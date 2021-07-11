@@ -2,18 +2,12 @@
 <search>
   <entry>
     <title></title>
-    <url>/2021/07/09/ckqxyk7wv0000qqey96b66gav/</url>
+    <url>/2021/07/09/ckqzawvs90001fieyfvutap1o/</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>git-how-to-change-the-url-for-a-remote-git-repository</title>
-    <url>/2021/06/16/ckqxyk7wx0002qqey0lt6agrd/</url>
-    <content><![CDATA[<p>9999</p>
-]]></content>
-  </entry>
-  <entry>
     <title>Hello World</title>
-    <url>/2021/06/04/ckqxyk7wx0004qqey44ze70r4/</url>
+    <url>/2021/06/04/ckqzawvsc0005fiey36y50gwe/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
@@ -30,8 +24,14 @@
 ]]></content>
   </entry>
   <entry>
+    <title>git-how-to-change-the-url-for-a-remote-git-repository</title>
+    <url>/2021/06/16/ckqzawvsd0007fiey2om4hvrg/</url>
+    <content><![CDATA[<p>9999</p>
+]]></content>
+  </entry>
+  <entry>
     <title>【Git常用命令】查看/修改远程仓库地址</title>
-    <url>/2019/10/07/ckqxyk7wy0006qqeygf1sa0yy/</url>
+    <url>/2019/10/07/ckqzawvsd0009fieye2q95sto/</url>
     <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
 
@@ -72,6 +72,251 @@
       </categories>
       <tags>
         <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基金定投计划：每月定投2000元，共投资30年</title>
+    <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
+    <content><![CDATA[<blockquote>
+<p>每月定投 2000 元，30 年后会变成多少资产？</p>
+</blockquote>
+<span id="more"></span>
+
+<p>规则：</p>
+<ul>
+<li>定投基金：富国天惠成长（161005）；</li>
+<li>定投金额：1000 元；</li>
+<li>定投日期：每月 10 号和 24 号，如遇节假日或休息日，则根据情况提前在最近一个交易日定投，或顺延至下一个交易日定投；</li>
+<li>定投当天更新<strong>净投入</strong>和<strong>总资产</strong>记录；</li>
+<li>其他：若基金年化收益率低于 15%，则根据情况决定是否更换定投基金。</li>
+</ul>
+
+    <div id="echarts5870" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts2061" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('echarts5870'));
+    var bar_chart = echarts.init(document.getElementById('echarts2061'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var dates = [];
+        var invest_data = [];
+        var total_data = [];
+        var records = data.data;
+        var options = data.options;
+        var len = records.length;
+        var newestData = records[len - 1];
+
+        for (var i = 0; i < len; i++){
+          dates.push(records[i][0]);
+          invest_data.push(records[i][2]);
+          total_data.push(records[i][3]);
+        }
+        options.xAxis.data = dates;
+        options.series[0].data = invest_data;
+        options.series[1].data = total_data;
+        myChart.setOption(options);
+
+        var labelRight = {
+          position: 'right'
+        };
+      
+        var bar_options = {
+          title: {
+              text: '账户资产明细',
+              subtext: '单位：元',
+              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
+          },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              }
+          },
+          grid: {
+              top: 80,
+              bottom: 30
+          },
+          xAxis: {
+              type: 'value',
+              position: 'top',
+              splitLine: {
+                  lineStyle: {
+                      type: 'dashed'
+                  }
+              }
+          },
+          yAxis: {
+              type: 'category',
+              axisLine: {show: false},
+              axisLabel: {show: false},
+              axisTick: {show: false},
+              splitLine: {show: false},
+              data: ['收益', '净投入', '总资产']
+          },
+          series: [
+              {
+                  name: '人民币',
+                  type: 'bar',
+                  stack: '总量',
+                  label: {
+                      show: true,
+                      formatter: '{b}'
+                  },
+                  data: [
+                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
+                      {value: newestData[2], label: labelRight},
+                      {value: newestData[3], label: labelRight},
+                  ],
+                  itemStyle: {
+                    normal: {
+        　　　　　　　　//这里是重点
+                        color: function(params) {
+                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
+                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                }
+              }
+          ]
+      };
+        bar_chart.setOption(bar_options);
+    });
+    </script>
+    
+
+<blockquote>
+<p>图表说明：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
+</blockquote>
+<h2 id="第一个五年目标（2021年3月-2025年2月）"><a href="#第一个五年目标（2021年3月-2025年2月）" class="headerlink" title="第一个五年目标（2021年3月-2025年2月）"></a>第一个五年目标（2021年3月-2025年2月）</h2><ul>
+<li>累计净投入 <strong>120,000</strong> 元；</li>
+<li>总资产 <strong>175,000</strong> 元；</li>
+</ul>
+
+    <div id="echarts4738" style="width: 100%;height: 568px;margin: 0 auto"></div>
+    <div id="echarts2091" style="width: 100%;height: 568px;margin: 0 auto"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart2 = echarts.init(document.getElementById('echarts4738'));
+    var total_chart_id_chart = echarts.init(document.getElementById('echarts2091'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var records = data.data;
+        var len = records.length;
+        var newestData = records[len - 1];
+        
+        var options = {
+          tooltip: {
+            formatter: '{a} <br/>{b} : {c}%'
+          },
+          series: [
+            {
+              name: '累计净投入进度',
+              type: 'gauge',
+              detail: {
+                valueAnimation: true,
+                formatter: '{value} %',
+                color: '#fd666d',
+              },
+              data: [{value: (newestData[2] / 120000.00 * 100).toFixed(2), name: '累计净投入进度'}],
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: [
+                    [1,new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                      {
+                        offset: 0.1,
+                        color: "#FFC600"
+                      },
+                      {
+                        offset: 0.6,
+                        color: "#30D27C"
+                      },
+                      {
+                        offset: 1,
+                        color: "#0B95FF"
+                      }
+                    ])
+                  ]
+                ]
+                  
+                }
+             }
+            }
+          ]
+        };
+
+        var total_chart_id_options = {
+          series: [{
+              type: 'gauge',
+              axisLine: {
+                  lineStyle: {
+                      width: 30,
+                      color: [
+                          [0.3, '#67e0e3'],
+                          [0.7, '#37a2da'],
+                          [1, '#fd666d']
+                      ]
+                  }
+              },
+              pointer: {
+                  itemStyle: {
+                      color: 'auto'
+                  }
+              },
+              axisTick: {
+                  distance: -30,
+                  length: 8,
+                  lineStyle: {
+                      color: '#fff',
+                      width: 2
+                  }
+              },
+              splitLine: {
+                  distance: -30,
+                  length: 30,
+                  lineStyle: {
+                      color: '#fff',
+                      width: 4
+                  }
+              },
+              axisLabel: {
+                  color: 'auto',
+                  distance: 40,
+                  fontSize: 20
+              },
+              detail: {
+                  valueAnimation: true,
+                  formatter: '{value} %',
+                  color: 'auto'
+              },
+              data: [{
+                  value: (newestData[3] / 175000 * 100).toFixed(2),
+                  name: '总资产进度'
+              }]
+          }]
+      };
+        
+        myChart2.setOption(options);
+        total_chart_id_chart.setOption(total_chart_id_options);
+    });
+    </script>
+    ]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>投资理财</tag>
       </tags>
   </entry>
   <entry>
@@ -346,180 +591,6 @@
       </categories>
       <tags>
         <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基金定投计划：每月定投2000元，共投资30年</title>
-    <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
-    <content><![CDATA[<blockquote>
-<p>每月定投 2000 元，30 年后会变成多少资产？</p>
-</blockquote>
-<span id="more"></span>
-
-<p>规则：</p>
-<ul>
-<li>定投基金：富国天惠成长（161005）；</li>
-<li>定投金额：1000 元；</li>
-<li>定投日期：每月 10 号和 24 号，如遇节假日或休息日，则根据情况提前在最近一个交易日定投，或顺延至下一个交易日定投；</li>
-<li>定投当天更新<strong>净投入</strong>和<strong>总资产</strong>记录；</li>
-<li>其他：若基金年化收益率低于 15%，则根据情况决定是否更换定投基金。</li>
-</ul>
-
-    <div id="echarts1655" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts1655'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var dates = [];
-        var invest_data = [];
-        var total_data = [];
-        var records = data.data;
-        var options = data.options;
-        var len = records.length;
-        for (var i = 0; i < len; i++){
-          dates.push(records[i][0]);
-          invest_data.push(records[i][2]);
-          total_data.push(records[i][3]);
-        }
-        options.xAxis.data = dates;
-        options.series[0].data = invest_data;
-        options.series[1].data = total_data;
-        myChart.setOption(options);
-    });
-    </script>
-    
-
-<blockquote>
-<p>图表说明：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
-</blockquote>
-<h2 id="第一个五年目标（2021年3月-2025年2月）"><a href="#第一个五年目标（2021年3月-2025年2月）" class="headerlink" title="第一个五年目标（2021年3月-2025年2月）"></a>第一个五年目标（2021年3月-2025年2月）</h2><ul>
-<li>累计净投入 <strong>120,000</strong> 元；</li>
-<li>总资产 <strong>175,000</strong> 元；</li>
-</ul>
-
-    <div id="echarts5978" style="width: 100%;height: 568px;margin: 0 auto"></div>
-    <div id="echarts5440" style="width: 100%;height: 568px;margin: 0 auto"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart2 = echarts.init(document.getElementById('echarts5978'));
-    var total_chart_id_chart = echarts.init(document.getElementById('echarts5440'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var records = data.data;
-        var len = records.length;
-        var newestData = records[len - 1];
-        
-        var options = {
-          tooltip: {
-            formatter: '{a} <br/>{b} : {c}%'
-          },
-          series: [
-            {
-              name: '累计净投入进度',
-              type: 'gauge',
-              detail: {
-                valueAnimation: true,
-                formatter: '{value} %',
-                color: '#fd666d',
-              },
-              data: [{value: (newestData[2] / 120000.00 * 100).toFixed(2), name: '累计净投入进度'}],
-              axisLine: {
-                show: true,
-                lineStyle: {
-                  color: [
-                    [1,new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                      {
-                        offset: 0.1,
-                        color: "#FFC600"
-                      },
-                      {
-                        offset: 0.6,
-                        color: "#30D27C"
-                      },
-                      {
-                        offset: 1,
-                        color: "#0B95FF"
-                      }
-                    ])
-                  ]
-                ]
-                  
-                }
-             }
-            }
-          ]
-        };
-
-        var total_chart_id_options = {
-          series: [{
-              type: 'gauge',
-              axisLine: {
-                  lineStyle: {
-                      width: 30,
-                      color: [
-                          [0.3, '#67e0e3'],
-                          [0.7, '#37a2da'],
-                          [1, '#fd666d']
-                      ]
-                  }
-              },
-              pointer: {
-                  itemStyle: {
-                      color: 'auto'
-                  }
-              },
-              axisTick: {
-                  distance: -30,
-                  length: 8,
-                  lineStyle: {
-                      color: '#fff',
-                      width: 2
-                  }
-              },
-              splitLine: {
-                  distance: -30,
-                  length: 30,
-                  lineStyle: {
-                      color: '#fff',
-                      width: 4
-                  }
-              },
-              axisLabel: {
-                  color: 'auto',
-                  distance: 40,
-                  fontSize: 20
-              },
-              detail: {
-                  valueAnimation: true,
-                  formatter: '{value} %',
-                  color: 'auto'
-              },
-              data: [{
-                  value: (newestData[3] / 175000 * 100).toFixed(2),
-                  name: '总资产进度'
-              }]
-          }]
-      };
-        
-        myChart2.setOption(options);
-        total_chart_id_chart.setOption(total_chart_id_options);
-    });
-    </script>
-    ]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>投资理财</tag>
       </tags>
   </entry>
 </search>
