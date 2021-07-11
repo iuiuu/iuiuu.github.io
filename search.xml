@@ -2,12 +2,18 @@
 <search>
   <entry>
     <title></title>
-    <url>/2021/07/09/ckqzawvs90001fieyfvutap1o/</url>
+    <url>/2021/07/09/ckqzb1ozn0003itey7h4h2g96/</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
+    <title>git-how-to-change-the-url-for-a-remote-git-repository</title>
+    <url>/2021/06/16/ckqzb1ozo0005iteya6rca5gw/</url>
+    <content><![CDATA[<p>9999</p>
+]]></content>
+  </entry>
+  <entry>
     <title>Hello World</title>
-    <url>/2021/06/04/ckqzawvsc0005fiey36y50gwe/</url>
+    <url>/2021/06/04/ckqzb1ozp0007itey4fw2b58r/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
@@ -24,14 +30,8 @@
 ]]></content>
   </entry>
   <entry>
-    <title>git-how-to-change-the-url-for-a-remote-git-repository</title>
-    <url>/2021/06/16/ckqzawvsd0007fiey2om4hvrg/</url>
-    <content><![CDATA[<p>9999</p>
-]]></content>
-  </entry>
-  <entry>
     <title>【Git常用命令】查看/修改远程仓库地址</title>
-    <url>/2019/10/07/ckqzawvsd0009fieye2q95sto/</url>
+    <url>/2019/10/07/ckqzb1ozp0009itey4p8c4ne6/</url>
     <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
 
@@ -91,14 +91,14 @@
 <li>其他：若基金年化收益率低于 15%，则根据情况决定是否更换定投基金。</li>
 </ul>
 
-    <div id="echarts5870" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts2061" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts1602" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts5657" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts5870'));
-    var bar_chart = echarts.init(document.getElementById('echarts2061'));
+    var myChart = echarts.init(document.getElementById('echarts1602'));
+    var bar_chart = echarts.init(document.getElementById('echarts5657'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -128,7 +128,7 @@
         var bar_options = {
           title: {
               text: '账户资产明细',
-              subtext: '单位：元',
+              subtext: '金额（元）',
               // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
           },
           tooltip: {
@@ -199,14 +199,14 @@
 <li>总资产 <strong>175,000</strong> 元；</li>
 </ul>
 
-    <div id="echarts4738" style="width: 100%;height: 568px;margin: 0 auto"></div>
-    <div id="echarts2091" style="width: 100%;height: 568px;margin: 0 auto"></div>
+    <div id="echarts2317" style="width: 100%;height: 568px;margin: 0 auto"></div>
+    <div id="echarts5204" style="width: 100%;height: 568px;margin: 0 auto"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart2 = echarts.init(document.getElementById('echarts4738'));
-    var total_chart_id_chart = echarts.init(document.getElementById('echarts2091'));
+    var myChart2 = echarts.init(document.getElementById('echarts2317'));
+    var total_chart_id_chart = echarts.init(document.getElementById('echarts5204'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
