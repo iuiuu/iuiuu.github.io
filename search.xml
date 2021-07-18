@@ -901,240 +901,6 @@
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：计划进度</title>
-    <url>/2021/07/17/investment-plan-progress/</url>
-    <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
-
-    <div id="echarts5611" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts8430" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts5611'));
-    var bar_chart = echarts.init(document.getElementById('echarts8430'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var dates = [];
-        var invest_data = [];
-        var total_data = [];
-        var records = data.data;
-        var options = data.options;
-        var len = records.length;
-        var newestData = records[len - 1];
-
-        for (var i = 0; i < len; i++){
-          dates.push(records[i][0]);
-          invest_data.push(records[i][2]);
-          total_data.push(records[i][3]);
-        }
-        options.xAxis.data = dates;
-        options.series[0].data = invest_data;
-        options.series[1].data = total_data;
-        myChart.setOption(options);
-
-        var labelRight = {
-          position: 'right'
-        };
-      
-        var bar_options = {
-          title: {
-              text: '账户资产明细',
-              subtext: '金额（元）',
-              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
-          },
-          tooltip: {
-              trigger: 'axis',
-              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-              }
-          },
-          grid: {
-              top: 80,
-              bottom: 30
-          },
-          xAxis: {
-              type: 'value',
-              position: 'top',
-              splitLine: {
-                  lineStyle: {
-                      type: 'dashed'
-                  }
-              }
-          },
-          yAxis: {
-              type: 'category',
-              axisLine: {show: false},
-              axisLabel: {show: false},
-              axisTick: {show: false},
-              splitLine: {show: false},
-              data: ['收益', '净投入', '总资产']
-          },
-          series: [
-              {
-                  name: '人民币',
-                  type: 'bar',
-                  stack: '总量',
-                  label: {
-                      show: true,
-                      formatter: '{b}'
-                  },
-                  data: [
-                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
-                      {value: newestData[2], label: labelRight},
-                      {value: newestData[3], label: labelRight},
-                  ],
-                  itemStyle: {
-                    normal: {
-        　　　　　　　　//这里是重点
-                        color: function(params) {
-                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
-                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
-                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
-                            return colorList[params.dataIndex]
-                        }
-                    }
-                }
-              }
-          ]
-      };
-        bar_chart.setOption(bar_options);
-    });
-    </script>
-    
-
-<blockquote>
-<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
-</blockquote>
-<h2 id="第一个五年目标（2021年3月-2025年12月）"><a href="#第一个五年目标（2021年3月-2025年12月）" class="headerlink" title="第一个五年目标（2021年3月-2025年12月）"></a>第一个五年目标（2021年3月-2025年12月）</h2><ul>
-<li>累计净投入 <strong>116,000</strong> 元；</li>
-</ul>
-
-    <div id="echarts7852" style="width: 100%;height: 568px;margin: 0 auto"></div>
-    <div id="echarts5662" style="width: 100%;height: 568px;margin: 0 auto"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart2 = echarts.init(document.getElementById('echarts7852'));
-    var total_chart_id_chart = echarts.init(document.getElementById('echarts5662'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var records = data.data;
-        var len = records.length;
-        var newestData = records[len - 1];
-        
-        var options = {
-          tooltip: {
-            formatter: '{a} <br/>{b} : {c}%'
-          },
-          series: [
-            {
-              name: '累计净投入进度',
-              type: 'gauge',
-              detail: {
-                valueAnimation: true,
-                formatter: '{value} %',
-                color: '#fd666d',
-              },
-              data: [{value: (newestData[2] / 116000.00 * 100).toFixed(2), name: '累计净投入进度'}],
-              axisLine: {
-                show: true,
-                lineStyle: {
-                  color: [
-                    [1,new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                      {
-                        offset: 0.1,
-                        color: "#FFC600"
-                      },
-                      {
-                        offset: 0.6,
-                        color: "#30D27C"
-                      },
-                      {
-                        offset: 1,
-                        color: "#0B95FF"
-                      }
-                    ])
-                  ]
-                ]
-                  
-                }
-             }
-            }
-          ]
-        };
-
-        var total_chart_id_options = {
-          series: [{
-              type: 'gauge',
-              axisLine: {
-                  lineStyle: {
-                      width: 30,
-                      color: [
-                          [0.3, '#67e0e3'],
-                          [0.7, '#37a2da'],
-                          [1, '#fd666d']
-                      ]
-                  }
-              },
-              pointer: {
-                  itemStyle: {
-                      color: 'auto'
-                  }
-              },
-              axisTick: {
-                  distance: -30,
-                  length: 8,
-                  lineStyle: {
-                      color: '#fff',
-                      width: 2
-                  }
-              },
-              splitLine: {
-                  distance: -30,
-                  length: 30,
-                  lineStyle: {
-                      color: '#fff',
-                      width: 4
-                  }
-              },
-              axisLabel: {
-                  color: 'auto',
-                  distance: 40,
-                  fontSize: 20
-              },
-              detail: {
-                  valueAnimation: true,
-                  formatter: '{value} %',
-                  color: 'auto'
-              },
-              data: [{
-                  value: (newestData[3] / 175000 * 100).toFixed(2),
-                  name: '总资产进度'
-              }]
-          }]
-      };
-        
-        myChart2.setOption(options);
-        total_chart_id_chart.setOption(total_chart_id_options);
-    });
-    </script>
-    
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>退休金计划：2026-2030年定投执行计划</title>
     <url>/2021/07/10/investment-plan-2026-2030/</url>
     <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第二个五年行动计划——2026-2030年定投计划。</p>
@@ -2056,277 +1822,14 @@
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：每月定投基金2000元，30年后资产总额达到多少？</title>
-    <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
-    <content><![CDATA[<h2 id="突发奇想"><a href="#突发奇想" class="headerlink" title="突发奇想"></a>突发奇想</h2><p>前段时间突发奇想，如果每个月拿出2000元用于投资理财，如定投基金，那30年后资产总额会达到多少呢？</p>
-<p>根据网上查到的资料，如果年化收益率为 14.5%，每月末坚持定投 2000 元，那么 30 年后资产总额将高达 1000 万元！！！这可谓是一个振奋人心的结果，非常诱人。毕竟这 30 年的净投入才 72 万（2000 × 12 × 30 = 720000），收益竟达到了 928 万之多。</p>
-<p>但这真的有可能实现吗？</p>
-<p>其实我不是怀疑在这样的假设下得出这样的结果。随着年期的增长，复利效应引发的倍数增长会越来越显著，而 30 年的时长，是足以见识到复利的威力和魅力的。</p>
-<p>问题是预期年化收益率 14.5% 能达到吗？公认的投资大师沃伦・巴菲特，具有四十多年投资年限，他的平均年化收益率也只是 20.3%。作为一个普通人，30 年的年化收益率要达到 14.5%，可能性有多大？即使能达到，每月定投 2000 元并坚持 30 年，是否又能做到呢？尤其是在市场出现极端恐慌或极端火热的时候，还能心如止水，仍坚定不移地按月定投吗？</p>
-<p>说实话，三十年的平均年化收益率要达到将近15%，我是一点把握都没有。而且也没有多少信心能够坚持下去。我得承认自己是一个普通人，没有过多的时间精力花费在研究投资上，本身也缺乏相关的专业能力。但这并不意味着我会放弃尝试的机会。相反，我倒是跃跃欲试，就当作是为自己储蓄退休金，因为三十年后也差不多快到了我该退休的年纪。</p>
-<p>既然决定要去尝试，那就必须面对现实，尽最大的努力去解决这些问题，即使问题的解决方案并不是最优的。</p>
-<p>首先，关于年化收益率问题，如果自己没有能力达到，那是不是通过选择优秀的基金进行定投的方式来解决呢？要找到跨越牛熊周期的（时间一般超过八年）、平均年化收益率达到14.5% 的基金，虽没有想象中那么简单，但也没有想象中的困难。很多明星基金经理，如张坤、谢治宇、朱少醒等，他们手上管理的基金大多都能达到这个年化收益率。</p>
-<p>比如，朱少醒的富国天惠成长混合A基金，成立十五年翻了 21 倍，平均年化收益率高达 23.94%。当然，过去的业绩不代表未来的业绩，未来也有可能会更换基金经理。平均年化收益率也不代表每年都是一层不变，而是有的年度可能是高于这个值，有的年度是低于这个值，甚至是负数。</p>
-<p>长期来看，优秀基金经理的投资业绩肯定会比自己好很多。</p>
-<p>其次，关于每月坚持定投问题。一项目标计划需要持续三十年之久，这中间存在很多“拦路虎”，将来可能会以各种各样的方式影响计划的顺利执行。甚至有时候出现一些“致命性”的因素，导致整个计划不得不终止。比如一个常见的问题是缺少每月可用于定投的资金；比如可能会碰到最大的问题是出现特殊情况需要卖出基金；比如定投过程中还可能遇到坚持不下来的问题，等等。</p>
-<p>那有没有方法让这长达三十年的定投计划的执行可以变得稍微顺利些呢？</p>
-<p>我现在能想到的，一个是保障每月收入稳定，并且每月定投的钱一定要用“闲钱”，同时还要不断提高收入，为计划的顺利执行挖出一条深深的护城河，避免出现需要终止计划的情况。</p>
-<p>另外一个是可以将三十年的长期目标计划分阶段拆解成中期目标计划（五年计划或十年计划）、短期目标计划，最后变成一步步切实可行的行动计划和容易量化的行动目标，并在执行的过程中不断地给予自己反馈（计划进度图表等）。</p>
-<p>就像打怪升级一样，当你努力完成一定量的阶段目标之后，每次看到自己的储蓄金额（净投入）在慢慢增长，总资产也在慢慢地接近下一阶段目标，甚至是接近总目标，那种每天都在一点一点的慢慢变富的成就感和满足感就不由自主地产生了。</p>
-<p>在漫长且枯燥的定投过程中，成就感和满足感是可以增添我们坚持的动力和信心。</p>
-<p>再次，关于无视市场情绪问题。</p>
-<p>人的弱点有很多，自私、妒嫉、虚荣、胆小、好逸恶劳、优柔寡断、刚愎自用，等等。在股市中，每个人或多或少都会展现自己人性的弱点，其中比较典型的是贪婪与恐惧。</p>
-<p>在股市火爆的时候，有多少人还能按既定计划坚持定投，而不是匆匆止盈或者加大杠杆买入？在市场暴跌的时候，即使是优秀的基金，也是有可能出现很大的回撤，如上文提到的基金——富国天惠成长混合A，过去最大回撤也达到了 58.9%。当 100 块跌去 58.9 块，还有多少人能不割肉离场并坚持拿住？</p>
-<p>无视市场情绪，其实就是克服人性弱点，过程非常难，需要很大的毅力。</p>
-<p>个人的想法是，既然选择了大家公认（或自己个人认为）的优秀基金经理管理的基金，就相当于把自己的资金交给基金经理，由他们进行管理和投资。我们要做的是相信他们的专业能力是能够根据市场行情变化做出较为理性的判断，而不是瞎操心。剩下要做的是这些在我看来更重要的事情：认真过好自己的生活、多花时间陪伴家人孩子、专注于自己的事业、增加收入的来源等。</p>
-<p>最后，还有一个关于通货膨胀问题。</p>
-<p>受通货膨胀因素影响，未来是否会增加每月定投金额？</p>
-<p>目前没有明确的想法。不过随着收入的上涨，从上涨的这部分收入里拿出一小部分资金投入到退休金计划，享受时间复利带来的收益，确实是一个不错的选择。需要强调的是新增加的这一部分资金，最好还是长时间不会用到的“闲钱”。</p>
-<h2 id="制定计划"><a href="#制定计划" class="headerlink" title="制定计划"></a>制定计划</h2><p>人生的道路上总是布满着荆棘，我们只能不断的前进，不断的披荆斩棘，虽然困难却总是充满着梦想与希望。</p>
-<p>以下是我根据自身的情况制定了一项长期计划——退休金计划。</p>
-<p>计划内容：</p>
-<ul>
-<li>计划目标：退休金额达到 10,000,000 元；</li>
-<li>定投基金：富国天惠成长混合A（161005）；</li>
-<li>定投金额：2000 元/月；</li>
-<li>定投日期：每月 10 号和 24 号，如遇节假日或休息日，则根据情况提前在最近一个交易日定投，或顺延至下一个交易日定投；</li>
-<li>定投年限：30年；</li>
-<li>预期平均年回报率：14.5%；</li>
-<li>计划停止执行条件：提前完成目标金额或 30 年时间已到（2051年2月）；</li>
-<li>定投当天更新净投入和总资产记录；</li>
-<li>其他补充：根据未来的实际情况，决定是否更换定投基金、增加每月定制金额等。</li>
-</ul>
-<p>计划本身比较简单，关键是要<strong>坚定不移地去执行</strong>。</p>
-<h2 id="分阶段执行计划"><a href="#分阶段执行计划" class="headerlink" title="分阶段执行计划"></a>分阶段执行计划</h2><p><a href="/2021/07/10/investment-plan-2021-2025/">2021-2025年定投执行计划</a></p>
-<p><a href="/2021/07/10/investment-plan-2026-2030/">2026-2030年定投执行计划</a></p>
-<p><a href="/2021/07/10/investment-plan-2031-2035/">2031-2035年定投执行计划</a></p>
-<p>2036-2040年定投执行计划</p>
-<p>2041-2045年定投执行计划</p>
-<p>2046-2050年定投执行计划</p>
-<p>2051年（1月、2月）定投执行计划</p>
-<h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts2300" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts9857" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts2300'));
-    var bar_chart = echarts.init(document.getElementById('echarts9857'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var dates = [];
-        var invest_data = [];
-        var total_data = [];
-        var records = data.data;
-        var options = data.options;
-        var len = records.length;
-        var newestData = records[len - 1];
-
-        for (var i = 0; i < len; i++){
-          dates.push(records[i][0]);
-          invest_data.push(records[i][2]);
-          total_data.push(records[i][3]);
-        }
-        options.xAxis.data = dates;
-        options.series[0].data = invest_data;
-        options.series[1].data = total_data;
-        myChart.setOption(options);
-
-        var labelRight = {
-          position: 'right'
-        };
-      
-        var bar_options = {
-          title: {
-              text: '账户资产明细',
-              subtext: '金额（元）',
-              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
-          },
-          tooltip: {
-              trigger: 'axis',
-              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-              }
-          },
-          grid: {
-              top: 80,
-              bottom: 30
-          },
-          xAxis: {
-              type: 'value',
-              position: 'top',
-              splitLine: {
-                  lineStyle: {
-                      type: 'dashed'
-                  }
-              }
-          },
-          yAxis: {
-              type: 'category',
-              axisLine: {show: false},
-              axisLabel: {show: false},
-              axisTick: {show: false},
-              splitLine: {show: false},
-              data: ['收益', '净投入', '总资产']
-          },
-          series: [
-              {
-                  name: '人民币',
-                  type: 'bar',
-                  stack: '总量',
-                  label: {
-                      show: true,
-                      formatter: '{b}'
-                  },
-                  data: [
-                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
-                      {value: newestData[2], label: labelRight},
-                      {value: newestData[3], label: labelRight},
-                  ],
-                  itemStyle: {
-                    normal: {
-        　　　　　　　　//这里是重点
-                        color: function(params) {
-                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
-                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
-                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
-                            return colorList[params.dataIndex]
-                        }
-                    }
-                }
-              }
-          ]
-      };
-        bar_chart.setOption(bar_options);
-    });
-    </script>
-    
-
-<blockquote>
-<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
-</blockquote>
-<h2 id="第一个五年目标（2021年3月-2025年12月）"><a href="#第一个五年目标（2021年3月-2025年12月）" class="headerlink" title="第一个五年目标（2021年3月-2025年12月）"></a>第一个五年目标（2021年3月-2025年12月）</h2><ul>
-<li>累计净投入 <strong>116,000</strong> 元；</li>
-</ul>
-
-    <div id="echarts2096" style="width: 100%;height: 568px;margin: 0 auto"></div>
-    <div id="echarts3988" style="width: 100%;height: 568px;margin: 0 auto"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart2 = echarts.init(document.getElementById('echarts2096'));
-    var total_chart_id_chart = echarts.init(document.getElementById('echarts3988'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var records = data.data;
-        var len = records.length;
-        var newestData = records[len - 1];
-        
-        var options = {
-          tooltip: {
-            formatter: '{a} <br/>{b} : {c}%'
-          },
-          series: [
-            {
-              name: '累计净投入进度',
-              type: 'gauge',
-              detail: {
-                valueAnimation: true,
-                formatter: '{value} %',
-                color: '#fd666d',
-              },
-              data: [{value: (newestData[2] / 116000.00 * 100).toFixed(2), name: '累计净投入进度'}],
-              axisLine: {
-                show: true,
-                lineStyle: {
-                  color: [
-                    [1,new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                      {
-                        offset: 0.1,
-                        color: "#FFC600"
-                      },
-                      {
-                        offset: 0.6,
-                        color: "#30D27C"
-                      },
-                      {
-                        offset: 1,
-                        color: "#0B95FF"
-                      }
-                    ])
-                  ]
-                ]
-                  
-                }
-             }
-            }
-          ]
-        };
-
-        var total_chart_id_options = {
-          series: [{
-              type: 'gauge',
-              axisLine: {
-                  lineStyle: {
-                      width: 30,
-                      color: [
-                          [0.3, '#67e0e3'],
-                          [0.7, '#37a2da'],
-                          [1, '#fd666d']
-                      ]
-                  }
-              },
-              pointer: {
-                  itemStyle: {
-                      color: 'auto'
-                  }
-              },
-              axisTick: {
-                  distance: -30,
-                  length: 8,
-                  lineStyle: {
-                      color: '#fff',
-                      width: 2
-                  }
-              },
-              splitLine: {
-                  distance: -30,
-                  length: 30,
-                  lineStyle: {
-                      color: '#fff',
-                      width: 4
-                  }
-              },
-              axisLabel: {
-                  color: 'auto',
-                  distance: 40,
-                  fontSize: 20
-              },
-              detail: {
-                  valueAnimation: true,
-                  formatter: '{value} %',
-                  color: 'auto'
-              },
-              data: [{
-                  value: (newestData[3] / 175000 * 100).toFixed(2),
-                  name: '总资产进度'
-              }]
-          }]
-      };
-        
-        myChart2.setOption(options);
-        total_chart_id_chart.setOption(total_chart_id_options);
-    });
-    </script>
-    
-
-<h2 id="年度计划参考"><a href="#年度计划参考" class="headerlink" title="年度计划参考"></a>年度计划参考</h2><p>本参考计划根据 <a href="https://www.calculator.net/investment-calculator.html?ctype=returnrate&ctargetamountv=10000000&cstartingprinciplev=0&cyearsv=30&cinterestratev=23&ccompound=annually&ccontributeamountv=2000&cadditionat1=end&ciadditionat1=monthly&printit=0">投资计算器</a> 生成，这里假设你的：<br>目标金额：10,000,000元<br>起始金额：0元<br>每月月末定投：2000元<br>投资年限：30年<br>则需要 14.469% 的年回报率才能达到 ￥10,000,000.00 的目标。</p>
+    <title>退休金计划：三十年一千万参考</title>
+    <url>/2021/07/18/investment-plan-reference/</url>
+    <content><![CDATA[<p>本参考计划根据 <a href="https://www.calculator.net/investment-calculator.html?ctype=returnrate&ctargetamountv=10000000&cstartingprinciplev=0&cyearsv=30&cinterestratev=23&ccompound=annually&ccontributeamountv=2000&cadditionat1=end&ciadditionat1=monthly&printit=0">投资计算器</a> 生成，这里假设你的：</p>
+<p>目标金额：10,000,000元</p>
+<p>起始金额：0元</p>
+<p>每月月末定投：2000元</p>
+<p>投资年限：30年</p>
+<p>则需要 14.469% 的年回报率才能达到 ￥10,000,000.00 的目标。</p>
 <p>期末账户明细：</p>
 <table>
 <thead>
@@ -2601,6 +2104,521 @@
 <td>￥720,000.00</td>
 </tr>
 </tbody></table>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>退休金计划：每月定投基金2000元，30年后资产总额达到多少？</title>
+    <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
+    <content><![CDATA[<h2 id="突发奇想"><a href="#突发奇想" class="headerlink" title="突发奇想"></a>突发奇想</h2><p>前段时间突发奇想，如果每个月拿出2000元用于投资理财，如定投基金，那30年后资产总额会达到多少呢？</p>
+<p>根据网上查到的资料，如果年化收益率为 14.5%，每月末坚持定投 2000 元，那么 30 年后资产总额将高达 1000 万元！！！这可谓是一个振奋人心的结果，非常诱人。毕竟这 30 年的净投入才 72 万（2000 × 12 × 30 = 720000），收益竟达到了 928 万之多。</p>
+<h2 id="回到现实"><a href="#回到现实" class="headerlink" title="回到现实"></a>回到现实</h2><p>但这真的有可能实现吗？</p>
+<p>其实我不是怀疑在这样的假设下得出这样的结果。随着年期的增长，复利效应引发的倍数增长会越来越显著，而 30 年的时长，是足以见识到复利的威力和魅力的。</p>
+<p>问题是预期年化收益率 14.5% 能达到吗？公认的投资大师沃伦・巴菲特，具有四十多年投资年限，他的平均年化收益率也只是 20.3%。作为一个普通人，30 年的年化收益率要达到 14.5%，可能性有多大？即使能达到，每月定投 2000 元并坚持 30 年，是否又能做到呢？尤其是在市场出现极端恐慌或极端火热的时候，还能心如止水，仍坚定不移地按月定投吗？</p>
+<h2 id="一次大胆的尝试"><a href="#一次大胆的尝试" class="headerlink" title="一次大胆的尝试"></a>一次大胆的尝试</h2><p>说实话，三十年的平均年化收益率要达到将近15%，我是一点把握都没有。而且也没有多少信心能够坚持下去。我得承认自己是一个普通人，没有过多的时间精力花费在研究投资上，本身也缺乏相关的专业能力。但这并不意味着我会放弃尝试的机会。相反，我倒是跃跃欲试，就当作是为自己储蓄退休金，因为三十年后也差不多快到了我该退休的年纪。</p>
+<p>既然决定要去尝试，那就必须面对现实，尽最大的努力去解决这些问题，即使问题的解决方案并不是最优的。</p>
+<p>首先，关于年化收益率问题，如果自己没有能力达到，那是不是通过选择优秀的基金进行定投的方式来解决呢？要找到跨越牛熊周期的（时间一般超过八年）、平均年化收益率达到14.5% 的基金，虽没有想象中那么简单，但也没有想象中的困难。很多明星基金经理，如张坤、谢治宇、朱少醒等，他们手上管理的基金大多都能达到这个年化收益率。</p>
+<p>比如，朱少醒的富国天惠成长混合A基金，成立十五年翻了 21 倍，平均年化收益率高达 23.94%。当然，过去的业绩不代表未来的业绩，未来也有可能会更换基金经理。平均年化收益率也不代表每年都是一层不变，而是有的年度可能是高于这个值，有的年度是低于这个值，甚至是负数。</p>
+<p>长期来看，优秀基金经理的投资业绩肯定会比自己好很多。</p>
+<p>其次，关于每月坚持定投问题。一项目标计划需要持续三十年之久，这中间存在很多“拦路虎”，将来可能会以各种各样的方式影响计划的顺利执行。甚至有时候出现一些“致命性”的因素，导致整个计划不得不终止。比如一个常见的问题是缺少每月可用于定投的资金；比如可能会碰到最大的问题是出现特殊情况需要卖出基金；比如定投过程中还可能遇到坚持不下来的问题，等等。</p>
+<p>那有没有方法让这长达三十年的定投计划的执行可以变得稍微顺利些呢？</p>
+<p>我现在能想到的，一个是保障每月收入稳定，并且每月定投的钱一定要用“闲钱”，同时还要不断提高收入，为计划的顺利执行挖出一条深深的护城河，避免出现需要终止计划的情况。</p>
+<p>另外一个是可以将三十年的长期目标计划分阶段拆解成中期目标计划（五年计划或十年计划）、短期目标计划，最后变成一步步切实可行的行动计划和容易量化的行动目标，并在执行的过程中不断地给予自己反馈（计划进度图表等）。</p>
+<p>就像打怪升级一样，当你努力完成一定量的阶段目标之后，每次看到自己的储蓄金额（净投入）在慢慢增长，总资产也在慢慢地接近下一阶段目标，甚至是接近总目标，那种每天都在一点一点的慢慢变富的成就感和满足感就不由自主地产生了。</p>
+<p>在漫长且枯燥的定投过程中，成就感和满足感是可以增添我们坚持的动力和信心。</p>
+<p>再次，关于无视市场情绪问题。</p>
+<p>人的弱点有很多，自私、妒嫉、虚荣、胆小、好逸恶劳、优柔寡断、刚愎自用，等等。在股市中，每个人或多或少都会展现自己人性的弱点，其中比较典型的是贪婪与恐惧。</p>
+<p>在股市火爆的时候，有多少人还能按既定计划坚持定投，而不是匆匆止盈或者加大杠杆买入？在市场暴跌的时候，即使是优秀的基金，也是有可能出现很大的回撤，如上文提到的基金——富国天惠成长混合A，过去最大回撤也达到了 58.9%。当 100 块跌去 58.9 块，还有多少人能不割肉离场并坚持拿住？</p>
+<p>无视市场情绪，其实就是克服人性弱点，过程非常难，需要很大的毅力。</p>
+<p>个人的想法是，既然选择了大家公认（或自己个人认为）的优秀基金经理管理的基金，就相当于把自己的资金交给基金经理，由他们进行管理和投资。我们要做的是相信他们的专业能力是能够根据市场行情变化做出较为理性的判断，而不是瞎操心。剩下要做的是这些在我看来更重要的事情：认真过好自己的生活、多花时间陪伴家人孩子、专注于自己的事业、增加收入的来源等。</p>
+<p>最后，还有一个关于通货膨胀问题。</p>
+<p>受通货膨胀因素影响，未来是否会增加每月定投金额？</p>
+<p>目前没有明确的想法。不过随着收入的上涨，从上涨的这部分收入里拿出一小部分资金投入到退休金计划，享受时间复利带来的收益，确实是一个不错的选择。需要强调的是新增加的这一部分资金，最好还是长时间不会用到的“闲钱”。</p>
+<h2 id="制定计划"><a href="#制定计划" class="headerlink" title="制定计划"></a>制定计划</h2><p>以下是我根据自身的情况制定了一项长期计划——退休金计划。</p>
+<p>计划内容：</p>
+<ul>
+<li>计划目标：退休金额达到 10,000,000 元；</li>
+<li>定投基金：富国天惠成长混合A（161005）；</li>
+<li>定投金额：2000 元/月；</li>
+<li>定投日期：每月 10 号和 24 号，如遇节假日或休息日，则根据情况提前在最近一个交易日定投，或顺延至下一个交易日定投；</li>
+<li>定投年限：30年；</li>
+<li>预期平均年回报率：14.5%；</li>
+<li>计划停止执行条件：提前完成目标金额或 30 年时间已到（2051年2月）；</li>
+<li>定投当天更新净投入和总资产记录；</li>
+<li>其他补充：根据未来的实际情况，决定是否更换定投基金、增加每月定制金额等。</li>
+</ul>
+<p>计划本身比较简单，关键是要<strong>坚定不移地去执行</strong>。</p>
+<p>人生的道路上总是布满着荆棘，我们只能不断的前进，不断的披荆斩棘，虽然困难却总是充满着梦想与希望。</p>
+<h2 id="分阶段执行计划"><a href="#分阶段执行计划" class="headerlink" title="分阶段执行计划"></a>分阶段执行计划</h2><p><a href="/2021/07/10/investment-plan-2021-2025/">2021-2025年定投执行计划</a></p>
+<p><a href="/2021/07/10/investment-plan-2026-2030/">2026-2030年定投执行计划</a></p>
+<p><a href="/2021/07/10/investment-plan-2031-2035/">2031-2035年定投执行计划</a></p>
+<p>2036-2040年定投执行计划</p>
+<p>2041-2045年定投执行计划</p>
+<p>2046-2050年定投执行计划</p>
+<p>2051年（1月、2月）定投执行计划</p>
+<h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
+    <div id="echarts6375" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts124" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('echarts6375'));
+    var bar_chart = echarts.init(document.getElementById('echarts124'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var dates = [];
+        var invest_data = [];
+        var total_data = [];
+        var records = data.data;
+        var options = data.options;
+        var len = records.length;
+        var newestData = records[len - 1];
+
+        for (var i = 0; i < len; i++){
+          dates.push(records[i][0]);
+          invest_data.push(records[i][2]);
+          total_data.push(records[i][3]);
+        }
+        options.xAxis.data = dates;
+        options.series[0].data = invest_data;
+        options.series[1].data = total_data;
+        myChart.setOption(options);
+
+        var labelRight = {
+          position: 'right'
+        };
+      
+        var bar_options = {
+          title: {
+              text: '账户资产明细',
+              subtext: '金额（元）',
+              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
+          },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              }
+          },
+          grid: {
+              top: 80,
+              bottom: 30
+          },
+          xAxis: {
+              type: 'value',
+              position: 'top',
+              splitLine: {
+                  lineStyle: {
+                      type: 'dashed'
+                  }
+              }
+          },
+          yAxis: {
+              type: 'category',
+              axisLine: {show: false},
+              axisLabel: {show: false},
+              axisTick: {show: false},
+              splitLine: {show: false},
+              data: ['收益', '净投入', '总资产']
+          },
+          series: [
+              {
+                  name: '人民币',
+                  type: 'bar',
+                  stack: '总量',
+                  label: {
+                      show: true,
+                      formatter: '{b}'
+                  },
+                  data: [
+                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
+                      {value: newestData[2], label: labelRight},
+                      {value: newestData[3], label: labelRight},
+                  ],
+                  itemStyle: {
+                    normal: {
+        　　　　　　　　//这里是重点
+                        color: function(params) {
+                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
+                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                }
+              }
+          ]
+      };
+        bar_chart.setOption(bar_options);
+    });
+    </script>
+    
+
+<blockquote>
+<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
+</blockquote>
+<h2 id="第一个五年目标（2021年3月-2025年12月）"><a href="#第一个五年目标（2021年3月-2025年12月）" class="headerlink" title="第一个五年目标（2021年3月-2025年12月）"></a>第一个五年目标（2021年3月-2025年12月）</h2><ul>
+<li>累计净投入 <strong>116,000</strong> 元；</li>
+</ul>
+
+    <div id="echarts3809" style="width: 100%;height: 568px;margin: 0 auto"></div>
+    <div id="echarts7298" style="width: 100%;height: 568px;margin: 0 auto"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart2 = echarts.init(document.getElementById('echarts3809'));
+    var total_chart_id_chart = echarts.init(document.getElementById('echarts7298'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var records = data.data;
+        var len = records.length;
+        var newestData = records[len - 1];
+        
+        var options = {
+          tooltip: {
+            formatter: '{a} <br/>{b} : {c}%'
+          },
+          series: [
+            {
+              name: '累计净投入进度',
+              type: 'gauge',
+              detail: {
+                valueAnimation: true,
+                formatter: '{value} %',
+                color: '#fd666d',
+              },
+              data: [{value: (newestData[2] / 116000.00 * 100).toFixed(2), name: '累计净投入进度'}],
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: [
+                    [1,new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                      {
+                        offset: 0.1,
+                        color: "#FFC600"
+                      },
+                      {
+                        offset: 0.6,
+                        color: "#30D27C"
+                      },
+                      {
+                        offset: 1,
+                        color: "#0B95FF"
+                      }
+                    ])
+                  ]
+                ]
+                  
+                }
+             }
+            }
+          ]
+        };
+
+        var total_chart_id_options = {
+          series: [{
+              type: 'gauge',
+              axisLine: {
+                  lineStyle: {
+                      width: 30,
+                      color: [
+                          [0.3, '#67e0e3'],
+                          [0.7, '#37a2da'],
+                          [1, '#fd666d']
+                      ]
+                  }
+              },
+              pointer: {
+                  itemStyle: {
+                      color: 'auto'
+                  }
+              },
+              axisTick: {
+                  distance: -30,
+                  length: 8,
+                  lineStyle: {
+                      color: '#fff',
+                      width: 2
+                  }
+              },
+              splitLine: {
+                  distance: -30,
+                  length: 30,
+                  lineStyle: {
+                      color: '#fff',
+                      width: 4
+                  }
+              },
+              axisLabel: {
+                  color: 'auto',
+                  distance: 40,
+                  fontSize: 20
+              },
+              detail: {
+                  valueAnimation: true,
+                  formatter: '{value} %',
+                  color: 'auto'
+              },
+              data: [{
+                  value: (newestData[3] / 175000 * 100).toFixed(2),
+                  name: '总资产进度'
+              }]
+          }]
+      };
+        
+        myChart2.setOption(options);
+        total_chart_id_chart.setOption(total_chart_id_options);
+    });
+    </script>
+    
+
+<h2 id="年度计划参考"><a href="#年度计划参考" class="headerlink" title="年度计划参考"></a>年度计划参考</h2><p>详见 <a href="/2021/07/18/investment-plan-reference">退休金计划：三十年一千万参考</a></p>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>退休金计划：计划进度</title>
+    <url>/2021/07/17/investment-plan-progress/</url>
+    <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
+
+    <div id="echarts7426" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts4794" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('echarts7426'));
+    var bar_chart = echarts.init(document.getElementById('echarts4794'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var dates = [];
+        var invest_data = [];
+        var total_data = [];
+        var records = data.data;
+        var options = data.options;
+        var len = records.length;
+        var newestData = records[len - 1];
+
+        for (var i = 0; i < len; i++){
+          dates.push(records[i][0]);
+          invest_data.push(records[i][2]);
+          total_data.push(records[i][3]);
+        }
+        options.xAxis.data = dates;
+        options.series[0].data = invest_data;
+        options.series[1].data = total_data;
+        myChart.setOption(options);
+
+        var labelRight = {
+          position: 'right'
+        };
+      
+        var bar_options = {
+          title: {
+              text: '账户资产明细',
+              subtext: '金额（元）',
+              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
+          },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              }
+          },
+          grid: {
+              top: 80,
+              bottom: 30
+          },
+          xAxis: {
+              type: 'value',
+              position: 'top',
+              splitLine: {
+                  lineStyle: {
+                      type: 'dashed'
+                  }
+              }
+          },
+          yAxis: {
+              type: 'category',
+              axisLine: {show: false},
+              axisLabel: {show: false},
+              axisTick: {show: false},
+              splitLine: {show: false},
+              data: ['收益', '净投入', '总资产']
+          },
+          series: [
+              {
+                  name: '人民币',
+                  type: 'bar',
+                  stack: '总量',
+                  label: {
+                      show: true,
+                      formatter: '{b}'
+                  },
+                  data: [
+                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
+                      {value: newestData[2], label: labelRight},
+                      {value: newestData[3], label: labelRight},
+                  ],
+                  itemStyle: {
+                    normal: {
+        　　　　　　　　//这里是重点
+                        color: function(params) {
+                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
+                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                }
+              }
+          ]
+      };
+        bar_chart.setOption(bar_options);
+    });
+    </script>
+    
+
+<blockquote>
+<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
+</blockquote>
+<h2 id="第一个五年目标（2021年3月-2025年12月）"><a href="#第一个五年目标（2021年3月-2025年12月）" class="headerlink" title="第一个五年目标（2021年3月-2025年12月）"></a>第一个五年目标（2021年3月-2025年12月）</h2><ul>
+<li>累计净投入 <strong>116,000</strong> 元；</li>
+</ul>
+
+    <div id="echarts4714" style="width: 100%;height: 568px;margin: 0 auto"></div>
+    <div id="echarts2943" style="width: 100%;height: 568px;margin: 0 auto"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart2 = echarts.init(document.getElementById('echarts4714'));
+    var total_chart_id_chart = echarts.init(document.getElementById('echarts2943'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var records = data.data;
+        var len = records.length;
+        var newestData = records[len - 1];
+        
+        var options = {
+          tooltip: {
+            formatter: '{a} <br/>{b} : {c}%'
+          },
+          series: [
+            {
+              name: '累计净投入进度',
+              type: 'gauge',
+              detail: {
+                valueAnimation: true,
+                formatter: '{value} %',
+                color: '#fd666d',
+              },
+              data: [{value: (newestData[2] / 116000.00 * 100).toFixed(2), name: '累计净投入进度'}],
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: [
+                    [1,new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                      {
+                        offset: 0.1,
+                        color: "#FFC600"
+                      },
+                      {
+                        offset: 0.6,
+                        color: "#30D27C"
+                      },
+                      {
+                        offset: 1,
+                        color: "#0B95FF"
+                      }
+                    ])
+                  ]
+                ]
+                  
+                }
+             }
+            }
+          ]
+        };
+
+        var total_chart_id_options = {
+          series: [{
+              type: 'gauge',
+              axisLine: {
+                  lineStyle: {
+                      width: 30,
+                      color: [
+                          [0.3, '#67e0e3'],
+                          [0.7, '#37a2da'],
+                          [1, '#fd666d']
+                      ]
+                  }
+              },
+              pointer: {
+                  itemStyle: {
+                      color: 'auto'
+                  }
+              },
+              axisTick: {
+                  distance: -30,
+                  length: 8,
+                  lineStyle: {
+                      color: '#fff',
+                      width: 2
+                  }
+              },
+              splitLine: {
+                  distance: -30,
+                  length: 30,
+                  lineStyle: {
+                      color: '#fff',
+                      width: 4
+                  }
+              },
+              axisLabel: {
+                  color: 'auto',
+                  distance: 40,
+                  fontSize: 20
+              },
+              detail: {
+                  valueAnimation: true,
+                  formatter: '{value} %',
+                  color: 'auto'
+              },
+              data: [{
+                  value: (newestData[3] / 175000 * 100).toFixed(2),
+                  name: '总资产进度'
+              }]
+          }]
+      };
+        
+        myChart2.setOption(options);
+        total_chart_id_chart.setOption(total_chart_id_options);
+    });
+    </script>
+    
 ]]></content>
       <categories>
         <category>投资理财</category>
