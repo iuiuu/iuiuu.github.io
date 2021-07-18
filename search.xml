@@ -1805,23 +1805,6 @@
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：2031-2035年定投执行计划</title>
-    <url>/2021/07/10/investment-plan-2031-2035/</url>
-    <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第三个五年行动计划——2031-2035年定投计划。</p>
-<p>本计划目标：净投入达 120,000 元。</p>
-<p>计划具体内容为 2031 - 2035 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
-<p>（未制定）</p>
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-        <tag>计划</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>退休金计划：三十年一千万参考</title>
     <url>/2021/07/18/investment-plan-reference/</url>
     <content><![CDATA[<p>本参考计划根据 <a href="https://www.calculator.net/investment-calculator.html?ctype=returnrate&ctargetamountv=10000000&cstartingprinciplev=0&cyearsv=30&cinterestratev=23&ccompound=annually&ccontributeamountv=2000&cadditionat1=end&ciadditionat1=monthly&printit=0">投资计算器</a> 生成，这里假设你的：</p>
@@ -2114,6 +2097,23 @@
       </tags>
   </entry>
   <entry>
+    <title>退休金计划：2031-2035年定投执行计划</title>
+    <url>/2021/07/10/investment-plan-2031-2035/</url>
+    <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第三个五年行动计划——2031-2035年定投计划。</p>
+<p>本计划目标：净投入达 120,000 元。</p>
+<p>计划具体内容为 2031 - 2035 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
+<p>（未制定）</p>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
+        <tag>计划</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>退休金计划：每月定投基金2000元，30年后资产总额达到多少？</title>
     <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
     <content><![CDATA[<h2 id="突发奇想"><a href="#突发奇想" class="headerlink" title="突发奇想"></a>突发奇想</h2><p>前段时间突发奇想，如果每个月拿出2000元用于投资理财，如定投基金，那30年后资产总额会达到多少呢？</p>
@@ -2163,14 +2163,14 @@
 <p>2046-2050年定投执行计划</p>
 <p>2051年（1月、2月）定投执行计划</p>
 <h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts6375" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts124" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts5419" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts1884" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts6375'));
-    var bar_chart = echarts.init(document.getElementById('echarts124'));
+    var myChart = echarts.init(document.getElementById('echarts5419'));
+    var bar_chart = echarts.init(document.getElementById('echarts1884'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -2270,14 +2270,14 @@
 <li>累计净投入 <strong>116,000</strong> 元；</li>
 </ul>
 
-    <div id="echarts3809" style="width: 100%;height: 568px;margin: 0 auto"></div>
-    <div id="echarts7298" style="width: 100%;height: 568px;margin: 0 auto"></div>
+    <div id="echarts5890" style="width: 100%;height: 568px;margin: 0 auto"></div>
+    <div id="echarts3983" style="width: 100%;height: 568px;margin: 0 auto"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart2 = echarts.init(document.getElementById('echarts3809'));
-    var total_chart_id_chart = echarts.init(document.getElementById('echarts7298'));
+    var myChart2 = echarts.init(document.getElementById('echarts5890'));
+    var total_chart_id_chart = echarts.init(document.getElementById('echarts3983'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -2395,18 +2395,18 @@
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：计划进度</title>
+    <title>退休金计划：进度看板</title>
     <url>/2021/07/17/investment-plan-progress/</url>
     <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
-
-    <div id="echarts7426" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts4794" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+<h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
+    <div id="echarts8069" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts3552" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts7426'));
-    var bar_chart = echarts.init(document.getElementById('echarts4794'));
+    var myChart = echarts.init(document.getElementById('echarts8069'));
+    var bar_chart = echarts.init(document.getElementById('echarts3552'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -2502,18 +2502,13 @@
 <blockquote>
 <p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
 </blockquote>
-<h2 id="第一个五年目标（2021年3月-2025年12月）"><a href="#第一个五年目标（2021年3月-2025年12月）" class="headerlink" title="第一个五年目标（2021年3月-2025年12月）"></a>第一个五年目标（2021年3月-2025年12月）</h2><ul>
-<li>累计净投入 <strong>116,000</strong> 元；</li>
-</ul>
-
-    <div id="echarts4714" style="width: 100%;height: 568px;margin: 0 auto"></div>
-    <div id="echarts2943" style="width: 100%;height: 568px;margin: 0 auto"></div>
+<h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
+    <div id="echarts3697" style="width: 100%;height: 200px;margin: 0 auto"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart2 = echarts.init(document.getElementById('echarts4714'));
-    var total_chart_id_chart = echarts.init(document.getElementById('echarts2943'));
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts3697'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -2522,100 +2517,106 @@
         var len = records.length;
         var newestData = records[len - 1];
         
-        var options = {
-          tooltip: {
-            formatter: '{a} <br/>{b} : {c}%'
+        var dashboard_chart_id_options = {
+          title: {
+            name: "textShadowOffsetXt",
+            text: "",
+            textStyle: {
+              color: "#fff"
+            }
           },
+          backgroundColor: "#17326b",
+          grid: {
+            left: "10",
+            top: "10",
+            right: "10",
+            bottom: "10",
+            containLabel: true
+          },
+          xAxis: {
+            type: 'value',
+            splitLine: { show: false },
+            axisLabel: { show: false },
+            axisTick: { show: false },
+            axisLine: { show: false }
+          },
+          yAxis: [
+            {
+              type: 'category',
+              axisTick: { show: false },
+              axisLine: { show: false },
+              axisLabel: {
+                color: "black",
+                fontSize: 14,
+                textStyle: {
+                  color: '#fff'
+                }
+              },
+              data: ["今年净投入", "一五净投入", "一五总资产", "计划总资产"],
+              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
+              inverse: true
+            },
+            {
+              type: 'category',
+              axisTick: { show: false },
+              axisLine: { show: false },
+              axisLabel: {
+                color: "black",
+                fontSize: 14,
+                textStyle: {
+                  color: '#fff'
+                }
+              },
+              data: ['20,000', '116,000', '170,000', '10,000,000'],
+              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
+              inverse: true
+            }
+          ],
           series: [
             {
-              name: '累计净投入进度',
-              type: 'gauge',
-              detail: {
-                valueAnimation: true,
-                formatter: '{value} %',
-                color: '#fd666d',
-              },
-              data: [{value: (newestData[2] / 116000.00 * 100).toFixed(2), name: '累计净投入进度'}],
-              axisLine: {
+              name: "%",
+              type: "bar",
+              barWidth: 19,
+              data: [(newestData[2] / 20000 * 100).toFixed(2), (newestData[2] / 116000 * 100).toFixed(2), (newestData[3] / 170000 * 100).toFixed(2), (newestData[3] / 10000000 * 100).toFixed(2)],
+              label: {
                 show: true,
-                lineStyle: {
-                  color: [
-                    [1,new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                      {
-                        offset: 0.1,
-                        color: "#FFC600"
-                      },
-                      {
-                        offset: 0.6,
-                        color: "#30D27C"
-                      },
-                      {
-                        offset: 1,
-                        color: "#0B95FF"
-                      }
-                    ])
-                  ]
-                ]
-                  
+                //position    : 'middle',
+                offset: [20, 2],
+                formatter: '{c}{a}',
+                color: '#fff',
+                fontSize: 15
+              },
+              barCategoryGap: 20,
+              itemStyle: {
+                normal: {
+                  barBorderRadius: 10,
+                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+                    offset: 0,
+                    color: '#fdc830'
+                  }, {
+                    offset: 1,
+                    color: '#f37335'
+                  }]),
                 }
-             }
+              },
+              zlevel: 1
+        
+            }, {
+              name: "进度条背景",
+              type: "bar",
+              barGap: "-100%",
+              barWidth: 19,
+              data: [100, 100, 100, 100],
+              color: "#2e5384",
+              itemStyle: {
+                normal: {
+                  barBorderRadius: 10
+                }
+              },
             }
           ]
         };
-
-        var total_chart_id_options = {
-          series: [{
-              type: 'gauge',
-              axisLine: {
-                  lineStyle: {
-                      width: 30,
-                      color: [
-                          [0.3, '#67e0e3'],
-                          [0.7, '#37a2da'],
-                          [1, '#fd666d']
-                      ]
-                  }
-              },
-              pointer: {
-                  itemStyle: {
-                      color: 'auto'
-                  }
-              },
-              axisTick: {
-                  distance: -30,
-                  length: 8,
-                  lineStyle: {
-                      color: '#fff',
-                      width: 2
-                  }
-              },
-              splitLine: {
-                  distance: -30,
-                  length: 30,
-                  lineStyle: {
-                      color: '#fff',
-                      width: 4
-                  }
-              },
-              axisLabel: {
-                  color: 'auto',
-                  distance: 40,
-                  fontSize: 20
-              },
-              detail: {
-                  valueAnimation: true,
-                  formatter: '{value} %',
-                  color: 'auto'
-              },
-              data: [{
-                  value: (newestData[3] / 175000 * 100).toFixed(2),
-                  name: '总资产进度'
-              }]
-          }]
-      };
-        
-        myChart2.setOption(options);
-        total_chart_id_chart.setOption(total_chart_id_options);
+        dashboard_chart_id_chart.setOption(dashboard_chart_id_options);
     });
     </script>
     
