@@ -1,879 +1,919 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>退休金计划：2021-2025年定投执行计划</title>
-    <url>/2021/07/10/investment-plan-2021-2025/</url>
-    <content><![CDATA[<p>本计划是根据 <strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 而制定的第一个五年行动计划——2021-2025年定投计划。</p>
-<p>本计划目标：净投入达 120,000 元。</p>
-<p>计划具体内容为 2021 - 2025 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
-<h2 id="2021年定投计划"><a href="#2021年定投计划" class="headerlink" title="2021年定投计划"></a>2021年定投计划</h2><table>
+    <title>CentOS7下安装JDK1.8</title>
+    <url>/2019/08/30/how-to-install-jdk-1-8-on-centos-7/</url>
+    <content><![CDATA[<h2 id="安装Java-幵发工具包（JDK）"><a href="#安装Java-幵发工具包（JDK）" class="headerlink" title="安装Java 幵发工具包（JDK）"></a>安装Java 幵发工具包（JDK）</h2><span id="more"></span>
+<ol>
+<li><p>从 Oracle 官网下载 1.8 版本的<a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">安装包 </a>（网速慢的同学请移步<a href="https://pan.baidu.com/s/13-dtHfGUxb9c2aFzHOqqwg">国内镜像</a>，提取码为 <strong>rjqx</strong>），本次安装的JDK版本为 <code>jdk-8u221-linux-x64.tar.gz</code>；</p>
+</li>
+<li><p>上传至服务器（系统为 CentOS7.3），存放目录为 <code>/home</code>；</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">scp ~/Downloads/jdk-8u221-linux-x64.tar.gz root@192.168.3.67:/home</span><br></pre></td></tr></table></figure></li>
+<li><p>新建JDK安装目录 <code>/usr/local/java</code>，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /usr/local/java</span><br></pre></td></tr></table></figure></li>
+<li><p>解压文件 <code>jdk-8u221-linux-x64.tar.gz</code> 至安装目录 <code>/usr/local/java</code>，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -zxvf jdk-8u221-linux-x64.tar.gz -C /usr/local/java/</span><br></pre></td></tr></table></figure></li>
+<li><p>安装完成之后需要配置环境变量，将以下代码追加到文件 <code>profile</code> 末尾；</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> JAVA_HOME为JDK安装目录</span></span><br><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_221</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>具体操作如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[johnson@localhost home]# vim /etc/profile</span><br><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_221</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span><br></pre></td></tr></table></figure></li>
+<li><p>执行命令 <code>source /etc/profile</code> 使刚刚新加的环境变量生效；</p>
+</li>
+<li><p>执行命令 <code>java -version</code> 检测安装是否成功，若安装并配置成功，可以看到以输出；如果得到诸如“-bash: java: 未找到命令 ”就需要退回去反复检査安装和配置步骤是否正确。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[johnson@localhost home]# java -version</span><br><span class="line">java version &quot;1.8.0_221&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_221-b11)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.221-b11, mixed mode)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><p>如果 CentOS 系统中集成了 OpenJDK，那么需要先卸载自带的 OpenJDK 才能安装标准版 JDK，卸载具体步骤如下：</p>
+<ol>
+<li><p>系统终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -qa | grep java</span><br></pre></td></tr></table></figure>
+
+<p>若系统中集成了 OpenJDK，会出现 xxxx_openjdk_xxxx 的信息；</p>
+</li>
+<li><p>删除 OpenJDK，在终端输入以下命令即可删除成功：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -e –-nodeps xxxx_openjdk_xxxx </span><br></pre></td></tr></table></figure>
+
+<p>也可以把上面两条命令合并成一条命令，一次性删除成功：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -e --nodeps rpm -qa | grep java</span><br></pre></td></tr></table></figure>
+
+<p>或者使用以下卸载命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum -y remove xxxx_openjdk_xxxx</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Java-术语说明"><a href="#Java-术语说明" class="headerlink" title="Java 术语说明"></a>Java 术语说明</h2><p>表 2-1 Java 术语</p>
+<table>
 <thead>
 <tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
+<th>术语名</th>
+<th>缩写</th>
+<th>解释</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>2021/3/31</td>
-<td>1,000</td>
-<td>2021/3/31</td>
-<td>1,000</td>
+<td>Java Development Kit</td>
+<td>JDK</td>
+<td>编写 Java 程序的程序员使用的软件</td>
+</tr>
+<tr>
+<td>Java Runtime Environment</td>
+<td>JRE</td>
+<td>运行 Java 程序的用户使用的软件</td>
+</tr>
+<tr>
+<td>Server JRE</td>
+<td>–</td>
+<td>在服务器上运行 Java 程序的软件</td>
+</tr>
+<tr>
+<td>Standard Edition</td>
+<td>SE</td>
+<td>用于桌面或简单服务器应用的 Java 平台</td>
+</tr>
+<tr>
+<td>Enterprise Edition</td>
+<td>EE</td>
+<td>用于复杂服务器应用的 Java 平台</td>
+</tr>
+<tr>
+<td>Micro Edition</td>
+<td>ME</td>
+<td>用于手机和其他小型设备的 Java 平台</td>
+</tr>
+<tr>
+<td>Java FX</td>
+<td>–</td>
+<td>用于图形化用户界面的一个替代工具包，在 Oracle 的 Java SE 发布版本中提供</td>
+</tr>
+<tr>
+<td>OpenJDK</td>
+<td>–</td>
+<td>JavaSE的一个免费幵源实现，不包含浏览器集成或JavaFX</td>
+</tr>
+<tr>
+<td>Java 2</td>
+<td>J2</td>
+<td>一个过时的术语，用于描述 1998 年 〜 2006 年之间的 Java 版本</td>
+</tr>
+<tr>
+<td>Software Development Kit</td>
+<td>SDK</td>
+<td>一个过时的术语， 用于描述 1998 年 ~ 2006 年之间的 JDK</td>
+</tr>
+<tr>
+<td>Update</td>
+<td>u</td>
+<td>Oracle 的术语， 表示 bug 修正版本</td>
+</tr>
+<tr>
+<td>NetBeans</td>
+<td>–</td>
+<td>Oracle 的集成开发环境</td>
+</tr>
+</tbody></table>
+<p>摘至《Java核心技术 卷I 基础知识（原书第十版）》</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+        <tag>JAVA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL多表更新（关联表更新）</title>
+    <url>/2019/08/18/mysql-update-multiple-tables-with-one-query/</url>
+    <content><![CDATA[<p>在开发过程中，有时会遇到需要将某张表的字段值根据条件动态地更新到另一张表字段的问题，即通过一张表的字段修改另一张关联表中的内容。比如，存在两张表A（表名：test_a）、B（表名：test_b），他们的表结构如下：</p>
+<span id="more"></span>
+
+<p><strong>表A（test_a）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>user_id</th>
+<th>dept_id</th>
+<th>update_time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>34242</td>
+<td>313</td>
 <td></td>
 </tr>
 <tr>
-<td>2021/4/10</td>
-<td>1,000</td>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td>补投</td>
-</tr>
-<tr>
-<td>2021/4/24</td>
-<td>1,000</td>
-<td>2021/6/5</td>
-<td>1,000</td>
-<td>补投</td>
-</tr>
-<tr>
-<td>2021/5/10</td>
-<td>1,000</td>
-<td>2021/5/10</td>
-<td>1,000</td>
+<td>2</td>
+<td>35322</td>
+<td>320</td>
 <td></td>
 </tr>
 <tr>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/6/10</td>
-<td>1,000</td>
-<td>2021/6/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/6/24</td>
-<td>1,000</td>
-<td>2021/6/24</td>
-<td>2,000</td>
-<td>每月2000，故3月补投一笔</td>
-</tr>
-<tr>
-<td>2021/7/10</td>
-<td>1,000</td>
-<td>2021/7/12</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
+<td>3</td>
+<td>35639</td>
+<td>321</td>
 <td></td>
 </tr>
 </tbody></table>
-<h2 id="2022年定投计划"><a href="#2022年定投计划" class="headerlink" title="2022年定投计划"></a>2022年定投计划</h2><table>
+<p><strong>表B（test_b）：</strong></p>
+<table>
 <thead>
 <tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
+<th>id</th>
+<th>user_id</th>
+<th>patient_id</th>
+<th>dept_id</th>
+<th>create_time</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>2022/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td>1</td>
+<td>34242</td>
+<td>342</td>
+<td>0</td>
+<td>2018-05-23 09:33:45</td>
 </tr>
 <tr>
-<td>2022/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td>2</td>
+<td>35322</td>
+<td>365</td>
+<td>0</td>
+<td>2018-05-24 00:13:05</td>
 </tr>
 <tr>
-<td>2022/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td>3</td>
+<td>35639</td>
+<td>398</td>
+<td>0</td>
+<td>2018-05-24 00:43:18</td>
 </tr>
 </tbody></table>
-<h2 id="2023年定投计划"><a href="#2023年定投计划" class="headerlink" title="2023年定投计划"></a>2023年定投计划</h2><table>
+<p>现在我们需要将表A的 <em>dept_id</em> 字段值根据 <em>user_id</em> 字段同步到表B的 <em>dept_id</em> 字段中，即用表A中的 <em>dept_id</em> 字段数据去更新表B中的 <em>dept_id</em> 字段，条件是表A的 <em>user_id</em> 字段值与表B的 <em>user_id</em> 字段值相等时进行更新。</p>
+<p>在MySQL中我们有几种方法可以做到：</p>
+<p>方法一：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id </span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br></pre></td></tr></table></figure>
+
+<p>方法二：（通过 INNER JOIN）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
+
+<p>方法三：（通过 LEFT JOIN）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
+
+<p>方法四：（通过子查询）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_b b </span><br><span class="line"><span class="keyword">SET</span> dept_id <span class="operator">=</span> ( <span class="keyword">SELECT</span> dept_id <span class="keyword">FROM</span> test_a <span class="keyword">WHERE</span> user_id <span class="operator">=</span> b.user_id );</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码片断都是在两张表之间做关联，但只更新其中一张表的数据。其实，除了更新其中一张表的数据外，方法一、方法二和方法三是可以同时更新两张表的数据，如：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 以下代码无实际意义，目的是方便记录</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法一</span></span><br><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法二：（通过 INNER JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法三：（通过 LEFT JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b</span><br><span class="line"><span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id</span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br></pre></td></tr></table></figure>
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis根据通配符批量删除Key</title>
+    <url>/2019/09/03/redis-batch-delete/</url>
+    <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
+<blockquote>
+<p>Redis的 <code>del</code> 命令支持删除给定的一个或多个 key，并返回被删除 key 的数量。如命令 <code>del key1 key2 key3</code>。</p>
+</blockquote>
+<p>比如要删除所有以 WxMpSessionKey 开头的 Key，可以使用如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[redis@iztz9ploifbvce ~]# redis-cli -h 192.168.182.227 -p 1379 keys &quot;WxMpSessionKey*&quot; |xargs redis-cli -h 192.168.182.227 -p 1379 del</span><br><span class="line">(integer) 2674</span><br></pre></td></tr></table></figure>
+
+<p>如果连接 Redis 的 HOST 为 127.0.0.1，端口号也为默认的 6379，则以上的命令可以简写为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli keys &quot;WxMpSessionKey*&quot; |xargs redis-cli del</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Git常用命令】查看/修改远程仓库地址</title>
+    <url>/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</url>
+    <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Git修改远程仓库地址"><a href="#Git修改远程仓库地址" class="headerlink" title="Git修改远程仓库地址"></a>Git修改远程仓库地址</h2><p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote set-url origin new.git.url/here</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将远程仓库地址改为 HTTPS 协议</span></span><br><span class="line">git remote set-url origin https://gogs.linjiangxiong.com/ljx/devops-doc.git</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看修改后的地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用Markdown优雅地编写接口文档（排版示例）</title>
+    <url>/2019/07/24/markdown-api-document/</url>
+    <content><![CDATA[<blockquote>
+<p>本排版示例整理于两年前，当时是用来在公司推广使用 Markdown 编写开发文档的，现在稍微作了些修改，去掉一些与公司接口相关的信息。希望该示例能够对小伙伴们在以后编写文档时有所帮助，也希望能够得到大家关于文档排版方面的建议。<br>使用 Markdown 编写接口文档最主要的好处，一个是可以让你更专注于内容本身，另外一个是 Markdown编写的文档能用代码管理工具（Git、SVN等）进行有效的版本管理（如版本对比）。</p>
+</blockquote>
+<span id="more"></span>
+
+<p>本示例显示效果如下：（<a href="https://github.com/iuiuu/markdown-api-document">源文件链接：https://github.com/iuiuu/markdown-api-document</a>）</p>
+<h1 id="AA公司BC平台接口文档-v3-2-0"><a href="#AA公司BC平台接口文档-v3-2-0" class="headerlink" title="AA公司BC平台接口文档 v3.2.0"></a>AA公司BC平台接口文档 v3.2.0</h1><h2 id="1-规范说明"><a href="#1-规范说明" class="headerlink" title="1 规范说明"></a>1 规范说明</h2><h3 id="1-1-通信协议"><a href="#1-1-通信协议" class="headerlink" title="1.1 通信协议"></a>1.1 通信协议</h3><p>HTTPS协议</p>
+<h3 id="1-2-请求方法"><a href="#1-2-请求方法" class="headerlink" title="1.2 请求方法"></a>1.2 请求方法</h3><p>所有接口只支持POST方法发起请求。</p>
+<h3 id="1-3-字符编码"><a href="#1-3-字符编码" class="headerlink" title="1.3 字符编码"></a>1.3 字符编码</h3><p>HTTP通讯及报文BASE64编码均采用UTF-8字符集编码格式。</p>
+<h3 id="1-4-格式说明"><a href="#1-4-格式说明" class="headerlink" title="1.4 格式说明"></a>1.4 格式说明</h3><p>元素出现要求说明：</p>
+<table>
 <thead>
 <tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
+<th align="center">符号</th>
+<th align="left">说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>2023/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center">R</td>
+<td align="left">报文中该元素必须出现（Required）</td>
 </tr>
 <tr>
-<td>2023/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center">O</td>
+<td align="left">报文中该元素可选出现（Optional）</td>
 </tr>
 <tr>
-<td>2023/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center">C</td>
+<td align="left">报文中该元素在一定条件下出现（Conditional）</td>
 </tr>
 </tbody></table>
-<h2 id="2024年定投计划"><a href="#2024年定投计划" class="headerlink" title="2024年定投计划"></a>2024年定投计划</h2><table>
+<h3 id="1-5-报文规范说明"><a href="#1-5-报文规范说明" class="headerlink" title="1.5 报文规范说明"></a>1.5 报文规范说明</h3><ol>
+<li><p>报文规范仅针对交易请求数据进行描述；  </p>
+</li>
+<li><p>报文规范中请求报文的内容为Https请求报文中RequestData值的明文内容；</p>
+</li>
+<li><p>报文规范分为请求报文和响应报文。请求报文描述由发起方，响应报文由报文接收方响应。</p>
+</li>
+</ol>
+<h3 id="1-6-请求报文结构"><a href="#1-6-请求报文结构" class="headerlink" title="1.6 请求报文结构"></a>1.6 请求报文结构</h3><p>接口只接收两个参数 <strong>RequestData</strong> 和 <strong>SignData</strong> ，其中RequestData的值为请求内容，SignData的值为签名内容。</p>
+<h4 id="1-6-1-参数说明"><a href="#1-6-1-参数说明" class="headerlink" title="1.6.1 参数说明"></a>1.6.1 参数说明</h4><p><strong>RequestData（请求内容）：</strong> 其明文为每次请求的具体参数，采用 JSON 格式，依次经过 DES 加密（以UTF-8编码、BASE64编码输出结果）和 URLEncode 后，作为 RequestData 的值。  </p>
+<p><strong>SignData（签名内容）：</strong> 请求参数（明文）的MD5加密字符串，用于校验RequestData是否合法。</p>
+<h4 id="1-6-2-请求内容（RequestData）明文结构说明"><a href="#1-6-2-请求内容（RequestData）明文结构说明" class="headerlink" title="1.6.2 请求内容（RequestData）明文结构说明"></a>1.6.2 请求内容（RequestData）明文结构说明</h4><p>采用JSON格式，其中包含Header（公有参数）、Body（私有参数）节点：</p>
+<table>
 <thead>
 <tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
+<th align="left">名称</th>
+<th align="left">描述</th>
+<th align="left">备注</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>2024/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">公共参数</td>
+<td align="left">每个接口都包含的通用参数，以JSON格式存放在Header属性</td>
+<td align="left">详见以下公共参数说明</td>
 </tr>
 <tr>
-<td>2024/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">私有参数</td>
+<td align="left">每个接口特有的参数，以JSON格式存放在Body属性</td>
+<td align="left">详见每个接口定义</td>
 </tr>
 </tbody></table>
-<h2 id="2025年定投计划"><a href="#2025年定投计划" class="headerlink" title="2025年定投计划"></a>2025年定投计划</h2><table>
+<p><strong>公共参数说明：</strong></p>
+<p>公共参数（Header）是用于标识产品及接口鉴权的参数，每次请求均需要携带这些参数：</p>
+<table>
 <thead>
 <tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
+<th align="left">参数名称</th>
+<th align="left">类型</th>
+<th align="left">出现要求</th>
+<th align="left">描述</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>2025/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">Token</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">用户登录后token，没有登录则为空字符串</td>
 </tr>
 <tr>
-<td>2025/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">Version</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">接口版本号</td>
 </tr>
 <tr>
-<td>2025/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">SystemId</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">机构号，请求的系统Id</td>
 </tr>
 <tr>
-<td>2025/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">Timestamp</td>
+<td align="left">long</td>
+<td align="left">R</td>
+<td align="left">当前UNIX时间戳</td>
+</tr>
+</tbody></table>
+<h4 id="1-6-3-校验流程："><a href="#1-6-3-校验流程：" class="headerlink" title="1.6.3 校验流程："></a>1.6.3 校验流程：</h4><p>服务端接收到请求后首先对RequestData进行DES解密出JSON字符串，然后对JSON字符串进行MD5加密，加密后的值与请求中的SignData值进行对比，如对比通过，视为合法请求，否则视为非法请求。</p>
+<p><strong>DES加密/解密函数示例：</strong></p>
+<p>C#版：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// 进行DES加密。</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">/// &lt;param name=&quot;decryptString&quot;&gt;要加密的字符串。&lt;/param&gt;</span><br><span class="line">/// &lt;param name=&quot;secretKey&quot;&gt;密钥，且必须为8位。&lt;/param&gt;</span><br><span class="line">/// &lt;returns&gt;以Base64格式返回的加密字符串。&lt;/returns&gt;</span><br><span class="line">public static string DesEncrypt(string decryptString, string secretKey)</span><br><span class="line">&#123;</span><br><span class="line">    using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())</span><br><span class="line">    &#123;</span><br><span class="line">        byte[] inputByteArray = Encoding.UTF8.GetBytes(decryptString);</span><br><span class="line">        des.Key = Encoding.ASCII.GetBytes(secretKey);</span><br><span class="line">        des.IV = Encoding.ASCII.GetBytes(secretKey);</span><br><span class="line">        MemoryStream ms = new MemoryStream();</span><br><span class="line">        using (CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(), CryptoStreamMode.Write))</span><br><span class="line">        &#123;</span><br><span class="line">            cs.Write(inputByteArray, 0, inputByteArray.Length);</span><br><span class="line">            cs.FlushFinalBlock();</span><br><span class="line">            cs.Close();</span><br><span class="line">        &#125;</span><br><span class="line">        string str = Convert.ToBase64String(ms.ToArray());</span><br><span class="line">        ms.Close();</span><br><span class="line">        return str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// 进行DES解密。</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">/// &lt;param name=&quot;encryptedString&quot;&gt;要解密的以Base64&lt;/param&gt;</span><br><span class="line">/// &lt;param name=&quot;secretKey&quot;&gt;密钥，且必须为8位。&lt;/param&gt;</span><br><span class="line">/// &lt;returns&gt;已解密的字符串。&lt;/returns&gt;</span><br><span class="line">public static string DesDecrypt(string encryptedString, string secretKey)</span><br><span class="line">&#123;</span><br><span class="line">    byte[] inputByteArray = Convert.FromBase64String(encryptedString);</span><br><span class="line">    using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())</span><br><span class="line">    &#123;</span><br><span class="line">        des.Key = Encoding.ASCII.GetBytes(secretKey);</span><br><span class="line">        des.IV = Encoding.ASCII.GetBytes(secretKey);</span><br><span class="line">        MemoryStream ms = new MemoryStream();</span><br><span class="line">        using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write))</span><br><span class="line">        &#123;</span><br><span class="line">            cs.Write(inputByteArray, 0, inputByteArray.Length);</span><br><span class="line">            cs.FlushFinalBlock();</span><br><span class="line">            cs.Close();</span><br><span class="line">        &#125;</span><br><span class="line">        string str = Encoding.UTF8.GetString(ms.ToArray());</span><br><span class="line">        ms.Close();</span><br><span class="line">        return str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>JAVA版：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/* DES解密 */</span><br><span class="line">public static String decrypt(String message, String key) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">    byte[] bytesrc = Base64.decode(message);</span><br><span class="line">    //convertHexString(message);</span><br><span class="line">    Cipher cipher = Cipher.getInstance(&quot;DES/CBC/PKCS5Padding&quot;);</span><br><span class="line">    DESKeySpec desKeySpec = new DESKeySpec(key.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">    SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&quot;DES&quot;);</span><br><span class="line">    SecretKey secretKey = keyFactory.generateSecret(desKeySpec);</span><br><span class="line">    IvParameterSpec iv = new IvParameterSpec(key.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">    cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);</span><br><span class="line">    byte[] retByte = cipher.doFinal(bytesrc);</span><br><span class="line">    return new String(retByte);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/* DES加密 */</span><br><span class="line">public static byte[] encrypt(String message, String key) throws Exception &#123;</span><br><span class="line">    Cipher cipher = Cipher.getInstance(&quot;DES/CBC/PKCS5Padding&quot;);</span><br><span class="line">    DESKeySpec desKeySpec = new DESKeySpec(key.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">    SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&quot;DES&quot;);</span><br><span class="line">    SecretKey secretKey = keyFactory.generateSecret(desKeySpec);</span><br><span class="line">    IvParameterSpec iv = new IvParameterSpec(key.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">    cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv);</span><br><span class="line">    return cipher.doFinal(message.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-6-4-DES密钥"><a href="#1-6-4-DES密钥" class="headerlink" title="1.6.4 DES密钥"></a>1.6.4 DES密钥</h4><p>测试环境：az2ih1uY</p>
+<p>生产环境：另外提供。</p>
+<h4 id="1-6-5-请求报文示例"><a href="#1-6-5-请求报文示例" class="headerlink" title="1.6.5 请求报文示例"></a>1.6.5 请求报文示例</h4><p>请求内容明文：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Header&quot;:&#123;</span><br><span class="line">        &quot;Token&quot;:&quot;2366CF921FAD44CCBB07FF9CD02FC90E&quot;,</span><br><span class="line">        &quot;Version&quot;:&quot;3.2.0&quot;,</span><br><span class="line">        &quot;SystemId&quot;:100,</span><br><span class="line">        &quot;Timestamp&quot;:1502870664</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;Body&quot;:&#123;</span><br><span class="line">        &quot;Mobile&quot;:&quot;18520322032&quot;,</span><br><span class="line">        &quot;Password&quot;:&quot;acb000000&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>请求报文示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url?RequestData=UFAYIRF21XzGoaAaEU54qoDBYaFkT2KbRpWxKZuqqltApdIneF7AjlEArPLsg3%2Fo1Pu7FHFmsKZn%0A9KJb%2BGuwx0P%2F3jzv2TgwUpVtgwEdfd0vIRfqEF4jCouldaxxVBjbHvd%2F08pUoYJDNZJLvNrJ%2BsK4%0A79de92T0Cyu4hKNMUPtVI7Tp0IC%2BBw%3D%3D&amp;SignData=0865c7d625f90d3bb5457f5d9ac3725d</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-7-响应报文结构"><a href="#1-7-响应报文结构" class="headerlink" title="1.7 响应报文结构"></a>1.7 响应报文结构</h3><h4 id="1-7-1-结构说明"><a href="#1-7-1-结构说明" class="headerlink" title="1.7.1 结构说明"></a>1.7.1 结构说明</h4><p>所有接口响应均采用JSON格式，如无特殊说明，每次请求的返回值中，都包含下列字段：</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数名称</th>
+<th align="left">类型</th>
+<th align="left">出现要求</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Code</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">响应码，代码定义请见“附录A 响应吗说明”</td>
 </tr>
 <tr>
-<td>2025/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">Msg</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">响应描述</td>
 </tr>
 <tr>
-<td>2025/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">Data</td>
+<td align="left">object</td>
+<td align="left">R</td>
+<td align="left">每个接口特有的参数，详见每个接口定义</td>
+</tr>
+</tbody></table>
+<h4 id="1-7-2-响应报文示例"><a href="#1-7-2-响应报文示例" class="headerlink" title="1.7.2 响应报文示例"></a>1.7.2 响应报文示例</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Code&quot;:200,</span><br><span class="line">    &quot;Msg&quot;:&quot;调用成功&quot;,</span><br><span class="line">    &quot;Data&quot;:&#123;</span><br><span class="line">        &quot;Channel&quot;:&quot;A10086&quot;,</span><br><span class="line">        &quot;Type&quot;:7004</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="2-接口定义"><a href="#2-接口定义" class="headerlink" title="2. 接口定义"></a>2. 接口定义</h2><h3 id="2-1-密码登录"><a href="#2-1-密码登录" class="headerlink" title="2.1 密码登录"></a>2.1 密码登录</h3><ul>
+<li><strong>接口说明：</strong> 密码登录</li>
+<li><strong>接口地址：</strong> /account/signin</li>
+</ul>
+<h4 id="2-1-1-请求参数"><a href="#2-1-1-请求参数" class="headerlink" title="2.1.1 请求参数"></a>2.1.1 请求参数</h4><table>
+<thead>
+<tr>
+<th align="left">参数名称</th>
+<th align="left">类型</th>
+<th align="left">出现要求</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Header</td>
+<td align="left">&nbsp;</td>
+<td align="left">R</td>
+<td align="left">请求报文头</td>
 </tr>
 <tr>
-<td>2025/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">&emsp;Token</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">用户登录后token，没有登录则为空字符串</td>
 </tr>
 <tr>
-<td>2025/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">&emsp;Version</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">接口版本号</td>
 </tr>
 <tr>
-<td>2025/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">&emsp;SystemId</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">机构号，请求的系统Id</td>
 </tr>
 <tr>
-<td>2025/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">&emsp;Timestamp</td>
+<td align="left">long</td>
+<td align="left">R</td>
+<td align="left">当前UNIX时间戳</td>
 </tr>
 <tr>
-<td>2025/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">Body</td>
+<td align="left">&nbsp;</td>
+<td align="left">R</td>
+<td align="left">&nbsp;</td>
 </tr>
 <tr>
-<td>2025/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">&emsp;Mobile</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">手机号</td>
 </tr>
 <tr>
-<td>2025/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">&emsp;Password</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">密码</td>
+</tr>
+</tbody></table>
+<p>请求示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Header&quot;:&#123;</span><br><span class="line">        &quot;Token&quot;:&quot;&quot;,</span><br><span class="line">        &quot;Version&quot;:&quot;3.2.0&quot;,</span><br><span class="line">        &quot;SystemId&quot;:100,</span><br><span class="line">        &quot;Timestamp&quot;:1502870664</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;Body&quot;:&#123;</span><br><span class="line">        &quot;Mobile&quot;:&quot;18520322032&quot;,</span><br><span class="line">        &quot;Password&quot;:&quot;acb000000&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="2-1-2-返回结果"><a href="#2-1-2-返回结果" class="headerlink" title="2.1.2 返回结果"></a>2.1.2 返回结果</h4><table>
+<thead>
+<tr>
+<th align="left">参数名称</th>
+<th align="left">类型</th>
+<th align="left">出现要求</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Code</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">响应码，代码定义请见“附录A 响应吗说明”</td>
 </tr>
 <tr>
-<td>2025/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">Msg</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">&nbsp;</td>
 </tr>
 <tr>
-<td>2025/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">Data</td>
+<td align="left">object</td>
+<td align="left">R</td>
+<td align="left">&nbsp;</td>
 </tr>
 <tr>
-<td>2025/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">&emsp;UserId</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">用户Id</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Code&quot;:200,</span><br><span class="line">    &quot;Msg&quot;:&quot;登录成功&quot;,</span><br><span class="line">    &quot;Data&quot;:&#123;</span><br><span class="line">        &quot;UserId&quot;:&quot;7D916C7283434955A235C17DD9B71C64&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-获取登录用户信息"><a href="#2-2-获取登录用户信息" class="headerlink" title="2.2 获取登录用户信息"></a>2.2 获取登录用户信息</h3><ul>
+<li><strong>接口说明：</strong> 获取登录用户信息</li>
+<li><strong>接口地址：</strong> /account/profile</li>
+</ul>
+<h4 id="2-2-1-请求参数"><a href="#2-2-1-请求参数" class="headerlink" title="2.2.1 请求参数"></a>2.2.1 请求参数</h4><table>
+<thead>
+<tr>
+<th align="left">参数名称</th>
+<th align="left">类型</th>
+<th align="left">出现要求</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Header</td>
+<td align="left">&nbsp;</td>
+<td align="left">R</td>
+<td align="left">请求报文头</td>
 </tr>
 <tr>
-<td>2025/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">&emsp;Token</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">用户登录后token，没有登录则为空字符串</td>
 </tr>
 <tr>
-<td>2025/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">&emsp;Version</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">接口版本号</td>
 </tr>
 <tr>
-<td>2025/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">&emsp;SystemId</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">机构号，请求的系统Id</td>
 </tr>
 <tr>
-<td>2025/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">&emsp;Timestamp</td>
+<td align="left">long</td>
+<td align="left">R</td>
+<td align="left">当前UNIX时间戳</td>
 </tr>
 <tr>
-<td>2025/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">Body</td>
+<td align="left">&nbsp;</td>
+<td align="left">R</td>
+<td align="left">&nbsp;</td>
+</tr>
+</tbody></table>
+<p>请求示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;Header&quot;:&#123;</span><br><span class="line">        &quot;Token&quot;:&quot;CA64A439E7C344B0BA7F5C825E17C7AB&quot;,</span><br><span class="line">        &quot;Version&quot;:&quot;3.2.0&quot;,</span><br><span class="line">        &quot;SystemId&quot;:100,</span><br><span class="line">        &quot;Timestamp&quot;:1502870664</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;Body&quot;:null</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="2-2-2-返回结果"><a href="#2-2-2-返回结果" class="headerlink" title="2.2.2 返回结果"></a>2.2.2 返回结果</h4><table>
+<thead>
+<tr>
+<th align="left">参数名称</th>
+<th align="left">类型</th>
+<th align="left">出现要求</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Code</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">响应码，代码定义请见“附录A 响应吗说明”</td>
 </tr>
 <tr>
-<td>2025/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">Msg</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">&nbsp;</td>
 </tr>
 <tr>
-<td>2025/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">Data</td>
+<td align="left">object</td>
+<td align="left">R</td>
+<td align="left">&nbsp;</td>
 </tr>
 <tr>
-<td>2025/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left">&emsp;UserId</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">用户Id</td>
+</tr>
+<tr>
+<td align="left">&emsp;RealName</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">姓名</td>
+</tr>
+<tr>
+<td align="left">&emsp;ImageUrl</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">头像</td>
+</tr>
+<tr>
+<td align="left">&emsp;Score</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">积分</td>
+</tr>
+<tr>
+<td align="left">&emsp;Nickname</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">昵称</td>
+</tr>
+<tr>
+<td align="left">&emsp;Sex</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">性别：0-未知、1-男、2-女</td>
+</tr>
+<tr>
+<td align="left">&emsp;Title</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">头衔</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Code&quot;:200,</span><br><span class="line">    &quot;Msg&quot;:&quot;处理成功&quot;,</span><br><span class="line">    &quot;Data&quot;:&#123;</span><br><span class="line">        &quot;UserId&quot;:&quot;7D916C7283434955A235C17DD9B71C64&quot;,</span><br><span class="line">        &quot;RealName&quot;:&quot;张三&quot;,</span><br><span class="line">        &quot;ImageUrl&quot;:&quot;https://img.xx.net/afdicew8751.png&quot;,</span><br><span class="line">        &quot;Score&quot;:4732,</span><br><span class="line">        &quot;Nickname&quot;:&quot;张冠李戴&quot;,</span><br><span class="line">        &quot;Sex&quot;:1,</span><br><span class="line">        &quot;Title&quot;:&quot;侠客Lv4&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="3-附录A-响应码说明"><a href="#3-附录A-响应码说明" class="headerlink" title="3 附录A 响应码说明"></a>3 附录A 响应码说明</h2><table>
+<thead>
+<tr>
+<th align="left">响应码</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">200</td>
+<td align="left">处理成功</td>
+</tr>
+<tr>
+<td align="left">301</td>
+<td align="left">解析报文错误</td>
+</tr>
+<tr>
+<td align="left">302</td>
+<td align="left">无效调用凭证</td>
+</tr>
+<tr>
+<td align="left">303</td>
+<td align="left">参数不正确</td>
+</tr>
+<tr>
+<td align="left">500</td>
+<td align="left">系统内部错误</td>
+</tr>
+<tr>
+<td align="left">999</td>
+<td align="left">处理失败</td>
+</tr>
+</tbody></table>
+<h2 id="4-附录B-币种"><a href="#4-附录B-币种" class="headerlink" title="4 附录B 币种"></a>4 附录B 币种</h2><table>
+<thead>
+<tr>
+<th align="left">币种</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">RMB</td>
+<td align="left">人民币</td>
+</tr>
+<tr>
+<td align="left">HKD</td>
+<td align="left">港币</td>
+</tr>
+<tr>
+<td align="left">JPY</td>
+<td align="left">日元</td>
+</tr>
+<tr>
+<td align="left">TWD</td>
+<td align="left">新台币</td>
+</tr>
+<tr>
+<td align="left">USD</td>
+<td align="left">美元</td>
+</tr>
+<tr>
+<td align="left">VND</td>
+<td align="left">越南盾</td>
+</tr>
+<tr>
+<td align="left">THB</td>
+<td align="left">泰铢</td>
 </tr>
 </tbody></table>
 ]]></content>
       <categories>
-        <category>投资理财</category>
+        <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-        <tag>计划</tag>
+        <tag>Markdown</tag>
+        <tag>接口文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗马数字（上）——拼写规则</title>
+    <url>/2019/06/26/rules-of-reading-and-writing-roman-numerals/</url>
+    <content><![CDATA[<h3 id="罗马数字符号"><a href="#罗马数字符号" class="headerlink" title="罗马数字符号"></a>罗马数字符号</h3><p>罗马数字是总共由 7 个字母符号表示：<strong>I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和 M（1000）。</strong></p>
+<span id="more"></span>
+
+<p>表一：罗马数字对应的阿拉伯数字</p>
+<table>
+<thead>
+<tr>
+<th align="center">罗马数字</th>
+<th align="center">阿拉伯数字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">I</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">V</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">X</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">L</td>
+<td align="center">50</td>
+</tr>
+<tr>
+<td align="center">C</td>
+<td align="center">100</td>
+</tr>
+<tr>
+<td align="center">D</td>
+<td align="center">500</td>
+</tr>
+<tr>
+<td align="center">M</td>
+<td align="center">1000</td>
+</tr>
+</tbody></table>
+<p>他们按照以下 4 个规则可以组合成表示任意的正整数。</p>
+<h3 id="规则-1"><a href="#规则-1" class="headerlink" title="规则 1"></a>规则 1</h3><p><strong>一个罗马数字重复多少次，就表示这个数多少倍</strong>，比如罗马数字 I 表示的是数字 1，重复两次，即 II，表示的数字是 2，同理，III 表示数字 3，XX 表示数字 20，CC 表示数字 200 等；</p>
+<p>需要注意的是，<strong>同一个罗马数字最多只能连续重复 3 次</strong>，如数字 400 就不能表示为 CCCC（重复了 4 次），而是要用 CD 来表示，数字40不能表示为 XXXX（同样重复了 4 次），而要表示为 XL 等。</p>
+<p>但有一种特殊情况，因为古罗马人用 IV 作为古罗马神话主神朱庇特（IVPITER，古罗马字母里没有 J 和 U）名字的简写，他们不希望神的名字看上去像个数字，因此<strong>有时用 IIII 代替 IV</strong>。</p>
+<p>另外，<strong>符号 D、L 和 V 不可以连续重复出现</strong>，比如用 DD 表示 1000 的写法是错误的，正确的是要用 M，表示 1500 的罗马数字是 MD，而不是 DDD。</p>
+<h3 id="规则-2"><a href="#规则-2" class="headerlink" title="规则 2"></a>规则 2</h3><p><strong>如果在较大的罗马数字后面（右边）放置较小的罗马数字，表示的数字为这些数字相加得到的数</strong>，如较大的罗马数字 V 后面放置较小的罗马数字 I，即 VI，表示的数字则为 V 与 I 相加得到数 6。</p>
+<p>同理，<br>VII = 7 (5 + 2 = 7)<br>LXXX = 80 (50 + 10 + 10 + 10 = 80)<br>MC = 1100 (1000 + 100 = 1100)</p>
+<h3 id="规则-3"><a href="#规则-3" class="headerlink" title="规则 3"></a>规则 3</h3><p><strong>如果在较大的罗马数字前面（左边）放置在较小的罗马数字，表示的数是用较大的数减去较小的数所得到的值</strong>，如较大的罗马数字 V 前面或左边放置较小的罗马数字 I，即 IV，表示的数字则为 V 减去 I 得到的数 4。</p>
+<p>同理，<br>IX = 9 (10 – 1 = 9)<br>XC = 90 (100 – 10 = 90)</p>
+<p>用这种方式来表示罗马数字时，有以下几点需要注意：</p>
+<p><strong>i) 充当减数的只能是 I，C 或 X</strong>，不能是 L 或 V，即罗马数字对应的数是 10 的 n 次幂才能充当减数。另外，由于 M 在罗马字母中表示的数最大，也不能充当减数（罗马数字没有 0 或负整数）。</p>
+<blockquote>
+<p>被减数 - 减数 = 差，<br>如 32 - 10 = 22，<br>被减数是 32，减数是 10，差是 22。</p>
+</blockquote>
+<p>表二：被减数的只能是 I，C 或 X</p>
+<table>
+<thead>
+<tr>
+<th>罗马数字</th>
+<th>阿拉伯数字</th>
+<th>10 的 n 次幂</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>I</td>
+<td>1</td>
+<td>$10^0 = 1$</td>
+<td>10的0次幂</td>
+</tr>
+<tr>
+<td>X</td>
+<td>10</td>
+<td>$10^1 = 10$</td>
+<td>10的1次幂</td>
+</tr>
+<tr>
+<td>C</td>
+<td>100</td>
+<td>$10^2 = 100$</td>
+<td>10的2次幂</td>
+</tr>
+</tbody></table>
+<p>比如数字 45，<br>不能写成 VL（50 - 5），<br>而是要写成 XLV（XL + V，即 40 + 5）；</p>
+<p><strong>ii) 只能从一个罗马数字中减去另一个罗马数字，而不能减去两个或两个以上的罗马数字</strong>，比如说数字 8，<br>不能写成 IIX（X - I - I，即 10 - 1 - 1 = 8），<br>而是要写成 VIII（V + I + I + I，即 5 + 1 + 1 + 1 = 8）；</p>
+<p><strong>iii) 从一个罗马数字（设为 a）中减去另一个罗马数字（设为 b）所得的差（设为 c），不能超过减数（即 b）的 10 倍以上。</strong><br>例如，<br>你可以从数字 10 中减去 1，<br>因为 10 - 1 = 9，9 比 1 的 10 倍（10）小；<br>但是不能从数字 100 中减去 1，<br>因为 100 - 1 = 99，99 比 1 的 10 倍（10）大。<br>所以，<br>数字 9 可以用 IX 来表示，<br>但数字 100 不能用 IC 来表示，<br>而是要用 XCIX（XC + IX，即 90 + 9 = 99）来表示。</p>
+<p><em><strong>总结第 i) 点和第 iii) 点，可以得到以下规则：</strong></em><br><em><strong>符号 I 只能出现在符号 V 或 X 的前面（左边）；</strong></em><br><em><strong>符号 X 只能出现在符号 L 或 C 的前面（左边）；</strong></em><br><em><strong>符号 C 只能出现在符号 D 或 M 的前面（左边）。</strong></em></p>
+<h3 id="规则-4"><a href="#规则-4" class="headerlink" title="规则 4"></a>规则 4</h3><p><strong>如果在罗马数字上方加一条横线，表示将该数值乘以 1000，即原数的 1000 倍，如果上方有两条横线，表示的数字是原数的 1, 000, 000 倍。</strong></p>
+<p>如：</p>
+<p>$\overline{M}=1, 000, 000$</p>
+<p>$\overline{V}=5, 000$</p>
+<p>$\overline{\overline{X}} = 10, 000, 000 $</p>
+<hr>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>尝试应用上述规则，写出以下阿拉伯数字对应的罗马数字<br>35，<br>65，<br>99</p>
+<p>求解过程如下：<br>35 = 10 + 10 + 10 + 5，即 X + X + X + V（XXXV），所以 35 = XXXV；<br>65 = 50 + 10 + 5，即 L + X + V（LXV），所以 65 = LXV；<br>99 = （100 - 10）+（10 - 1），即 XC + IX（XCIX）所以 99 = XCIX 。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>罗马数字</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗马数字（中）——起源与用途</title>
+    <url>/2019/07/01/history-of-roman-numerals/</url>
+    <content><![CDATA[<h2 id="一、罗马数字的诞生与进化"><a href="#一、罗马数字的诞生与进化" class="headerlink" title="一、罗马数字的诞生与进化"></a>一、罗马数字的诞生与进化</h2><p>罗马数字起源于古罗马帝国，拥有一个漫长而复杂的历史，始于公元前 8 世纪至 9 世纪，与古罗马帝国在帕兰丁山（Palantine Hill）周围建立的时间大致相同。不过，罗马数字的盛行时间比帝国本身还要长，直到 14 世纪前仍被广泛使用。</p>
+<span id="more"></span>
+
+<p>在设计上，罗马数字存在一些缺陷：</p>
+<ol>
+<li><p>没有表示零（0）的符号；</p>
+</li>
+<li><p>也没有用于计数超过几千数值的实际方法，只有通过在数字符号上方添加横线来表示它们的值的倍数来修正。</p>
+</li>
+</ol>
+<p>复杂的社会、经济管理，建造像斗兽场和君士坦丁大拱门这样的大型纪念碑，都离不开大量的数学技能。而罗马数字的这些缺陷并没有阻止古罗马的学者和建筑师们建立一个伟大的帝国。</p>
+<p>在公元 11 世纪时，阿拉伯数字传入欧洲。阿拉伯数字始创于印度，采用 0、1、2、3、4、5、6、7、8、9 共 10 个计数符号。采取位值法，高位在左，低位在右，从左往右书写。借助一些简单的数学符号（小数点、负号等），阿拉伯数字可以明确的表示所有的有理数。这是对罗马数字的一个很大的改进。</p>
+<p>于是，人们开始逐渐使用阿拉伯数字作为日常生活中的记数系统，而罗马数字的使用更是随着创造它的帝国的崩溃而减少。到公元 14 世纪时，罗马数字已被阿拉伯数字所取代，成为在欧洲被广泛使用的记数系统。现在阿拉伯数字已成为目前使用最广泛的记数系统，通行于全世界。</p>
+<h2 id="二、罗马数字的现代用途"><a href="#二、罗马数字的现代用途" class="headerlink" title="二、罗马数字的现代用途"></a>二、罗马数字的现代用途</h2><p>从某种角度上，可以说罗马数字经受住了时间的考验，并没有随着罗马帝国的消亡而结束。它的优雅感和复古风格确保了它不会在未来某个时候消失。今天，我们仍然使用罗马数字来表达某些东西，如：</p>
+<p>在天文学领域中，用于为卫星编号，如木卫一，木卫二，木卫三。<br>在化学领域中，用于表示元素周期表中的元素组：IA族，IIA族，IIIA族，IVA族，VA族，VIA族，VIIA族，IB族，IIB族，IIIB族，IVB族，VB族，VIB族，VIIB族，VIII族。<br>钟表表盘符号：Ⅰ、Ⅱ、Ⅲ、Ⅳ（IIII）、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ、Ⅹ、Ⅺ、Ⅻ。<br>有序列表（ordered list）的编号（多用小写字母），例如：<br>i) 第一项<br>ii) 第二项<br>iii) 第三项<br>书籍和章节标题<br>君王的名字，如 Louis XIV（路易十四）、Charles II（查理二世）。<br>教皇的名字，如 Alexander VIII（亚历山大八世）、John Paul II（约翰·保罗二世）。<br>其他命名，如 iPhone X，氨酚伪麻美芬片（Ⅱ）。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>罗马数字</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？</title>
+    <url>/2021/07/05/the-product-minded-software-engineer/</url>
+    <content><![CDATA[<p>近日在网上读到一篇标题为<a href="https://blog.pragmaticengineer.com/the-product-minded-engineer">《The Product-Minded Software Engineer》</a>的文章，该文讲述了具有产品思维的软件工程师都具备哪些特点，在文末也给出了如何成为具有产品思维的软件工程师的秘诀。读完很有感触，身处现如今的互联网环境，工程师如果还只专注于技术，未免有些狭隘。毕竟工程师的价值并不只体现在技术层面上，还应体现在产品、商业等层面上。</p>
+<p>文章很好，于是就把它翻译了出来，以期大家一起学习探讨，共同提高。</p>
+<hr>
+<p>具有产品思维的工程师是指那些对产品本身非常感兴趣的开发人员。他们会想去了解每个产品决策背后的原因，以及用户如何使用他们的产品，同时他们也乐于参与产品决策。如果他们决定放弃工程的乐趣（即放弃从事工程师工作），他们很可能会成为一名优秀的产品经理。我曾经与许多具有产品思维的优秀工程师一起工作，并认为自己也是这样的开发人员。在开发世界级产品的公司中，具有产品思维的工程师能把团队的影响力提升到一个新的水平。</p>
+<p>Atlassian 公司的产品经理 Sherif Mansour 写了一篇关于产品工程师以及产品经理如何识别这些产品工程师并与他们良好合作的优秀文章。他的观点很相似：</p>
+<blockquote>
+<p>在我过去十年的产品管理工作中，我得出的结论是，产品工程师是帮助你构建成功的产品、扩展自己并成为更好的产品经理的关键因素。</p>
+</blockquote>
+<p>他还引用了 Shopify 的工程主管 Jean-Michel Lemieux 的话，他对产品工程师的定义是这样的：</p>
+<blockquote>
+<p>一旦你有了产品基础，你就需要这些积极问“为什么”的开发人员、这些渴望使用技术解决人类/用户问题的工程师、还有那些具有同理心的人来获得神奇的体验。这就是我书中对产品工程师的定义。优秀的产品工程师知道在构建阶段需要考虑最小可爱产品的正确深度，而不好的产品工程师则会砍掉过多的产品功能需求。</p>
+</blockquote>
+<p>开发面向用户功能的、并与产品经理合作的团队，是具有产品思维的工程师可以产生巨大影响的环境。他们常常会成为主要贡献者、产品经理的首选人员、并且也常晋升为团队领导。那么，具有产品思维的工程师的关键特征是什么，如何才能变得更加具有产品思维？本文总结了我观察到的这类人共有的 9 个特征，以及我对工程师培养他们的产品思维肌肉的建议。</p>
+<h2 id="1-积极主动地对待产品理念或观点"><a href="#1-积极主动地对待产品理念或观点" class="headerlink" title="1. 积极主动地对待产品理念或观点"></a>1. 积极主动地对待产品理念或观点</h2><p>具有产品思维的工程师不会满足于拿到需求说明后就匆匆忙忙地实现它。他们会思考其他的创意，并找产品经理提出这些想法。他们会经常挑战现有的需求说明，建议其他可能更优的替代性方法。</p>
+<h2 id="2-对业务、用户行为和数据的兴趣"><a href="#2-对业务、用户行为和数据的兴趣" class="headerlink" title="2. 对业务、用户行为和数据的兴趣"></a>2. 对业务、用户行为和数据的兴趣</h2><p>具有产品思维的工程师们的想法和创意都不是凭空得来的。他们会花时间去了解企业是如何商业运作的，产品又是如何配合商业运作，以及最终要达到什么样的商业目标。此外，他们也会去换位思考，试图理解产品将给用户带来什么感受，以及用户如何从使用产品中受益。他们通常会直接去深入研究商业数据和用户测量指标，并尽其所能获取这些数据。如果可能的话，他们会直接访问相关数据，或者找产品经理、数据专家去要这些信息。工程师们这样做，往往是出于他们好奇的天性。这也是我观察到的下一个特征。</p>
+<h2 id="3-好奇心和对“为什么”的浓厚兴趣"><a href="#3-好奇心和对“为什么”的浓厚兴趣" class="headerlink" title="3. 好奇心和对“为什么”的浓厚兴趣"></a>3. 好奇心和对“为什么”的浓厚兴趣</h2><p>具有产品意识的工程师喜欢去理解所有事物背后的那个“为什么? ”。为什么产品要开发这个功能、而不开发另一个功能呢？为什么要首先发布这一里程碑，而不是选择另一个更简单的里程碑呢？如何进行测量——为什么我们不选择一种更全面彻底的度量方式来测量呢？</p>
+<p>他们能够自主地找到他们能够找到的答案。他们也会向产品经理和其他业务人员寻求帮助，找寻其他与产品相关问题的答案。尽管他们经常会问很多问题，但是他们都会设法不让其他人觉得不爽，因为他们已经与那些同事建立起了牢固的关系。</p>
+<h2 id="4-强大的沟通能力，建立与非工程师同事良好的关系"><a href="#4-强大的沟通能力，建立与非工程师同事良好的关系" class="headerlink" title="4. 强大的沟通能力，建立与非工程师同事良好的关系"></a>4. 强大的沟通能力，建立与非工程师同事良好的关系</h2><p>具有产品意识的工程师喜欢与软件工程领域外的同事们交谈，了解他们在做什么、为什么做。他们善于沟通，充分显示他们对于学习其他学科工作方式的浓厚兴趣。我经常看到他们和其他专业的同事们一起喝咖啡、吃午饭或者在走廊上聊天。</p>
+<h2 id="5-提前在产品和工程两方面做出权衡"><a href="#5-提前在产品和工程两方面做出权衡" class="headerlink" title="5. 提前在产品和工程两方面做出权衡"></a>5. 提前在产品和工程两方面做出权衡</h2><p>因为具有产品思维的工程师们对产品的原理以及软件工程都有深刻的理解，他们可以提出非常独到的建议，而很少有别人可以做到。例如，在确定产品构建的工作范围时，打造产品某项关键功能的编程工作量可能非常巨大。许多工程师会开始寻找减少工作量的方法，并试图明确减少工作量对该项关键功能可能会产生的影响。</p>
+<p>具有产品意识的工程师会从两个角度来解决这个问题：一方面在工程方面进行取舍，明确可能对产品产生的影响；同时在另一方面，他们还会开始对产品功能进行取舍，评估对工程工作量的影响。他们经常会去找产品经理，在保持产品体验相似的前提下，建议构建一个完全不同的功能，从而使得编程的工作量大幅降低。</p>
+<p>兼顾产品和工程、平衡两者的影响，是具有产品意识的工程师们拥有的独特优势。他们可以快速地在同一枚硬币的两面之间来回切换：产品特性、工程工作量和两者的平衡。由于他们利用其工程和产品两方面的洞察力，在头脑中快速完成上述权衡，所以他们能够很快得出有价值的结论。</p>
+<h2 id="6-以务实的方式处理边缘案例"><a href="#6-以务实的方式处理边缘案例" class="headerlink" title="6. 以务实的方式处理边缘案例"></a>6. 以务实的方式处理边缘案例</h2><p>边缘案例是一件很有意思的事情。有的工程师经常会忘记边缘案例的存在，最后从产品测试人员或最终用户那里得到反馈之后，才不得不回过头来解决这些问题。这是一个极端，而另一方面，如果在一个新产品或功能中试图处理所有可能的边缘情况，则可能会耗费大量的时间。</p>
+<p>具有产品意识的工程师会很快制定出关于边缘案例的计划，并思考如何减少工作量，并经常会找到不需要额外工作量的解决方案。他们专注于“最小可爱产品”的概念，评估边缘案例的影响和处理所需的工作量。他们会提供很好的折衷建议: 在发布早期版本之前，列出大多数可能出错的地方，并提出需要解决哪些边缘案例的建议。</p>
+<p>例如，对于一个千分之一的用户可能会遇到的错误，他们会考虑修复这一错误涉及的工作量，以及如果什么都不做会发生的后果。在产品验证过程中，客服专员是否可以在这个案例中帮助用户？用户下一次再遇到同样问题可以自己尝试成功解决吗？对产品进行略微调整，是否就可以避免边缘案例？</p>
+<h2 id="7-快速的产品验证周期"><a href="#7-快速的产品验证周期" class="headerlink" title="7. 快速的产品验证周期"></a>7. 快速的产品验证周期</h2><p>甚至在开发的产品功能可以上线之前，具有产品思维的工程师们早就已经找到创造性的方法来获取早期的反馈意见。他们可以和同事一起进行走廊测试，可以向产品经理演示尚在开发中的功能，也可以在 Beta 版本发布前组织整个团队来一场“漏洞大扫荡”，当然还有许多其他创造性的方法。他们会一直思考这个问题：“我们怎样才能验证用户们会像我们预期的那样来使用这个功能？”</p>
+<h2 id="8-对产品功能从头至尾负责到底"><a href="#8-对产品功能从头至尾负责到底" class="headerlink" title="8. 对产品功能从头至尾负责到底"></a>8. 对产品功能从头至尾负责到底</h2><p>经验丰富的工程师们都会对他们的工作从头至尾负责到底：从拿到产品规范到部署实施，再到发布产品并最终验证产品能否正常工作。除了上述这些工作以外，具有产品意识的工程师通常会举一反三、再进一步。</p>
+<p>他们坚信，只有在获得用户行为和商业指标的结果之后，他们的工作才算全部完成。产品上线后，他们仍然会积极与产品经理、数据专家和客户支持渠道保持密切沟通，以便了解产品功能在现实世界中的使用情况。要获得足够得出结论的可靠数据通常需要几周时间。即使他们可能已经接手下一个新项目，他们仍然会把检查上一项目的成果作为首要任务之一。这并不是一项特别耗时的活动，但是特别需要一种锲而不舍的精神，推动那些想要知道自己的辛勤劳动究竟效果如何的工程师们，去坚持探寻答案。</p>
+<p>当开发的某项功能表现得不如预期时，他们会特别好奇问题出在哪里？他们对于找到产品计划和现实世界结果之间存在差距的根本原因怀有浓厚的兴趣，程度不亚于他们在代码库中找到难以复现的缺陷并成功除错。他们经常会花费大量的时间，就某些假设和心得与产品经理和数据专家展开辩论。</p>
+<h2 id="9-通过反复循环的学习，形成强大的产品本能"><a href="#9-通过反复循环的学习，形成强大的产品本能" class="headerlink" title="9. 通过反复循环的学习，形成强大的产品本能"></a>9. 通过反复循环的学习，形成强大的产品本能</h2><p>对于有产品意识的工程师来说，一个典型的项目通常是这样的：</p>
+<ol>
+<li>他们会提出很多问题，来准确理解构建产品功能的原因；</li>
+<li>他们会提供建议和取舍方案，其中某些建议会反映在修订后的产品设计规范中；</li>
+<li>他们会很快开发出相关功能，以便尽早得到反馈意见；</li>
+<li>在产品发布之后，他们会积极跟进了解相关产品功能是否符合预期；</li>
+<li>如果没有达到预期，他们会深入挖掘原因，并学到产品在现实世界中使用的新知识。</li>
+</ol>
+<p>每完成一个项目，他们对产品的理解就会加深，他们开始培养起越来越好的产品直觉。等到下一个项目，他们会贡献更多有价值的建议。随着时间推移，他们会成为产品经理最愿意去讨教的大专家，在新的项目还未开始之前就会提前去征求他们的意见。他们将名声在外，为持续的职业发展打开更多的大门。</p>
+<h2 id="成为更有产品思维的工程师的秘诀"><a href="#成为更有产品思维的工程师的秘诀" class="headerlink" title="成为更有产品思维的工程师的秘诀"></a>成为更有产品思维的工程师的秘诀</h2><p>如果你在开发面向用户的产品，这里有一些我认为效果很好的技巧，可以增强你的产品思维。</p>
+<ul>
+<li><strong>了解公司成功的方式和原因。</strong>商业模式是什么？钱是怎么赚的？哪部分最赚钱，公司哪部分发展最快？原因是什么？你的团队如何适应这一切？</li>
+<li>与你的产品经理建立牢固的关系。大多数产品经理会抓住机会指导工程师。让工程师对产品感兴趣意味着他们可以更好地扩展自己。在进来之前，问很多产品问题，花时间建立这种关系，并向你的产品经理明确表示，你想更多地参与到产品中来。</li>
+<li>参与用户研究、客户支持和其他活动，你可以在其中了解更多有关产品如何运作的信息。与设计师、用户体验人员、数据科学家、运营人员和其他经常跟用户互动的人员结伴。</li>
+<li>提出有充分依据的产品建议。在你对业务、产品和利益相关者都有一个很好的了解之后：就要采取主动。你可以为你正在进行的项目提出一些小建议。或者，你可以建议进行更大的努力，概述工程工作和产品工作，以便在待办事项中轻松确定优先级。</li>
+<li>为你正在进行的项目提供产品/工程取舍。不仅要考虑对你团队正在构建的产品功能进行工程方面的取舍，还要建议可以减少工程工作量的产品权衡。对其他人的反馈持开放态度。</li>
+<li>经常向你的产品经理寻求反馈。成为一名具有产品思维的优秀工程师意味着你已经在现有的工程技能组合之上建立了良好的产品技能。向你提供有关你在产品技能方面的表现的反馈的最佳人选是你的产品经理。就他们对你的产品建议的价值提出反馈意见，并就需要进一步发展的领域征求意见。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>翻译</tag>
       </tags>
   </entry>
   <entry>
@@ -891,406 +931,6 @@
         <tag>理财</tag>
         <tag>定投</tag>
         <tag>计划</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>退休金计划：每月定投基金2000元，30年后资产总额达到多少？</title>
-    <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
-    <content><![CDATA[<h2 id="突发奇想"><a href="#突发奇想" class="headerlink" title="突发奇想"></a>突发奇想</h2><p>前段时间突发奇想，如果每个月拿出2000元用于投资理财，如定投基金，那30年后资产总额会达到多少呢？</p>
-<p>根据网上查到的资料，如果年化收益率为 14.5%，每月末坚持定投 2000 元，那么 30 年后资产总额将高达 1000 万元！！！这可谓是一个振奋人心的结果，非常诱人。毕竟这 30 年的净投入才 72 万（2000 × 12 × 30 = 720000），收益竟达到了 928 万之多。</p>
-<h2 id="回到现实"><a href="#回到现实" class="headerlink" title="回到现实"></a>回到现实</h2><p>但这真的有可能实现吗？</p>
-<p>其实我不是怀疑在这样的假设下得出这样的结果。随着年期的增长，复利效应引发的倍数增长会越来越显著，而 30 年的时长，是足以见识到复利的威力和魅力的。</p>
-<p>问题是预期年化收益率 14.5% 能达到吗？公认的投资大师沃伦・巴菲特，具有四十多年投资年限，他的平均年化收益率也只是 20.3%。作为一个普通人，30 年的年化收益率要达到 14.5%，可能性有多大？即使能达到，每月定投 2000 元并坚持 30 年，是否又能做到呢？尤其是在市场出现极端恐慌或极端火热的时候，还能心如止水，仍坚定不移地按月定投吗？</p>
-<h2 id="一次大胆的尝试"><a href="#一次大胆的尝试" class="headerlink" title="一次大胆的尝试"></a>一次大胆的尝试</h2><p>说实话，三十年的平均年化收益率要达到将近15%，我是一点把握都没有。而且也没有多少信心能够坚持下去。我得承认自己是一个普通人，没有过多的时间精力花费在研究投资上，本身也缺乏相关的专业能力。但这并不意味着我会放弃尝试的机会。相反，我倒是跃跃欲试，就当作是为自己储蓄退休金，因为三十年后也差不多快到了我该退休的年纪。</p>
-<p>既然决定要去尝试，那就必须面对现实，尽最大的努力去解决这些问题，即使问题的解决方案并不是最优的。</p>
-<p>首先，关于年化收益率问题，如果自己没有能力达到，那是不是通过选择优秀的基金进行定投的方式来解决呢？要找到跨越牛熊周期的（时间一般超过八年）、平均年化收益率达到14.5% 的基金，虽没有想象中那么简单，但也没有想象中的困难。很多明星基金经理，如张坤、谢治宇、朱少醒等，他们手上管理的基金大多都能达到这个年化收益率。</p>
-<p>比如，朱少醒的富国天惠成长混合A基金，成立十五年翻了 21 倍，平均年化收益率高达 23.94%。当然，过去的业绩不代表未来的业绩，未来也有可能会更换基金经理。平均年化收益率也不代表每年都是一层不变，而是有的年度可能是高于这个值，有的年度是低于这个值，甚至是负数。</p>
-<p>长期来看，优秀基金经理的投资业绩肯定会比自己好很多。</p>
-<p>其次，关于每月坚持定投问题。一项目标计划需要持续三十年之久，这中间存在很多“拦路虎”，将来可能会以各种各样的方式影响计划的顺利执行。甚至有时候出现一些“致命性”的因素，导致整个计划不得不终止。比如一个常见的问题是缺少每月可用于定投的资金；比如可能会碰到最大的问题是出现特殊情况需要卖出基金；比如定投过程中还可能遇到坚持不下来的问题，等等。</p>
-<p>那有没有方法让这长达三十年的定投计划的执行可以变得稍微顺利些呢？</p>
-<p>我现在能想到的，一个是保障每月收入稳定，并且每月定投的钱一定要用“闲钱”，同时还要不断提高收入，为计划的顺利执行挖出一条深深的护城河，避免出现需要终止计划的情况。</p>
-<p>另外一个是可以将三十年的长期目标计划分阶段拆解成中期目标计划（五年计划或十年计划）、短期目标计划，最后变成一步步切实可行的行动计划和容易量化的行动目标，并在执行的过程中不断地给予自己反馈（计划进度图表等）。</p>
-<p>就像打怪升级一样，当你努力完成一定量的阶段目标之后，每次看到自己的储蓄金额（净投入）在慢慢增长，总资产也在慢慢地接近下一阶段目标，甚至是接近总目标，那种每天都在一点一点的慢慢变富的成就感和满足感就不由自主地产生了。</p>
-<p>在漫长且枯燥的定投过程中，成就感和满足感是可以增添我们坚持的动力和信心。</p>
-<p>再次，关于无视市场情绪问题。</p>
-<p>人的弱点有很多，自私、妒嫉、虚荣、胆小、好逸恶劳、优柔寡断、刚愎自用，等等。在股市中，每个人或多或少都会展现自己人性的弱点，其中比较典型的是贪婪与恐惧。</p>
-<p>在股市火爆的时候，有多少人还能按既定计划坚持定投，而不是匆匆止盈或者加大杠杆买入？在市场暴跌的时候，即使是优秀的基金，也是有可能出现很大的回撤，如上文提到的基金——富国天惠成长混合A，过去最大回撤也达到了 58.9%。当 100 块跌去 58.9 块，还有多少人能不割肉离场并坚持拿住？</p>
-<p>无视市场情绪，其实就是克服人性弱点，过程非常难，需要很大的毅力。</p>
-<p>个人的想法是，既然选择了大家公认（或自己个人认为）的优秀基金经理管理的基金，就相当于把自己的资金交给基金经理，由他们进行管理和投资。我们要做的是相信他们的专业能力是能够根据市场行情变化做出较为理性的判断，而不是瞎操心。剩下要做的是这些在我看来更重要的事情：认真过好自己的生活、多花时间陪伴家人孩子、专注于自己的事业、增加收入的来源等。</p>
-<p>最后，还有一个关于通货膨胀问题。</p>
-<p>受通货膨胀因素影响，未来是否会增加每月定投金额？</p>
-<p>目前没有明确的想法。不过随着收入的上涨，从上涨的这部分收入里拿出一小部分资金投入到退休金计划，享受时间复利带来的收益，确实是一个不错的选择。需要强调的是新增加的这一部分资金，最好还是长时间不会用到的“闲钱”。</p>
-<h2 id="制定计划"><a href="#制定计划" class="headerlink" title="制定计划"></a>制定计划</h2><p>以下是我根据自身的情况制定了一项长期计划——退休金计划。</p>
-<p>计划内容：</p>
-<ul>
-<li>计划目标：退休金额达到 10,000,000 元；</li>
-<li>定投基金：富国天惠成长混合A（161005）；</li>
-<li>定投金额：2000 元/月；</li>
-<li>定投日期：每月 10 号和 24 号，如遇节假日或休息日，则根据情况提前在最近一个交易日定投，或顺延至下一个交易日定投；</li>
-<li>定投年限：30年；</li>
-<li>预期平均年回报率：14.5%；</li>
-<li>计划停止执行条件：提前完成目标金额或 30 年时间已到（2051年2月）；</li>
-<li>定投当天更新净投入和总资产记录；</li>
-<li>其他补充：根据未来的实际情况，决定是否更换定投基金、增加每月定制金额等。</li>
-</ul>
-<p>计划本身比较简单，关键是要<strong>坚定不移地去执行</strong>。</p>
-<p>人生的道路上总是布满着荆棘，我们只能不断的前进，不断的披荆斩棘，虽然困难却总是充满着梦想与希望。</p>
-<h2 id="分阶段执行计划"><a href="#分阶段执行计划" class="headerlink" title="分阶段执行计划"></a>分阶段执行计划</h2><p><a href="/2021/07/10/investment-plan-2021-2025/">2021-2025年定投执行计划</a></p>
-<p><a href="/2021/07/10/investment-plan-2026-2030/">2026-2030年定投执行计划</a></p>
-<p><a href="/2021/07/10/investment-plan-2031-2035/">2031-2035年定投执行计划</a></p>
-<p>2036-2040年定投执行计划</p>
-<p>2041-2045年定投执行计划</p>
-<p>2046-2050年定投执行计划</p>
-<p>2051年（1月、2月）定投执行计划</p>
-<h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts4532" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts1945" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts4532'));
-    var bar_chart = echarts.init(document.getElementById('echarts1945'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var dates = [];
-        var invest_data = [];
-        var total_data = [];
-        var records = data.data;
-        var options = data.options;
-        var len = records.length;
-        var newestData = records[len - 1];
-
-        for (var i = 0; i < len; i++){
-          dates.push(records[i][0]);
-          invest_data.push(records[i][2]);
-          total_data.push(records[i][3]);
-        }
-        options.xAxis.data = dates;
-        options.series[0].data = invest_data;
-        options.series[1].data = total_data;
-        myChart.setOption(options);
-
-        var labelRight = {
-          position: 'right'
-        };
-      
-        var bar_options = {
-          title: {
-              text: '账户资产明细',
-              subtext: '金额（元）',
-              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
-          },
-          tooltip: {
-              trigger: 'axis',
-              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-              }
-          },
-          grid: {
-              top: 80,
-              bottom: 30
-          },
-          xAxis: {
-              type: 'value',
-              position: 'top',
-              splitLine: {
-                  lineStyle: {
-                      type: 'dashed'
-                  }
-              }
-          },
-          yAxis: {
-              type: 'category',
-              axisLine: {show: false},
-              axisLabel: {show: false},
-              axisTick: {show: false},
-              splitLine: {show: false},
-              data: ['收益', '净投入', '总资产']
-          },
-          series: [
-              {
-                  name: '人民币',
-                  type: 'bar',
-                  stack: '总量',
-                  label: {
-                      show: true,
-                      formatter: '{b}'
-                  },
-                  data: [
-                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
-                      {value: newestData[2], label: labelRight},
-                      {value: newestData[3], label: labelRight},
-                  ],
-                  itemStyle: {
-                    normal: {
-        　　　　　　　　//这里是重点
-                        color: function(params) {
-                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
-                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
-                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
-                            return colorList[params.dataIndex]
-                        }
-                    }
-                }
-              }
-          ]
-      };
-        bar_chart.setOption(bar_options);
-    });
-    </script>
-    
-
-<blockquote>
-<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
-</blockquote>
-<p>第一个五年目标（2021年3月-2025年12月），目标净投入 <strong>116,000</strong> 元；</p>
-<p>详见 <a href="/2021/07/17/investment-plan-progress/">退休金计划：进度看板</a></p>
-<h2 id="年度计划参考"><a href="#年度计划参考" class="headerlink" title="年度计划参考"></a>年度计划参考</h2><p>详见 <a href="/2021/07/18/investment-plan-reference">退休金计划：三十年一千万参考</a></p>
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>退休金计划：进度看板</title>
-    <url>/2021/07/17/investment-plan-progress/</url>
-    <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
-<h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts2365" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts7850" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts2365'));
-    var bar_chart = echarts.init(document.getElementById('echarts7850'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var dates = [];
-        var invest_data = [];
-        var total_data = [];
-        var records = data.data;
-        var options = data.options;
-        var len = records.length;
-        var newestData = records[len - 1];
-
-        for (var i = 0; i < len; i++){
-          dates.push(records[i][0]);
-          invest_data.push(records[i][2]);
-          total_data.push(records[i][3]);
-        }
-        options.xAxis.data = dates;
-        options.series[0].data = invest_data;
-        options.series[1].data = total_data;
-        myChart.setOption(options);
-
-        var labelRight = {
-          position: 'right'
-        };
-      
-        var bar_options = {
-          title: {
-              text: '账户资产明细',
-              subtext: '金额（元）',
-              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
-          },
-          tooltip: {
-              trigger: 'axis',
-              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-              }
-          },
-          grid: {
-              top: 80,
-              bottom: 30
-          },
-          xAxis: {
-              type: 'value',
-              position: 'top',
-              splitLine: {
-                  lineStyle: {
-                      type: 'dashed'
-                  }
-              }
-          },
-          yAxis: {
-              type: 'category',
-              axisLine: {show: false},
-              axisLabel: {show: false},
-              axisTick: {show: false},
-              splitLine: {show: false},
-              data: ['收益', '净投入', '总资产']
-          },
-          series: [
-              {
-                  name: '人民币',
-                  type: 'bar',
-                  stack: '总量',
-                  label: {
-                      show: true,
-                      formatter: '{b}'
-                  },
-                  data: [
-                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
-                      {value: newestData[2], label: labelRight},
-                      {value: newestData[3], label: labelRight},
-                  ],
-                  itemStyle: {
-                    normal: {
-        　　　　　　　　//这里是重点
-                        color: function(params) {
-                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
-                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
-                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
-                            return colorList[params.dataIndex]
-                        }
-                    }
-                }
-              }
-          ]
-      };
-        bar_chart.setOption(bar_options);
-    });
-    </script>
-    
-
-<blockquote>
-<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
-</blockquote>
-<h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts1070" style="width: 100%;height: 200px;margin: 0 auto"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts1070'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var records = data.data;
-        var len = records.length;
-        var newestData = records[len - 1];
-        
-        var dashboard_chart_id_options = {
-          title: {
-            name: "textShadowOffsetXt",
-            text: "",
-            textStyle: {
-              color: "#fff"
-            }
-          },
-          backgroundColor: "#17326b",
-          grid: {
-            left: "10",
-            top: "10",
-            right: "10",
-            bottom: "10",
-            containLabel: true
-          },
-          xAxis: {
-            type: 'value',
-            splitLine: { show: false },
-            axisLabel: { show: false },
-            axisTick: { show: false },
-            axisLine: { show: false }
-          },
-          yAxis: [
-            {
-              type: 'category',
-              axisTick: { show: false },
-              axisLine: { show: false },
-              axisLabel: {
-                color: "black",
-                fontSize: 14,
-                textStyle: {
-                  color: '#fff'
-                }
-              },
-              data: ["今年净投入", "一五净投入", "一五总资产", "计划总资产"],
-              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
-              inverse: true
-            },
-            {
-              type: 'category',
-              axisTick: { show: false },
-              axisLine: { show: false },
-              axisLabel: {
-                color: "black",
-                fontSize: 14,
-                textStyle: {
-                  color: '#fff'
-                }
-              },
-              data: ['20,000', '116,000', '170,000', '10,000,000'],
-              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
-              inverse: true
-            }
-          ],
-          series: [
-            {
-              name: "%",
-              type: "bar",
-              barWidth: 19,
-              data: [(newestData[2] / 20000 * 100).toFixed(2), (newestData[2] / 116000 * 100).toFixed(2), (newestData[3] / 170000 * 100).toFixed(2), (newestData[3] / 10000000 * 100).toFixed(2)],
-              label: {
-                show: true,
-                //position    : 'middle',
-                offset: [20, 2],
-                formatter: '{c}{a}',
-                color: '#fff',
-                fontSize: 15
-              },
-              barCategoryGap: 20,
-              itemStyle: {
-                normal: {
-                  barBorderRadius: 10,
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-                    offset: 0,
-                    color: '#fdc830'
-                  }, {
-                    offset: 1,
-                    color: '#f37335'
-                  }]),
-                }
-              },
-              zlevel: 1
-        
-            }, {
-              name: "进度条背景",
-              type: "bar",
-              barGap: "-100%",
-              barWidth: 19,
-              data: [100, 100, 100, 100],
-              color: "#2e5384",
-              itemStyle: {
-                normal: {
-                  barBorderRadius: 10
-                }
-              },
-            }
-          ]
-        };
-        dashboard_chart_id_chart.setOption(dashboard_chart_id_options);
-    });
-    </script>
-    
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
       </tags>
   </entry>
   <entry>
@@ -2198,27 +1838,1046 @@
       </tags>
   </entry>
   <entry>
-    <title>【Git常用命令】查看/修改远程仓库地址</title>
-    <url>/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</url>
-    <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
-
-<p>e.g.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Git修改远程仓库地址"><a href="#Git修改远程仓库地址" class="headerlink" title="Git修改远程仓库地址"></a>Git修改远程仓库地址</h2><p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote set-url origin new.git.url/here</span><br></pre></td></tr></table></figure>
-
-<p>e.g.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将远程仓库地址改为 HTTPS 协议</span></span><br><span class="line">git remote set-url origin https://gogs.linjiangxiong.com/ljx/devops-doc.git</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看修改后的地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
-
-<p>（END）</p>
+    <title>退休金计划：2021-2025年定投执行计划</title>
+    <url>/2021/07/10/investment-plan-2021-2025/</url>
+    <content><![CDATA[<p>本计划是根据 <strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 而制定的第一个五年行动计划——2021-2025年定投计划。</p>
+<p>本计划目标：净投入达 120,000 元。</p>
+<p>计划具体内容为 2021 - 2025 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
+<h2 id="2021年定投计划"><a href="#2021年定投计划" class="headerlink" title="2021年定投计划"></a>2021年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2021/3/31</td>
+<td>1,000</td>
+<td>2021/3/31</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/4/10</td>
+<td>1,000</td>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td>补投</td>
+</tr>
+<tr>
+<td>2021/4/24</td>
+<td>1,000</td>
+<td>2021/6/5</td>
+<td>1,000</td>
+<td>补投</td>
+</tr>
+<tr>
+<td>2021/5/10</td>
+<td>1,000</td>
+<td>2021/5/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/6/10</td>
+<td>1,000</td>
+<td>2021/6/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/6/24</td>
+<td>1,000</td>
+<td>2021/6/24</td>
+<td>2,000</td>
+<td>每月2000，故3月补投一笔</td>
+</tr>
+<tr>
+<td>2021/7/10</td>
+<td>1,000</td>
+<td>2021/7/12</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2022年定投计划"><a href="#2022年定投计划" class="headerlink" title="2022年定投计划"></a>2022年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2022/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2023年定投计划"><a href="#2023年定投计划" class="headerlink" title="2023年定投计划"></a>2023年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2023/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2024年定投计划"><a href="#2024年定投计划" class="headerlink" title="2024年定投计划"></a>2024年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2024/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2025年定投计划"><a href="#2025年定投计划" class="headerlink" title="2025年定投计划"></a>2025年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2025/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
 ]]></content>
       <categories>
-        <category>编程文摘</category>
+        <category>投资理财</category>
       </categories>
       <tags>
-        <tag>git</tag>
+        <tag>理财</tag>
+        <tag>定投</tag>
+        <tag>计划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>退休金计划：每月定投基金2000元，30年后资产总额达到多少？</title>
+    <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
+    <content><![CDATA[<h2 id="突发奇想"><a href="#突发奇想" class="headerlink" title="突发奇想"></a>突发奇想</h2><p>前段时间突发奇想，如果每个月拿出2000元用于投资理财，如定投基金，那30年后资产总额会达到多少呢？</p>
+<p>根据网上查到的资料，如果年化收益率为 14.5%，每月末坚持定投 2000 元，那么 30 年后资产总额将高达 1000 万元！！！看到这个结果，顿时心动不已。毕竟这 30 年的净投入才 72 万（2000 × 12 × 30 = 720000），收益竟达到了 928 万之多。</p>
+<h2 id="回到现实"><a href="#回到现实" class="headerlink" title="回到现实"></a>回到现实</h2><p>但这真的有可能实现吗？</p>
+<p>其实我不是怀疑在这样的假设下得出这样的结果。随着年期的增长，复利效应引发的倍数增长会越来越显著，而 30 年的时长，是足以见识到复利的威力和魅力的。</p>
+<p>问题是预期年化收益率 14.5% 能达到吗？公认的投资大师沃伦・巴菲特，具有四十多年投资年限，他的平均年化收益率也只是 20.3%。作为一个普通人，30 年的年化收益率要达到 14.5%，可能性有多大？即使能达到，每月定投 2000 元并坚持 30 年，是否又能做到呢？尤其是在市场出现极端恐慌或极端火热的时候，还能心如止水，仍坚定不移地按月定投吗？</p>
+<h2 id="一次大胆的尝试"><a href="#一次大胆的尝试" class="headerlink" title="一次大胆的尝试"></a>一次大胆的尝试</h2><p>说实话，三十年的平均年化收益率要达到将近15%，我是一点把握都没有。而且也没有多少信心能够坚持下去。我得承认自己是一个普通人，没有过多的时间精力花费在研究投资上，本身也缺乏相关的专业能力。但这并不意味着我会放弃尝试的机会。相反，我倒是跃跃欲试，就当作是为自己储蓄退休金，因为三十年后也差不多快到了我该退休的年纪。</p>
+<p>既然决定要去尝试，那就必须面对现实，尽最大的努力去解决这些问题，即使问题的解决方案并不是最优的。</p>
+<p>首先，关于年化收益率问题，如果自己没有能力达到，那是不是通过选择优秀的基金进行定投的方式来解决呢？要找到跨越牛熊周期的（时间一般超过八年）、平均年化收益率达到14.5% 的基金，虽没有想象中那么简单，但也没有想象中的困难。很多明星基金经理，如张坤、谢治宇、朱少醒等，他们手上管理的基金大多都能达到这个年化收益率。</p>
+<p>比如，朱少醒的富国天惠成长混合A基金，成立十五年翻了 21 倍，平均年化收益率高达 23.94%。当然，过去的业绩不代表未来的业绩，未来也有可能会更换基金经理。平均年化收益率也不代表每年都是一层不变，而是有的年度可能是高于这个值，有的年度是低于这个值，甚至是负数。</p>
+<p>长期来看，优秀基金经理的投资业绩肯定会比自己好很多。</p>
+<p>其次，关于每月坚持定投问题。一项目标计划需要持续三十年之久，这中间存在很多“拦路虎”，将来可能会以各种各样的方式影响计划的顺利执行。甚至有时候出现一些“致命性”的因素，导致整个计划不得不终止。比如一个常见的问题是缺少每月可用于定投的资金；比如可能会碰到最大的问题是出现特殊情况需要卖出基金；比如定投过程中还可能遇到坚持不下来的问题，等等。</p>
+<p>那有没有方法让这长达三十年的定投计划的执行可以变得稍微顺利些呢？</p>
+<p>我现在能想到的，一个是保障每月收入稳定，并且每月定投的钱一定要用“闲钱”，同时还要不断提高收入，为计划的顺利执行挖出一条深深的护城河，避免出现需要终止计划的情况。</p>
+<p>另外一个是可以将三十年的长期目标计划分阶段拆解成中期目标计划（五年计划或十年计划）、短期目标计划，最后变成一步步切实可行的行动计划和容易量化的行动目标，并在执行的过程中不断地给予自己反馈（计划进度图表等）。</p>
+<p>就像打怪升级一样，当你努力完成一定量的阶段目标之后，每次看到自己的储蓄金额（净投入）在慢慢增长，总资产也在慢慢地接近下一阶段目标，甚至是接近总目标，那种每天都在一点一点的慢慢变富的成就感和满足感就不由自主地产生了。</p>
+<p>在漫长且枯燥的定投过程中，成就感和满足感是可以增添我们坚持的动力和信心。</p>
+<p>再次，关于无视市场情绪问题。</p>
+<p>人的弱点有很多，自私、妒嫉、虚荣、胆小、好逸恶劳、优柔寡断、刚愎自用，等等。在股市中，每个人或多或少都会展现自己人性的弱点，其中比较典型的是贪婪与恐惧。</p>
+<p>在股市火爆的时候，有多少人还能按既定计划坚持定投，而不是匆匆止盈或者加大杠杆买入？在市场暴跌的时候，即使是优秀的基金，也是有可能出现很大的回撤，如上文提到的基金——富国天惠成长混合A，过去最大回撤也达到了 58.9%。当 100 块跌去 58.9 块，还有多少人能不割肉离场并坚持拿住？</p>
+<p>无视市场情绪，其实就是克服人性弱点，过程非常难，需要很大的毅力。</p>
+<p>个人的想法是，既然选择了大家公认（或自己个人认为）的优秀基金经理管理的基金，就相当于把自己的资金交给基金经理，由他们进行管理和投资。我们要做的是相信他们的专业能力是能够根据市场行情变化做出较为理性的判断，而不是瞎操心。剩下要做的是这些在我看来更重要的事情：保持健康、认真过好自己的生活、多花时间陪伴家人孩子、专注于自己的事业、增加收入的来源等。</p>
+<p>最后，还有一个关于通货膨胀问题。</p>
+<p>受通货膨胀因素影响，未来是否会增加每月定投金额？</p>
+<p>目前没有明确的想法。不过随着收入的上涨，从上涨的这部分收入里拿出一小部分资金投入到退休金计划，享受时间复利带来的收益，确实是一个不错的选择。需要强调的是新增加的这一部分资金，最好还是长时间不会用到的“闲钱”。</p>
+<h2 id="制定计划"><a href="#制定计划" class="headerlink" title="制定计划"></a>制定计划</h2><p>以下是我根据自身的情况制定了一项长期计划——退休金计划。</p>
+<p>计划内容：</p>
+<ul>
+<li>计划目标：退休金额达到 10,000,000 元；</li>
+<li>定投基金：富国天惠成长混合A（161005）；</li>
+<li>定投金额：2000 元/月；</li>
+<li>定投日期：每月 10 号和 24 号，如遇节假日或休息日，则根据情况提前在最近一个交易日定投，或顺延至下一个交易日定投；</li>
+<li>定投年限：30年；</li>
+<li>预期平均年回报率：14.5%；</li>
+<li>计划停止执行条件：提前完成目标金额或 30 年时间已到（2051年2月）；</li>
+<li>定投当天更新净投入和总资产记录；</li>
+<li>其他补充：根据未来的实际情况，决定是否更换定投基金、增加每月定制金额等。</li>
+</ul>
+<p>计划本身比较简单，关键是要<strong>坚定不移地去执行</strong>。</p>
+<p>人生的道路上总是布满着荆棘，我们只能不断的前进，不断的披荆斩棘，虽然困难却总是充满着梦想与希望。</p>
+<h2 id="分阶段执行计划"><a href="#分阶段执行计划" class="headerlink" title="分阶段执行计划"></a>分阶段执行计划</h2><p>长期目标如果不细化或拆解成可执行的计划，往往很难实现。越是宏大的目标，越要细化成中期或短期内可实现的小目标。否则就容易因为目标过于宏大而感到难以实现，最终选择放弃。</p>
+<p>结合本人实际情况，退休金计划大概细化为六个“五年计划”。同时为便于记录统计，“五年计划”的起止时间以自然年为基准时间。详细计划如下：</p>
+<p><a href="/2021/07/10/investment-plan-2021-2025/">2021-2025年定投执行计划</a></p>
+<p><a href="/2021/07/10/investment-plan-2026-2030/">2026-2030年定投执行计划</a></p>
+<p><a href="/2021/07/10/investment-plan-2031-2035/">2031-2035年定投执行计划</a></p>
+<p>2036-2040年定投执行计划</p>
+<p>2041-2045年定投执行计划</p>
+<p>2046-2050年定投执行计划</p>
+<p>2051年（1月、2月）定投执行计划</p>
+<h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
+    <div id="echarts2020" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts2332" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('echarts2020'));
+    var bar_chart = echarts.init(document.getElementById('echarts2332'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var dates = [];
+        var invest_data = [];
+        var total_data = [];
+        var records = data.data;
+        var options = data.options;
+        var len = records.length;
+        var newestData = records[len - 1];
+
+        for (var i = 0; i < len; i++){
+          dates.push(records[i][0]);
+          invest_data.push(records[i][2]);
+          total_data.push(records[i][3]);
+        }
+        options.xAxis.data = dates;
+        options.series[0].data = invest_data;
+        options.series[1].data = total_data;
+        myChart.setOption(options);
+
+        var labelRight = {
+          position: 'right'
+        };
+      
+        var bar_options = {
+          title: {
+              text: '账户资产明细',
+              subtext: '金额（元）',
+              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
+          },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              }
+          },
+          grid: {
+              top: 80,
+              bottom: 30
+          },
+          xAxis: {
+              type: 'value',
+              position: 'top',
+              splitLine: {
+                  lineStyle: {
+                      type: 'dashed'
+                  }
+              }
+          },
+          yAxis: {
+              type: 'category',
+              axisLine: {show: false},
+              axisLabel: {show: false},
+              axisTick: {show: false},
+              splitLine: {show: false},
+              data: ['收益', '净投入', '总资产']
+          },
+          series: [
+              {
+                  name: '人民币',
+                  type: 'bar',
+                  stack: '总量',
+                  label: {
+                      show: true,
+                      formatter: '{b}'
+                  },
+                  data: [
+                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
+                      {value: newestData[2], label: labelRight},
+                      {value: newestData[3], label: labelRight},
+                  ],
+                  itemStyle: {
+                    normal: {
+        　　　　　　　　//这里是重点
+                        color: function(params) {
+                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
+                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                }
+              }
+          ]
+      };
+        bar_chart.setOption(bar_options);
+    });
+    </script>
+    
+
+<blockquote>
+<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
+</blockquote>
+<p>第一个五年目标（2021年3月-2025年12月），目标净投入 <strong>116,000</strong> 元；</p>
+<p>详见 <a href="/2021/07/17/investment-plan-progress/">退休金计划：进度看板</a></p>
+<h2 id="年度计划参考"><a href="#年度计划参考" class="headerlink" title="年度计划参考"></a>年度计划参考</h2><p>详见 <a href="/2021/07/18/investment-plan-reference">退休金计划：三十年一千万参考</a></p>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
       </tags>
   </entry>
   <entry>
@@ -2514,6 +3173,241 @@
       </tags>
   </entry>
   <entry>
+    <title>退休金计划：进度看板</title>
+    <url>/2021/07/17/investment-plan-progress/</url>
+    <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
+<h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
+    <div id="echarts6463" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts5697" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('echarts6463'));
+    var bar_chart = echarts.init(document.getElementById('echarts5697'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var dates = [];
+        var invest_data = [];
+        var total_data = [];
+        var records = data.data;
+        var options = data.options;
+        var len = records.length;
+        var newestData = records[len - 1];
+
+        for (var i = 0; i < len; i++){
+          dates.push(records[i][0]);
+          invest_data.push(records[i][2]);
+          total_data.push(records[i][3]);
+        }
+        options.xAxis.data = dates;
+        options.series[0].data = invest_data;
+        options.series[1].data = total_data;
+        myChart.setOption(options);
+
+        var labelRight = {
+          position: 'right'
+        };
+      
+        var bar_options = {
+          title: {
+              text: '账户资产明细',
+              subtext: '金额（元）',
+              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
+          },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              }
+          },
+          grid: {
+              top: 80,
+              bottom: 30
+          },
+          xAxis: {
+              type: 'value',
+              position: 'top',
+              splitLine: {
+                  lineStyle: {
+                      type: 'dashed'
+                  }
+              }
+          },
+          yAxis: {
+              type: 'category',
+              axisLine: {show: false},
+              axisLabel: {show: false},
+              axisTick: {show: false},
+              splitLine: {show: false},
+              data: ['收益', '净投入', '总资产']
+          },
+          series: [
+              {
+                  name: '人民币',
+                  type: 'bar',
+                  stack: '总量',
+                  label: {
+                      show: true,
+                      formatter: '{b}'
+                  },
+                  data: [
+                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
+                      {value: newestData[2], label: labelRight},
+                      {value: newestData[3], label: labelRight},
+                  ],
+                  itemStyle: {
+                    normal: {
+        　　　　　　　　//这里是重点
+                        color: function(params) {
+                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
+                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                }
+              }
+          ]
+      };
+        bar_chart.setOption(bar_options);
+    });
+    </script>
+    
+
+<blockquote>
+<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
+</blockquote>
+<h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
+    <div id="echarts2503" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts2503'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var records = data.data;
+        var len = records.length;
+        var newestData = records[len - 1];
+        
+        var dashboard_chart_id_options = {
+          title: {
+            name: "textShadowOffsetXt",
+            text: "",
+            textStyle: {
+              color: "#fff"
+            }
+          },
+          backgroundColor: "#17326b",
+          grid: {
+            left: "10",
+            top: "10",
+            right: "10",
+            bottom: "10",
+            containLabel: true
+          },
+          xAxis: {
+            type: 'value',
+            splitLine: { show: false },
+            axisLabel: { show: false },
+            axisTick: { show: false },
+            axisLine: { show: false }
+          },
+          yAxis: [
+            {
+              type: 'category',
+              axisTick: { show: false },
+              axisLine: { show: false },
+              axisLabel: {
+                color: "black",
+                fontSize: 14,
+                textStyle: {
+                  color: '#fff'
+                }
+              },
+              data: ["今年净投入", "一五净投入", "一五总资产", "计划总资产"],
+              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
+              inverse: true
+            },
+            {
+              type: 'category',
+              axisTick: { show: false },
+              axisLine: { show: false },
+              axisLabel: {
+                color: "black",
+                fontSize: 14,
+                textStyle: {
+                  color: '#fff'
+                }
+              },
+              data: ['20,000', '116,000', '170,000', '10,000,000'],
+              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
+              inverse: true
+            }
+          ],
+          series: [
+            {
+              name: "%",
+              type: "bar",
+              barWidth: 19,
+              data: [(newestData[2] / 20000 * 100).toFixed(2), (newestData[2] / 116000 * 100).toFixed(2), (newestData[3] / 170000 * 100).toFixed(2), (newestData[3] / 10000000 * 100).toFixed(2)],
+              label: {
+                show: true,
+                //position    : 'middle',
+                offset: [20, 2],
+                formatter: '{c}{a}',
+                color: '#fff',
+                fontSize: 15
+              },
+              barCategoryGap: 20,
+              itemStyle: {
+                normal: {
+                  barBorderRadius: 10,
+                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+                    offset: 0,
+                    color: '#fdc830'
+                  }, {
+                    offset: 1,
+                    color: '#f37335'
+                  }]),
+                }
+              },
+              zlevel: 1
+        
+            }, {
+              name: "进度条背景",
+              type: "bar",
+              barGap: "-100%",
+              barWidth: 19,
+              data: [100, 100, 100, 100],
+              color: "#2e5384",
+              itemStyle: {
+                normal: {
+                  barBorderRadius: 10
+                }
+              },
+            }
+          ]
+        };
+        dashboard_chart_id_chart.setOption(dashboard_chart_id_options);
+    });
+    </script>
+    
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>关于MySQL数据库自增主键，说几个容易被忽略的点</title>
     <url>/2019/10/12/mysql-auto-increment-id/</url>
     <content><![CDATA[<h2 id="自增主键是什么"><a href="#自增主键是什么" class="headerlink" title="自增主键是什么"></a>自增主键是什么</h2><p>自增主键是指在自增列上定义的主键。自增主键可以让主键索引尽量地保持递增顺序插入，避免了页分裂，索引也更紧凑。</p>
@@ -2785,6 +3679,2536 @@
       </categories>
       <tags>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗马数字（下）——对照表 1-1000</title>
+    <url>/2019/07/02/roman-numerals-1-1000/</url>
+    <content><![CDATA[<h2 id="罗马数字-1-1000-对照表"><a href="#罗马数字-1-1000-对照表" class="headerlink" title="罗马数字 1-1000 对照表"></a>罗马数字 1-1000 对照表</h2><span id="more"></span>
+<p><em><strong>PDF 版本下载:</strong></em> <em><a href="https://github.com/iuiuu/roman-numerals/blob/master/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%201-1000.pdf">roman numerals 1-1000.pdf</a></em></p>
+<p><em><strong>Excel 版本下载:</strong></em> <em><a href="https://github.com/iuiuu/roman-numerals/blob/master/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%201-1000.xlsx">roman numerals 1-1000.xlsx</a></em></p>
+<table>
+<thead>
+<tr>
+<th>1-250</th>
+<th></th>
+<th>251-500</th>
+<th></th>
+<th>501-750</th>
+<th></th>
+<th>751-1000</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>I</td>
+<td>251</td>
+<td>CCLI</td>
+<td>501</td>
+<td>DI</td>
+<td>751</td>
+<td>DCCLI</td>
+</tr>
+<tr>
+<td>2</td>
+<td>II</td>
+<td>252</td>
+<td>CCLII</td>
+<td>502</td>
+<td>DII</td>
+<td>752</td>
+<td>DCCLII</td>
+</tr>
+<tr>
+<td>3</td>
+<td>III</td>
+<td>253</td>
+<td>CCLIII</td>
+<td>503</td>
+<td>DIII</td>
+<td>753</td>
+<td>DCCLIII</td>
+</tr>
+<tr>
+<td>4</td>
+<td>IV</td>
+<td>254</td>
+<td>CCLIV</td>
+<td>504</td>
+<td>DIV</td>
+<td>754</td>
+<td>DCCLIV</td>
+</tr>
+<tr>
+<td>5</td>
+<td>V</td>
+<td>255</td>
+<td>CCLV</td>
+<td>505</td>
+<td>DV</td>
+<td>755</td>
+<td>DCCLV</td>
+</tr>
+<tr>
+<td>6</td>
+<td>VI</td>
+<td>256</td>
+<td>CCLVI</td>
+<td>506</td>
+<td>DVI</td>
+<td>756</td>
+<td>DCCLVI</td>
+</tr>
+<tr>
+<td>7</td>
+<td>VII</td>
+<td>257</td>
+<td>CCLVII</td>
+<td>507</td>
+<td>DVII</td>
+<td>757</td>
+<td>DCCLVII</td>
+</tr>
+<tr>
+<td>8</td>
+<td>VIII</td>
+<td>258</td>
+<td>CCLVIII</td>
+<td>508</td>
+<td>DVIII</td>
+<td>758</td>
+<td>DCCLVIII</td>
+</tr>
+<tr>
+<td>9</td>
+<td>IX</td>
+<td>259</td>
+<td>CCLVIX</td>
+<td>509</td>
+<td>DIX</td>
+<td>759</td>
+<td>DCCLIX</td>
+</tr>
+<tr>
+<td>10</td>
+<td>X</td>
+<td>260</td>
+<td>CCLX</td>
+<td>510</td>
+<td>DX</td>
+<td>760</td>
+<td>DCCLX</td>
+</tr>
+<tr>
+<td>11</td>
+<td>XI</td>
+<td>261</td>
+<td>CCLXI</td>
+<td>511</td>
+<td>DXI</td>
+<td>761</td>
+<td>DCCLXI</td>
+</tr>
+<tr>
+<td>12</td>
+<td>XII</td>
+<td>262</td>
+<td>CCLXII</td>
+<td>512</td>
+<td>DXII</td>
+<td>762</td>
+<td>DCCLXII</td>
+</tr>
+<tr>
+<td>13</td>
+<td>XIII</td>
+<td>263</td>
+<td>CCLXIII</td>
+<td>513</td>
+<td>DXIII</td>
+<td>763</td>
+<td>DCCLXIII</td>
+</tr>
+<tr>
+<td>14</td>
+<td>XIV</td>
+<td>264</td>
+<td>CCLXIV</td>
+<td>514</td>
+<td>DXIV</td>
+<td>764</td>
+<td>DCCLXIV</td>
+</tr>
+<tr>
+<td>15</td>
+<td>XV</td>
+<td>265</td>
+<td>CCLXV</td>
+<td>515</td>
+<td>DXV</td>
+<td>765</td>
+<td>DCCLXV</td>
+</tr>
+<tr>
+<td>16</td>
+<td>XVI</td>
+<td>266</td>
+<td>CCLXVI</td>
+<td>516</td>
+<td>DXVI</td>
+<td>766</td>
+<td>DCCLXVI</td>
+</tr>
+<tr>
+<td>17</td>
+<td>XVII</td>
+<td>267</td>
+<td>CCLXVII</td>
+<td>517</td>
+<td>DXVII</td>
+<td>767</td>
+<td>DCCLXVII</td>
+</tr>
+<tr>
+<td>18</td>
+<td>XVIII</td>
+<td>268</td>
+<td>CCLXVIII</td>
+<td>518</td>
+<td>DXVIII</td>
+<td>768</td>
+<td>DCCLXVIII</td>
+</tr>
+<tr>
+<td>19</td>
+<td>XIX</td>
+<td>269</td>
+<td>CCLXIX</td>
+<td>519</td>
+<td>DXIX</td>
+<td>769</td>
+<td>DCCLXIX</td>
+</tr>
+<tr>
+<td>20</td>
+<td>XX</td>
+<td>270</td>
+<td>CCLXX</td>
+<td>520</td>
+<td>DXX</td>
+<td>770</td>
+<td>DCCLXX</td>
+</tr>
+<tr>
+<td>21</td>
+<td>XXI</td>
+<td>271</td>
+<td>CCLXXI</td>
+<td>521</td>
+<td>DXXI</td>
+<td>771</td>
+<td>DCCLXXI</td>
+</tr>
+<tr>
+<td>22</td>
+<td>XXII</td>
+<td>272</td>
+<td>CCLXXII</td>
+<td>522</td>
+<td>DXXII</td>
+<td>772</td>
+<td>DCCLXXII</td>
+</tr>
+<tr>
+<td>23</td>
+<td>XXIII</td>
+<td>273</td>
+<td>CCLXXIII</td>
+<td>523</td>
+<td>DXXIII</td>
+<td>773</td>
+<td>DCCLXXIII</td>
+</tr>
+<tr>
+<td>24</td>
+<td>XXIV</td>
+<td>274</td>
+<td>CCLXXIV</td>
+<td>524</td>
+<td>DXXIV</td>
+<td>774</td>
+<td>DCCLXXIV</td>
+</tr>
+<tr>
+<td>25</td>
+<td>XXV</td>
+<td>275</td>
+<td>CCLXXV</td>
+<td>525</td>
+<td>DXXV</td>
+<td>775</td>
+<td>DCCLXXV</td>
+</tr>
+<tr>
+<td>26</td>
+<td>XXVI</td>
+<td>276</td>
+<td>CCLXXVI</td>
+<td>526</td>
+<td>DXXVI</td>
+<td>776</td>
+<td>DCCLXXVI</td>
+</tr>
+<tr>
+<td>27</td>
+<td>XXVII</td>
+<td>277</td>
+<td>CCLXXVII</td>
+<td>527</td>
+<td>DXXVII</td>
+<td>777</td>
+<td>DCCLXXVII</td>
+</tr>
+<tr>
+<td>28</td>
+<td>XXVIII</td>
+<td>278</td>
+<td>CCLXXIII</td>
+<td>528</td>
+<td>DXXVIII</td>
+<td>778</td>
+<td>DCCLXXVIII</td>
+</tr>
+<tr>
+<td>29</td>
+<td>XXIX</td>
+<td>279</td>
+<td>CCLXXIX</td>
+<td>529</td>
+<td>DXXIX</td>
+<td>779</td>
+<td>DCCLXXIX</td>
+</tr>
+<tr>
+<td>30</td>
+<td>XXX</td>
+<td>280</td>
+<td>CCLXXX</td>
+<td>530</td>
+<td>DXXX</td>
+<td>780</td>
+<td>DCCLXXX</td>
+</tr>
+<tr>
+<td>31</td>
+<td>XXXI</td>
+<td>281</td>
+<td>CCLXXXI</td>
+<td>531</td>
+<td>DXXXI</td>
+<td>781</td>
+<td>DCCLXXXI</td>
+</tr>
+<tr>
+<td>32</td>
+<td>XXXII</td>
+<td>282</td>
+<td>CCLXXXII</td>
+<td>532</td>
+<td>DXXXII</td>
+<td>782</td>
+<td>DCCLXXXII</td>
+</tr>
+<tr>
+<td>33</td>
+<td>XXXIII</td>
+<td>283</td>
+<td>CCLXXXIII</td>
+<td>533</td>
+<td>DXXXIII</td>
+<td>783</td>
+<td>DCCLXXXIII</td>
+</tr>
+<tr>
+<td>34</td>
+<td>XXXIV</td>
+<td>284</td>
+<td>CCLXXXIV</td>
+<td>534</td>
+<td>DXXXIV</td>
+<td>784</td>
+<td>DCCLXXXIV</td>
+</tr>
+<tr>
+<td>35</td>
+<td>XXXV</td>
+<td>285</td>
+<td>CCLXXXV</td>
+<td>535</td>
+<td>DXXXV</td>
+<td>785</td>
+<td>DCCLXXXV</td>
+</tr>
+<tr>
+<td>36</td>
+<td>XXXVI</td>
+<td>286</td>
+<td>CCLXXXVI</td>
+<td>536</td>
+<td>DXXXVI</td>
+<td>786</td>
+<td>DCCLXXXVI</td>
+</tr>
+<tr>
+<td>37</td>
+<td>XXXVII</td>
+<td>287</td>
+<td>CCLXXXVII</td>
+<td>537</td>
+<td>DXXXVII</td>
+<td>787</td>
+<td>DCCLXXXVII</td>
+</tr>
+<tr>
+<td>38</td>
+<td>XXXVIII</td>
+<td>288</td>
+<td>CCLXXXVIII</td>
+<td>538</td>
+<td>DXXXVIII</td>
+<td>788</td>
+<td>DCCLXXXVIII</td>
+</tr>
+<tr>
+<td>39</td>
+<td>XXXIX</td>
+<td>289</td>
+<td>CCLXXXIX</td>
+<td>539</td>
+<td>DXXXIX</td>
+<td>789</td>
+<td>DCCLXXXIX</td>
+</tr>
+<tr>
+<td>40</td>
+<td>XL</td>
+<td>290</td>
+<td>CCXC</td>
+<td>540</td>
+<td>DXL</td>
+<td>790</td>
+<td>DCCXC</td>
+</tr>
+<tr>
+<td>41</td>
+<td>XLI</td>
+<td>291</td>
+<td>CCXCI</td>
+<td>541</td>
+<td>DXLI</td>
+<td>791</td>
+<td>DCCXCI</td>
+</tr>
+<tr>
+<td>42</td>
+<td>XLII</td>
+<td>292</td>
+<td>CCXCII</td>
+<td>542</td>
+<td>DXLII</td>
+<td>792</td>
+<td>DCCXCII</td>
+</tr>
+<tr>
+<td>43</td>
+<td>XLIII</td>
+<td>293</td>
+<td>CCXCIII</td>
+<td>543</td>
+<td>DXLIII</td>
+<td>793</td>
+<td>DCCXCIII</td>
+</tr>
+<tr>
+<td>44</td>
+<td>XLIV</td>
+<td>294</td>
+<td>CCXCIV</td>
+<td>544</td>
+<td>DXLIV</td>
+<td>794</td>
+<td>DCCXCIV</td>
+</tr>
+<tr>
+<td>45</td>
+<td>XLV</td>
+<td>295</td>
+<td>CCXCV</td>
+<td>545</td>
+<td>DXLV</td>
+<td>795</td>
+<td>DCCXCV</td>
+</tr>
+<tr>
+<td>46</td>
+<td>XLVI</td>
+<td>296</td>
+<td>CCXCVI</td>
+<td>546</td>
+<td>DXLVI</td>
+<td>796</td>
+<td>DCCXCVI</td>
+</tr>
+<tr>
+<td>47</td>
+<td>XLVII</td>
+<td>297</td>
+<td>CCXCVII</td>
+<td>547</td>
+<td>DXLVII</td>
+<td>797</td>
+<td>DCCXCVII</td>
+</tr>
+<tr>
+<td>48</td>
+<td>XLVIII</td>
+<td>298</td>
+<td>CCXCVIII</td>
+<td>548</td>
+<td>DXLVIII</td>
+<td>798</td>
+<td>DCCXCVIII</td>
+</tr>
+<tr>
+<td>49</td>
+<td>XLIX</td>
+<td>299</td>
+<td>CCXCIX</td>
+<td>549</td>
+<td>DXLIX</td>
+<td>799</td>
+<td>DCCXCIX</td>
+</tr>
+<tr>
+<td>50</td>
+<td>L</td>
+<td>300</td>
+<td>CCC</td>
+<td>550</td>
+<td>DL</td>
+<td>800</td>
+<td>DCCC</td>
+</tr>
+<tr>
+<td>51</td>
+<td>LI</td>
+<td>301</td>
+<td>CCCI</td>
+<td>551</td>
+<td>DLI</td>
+<td>801</td>
+<td>DCCCI</td>
+</tr>
+<tr>
+<td>52</td>
+<td>LII</td>
+<td>302</td>
+<td>CCCII</td>
+<td>552</td>
+<td>DLII</td>
+<td>802</td>
+<td>DCCCII</td>
+</tr>
+<tr>
+<td>53</td>
+<td>LIII</td>
+<td>303</td>
+<td>CCCIII</td>
+<td>553</td>
+<td>DLIII</td>
+<td>803</td>
+<td>DCCCIII</td>
+</tr>
+<tr>
+<td>54</td>
+<td>LIV</td>
+<td>304</td>
+<td>CCCIV</td>
+<td>554</td>
+<td>DLIV</td>
+<td>804</td>
+<td>DCCCIV</td>
+</tr>
+<tr>
+<td>55</td>
+<td>LV</td>
+<td>305</td>
+<td>CCCV</td>
+<td>555</td>
+<td>DLV</td>
+<td>805</td>
+<td>DCCCV</td>
+</tr>
+<tr>
+<td>56</td>
+<td>LVI</td>
+<td>306</td>
+<td>CCCVI</td>
+<td>556</td>
+<td>DLVI</td>
+<td>806</td>
+<td>DCCCVI</td>
+</tr>
+<tr>
+<td>57</td>
+<td>LVII</td>
+<td>307</td>
+<td>CCCVII</td>
+<td>557</td>
+<td>DLVII</td>
+<td>807</td>
+<td>DCCCVII</td>
+</tr>
+<tr>
+<td>58</td>
+<td>LVIII</td>
+<td>308</td>
+<td>CCCVIII</td>
+<td>558</td>
+<td>DLVIII</td>
+<td>808</td>
+<td>DCCCVIII</td>
+</tr>
+<tr>
+<td>59</td>
+<td>LIX</td>
+<td>309</td>
+<td>CCCIX</td>
+<td>559</td>
+<td>DLIX</td>
+<td>809</td>
+<td>DCCCIX</td>
+</tr>
+<tr>
+<td>60</td>
+<td>LX</td>
+<td>310</td>
+<td>CCCX</td>
+<td>560</td>
+<td>DLX</td>
+<td>810</td>
+<td>DCCCX</td>
+</tr>
+<tr>
+<td>61</td>
+<td>LXI</td>
+<td>311</td>
+<td>CCCXI</td>
+<td>561</td>
+<td>DLXI</td>
+<td>811</td>
+<td>DCCCXI</td>
+</tr>
+<tr>
+<td>62</td>
+<td>LXII</td>
+<td>312</td>
+<td>CCCXII</td>
+<td>562</td>
+<td>DLXII</td>
+<td>812</td>
+<td>DCCCXII</td>
+</tr>
+<tr>
+<td>63</td>
+<td>LXIII</td>
+<td>313</td>
+<td>CCCXIII</td>
+<td>563</td>
+<td>DLXIII</td>
+<td>813</td>
+<td>DCCCXIII</td>
+</tr>
+<tr>
+<td>64</td>
+<td>LXIV</td>
+<td>314</td>
+<td>CCCXIV</td>
+<td>564</td>
+<td>DLXIV</td>
+<td>814</td>
+<td>DCCCXIV</td>
+</tr>
+<tr>
+<td>65</td>
+<td>LXV</td>
+<td>315</td>
+<td>CCCXV</td>
+<td>565</td>
+<td>DLXV</td>
+<td>815</td>
+<td>DCCCXV</td>
+</tr>
+<tr>
+<td>66</td>
+<td>LXVI</td>
+<td>316</td>
+<td>CCCXVI</td>
+<td>566</td>
+<td>DLXVI</td>
+<td>816</td>
+<td>DCCCXVI</td>
+</tr>
+<tr>
+<td>67</td>
+<td>LXVII</td>
+<td>317</td>
+<td>CCCXVII</td>
+<td>567</td>
+<td>DLXVII</td>
+<td>817</td>
+<td>DCCCXVII</td>
+</tr>
+<tr>
+<td>68</td>
+<td>LXVIII</td>
+<td>318</td>
+<td>CCCXVIII</td>
+<td>568</td>
+<td>DLXVIII</td>
+<td>818</td>
+<td>DCCCXVIII</td>
+</tr>
+<tr>
+<td>69</td>
+<td>LXIX</td>
+<td>319</td>
+<td>CCCXIX</td>
+<td>569</td>
+<td>DLXIX</td>
+<td>819</td>
+<td>DCCCXIX</td>
+</tr>
+<tr>
+<td>70</td>
+<td>LXX</td>
+<td>320</td>
+<td>CCCXX</td>
+<td>570</td>
+<td>DLXX</td>
+<td>820</td>
+<td>DCCCXX</td>
+</tr>
+<tr>
+<td>71</td>
+<td>LXXI</td>
+<td>321</td>
+<td>CCCXXI</td>
+<td>571</td>
+<td>DLXXI</td>
+<td>821</td>
+<td>DCCCXXI</td>
+</tr>
+<tr>
+<td>72</td>
+<td>LXXII</td>
+<td>322</td>
+<td>CCCXXII</td>
+<td>572</td>
+<td>DLXXII</td>
+<td>822</td>
+<td>DCCCXXII</td>
+</tr>
+<tr>
+<td>73</td>
+<td>LXXIII</td>
+<td>323</td>
+<td>CCCXXIII</td>
+<td>573</td>
+<td>DLXXIII</td>
+<td>823</td>
+<td>DCCCXXIII</td>
+</tr>
+<tr>
+<td>74</td>
+<td>LXXIV</td>
+<td>324</td>
+<td>CCCXXIV</td>
+<td>574</td>
+<td>DLXXIV</td>
+<td>824</td>
+<td>DCCCXXIV</td>
+</tr>
+<tr>
+<td>75</td>
+<td>LXXV</td>
+<td>325</td>
+<td>CCCXXV</td>
+<td>575</td>
+<td>DLXXV</td>
+<td>825</td>
+<td>DCCCXXV</td>
+</tr>
+<tr>
+<td>76</td>
+<td>LXXVI</td>
+<td>326</td>
+<td>CCCXXVI</td>
+<td>576</td>
+<td>DLXXVI</td>
+<td>826</td>
+<td>DCCCXXVI</td>
+</tr>
+<tr>
+<td>77</td>
+<td>LXXVII</td>
+<td>327</td>
+<td>CCCXXVII</td>
+<td>577</td>
+<td>DLXXVII</td>
+<td>827</td>
+<td>DCCCXXVII</td>
+</tr>
+<tr>
+<td>78</td>
+<td>LXXVIII</td>
+<td>328</td>
+<td>CCCXXVIII</td>
+<td>578</td>
+<td>DLXXVIII</td>
+<td>828</td>
+<td>DCCCXXVIII</td>
+</tr>
+<tr>
+<td>79</td>
+<td>LXXIX</td>
+<td>329</td>
+<td>CCCXXIX</td>
+<td>579</td>
+<td>DLXXIX</td>
+<td>829</td>
+<td>DCCCXXIX</td>
+</tr>
+<tr>
+<td>80</td>
+<td>LXXX</td>
+<td>330</td>
+<td>CCCXXX</td>
+<td>580</td>
+<td>DLXXX</td>
+<td>930</td>
+<td>DCCCXXX</td>
+</tr>
+<tr>
+<td>81</td>
+<td>LXXXI</td>
+<td>331</td>
+<td>CCCXXXI</td>
+<td>581</td>
+<td>DLXXXI</td>
+<td>831</td>
+<td>DCCCXXXI</td>
+</tr>
+<tr>
+<td>82</td>
+<td>LXXXII</td>
+<td>332</td>
+<td>CCCXXXII</td>
+<td>582</td>
+<td>DLXXXII</td>
+<td>832</td>
+<td>DCCCXXXII</td>
+</tr>
+<tr>
+<td>83</td>
+<td>LXXXIII</td>
+<td>333</td>
+<td>CCCXXXIII</td>
+<td>583</td>
+<td>DLXXXIII</td>
+<td>833</td>
+<td>DCCCXXXIII</td>
+</tr>
+<tr>
+<td>84</td>
+<td>LXXXIV</td>
+<td>334</td>
+<td>CCCXXXIV</td>
+<td>584</td>
+<td>DLXXXIV</td>
+<td>834</td>
+<td>DCCCXXXIV</td>
+</tr>
+<tr>
+<td>85</td>
+<td>LXXXV</td>
+<td>335</td>
+<td>CCCXXXV</td>
+<td>585</td>
+<td>DLXXXV</td>
+<td>835</td>
+<td>DCCCXXXV</td>
+</tr>
+<tr>
+<td>86</td>
+<td>LXXXVI</td>
+<td>336</td>
+<td>CCCXXXVI</td>
+<td>586</td>
+<td>DLXXXVI</td>
+<td>836</td>
+<td>DCCCXXXVI</td>
+</tr>
+<tr>
+<td>87</td>
+<td>LXXXVII</td>
+<td>337</td>
+<td>CCCXXXVII</td>
+<td>587</td>
+<td>DLXXXVII</td>
+<td>837</td>
+<td>DCCCXXXVII</td>
+</tr>
+<tr>
+<td>88</td>
+<td>LXXXVIII</td>
+<td>338</td>
+<td>CCCXXXVIII</td>
+<td>588</td>
+<td>DLXXXVIII</td>
+<td>838</td>
+<td>DCCCXXXVIII</td>
+</tr>
+<tr>
+<td>89</td>
+<td>LXXXIX</td>
+<td>339</td>
+<td>CCCXXXIX</td>
+<td>589</td>
+<td>DLXXXIX</td>
+<td>839</td>
+<td>DCCCXXXIX</td>
+</tr>
+<tr>
+<td>90</td>
+<td>XC</td>
+<td>340</td>
+<td>CCCXL</td>
+<td>590</td>
+<td>DXC</td>
+<td>840</td>
+<td>DCCCXL</td>
+</tr>
+<tr>
+<td>91</td>
+<td>XCI</td>
+<td>341</td>
+<td>CCCXLI</td>
+<td>591</td>
+<td>DXCI</td>
+<td>841</td>
+<td>DCCCXLI</td>
+</tr>
+<tr>
+<td>92</td>
+<td>XCII</td>
+<td>342</td>
+<td>CCCXLII</td>
+<td>592</td>
+<td>DXCII</td>
+<td>842</td>
+<td>DCCCXLII</td>
+</tr>
+<tr>
+<td>93</td>
+<td>XCIII</td>
+<td>343</td>
+<td>CCCXLIII</td>
+<td>593</td>
+<td>DXCIII</td>
+<td>843</td>
+<td>DCCCXLIII</td>
+</tr>
+<tr>
+<td>94</td>
+<td>XCIV</td>
+<td>344</td>
+<td>CCCXLIV</td>
+<td>594</td>
+<td>DXCIV</td>
+<td>844</td>
+<td>DCCCXLIV</td>
+</tr>
+<tr>
+<td>95</td>
+<td>XCV</td>
+<td>345</td>
+<td>CCCXLV</td>
+<td>595</td>
+<td>DXCV</td>
+<td>845</td>
+<td>DCCCXLV</td>
+</tr>
+<tr>
+<td>96</td>
+<td>XCVI</td>
+<td>346</td>
+<td>CCCXLVI</td>
+<td>596</td>
+<td>DXCVI</td>
+<td>846</td>
+<td>DCCCXLVI</td>
+</tr>
+<tr>
+<td>97</td>
+<td>XCVII</td>
+<td>347</td>
+<td>CCCXLVII</td>
+<td>597</td>
+<td>DXCVII</td>
+<td>847</td>
+<td>DCCCXLVII</td>
+</tr>
+<tr>
+<td>98</td>
+<td>XCVIII</td>
+<td>348</td>
+<td>CCCXLVIII</td>
+<td>598</td>
+<td>DXCVIII</td>
+<td>848</td>
+<td>DCCCXLVIII</td>
+</tr>
+<tr>
+<td>99</td>
+<td>XCIX</td>
+<td>349</td>
+<td>CCCXLIX</td>
+<td>599</td>
+<td>DXCIX</td>
+<td>849</td>
+<td>DCCCXLIX</td>
+</tr>
+<tr>
+<td>100</td>
+<td>C</td>
+<td>350</td>
+<td>CCCL</td>
+<td>600</td>
+<td>DC</td>
+<td>850</td>
+<td>DCCCL</td>
+</tr>
+<tr>
+<td>101</td>
+<td>CI</td>
+<td>351</td>
+<td>CCCLI</td>
+<td>601</td>
+<td>DCI</td>
+<td>851</td>
+<td>DCCCLI</td>
+</tr>
+<tr>
+<td>102</td>
+<td>CII</td>
+<td>352</td>
+<td>CCCLII</td>
+<td>602</td>
+<td>DCII</td>
+<td>852</td>
+<td>DCCCLII</td>
+</tr>
+<tr>
+<td>103</td>
+<td>CIII</td>
+<td>353</td>
+<td>CCCLIII</td>
+<td>603</td>
+<td>DCIII</td>
+<td>853</td>
+<td>DCCCLIII</td>
+</tr>
+<tr>
+<td>104</td>
+<td>CIV</td>
+<td>354</td>
+<td>CCCLIV</td>
+<td>604</td>
+<td>DCIV</td>
+<td>854</td>
+<td>DCCCLIV</td>
+</tr>
+<tr>
+<td>105</td>
+<td>CV</td>
+<td>355</td>
+<td>CCCLV</td>
+<td>605</td>
+<td>DCV</td>
+<td>855</td>
+<td>DCCCLV</td>
+</tr>
+<tr>
+<td>106</td>
+<td>CVI</td>
+<td>356</td>
+<td>CCCLVI</td>
+<td>606</td>
+<td>DCVI</td>
+<td>856</td>
+<td>DCCCLVI</td>
+</tr>
+<tr>
+<td>107</td>
+<td>CVII</td>
+<td>357</td>
+<td>CCCLVII</td>
+<td>607</td>
+<td>DCVII</td>
+<td>857</td>
+<td>DCCCLVII</td>
+</tr>
+<tr>
+<td>108</td>
+<td>CVIII</td>
+<td>358</td>
+<td>CCCLVIII</td>
+<td>608</td>
+<td>DCVIII</td>
+<td>858</td>
+<td>DCCCLVIII</td>
+</tr>
+<tr>
+<td>109</td>
+<td>CIX</td>
+<td>359</td>
+<td>CCCLIX</td>
+<td>609</td>
+<td>DCIX</td>
+<td>859</td>
+<td>DCCCLIX</td>
+</tr>
+<tr>
+<td>110</td>
+<td>CX</td>
+<td>360</td>
+<td>CCCLX</td>
+<td>610</td>
+<td>DCX</td>
+<td>860</td>
+<td>DCCCLX</td>
+</tr>
+<tr>
+<td>111</td>
+<td>CXI</td>
+<td>361</td>
+<td>CCCLXI</td>
+<td>611</td>
+<td>DCXI</td>
+<td>861</td>
+<td>DCCCLXI</td>
+</tr>
+<tr>
+<td>112</td>
+<td>CXII</td>
+<td>362</td>
+<td>CCCLXII</td>
+<td>612</td>
+<td>DCXII</td>
+<td>862</td>
+<td>DCCCLXII</td>
+</tr>
+<tr>
+<td>113</td>
+<td>CXIII</td>
+<td>363</td>
+<td>CCCLXIII</td>
+<td>613</td>
+<td>DCXIII</td>
+<td>863</td>
+<td>DCCCLXIII</td>
+</tr>
+<tr>
+<td>114</td>
+<td>CXIV</td>
+<td>364</td>
+<td>CCCLXIV</td>
+<td>614</td>
+<td>DCXIV</td>
+<td>864</td>
+<td>DCCCLXIV</td>
+</tr>
+<tr>
+<td>115</td>
+<td>CXV</td>
+<td>365</td>
+<td>CCCLXV</td>
+<td>615</td>
+<td>DCXV</td>
+<td>865</td>
+<td>DCCCLXV</td>
+</tr>
+<tr>
+<td>116</td>
+<td>CXVI</td>
+<td>366</td>
+<td>CCCLXVI</td>
+<td>616</td>
+<td>DCXVI</td>
+<td>866</td>
+<td>DCCCLXVI</td>
+</tr>
+<tr>
+<td>117</td>
+<td>CXVII</td>
+<td>367</td>
+<td>CCCLXVII</td>
+<td>617</td>
+<td>DCXVII</td>
+<td>867</td>
+<td>DCCCLXVII</td>
+</tr>
+<tr>
+<td>118</td>
+<td>CXVIII</td>
+<td>368</td>
+<td>CCCLXVIII</td>
+<td>618</td>
+<td>DCXVIII</td>
+<td>868</td>
+<td>DCCCLXVIII</td>
+</tr>
+<tr>
+<td>119</td>
+<td>CXIX</td>
+<td>369</td>
+<td>CCCLXIX</td>
+<td>619</td>
+<td>DCXIX</td>
+<td>869</td>
+<td>DCCCLXIX</td>
+</tr>
+<tr>
+<td>120</td>
+<td>CXX</td>
+<td>370</td>
+<td>CCCLXX</td>
+<td>620</td>
+<td>DCXX</td>
+<td>870</td>
+<td>DCCCLXX</td>
+</tr>
+<tr>
+<td>121</td>
+<td>CXXI</td>
+<td>371</td>
+<td>CCCLXXI</td>
+<td>621</td>
+<td>DCXXI</td>
+<td>871</td>
+<td>DCCCLXXI</td>
+</tr>
+<tr>
+<td>122</td>
+<td>CXXII</td>
+<td>372</td>
+<td>CCCLXXII</td>
+<td>622</td>
+<td>DCXXII</td>
+<td>872</td>
+<td>DCCCLXXII</td>
+</tr>
+<tr>
+<td>123</td>
+<td>CXXIII</td>
+<td>373</td>
+<td>CCCLXXIII</td>
+<td>623</td>
+<td>DCXXIII</td>
+<td>873</td>
+<td>DCCCLXXIII</td>
+</tr>
+<tr>
+<td>124</td>
+<td>CXXIV</td>
+<td>374</td>
+<td>CCCLXXIV</td>
+<td>624</td>
+<td>DCXXIV</td>
+<td>874</td>
+<td>DCCCLXXIV</td>
+</tr>
+<tr>
+<td>125</td>
+<td>CXXV</td>
+<td>375</td>
+<td>CCCLXXV</td>
+<td>625</td>
+<td>DCXXV</td>
+<td>875</td>
+<td>DCCCLXXV</td>
+</tr>
+<tr>
+<td>126</td>
+<td>CXXVI</td>
+<td>376</td>
+<td>CCCLXXVI</td>
+<td>626</td>
+<td>DCXXVI</td>
+<td>876</td>
+<td>DCCCLXXVI</td>
+</tr>
+<tr>
+<td>127</td>
+<td>CXXVII</td>
+<td>377</td>
+<td>CCCLXXVII</td>
+<td>627</td>
+<td>DCXXVII</td>
+<td>877</td>
+<td>DCCCLXXVII</td>
+</tr>
+<tr>
+<td>128</td>
+<td>CXXVIII</td>
+<td>378</td>
+<td>CCCLXXVIII</td>
+<td>628</td>
+<td>DCXXVIII</td>
+<td>878</td>
+<td>DCCCLXXVIII</td>
+</tr>
+<tr>
+<td>129</td>
+<td>CXXIX</td>
+<td>379</td>
+<td>CCCLXXIX</td>
+<td>629</td>
+<td>DCXXIX</td>
+<td>879</td>
+<td>DCCCLXXIX</td>
+</tr>
+<tr>
+<td>130</td>
+<td>CXXX</td>
+<td>380</td>
+<td>CCCLXXX</td>
+<td>630</td>
+<td>DCXXX</td>
+<td>880</td>
+<td>DCCCLXXX</td>
+</tr>
+<tr>
+<td>131</td>
+<td>CXXXI</td>
+<td>381</td>
+<td>CCCLXXXI</td>
+<td>631</td>
+<td>DCXXXI</td>
+<td>881</td>
+<td>DCCCLXXXI</td>
+</tr>
+<tr>
+<td>132</td>
+<td>CXXXII</td>
+<td>382</td>
+<td>CCCLXXXII</td>
+<td>632</td>
+<td>DCXXXII</td>
+<td>882</td>
+<td>DCCCLXXXII</td>
+</tr>
+<tr>
+<td>133</td>
+<td>CXXXIII</td>
+<td>383</td>
+<td>CCCLXXXIII</td>
+<td>633</td>
+<td>DCXXXIII</td>
+<td>883</td>
+<td>DCCCLXXXIII</td>
+</tr>
+<tr>
+<td>134</td>
+<td>CXXXIV</td>
+<td>384</td>
+<td>CCCLXXXIV</td>
+<td>634</td>
+<td>DCXXXIV</td>
+<td>884</td>
+<td>DCCCLXXXIV</td>
+</tr>
+<tr>
+<td>135</td>
+<td>CXXXV</td>
+<td>385</td>
+<td>CCCLXXXV</td>
+<td>635</td>
+<td>DCXXXV</td>
+<td>885</td>
+<td>DCCCLXXXV</td>
+</tr>
+<tr>
+<td>136</td>
+<td>CXXXVI</td>
+<td>386</td>
+<td>CCCLXXXVI</td>
+<td>636</td>
+<td>DCXXXVI</td>
+<td>886</td>
+<td>DCCCLXXXVI</td>
+</tr>
+<tr>
+<td>137</td>
+<td>CXXXVII</td>
+<td>387</td>
+<td>CCCLXXXVII</td>
+<td>637</td>
+<td>DCXXXVII</td>
+<td>887</td>
+<td>DCCCLXXXVII</td>
+</tr>
+<tr>
+<td>138</td>
+<td>CXXXVIII</td>
+<td>388</td>
+<td>CCCLXXXVIII</td>
+<td>638</td>
+<td>DCXXXVIII</td>
+<td>888</td>
+<td>DCCCLXXXVIII</td>
+</tr>
+<tr>
+<td>139</td>
+<td>CXXXIX</td>
+<td>389</td>
+<td>CCCLXXXIX</td>
+<td>639</td>
+<td>DCXXXIX</td>
+<td>889</td>
+<td>DCCCLXXXIX</td>
+</tr>
+<tr>
+<td>140</td>
+<td>CXL</td>
+<td>390</td>
+<td>CCCXC</td>
+<td>640</td>
+<td>DCXL</td>
+<td>890</td>
+<td>DCCCXC</td>
+</tr>
+<tr>
+<td>141</td>
+<td>CXLI</td>
+<td>391</td>
+<td>CCCXCI</td>
+<td>641</td>
+<td>DCXLI</td>
+<td>891</td>
+<td>DCCCXCI</td>
+</tr>
+<tr>
+<td>142</td>
+<td>CXLII</td>
+<td>392</td>
+<td>CCCXCII</td>
+<td>642</td>
+<td>DCXLII</td>
+<td>892</td>
+<td>DCCCXCII</td>
+</tr>
+<tr>
+<td>143</td>
+<td>CXLIII</td>
+<td>393</td>
+<td>CCCXCIII</td>
+<td>643</td>
+<td>DCXLIII</td>
+<td>893</td>
+<td>DCCCXCIII</td>
+</tr>
+<tr>
+<td>144</td>
+<td>CXLIV</td>
+<td>394</td>
+<td>CCCXCIV</td>
+<td>644</td>
+<td>DCXLIV</td>
+<td>894</td>
+<td>DCCCXCIV</td>
+</tr>
+<tr>
+<td>145</td>
+<td>CXLV</td>
+<td>395</td>
+<td>CCCXCV</td>
+<td>645</td>
+<td>DCXLV</td>
+<td>895</td>
+<td>DCCCXCV</td>
+</tr>
+<tr>
+<td>146</td>
+<td>CXLVI</td>
+<td>396</td>
+<td>CCCXCVI</td>
+<td>646</td>
+<td>DCXLVI</td>
+<td>896</td>
+<td>DCCCXCVI</td>
+</tr>
+<tr>
+<td>147</td>
+<td>CXLVII</td>
+<td>397</td>
+<td>CCCXCVII</td>
+<td>647</td>
+<td>DCXLVII</td>
+<td>897</td>
+<td>DCCCXCVII</td>
+</tr>
+<tr>
+<td>148</td>
+<td>CXLVIII</td>
+<td>398</td>
+<td>CCCVCVIII</td>
+<td>648</td>
+<td>DCXLVIII</td>
+<td>898</td>
+<td>DCCCXCVIII</td>
+</tr>
+<tr>
+<td>149</td>
+<td>CXLIX</td>
+<td>399</td>
+<td>CCCXCIX</td>
+<td>649</td>
+<td>DCXLIX</td>
+<td>899</td>
+<td>DCCCXCIX</td>
+</tr>
+<tr>
+<td>150</td>
+<td>CL</td>
+<td>400</td>
+<td>CD</td>
+<td>650</td>
+<td>DCL</td>
+<td>900</td>
+<td>CM</td>
+</tr>
+<tr>
+<td>151</td>
+<td>CLI</td>
+<td>401</td>
+<td>CDI</td>
+<td>651</td>
+<td>DCLI</td>
+<td>901</td>
+<td>CMI</td>
+</tr>
+<tr>
+<td>152</td>
+<td>CLII</td>
+<td>402</td>
+<td>CDII</td>
+<td>652</td>
+<td>DCLII</td>
+<td>902</td>
+<td>CMII</td>
+</tr>
+<tr>
+<td>153</td>
+<td>CLIII</td>
+<td>403</td>
+<td>CDIII</td>
+<td>653</td>
+<td>DCLIII</td>
+<td>903</td>
+<td>CMIII</td>
+</tr>
+<tr>
+<td>154</td>
+<td>CLIV</td>
+<td>404</td>
+<td>CDIV</td>
+<td>654</td>
+<td>DCLIV</td>
+<td>904</td>
+<td>CMIV</td>
+</tr>
+<tr>
+<td>155</td>
+<td>CLV</td>
+<td>405</td>
+<td>CDV</td>
+<td>655</td>
+<td>DCLV</td>
+<td>905</td>
+<td>CMV</td>
+</tr>
+<tr>
+<td>156</td>
+<td>CLVI</td>
+<td>406</td>
+<td>CDVI</td>
+<td>656</td>
+<td>DCLVI</td>
+<td>906</td>
+<td>CMVI</td>
+</tr>
+<tr>
+<td>157</td>
+<td>CLVII</td>
+<td>407</td>
+<td>CDVII</td>
+<td>657</td>
+<td>DCLVII</td>
+<td>907</td>
+<td>CMVII</td>
+</tr>
+<tr>
+<td>158</td>
+<td>CLVIII</td>
+<td>408</td>
+<td>CDVIII</td>
+<td>658</td>
+<td>DCLVIII</td>
+<td>908</td>
+<td>CMVIII</td>
+</tr>
+<tr>
+<td>159</td>
+<td>CLIX</td>
+<td>409</td>
+<td>CDIX</td>
+<td>659</td>
+<td>DCLIX</td>
+<td>909</td>
+<td>CMIX</td>
+</tr>
+<tr>
+<td>160</td>
+<td>CLX</td>
+<td>410</td>
+<td>CDX</td>
+<td>660</td>
+<td>DCLX</td>
+<td>910</td>
+<td>CMX</td>
+</tr>
+<tr>
+<td>161</td>
+<td>CLXI</td>
+<td>411</td>
+<td>CDXI</td>
+<td>661</td>
+<td>DCLXI</td>
+<td>911</td>
+<td>CMXI</td>
+</tr>
+<tr>
+<td>162</td>
+<td>CLXII</td>
+<td>412</td>
+<td>CDXII</td>
+<td>662</td>
+<td>DCLXII</td>
+<td>912</td>
+<td>CMXII</td>
+</tr>
+<tr>
+<td>163</td>
+<td>CLXIII</td>
+<td>413</td>
+<td>CDXIII</td>
+<td>663</td>
+<td>DCLXIII</td>
+<td>913</td>
+<td>CMXIII</td>
+</tr>
+<tr>
+<td>164</td>
+<td>CLXIV</td>
+<td>414</td>
+<td>CDXIV</td>
+<td>664</td>
+<td>DCLXIV</td>
+<td>914</td>
+<td>CMXIV</td>
+</tr>
+<tr>
+<td>165</td>
+<td>CLXV</td>
+<td>415</td>
+<td>CDXV</td>
+<td>665</td>
+<td>DCLXV</td>
+<td>915</td>
+<td>CMXV</td>
+</tr>
+<tr>
+<td>166</td>
+<td>CLXVI</td>
+<td>416</td>
+<td>CDXVI</td>
+<td>666</td>
+<td>DCLXVI</td>
+<td>916</td>
+<td>CMXVI</td>
+</tr>
+<tr>
+<td>167</td>
+<td>CLXVII</td>
+<td>417</td>
+<td>CDXVII</td>
+<td>667</td>
+<td>DCLXVII</td>
+<td>917</td>
+<td>CMXVII</td>
+</tr>
+<tr>
+<td>168</td>
+<td>CLXVIII</td>
+<td>418</td>
+<td>CDXVIII</td>
+<td>668</td>
+<td>DCLXVIII</td>
+<td>918</td>
+<td>CMXVIII</td>
+</tr>
+<tr>
+<td>169</td>
+<td>CLXIX</td>
+<td>419</td>
+<td>CDXIX</td>
+<td>669</td>
+<td>DCLXIX</td>
+<td>919</td>
+<td>CMXIX</td>
+</tr>
+<tr>
+<td>170</td>
+<td>CLXX</td>
+<td>420</td>
+<td>CDXX</td>
+<td>670</td>
+<td>DCLXX</td>
+<td>920</td>
+<td>CMXX</td>
+</tr>
+<tr>
+<td>171</td>
+<td>CLXXI</td>
+<td>421</td>
+<td>CDXXI</td>
+<td>671</td>
+<td>DCLXXI</td>
+<td>921</td>
+<td>CMXXI</td>
+</tr>
+<tr>
+<td>172</td>
+<td>CLXXII</td>
+<td>422</td>
+<td>CDXXII</td>
+<td>672</td>
+<td>DCLXXII</td>
+<td>922</td>
+<td>CMXXII</td>
+</tr>
+<tr>
+<td>173</td>
+<td>CLXXIII</td>
+<td>423</td>
+<td>CDXXIII</td>
+<td>673</td>
+<td>DCLXXIII</td>
+<td>923</td>
+<td>CMXXIII</td>
+</tr>
+<tr>
+<td>174</td>
+<td>CLXXIV</td>
+<td>424</td>
+<td>CDXXIV</td>
+<td>674</td>
+<td>DCLXXIV</td>
+<td>924</td>
+<td>CMXXIV</td>
+</tr>
+<tr>
+<td>175</td>
+<td>CLXXV</td>
+<td>425</td>
+<td>CDXXV</td>
+<td>675</td>
+<td>DCLXXV</td>
+<td>925</td>
+<td>CMXXV</td>
+</tr>
+<tr>
+<td>176</td>
+<td>CLXXVI</td>
+<td>426</td>
+<td>CDXXVI</td>
+<td>676</td>
+<td>DCLXXVI</td>
+<td>926</td>
+<td>CMXXVI</td>
+</tr>
+<tr>
+<td>177</td>
+<td>CLXXVII</td>
+<td>427</td>
+<td>CDXXVII</td>
+<td>677</td>
+<td>DCLXXVII</td>
+<td>927</td>
+<td>CMXXVII</td>
+</tr>
+<tr>
+<td>178</td>
+<td>CLXXVIII</td>
+<td>428</td>
+<td>CDXXVIII</td>
+<td>678</td>
+<td>DCLXXVIII</td>
+<td>928</td>
+<td>CMXXVIII</td>
+</tr>
+<tr>
+<td>179</td>
+<td>CLXXIX</td>
+<td>429</td>
+<td>CDXXIX</td>
+<td>679</td>
+<td>DCLXXIX</td>
+<td>929</td>
+<td>CMXXIX</td>
+</tr>
+<tr>
+<td>180</td>
+<td>CLXXX</td>
+<td>430</td>
+<td>CDXXX</td>
+<td>680</td>
+<td>DCLXXX</td>
+<td>930</td>
+<td>CMXXX</td>
+</tr>
+<tr>
+<td>181</td>
+<td>CLXXXI</td>
+<td>431</td>
+<td>CDXXXI</td>
+<td>681</td>
+<td>DCLXXXI</td>
+<td>931</td>
+<td>CMXXXI</td>
+</tr>
+<tr>
+<td>182</td>
+<td>CLXXXII</td>
+<td>432</td>
+<td>CDXXXII</td>
+<td>682</td>
+<td>DCLXXXII</td>
+<td>932</td>
+<td>CMXXXII</td>
+</tr>
+<tr>
+<td>183</td>
+<td>CLXXXIII</td>
+<td>433</td>
+<td>CDXXXIII</td>
+<td>683</td>
+<td>DCLXXXIII</td>
+<td>933</td>
+<td>CMXXXIII</td>
+</tr>
+<tr>
+<td>184</td>
+<td>CLXXXIV</td>
+<td>434</td>
+<td>CDXXXIV</td>
+<td>684</td>
+<td>DCLXXXIV</td>
+<td>934</td>
+<td>CMXXXIV</td>
+</tr>
+<tr>
+<td>185</td>
+<td>CLXXXV</td>
+<td>435</td>
+<td>CDXXXV</td>
+<td>685</td>
+<td>DCLXXXV</td>
+<td>935</td>
+<td>CMXXXV</td>
+</tr>
+<tr>
+<td>186</td>
+<td>CLXXXVI</td>
+<td>436</td>
+<td>CDXXXVI</td>
+<td>686</td>
+<td>DCLXXXVI</td>
+<td>936</td>
+<td>CMXXXVI</td>
+</tr>
+<tr>
+<td>187</td>
+<td>CLXXXVII</td>
+<td>437</td>
+<td>CDXXXVII</td>
+<td>687</td>
+<td>DCLXXXVII</td>
+<td>937</td>
+<td>CMXXXVII</td>
+</tr>
+<tr>
+<td>188</td>
+<td>CLXXXVIII</td>
+<td>438</td>
+<td>CDXXXVIII</td>
+<td>688</td>
+<td>DCLXXXVIII</td>
+<td>938</td>
+<td>CMXXXVIII</td>
+</tr>
+<tr>
+<td>189</td>
+<td>CLXXXIX</td>
+<td>439</td>
+<td>CDXXXIX</td>
+<td>689</td>
+<td>DCLXXXIX</td>
+<td>939</td>
+<td>CMXXXIX</td>
+</tr>
+<tr>
+<td>190</td>
+<td>CXC</td>
+<td>440</td>
+<td>CDXL</td>
+<td>690</td>
+<td>DCXC</td>
+<td>940</td>
+<td>CMXL</td>
+</tr>
+<tr>
+<td>191</td>
+<td>CXCI</td>
+<td>441</td>
+<td>CDXLI</td>
+<td>691</td>
+<td>DCXCI</td>
+<td>941</td>
+<td>CMXLI</td>
+</tr>
+<tr>
+<td>192</td>
+<td>CXCII</td>
+<td>442</td>
+<td>CDXLII</td>
+<td>692</td>
+<td>DCXCII</td>
+<td>942</td>
+<td>CMXLII</td>
+</tr>
+<tr>
+<td>193</td>
+<td>CXCIII</td>
+<td>443</td>
+<td>CDXLIII</td>
+<td>693</td>
+<td>DCXCIII</td>
+<td>943</td>
+<td>CMXLIII</td>
+</tr>
+<tr>
+<td>194</td>
+<td>CXCIV</td>
+<td>444</td>
+<td>CDXLIV</td>
+<td>694</td>
+<td>DCXCIV</td>
+<td>944</td>
+<td>CMXLIV</td>
+</tr>
+<tr>
+<td>195</td>
+<td>CXCV</td>
+<td>445</td>
+<td>CDXLV</td>
+<td>695</td>
+<td>DCXCV</td>
+<td>945</td>
+<td>CMXLV</td>
+</tr>
+<tr>
+<td>196</td>
+<td>CXCVI</td>
+<td>446</td>
+<td>CDXLVI</td>
+<td>696</td>
+<td>DCXCVI</td>
+<td>946</td>
+<td>CMXLVI</td>
+</tr>
+<tr>
+<td>197</td>
+<td>CXCVII</td>
+<td>447</td>
+<td>CDXLVII</td>
+<td>697</td>
+<td>DCXCVII</td>
+<td>947</td>
+<td>CMXLVII</td>
+</tr>
+<tr>
+<td>198</td>
+<td>CXCVIII</td>
+<td>448</td>
+<td>CDXLVIII</td>
+<td>698</td>
+<td>DCXCVIII</td>
+<td>948</td>
+<td>CMXLVIII</td>
+</tr>
+<tr>
+<td>199</td>
+<td>CXCIX</td>
+<td>449</td>
+<td>CDXLIX</td>
+<td>699</td>
+<td>DCXCIX</td>
+<td>949</td>
+<td>CMXLIX</td>
+</tr>
+<tr>
+<td>200</td>
+<td>CC</td>
+<td>450</td>
+<td>CDL</td>
+<td>700</td>
+<td>DCC</td>
+<td>950</td>
+<td>CML</td>
+</tr>
+<tr>
+<td>201</td>
+<td>CCI</td>
+<td>451</td>
+<td>CDLI</td>
+<td>701</td>
+<td>DCCI</td>
+<td>951</td>
+<td>CMLI</td>
+</tr>
+<tr>
+<td>202</td>
+<td>CCII</td>
+<td>452</td>
+<td>CDLII</td>
+<td>702</td>
+<td>DCCII</td>
+<td>952</td>
+<td>CMLII</td>
+</tr>
+<tr>
+<td>203</td>
+<td>CCIII</td>
+<td>453</td>
+<td>CDLIII</td>
+<td>703</td>
+<td>DCCIII</td>
+<td>953</td>
+<td>CMLIII</td>
+</tr>
+<tr>
+<td>204</td>
+<td>CCIV</td>
+<td>454</td>
+<td>CDLIV</td>
+<td>704</td>
+<td>DCCIV</td>
+<td>954</td>
+<td>CMLIV</td>
+</tr>
+<tr>
+<td>205</td>
+<td>CCV</td>
+<td>455</td>
+<td>CDLV</td>
+<td>705</td>
+<td>DCCV</td>
+<td>955</td>
+<td>CMLV</td>
+</tr>
+<tr>
+<td>206</td>
+<td>CCVI</td>
+<td>456</td>
+<td>CDLVI</td>
+<td>706</td>
+<td>DCCVI</td>
+<td>956</td>
+<td>CMLVI</td>
+</tr>
+<tr>
+<td>207</td>
+<td>CCVII</td>
+<td>457</td>
+<td>CDLVII</td>
+<td>707</td>
+<td>DCCVII</td>
+<td>957</td>
+<td>CMLVII</td>
+</tr>
+<tr>
+<td>208</td>
+<td>CCVIII</td>
+<td>458</td>
+<td>CDLVIII</td>
+<td>708</td>
+<td>DCCVIII</td>
+<td>958</td>
+<td>CMLVIII</td>
+</tr>
+<tr>
+<td>209</td>
+<td>CCIX</td>
+<td>459</td>
+<td>CDLIX</td>
+<td>709</td>
+<td>DCCIX</td>
+<td>959</td>
+<td>CMLIX</td>
+</tr>
+<tr>
+<td>210</td>
+<td>CCX</td>
+<td>460</td>
+<td>CDLX</td>
+<td>710</td>
+<td>DCCX</td>
+<td>960</td>
+<td>CMLX</td>
+</tr>
+<tr>
+<td>211</td>
+<td>CCXI</td>
+<td>461</td>
+<td>CDLXI</td>
+<td>711</td>
+<td>DCCXI</td>
+<td>961</td>
+<td>CMLXI</td>
+</tr>
+<tr>
+<td>212</td>
+<td>CCXII</td>
+<td>462</td>
+<td>CDLXII</td>
+<td>712</td>
+<td>DCCXII</td>
+<td>962</td>
+<td>CMLXII</td>
+</tr>
+<tr>
+<td>213</td>
+<td>CCXIII</td>
+<td>463</td>
+<td>CDLXIII</td>
+<td>713</td>
+<td>DCCXIII</td>
+<td>963</td>
+<td>CMLXIII</td>
+</tr>
+<tr>
+<td>214</td>
+<td>CCXIV</td>
+<td>464</td>
+<td>CDLXIV</td>
+<td>714</td>
+<td>DCCXIV</td>
+<td>964</td>
+<td>CMLXIV</td>
+</tr>
+<tr>
+<td>215</td>
+<td>CCXV</td>
+<td>465</td>
+<td>CDLXV</td>
+<td>715</td>
+<td>DCCXV</td>
+<td>965</td>
+<td>CMLXV</td>
+</tr>
+<tr>
+<td>216</td>
+<td>CCXVI</td>
+<td>466</td>
+<td>CDLXVI</td>
+<td>716</td>
+<td>DCCXVI</td>
+<td>966</td>
+<td>CMLXVI</td>
+</tr>
+<tr>
+<td>217</td>
+<td>CCXVII</td>
+<td>467</td>
+<td>CDLXVII</td>
+<td>717</td>
+<td>DCCXVII</td>
+<td>967</td>
+<td>CMLXVII</td>
+</tr>
+<tr>
+<td>218</td>
+<td>CCXVIII</td>
+<td>468</td>
+<td>CDLXVIII</td>
+<td>718</td>
+<td>DCCXVIII</td>
+<td>968</td>
+<td>CMLXVIII</td>
+</tr>
+<tr>
+<td>219</td>
+<td>CCXIX</td>
+<td>469</td>
+<td>CDLXIX</td>
+<td>719</td>
+<td>DCCXIX</td>
+<td>969</td>
+<td>CMLXIX</td>
+</tr>
+<tr>
+<td>220</td>
+<td>CCXX</td>
+<td>470</td>
+<td>CDLXX</td>
+<td>720</td>
+<td>DCCXX</td>
+<td>970</td>
+<td>CMLXX</td>
+</tr>
+<tr>
+<td>221</td>
+<td>CCXXI</td>
+<td>471</td>
+<td>CDLXXI</td>
+<td>721</td>
+<td>DCCXXI</td>
+<td>971</td>
+<td>CMLXXI</td>
+</tr>
+<tr>
+<td>222</td>
+<td>CCXXII</td>
+<td>472</td>
+<td>CDLXXII</td>
+<td>722</td>
+<td>DCCXXII</td>
+<td>972</td>
+<td>CMLXXII</td>
+</tr>
+<tr>
+<td>223</td>
+<td>CCXXIII</td>
+<td>473</td>
+<td>CDLXXIII</td>
+<td>723</td>
+<td>DCCXXIII</td>
+<td>973</td>
+<td>CMLXXIII</td>
+</tr>
+<tr>
+<td>224</td>
+<td>CCXXIV</td>
+<td>474</td>
+<td>CDLXXIV</td>
+<td>724</td>
+<td>DCCXXIV</td>
+<td>974</td>
+<td>CMLXXIV</td>
+</tr>
+<tr>
+<td>225</td>
+<td>CCXXV</td>
+<td>475</td>
+<td>CDLXXV</td>
+<td>725</td>
+<td>DCCXXV</td>
+<td>975</td>
+<td>CMLXXV</td>
+</tr>
+<tr>
+<td>226</td>
+<td>CCXXVI</td>
+<td>476</td>
+<td>CDLXXVI</td>
+<td>726</td>
+<td>DCCXXVI</td>
+<td>976</td>
+<td>CMLXXVI</td>
+</tr>
+<tr>
+<td>227</td>
+<td>CCXXVII</td>
+<td>477</td>
+<td>CDLXXVII</td>
+<td>727</td>
+<td>DCCXXVII</td>
+<td>977</td>
+<td>CMLXXVII</td>
+</tr>
+<tr>
+<td>228</td>
+<td>CCXXVIII</td>
+<td>478</td>
+<td>CDLXXVIII</td>
+<td>728</td>
+<td>DCCXXVIII</td>
+<td>978</td>
+<td>CMLXXVIII</td>
+</tr>
+<tr>
+<td>229</td>
+<td>CCXXIX</td>
+<td>479</td>
+<td>CDLXXIX</td>
+<td>729</td>
+<td>DCCXXIX</td>
+<td>979</td>
+<td>CMLXXIX</td>
+</tr>
+<tr>
+<td>230</td>
+<td>CCXXX</td>
+<td>480</td>
+<td>CDLXXX</td>
+<td>730</td>
+<td>DCCXXX</td>
+<td>980</td>
+<td>CMLXXX</td>
+</tr>
+<tr>
+<td>231</td>
+<td>CCXXXI</td>
+<td>481</td>
+<td>CDLXXXI</td>
+<td>731</td>
+<td>DCCXXXI</td>
+<td>981</td>
+<td>CMLXXXI</td>
+</tr>
+<tr>
+<td>232</td>
+<td>CCXXXII</td>
+<td>482</td>
+<td>CDDLXXXII</td>
+<td>732</td>
+<td>DCCXXXII</td>
+<td>982</td>
+<td>CMLXXXII</td>
+</tr>
+<tr>
+<td>233</td>
+<td>CCXXXIII</td>
+<td>483</td>
+<td>CDLXXXIII</td>
+<td>733</td>
+<td>DCCXXXIII</td>
+<td>983</td>
+<td>CMLXXXIII</td>
+</tr>
+<tr>
+<td>234</td>
+<td>CCXXXIV</td>
+<td>484</td>
+<td>CDLXXXIV</td>
+<td>734</td>
+<td>DCCXXXIV</td>
+<td>984</td>
+<td>CMLXXXIV</td>
+</tr>
+<tr>
+<td>235</td>
+<td>CCXXXV</td>
+<td>485</td>
+<td>CDLXXXV</td>
+<td>735</td>
+<td>DCCXXXV</td>
+<td>985</td>
+<td>CMLXXXV</td>
+</tr>
+<tr>
+<td>236</td>
+<td>CCXXXVI</td>
+<td>486</td>
+<td>CDLXXXVI</td>
+<td>736</td>
+<td>DCCXXXVI</td>
+<td>986</td>
+<td>CMLXXXVI</td>
+</tr>
+<tr>
+<td>237</td>
+<td>CCXXXVII</td>
+<td>487</td>
+<td>CDLXXXVII</td>
+<td>737</td>
+<td>DCCXXXVII</td>
+<td>987</td>
+<td>CMLXXXVII</td>
+</tr>
+<tr>
+<td>238</td>
+<td>CCXXXVIII</td>
+<td>488</td>
+<td>CDLXXXVIII</td>
+<td>738</td>
+<td>DCCXXXVIII</td>
+<td>988</td>
+<td>CMLXXXVIII</td>
+</tr>
+<tr>
+<td>239</td>
+<td>CCXXXIX</td>
+<td>489</td>
+<td>CDLXXXIX</td>
+<td>739</td>
+<td>DCCXXXIX</td>
+<td>989</td>
+<td>CMLXXXIX</td>
+</tr>
+<tr>
+<td>240</td>
+<td>CCXL</td>
+<td>490</td>
+<td>CDXC</td>
+<td>740</td>
+<td>DCCXL</td>
+<td>990</td>
+<td>CMXC</td>
+</tr>
+<tr>
+<td>241</td>
+<td>CCXLI</td>
+<td>491</td>
+<td>CDXCI</td>
+<td>741</td>
+<td>DCCXLI</td>
+<td>991</td>
+<td>CMXCI</td>
+</tr>
+<tr>
+<td>242</td>
+<td>CCXLII</td>
+<td>492</td>
+<td>CDXCII</td>
+<td>742</td>
+<td>DCCXLII</td>
+<td>992</td>
+<td>CMXCII</td>
+</tr>
+<tr>
+<td>243</td>
+<td>CCXLIII</td>
+<td>493</td>
+<td>CDXCIII</td>
+<td>743</td>
+<td>DCCXLIII</td>
+<td>993</td>
+<td>CMXCIII</td>
+</tr>
+<tr>
+<td>244</td>
+<td>CCXLIV</td>
+<td>494</td>
+<td>CDXCIV</td>
+<td>744</td>
+<td>DCCXLIV</td>
+<td>994</td>
+<td>CMXCIV</td>
+</tr>
+<tr>
+<td>245</td>
+<td>CCXLV</td>
+<td>495</td>
+<td>CDXCV</td>
+<td>745</td>
+<td>DCCXLV</td>
+<td>995</td>
+<td>CMXCV</td>
+</tr>
+<tr>
+<td>246</td>
+<td>CCXLVI</td>
+<td>496</td>
+<td>CDXCVI</td>
+<td>746</td>
+<td>DCCXLVI</td>
+<td>996</td>
+<td>CMXCVI</td>
+</tr>
+<tr>
+<td>247</td>
+<td>CCXLVII</td>
+<td>497</td>
+<td>CDXCVII</td>
+<td>747</td>
+<td>DCCXLVII</td>
+<td>997</td>
+<td>CMXCVII</td>
+</tr>
+<tr>
+<td>248</td>
+<td>CCXLVIII</td>
+<td>498</td>
+<td>CDXCVIII</td>
+<td>748</td>
+<td>DCCXLVIII</td>
+<td>998</td>
+<td>CMXCVIII</td>
+</tr>
+<tr>
+<td>249</td>
+<td>CCXLIX</td>
+<td>499</td>
+<td>CDXCIX</td>
+<td>749</td>
+<td>DCCXLIX</td>
+<td>999</td>
+<td>CMXCIX</td>
+</tr>
+<tr>
+<td>250</td>
+<td>CCL</td>
+<td>500</td>
+<td>D</td>
+<td>750</td>
+<td>DCCL</td>
+<td>1000</td>
+<td>M</td>
+</tr>
+</tbody></table>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>罗马数字</tag>
       </tags>
   </entry>
 </search>
