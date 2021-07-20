@@ -117,7 +117,7 @@
       </categories>
       <tags>
         <tag>CentOS7</tag>
-        <tag>JAVA</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -342,7 +342,7 @@
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>git</tag>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -362,7 +362,6 @@
 ]]></content>
       <categories>
         <category>编程文摘</category>
-        <category>DevOps</category>
       </categories>
       <tags>
         <tag>CentOS7</tag>
@@ -3215,14 +3214,14 @@
 <p>2046-2050年定投执行计划</p>
 <p>2051年（1月、2月）定投执行计划</p>
 <h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts7158" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts3742" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts7092" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts5510" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts7158'));
-    var bar_chart = echarts.init(document.getElementById('echarts3742'));
+    var myChart = echarts.init(document.getElementById('echarts7092'));
+    var bar_chart = echarts.init(document.getElementById('echarts5510'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3335,14 +3334,14 @@
     <url>/2021/07/17/investment-plan-progress/</url>
     <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
 <h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts8113" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts5060" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts1477" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts3046" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts8113'));
-    var bar_chart = echarts.init(document.getElementById('echarts5060'));
+    var myChart = echarts.init(document.getElementById('echarts1477'));
+    var bar_chart = echarts.init(document.getElementById('echarts3046'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3439,12 +3438,12 @@
 <p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
 </blockquote>
 <h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts3291" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <div id="echarts7466" style="width: 100%;height: 200px;margin: 0 auto"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts3291'));
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts7466'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
