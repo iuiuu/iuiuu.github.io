@@ -1018,8 +1018,41 @@
       </tags>
   </entry>
   <entry>
+    <title>使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</title>
+    <url>/2020/06/29/java-list-string-join/</url>
+    <content><![CDATA[<p>在日常开发工作中，经常会遇到需要将 <code>List&lt;String&gt;</code> 转换为使用某个符号连接的字符串。如将 <code>List&lt;String&gt;</code> 转换为按英文逗号（<code>,</code>）分隔的字符串：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：</span></span><br><span class="line"><span class="comment">// Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>最容易想到的拼接方式，是通过 <code>for</code> 循环来实现。不过，如果你使用 Java 8 或以上的版本进行开发，实现该功能将变得非常简单，通常有以下两种方法。</p>
+<p><strong>方法一：使用 <code>String.join</code>，主要代码如下：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示 String.join 方法的使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line">        System.out.println(String.join(<span class="string">&quot;,&quot;</span>, weekList));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>方法二：采用流的方式（<code>stream()</code>）来写，就像下面这样，仍然能够得到同样的结果：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示流方式（stream）进行拼接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        String str = weekList.stream().collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>此外，如果你想在连接成字符串之前，先对元素进行其他的操作，如过滤元素、转成大写等，采用流的方式实现也很方便。以下代码展示如何将整个字符串在连接之前先转为大写：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示在连接之前先将元素转为大写</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">      String str = String str = weekList.stream()</span><br><span class="line">                .map(String::toUpperCase)</span><br><span class="line">                .collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">      </span><br><span class="line">      System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在macOS编译JDK14</title>
-    <url>/2020/05/08/compile-jdk-14/</url>
+    <url>/2020/05/08/apache-kafka-intro/</url>
     <content><![CDATA[<h2 id="一、系统环境"><a href="#一、系统环境" class="headerlink" title="一、系统环境"></a>一、系统环境</h2><p>操作系统：macOS 10.15.4（Catalina）</p>
 <p>处理器：2.6 GHz 双核Intel Core i5</p>
 <p>内存：8G</p>
@@ -3306,14 +3339,14 @@
 <p>2046-2050年定投执行计划</p>
 <p>2051年（1月、2月）定投执行计划</p>
 <h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts3012" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts6645" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts917" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts488" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts3012'));
-    var bar_chart = echarts.init(document.getElementById('echarts6645'));
+    var myChart = echarts.init(document.getElementById('echarts917'));
+    var bar_chart = echarts.init(document.getElementById('echarts488'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3422,51 +3455,18 @@
       </tags>
   </entry>
   <entry>
-    <title>使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</title>
-    <url>/2020/06/29/java-list-string-join/</url>
-    <content><![CDATA[<p>在日常开发工作中，经常会遇到需要将 <code>List&lt;String&gt;</code> 转换为使用某个符号连接的字符串。如将 <code>List&lt;String&gt;</code> 转换为按英文逗号（<code>,</code>）分隔的字符串：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：</span></span><br><span class="line"><span class="comment">// Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>最容易想到的拼接方式，是通过 <code>for</code> 循环来实现。不过，如果你使用 Java 8 或以上的版本进行开发，实现该功能将变得非常简单，通常有以下两种方法。</p>
-<p><strong>方法一：使用 <code>String.join</code>，主要代码如下：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示 String.join 方法的使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line">        System.out.println(String.join(<span class="string">&quot;,&quot;</span>, weekList));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>方法二：采用流的方式（<code>stream()</code>）来写，就像下面这样，仍然能够得到同样的结果：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示流方式（stream）进行拼接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        String str = weekList.stream().collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>此外，如果你想在连接成字符串之前，先对元素进行其他的操作，如过滤元素、转成大写等，采用流的方式实现也很方便。以下代码展示如何将整个字符串在连接之前先转为大写：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示在连接之前先将元素转为大写</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">      String str = String str = weekList.stream()</span><br><span class="line">                .map(String::toUpperCase)</span><br><span class="line">                .collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">      </span><br><span class="line">      System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>退休金计划：进度看板</title>
     <url>/2021/07/17/investment-plan-progress/</url>
     <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
 <h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts9266" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts1016" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts8016" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts555" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts9266'));
-    var bar_chart = echarts.init(document.getElementById('echarts1016'));
+    var myChart = echarts.init(document.getElementById('echarts8016'));
+    var bar_chart = echarts.init(document.getElementById('echarts555'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3563,12 +3563,12 @@
 <p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
 </blockquote>
 <h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts7576" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <div id="echarts3808" style="width: 100%;height: 200px;margin: 0 auto"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts7576'));
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts3808'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
