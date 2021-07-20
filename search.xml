@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>MySQL多表更新（关联表更新）</title>
+    <url>/2019/08/18/mysql-update-multiple-tables-with-one-query/</url>
+    <content><![CDATA[<p>在开发过程中，有时会遇到需要将某张表的字段值根据条件动态地更新到另一张表字段的问题，即通过一张表的字段修改另一张关联表中的内容。比如，存在两张表A（表名：test_a）、B（表名：test_b），他们的表结构如下：</p>
+<span id="more"></span>
+
+<p><strong>表A（test_a）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>user_id</th>
+<th>dept_id</th>
+<th>update_time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>34242</td>
+<td>313</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>35322</td>
+<td>320</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>35639</td>
+<td>321</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>表B（test_b）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>user_id</th>
+<th>patient_id</th>
+<th>dept_id</th>
+<th>create_time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>34242</td>
+<td>342</td>
+<td>0</td>
+<td>2018-05-23 09:33:45</td>
+</tr>
+<tr>
+<td>2</td>
+<td>35322</td>
+<td>365</td>
+<td>0</td>
+<td>2018-05-24 00:13:05</td>
+</tr>
+<tr>
+<td>3</td>
+<td>35639</td>
+<td>398</td>
+<td>0</td>
+<td>2018-05-24 00:43:18</td>
+</tr>
+</tbody></table>
+<p>现在我们需要将表A的 <em>dept_id</em> 字段值根据 <em>user_id</em> 字段同步到表B的 <em>dept_id</em> 字段中，即用表A中的 <em>dept_id</em> 字段数据去更新表B中的 <em>dept_id</em> 字段，条件是表A的 <em>user_id</em> 字段值与表B的 <em>user_id</em> 字段值相等时进行更新。</p>
+<p>在MySQL中我们有几种方法可以做到：</p>
+<p>方法一：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id </span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br></pre></td></tr></table></figure>
+
+<p>方法二：（通过 INNER JOIN）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
+
+<p>方法三：（通过 LEFT JOIN）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
+
+<p>方法四：（通过子查询）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_b b </span><br><span class="line"><span class="keyword">SET</span> dept_id <span class="operator">=</span> ( <span class="keyword">SELECT</span> dept_id <span class="keyword">FROM</span> test_a <span class="keyword">WHERE</span> user_id <span class="operator">=</span> b.user_id );</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码片断都是在两张表之间做关联，但只更新其中一张表的数据。其实，除了更新其中一张表的数据外，方法一、方法二和方法三是可以同时更新两张表的数据，如：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 以下代码无实际意义，目的是方便记录</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法一</span></span><br><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法二：（通过 INNER JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法三：（通过 LEFT JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b</span><br><span class="line"><span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id</span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br></pre></td></tr></table></figure>
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CentOS7下安装JDK1.8</title>
     <url>/2019/08/30/how-to-install-jdk-1-8-on-centos-7/</url>
     <content><![CDATA[<h2 id="安装Java-幵发工具包（JDK）"><a href="#安装Java-幵发工具包（JDK）" class="headerlink" title="安装Java 幵发工具包（JDK）"></a>安装Java 幵发工具包（JDK）</h2><span id="more"></span>
@@ -161,70 +256,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Spring Boot 2.x 集成Redis示例</title>
-    <url>/2019/12/19/spring-boot-2_x-redis/</url>
-    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
-
-<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 redis 中的值如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
-<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Spring Boot</tag>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【Git常用命令】查看/修改远程仓库地址</title>
-    <url>/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</url>
-    <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
-
-<p>e.g.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Git修改远程仓库地址"><a href="#Git修改远程仓库地址" class="headerlink" title="Git修改远程仓库地址"></a>Git修改远程仓库地址</h2><p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote set-url origin new.git.url/here</span><br></pre></td></tr></table></figure>
-
-<p>e.g.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将远程仓库地址改为 HTTPS 协议</span></span><br><span class="line">git remote set-url origin https://gogs.linjiangxiong.com/ljx/devops-doc.git</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看修改后的地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Redis根据通配符批量删除Key</title>
     <url>/2019/09/03/redis-batch-delete/</url>
     <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
@@ -271,6 +302,70 @@
       <tags>
         <tag>CentOS7</tag>
         <tag>ZooKeeper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Git常用命令】查看/修改远程仓库地址</title>
+    <url>/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</url>
+    <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Git修改远程仓库地址"><a href="#Git修改远程仓库地址" class="headerlink" title="Git修改远程仓库地址"></a>Git修改远程仓库地址</h2><p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote set-url origin new.git.url/here</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将远程仓库地址改为 HTTPS 协议</span></span><br><span class="line">git remote set-url origin https://gogs.linjiangxiong.com/ljx/devops-doc.git</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看修改后的地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring Boot 2.x 集成Redis示例</title>
+    <url>/2019/12/19/spring-boot-2_x-redis/</url>
+    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
+
+<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 redis 中的值如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
+<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Spring Boot</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -732,184 +827,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MySQL多表更新（关联表更新）</title>
-    <url>/2019/08/18/mysql-update-multiple-tables-with-one-query/</url>
-    <content><![CDATA[<p>在开发过程中，有时会遇到需要将某张表的字段值根据条件动态地更新到另一张表字段的问题，即通过一张表的字段修改另一张关联表中的内容。比如，存在两张表A（表名：test_a）、B（表名：test_b），他们的表结构如下：</p>
-<span id="more"></span>
-
-<p><strong>表A（test_a）：</strong></p>
-<table>
-<thead>
-<tr>
-<th>id</th>
-<th>user_id</th>
-<th>dept_id</th>
-<th>update_time</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>34242</td>
-<td>313</td>
-<td></td>
-</tr>
-<tr>
-<td>2</td>
-<td>35322</td>
-<td>320</td>
-<td></td>
-</tr>
-<tr>
-<td>3</td>
-<td>35639</td>
-<td>321</td>
-<td></td>
-</tr>
-</tbody></table>
-<p><strong>表B（test_b）：</strong></p>
-<table>
-<thead>
-<tr>
-<th>id</th>
-<th>user_id</th>
-<th>patient_id</th>
-<th>dept_id</th>
-<th>create_time</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>34242</td>
-<td>342</td>
-<td>0</td>
-<td>2018-05-23 09:33:45</td>
-</tr>
-<tr>
-<td>2</td>
-<td>35322</td>
-<td>365</td>
-<td>0</td>
-<td>2018-05-24 00:13:05</td>
-</tr>
-<tr>
-<td>3</td>
-<td>35639</td>
-<td>398</td>
-<td>0</td>
-<td>2018-05-24 00:43:18</td>
-</tr>
-</tbody></table>
-<p>现在我们需要将表A的 <em>dept_id</em> 字段值根据 <em>user_id</em> 字段同步到表B的 <em>dept_id</em> 字段中，即用表A中的 <em>dept_id</em> 字段数据去更新表B中的 <em>dept_id</em> 字段，条件是表A的 <em>user_id</em> 字段值与表B的 <em>user_id</em> 字段值相等时进行更新。</p>
-<p>在MySQL中我们有几种方法可以做到：</p>
-<p>方法一：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id </span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br></pre></td></tr></table></figure>
-
-<p>方法二：（通过 INNER JOIN）</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
-
-<p>方法三：（通过 LEFT JOIN）</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
-
-<p>方法四：（通过子查询）</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_b b </span><br><span class="line"><span class="keyword">SET</span> dept_id <span class="operator">=</span> ( <span class="keyword">SELECT</span> dept_id <span class="keyword">FROM</span> test_a <span class="keyword">WHERE</span> user_id <span class="operator">=</span> b.user_id );</span><br></pre></td></tr></table></figure>
-
-<p>上面的代码片断都是在两张表之间做关联，但只更新其中一张表的数据。其实，除了更新其中一张表的数据外，方法一、方法二和方法三是可以同时更新两张表的数据，如：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 以下代码无实际意义，目的是方便记录</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法一</span></span><br><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法二：（通过 INNER JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法三：（通过 LEFT JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b</span><br><span class="line"><span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id</span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br></pre></td></tr></table></figure>
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>罗马数字（中）——起源与用途</title>
-    <url>/2019/07/01/history-of-roman-numerals/</url>
-    <content><![CDATA[<h2 id="一、罗马数字的诞生与进化"><a href="#一、罗马数字的诞生与进化" class="headerlink" title="一、罗马数字的诞生与进化"></a>一、罗马数字的诞生与进化</h2><p>罗马数字起源于古罗马帝国，拥有一个漫长而复杂的历史，始于公元前 8 世纪至 9 世纪，与古罗马帝国在帕兰丁山（Palantine Hill）周围建立的时间大致相同。不过，罗马数字的盛行时间比帝国本身还要长，直到 14 世纪前仍被广泛使用。</p>
-<span id="more"></span>
-
-<p>在设计上，罗马数字存在一些缺陷：</p>
-<ol>
-<li><p>没有表示零（0）的符号；</p>
-</li>
-<li><p>也没有用于计数超过几千数值的实际方法，只有通过在数字符号上方添加横线来表示它们的值的倍数来修正。</p>
-</li>
-</ol>
-<p>复杂的社会、经济管理，建造像斗兽场和君士坦丁大拱门这样的大型纪念碑，都离不开大量的数学技能。而罗马数字的这些缺陷并没有阻止古罗马的学者和建筑师们建立一个伟大的帝国。</p>
-<p>在公元 11 世纪时，阿拉伯数字传入欧洲。阿拉伯数字始创于印度，采用 0、1、2、3、4、5、6、7、8、9 共 10 个计数符号。采取位值法，高位在左，低位在右，从左往右书写。借助一些简单的数学符号（小数点、负号等），阿拉伯数字可以明确的表示所有的有理数。这是对罗马数字的一个很大的改进。</p>
-<p>于是，人们开始逐渐使用阿拉伯数字作为日常生活中的记数系统，而罗马数字的使用更是随着创造它的帝国的崩溃而减少。到公元 14 世纪时，罗马数字已被阿拉伯数字所取代，成为在欧洲被广泛使用的记数系统。现在阿拉伯数字已成为目前使用最广泛的记数系统，通行于全世界。</p>
-<h2 id="二、罗马数字的现代用途"><a href="#二、罗马数字的现代用途" class="headerlink" title="二、罗马数字的现代用途"></a>二、罗马数字的现代用途</h2><p>从某种角度上，可以说罗马数字经受住了时间的考验，并没有随着罗马帝国的消亡而结束。它的优雅感和复古风格确保了它不会在未来某个时候消失。今天，我们仍然使用罗马数字来表达某些东西，如：</p>
-<p>在天文学领域中，用于为卫星编号，如木卫一，木卫二，木卫三。<br>在化学领域中，用于表示元素周期表中的元素组：IA族，IIA族，IIIA族，IVA族，VA族，VIA族，VIIA族，IB族，IIB族，IIIB族，IVB族，VB族，VIB族，VIIB族，VIII族。<br>钟表表盘符号：Ⅰ、Ⅱ、Ⅲ、Ⅳ（IIII）、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ、Ⅹ、Ⅺ、Ⅻ。<br>有序列表（ordered list）的编号（多用小写字母），例如：<br>i) 第一项<br>ii) 第二项<br>iii) 第三项<br>书籍和章节标题<br>君王的名字，如 Louis XIV（路易十四）、Charles II（查理二世）。<br>教皇的名字，如 Alexander VIII（亚历山大八世）、John Paul II（约翰·保罗二世）。<br>其他命名，如 iPhone X，氨酚伪麻美芬片（Ⅱ）。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-        <tag>罗马数字</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通过yum方式在CentOS7系统安装MySQL8</title>
-    <url>/2019/12/28/how-to-install-mysql8-on-centos7/</url>
-    <content><![CDATA[<h2 id="一、添加-MySQL-YUM-源"><a href="#一、添加-MySQL-YUM-源" class="headerlink" title="一、添加 MySQL YUM 源"></a>一、添加 MySQL YUM 源</h2><p>根据自己的操作系统版本选择合适的安装源（<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a>），这里选择的是 CentOS 7，MySQL 8。点击 Download 按钮，进入下载页。可以直接下载 rpm 文件，再上传到 CentOS 7 系统，也可以通过复制链接地址（地址为：<a href="https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm%EF%BC%89%EF%BC%8C%E8%BF%9B%E5%85%A5">https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm），进入</a> CentOS 7 系统，通过 <code>wget</code> 命令下载。</p>
-<span id="more"></span>
-
-<p><img src="/20191228194455039.png" alt="CentOS 7 &amp; MySQL "></p>
-<p>这里以进入 CentOS 7 系统，通过 <code>wget</code> 命令下载为例，展示如何添加 MySQL yum 源，相关命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入存放 rpm 文件的目录</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /homw/software</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载 rpm 文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过 rpm -Uvh 安装</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm</span> </span><br></pre></td></tr></table></figure>
-
-<h2 id="二、安装MySQL"><a href="#二、安装MySQL" class="headerlink" title="二、安装MySQL"></a>二、安装MySQL</h2><p>安装好 yum 源后，直接通过以下命令即可安装 MySQL，非常简单，安装过程中会有两次让你确认下载或安装，直接输入 y 即可。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装 MySQL</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install mysql-community-server</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="三、启动MySQL"><a href="#三、启动MySQL" class="headerlink" title="三、启动MySQL"></a>三、启动MySQL</h2><p>启动 MySQL 命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl start mysqld</span></span><br></pre></td></tr></table></figure>
-
-<p>可通过如下命令查看 MySQL 运行状态：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl status mysqld</span></span><br></pre></td></tr></table></figure>
-
-<p>若输出以下的信息，则说明 MySQL 已经在运行中了。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo systemctl status mysqld</span><br><span class="line">● mysqld.service - MySQL Server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Fri 2019-12-27 15:48:33 CST; 11s ago</span><br><span class="line">     Docs: man:mysqld(8)</span><br><span class="line">           http://dev.mysql.com/doc/refman/en/using-systemd.html</span><br><span class="line">  Process: 22383 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 22459 (mysqld)</span><br><span class="line">   Status: &quot;Server is operational&quot;</span><br><span class="line">   CGroup: /system.slice/mysqld.service</span><br><span class="line">           └─22459 /usr/sbin/mysqld</span><br><span class="line"></span><br><span class="line">Dec 27 15:48:25 202 systemd[1]: Starting MySQL Server...</span><br><span class="line">Dec 27 15:48:33 202 systemd[1]: Started MySQL Server.</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、MySQL-8-root-用户默认登录密码问题"><a href="#四、MySQL-8-root-用户默认登录密码问题" class="headerlink" title="四、MySQL 8 root 用户默认登录密码问题"></a>四、MySQL 8 root 用户默认登录密码问题</h2><p>在 CentOS 7 系统中，通过 yum 方式安装 MySQL 8，需要使用以下命令查看 root 用户的默认密码：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo grep <span class="string">&quot;temporary password&quot;</span> /var/<span class="built_in">log</span>/mysqld.log</span></span><br></pre></td></tr></table></figure>
-
-<p>返回结果最后冒号后面的字符串就是root的默认密码。</p>
-<blockquote>
-<p>如果提示不存在 /var/log/mysqld.log 文件，请确保您已经通过步骤三，启动过一次 MySQL 服务。这里再提下 MySQL服务的启动命令是：<em><strong>systemctl start mysqld.service</strong></em></p>
-</blockquote>
-<p>如以下的输出，root 用户的登录密码为 <strong>Eea*eoqoI9:I</strong>。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo grep &quot;temporary password&quot; /var/log/mysqld.log</span><br><span class="line">[sudo] password for mysqlu: </span><br><span class="line">2019-12-27T07:48:29.009116Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: Eea*eoqoI9:I</span><br></pre></td></tr></table></figure>
-
-<h2 id="五、登录MySQL，并修改默认密码"><a href="#五、登录MySQL，并修改默认密码" class="headerlink" title="五、登录MySQL，并修改默认密码"></a>五、登录MySQL，并修改默认密码</h2><p>知道 MySQL 的 root 用户密码后，即可登录 MySQL 了：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mysql -uroot -p</span> </span><br><span class="line">Enter password: # 这里输入密码</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 17</span><br><span class="line">Server version: 8.0.18</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
-
-<p>进入 MySQL 后，还不能做其他操作，会一直提示你修改默认密码，比如切换到 <code>mysql</code> 数据库：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash">  use mysql;</span></span><br><span class="line">ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</span><br></pre></td></tr></table></figure>
-
-<p>修改默认密码的命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ALTER user &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;新密码&#x27;;</span><br></pre></td></tr></table></figure>
-
-<p>其中 <strong>MySQL 8 以上的密码策略限制必须要包含大小写字母、数字和特殊符号。</strong>如：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> ALTER user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;2020Super_Star&#x27;</span>;</span></span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>至此，你再执行其他命令，而不会提示你需要修改密码了。</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>罗马数字（上）——拼写规则</title>
     <url>/2019/06/26/rules-of-reading-and-writing-roman-numerals/</url>
     <content><![CDATA[<h3 id="罗马数字符号"><a href="#罗马数字符号" class="headerlink" title="罗马数字符号"></a>罗马数字符号</h3><p>罗马数字是总共由 7 个字母符号表示：<strong>I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和 M（1000）。</strong></p>
@@ -1015,6 +932,146 @@
       <tags>
         <tag>数学</tag>
         <tag>罗马数字</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗马数字（中）——起源与用途</title>
+    <url>/2019/07/01/history-of-roman-numerals/</url>
+    <content><![CDATA[<h2 id="一、罗马数字的诞生与进化"><a href="#一、罗马数字的诞生与进化" class="headerlink" title="一、罗马数字的诞生与进化"></a>一、罗马数字的诞生与进化</h2><p>罗马数字起源于古罗马帝国，拥有一个漫长而复杂的历史，始于公元前 8 世纪至 9 世纪，与古罗马帝国在帕兰丁山（Palantine Hill）周围建立的时间大致相同。不过，罗马数字的盛行时间比帝国本身还要长，直到 14 世纪前仍被广泛使用。</p>
+<span id="more"></span>
+
+<p>在设计上，罗马数字存在一些缺陷：</p>
+<ol>
+<li><p>没有表示零（0）的符号；</p>
+</li>
+<li><p>也没有用于计数超过几千数值的实际方法，只有通过在数字符号上方添加横线来表示它们的值的倍数来修正。</p>
+</li>
+</ol>
+<p>复杂的社会、经济管理，建造像斗兽场和君士坦丁大拱门这样的大型纪念碑，都离不开大量的数学技能。而罗马数字的这些缺陷并没有阻止古罗马的学者和建筑师们建立一个伟大的帝国。</p>
+<p>在公元 11 世纪时，阿拉伯数字传入欧洲。阿拉伯数字始创于印度，采用 0、1、2、3、4、5、6、7、8、9 共 10 个计数符号。采取位值法，高位在左，低位在右，从左往右书写。借助一些简单的数学符号（小数点、负号等），阿拉伯数字可以明确的表示所有的有理数。这是对罗马数字的一个很大的改进。</p>
+<p>于是，人们开始逐渐使用阿拉伯数字作为日常生活中的记数系统，而罗马数字的使用更是随着创造它的帝国的崩溃而减少。到公元 14 世纪时，罗马数字已被阿拉伯数字所取代，成为在欧洲被广泛使用的记数系统。现在阿拉伯数字已成为目前使用最广泛的记数系统，通行于全世界。</p>
+<h2 id="二、罗马数字的现代用途"><a href="#二、罗马数字的现代用途" class="headerlink" title="二、罗马数字的现代用途"></a>二、罗马数字的现代用途</h2><p>从某种角度上，可以说罗马数字经受住了时间的考验，并没有随着罗马帝国的消亡而结束。它的优雅感和复古风格确保了它不会在未来某个时候消失。今天，我们仍然使用罗马数字来表达某些东西，如：</p>
+<p>在天文学领域中，用于为卫星编号，如木卫一，木卫二，木卫三。<br>在化学领域中，用于表示元素周期表中的元素组：IA族，IIA族，IIIA族，IVA族，VA族，VIA族，VIIA族，IB族，IIB族，IIIB族，IVB族，VB族，VIB族，VIIB族，VIII族。<br>钟表表盘符号：Ⅰ、Ⅱ、Ⅲ、Ⅳ（IIII）、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ、Ⅹ、Ⅺ、Ⅻ。<br>有序列表（ordered list）的编号（多用小写字母），例如：<br>i) 第一项<br>ii) 第二项<br>iii) 第三项<br>书籍和章节标题<br>君王的名字，如 Louis XIV（路易十四）、Charles II（查理二世）。<br>教皇的名字，如 Alexander VIII（亚历山大八世）、John Paul II（约翰·保罗二世）。<br>其他命名，如 iPhone X，氨酚伪麻美芬片（Ⅱ）。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>罗马数字</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通过yum方式在CentOS7系统安装MySQL8</title>
+    <url>/2019/12/28/how-to-install-mysql8-on-centos7/</url>
+    <content><![CDATA[<h2 id="一、添加-MySQL-YUM-源"><a href="#一、添加-MySQL-YUM-源" class="headerlink" title="一、添加 MySQL YUM 源"></a>一、添加 MySQL YUM 源</h2><p>根据自己的操作系统版本选择合适的安装源（<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a>），这里选择的是 CentOS 7，MySQL 8。点击 Download 按钮，进入下载页。可以直接下载 rpm 文件，再上传到 CentOS 7 系统，也可以通过复制链接地址（地址为：<a href="https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm%EF%BC%89%EF%BC%8C%E8%BF%9B%E5%85%A5">https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm），进入</a> CentOS 7 系统，通过 <code>wget</code> 命令下载。</p>
+<span id="more"></span>
+
+<p><img src="/image/20191228194455039.png" alt="CentOS 7 &amp; MySQL "></p>
+<p>这里以进入 CentOS 7 系统，通过 <code>wget</code> 命令下载为例，展示如何添加 MySQL yum 源，相关命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入存放 rpm 文件的目录</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /homw/software</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载 rpm 文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过 rpm -Uvh 安装</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm</span> </span><br></pre></td></tr></table></figure>
+
+<h2 id="二、安装MySQL"><a href="#二、安装MySQL" class="headerlink" title="二、安装MySQL"></a>二、安装MySQL</h2><p>安装好 yum 源后，直接通过以下命令即可安装 MySQL，非常简单，安装过程中会有两次让你确认下载或安装，直接输入 y 即可。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装 MySQL</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install mysql-community-server</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、启动MySQL"><a href="#三、启动MySQL" class="headerlink" title="三、启动MySQL"></a>三、启动MySQL</h2><p>启动 MySQL 命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl start mysqld</span></span><br></pre></td></tr></table></figure>
+
+<p>可通过如下命令查看 MySQL 运行状态：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl status mysqld</span></span><br></pre></td></tr></table></figure>
+
+<p>若输出以下的信息，则说明 MySQL 已经在运行中了。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo systemctl status mysqld</span><br><span class="line">● mysqld.service - MySQL Server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Fri 2019-12-27 15:48:33 CST; 11s ago</span><br><span class="line">     Docs: man:mysqld(8)</span><br><span class="line">           http://dev.mysql.com/doc/refman/en/using-systemd.html</span><br><span class="line">  Process: 22383 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 22459 (mysqld)</span><br><span class="line">   Status: &quot;Server is operational&quot;</span><br><span class="line">   CGroup: /system.slice/mysqld.service</span><br><span class="line">           └─22459 /usr/sbin/mysqld</span><br><span class="line"></span><br><span class="line">Dec 27 15:48:25 202 systemd[1]: Starting MySQL Server...</span><br><span class="line">Dec 27 15:48:33 202 systemd[1]: Started MySQL Server.</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、MySQL-8-root-用户默认登录密码问题"><a href="#四、MySQL-8-root-用户默认登录密码问题" class="headerlink" title="四、MySQL 8 root 用户默认登录密码问题"></a>四、MySQL 8 root 用户默认登录密码问题</h2><p>在 CentOS 7 系统中，通过 yum 方式安装 MySQL 8，需要使用以下命令查看 root 用户的默认密码：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo grep <span class="string">&quot;temporary password&quot;</span> /var/<span class="built_in">log</span>/mysqld.log</span></span><br></pre></td></tr></table></figure>
+
+<p>返回结果最后冒号后面的字符串就是root的默认密码。</p>
+<blockquote>
+<p>如果提示不存在 /var/log/mysqld.log 文件，请确保您已经通过步骤三，启动过一次 MySQL 服务。这里再提下 MySQL服务的启动命令是：<em><strong>systemctl start mysqld.service</strong></em></p>
+</blockquote>
+<p>如以下的输出，root 用户的登录密码为 <strong>Eea*eoqoI9:I</strong>。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo grep &quot;temporary password&quot; /var/log/mysqld.log</span><br><span class="line">[sudo] password for mysqlu: </span><br><span class="line">2019-12-27T07:48:29.009116Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: Eea*eoqoI9:I</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、登录MySQL，并修改默认密码"><a href="#五、登录MySQL，并修改默认密码" class="headerlink" title="五、登录MySQL，并修改默认密码"></a>五、登录MySQL，并修改默认密码</h2><p>知道 MySQL 的 root 用户密码后，即可登录 MySQL 了：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mysql -uroot -p</span> </span><br><span class="line">Enter password: # 这里输入密码</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 17</span><br><span class="line">Server version: 8.0.18</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
+
+<p>进入 MySQL 后，还不能做其他操作，会一直提示你修改默认密码，比如切换到 <code>mysql</code> 数据库：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash">  use mysql;</span></span><br><span class="line">ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</span><br></pre></td></tr></table></figure>
+
+<p>修改默认密码的命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ALTER user &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;新密码&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>其中 <strong>MySQL 8 以上的密码策略限制必须要包含大小写字母、数字和特殊符号。</strong>如：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> ALTER user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;2020Super_Star&#x27;</span>;</span></span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>至此，你再执行其他命令，而不会提示你需要修改密码了。</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？</title>
+    <url>/2021/07/05/the-product-minded-software-engineer/</url>
+    <content><![CDATA[<p>近日在网上读到一篇标题为<a href="https://blog.pragmaticengineer.com/the-product-minded-engineer">《The Product-Minded Software Engineer》</a>的文章，该文讲述了具有产品思维的软件工程师都具备哪些特点，在文末也给出了如何成为具有产品思维的软件工程师的秘诀。读完很有感触，身处现如今的互联网环境，工程师如果还只专注于技术，未免有些狭隘。毕竟工程师的价值并不只体现在技术层面上，还应体现在产品、商业等层面上。</p>
+<p>文章很好，于是就把它翻译了出来，以期大家一起学习探讨，共同提高。</p>
+<hr>
+<p>具有产品思维的工程师是指那些对产品本身非常感兴趣的开发人员。他们会想去了解每个产品决策背后的原因，以及用户如何使用他们的产品，同时他们也乐于参与产品决策。如果他们决定放弃工程的乐趣（即放弃从事工程师工作），他们很可能会成为一名优秀的产品经理。我曾经与许多具有产品思维的优秀工程师一起工作，并认为自己也是这样的开发人员。在开发世界级产品的公司中，具有产品思维的工程师能把团队的影响力提升到一个新的水平。</p>
+<p>Atlassian 公司的产品经理 Sherif Mansour 写了一篇关于产品工程师以及产品经理如何识别这些产品工程师并与他们良好合作的优秀文章。他的观点很相似：</p>
+<blockquote>
+<p>在我过去十年的产品管理工作中，我得出的结论是，产品工程师是帮助你构建成功的产品、扩展自己并成为更好的产品经理的关键因素。</p>
+</blockquote>
+<p>他还引用了 Shopify 的工程主管 Jean-Michel Lemieux 的话，他对产品工程师的定义是这样的：</p>
+<blockquote>
+<p>一旦你有了产品基础，你就需要这些积极问“为什么”的开发人员、这些渴望使用技术解决人类/用户问题的工程师、还有那些具有同理心的人来获得神奇的体验。这就是我书中对产品工程师的定义。优秀的产品工程师知道在构建阶段需要考虑最小可爱产品的正确深度，而不好的产品工程师则会砍掉过多的产品功能需求。</p>
+</blockquote>
+<p>开发面向用户功能的、并与产品经理合作的团队，是具有产品思维的工程师可以产生巨大影响的环境。他们常常会成为主要贡献者、产品经理的首选人员、并且也常晋升为团队领导。那么，具有产品思维的工程师的关键特征是什么，如何才能变得更加具有产品思维？本文总结了我观察到的这类人共有的 9 个特征，以及我对工程师培养他们的产品思维肌肉的建议。</p>
+<h2 id="1-积极主动地对待产品理念或观点"><a href="#1-积极主动地对待产品理念或观点" class="headerlink" title="1. 积极主动地对待产品理念或观点"></a>1. 积极主动地对待产品理念或观点</h2><p>具有产品思维的工程师不会满足于拿到需求说明后就匆匆忙忙地实现它。他们会思考其他的创意，并找产品经理提出这些想法。他们会经常挑战现有的需求说明，建议其他可能更优的替代性方法。</p>
+<h2 id="2-对业务、用户行为和数据的兴趣"><a href="#2-对业务、用户行为和数据的兴趣" class="headerlink" title="2. 对业务、用户行为和数据的兴趣"></a>2. 对业务、用户行为和数据的兴趣</h2><p>具有产品思维的工程师们的想法和创意都不是凭空得来的。他们会花时间去了解企业是如何商业运作的，产品又是如何配合商业运作，以及最终要达到什么样的商业目标。此外，他们也会去换位思考，试图理解产品将给用户带来什么感受，以及用户如何从使用产品中受益。他们通常会直接去深入研究商业数据和用户测量指标，并尽其所能获取这些数据。如果可能的话，他们会直接访问相关数据，或者找产品经理、数据专家去要这些信息。工程师们这样做，往往是出于他们好奇的天性。这也是我观察到的下一个特征。</p>
+<h2 id="3-好奇心和对“为什么”的浓厚兴趣"><a href="#3-好奇心和对“为什么”的浓厚兴趣" class="headerlink" title="3. 好奇心和对“为什么”的浓厚兴趣"></a>3. 好奇心和对“为什么”的浓厚兴趣</h2><p>具有产品意识的工程师喜欢去理解所有事物背后的那个“为什么? ”。为什么产品要开发这个功能、而不开发另一个功能呢？为什么要首先发布这一里程碑，而不是选择另一个更简单的里程碑呢？如何进行测量——为什么我们不选择一种更全面彻底的度量方式来测量呢？</p>
+<p>他们能够自主地找到他们能够找到的答案。他们也会向产品经理和其他业务人员寻求帮助，找寻其他与产品相关问题的答案。尽管他们经常会问很多问题，但是他们都会设法不让其他人觉得不爽，因为他们已经与那些同事建立起了牢固的关系。</p>
+<h2 id="4-强大的沟通能力，建立与非工程师同事良好的关系"><a href="#4-强大的沟通能力，建立与非工程师同事良好的关系" class="headerlink" title="4. 强大的沟通能力，建立与非工程师同事良好的关系"></a>4. 强大的沟通能力，建立与非工程师同事良好的关系</h2><p>具有产品意识的工程师喜欢与软件工程领域外的同事们交谈，了解他们在做什么、为什么做。他们善于沟通，充分显示他们对于学习其他学科工作方式的浓厚兴趣。我经常看到他们和其他专业的同事们一起喝咖啡、吃午饭或者在走廊上聊天。</p>
+<h2 id="5-提前在产品和工程两方面做出权衡"><a href="#5-提前在产品和工程两方面做出权衡" class="headerlink" title="5. 提前在产品和工程两方面做出权衡"></a>5. 提前在产品和工程两方面做出权衡</h2><p>因为具有产品思维的工程师们对产品的原理以及软件工程都有深刻的理解，他们可以提出非常独到的建议，而很少有别人可以做到。例如，在确定产品构建的工作范围时，打造产品某项关键功能的编程工作量可能非常巨大。许多工程师会开始寻找减少工作量的方法，并试图明确减少工作量对该项关键功能可能会产生的影响。</p>
+<p>具有产品意识的工程师会从两个角度来解决这个问题：一方面在工程方面进行取舍，明确可能对产品产生的影响；同时在另一方面，他们还会开始对产品功能进行取舍，评估对工程工作量的影响。他们经常会去找产品经理，在保持产品体验相似的前提下，建议构建一个完全不同的功能，从而使得编程的工作量大幅降低。</p>
+<p>兼顾产品和工程、平衡两者的影响，是具有产品意识的工程师们拥有的独特优势。他们可以快速地在同一枚硬币的两面之间来回切换：产品特性、工程工作量和两者的平衡。由于他们利用其工程和产品两方面的洞察力，在头脑中快速完成上述权衡，所以他们能够很快得出有价值的结论。</p>
+<h2 id="6-以务实的方式处理边缘案例"><a href="#6-以务实的方式处理边缘案例" class="headerlink" title="6. 以务实的方式处理边缘案例"></a>6. 以务实的方式处理边缘案例</h2><p>边缘案例是一件很有意思的事情。有的工程师经常会忘记边缘案例的存在，最后从产品测试人员或最终用户那里得到反馈之后，才不得不回过头来解决这些问题。这是一个极端，而另一方面，如果在一个新产品或功能中试图处理所有可能的边缘情况，则可能会耗费大量的时间。</p>
+<p>具有产品意识的工程师会很快制定出关于边缘案例的计划，并思考如何减少工作量，并经常会找到不需要额外工作量的解决方案。他们专注于“最小可爱产品”的概念，评估边缘案例的影响和处理所需的工作量。他们会提供很好的折衷建议: 在发布早期版本之前，列出大多数可能出错的地方，并提出需要解决哪些边缘案例的建议。</p>
+<p>例如，对于一个千分之一的用户可能会遇到的错误，他们会考虑修复这一错误涉及的工作量，以及如果什么都不做会发生的后果。在产品验证过程中，客服专员是否可以在这个案例中帮助用户？用户下一次再遇到同样问题可以自己尝试成功解决吗？对产品进行略微调整，是否就可以避免边缘案例？</p>
+<h2 id="7-快速的产品验证周期"><a href="#7-快速的产品验证周期" class="headerlink" title="7. 快速的产品验证周期"></a>7. 快速的产品验证周期</h2><p>甚至在开发的产品功能可以上线之前，具有产品思维的工程师们早就已经找到创造性的方法来获取早期的反馈意见。他们可以和同事一起进行走廊测试，可以向产品经理演示尚在开发中的功能，也可以在 Beta 版本发布前组织整个团队来一场“漏洞大扫荡”，当然还有许多其他创造性的方法。他们会一直思考这个问题：“我们怎样才能验证用户们会像我们预期的那样来使用这个功能？”</p>
+<h2 id="8-对产品功能从头至尾负责到底"><a href="#8-对产品功能从头至尾负责到底" class="headerlink" title="8. 对产品功能从头至尾负责到底"></a>8. 对产品功能从头至尾负责到底</h2><p>经验丰富的工程师们都会对他们的工作从头至尾负责到底：从拿到产品规范到部署实施，再到发布产品并最终验证产品能否正常工作。除了上述这些工作以外，具有产品意识的工程师通常会举一反三、再进一步。</p>
+<p>他们坚信，只有在获得用户行为和商业指标的结果之后，他们的工作才算全部完成。产品上线后，他们仍然会积极与产品经理、数据专家和客户支持渠道保持密切沟通，以便了解产品功能在现实世界中的使用情况。要获得足够得出结论的可靠数据通常需要几周时间。即使他们可能已经接手下一个新项目，他们仍然会把检查上一项目的成果作为首要任务之一。这并不是一项特别耗时的活动，但是特别需要一种锲而不舍的精神，推动那些想要知道自己的辛勤劳动究竟效果如何的工程师们，去坚持探寻答案。</p>
+<p>当开发的某项功能表现得不如预期时，他们会特别好奇问题出在哪里？他们对于找到产品计划和现实世界结果之间存在差距的根本原因怀有浓厚的兴趣，程度不亚于他们在代码库中找到难以复现的缺陷并成功除错。他们经常会花费大量的时间，就某些假设和心得与产品经理和数据专家展开辩论。</p>
+<h2 id="9-通过反复循环的学习，形成强大的产品本能"><a href="#9-通过反复循环的学习，形成强大的产品本能" class="headerlink" title="9. 通过反复循环的学习，形成强大的产品本能"></a>9. 通过反复循环的学习，形成强大的产品本能</h2><p>对于有产品意识的工程师来说，一个典型的项目通常是这样的：</p>
+<ol>
+<li>他们会提出很多问题，来准确理解构建产品功能的原因；</li>
+<li>他们会提供建议和取舍方案，其中某些建议会反映在修订后的产品设计规范中；</li>
+<li>他们会很快开发出相关功能，以便尽早得到反馈意见；</li>
+<li>在产品发布之后，他们会积极跟进了解相关产品功能是否符合预期；</li>
+<li>如果没有达到预期，他们会深入挖掘原因，并学到产品在现实世界中使用的新知识。</li>
+</ol>
+<p>每完成一个项目，他们对产品的理解就会加深，他们开始培养起越来越好的产品直觉。等到下一个项目，他们会贡献更多有价值的建议。随着时间推移，他们会成为产品经理最愿意去讨教的大专家，在新的项目还未开始之前就会提前去征求他们的意见。他们将名声在外，为持续的职业发展打开更多的大门。</p>
+<h2 id="成为更有产品思维的工程师的秘诀"><a href="#成为更有产品思维的工程师的秘诀" class="headerlink" title="成为更有产品思维的工程师的秘诀"></a>成为更有产品思维的工程师的秘诀</h2><p>如果你在开发面向用户的产品，这里有一些我认为效果很好的技巧，可以增强你的产品思维。</p>
+<ul>
+<li><strong>了解公司成功的方式和原因。</strong>商业模式是什么？钱是怎么赚的？哪部分最赚钱，公司哪部分发展最快？原因是什么？你的团队如何适应这一切？</li>
+<li>与你的产品经理建立牢固的关系。大多数产品经理会抓住机会指导工程师。让工程师对产品感兴趣意味着他们可以更好地扩展自己。在进来之前，问很多产品问题，花时间建立这种关系，并向你的产品经理明确表示，你想更多地参与到产品中来。</li>
+<li>参与用户研究、客户支持和其他活动，你可以在其中了解更多有关产品如何运作的信息。与设计师、用户体验人员、数据科学家、运营人员和其他经常跟用户互动的人员结伴。</li>
+<li>提出有充分依据的产品建议。在你对业务、产品和利益相关者都有一个很好的了解之后：就要采取主动。你可以为你正在进行的项目提出一些小建议。或者，你可以建议进行更大的努力，概述工程工作和产品工作，以便在待办事项中轻松确定优先级。</li>
+<li>为你正在进行的项目提供产品/工程取舍。不仅要考虑对你团队正在构建的产品功能进行工程方面的取舍，还要建议可以减少工程工作量的产品权衡。对其他人的反馈持开放态度。</li>
+<li>经常向你的产品经理寻求反馈。成为一名具有产品思维的优秀工程师意味着你已经在现有的工程技能组合之上建立了良好的产品技能。向你提供有关你在产品技能方面的表现的反馈的最佳人选是你的产品经理。就他们对你的产品建议的价值提出反馈意见，并就需要进一步发展的领域征求意见。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>翻译</tag>
       </tags>
   </entry>
   <entry>
@@ -2815,60 +2872,238 @@
       </tags>
   </entry>
   <entry>
-    <title>具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？</title>
-    <url>/2021/07/05/the-product-minded-software-engineer/</url>
-    <content><![CDATA[<p>近日在网上读到一篇标题为<a href="https://blog.pragmaticengineer.com/the-product-minded-engineer">《The Product-Minded Software Engineer》</a>的文章，该文讲述了具有产品思维的软件工程师都具备哪些特点，在文末也给出了如何成为具有产品思维的软件工程师的秘诀。读完很有感触，身处现如今的互联网环境，工程师如果还只专注于技术，未免有些狭隘。毕竟工程师的价值并不只体现在技术层面上，还应体现在产品、商业等层面上。</p>
-<p>文章很好，于是就把它翻译了出来，以期大家一起学习探讨，共同提高。</p>
-<hr>
-<p>具有产品思维的工程师是指那些对产品本身非常感兴趣的开发人员。他们会想去了解每个产品决策背后的原因，以及用户如何使用他们的产品，同时他们也乐于参与产品决策。如果他们决定放弃工程的乐趣（即放弃从事工程师工作），他们很可能会成为一名优秀的产品经理。我曾经与许多具有产品思维的优秀工程师一起工作，并认为自己也是这样的开发人员。在开发世界级产品的公司中，具有产品思维的工程师能把团队的影响力提升到一个新的水平。</p>
-<p>Atlassian 公司的产品经理 Sherif Mansour 写了一篇关于产品工程师以及产品经理如何识别这些产品工程师并与他们良好合作的优秀文章。他的观点很相似：</p>
+    <title>退休金计划：进度看板</title>
+    <url>/2021/07/17/investment-plan-progress/</url>
+    <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
+<h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
+    <div id="echarts6264" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts8981" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('echarts6264'));
+    var bar_chart = echarts.init(document.getElementById('echarts8981'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var dates = [];
+        var invest_data = [];
+        var total_data = [];
+        var records = data.data;
+        var options = data.options;
+        var len = records.length;
+        var newestData = records[len - 1];
+
+        for (var i = 0; i < len; i++){
+          dates.push(records[i][0]);
+          invest_data.push(records[i][2]);
+          total_data.push(records[i][3]);
+        }
+        options.xAxis.data = dates;
+        options.series[0].data = invest_data;
+        options.series[1].data = total_data;
+        myChart.setOption(options);
+
+        var labelRight = {
+          position: 'right'
+        };
+      
+        var bar_options = {
+          title: {
+              text: '账户资产明细',
+              subtext: '金额（元）',
+              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
+          },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              }
+          },
+          grid: {
+              top: 80,
+              bottom: 30
+          },
+          xAxis: {
+              type: 'value',
+              position: 'top',
+              splitLine: {
+                  lineStyle: {
+                      type: 'dashed'
+                  }
+              }
+          },
+          yAxis: {
+              type: 'category',
+              axisLine: {show: false},
+              axisLabel: {show: false},
+              axisTick: {show: false},
+              splitLine: {show: false},
+              data: ['收益', '净投入', '总资产']
+          },
+          series: [
+              {
+                  name: '人民币',
+                  type: 'bar',
+                  stack: '总量',
+                  label: {
+                      show: true,
+                      formatter: '{b}'
+                  },
+                  data: [
+                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
+                      {value: newestData[2], label: labelRight},
+                      {value: newestData[3], label: labelRight},
+                  ],
+                  itemStyle: {
+                    normal: {
+        　　　　　　　　//这里是重点
+                        color: function(params) {
+                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
+                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                }
+              }
+          ]
+      };
+        bar_chart.setOption(bar_options);
+    });
+    </script>
+    
+
 <blockquote>
-<p>在我过去十年的产品管理工作中，我得出的结论是，产品工程师是帮助你构建成功的产品、扩展自己并成为更好的产品经理的关键因素。</p>
+<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
 </blockquote>
-<p>他还引用了 Shopify 的工程主管 Jean-Michel Lemieux 的话，他对产品工程师的定义是这样的：</p>
-<blockquote>
-<p>一旦你有了产品基础，你就需要这些积极问“为什么”的开发人员、这些渴望使用技术解决人类/用户问题的工程师、还有那些具有同理心的人来获得神奇的体验。这就是我书中对产品工程师的定义。优秀的产品工程师知道在构建阶段需要考虑最小可爱产品的正确深度，而不好的产品工程师则会砍掉过多的产品功能需求。</p>
-</blockquote>
-<p>开发面向用户功能的、并与产品经理合作的团队，是具有产品思维的工程师可以产生巨大影响的环境。他们常常会成为主要贡献者、产品经理的首选人员、并且也常晋升为团队领导。那么，具有产品思维的工程师的关键特征是什么，如何才能变得更加具有产品思维？本文总结了我观察到的这类人共有的 9 个特征，以及我对工程师培养他们的产品思维肌肉的建议。</p>
-<h2 id="1-积极主动地对待产品理念或观点"><a href="#1-积极主动地对待产品理念或观点" class="headerlink" title="1. 积极主动地对待产品理念或观点"></a>1. 积极主动地对待产品理念或观点</h2><p>具有产品思维的工程师不会满足于拿到需求说明后就匆匆忙忙地实现它。他们会思考其他的创意，并找产品经理提出这些想法。他们会经常挑战现有的需求说明，建议其他可能更优的替代性方法。</p>
-<h2 id="2-对业务、用户行为和数据的兴趣"><a href="#2-对业务、用户行为和数据的兴趣" class="headerlink" title="2. 对业务、用户行为和数据的兴趣"></a>2. 对业务、用户行为和数据的兴趣</h2><p>具有产品思维的工程师们的想法和创意都不是凭空得来的。他们会花时间去了解企业是如何商业运作的，产品又是如何配合商业运作，以及最终要达到什么样的商业目标。此外，他们也会去换位思考，试图理解产品将给用户带来什么感受，以及用户如何从使用产品中受益。他们通常会直接去深入研究商业数据和用户测量指标，并尽其所能获取这些数据。如果可能的话，他们会直接访问相关数据，或者找产品经理、数据专家去要这些信息。工程师们这样做，往往是出于他们好奇的天性。这也是我观察到的下一个特征。</p>
-<h2 id="3-好奇心和对“为什么”的浓厚兴趣"><a href="#3-好奇心和对“为什么”的浓厚兴趣" class="headerlink" title="3. 好奇心和对“为什么”的浓厚兴趣"></a>3. 好奇心和对“为什么”的浓厚兴趣</h2><p>具有产品意识的工程师喜欢去理解所有事物背后的那个“为什么? ”。为什么产品要开发这个功能、而不开发另一个功能呢？为什么要首先发布这一里程碑，而不是选择另一个更简单的里程碑呢？如何进行测量——为什么我们不选择一种更全面彻底的度量方式来测量呢？</p>
-<p>他们能够自主地找到他们能够找到的答案。他们也会向产品经理和其他业务人员寻求帮助，找寻其他与产品相关问题的答案。尽管他们经常会问很多问题，但是他们都会设法不让其他人觉得不爽，因为他们已经与那些同事建立起了牢固的关系。</p>
-<h2 id="4-强大的沟通能力，建立与非工程师同事良好的关系"><a href="#4-强大的沟通能力，建立与非工程师同事良好的关系" class="headerlink" title="4. 强大的沟通能力，建立与非工程师同事良好的关系"></a>4. 强大的沟通能力，建立与非工程师同事良好的关系</h2><p>具有产品意识的工程师喜欢与软件工程领域外的同事们交谈，了解他们在做什么、为什么做。他们善于沟通，充分显示他们对于学习其他学科工作方式的浓厚兴趣。我经常看到他们和其他专业的同事们一起喝咖啡、吃午饭或者在走廊上聊天。</p>
-<h2 id="5-提前在产品和工程两方面做出权衡"><a href="#5-提前在产品和工程两方面做出权衡" class="headerlink" title="5. 提前在产品和工程两方面做出权衡"></a>5. 提前在产品和工程两方面做出权衡</h2><p>因为具有产品思维的工程师们对产品的原理以及软件工程都有深刻的理解，他们可以提出非常独到的建议，而很少有别人可以做到。例如，在确定产品构建的工作范围时，打造产品某项关键功能的编程工作量可能非常巨大。许多工程师会开始寻找减少工作量的方法，并试图明确减少工作量对该项关键功能可能会产生的影响。</p>
-<p>具有产品意识的工程师会从两个角度来解决这个问题：一方面在工程方面进行取舍，明确可能对产品产生的影响；同时在另一方面，他们还会开始对产品功能进行取舍，评估对工程工作量的影响。他们经常会去找产品经理，在保持产品体验相似的前提下，建议构建一个完全不同的功能，从而使得编程的工作量大幅降低。</p>
-<p>兼顾产品和工程、平衡两者的影响，是具有产品意识的工程师们拥有的独特优势。他们可以快速地在同一枚硬币的两面之间来回切换：产品特性、工程工作量和两者的平衡。由于他们利用其工程和产品两方面的洞察力，在头脑中快速完成上述权衡，所以他们能够很快得出有价值的结论。</p>
-<h2 id="6-以务实的方式处理边缘案例"><a href="#6-以务实的方式处理边缘案例" class="headerlink" title="6. 以务实的方式处理边缘案例"></a>6. 以务实的方式处理边缘案例</h2><p>边缘案例是一件很有意思的事情。有的工程师经常会忘记边缘案例的存在，最后从产品测试人员或最终用户那里得到反馈之后，才不得不回过头来解决这些问题。这是一个极端，而另一方面，如果在一个新产品或功能中试图处理所有可能的边缘情况，则可能会耗费大量的时间。</p>
-<p>具有产品意识的工程师会很快制定出关于边缘案例的计划，并思考如何减少工作量，并经常会找到不需要额外工作量的解决方案。他们专注于“最小可爱产品”的概念，评估边缘案例的影响和处理所需的工作量。他们会提供很好的折衷建议: 在发布早期版本之前，列出大多数可能出错的地方，并提出需要解决哪些边缘案例的建议。</p>
-<p>例如，对于一个千分之一的用户可能会遇到的错误，他们会考虑修复这一错误涉及的工作量，以及如果什么都不做会发生的后果。在产品验证过程中，客服专员是否可以在这个案例中帮助用户？用户下一次再遇到同样问题可以自己尝试成功解决吗？对产品进行略微调整，是否就可以避免边缘案例？</p>
-<h2 id="7-快速的产品验证周期"><a href="#7-快速的产品验证周期" class="headerlink" title="7. 快速的产品验证周期"></a>7. 快速的产品验证周期</h2><p>甚至在开发的产品功能可以上线之前，具有产品思维的工程师们早就已经找到创造性的方法来获取早期的反馈意见。他们可以和同事一起进行走廊测试，可以向产品经理演示尚在开发中的功能，也可以在 Beta 版本发布前组织整个团队来一场“漏洞大扫荡”，当然还有许多其他创造性的方法。他们会一直思考这个问题：“我们怎样才能验证用户们会像我们预期的那样来使用这个功能？”</p>
-<h2 id="8-对产品功能从头至尾负责到底"><a href="#8-对产品功能从头至尾负责到底" class="headerlink" title="8. 对产品功能从头至尾负责到底"></a>8. 对产品功能从头至尾负责到底</h2><p>经验丰富的工程师们都会对他们的工作从头至尾负责到底：从拿到产品规范到部署实施，再到发布产品并最终验证产品能否正常工作。除了上述这些工作以外，具有产品意识的工程师通常会举一反三、再进一步。</p>
-<p>他们坚信，只有在获得用户行为和商业指标的结果之后，他们的工作才算全部完成。产品上线后，他们仍然会积极与产品经理、数据专家和客户支持渠道保持密切沟通，以便了解产品功能在现实世界中的使用情况。要获得足够得出结论的可靠数据通常需要几周时间。即使他们可能已经接手下一个新项目，他们仍然会把检查上一项目的成果作为首要任务之一。这并不是一项特别耗时的活动，但是特别需要一种锲而不舍的精神，推动那些想要知道自己的辛勤劳动究竟效果如何的工程师们，去坚持探寻答案。</p>
-<p>当开发的某项功能表现得不如预期时，他们会特别好奇问题出在哪里？他们对于找到产品计划和现实世界结果之间存在差距的根本原因怀有浓厚的兴趣，程度不亚于他们在代码库中找到难以复现的缺陷并成功除错。他们经常会花费大量的时间，就某些假设和心得与产品经理和数据专家展开辩论。</p>
-<h2 id="9-通过反复循环的学习，形成强大的产品本能"><a href="#9-通过反复循环的学习，形成强大的产品本能" class="headerlink" title="9. 通过反复循环的学习，形成强大的产品本能"></a>9. 通过反复循环的学习，形成强大的产品本能</h2><p>对于有产品意识的工程师来说，一个典型的项目通常是这样的：</p>
-<ol>
-<li>他们会提出很多问题，来准确理解构建产品功能的原因；</li>
-<li>他们会提供建议和取舍方案，其中某些建议会反映在修订后的产品设计规范中；</li>
-<li>他们会很快开发出相关功能，以便尽早得到反馈意见；</li>
-<li>在产品发布之后，他们会积极跟进了解相关产品功能是否符合预期；</li>
-<li>如果没有达到预期，他们会深入挖掘原因，并学到产品在现实世界中使用的新知识。</li>
-</ol>
-<p>每完成一个项目，他们对产品的理解就会加深，他们开始培养起越来越好的产品直觉。等到下一个项目，他们会贡献更多有价值的建议。随着时间推移，他们会成为产品经理最愿意去讨教的大专家，在新的项目还未开始之前就会提前去征求他们的意见。他们将名声在外，为持续的职业发展打开更多的大门。</p>
-<h2 id="成为更有产品思维的工程师的秘诀"><a href="#成为更有产品思维的工程师的秘诀" class="headerlink" title="成为更有产品思维的工程师的秘诀"></a>成为更有产品思维的工程师的秘诀</h2><p>如果你在开发面向用户的产品，这里有一些我认为效果很好的技巧，可以增强你的产品思维。</p>
-<ul>
-<li><strong>了解公司成功的方式和原因。</strong>商业模式是什么？钱是怎么赚的？哪部分最赚钱，公司哪部分发展最快？原因是什么？你的团队如何适应这一切？</li>
-<li>与你的产品经理建立牢固的关系。大多数产品经理会抓住机会指导工程师。让工程师对产品感兴趣意味着他们可以更好地扩展自己。在进来之前，问很多产品问题，花时间建立这种关系，并向你的产品经理明确表示，你想更多地参与到产品中来。</li>
-<li>参与用户研究、客户支持和其他活动，你可以在其中了解更多有关产品如何运作的信息。与设计师、用户体验人员、数据科学家、运营人员和其他经常跟用户互动的人员结伴。</li>
-<li>提出有充分依据的产品建议。在你对业务、产品和利益相关者都有一个很好的了解之后：就要采取主动。你可以为你正在进行的项目提出一些小建议。或者，你可以建议进行更大的努力，概述工程工作和产品工作，以便在待办事项中轻松确定优先级。</li>
-<li>为你正在进行的项目提供产品/工程取舍。不仅要考虑对你团队正在构建的产品功能进行工程方面的取舍，还要建议可以减少工程工作量的产品权衡。对其他人的反馈持开放态度。</li>
-<li>经常向你的产品经理寻求反馈。成为一名具有产品思维的优秀工程师意味着你已经在现有的工程技能组合之上建立了良好的产品技能。向你提供有关你在产品技能方面的表现的反馈的最佳人选是你的产品经理。就他们对你的产品建议的价值提出反馈意见，并就需要进一步发展的领域征求意见。</li>
-</ul>
+<h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
+    <div id="echarts326" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts326'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var records = data.data;
+        var len = records.length;
+        var newestData = records[len - 1];
+        
+        var dashboard_chart_id_options = {
+          title: {
+            name: "textShadowOffsetXt",
+            text: "",
+            textStyle: {
+              color: "#fff"
+            }
+          },
+          backgroundColor: "#17326b",
+          grid: {
+            left: "10",
+            top: "10",
+            right: "10",
+            bottom: "10",
+            containLabel: true
+          },
+          xAxis: {
+            type: 'value',
+            splitLine: { show: false },
+            axisLabel: { show: false },
+            axisTick: { show: false },
+            axisLine: { show: false }
+          },
+          yAxis: [
+            {
+              type: 'category',
+              axisTick: { show: false },
+              axisLine: { show: false },
+              axisLabel: {
+                color: "black",
+                fontSize: 14,
+                textStyle: {
+                  color: '#fff'
+                }
+              },
+              data: ["今年净投入", "一五净投入", "一五总资产", "计划总资产"],
+              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
+              inverse: true
+            },
+            {
+              type: 'category',
+              axisTick: { show: false },
+              axisLine: { show: false },
+              axisLabel: {
+                color: "black",
+                fontSize: 14,
+                textStyle: {
+                  color: '#fff'
+                }
+              },
+              data: ['20,000', '116,000', '170,000', '10,000,000'],
+              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
+              inverse: true
+            }
+          ],
+          series: [
+            {
+              name: "%",
+              type: "bar",
+              barWidth: 19,
+              data: [(newestData[2] / 20000 * 100).toFixed(2), (newestData[2] / 116000 * 100).toFixed(2), (newestData[3] / 170000 * 100).toFixed(2), (newestData[3] / 10000000 * 100).toFixed(2)],
+              label: {
+                show: true,
+                //position    : 'middle',
+                offset: [20, 2],
+                formatter: '{c}{a}',
+                color: '#fff',
+                fontSize: 15
+              },
+              barCategoryGap: 20,
+              itemStyle: {
+                normal: {
+                  barBorderRadius: 10,
+                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+                    offset: 0,
+                    color: '#fdc830'
+                  }, {
+                    offset: 1,
+                    color: '#f37335'
+                  }]),
+                }
+              },
+              zlevel: 1
+        
+            }, {
+              name: "进度条背景",
+              type: "bar",
+              barGap: "-100%",
+              barWidth: 19,
+              data: [100, 100, 100, 100],
+              color: "#2e5384",
+              itemStyle: {
+                normal: {
+                  barBorderRadius: 10
+                }
+              },
+            }
+          ]
+        };
+        dashboard_chart_id_chart.setOption(dashboard_chart_id_options);
+    });
+    </script>
+    
 ]]></content>
       <categories>
-        <category>编程文摘</category>
+        <category>投资理财</category>
       </categories>
       <tags>
-        <tag>翻译</tag>
+        <tag>理财</tag>
+        <tag>定投</tag>
       </tags>
   </entry>
   <entry>
@@ -3164,241 +3399,6 @@
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：进度看板</title>
-    <url>/2021/07/17/investment-plan-progress/</url>
-    <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
-<h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts1520" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts2461" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts1520'));
-    var bar_chart = echarts.init(document.getElementById('echarts2461'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var dates = [];
-        var invest_data = [];
-        var total_data = [];
-        var records = data.data;
-        var options = data.options;
-        var len = records.length;
-        var newestData = records[len - 1];
-
-        for (var i = 0; i < len; i++){
-          dates.push(records[i][0]);
-          invest_data.push(records[i][2]);
-          total_data.push(records[i][3]);
-        }
-        options.xAxis.data = dates;
-        options.series[0].data = invest_data;
-        options.series[1].data = total_data;
-        myChart.setOption(options);
-
-        var labelRight = {
-          position: 'right'
-        };
-      
-        var bar_options = {
-          title: {
-              text: '账户资产明细',
-              subtext: '金额（元）',
-              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
-          },
-          tooltip: {
-              trigger: 'axis',
-              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-              }
-          },
-          grid: {
-              top: 80,
-              bottom: 30
-          },
-          xAxis: {
-              type: 'value',
-              position: 'top',
-              splitLine: {
-                  lineStyle: {
-                      type: 'dashed'
-                  }
-              }
-          },
-          yAxis: {
-              type: 'category',
-              axisLine: {show: false},
-              axisLabel: {show: false},
-              axisTick: {show: false},
-              splitLine: {show: false},
-              data: ['收益', '净投入', '总资产']
-          },
-          series: [
-              {
-                  name: '人民币',
-                  type: 'bar',
-                  stack: '总量',
-                  label: {
-                      show: true,
-                      formatter: '{b}'
-                  },
-                  data: [
-                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
-                      {value: newestData[2], label: labelRight},
-                      {value: newestData[3], label: labelRight},
-                  ],
-                  itemStyle: {
-                    normal: {
-        　　　　　　　　//这里是重点
-                        color: function(params) {
-                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
-                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
-                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
-                            return colorList[params.dataIndex]
-                        }
-                    }
-                }
-              }
-          ]
-      };
-        bar_chart.setOption(bar_options);
-    });
-    </script>
-    
-
-<blockquote>
-<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
-</blockquote>
-<h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts5436" style="width: 100%;height: 200px;margin: 0 auto"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts5436'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var records = data.data;
-        var len = records.length;
-        var newestData = records[len - 1];
-        
-        var dashboard_chart_id_options = {
-          title: {
-            name: "textShadowOffsetXt",
-            text: "",
-            textStyle: {
-              color: "#fff"
-            }
-          },
-          backgroundColor: "#17326b",
-          grid: {
-            left: "10",
-            top: "10",
-            right: "10",
-            bottom: "10",
-            containLabel: true
-          },
-          xAxis: {
-            type: 'value',
-            splitLine: { show: false },
-            axisLabel: { show: false },
-            axisTick: { show: false },
-            axisLine: { show: false }
-          },
-          yAxis: [
-            {
-              type: 'category',
-              axisTick: { show: false },
-              axisLine: { show: false },
-              axisLabel: {
-                color: "black",
-                fontSize: 14,
-                textStyle: {
-                  color: '#fff'
-                }
-              },
-              data: ["今年净投入", "一五净投入", "一五总资产", "计划总资产"],
-              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
-              inverse: true
-            },
-            {
-              type: 'category',
-              axisTick: { show: false },
-              axisLine: { show: false },
-              axisLabel: {
-                color: "black",
-                fontSize: 14,
-                textStyle: {
-                  color: '#fff'
-                }
-              },
-              data: ['20,000', '116,000', '170,000', '10,000,000'],
-              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
-              inverse: true
-            }
-          ],
-          series: [
-            {
-              name: "%",
-              type: "bar",
-              barWidth: 19,
-              data: [(newestData[2] / 20000 * 100).toFixed(2), (newestData[2] / 116000 * 100).toFixed(2), (newestData[3] / 170000 * 100).toFixed(2), (newestData[3] / 10000000 * 100).toFixed(2)],
-              label: {
-                show: true,
-                //position    : 'middle',
-                offset: [20, 2],
-                formatter: '{c}{a}',
-                color: '#fff',
-                fontSize: 15
-              },
-              barCategoryGap: 20,
-              itemStyle: {
-                normal: {
-                  barBorderRadius: 10,
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-                    offset: 0,
-                    color: '#fdc830'
-                  }, {
-                    offset: 1,
-                    color: '#f37335'
-                  }]),
-                }
-              },
-              zlevel: 1
-        
-            }, {
-              name: "进度条背景",
-              type: "bar",
-              barGap: "-100%",
-              barWidth: 19,
-              data: [100, 100, 100, 100],
-              color: "#2e5384",
-              itemStyle: {
-                normal: {
-                  barBorderRadius: 10
-                }
-              },
-            }
-          ]
-        };
-        dashboard_chart_id_chart.setOption(dashboard_chart_id_options);
-    });
-    </script>
-    
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>袁隆平：我的两个梦</title>
     <url>/2021/05/24/ylp-2/</url>
     <content><![CDATA[<blockquote>
@@ -3519,14 +3519,14 @@
 <p>2046-2050年定投执行计划</p>
 <p>2051年（1月、2月）定投执行计划</p>
 <h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts9975" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts5130" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts4988" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts8553" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts9975'));
-    var bar_chart = echarts.init(document.getElementById('echarts5130'));
+    var myChart = echarts.init(document.getElementById('echarts4988'));
+    var bar_chart = echarts.init(document.getElementById('echarts8553'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -6439,26 +6439,6 @@
       </tags>
   </entry>
   <entry>
-    <title>毛泽东：体育之研究</title>
-    <url>/2021/07/15/mzd-1/</url>
-    <content><![CDATA[<h2 id="前-言"><a href="#前-言" class="headerlink" title="前   言"></a><strong>前   言</strong></h2><p>国力苶弱，武风不振，民族之体质，日趋轻细。此甚可忧之现象也。提倡之者，不得其本，久而无效。长是不改，弱且加甚。夫命中致远，外部之事，结果之事也。体力充实，内部之事，原因之事也。体不坚实，则见兵而畏之，何有于命中，何有于致远？坚实在于锻炼。锻炼在于自觉。今之提倡者，非不设种种之方法，然而无效者，外力不足以动其心，不知何为体育之真义。体育果有如何之价值，效果云何，著手何处，皆茫乎如在雾中，其无效亦宜。欲图体育之效，非动其主观，促其对体育之自觉不可。苟自觉矣，则体育之条目，可不言而自知，命中致远之效，亦当不求而自至矣。不佞深感体育之要，伤提倡者之不得其当，知海内同志，同此病而相怜者必多。不自惭赧，贡其愚见，以资商榷。所言并非皆己实行，尚多空言理想之处，不敢为欺。倘辱不遗，赐之教诲，所虚心百拜者也。</p>
-<h2 id="第一-释体育"><a href="#第一-释体育" class="headerlink" title="第一  释体育"></a><strong>第一  释体育</strong></h2><p>自有生民以来，智识有愚闇，无不知自卫其生者。是故西山之薇，饥极必食；井上之李，不容不咽；巢木以为居；皮兽以为衣；盖发乎天能，不知所以然也。然而未精也。有圣人者出，于是乎有礼，饮食起居，皆有节度。故”子之燕居，申申如也，夭夭如也”；”食饐而谒，鱼馁而肉败，不食”；”射于矍相之圃，盖观者如墙堵焉”。人体之组成，与群动无不同，而群动不能及人之寿，所以制其生者无节度也。人则以节度制其生，愈降于后而愈明，于是乎有体育。体育者，养生之道也。<br>东西之所明者不一：庄子效法于庖丁，仲尼取资于射御；现今文明诸国，德为最盛，其斗剑之风，播于全国；日本则有武士道，近且因吾国之绪余，造成柔术，觥觥乎可观已。而考其内容，皆先精究生理，详于官体之构造，脉络之运行，何方发达为早，何部较有偏缺，其体育即准此为程序，抑其过而救其所不及。故其结论，在使身体平均发达。由此言之，体育者，人类自其养生之道，使身体平均发达，而有规则次序之可言者也。</p>
-<h2 id="第二-体育在吾人之位置"><a href="#第二-体育在吾人之位置" class="headerlink" title="第二 体育在吾人之位置"></a><strong>第二 体育在吾人之位置</strong></h2><p>体育一道，配德育与智育，而德智皆寄于体。无体是无德智也。顾知之者或寡矣。或以为重在智识，或曰道德也。夫知识则诚可贵矣，人之所以异于动物者此耳。顾徒知识之何载乎？道德亦诚可贵矣，所以立群道平人己者此耳。顾徒道德之何寓乎？体者，为知识之载而为道德之寓者也。其载知识也如车，其寓道德也如舍。<br>体者，载知识之车而寓道德之舍也。儿童及年入小学，小学之时，宜专注重于身体之发育，而知识之增进道德之养成次之。宜以养护为主，而以教授训练为辅。今盖多不知之，故儿童缘读书而得疾病或至夭殇者有之矣。中学及中学以上，宜三育并重，今人则多偏于智。中学之年，身体之发育尚未完成，乃今培之者少而倾之者多，发育不将有中止之势乎？吾国学制，课程密如牛毛，虽成年之人，顽强之身，犹莫能举，况未成年者乎？况弱者乎？<br>观其意，教者若特设此繁重之课，以困学生，蹂躏其身而残贼其生，有不受者则罚之；智力过人者，则令加读某种某种之书，甘言以恬之，厚赏以诱之。嗟乎，此所谓贼夫人之子欤！学者亦若恶此生之永年，必欲摧折之，以身为殉而不悔。何其梦梦如是也！人独患无身耳，他复何患？求所以善其身者，他事亦随之矣。善其身无过于体育。体育于吾人实占第一之位置。体强壮而后学问道德之进修勇而收效远。于吾人研究之中，宜视为重要之部。”学有本末，事有终始，知所先后，则近道矣。”此之谓也。</p>
-<h2 id="第三-前此体育之弊及吾人自处之道"><a href="#第三-前此体育之弊及吾人自处之道" class="headerlink" title="第三 前此体育之弊及吾人自处之道"></a><strong>第三 前此体育之弊及吾人自处之道</strong></h2><p>三育并重，然昔之为学者，详德智而略于体。及其弊也。偻身俯首，纤纤素手，登山则气迫，涉水则足痉。故有颜子而短命，有贾生而早夭，王勃卢照邻或幼伤或坐废。此皆有甚高之德与智也，一旦身不存，德智则从之而隳矣。惟北方之强，任金革死而不厌。燕赵多悲歌慷慨之士。烈士武臣，多出凉州。清之初世，颜习斋李刚主文而兼武。习斋远跋千里之外，学击剑之术于塞北，与勇士角而胜焉。故其言曰：”文武缺一岂道乎？”顾炎武南人也，好居于北，不喜乘船而喜乘马。此数古人者，皆可师者也。<br>学校既起，采各国之成法，风习稍稍改矣。然办学之人，犹未脱陈旧一流，囿于所习，不能骤变，或少注意及之，亦惟是外面铺张，不揣其本而齐其末。故愚观现今之体育，率多有形式而无实质。非不有体操课程也，非不有体操教员也，然而受体操之益者少。非徒无益，又有害焉。教者发令，学者强应，身顺而心违，精神受无量之痛苦，精神苦而身亦苦矣。盖一体操之终，未有不貌瘁神伤者也。饮食不求洁，无机之物、微生之菌，入于体中，化为疾病；室内光线不足，则目力受害不小；桌椅长短不合，削趾适履，则躯干受亏；其余类此者尚多，不能尽也。<br>然则为吾侪学者之计如之何？学校之设备，教师之教训，乃外的客观的也。吾人盖尚有内的主观的。夫内断于心，百体从令。祸福无不自己求之者，我欲仁斯仁至，况于体育乎。苟自之不振，虽使外的客观的尽善尽美，亦犹之乎不能受意也。故讲体育必自自动始。</p>
-<h2 id="第四-体育之效"><a href="#第四-体育之效" class="headerlink" title="第四 体育之效"></a><strong>第四 体育之效</strong></h2><p>人者动物也，则动尚矣。人者有理性的动物也，则动必有道。然何贵乎此动邪？何贵乎此有道之动邪？动以营生也，此浅言之也；动以卫国也，此大言之也。皆非本义。动也者，盖养乎吾生乐乎吾心而已。朱子主敬，陆子主静。静，静也；敬，非动也，亦静而已。老子曰无动为大。释氏务求寂静。静坐之法，为朱陆之徒者咸尊之。近有因是子者，言静坐法，自诩其法之神，而鄙运动者之自损其体。是或一道，然予未敢效之也。愚拙之见，天地盖惟有动而已。<br>动之属于人类而有规则之可言者曰体育。前既言之，体育之效，则强筋骨也。愚昔尝闻，人之官骸肌络，及时而定，不复再可改易，大抵二十五岁以后，即一成无变。今乃知其不然。人之身盖日日变易者：新陈代谢之作用不绝行于各部组织之间，目不明可以明，耳不聪可以聪，虽六七十之人犹有改易官骸之效，事盖有必至者。又闻弱者难以转而为强，今亦知其非是。盖生而强者，滥用其强，不戒于种种嗜欲，以渐戕贼其身，自谓天生好身手，得此已足，尚待锻炼？故至强者或终转为至弱。至于弱者，则恒自悯其身之下全，而惧其生之不永，兢业自持。<br>于消极方面，则深戒嗜欲，不敢使有损失。于积极方面，则勤自锻炼，增益其所不能。久之遂变而为强矣。故生而强者不必自喜也，生而弱者不必自悲也。吾生而弱乎，或者夭之诱我以至于强，未可知也。东西著称之体育家，若美之罗斯福、德之孙棠、日本之嘉纳，皆以至弱之身，而得至强之效。又尝闻之，精神身体，不能并完。用思想之人，每歉于体；而体魄蛮健者，多缺于思。其说亦谬。<br>此盖指薄志弱行之人，非所以概乎君子也。孔子七十二而死，未闻其身体不健；释迹往来传道，死年亦高；邪苏不幸以冤死；至于摩诃末，左持经典，右执利剑，征压一世。此皆古之所谓圣人，而最大之思想家也。今之伍秩庸先生，七十有余岁矣，自谓可至百余岁，彼亦用思想之人也；王湘绮死年七十余，而康健矍铄。为是说者，其何以解邪？总之，勤体育则强筋骨，强筋骨则体质可变，弱可转强，身心可以并完。此盖非天命而全乎人力也。<br>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄。苟野蛮其体魄矣，则文明之精神随之。夫知识之事，认识世间之事物而判断其理也。于此有须于体者焉。直观则赖乎耳目，思索则赖乎脑筋，耳目脑筋之谓体，体全而知识之事以全。故可谓间接从体育以得知识。今世百科之学，无论学校独修，总须力能胜任。力能胜任者，体之强者也。不能胜任者，其弱者也。强弱分，而所任之区域以殊矣。<br>非第增知识也，又足以调感情。感情之于人，其力极大。古人以理性制之，故曰”主人翁常惺惺否”，又曰”以理制心”。然理性出于心，心存乎体。常观罢弱之人，往往为感情所役，而无力以自拔；五官不全及肢体有缺者，多困于一偏之情，而理性不足以救之。故身体健全，感情斯正，可谓不易之理。以例言之：吾人遇某种不快之事，受其刺激，心神震荡，难于制止，苟加以严急之运动，立可汰去陈旧之观念，而复使脑筋清明，效盖可立而待也。<br>非第调感情也，又足以强意志。体育之大效，盖尤在此矣。夫体育之主旨，武勇也。武勇之目，若猛烈，若不畏，若敢为，若耐久，皆意志之事。取例明之，如冷水浴足以练习猛烈与不畏，又足以练习敢为。凡各种之运动，持续不改，皆有练习耐久之益。若长距离之赛跑，于耐久之练习尤著。夫力拔山气盖世，猛烈而已；不斩楼兰誓不还，不畏而已；化家为国，敢为而已；八年于外，三过其门而不入，耐久而已。要皆可于日常体育之小基之。意志也者，固人生事业之先躯也。<br>肢体纤小者举止轻浮，肤理缓弛者心意柔钝，身体之影响于心理也如是。体育之效，至于强筋骨，因而增知识，因而调感情，因而强意志。筋骨者，吾人之身；知识、感情、意志者，吾人之心。身心皆适，是谓俱泰。故夫体育非他，养乎吾生、乐乎吾心而已。</p>
-<h2 id="第五-不好运动之原因"><a href="#第五-不好运动之原因" class="headerlink" title="第五 不好运动之原因"></a><strong>第五 不好运动之原因</strong></h2><p>运动力体育之最要者。今之学者多不好运动，其原因盖有四焉：一则无自觉心也。一事之见于行为也，必先动其喜为此事之情，尤必先有对于此事明白周详知其所以然之智。明白周详知所以然者，即自觉心也。人多不知运动对于自己有如何之关系，或知其大略，亦未至于亲切严密之度。无以发其智，因无以动其情。夫能研究各种科学孜孜不倦者，以其关系于己者切也。今日不为，他日将无以谋生。而运动则无此自觉，此其咎由于自己不能深省者半，而教师不知所以开之亦占其半也。一则积习难返也。我国历来重文，羞齿短后，动有好汉不当兵之语。<br>虽知运动当行之理，与各国运动致强之效，然旧观念之力尚强，其于新观念之运动，盖犹在迎拒参半之列。故不好运动，亦无怪其然。一则提倡不力也。此又有两种：其一，今之所称教育家，多不诺体育。自己不知体育，徒耳其名，亦从而体育之，所以出之也不诚，所以行之也无术，遂减学者研究之心。夫荡子而言自立，沉湎而言节饮，固无人信之矣。其次，教体操者多无学识，语言鄙俚，闻者塞耳。所知惟此一技，又未必精，日日相见者，惟此机械之动作而已。<br>夫徒有形式而无精意以贯注之者，其事不可一日存，而今之体操实如是。一则学者以运动力可羞也。以愚所考察，此实为不运动之大原因矣。夫衣裳檐檐（注：将木字旁换成衣字旁）、行止于于、瞻视舒徐而夷犹者，美好之态，而社会之所尚也。忽尔张臂露足，伸肢屈体，此何为者邪？宁非大可怪者邪？故有深知身体不可不运动，且甚思实行，竟不能实行者；有群行群止能运动，单独行动则不能者；有燕居私室能运动，稠人广众则不能者。一言蔽之，害羞之一念为之耳。四者皆不好运动之原因。第一与第四属于主观，改之在己；第二与第三属于客观，改之在人，君子求己，在人者听之可矣。</p>
-<h2 id="第六-运动之方法贵少"><a href="#第六-运动之方法贵少" class="headerlink" title="第六 运动之方法贵少"></a><strong>第六 运动之方法贵少</strong></h2><p>愚自伤体弱，因欲研究卫生之术。顾古人言者亦不少矣。近今学校有体操、坊间有书册，冥心务泛，终难得益。盖此事不重言谈，重在实行，苟能实行，得一道半法已足，曾文正行临睡洗脚、食后千步之法，得益不少。有老者年八十犹康健，问之，曰：”吾惟不饱食耳。”今之体操，诸法樊陈，更仆尽之，宁止数十百种？巢林止于一枝，饮河止于满腹。吾人惟此身耳，惟此官骸藏络耳，虽百其法，不外欲使血脉流通。夫法之致其效者一，一法之效然，百法之效亦然，则余之九十九法可废也。目不两视而明，耳不两听而聪，筋骨之锻炼而百其方法，是扰之也。<br>欲其有效，未见其能有效矣。夫应诸方之用，与锻一己之身者，不同。浪桥所以适于航海，持竿所以适于逾高，游戏宜乎小学，兵式宜乎中学以上，此应诸方之用者也。运动筋骸使血脉流通，此锻一己之身者也。应诸方之用者其法宜多，锻一己之身者其法宜少。近之学者，多误此意，故其失有二：一则好运动者，以多为善，几欲一人之身，百般俱备，甚至无一益身者；一则不好运动者，见人之技艺多，吾所知者少，则绝弃之而不为，其宜多者不必善，务广而荒，又何贵乎？少者不必不善，虽一手一足之屈伸，苟以为常，亦有益焉。明乎此，而后体育始有进步可言矣。</p>
-<h2 id="第七-运动应注意事项"><a href="#第七-运动应注意事项" class="headerlink" title="第七 运动应注意事项"></a><strong>第七 运动应注意事项</strong></h2><p>凡事皆宜有恒，运动亦然。有两人于此，其于运动也，一人时作时辍，一人到底不懈，则效不效必有分矣。运动而有恒，第一能生兴味。凡静者不能自动，必有所以动之者。动之无过于兴味。凡科学皆宜引起多方之兴味，而于运动尤然。人静处则甚逸，发动则甚劳，人恒好逸而恶劳，使无物焉以促之，则不足以移其势而变其好恶之心。<br>而此兴味之起，由于日日运动不辍。最好于才起临睡行两次运动，裸体最善，次则薄衣，多衣甚碍事。日以为常，使此运动之观念，相连而不绝，今日之运动，承乎昨日之运动，而又引起明日之运动。每次不必久，三十分钟已足。如此自生一种之兴味焉。第二能生快乐。运动既久，成效大著，发生自己价值之念。以之为学则胜任愉快，以之修德则日起有功，心中无限快乐，亦缘有恒而得也。快乐与兴味有辨。兴味者运动之始，快乐者运动之终。兴味生于进行，快乐生于结果。二者自异。<br>有恒矣，而不用心，亦难有效。走马观花，虽日日观，犹无观也。心在鸿鹄，虽与俱学，勿若之矣。故运动有注全力之道焉。运动之时，心在运动，闲思杂虑，一切屏去，运心于血脉如何流通，筋肉如何张弛，关节如何反复，呼吸如何出入。而运作按节，屈伸进退，皆一一踏实。朱子论主一无适，谓吃饭则想着吃饭，穿衣则想着穿衣。注全力于运动之时者，亦若是则已耳。<br>文明柔顺，君子之容。虽然，非所以语于运动也。运动宜蛮拙。骑突枪鸣十荡十决，暗噁颓山岳、叱咤变风云，力拔项王之山，勇贯由基之札，其道盖存乎蛮拙，而无与于纤巧之事。运动之进取宜蛮，蛮则气力雄，筋骨劲。运动之方法宜拙，拙则资守实，练习易。二者在初行运动之人为尤要。运动所宜注意者三：有恒一也，注全力二也，蛮拙三也。他所当注意者尚多。举其要者如此。</p>
-<h2 id="第八-运动一得之商榷"><a href="#第八-运动一得之商榷" class="headerlink" title="第八 运动一得之商榷"></a><strong>第八 运动一得之商榷</strong></h2><p>愚既粗涉各种运动，以其皆系外铄而无当于一己之心得。乃提挚各种运动之长，自成一种运动，得此运动之益，颇为不少。凡分六段：手部也，足部也，躯干部也，头部也，打击运动也，调和运动也。段之中有节，凡二十有七节。以其为六段，因名之曰六段运动。兹述于后，世之君子，幸教正焉。<br><strong>一、手部运动，坐势</strong><br>1．握拳向前屈伸。左右参，三次（左右参者，左动右息，右动左息，相参互也）。<br>2．握拳屈时前侧后半圆形运动。左右参，三次。<br>3．握拳向前面下方屈伸。左右并，三次（左右并者，并动不相参互）。<br>4．手仰向外拿。左右参，三次。<br>5．手复向外拿。左右参，三次。<br>6．伸指屈时前刺。左右参，三次。<br><strong>二、足部运动，坐势</strong><br>1．手握拳左右垂。足就原位一前屈，一后斜伸。左右参，三次。2．手握拳前平。足一侧伸，一前屈。伸者可易位，屈者惟趾立。臀跟相接。左右参，三次。3．手握拳左右垂。足一支一揭。左右参，三次。4．手握拳左右垂。足一支一前踢。左右参，三次。5．手握拳左右垂。足一前屈，一后伸。屈者在原位，伸者易位，两足略在直线上。左右参，三次。6．手释拳。全身一起一蹲，蹲时臀跟略接，三次。<br><strong>三、躯干部运动，立势</strong><br>1．身向前后屈。三次（手握拳，下同）。<br>2．手一上伸，一下垂。绷张左右胸肋，左右各一次。<br>3．手一侧垂，一前斜垂。绷张左右背肋，左右各一次。<br>4．足丁字势。手左右横荡。扭捩腰胁。左右各一次。<br><strong>四、头部运动，坐势</strong><br>1．头前后屈。三次。<br>2．头左右转。三次。<br>3．用手按摩额部、颊部、鼻部、唇部、喉部、耳部、后颈部。<br>4．自由运动。头大体位置不动，用意使皮肤及下颚运动。五次。<br><strong>五、打击运动，不定势</strong><br>(打击运动者，以拳遍击身体各处，使血液奔注，筋肉坚实，为此运动之主）<br>1．手部，右手击左手，左手击右手<br>(1) 前膊，上面、下面、左面、右面<br>(2) 后膊，上面、下面、左面、右面<br>2．肩部<br>3．胸部<br>4．胁部<br>5．背部<br>6．腹部<br>7．臀部<br>8．腿部，上腿、下腿<br><strong>六、调和运动，不定势</strong><br>1．跳舞，十余次<br>2．深呼吸，三次</p>
-<blockquote>
-<p>剪报来源<br>公众号： 考研体育人<br>链　接：<a href="https://mp.weixin.qq.com/s/P3CjCEXDsekDTcWw2vLMFg">https://mp.weixin.qq.com/s/P3CjCEXDsekDTcWw2vLMFg</a><br>日　期：2020-07-13</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>剪报</category>
-      </categories>
-  </entry>
-  <entry>
     <title>李大钊：青春</title>
     <url>/2021/05/01/ldz-1/</url>
     <content><![CDATA[<blockquote>
@@ -6476,6 +6456,26 @@
 <p><img src="https://i.loli.net/2021/07/20/Ixv8WzT9nJS6Gth.png" alt="本文刊登于《新青年》杂志第二卷第一号，1916年9月1日"><br>本文刊登于《新青年》杂志第二卷第一号，1916年9月1日</p>
 <blockquote>
 <p>剪报来源<br>公众号： 北京大学人文社会科学研究院<br>链　接：<a href="https://mp.weixin.qq.com/s/0Rg-uyGIjNULo7D74a6Dtw">https://mp.weixin.qq.com/s/0Rg-uyGIjNULo7D74a6Dtw</a><br>日　期：2021-04-28</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>剪报</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>毛泽东：体育之研究</title>
+    <url>/2021/07/15/mzd-1/</url>
+    <content><![CDATA[<h2 id="前-言"><a href="#前-言" class="headerlink" title="前   言"></a><strong>前   言</strong></h2><p>国力苶弱，武风不振，民族之体质，日趋轻细。此甚可忧之现象也。提倡之者，不得其本，久而无效。长是不改，弱且加甚。夫命中致远，外部之事，结果之事也。体力充实，内部之事，原因之事也。体不坚实，则见兵而畏之，何有于命中，何有于致远？坚实在于锻炼。锻炼在于自觉。今之提倡者，非不设种种之方法，然而无效者，外力不足以动其心，不知何为体育之真义。体育果有如何之价值，效果云何，著手何处，皆茫乎如在雾中，其无效亦宜。欲图体育之效，非动其主观，促其对体育之自觉不可。苟自觉矣，则体育之条目，可不言而自知，命中致远之效，亦当不求而自至矣。不佞深感体育之要，伤提倡者之不得其当，知海内同志，同此病而相怜者必多。不自惭赧，贡其愚见，以资商榷。所言并非皆己实行，尚多空言理想之处，不敢为欺。倘辱不遗，赐之教诲，所虚心百拜者也。</p>
+<h2 id="第一-释体育"><a href="#第一-释体育" class="headerlink" title="第一  释体育"></a><strong>第一  释体育</strong></h2><p>自有生民以来，智识有愚闇，无不知自卫其生者。是故西山之薇，饥极必食；井上之李，不容不咽；巢木以为居；皮兽以为衣；盖发乎天能，不知所以然也。然而未精也。有圣人者出，于是乎有礼，饮食起居，皆有节度。故”子之燕居，申申如也，夭夭如也”；”食饐而谒，鱼馁而肉败，不食”；”射于矍相之圃，盖观者如墙堵焉”。人体之组成，与群动无不同，而群动不能及人之寿，所以制其生者无节度也。人则以节度制其生，愈降于后而愈明，于是乎有体育。体育者，养生之道也。<br>东西之所明者不一：庄子效法于庖丁，仲尼取资于射御；现今文明诸国，德为最盛，其斗剑之风，播于全国；日本则有武士道，近且因吾国之绪余，造成柔术，觥觥乎可观已。而考其内容，皆先精究生理，详于官体之构造，脉络之运行，何方发达为早，何部较有偏缺，其体育即准此为程序，抑其过而救其所不及。故其结论，在使身体平均发达。由此言之，体育者，人类自其养生之道，使身体平均发达，而有规则次序之可言者也。</p>
+<h2 id="第二-体育在吾人之位置"><a href="#第二-体育在吾人之位置" class="headerlink" title="第二 体育在吾人之位置"></a><strong>第二 体育在吾人之位置</strong></h2><p>体育一道，配德育与智育，而德智皆寄于体。无体是无德智也。顾知之者或寡矣。或以为重在智识，或曰道德也。夫知识则诚可贵矣，人之所以异于动物者此耳。顾徒知识之何载乎？道德亦诚可贵矣，所以立群道平人己者此耳。顾徒道德之何寓乎？体者，为知识之载而为道德之寓者也。其载知识也如车，其寓道德也如舍。<br>体者，载知识之车而寓道德之舍也。儿童及年入小学，小学之时，宜专注重于身体之发育，而知识之增进道德之养成次之。宜以养护为主，而以教授训练为辅。今盖多不知之，故儿童缘读书而得疾病或至夭殇者有之矣。中学及中学以上，宜三育并重，今人则多偏于智。中学之年，身体之发育尚未完成，乃今培之者少而倾之者多，发育不将有中止之势乎？吾国学制，课程密如牛毛，虽成年之人，顽强之身，犹莫能举，况未成年者乎？况弱者乎？<br>观其意，教者若特设此繁重之课，以困学生，蹂躏其身而残贼其生，有不受者则罚之；智力过人者，则令加读某种某种之书，甘言以恬之，厚赏以诱之。嗟乎，此所谓贼夫人之子欤！学者亦若恶此生之永年，必欲摧折之，以身为殉而不悔。何其梦梦如是也！人独患无身耳，他复何患？求所以善其身者，他事亦随之矣。善其身无过于体育。体育于吾人实占第一之位置。体强壮而后学问道德之进修勇而收效远。于吾人研究之中，宜视为重要之部。”学有本末，事有终始，知所先后，则近道矣。”此之谓也。</p>
+<h2 id="第三-前此体育之弊及吾人自处之道"><a href="#第三-前此体育之弊及吾人自处之道" class="headerlink" title="第三 前此体育之弊及吾人自处之道"></a><strong>第三 前此体育之弊及吾人自处之道</strong></h2><p>三育并重，然昔之为学者，详德智而略于体。及其弊也。偻身俯首，纤纤素手，登山则气迫，涉水则足痉。故有颜子而短命，有贾生而早夭，王勃卢照邻或幼伤或坐废。此皆有甚高之德与智也，一旦身不存，德智则从之而隳矣。惟北方之强，任金革死而不厌。燕赵多悲歌慷慨之士。烈士武臣，多出凉州。清之初世，颜习斋李刚主文而兼武。习斋远跋千里之外，学击剑之术于塞北，与勇士角而胜焉。故其言曰：”文武缺一岂道乎？”顾炎武南人也，好居于北，不喜乘船而喜乘马。此数古人者，皆可师者也。<br>学校既起，采各国之成法，风习稍稍改矣。然办学之人，犹未脱陈旧一流，囿于所习，不能骤变，或少注意及之，亦惟是外面铺张，不揣其本而齐其末。故愚观现今之体育，率多有形式而无实质。非不有体操课程也，非不有体操教员也，然而受体操之益者少。非徒无益，又有害焉。教者发令，学者强应，身顺而心违，精神受无量之痛苦，精神苦而身亦苦矣。盖一体操之终，未有不貌瘁神伤者也。饮食不求洁，无机之物、微生之菌，入于体中，化为疾病；室内光线不足，则目力受害不小；桌椅长短不合，削趾适履，则躯干受亏；其余类此者尚多，不能尽也。<br>然则为吾侪学者之计如之何？学校之设备，教师之教训，乃外的客观的也。吾人盖尚有内的主观的。夫内断于心，百体从令。祸福无不自己求之者，我欲仁斯仁至，况于体育乎。苟自之不振，虽使外的客观的尽善尽美，亦犹之乎不能受意也。故讲体育必自自动始。</p>
+<h2 id="第四-体育之效"><a href="#第四-体育之效" class="headerlink" title="第四 体育之效"></a><strong>第四 体育之效</strong></h2><p>人者动物也，则动尚矣。人者有理性的动物也，则动必有道。然何贵乎此动邪？何贵乎此有道之动邪？动以营生也，此浅言之也；动以卫国也，此大言之也。皆非本义。动也者，盖养乎吾生乐乎吾心而已。朱子主敬，陆子主静。静，静也；敬，非动也，亦静而已。老子曰无动为大。释氏务求寂静。静坐之法，为朱陆之徒者咸尊之。近有因是子者，言静坐法，自诩其法之神，而鄙运动者之自损其体。是或一道，然予未敢效之也。愚拙之见，天地盖惟有动而已。<br>动之属于人类而有规则之可言者曰体育。前既言之，体育之效，则强筋骨也。愚昔尝闻，人之官骸肌络，及时而定，不复再可改易，大抵二十五岁以后，即一成无变。今乃知其不然。人之身盖日日变易者：新陈代谢之作用不绝行于各部组织之间，目不明可以明，耳不聪可以聪，虽六七十之人犹有改易官骸之效，事盖有必至者。又闻弱者难以转而为强，今亦知其非是。盖生而强者，滥用其强，不戒于种种嗜欲，以渐戕贼其身，自谓天生好身手，得此已足，尚待锻炼？故至强者或终转为至弱。至于弱者，则恒自悯其身之下全，而惧其生之不永，兢业自持。<br>于消极方面，则深戒嗜欲，不敢使有损失。于积极方面，则勤自锻炼，增益其所不能。久之遂变而为强矣。故生而强者不必自喜也，生而弱者不必自悲也。吾生而弱乎，或者夭之诱我以至于强，未可知也。东西著称之体育家，若美之罗斯福、德之孙棠、日本之嘉纳，皆以至弱之身，而得至强之效。又尝闻之，精神身体，不能并完。用思想之人，每歉于体；而体魄蛮健者，多缺于思。其说亦谬。<br>此盖指薄志弱行之人，非所以概乎君子也。孔子七十二而死，未闻其身体不健；释迹往来传道，死年亦高；邪苏不幸以冤死；至于摩诃末，左持经典，右执利剑，征压一世。此皆古之所谓圣人，而最大之思想家也。今之伍秩庸先生，七十有余岁矣，自谓可至百余岁，彼亦用思想之人也；王湘绮死年七十余，而康健矍铄。为是说者，其何以解邪？总之，勤体育则强筋骨，强筋骨则体质可变，弱可转强，身心可以并完。此盖非天命而全乎人力也。<br>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄。苟野蛮其体魄矣，则文明之精神随之。夫知识之事，认识世间之事物而判断其理也。于此有须于体者焉。直观则赖乎耳目，思索则赖乎脑筋，耳目脑筋之谓体，体全而知识之事以全。故可谓间接从体育以得知识。今世百科之学，无论学校独修，总须力能胜任。力能胜任者，体之强者也。不能胜任者，其弱者也。强弱分，而所任之区域以殊矣。<br>非第增知识也，又足以调感情。感情之于人，其力极大。古人以理性制之，故曰”主人翁常惺惺否”，又曰”以理制心”。然理性出于心，心存乎体。常观罢弱之人，往往为感情所役，而无力以自拔；五官不全及肢体有缺者，多困于一偏之情，而理性不足以救之。故身体健全，感情斯正，可谓不易之理。以例言之：吾人遇某种不快之事，受其刺激，心神震荡，难于制止，苟加以严急之运动，立可汰去陈旧之观念，而复使脑筋清明，效盖可立而待也。<br>非第调感情也，又足以强意志。体育之大效，盖尤在此矣。夫体育之主旨，武勇也。武勇之目，若猛烈，若不畏，若敢为，若耐久，皆意志之事。取例明之，如冷水浴足以练习猛烈与不畏，又足以练习敢为。凡各种之运动，持续不改，皆有练习耐久之益。若长距离之赛跑，于耐久之练习尤著。夫力拔山气盖世，猛烈而已；不斩楼兰誓不还，不畏而已；化家为国，敢为而已；八年于外，三过其门而不入，耐久而已。要皆可于日常体育之小基之。意志也者，固人生事业之先躯也。<br>肢体纤小者举止轻浮，肤理缓弛者心意柔钝，身体之影响于心理也如是。体育之效，至于强筋骨，因而增知识，因而调感情，因而强意志。筋骨者，吾人之身；知识、感情、意志者，吾人之心。身心皆适，是谓俱泰。故夫体育非他，养乎吾生、乐乎吾心而已。</p>
+<h2 id="第五-不好运动之原因"><a href="#第五-不好运动之原因" class="headerlink" title="第五 不好运动之原因"></a><strong>第五 不好运动之原因</strong></h2><p>运动力体育之最要者。今之学者多不好运动，其原因盖有四焉：一则无自觉心也。一事之见于行为也，必先动其喜为此事之情，尤必先有对于此事明白周详知其所以然之智。明白周详知所以然者，即自觉心也。人多不知运动对于自己有如何之关系，或知其大略，亦未至于亲切严密之度。无以发其智，因无以动其情。夫能研究各种科学孜孜不倦者，以其关系于己者切也。今日不为，他日将无以谋生。而运动则无此自觉，此其咎由于自己不能深省者半，而教师不知所以开之亦占其半也。一则积习难返也。我国历来重文，羞齿短后，动有好汉不当兵之语。<br>虽知运动当行之理，与各国运动致强之效，然旧观念之力尚强，其于新观念之运动，盖犹在迎拒参半之列。故不好运动，亦无怪其然。一则提倡不力也。此又有两种：其一，今之所称教育家，多不诺体育。自己不知体育，徒耳其名，亦从而体育之，所以出之也不诚，所以行之也无术，遂减学者研究之心。夫荡子而言自立，沉湎而言节饮，固无人信之矣。其次，教体操者多无学识，语言鄙俚，闻者塞耳。所知惟此一技，又未必精，日日相见者，惟此机械之动作而已。<br>夫徒有形式而无精意以贯注之者，其事不可一日存，而今之体操实如是。一则学者以运动力可羞也。以愚所考察，此实为不运动之大原因矣。夫衣裳檐檐（注：将木字旁换成衣字旁）、行止于于、瞻视舒徐而夷犹者，美好之态，而社会之所尚也。忽尔张臂露足，伸肢屈体，此何为者邪？宁非大可怪者邪？故有深知身体不可不运动，且甚思实行，竟不能实行者；有群行群止能运动，单独行动则不能者；有燕居私室能运动，稠人广众则不能者。一言蔽之，害羞之一念为之耳。四者皆不好运动之原因。第一与第四属于主观，改之在己；第二与第三属于客观，改之在人，君子求己，在人者听之可矣。</p>
+<h2 id="第六-运动之方法贵少"><a href="#第六-运动之方法贵少" class="headerlink" title="第六 运动之方法贵少"></a><strong>第六 运动之方法贵少</strong></h2><p>愚自伤体弱，因欲研究卫生之术。顾古人言者亦不少矣。近今学校有体操、坊间有书册，冥心务泛，终难得益。盖此事不重言谈，重在实行，苟能实行，得一道半法已足，曾文正行临睡洗脚、食后千步之法，得益不少。有老者年八十犹康健，问之，曰：”吾惟不饱食耳。”今之体操，诸法樊陈，更仆尽之，宁止数十百种？巢林止于一枝，饮河止于满腹。吾人惟此身耳，惟此官骸藏络耳，虽百其法，不外欲使血脉流通。夫法之致其效者一，一法之效然，百法之效亦然，则余之九十九法可废也。目不两视而明，耳不两听而聪，筋骨之锻炼而百其方法，是扰之也。<br>欲其有效，未见其能有效矣。夫应诸方之用，与锻一己之身者，不同。浪桥所以适于航海，持竿所以适于逾高，游戏宜乎小学，兵式宜乎中学以上，此应诸方之用者也。运动筋骸使血脉流通，此锻一己之身者也。应诸方之用者其法宜多，锻一己之身者其法宜少。近之学者，多误此意，故其失有二：一则好运动者，以多为善，几欲一人之身，百般俱备，甚至无一益身者；一则不好运动者，见人之技艺多，吾所知者少，则绝弃之而不为，其宜多者不必善，务广而荒，又何贵乎？少者不必不善，虽一手一足之屈伸，苟以为常，亦有益焉。明乎此，而后体育始有进步可言矣。</p>
+<h2 id="第七-运动应注意事项"><a href="#第七-运动应注意事项" class="headerlink" title="第七 运动应注意事项"></a><strong>第七 运动应注意事项</strong></h2><p>凡事皆宜有恒，运动亦然。有两人于此，其于运动也，一人时作时辍，一人到底不懈，则效不效必有分矣。运动而有恒，第一能生兴味。凡静者不能自动，必有所以动之者。动之无过于兴味。凡科学皆宜引起多方之兴味，而于运动尤然。人静处则甚逸，发动则甚劳，人恒好逸而恶劳，使无物焉以促之，则不足以移其势而变其好恶之心。<br>而此兴味之起，由于日日运动不辍。最好于才起临睡行两次运动，裸体最善，次则薄衣，多衣甚碍事。日以为常，使此运动之观念，相连而不绝，今日之运动，承乎昨日之运动，而又引起明日之运动。每次不必久，三十分钟已足。如此自生一种之兴味焉。第二能生快乐。运动既久，成效大著，发生自己价值之念。以之为学则胜任愉快，以之修德则日起有功，心中无限快乐，亦缘有恒而得也。快乐与兴味有辨。兴味者运动之始，快乐者运动之终。兴味生于进行，快乐生于结果。二者自异。<br>有恒矣，而不用心，亦难有效。走马观花，虽日日观，犹无观也。心在鸿鹄，虽与俱学，勿若之矣。故运动有注全力之道焉。运动之时，心在运动，闲思杂虑，一切屏去，运心于血脉如何流通，筋肉如何张弛，关节如何反复，呼吸如何出入。而运作按节，屈伸进退，皆一一踏实。朱子论主一无适，谓吃饭则想着吃饭，穿衣则想着穿衣。注全力于运动之时者，亦若是则已耳。<br>文明柔顺，君子之容。虽然，非所以语于运动也。运动宜蛮拙。骑突枪鸣十荡十决，暗噁颓山岳、叱咤变风云，力拔项王之山，勇贯由基之札，其道盖存乎蛮拙，而无与于纤巧之事。运动之进取宜蛮，蛮则气力雄，筋骨劲。运动之方法宜拙，拙则资守实，练习易。二者在初行运动之人为尤要。运动所宜注意者三：有恒一也，注全力二也，蛮拙三也。他所当注意者尚多。举其要者如此。</p>
+<h2 id="第八-运动一得之商榷"><a href="#第八-运动一得之商榷" class="headerlink" title="第八 运动一得之商榷"></a><strong>第八 运动一得之商榷</strong></h2><p>愚既粗涉各种运动，以其皆系外铄而无当于一己之心得。乃提挚各种运动之长，自成一种运动，得此运动之益，颇为不少。凡分六段：手部也，足部也，躯干部也，头部也，打击运动也，调和运动也。段之中有节，凡二十有七节。以其为六段，因名之曰六段运动。兹述于后，世之君子，幸教正焉。<br><strong>一、手部运动，坐势</strong><br>1．握拳向前屈伸。左右参，三次（左右参者，左动右息，右动左息，相参互也）。<br>2．握拳屈时前侧后半圆形运动。左右参，三次。<br>3．握拳向前面下方屈伸。左右并，三次（左右并者，并动不相参互）。<br>4．手仰向外拿。左右参，三次。<br>5．手复向外拿。左右参，三次。<br>6．伸指屈时前刺。左右参，三次。<br><strong>二、足部运动，坐势</strong><br>1．手握拳左右垂。足就原位一前屈，一后斜伸。左右参，三次。2．手握拳前平。足一侧伸，一前屈。伸者可易位，屈者惟趾立。臀跟相接。左右参，三次。3．手握拳左右垂。足一支一揭。左右参，三次。4．手握拳左右垂。足一支一前踢。左右参，三次。5．手握拳左右垂。足一前屈，一后伸。屈者在原位，伸者易位，两足略在直线上。左右参，三次。6．手释拳。全身一起一蹲，蹲时臀跟略接，三次。<br><strong>三、躯干部运动，立势</strong><br>1．身向前后屈。三次（手握拳，下同）。<br>2．手一上伸，一下垂。绷张左右胸肋，左右各一次。<br>3．手一侧垂，一前斜垂。绷张左右背肋，左右各一次。<br>4．足丁字势。手左右横荡。扭捩腰胁。左右各一次。<br><strong>四、头部运动，坐势</strong><br>1．头前后屈。三次。<br>2．头左右转。三次。<br>3．用手按摩额部、颊部、鼻部、唇部、喉部、耳部、后颈部。<br>4．自由运动。头大体位置不动，用意使皮肤及下颚运动。五次。<br><strong>五、打击运动，不定势</strong><br>(打击运动者，以拳遍击身体各处，使血液奔注，筋肉坚实，为此运动之主）<br>1．手部，右手击左手，左手击右手<br>(1) 前膊，上面、下面、左面、右面<br>(2) 后膊，上面、下面、左面、右面<br>2．肩部<br>3．胸部<br>4．胁部<br>5．背部<br>6．腹部<br>7．臀部<br>8．腿部，上腿、下腿<br><strong>六、调和运动，不定势</strong><br>1．跳舞，十余次<br>2．深呼吸，三次</p>
+<blockquote>
+<p>剪报来源<br>公众号： 考研体育人<br>链　接：<a href="https://mp.weixin.qq.com/s/P3CjCEXDsekDTcWw2vLMFg">https://mp.weixin.qq.com/s/P3CjCEXDsekDTcWw2vLMFg</a><br>日　期：2020-07-13</p>
 </blockquote>
 ]]></content>
       <categories>
