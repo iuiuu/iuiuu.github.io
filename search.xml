@@ -216,32 +216,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Redis根据通配符批量删除Key</title>
-    <url>/2019/09/03/redis-batch-delete/</url>
-    <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
-<blockquote>
-<p>Redis的 <code>del</code> 命令支持删除给定的一个或多个 key，并返回被删除 key 的数量。如命令 <code>del key1 key2 key3</code>。</p>
-</blockquote>
-<p>比如要删除所有以 WxMpSessionKey 开头的 Key，可以使用如下命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[redis@iztz9ploifbvce ~]# redis-cli -h 192.168.182.227 -p 1379 keys &quot;WxMpSessionKey*&quot; |xargs redis-cli -h 192.168.182.227 -p 1379 del</span><br><span class="line">(integer) 2674</span><br></pre></td></tr></table></figure>
-
-<p>如果连接 Redis 的 HOST 为 127.0.0.1，端口号也为默认的 6379，则以上的命令可以简写为：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli keys &quot;WxMpSessionKey*&quot; |xargs redis-cli del</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring Boot 2.x 集成Jpa示例</title>
     <url>/2019/12/25/spring-boot-2_x-jpa/</url>
     <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
@@ -282,6 +256,32 @@
       </tags>
   </entry>
   <entry>
+    <title>Redis根据通配符批量删除Key</title>
+    <url>/2019/09/03/redis-batch-delete/</url>
+    <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
+<blockquote>
+<p>Redis的 <code>del</code> 命令支持删除给定的一个或多个 key，并返回被删除 key 的数量。如命令 <code>del key1 key2 key3</code>。</p>
+</blockquote>
+<p>比如要删除所有以 WxMpSessionKey 开头的 Key，可以使用如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[redis@iztz9ploifbvce ~]# redis-cli -h 192.168.182.227 -p 1379 keys &quot;WxMpSessionKey*&quot; |xargs redis-cli -h 192.168.182.227 -p 1379 del</span><br><span class="line">(integer) 2674</span><br></pre></td></tr></table></figure>
+
+<p>如果连接 Redis 的 HOST 为 127.0.0.1，端口号也为默认的 6379，则以上的命令可以简写为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli keys &quot;WxMpSessionKey*&quot; |xargs redis-cli del</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring Boot 2.x 集成Redis示例</title>
     <url>/2019/12/19/spring-boot-2_x-redis/</url>
     <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
@@ -317,8 +317,31 @@
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>Redis</tag>
         <tag>Spring Boot</tag>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【ZooKeeper启动失败】Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</title>
+    <url>/2019/12/12/zookeeper-problem-1/</url>
+    <content><![CDATA[<p>在 CentOS 7 系统中安装好 ZooKeeper 后，进入安装目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/bin/</code>，使用命令 <code>./zkServer.sh start</code> 启动，发现启动失败：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... FAILED TO START</span><br></pre></td></tr></table></figure>
+
+<p>进入目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/logs</code>，查看日志文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ cd /usr/local/zookeeper/apache-zookeeper-3.5.6/logs</span><br><span class="line">[zookeeperu@202 bin]$ vim ./zookeeper-jump-server-202.out</span><br></pre></td></tr></table></figure>
+
+<p>可看到以下错误信息：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</span><br></pre></td></tr></table></figure>
+
+<p>出现 <code>Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</code> 错误，是因为我在安装时，选用了 <code>apache-zookeeper-&#123;version&#125;.tar.gz</code> 包而不是 <code>apache-zookeeper-&#123;version&#125;-bin.tar.gz</code> 包，后面使用 <code>apache-zookeeper-3.5.6-bin.tar.gz</code> （<strong>文件名包含bin</strong>）重新安装后，解决了问题：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6-bin/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... STARTED</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+        <tag>ZooKeeper</tag>
       </tags>
   </entry>
   <entry>
@@ -343,29 +366,6 @@
       </categories>
       <tags>
         <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【ZooKeeper启动失败】Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</title>
-    <url>/2019/12/12/zookeeper-problem-1/</url>
-    <content><![CDATA[<p>在 CentOS 7 系统中安装好 ZooKeeper 后，进入安装目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/bin/</code>，使用命令 <code>./zkServer.sh start</code> 启动，发现启动失败：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... FAILED TO START</span><br></pre></td></tr></table></figure>
-
-<p>进入目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/logs</code>，查看日志文件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ cd /usr/local/zookeeper/apache-zookeeper-3.5.6/logs</span><br><span class="line">[zookeeperu@202 bin]$ vim ./zookeeper-jump-server-202.out</span><br></pre></td></tr></table></figure>
-
-<p>可看到以下错误信息：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</span><br></pre></td></tr></table></figure>
-
-<p>出现 <code>Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</code> 错误，是因为我在安装时，选用了 <code>apache-zookeeper-&#123;version&#125;.tar.gz</code> 包而不是 <code>apache-zookeeper-&#123;version&#125;-bin.tar.gz</code> 包，后面使用 <code>apache-zookeeper-3.5.6-bin.tar.gz</code> （<strong>文件名包含bin</strong>）重新安装后，解决了问题：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6-bin/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... STARTED</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>CentOS7</tag>
-        <tag>ZooKeeper</tag>
       </tags>
   </entry>
   <entry>
@@ -1018,30 +1018,34 @@
       </tags>
   </entry>
   <entry>
-    <title>使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</title>
-    <url>/2020/06/29/java-list-string-join/</url>
-    <content><![CDATA[<p>在日常开发工作中，经常会遇到需要将 <code>List&lt;String&gt;</code> 转换为使用某个符号连接的字符串。如将 <code>List&lt;String&gt;</code> 转换为按英文逗号（<code>,</code>）分隔的字符串：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：</span></span><br><span class="line"><span class="comment">// Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br></pre></td></tr></table></figure>
+    <title>HashMap核心功能源码解读（一）：概述</title>
+    <url>/2021/07/22/hashmap-core-code-analysis-1/</url>
+    <content><![CDATA[<p>在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。</p>
+<h2 id="HashMap特性"><a href="#HashMap特性" class="headerlink" title="HashMap特性"></a>HashMap特性</h2><p>HashMap 是 Map 接口的一个基于哈希表实现，主要用来存储键值对数据。作为一个使用频率较高的集合类，了解它的特性有助于我们在实践中正确使用它。</p>
+<p>首先，HashMap 允许键为 null 和值为 null。</p>
+<p>其次，HashMap 不保证 Map 的有序性，即不保证遍历 HashMap 输出元素的顺序与其插入的顺序相同（可能存在顺序相同情况）。另外，HashMap 也不保证其顺序在一段时间内保持不变。如果需要在项目中保证 Map 有序性的话，可以使用 LinkedHashMap 代替 HashMap。</p>
+<p>再次，HashMap 是不同步的，即 HashMap 不是线程安全的。如果多个线程同时访问同一个 HashMap 实例，并且其中至少有一个线程从结构上修改了 HashMap 实例时，会导致数据不一致的情况发生。这里的“从结构上修改”是指对 HashMap 实例进行添加或删除元素的操作，仅修改已包含的键对应的值话，就不是从结构上修改。</p>
+<p>在需要线程安全环境中，可以在创建 HashMap 实例时使用 <code>Collections.synchronizedMap</code> 方法对其进行“包装”，以防止对 HashMap 的意外非同步访问：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map m = Collection.synchronizedMap(<span class="keyword">new</span> HashMap (…));</span><br></pre></td></tr></table></figure>
 
-
-
-<p>最容易想到的拼接方式，是通过 <code>for</code> 循环来实现。不过，如果你使用 Java 8 或以上的版本进行开发，实现该功能将变得非常简单，通常有以下两种方法。</p>
-<p><strong>方法一：使用 <code>String.join</code>，主要代码如下：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示 String.join 方法的使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line">        System.out.println(String.join(<span class="string">&quot;,&quot;</span>, weekList));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>方法二：采用流的方式（<code>stream()</code>）来写，就像下面这样，仍然能够得到同样的结果：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示流方式（stream）进行拼接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        String str = weekList.stream().collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>此外，如果你想在连接成字符串之前，先对元素进行其他的操作，如过滤元素、转成大写等，采用流的方式实现也很方便。以下代码展示如何将整个字符串在连接之前先转为大写：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示在连接之前先将元素转为大写</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">      String str = String str = weekList.stream()</span><br><span class="line">                .map(String::toUpperCase)</span><br><span class="line">                .collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">      </span><br><span class="line">      System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>（END）</p>
+<p>另外，也可以用 ConcurrentHashMap 代替 HashMap。</p>
+<p>最后，HashMap 的所有“集合视图方法”返回的迭代器是快速失败（fail-fast）的。如果在创建迭代器之后，除了通过迭代器本身的 remove 方法之外，在任何时候以任何方式从结构上修改 HashMap 实例时，迭代器都会抛出 ConcurrentModificationException 异常。因此，在面对并发修改时，迭代器会快速、干净利落地失败，而不是在未来某个不确定的时间出现随意的、不确定的行为风险。</p>
+<p>注意，迭代器的快速失败行为是无法保证的，因为一般而言，在存在非同步并发修改的情况下，不可能做出任何硬保证。快速失败的迭代器会尽最大努力抛出 <code>ConcurrentModificationException</code> 异常。因此，编写依赖于此异常的正确性的程序是错误的：迭代器的快速失败行为应该只用于检测错误。</p>
+<h2 id="HashMap性能"><a href="#HashMap性能" class="headerlink" title="HashMap性能"></a>HashMap性能</h2><p>如果哈希函数可以把元素均匀打散到不同的哈希桶中，那么 HashMap 的基本操作（get 和 put）能达到常数级时间的性能。这意味着理想情况下，HashMap 的基本操作的时间复杂度为 O(1)，执行时间不随数据规模（键值对数量）的增大而增长。</p>
+<p>但是在真实的情况下，当你往 HashMap 中写入大量数据后，就可能发现操作有时候会变慢了。这其实是因为哈希冲突和扩容带来的性能影响。</p>
+<p>在 HashMap 中，有两个参数——<strong>初始容量（initial capacity）和装载因子（load factor）</strong>，与哈希冲突和扩容这两个性能因素有直接关系。</p>
+<p>初始容量，顾名思义就是哈希表创建时的容量，这里的容量是指哈希表的哈希桶数。装载因子是衡量哈希表在其容量自动扩容之前允许达到多满的指标。当哈希表中的条目数超过负载因子和当前容量的乘积时，即</p>
+<p>条目数 &gt;= 哈希表容量 × 装载因子</p>
+<p>将对哈希表进行重新哈希（即重新构建内部数据结构），使哈希表的桶数为原来的两倍。</p>
+<p>一般来说，默认的装载因子（为 0.75）可以在时间和空间的开销上做到很好的权衡。较大的值虽然可以减少空间开销，但会增加查找成本（反映在 HashMap 的大多数操作中，包括 get 和 put 操作）。</p>
+<p>在设置初始容量时，应考虑映射中的预期条目数及其装载因子，以尽量减少重新哈希操作的次数。如果初始容量大于最大条目数除以负载因子，则不会发生重新哈希操作。</p>
+<p>如果有大量的键值对数据要存储在 HashMap 实例中，那么在创建时就指定一个足够大的容量来存储这些数据，会比随着表增长的需要而自动执行重新哈希更加高效。</p>
+<p>注意，如果使用大量的具有相同哈希码（hashCode()）的键，无疑会降低哈希表的性能。为了改善影响，当键是可比较时，可以使用键之间的比较顺序来帮助打破联系。</p>
+<p>另外，遍历 HashMap 所需的时间与 HashMap 实例的“容量”（指哈希桶数量）加上其大小（指键值映射数量）成正比。所以，如果你看重遍历 HashMap 的性能，那么不要把它初始容量设置得太大或把装载因子设置得太小就非常重要了。</p>
+<h2 id="TreeMap-Hashtable-和-HashMap"><a href="#TreeMap-Hashtable-和-HashMap" class="headerlink" title="TreeMap, Hashtable 和 HashMap"></a>TreeMap, Hashtable 和 HashMap</h2><p>TreeMap 是基于红黑树的一种提供顺序访问的 Map，和 HashMap 不同，它的 get、put、remove 之类操作都是 O（log(n)）的时间复杂度，具体顺序可以由指定的 Comparator 来决定，或者根据键的自然顺序来判断。</p>
+<p>Hashtable 大致相当于 HashMap ，只是 HashMap 是非线程安全的并且允许空值。</p>
+<p>需要注意的是，Hashtable 是遗留类，不建议在项目中使用。在非线程安全环境中，可以直接用 HashMap 代替 Hashtable；在需要线程安全环境中，可以用 ConcurrentHashMap 代替 Hashtable，因为 ConcurrentHashMap 引入了分段锁，并发性更好。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文概述了 HashMap 允许键为 null 和值为 null、不保证有序性、非线程安全、迭代器快速失败（fail-over）等特性，影响 HashMap 性能的参数，以及在实践中应该注意的地方，同时在文末简单对比了 TreeMap, Hashtable 和 HashMap 有什么不同。下一篇文章开始将对 HashMap 核心功能源码进行解读。</p>
 ]]></content>
       <categories>
         <category>编程文摘</category>
@@ -1140,976 +1144,6 @@
       </categories>
       <tags>
         <tag>JDK</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HashMap核心功能源码解读（一）：概述</title>
-    <url>/2021/07/22/hashmap-core-code-analysis-1/</url>
-    <content><![CDATA[<p>在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。</p>
-<h2 id="HashMap特性"><a href="#HashMap特性" class="headerlink" title="HashMap特性"></a>HashMap特性</h2><p>HashMap 是 Map 接口的一个基于哈希表实现，主要用来存储键值对数据。作为一个使用频率较高的集合类，了解它的特性有助于我们在实践中正确使用它。</p>
-<p>首先，HashMap 允许键为 null 和值为 null。</p>
-<p>其次，HashMap 不保证 Map 的有序性，即不保证遍历 HashMap 输出元素的顺序与其插入的顺序相同（可能存在顺序相同情况）。另外，HashMap 也不保证其顺序在一段时间内保持不变。如果需要在项目中保证 Map 有序性的话，可以使用 LinkedHashMap 代替 HashMap。</p>
-<p>再次，HashMap 是不同步的，即 HashMap 不是线程安全的。如果多个线程同时访问同一个 HashMap 实例，并且其中至少有一个线程从结构上修改了 HashMap 实例时，会导致数据不一致的情况发生。这里的“从结构上修改”是指对 HashMap 实例进行添加或删除元素的操作，仅修改已包含的键对应的值话，就不是从结构上修改。</p>
-<p>在需要线程安全环境中，可以在创建 HashMap 实例时使用 <code>Collections.synchronizedMap</code> 方法对其进行“包装”，以防止对 HashMap 的意外非同步访问：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map m = Collection.synchronizedMap(<span class="keyword">new</span> HashMap (…));</span><br></pre></td></tr></table></figure>
-
-<p>另外，也可以用 ConcurrentHashMap 代替 HashMap。</p>
-<p>最后，HashMap 的所有“集合视图方法”返回的迭代器是快速失败（fail-fast）的。如果在创建迭代器之后，除了通过迭代器本身的 remove 方法之外，在任何时候以任何方式从结构上修改 HashMap 实例时，迭代器都会抛出 ConcurrentModificationException 异常。因此，在面对并发修改时，迭代器会快速、干净利落地失败，而不是在未来某个不确定的时间出现随意的、不确定的行为风险。</p>
-<p>注意，迭代器的快速失败行为是无法保证的，因为一般而言，在存在非同步并发修改的情况下，不可能做出任何硬保证。快速失败的迭代器会尽最大努力抛出 <code>ConcurrentModificationException</code> 异常。因此，编写依赖于此异常的正确性的程序是错误的：迭代器的快速失败行为应该只用于检测错误。</p>
-<h2 id="HashMap性能"><a href="#HashMap性能" class="headerlink" title="HashMap性能"></a>HashMap性能</h2><p>如果哈希函数可以把元素均匀打散到不同的哈希桶中，那么 HashMap 的基本操作（get 和 put）能达到常数级时间的性能。这意味着理想情况下，HashMap 的基本操作的时间复杂度为 O(1)，执行时间不随数据规模（键值对数量）的增大而增长。</p>
-<p>但是在真实的情况下，当你往 HashMap 中写入大量数据后，就可能发现操作有时候会变慢了。这其实是因为哈希冲突和扩容带来的性能影响。</p>
-<p>在 HashMap 中，有两个参数——<strong>初始容量（initial capacity）和装载因子（load factor）</strong>，与哈希冲突和扩容这两个性能因素有直接关系。</p>
-<p>初始容量，顾名思义就是哈希表创建时的容量，这里的容量是指哈希表的哈希桶数。装载因子是衡量哈希表在其容量自动扩容之前允许达到多满的指标。当哈希表中的条目数超过负载因子和当前容量的乘积时，即</p>
-<p>条目数 &gt;= 哈希表容量 × 装载因子</p>
-<p>将对哈希表进行重新哈希（即重新构建内部数据结构），使哈希表的桶数为原来的两倍。</p>
-<p>一般来说，默认的装载因子（为 0.75）可以在时间和空间的开销上做到很好的权衡。较大的值虽然可以减少空间开销，但会增加查找成本（反映在 HashMap 的大多数操作中，包括 get 和 put 操作）。</p>
-<p>在设置初始容量时，应考虑映射中的预期条目数及其装载因子，以尽量减少重新哈希操作的次数。如果初始容量大于最大条目数除以负载因子，则不会发生重新哈希操作。</p>
-<p>如果有大量的键值对数据要存储在 HashMap 实例中，那么在创建时就指定一个足够大的容量来存储这些数据，会比随着表增长的需要而自动执行重新哈希更加高效。</p>
-<p>注意，如果使用大量的具有相同哈希码（hashCode()）的键，无疑会降低哈希表的性能。为了改善影响，当键是可比较时，可以使用键之间的比较顺序来帮助打破联系。</p>
-<p>另外，遍历 HashMap 所需的时间与 HashMap 实例的“容量”（指哈希桶数量）加上其大小（指键值映射数量）成正比。所以，如果你看重遍历 HashMap 的性能，那么不要把它初始容量设置得太大或把装载因子设置得太小就非常重要了。</p>
-<h2 id="TreeMap-Hashtable-和-HashMap"><a href="#TreeMap-Hashtable-和-HashMap" class="headerlink" title="TreeMap, Hashtable 和 HashMap"></a>TreeMap, Hashtable 和 HashMap</h2><p>TreeMap 是基于红黑树的一种提供顺序访问的 Map，和 HashMap 不同，它的 get、put、remove 之类操作都是 O（log(n)）的时间复杂度，具体顺序可以由指定的 Comparator 来决定，或者根据键的自然顺序来判断。</p>
-<p>Hashtable 大致相当于 HashMap ，只是 HashMap 是非线程安全的并且允许空值。</p>
-<p>需要注意的是，Hashtable 是遗留类，不建议在项目中使用。在非线程安全环境中，可以直接用 HashMap 代替 Hashtable；在需要线程安全环境中，可以用 ConcurrentHashMap 代替 Hashtable，因为 ConcurrentHashMap 引入了分段锁，并发性更好。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文概述了 HashMap 允许键为 null 和值为 null、不保证有序性、非线程安全、迭代器快速失败（fail-over）等特性，影响 HashMap 性能的参数，以及在实践中应该注意的地方，同时在文末简单对比了 TreeMap, Hashtable 和 HashMap 有什么不同。下一篇文章开始将对 HashMap 核心功能源码进行解读。</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？</title>
-    <url>/2021/07/05/the-product-minded-software-engineer/</url>
-    <content><![CDATA[<p>近日在网上读到一篇标题为<a href="https://blog.pragmaticengineer.com/the-product-minded-engineer">《The Product-Minded Software Engineer》</a>的文章，该文讲述了具有产品思维的软件工程师都具备哪些特点，在文末也给出了如何成为具有产品思维的软件工程师的秘诀。读完很有感触，身处现如今的互联网环境，工程师如果还只专注于技术，未免有些狭隘。毕竟工程师的价值并不只体现在技术层面上，还应体现在产品、商业等层面上。</p>
-<p>文章很好，于是就把它翻译了出来，以期大家一起学习探讨，共同提高。</p>
-<hr>
-<p>具有产品思维的工程师是指那些对产品本身非常感兴趣的开发人员。他们会想去了解每个产品决策背后的原因，以及用户如何使用他们的产品，同时他们也乐于参与产品决策。如果他们决定放弃工程的乐趣（即放弃从事工程师工作），他们很可能会成为一名优秀的产品经理。我曾经与许多具有产品思维的优秀工程师一起工作，并认为自己也是这样的开发人员。在开发世界级产品的公司中，具有产品思维的工程师能把团队的影响力提升到一个新的水平。</p>
-<p>Atlassian 公司的产品经理 Sherif Mansour 写了一篇关于产品工程师以及产品经理如何识别这些产品工程师并与他们良好合作的优秀文章。他的观点很相似：</p>
-<blockquote>
-<p>在我过去十年的产品管理工作中，我得出的结论是，产品工程师是帮助你构建成功的产品、扩展自己并成为更好的产品经理的关键因素。</p>
-</blockquote>
-<p>他还引用了 Shopify 的工程主管 Jean-Michel Lemieux 的话，他对产品工程师的定义是这样的：</p>
-<blockquote>
-<p>一旦你有了产品基础，你就需要这些积极问“为什么”的开发人员、这些渴望使用技术解决人类/用户问题的工程师、还有那些具有同理心的人来获得神奇的体验。这就是我书中对产品工程师的定义。优秀的产品工程师知道在构建阶段需要考虑最小可爱产品的正确深度，而不好的产品工程师则会砍掉过多的产品功能需求。</p>
-</blockquote>
-<p>开发面向用户功能的、并与产品经理合作的团队，是具有产品思维的工程师可以产生巨大影响的环境。他们常常会成为主要贡献者、产品经理的首选人员、并且也常晋升为团队领导。那么，具有产品思维的工程师的关键特征是什么，如何才能变得更加具有产品思维？本文总结了我观察到的这类人共有的 9 个特征，以及我对工程师培养他们的产品思维肌肉的建议。</p>
-<h2 id="1-积极主动地对待产品理念或观点"><a href="#1-积极主动地对待产品理念或观点" class="headerlink" title="1. 积极主动地对待产品理念或观点"></a>1. 积极主动地对待产品理念或观点</h2><p>具有产品思维的工程师不会满足于拿到需求说明后就匆匆忙忙地实现它。他们会思考其他的创意，并找产品经理提出这些想法。他们会经常挑战现有的需求说明，建议其他可能更优的替代性方法。</p>
-<h2 id="2-对业务、用户行为和数据的兴趣"><a href="#2-对业务、用户行为和数据的兴趣" class="headerlink" title="2. 对业务、用户行为和数据的兴趣"></a>2. 对业务、用户行为和数据的兴趣</h2><p>具有产品思维的工程师们的想法和创意都不是凭空得来的。他们会花时间去了解企业是如何商业运作的，产品又是如何配合商业运作，以及最终要达到什么样的商业目标。此外，他们也会去换位思考，试图理解产品将给用户带来什么感受，以及用户如何从使用产品中受益。他们通常会直接去深入研究商业数据和用户测量指标，并尽其所能获取这些数据。如果可能的话，他们会直接访问相关数据，或者找产品经理、数据专家去要这些信息。工程师们这样做，往往是出于他们好奇的天性。这也是我观察到的下一个特征。</p>
-<h2 id="3-好奇心和对“为什么”的浓厚兴趣"><a href="#3-好奇心和对“为什么”的浓厚兴趣" class="headerlink" title="3. 好奇心和对“为什么”的浓厚兴趣"></a>3. 好奇心和对“为什么”的浓厚兴趣</h2><p>具有产品意识的工程师喜欢去理解所有事物背后的那个“为什么? ”。为什么产品要开发这个功能、而不开发另一个功能呢？为什么要首先发布这一里程碑，而不是选择另一个更简单的里程碑呢？如何进行测量——为什么我们不选择一种更全面彻底的度量方式来测量呢？</p>
-<p>他们能够自主地找到他们能够找到的答案。他们也会向产品经理和其他业务人员寻求帮助，找寻其他与产品相关问题的答案。尽管他们经常会问很多问题，但是他们都会设法不让其他人觉得不爽，因为他们已经与那些同事建立起了牢固的关系。</p>
-<h2 id="4-强大的沟通能力，建立与非工程师同事良好的关系"><a href="#4-强大的沟通能力，建立与非工程师同事良好的关系" class="headerlink" title="4. 强大的沟通能力，建立与非工程师同事良好的关系"></a>4. 强大的沟通能力，建立与非工程师同事良好的关系</h2><p>具有产品意识的工程师喜欢与软件工程领域外的同事们交谈，了解他们在做什么、为什么做。他们善于沟通，充分显示他们对于学习其他学科工作方式的浓厚兴趣。我经常看到他们和其他专业的同事们一起喝咖啡、吃午饭或者在走廊上聊天。</p>
-<h2 id="5-提前在产品和工程两方面做出权衡"><a href="#5-提前在产品和工程两方面做出权衡" class="headerlink" title="5. 提前在产品和工程两方面做出权衡"></a>5. 提前在产品和工程两方面做出权衡</h2><p>因为具有产品思维的工程师们对产品的原理以及软件工程都有深刻的理解，他们可以提出非常独到的建议，而很少有别人可以做到。例如，在确定产品构建的工作范围时，打造产品某项关键功能的编程工作量可能非常巨大。许多工程师会开始寻找减少工作量的方法，并试图明确减少工作量对该项关键功能可能会产生的影响。</p>
-<p>具有产品意识的工程师会从两个角度来解决这个问题：一方面在工程方面进行取舍，明确可能对产品产生的影响；同时在另一方面，他们还会开始对产品功能进行取舍，评估对工程工作量的影响。他们经常会去找产品经理，在保持产品体验相似的前提下，建议构建一个完全不同的功能，从而使得编程的工作量大幅降低。</p>
-<p>兼顾产品和工程、平衡两者的影响，是具有产品意识的工程师们拥有的独特优势。他们可以快速地在同一枚硬币的两面之间来回切换：产品特性、工程工作量和两者的平衡。由于他们利用其工程和产品两方面的洞察力，在头脑中快速完成上述权衡，所以他们能够很快得出有价值的结论。</p>
-<h2 id="6-以务实的方式处理边缘案例"><a href="#6-以务实的方式处理边缘案例" class="headerlink" title="6. 以务实的方式处理边缘案例"></a>6. 以务实的方式处理边缘案例</h2><p>边缘案例是一件很有意思的事情。有的工程师经常会忘记边缘案例的存在，最后从产品测试人员或最终用户那里得到反馈之后，才不得不回过头来解决这些问题。这是一个极端，而另一方面，如果在一个新产品或功能中试图处理所有可能的边缘情况，则可能会耗费大量的时间。</p>
-<p>具有产品意识的工程师会很快制定出关于边缘案例的计划，并思考如何减少工作量，并经常会找到不需要额外工作量的解决方案。他们专注于“最小可爱产品”的概念，评估边缘案例的影响和处理所需的工作量。他们会提供很好的折衷建议: 在发布早期版本之前，列出大多数可能出错的地方，并提出需要解决哪些边缘案例的建议。</p>
-<p>例如，对于一个千分之一的用户可能会遇到的错误，他们会考虑修复这一错误涉及的工作量，以及如果什么都不做会发生的后果。在产品验证过程中，客服专员是否可以在这个案例中帮助用户？用户下一次再遇到同样问题可以自己尝试成功解决吗？对产品进行略微调整，是否就可以避免边缘案例？</p>
-<h2 id="7-快速的产品验证周期"><a href="#7-快速的产品验证周期" class="headerlink" title="7. 快速的产品验证周期"></a>7. 快速的产品验证周期</h2><p>甚至在开发的产品功能可以上线之前，具有产品思维的工程师们早就已经找到创造性的方法来获取早期的反馈意见。他们可以和同事一起进行走廊测试，可以向产品经理演示尚在开发中的功能，也可以在 Beta 版本发布前组织整个团队来一场“漏洞大扫荡”，当然还有许多其他创造性的方法。他们会一直思考这个问题：“我们怎样才能验证用户们会像我们预期的那样来使用这个功能？”</p>
-<h2 id="8-对产品功能从头至尾负责到底"><a href="#8-对产品功能从头至尾负责到底" class="headerlink" title="8. 对产品功能从头至尾负责到底"></a>8. 对产品功能从头至尾负责到底</h2><p>经验丰富的工程师们都会对他们的工作从头至尾负责到底：从拿到产品规范到部署实施，再到发布产品并最终验证产品能否正常工作。除了上述这些工作以外，具有产品意识的工程师通常会举一反三、再进一步。</p>
-<p>他们坚信，只有在获得用户行为和商业指标的结果之后，他们的工作才算全部完成。产品上线后，他们仍然会积极与产品经理、数据专家和客户支持渠道保持密切沟通，以便了解产品功能在现实世界中的使用情况。要获得足够得出结论的可靠数据通常需要几周时间。即使他们可能已经接手下一个新项目，他们仍然会把检查上一项目的成果作为首要任务之一。这并不是一项特别耗时的活动，但是特别需要一种锲而不舍的精神，推动那些想要知道自己的辛勤劳动究竟效果如何的工程师们，去坚持探寻答案。</p>
-<p>当开发的某项功能表现得不如预期时，他们会特别好奇问题出在哪里？他们对于找到产品计划和现实世界结果之间存在差距的根本原因怀有浓厚的兴趣，程度不亚于他们在代码库中找到难以复现的缺陷并成功除错。他们经常会花费大量的时间，就某些假设和心得与产品经理和数据专家展开辩论。</p>
-<h2 id="9-通过反复循环的学习，形成强大的产品本能"><a href="#9-通过反复循环的学习，形成强大的产品本能" class="headerlink" title="9. 通过反复循环的学习，形成强大的产品本能"></a>9. 通过反复循环的学习，形成强大的产品本能</h2><p>对于有产品意识的工程师来说，一个典型的项目通常是这样的：</p>
-<ol>
-<li>他们会提出很多问题，来准确理解构建产品功能的原因；</li>
-<li>他们会提供建议和取舍方案，其中某些建议会反映在修订后的产品设计规范中；</li>
-<li>他们会很快开发出相关功能，以便尽早得到反馈意见；</li>
-<li>在产品发布之后，他们会积极跟进了解相关产品功能是否符合预期；</li>
-<li>如果没有达到预期，他们会深入挖掘原因，并学到产品在现实世界中使用的新知识。</li>
-</ol>
-<p>每完成一个项目，他们对产品的理解就会加深，他们开始培养起越来越好的产品直觉。等到下一个项目，他们会贡献更多有价值的建议。随着时间推移，他们会成为产品经理最愿意去讨教的大专家，在新的项目还未开始之前就会提前去征求他们的意见。他们将名声在外，为持续的职业发展打开更多的大门。</p>
-<h2 id="成为更有产品思维的工程师的秘诀"><a href="#成为更有产品思维的工程师的秘诀" class="headerlink" title="成为更有产品思维的工程师的秘诀"></a>成为更有产品思维的工程师的秘诀</h2><p>如果你在开发面向用户的产品，这里有一些我认为效果很好的技巧，可以增强你的产品思维。</p>
-<ul>
-<li><strong>了解公司成功的方式和原因。</strong>商业模式是什么？钱是怎么赚的？哪部分最赚钱，公司哪部分发展最快？原因是什么？你的团队如何适应这一切？</li>
-<li>与你的产品经理建立牢固的关系。大多数产品经理会抓住机会指导工程师。让工程师对产品感兴趣意味着他们可以更好地扩展自己。在进来之前，问很多产品问题，花时间建立这种关系，并向你的产品经理明确表示，你想更多地参与到产品中来。</li>
-<li>参与用户研究、客户支持和其他活动，你可以在其中了解更多有关产品如何运作的信息。与设计师、用户体验人员、数据科学家、运营人员和其他经常跟用户互动的人员结伴。</li>
-<li>提出有充分依据的产品建议。在你对业务、产品和利益相关者都有一个很好的了解之后：就要采取主动。你可以为你正在进行的项目提出一些小建议。或者，你可以建议进行更大的努力，概述工程工作和产品工作，以便在待办事项中轻松确定优先级。</li>
-<li>为你正在进行的项目提供产品/工程取舍。不仅要考虑对你团队正在构建的产品功能进行工程方面的取舍，还要建议可以减少工程工作量的产品权衡。对其他人的反馈持开放态度。</li>
-<li>经常向你的产品经理寻求反馈。成为一名具有产品思维的优秀工程师意味着你已经在现有的工程技能组合之上建立了良好的产品技能。向你提供有关你在产品技能方面的表现的反馈的最佳人选是你的产品经理。就他们对你的产品建议的价值提出反馈意见，并就需要进一步发展的领域征求意见。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>翻译</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>退休金计划：2021-2025年定投执行计划</title>
-    <url>/2021/07/10/investment-plan-2021-2025/</url>
-    <content><![CDATA[<p>本计划是根据 <strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 而制定的第一个五年行动计划——2021-2025年定投计划。</p>
-<p>本计划目标：净投入达 120,000 元。</p>
-<p>计划具体内容为 2021 - 2025 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
-<h2 id="2021年定投计划"><a href="#2021年定投计划" class="headerlink" title="2021年定投计划"></a>2021年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2021/3/31</td>
-<td>1,000</td>
-<td>2021/3/31</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/4/10</td>
-<td>1,000</td>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td>补投</td>
-</tr>
-<tr>
-<td>2021/4/24</td>
-<td>1,000</td>
-<td>2021/6/5</td>
-<td>1,000</td>
-<td>补投</td>
-</tr>
-<tr>
-<td>2021/5/10</td>
-<td>1,000</td>
-<td>2021/5/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/6/10</td>
-<td>1,000</td>
-<td>2021/6/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/6/24</td>
-<td>1,000</td>
-<td>2021/6/24</td>
-<td>2,000</td>
-<td>每月2000，故3月补投一笔</td>
-</tr>
-<tr>
-<td>2021/7/10</td>
-<td>1,000</td>
-<td>2021/7/12</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="2022年定投计划"><a href="#2022年定投计划" class="headerlink" title="2022年定投计划"></a>2022年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2022/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="2023年定投计划"><a href="#2023年定投计划" class="headerlink" title="2023年定投计划"></a>2023年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2023/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="2024年定投计划"><a href="#2024年定投计划" class="headerlink" title="2024年定投计划"></a>2024年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2024/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="2025年定投计划"><a href="#2025年定投计划" class="headerlink" title="2025年定投计划"></a>2025年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2025/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-        <tag>计划</tag>
       </tags>
   </entry>
   <entry>
@@ -3017,6 +2051,882 @@
       </tags>
   </entry>
   <entry>
+    <title>退休金计划：2021-2025年定投执行计划</title>
+    <url>/2021/07/10/investment-plan-2021-2025/</url>
+    <content><![CDATA[<p>本计划是根据 <strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 而制定的第一个五年行动计划——2021-2025年定投计划。</p>
+<p>本计划目标：净投入达 120,000 元。</p>
+<p>计划具体内容为 2021 - 2025 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
+<h2 id="2021年定投计划"><a href="#2021年定投计划" class="headerlink" title="2021年定投计划"></a>2021年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2021/3/31</td>
+<td>1,000</td>
+<td>2021/3/31</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/4/10</td>
+<td>1,000</td>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td>补投</td>
+</tr>
+<tr>
+<td>2021/4/24</td>
+<td>1,000</td>
+<td>2021/6/5</td>
+<td>1,000</td>
+<td>补投</td>
+</tr>
+<tr>
+<td>2021/5/10</td>
+<td>1,000</td>
+<td>2021/5/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/6/10</td>
+<td>1,000</td>
+<td>2021/6/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/6/24</td>
+<td>1,000</td>
+<td>2021/6/24</td>
+<td>2,000</td>
+<td>每月2000，故3月补投一笔</td>
+</tr>
+<tr>
+<td>2021/7/10</td>
+<td>1,000</td>
+<td>2021/7/12</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2022年定投计划"><a href="#2022年定投计划" class="headerlink" title="2022年定投计划"></a>2022年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2022/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2023年定投计划"><a href="#2023年定投计划" class="headerlink" title="2023年定投计划"></a>2023年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2023/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2024年定投计划"><a href="#2024年定投计划" class="headerlink" title="2024年定投计划"></a>2024年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2024/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2025年定投计划"><a href="#2025年定投计划" class="headerlink" title="2025年定投计划"></a>2025年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2025/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
+        <tag>计划</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>退休金计划：2031-2035年定投执行计划</title>
     <url>/2021/07/10/investment-plan-2031-2035/</url>
     <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第三个五年行动计划——2031-2035年定投计划。</p>
@@ -3031,6 +2941,63 @@
         <tag>理财</tag>
         <tag>定投</tag>
         <tag>计划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？</title>
+    <url>/2021/07/05/the-product-minded-software-engineer/</url>
+    <content><![CDATA[<p>近日在网上读到一篇标题为<a href="https://blog.pragmaticengineer.com/the-product-minded-engineer">《The Product-Minded Software Engineer》</a>的文章，该文讲述了具有产品思维的软件工程师都具备哪些特点，在文末也给出了如何成为具有产品思维的软件工程师的秘诀。读完很有感触，身处现如今的互联网环境，工程师如果还只专注于技术，未免有些狭隘。毕竟工程师的价值并不只体现在技术层面上，还应体现在产品、商业等层面上。</p>
+<p>文章很好，于是就把它翻译了出来，以期大家一起学习探讨，共同提高。</p>
+<hr>
+<p>具有产品思维的工程师是指那些对产品本身非常感兴趣的开发人员。他们会想去了解每个产品决策背后的原因，以及用户如何使用他们的产品，同时他们也乐于参与产品决策。如果他们决定放弃工程的乐趣（即放弃从事工程师工作），他们很可能会成为一名优秀的产品经理。我曾经与许多具有产品思维的优秀工程师一起工作，并认为自己也是这样的开发人员。在开发世界级产品的公司中，具有产品思维的工程师能把团队的影响力提升到一个新的水平。</p>
+<p>Atlassian 公司的产品经理 Sherif Mansour 写了一篇关于产品工程师以及产品经理如何识别这些产品工程师并与他们良好合作的优秀文章。他的观点很相似：</p>
+<blockquote>
+<p>在我过去十年的产品管理工作中，我得出的结论是，产品工程师是帮助你构建成功的产品、扩展自己并成为更好的产品经理的关键因素。</p>
+</blockquote>
+<p>他还引用了 Shopify 的工程主管 Jean-Michel Lemieux 的话，他对产品工程师的定义是这样的：</p>
+<blockquote>
+<p>一旦你有了产品基础，你就需要这些积极问“为什么”的开发人员、这些渴望使用技术解决人类/用户问题的工程师、还有那些具有同理心的人来获得神奇的体验。这就是我书中对产品工程师的定义。优秀的产品工程师知道在构建阶段需要考虑最小可爱产品的正确深度，而不好的产品工程师则会砍掉过多的产品功能需求。</p>
+</blockquote>
+<p>开发面向用户功能的、并与产品经理合作的团队，是具有产品思维的工程师可以产生巨大影响的环境。他们常常会成为主要贡献者、产品经理的首选人员、并且也常晋升为团队领导。那么，具有产品思维的工程师的关键特征是什么，如何才能变得更加具有产品思维？本文总结了我观察到的这类人共有的 9 个特征，以及我对工程师培养他们的产品思维肌肉的建议。</p>
+<h2 id="1-积极主动地对待产品理念或观点"><a href="#1-积极主动地对待产品理念或观点" class="headerlink" title="1. 积极主动地对待产品理念或观点"></a>1. 积极主动地对待产品理念或观点</h2><p>具有产品思维的工程师不会满足于拿到需求说明后就匆匆忙忙地实现它。他们会思考其他的创意，并找产品经理提出这些想法。他们会经常挑战现有的需求说明，建议其他可能更优的替代性方法。</p>
+<h2 id="2-对业务、用户行为和数据的兴趣"><a href="#2-对业务、用户行为和数据的兴趣" class="headerlink" title="2. 对业务、用户行为和数据的兴趣"></a>2. 对业务、用户行为和数据的兴趣</h2><p>具有产品思维的工程师们的想法和创意都不是凭空得来的。他们会花时间去了解企业是如何商业运作的，产品又是如何配合商业运作，以及最终要达到什么样的商业目标。此外，他们也会去换位思考，试图理解产品将给用户带来什么感受，以及用户如何从使用产品中受益。他们通常会直接去深入研究商业数据和用户测量指标，并尽其所能获取这些数据。如果可能的话，他们会直接访问相关数据，或者找产品经理、数据专家去要这些信息。工程师们这样做，往往是出于他们好奇的天性。这也是我观察到的下一个特征。</p>
+<h2 id="3-好奇心和对“为什么”的浓厚兴趣"><a href="#3-好奇心和对“为什么”的浓厚兴趣" class="headerlink" title="3. 好奇心和对“为什么”的浓厚兴趣"></a>3. 好奇心和对“为什么”的浓厚兴趣</h2><p>具有产品意识的工程师喜欢去理解所有事物背后的那个“为什么? ”。为什么产品要开发这个功能、而不开发另一个功能呢？为什么要首先发布这一里程碑，而不是选择另一个更简单的里程碑呢？如何进行测量——为什么我们不选择一种更全面彻底的度量方式来测量呢？</p>
+<p>他们能够自主地找到他们能够找到的答案。他们也会向产品经理和其他业务人员寻求帮助，找寻其他与产品相关问题的答案。尽管他们经常会问很多问题，但是他们都会设法不让其他人觉得不爽，因为他们已经与那些同事建立起了牢固的关系。</p>
+<h2 id="4-强大的沟通能力，建立与非工程师同事良好的关系"><a href="#4-强大的沟通能力，建立与非工程师同事良好的关系" class="headerlink" title="4. 强大的沟通能力，建立与非工程师同事良好的关系"></a>4. 强大的沟通能力，建立与非工程师同事良好的关系</h2><p>具有产品意识的工程师喜欢与软件工程领域外的同事们交谈，了解他们在做什么、为什么做。他们善于沟通，充分显示他们对于学习其他学科工作方式的浓厚兴趣。我经常看到他们和其他专业的同事们一起喝咖啡、吃午饭或者在走廊上聊天。</p>
+<h2 id="5-提前在产品和工程两方面做出权衡"><a href="#5-提前在产品和工程两方面做出权衡" class="headerlink" title="5. 提前在产品和工程两方面做出权衡"></a>5. 提前在产品和工程两方面做出权衡</h2><p>因为具有产品思维的工程师们对产品的原理以及软件工程都有深刻的理解，他们可以提出非常独到的建议，而很少有别人可以做到。例如，在确定产品构建的工作范围时，打造产品某项关键功能的编程工作量可能非常巨大。许多工程师会开始寻找减少工作量的方法，并试图明确减少工作量对该项关键功能可能会产生的影响。</p>
+<p>具有产品意识的工程师会从两个角度来解决这个问题：一方面在工程方面进行取舍，明确可能对产品产生的影响；同时在另一方面，他们还会开始对产品功能进行取舍，评估对工程工作量的影响。他们经常会去找产品经理，在保持产品体验相似的前提下，建议构建一个完全不同的功能，从而使得编程的工作量大幅降低。</p>
+<p>兼顾产品和工程、平衡两者的影响，是具有产品意识的工程师们拥有的独特优势。他们可以快速地在同一枚硬币的两面之间来回切换：产品特性、工程工作量和两者的平衡。由于他们利用其工程和产品两方面的洞察力，在头脑中快速完成上述权衡，所以他们能够很快得出有价值的结论。</p>
+<h2 id="6-以务实的方式处理边缘案例"><a href="#6-以务实的方式处理边缘案例" class="headerlink" title="6. 以务实的方式处理边缘案例"></a>6. 以务实的方式处理边缘案例</h2><p>边缘案例是一件很有意思的事情。有的工程师经常会忘记边缘案例的存在，最后从产品测试人员或最终用户那里得到反馈之后，才不得不回过头来解决这些问题。这是一个极端，而另一方面，如果在一个新产品或功能中试图处理所有可能的边缘情况，则可能会耗费大量的时间。</p>
+<p>具有产品意识的工程师会很快制定出关于边缘案例的计划，并思考如何减少工作量，并经常会找到不需要额外工作量的解决方案。他们专注于“最小可爱产品”的概念，评估边缘案例的影响和处理所需的工作量。他们会提供很好的折衷建议: 在发布早期版本之前，列出大多数可能出错的地方，并提出需要解决哪些边缘案例的建议。</p>
+<p>例如，对于一个千分之一的用户可能会遇到的错误，他们会考虑修复这一错误涉及的工作量，以及如果什么都不做会发生的后果。在产品验证过程中，客服专员是否可以在这个案例中帮助用户？用户下一次再遇到同样问题可以自己尝试成功解决吗？对产品进行略微调整，是否就可以避免边缘案例？</p>
+<h2 id="7-快速的产品验证周期"><a href="#7-快速的产品验证周期" class="headerlink" title="7. 快速的产品验证周期"></a>7. 快速的产品验证周期</h2><p>甚至在开发的产品功能可以上线之前，具有产品思维的工程师们早就已经找到创造性的方法来获取早期的反馈意见。他们可以和同事一起进行走廊测试，可以向产品经理演示尚在开发中的功能，也可以在 Beta 版本发布前组织整个团队来一场“漏洞大扫荡”，当然还有许多其他创造性的方法。他们会一直思考这个问题：“我们怎样才能验证用户们会像我们预期的那样来使用这个功能？”</p>
+<h2 id="8-对产品功能从头至尾负责到底"><a href="#8-对产品功能从头至尾负责到底" class="headerlink" title="8. 对产品功能从头至尾负责到底"></a>8. 对产品功能从头至尾负责到底</h2><p>经验丰富的工程师们都会对他们的工作从头至尾负责到底：从拿到产品规范到部署实施，再到发布产品并最终验证产品能否正常工作。除了上述这些工作以外，具有产品意识的工程师通常会举一反三、再进一步。</p>
+<p>他们坚信，只有在获得用户行为和商业指标的结果之后，他们的工作才算全部完成。产品上线后，他们仍然会积极与产品经理、数据专家和客户支持渠道保持密切沟通，以便了解产品功能在现实世界中的使用情况。要获得足够得出结论的可靠数据通常需要几周时间。即使他们可能已经接手下一个新项目，他们仍然会把检查上一项目的成果作为首要任务之一。这并不是一项特别耗时的活动，但是特别需要一种锲而不舍的精神，推动那些想要知道自己的辛勤劳动究竟效果如何的工程师们，去坚持探寻答案。</p>
+<p>当开发的某项功能表现得不如预期时，他们会特别好奇问题出在哪里？他们对于找到产品计划和现实世界结果之间存在差距的根本原因怀有浓厚的兴趣，程度不亚于他们在代码库中找到难以复现的缺陷并成功除错。他们经常会花费大量的时间，就某些假设和心得与产品经理和数据专家展开辩论。</p>
+<h2 id="9-通过反复循环的学习，形成强大的产品本能"><a href="#9-通过反复循环的学习，形成强大的产品本能" class="headerlink" title="9. 通过反复循环的学习，形成强大的产品本能"></a>9. 通过反复循环的学习，形成强大的产品本能</h2><p>对于有产品意识的工程师来说，一个典型的项目通常是这样的：</p>
+<ol>
+<li>他们会提出很多问题，来准确理解构建产品功能的原因；</li>
+<li>他们会提供建议和取舍方案，其中某些建议会反映在修订后的产品设计规范中；</li>
+<li>他们会很快开发出相关功能，以便尽早得到反馈意见；</li>
+<li>在产品发布之后，他们会积极跟进了解相关产品功能是否符合预期；</li>
+<li>如果没有达到预期，他们会深入挖掘原因，并学到产品在现实世界中使用的新知识。</li>
+</ol>
+<p>每完成一个项目，他们对产品的理解就会加深，他们开始培养起越来越好的产品直觉。等到下一个项目，他们会贡献更多有价值的建议。随着时间推移，他们会成为产品经理最愿意去讨教的大专家，在新的项目还未开始之前就会提前去征求他们的意见。他们将名声在外，为持续的职业发展打开更多的大门。</p>
+<h2 id="成为更有产品思维的工程师的秘诀"><a href="#成为更有产品思维的工程师的秘诀" class="headerlink" title="成为更有产品思维的工程师的秘诀"></a>成为更有产品思维的工程师的秘诀</h2><p>如果你在开发面向用户的产品，这里有一些我认为效果很好的技巧，可以增强你的产品思维。</p>
+<ul>
+<li><strong>了解公司成功的方式和原因。</strong>商业模式是什么？钱是怎么赚的？哪部分最赚钱，公司哪部分发展最快？原因是什么？你的团队如何适应这一切？</li>
+<li>与你的产品经理建立牢固的关系。大多数产品经理会抓住机会指导工程师。让工程师对产品感兴趣意味着他们可以更好地扩展自己。在进来之前，问很多产品问题，花时间建立这种关系，并向你的产品经理明确表示，你想更多地参与到产品中来。</li>
+<li>参与用户研究、客户支持和其他活动，你可以在其中了解更多有关产品如何运作的信息。与设计师、用户体验人员、数据科学家、运营人员和其他经常跟用户互动的人员结伴。</li>
+<li>提出有充分依据的产品建议。在你对业务、产品和利益相关者都有一个很好的了解之后：就要采取主动。你可以为你正在进行的项目提出一些小建议。或者，你可以建议进行更大的努力，概述工程工作和产品工作，以便在待办事项中轻松确定优先级。</li>
+<li>为你正在进行的项目提供产品/工程取舍。不仅要考虑对你团队正在构建的产品功能进行工程方面的取舍，还要建议可以减少工程工作量的产品权衡。对其他人的反馈持开放态度。</li>
+<li>经常向你的产品经理寻求反馈。成为一名具有产品思维的优秀工程师意味着你已经在现有的工程技能组合之上建立了良好的产品技能。向你提供有关你在产品技能方面的表现的反馈的最佳人选是你的产品经理。就他们对你的产品建议的价值提出反馈意见，并就需要进一步发展的领域征求意见。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>翻译</tag>
       </tags>
   </entry>
   <entry>
@@ -3376,14 +3343,14 @@
 <p>2046-2050年定投执行计划</p>
 <p>2051年（1月、2月）定投执行计划</p>
 <h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts149" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts3115" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts3181" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts1797" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts149'));
-    var bar_chart = echarts.init(document.getElementById('echarts3115'));
+    var myChart = echarts.init(document.getElementById('echarts3181'));
+    var bar_chart = echarts.init(document.getElementById('echarts1797'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3496,14 +3463,14 @@
     <url>/2021/07/17/investment-plan-progress/</url>
     <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
 <h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts7443" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts3532" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts5870" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts6246" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts7443'));
-    var bar_chart = echarts.init(document.getElementById('echarts3532'));
+    var myChart = echarts.init(document.getElementById('echarts5870'));
+    var bar_chart = echarts.init(document.getElementById('echarts6246'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3600,12 +3567,12 @@
 <p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
 </blockquote>
 <h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts7017" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <div id="echarts7823" style="width: 100%;height: 200px;margin: 0 auto"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts7017'));
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts7823'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3724,6 +3691,39 @@
       <tags>
         <tag>理财</tag>
         <tag>定投</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</title>
+    <url>/2020/06/29/java-list-string-join/</url>
+    <content><![CDATA[<p>在日常开发工作中，经常会遇到需要将 <code>List&lt;String&gt;</code> 转换为使用某个符号连接的字符串。如将 <code>List&lt;String&gt;</code> 转换为按英文逗号（<code>,</code>）分隔的字符串：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：</span></span><br><span class="line"><span class="comment">// Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>最容易想到的拼接方式，是通过 <code>for</code> 循环来实现。不过，如果你使用 Java 8 或以上的版本进行开发，实现该功能将变得非常简单，通常有以下两种方法。</p>
+<p><strong>方法一：使用 <code>String.join</code>，主要代码如下：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示 String.join 方法的使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line">        System.out.println(String.join(<span class="string">&quot;,&quot;</span>, weekList));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>方法二：采用流的方式（<code>stream()</code>）来写，就像下面这样，仍然能够得到同样的结果：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示流方式（stream）进行拼接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        String str = weekList.stream().collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>此外，如果你想在连接成字符串之前，先对元素进行其他的操作，如过滤元素、转成大写等，采用流的方式实现也很方便。以下代码展示如何将整个字符串在连接之前先转为大写：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示在连接之前先将元素转为大写</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">      String str = String str = weekList.stream()</span><br><span class="line">                .map(String::toUpperCase)</span><br><span class="line">                .collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">      </span><br><span class="line">      System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
