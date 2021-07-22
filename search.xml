@@ -216,32 +216,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Redis根据通配符批量删除Key</title>
-    <url>/2019/09/03/redis-batch-delete/</url>
-    <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
-<blockquote>
-<p>Redis的 <code>del</code> 命令支持删除给定的一个或多个 key，并返回被删除 key 的数量。如命令 <code>del key1 key2 key3</code>。</p>
-</blockquote>
-<p>比如要删除所有以 WxMpSessionKey 开头的 Key，可以使用如下命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[redis@iztz9ploifbvce ~]# redis-cli -h 192.168.182.227 -p 1379 keys &quot;WxMpSessionKey*&quot; |xargs redis-cli -h 192.168.182.227 -p 1379 del</span><br><span class="line">(integer) 2674</span><br></pre></td></tr></table></figure>
-
-<p>如果连接 Redis 的 HOST 为 127.0.0.1，端口号也为默认的 6379，则以上的命令可以简写为：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli keys &quot;WxMpSessionKey*&quot; |xargs redis-cli del</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring Boot 2.x 集成Jpa示例</title>
     <url>/2019/12/25/spring-boot-2_x-jpa/</url>
     <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
@@ -317,8 +291,8 @@
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>Redis</tag>
         <tag>Spring Boot</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -366,6 +340,32 @@
       <tags>
         <tag>CentOS7</tag>
         <tag>ZooKeeper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis根据通配符批量删除Key</title>
+    <url>/2019/09/03/redis-batch-delete/</url>
+    <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
+<blockquote>
+<p>Redis的 <code>del</code> 命令支持删除给定的一个或多个 key，并返回被删除 key 的数量。如命令 <code>del key1 key2 key3</code>。</p>
+</blockquote>
+<p>比如要删除所有以 WxMpSessionKey 开头的 Key，可以使用如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[redis@iztz9ploifbvce ~]# redis-cli -h 192.168.182.227 -p 1379 keys &quot;WxMpSessionKey*&quot; |xargs redis-cli -h 192.168.182.227 -p 1379 del</span><br><span class="line">(integer) 2674</span><br></pre></td></tr></table></figure>
+
+<p>如果连接 Redis 的 HOST 为 127.0.0.1，端口号也为默认的 6379，则以上的命令可以简写为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli keys &quot;WxMpSessionKey*&quot; |xargs redis-cli del</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -1018,185 +1018,40 @@
       </tags>
   </entry>
   <entry>
-    <title>使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</title>
-    <url>/2020/06/29/java-list-string-join/</url>
-    <content><![CDATA[<p>在日常开发工作中，经常会遇到需要将 <code>List&lt;String&gt;</code> 转换为使用某个符号连接的字符串。如将 <code>List&lt;String&gt;</code> 转换为按英文逗号（<code>,</code>）分隔的字符串：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：</span></span><br><span class="line"><span class="comment">// Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br></pre></td></tr></table></figure>
+    <title>HashMap核心功能源码解读（一）：概述</title>
+    <url>/2021/07/22/hashmap-core-code-analysis-1/</url>
+    <content><![CDATA[<p>在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。</p>
+<h2 id="HashMap特性"><a href="#HashMap特性" class="headerlink" title="HashMap特性"></a>HashMap特性</h2><p>HashMap 是 Map 接口的一个基于哈希表实现，主要用来存储键值对数据。作为一个使用频率较高的集合类，了解它的特性有助于我们在实践中正确使用它。</p>
+<p>首先，HashMap 允许键为 null 和值为 null。</p>
+<p>其次，HashMap 不保证 Map 的有序性，即不保证遍历 HashMap 输出元素的顺序与其插入的顺序相同（可能存在顺序相同情况）。另外，HashMap 也不保证其顺序在一段时间内保持不变。如果需要在项目中保证 Map 有序性的话，可以使用 LinkedHashMap 代替 HashMap。</p>
+<p>再次，HashMap 是不同步的，即 HashMap 不是线程安全的。如果多个线程同时访问同一个 HashMap 实例，并且其中至少有一个线程从结构上修改了 HashMap 实例时，会导致数据不一致的情况发生。这里的“从结构上修改”是指对 HashMap 实例进行添加或删除元素的操作，仅修改已包含的键对应的值话，就不是从结构上修改。</p>
+<p>在需要线程安全环境中，可以在创建 HashMap 实例时使用 <code>Collections.synchronizedMap</code> 方法对其进行“包装”，以防止对 HashMap 的意外非同步访问：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map m = Collection.synchronizedMap(<span class="keyword">new</span> HashMap (…));</span><br></pre></td></tr></table></figure>
 
-
-
-<p>最容易想到的拼接方式，是通过 <code>for</code> 循环来实现。不过，如果你使用 Java 8 或以上的版本进行开发，实现该功能将变得非常简单，通常有以下两种方法。</p>
-<p><strong>方法一：使用 <code>String.join</code>，主要代码如下：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示 String.join 方法的使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line">        System.out.println(String.join(<span class="string">&quot;,&quot;</span>, weekList));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>方法二：采用流的方式（<code>stream()</code>）来写，就像下面这样，仍然能够得到同样的结果：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示流方式（stream）进行拼接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        String str = weekList.stream().collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>此外，如果你想在连接成字符串之前，先对元素进行其他的操作，如过滤元素、转成大写等，采用流的方式实现也很方便。以下代码展示如何将整个字符串在连接之前先转为大写：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示在连接之前先将元素转为大写</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">      String str = String str = weekList.stream()</span><br><span class="line">                .map(String::toUpperCase)</span><br><span class="line">                .collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">      </span><br><span class="line">      System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>（END）</p>
+<p>另外，也可以用 ConcurrentHashMap 代替 HashMap。</p>
+<p>最后，HashMap 的所有“集合视图方法”返回的迭代器是快速失败（fail-fast）的。如果在创建迭代器之后，除了通过迭代器本身的 remove 方法之外，在任何时候以任何方式从结构上修改 HashMap 实例时，迭代器都会抛出 ConcurrentModificationException 异常。因此，在面对并发修改时，迭代器会快速、干净利落地失败，而不是在未来某个不确定的时间出现随意的、不确定的行为风险。</p>
+<p>注意，迭代器的快速失败行为是无法保证的，因为一般而言，在存在非同步并发修改的情况下，不可能做出任何硬保证。快速失败的迭代器会尽最大努力抛出 <code>ConcurrentModificationException</code> 异常。因此，编写依赖于此异常的正确性的程序是错误的：迭代器的快速失败行为应该只用于检测错误。</p>
+<h2 id="HashMap性能"><a href="#HashMap性能" class="headerlink" title="HashMap性能"></a>HashMap性能</h2><p>如果哈希函数可以把元素均匀打散到不同的哈希桶中，那么 HashMap 的基本操作（get 和 put）能达到常数级时间的性能。这意味着理想情况下，HashMap 的基本操作的时间复杂度为 O(1)，执行时间不随数据规模（键值对数量）的增大而增长。</p>
+<p>但是在真实的情况下，当你往 HashMap 中写入大量数据后，就可能发现操作有时候会变慢了。这其实是因为哈希冲突和扩容带来的性能影响。</p>
+<p>在 HashMap 中，有两个参数——<strong>初始容量（initial capacity）和装载因子（load factor）</strong>，与哈希冲突和扩容这两个性能因素有直接关系。</p>
+<p>初始容量，顾名思义就是哈希表创建时的容量，这里的容量是指哈希表的哈希桶数。装载因子是衡量哈希表在其容量自动扩容之前允许达到多满的指标。当哈希表中的条目数超过负载因子和当前容量的乘积时，即</p>
+<p>条目数 &gt;= 哈希表容量 × 装载因子</p>
+<p>将对哈希表进行重新哈希（即重新构建内部数据结构），使哈希表的桶数为原来的两倍。</p>
+<p>一般来说，默认的装载因子（为 0.75）可以在时间和空间的开销上做到很好的权衡。较大的值虽然可以减少空间开销，但会增加查找成本（反映在 HashMap 的大多数操作中，包括 get 和 put 操作）。</p>
+<p>在设置初始容量时，应考虑映射中的预期条目数及其装载因子，以尽量减少重新哈希操作的次数。如果初始容量大于最大条目数除以负载因子，则不会发生重新哈希操作。</p>
+<p>如果有大量的键值对数据要存储在 HashMap 实例中，那么在创建时就指定一个足够大的容量来存储这些数据，会比随着表增长的需要而自动执行重新哈希更加高效。</p>
+<p>注意，如果使用大量的具有相同哈希码（hashCode()）的键，无疑会降低哈希表的性能。为了改善影响，当键是可比较时，可以使用键之间的比较顺序来帮助打破联系。</p>
+<p>另外，遍历 HashMap 所需的时间与 HashMap 实例的“容量”（指哈希桶数量）加上其大小（指键值映射数量）成正比。所以，如果你看重遍历 HashMap 的性能，那么不要把它初始容量设置得太大或把装载因子设置得太小就非常重要了。</p>
+<h2 id="TreeMap-Hashtable-和-HashMap"><a href="#TreeMap-Hashtable-和-HashMap" class="headerlink" title="TreeMap, Hashtable 和 HashMap"></a>TreeMap, Hashtable 和 HashMap</h2><p>TreeMap 是基于红黑树的一种提供顺序访问的 Map，和 HashMap 不同，它的 get、put、remove 之类操作都是 O（log(n)）的时间复杂度，具体顺序可以由指定的 Comparator 来决定，或者根据键的自然顺序来判断。</p>
+<p>Hashtable 大致相当于 HashMap ，只是 HashMap 是非线程安全的并且允许空值。</p>
+<p>需要注意的是，Hashtable 是遗留类，不建议在项目中使用。在非线程安全环境中，可以直接用 HashMap 代替 Hashtable；在需要线程安全环境中，可以用 ConcurrentHashMap 代替 Hashtable，因为 ConcurrentHashMap 引入了分段锁，并发性更好。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文概述了 HashMap 允许键为 null 和值为 null、不保证有序性、非线程安全、迭代器快速失败（fail-over）等特性，影响 HashMap 性能的参数，以及在实践中应该注意的地方，同时在文末简单对比了 TreeMap, Hashtable 和 HashMap 有什么不同。下一篇文章开始将对 HashMap 核心功能源码进行解读。</p>
 ]]></content>
       <categories>
         <category>编程文摘</category>
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在macOS编译JDK14</title>
-    <url>/2020/05/08/apache-kafka-intro/</url>
-    <content><![CDATA[<h2 id="一、系统环境"><a href="#一、系统环境" class="headerlink" title="一、系统环境"></a>一、系统环境</h2><p>操作系统：macOS 10.15.4（Catalina）</p>
-<p>处理器：2.6 GHz 双核Intel Core i5</p>
-<p>内存：8G</p>
-<p>硬盘：512G</p>
-<blockquote>
-<p>NOTE:  在 macOS 平台编译 OpenJDK 14，操作系统版本官方建议至少使用 Mac OS X 10.13（High Sierra），可用磁盘空间建议至少 6 GB。</p>
-</blockquote>
-<h2 id="二、准备工作"><a href="#二、准备工作" class="headerlink" title="二、准备工作"></a>二、准备工作</h2><h3 id="2-1-Boot-JDK"><a href="#2-1-Boot-JDK" class="headerlink" title="2.1 Boot JDK"></a>2.1 Boot JDK</h3><p>矛盾的是，为了编译 OpenJDK，我们需要预先安装一个版本的 JDK，官方称这个 JDK 为 Boot JDK，即引导 JDK。</p>
-<h4 id="何为-Boot-JDK"><a href="#何为-Boot-JDK" class="headerlink" title="何为 Boot JDK"></a>何为 Boot JDK</h4><p>我们知道，OpenJDK 源码由多个部分组成，包括 HotSpot、JDK 类库、JAXP 等。其中一部分的代码是使用 C/C++ 编写的，如 HotSpot；而更多的代码其实是使用 Java 实现的，如我们熟知的 JDK 类库。编译这些 Java 代码就需要用到另一个已经编译的 JDK，官方称这个 JDK 为 Bootstrap JDK，即引导 JDK，作用是编译 OpenJDK 源码中 Java 代码。</p>
-<h4 id="如何选择-Boot-JDK-的版本"><a href="#如何选择-Boot-JDK-的版本" class="headerlink" title="如何选择 Boot JDK 的版本"></a>如何选择 Boot JDK 的版本</h4><p>Bootstrap JDK 的版本与我们要编译的 OpenJDK 版本有关。假设要编译的 OpenJDK 的大版本号为 <em>N</em>，那么 Bootstrap JDK 大版本号最小为 <em>N-1</em> 版本。</p>
-<p>如本文要编译的 OpenJDK 的大版本号为 14，那 Bootstrap JDK 的大版本号就需要 13 或 13 之后的版本。这里选择的大版本号是 13 ：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ java -version</span><br><span class="line">openjdk version &quot;13.0.2&quot; 2020-01-14</span><br><span class="line">OpenJDK Runtime Environment (build 13.0.2+8)</span><br><span class="line">OpenJDK 64-Bit Server VM (build 13.0.2+8, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-2-安装-Xcode"><a href="#2-2-安装-Xcode" class="headerlink" title="2.2 安装 Xcode"></a>2.2 安装 Xcode</h3><p>直接通过电脑的 App Store 安装最新版 Xcode 即可。</p>
-<p>为什么需要安装 Xcode？这是因为 Xcode 提供了编译 OpenJDK 所需要 CLang 编译器以及 Makefile 中用到的其他外部命令。</p>
-<h3 id="2-3-获取源码"><a href="#2-3-获取源码" class="headerlink" title="2.3 获取源码"></a>2.3 获取源码</h3><p>从 OpenJDK 官网获取源码有以下两种方式：</p>
-<ul>
-<li><p>一种是通过代码管理工具 Mercurial 从 Repository（<a href="http://hg.openjdk.java.net/jdk/jdk14/">http://hg.openjdk.java.net/jdk/jdk14/</a>） 中取得源码：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hg clone http://hg.openjdk.java.net/jdk/jdk14/</span><br></pre></td></tr></table></figure></li>
-<li><p>另一种是先在仓库中打包出源码压缩包，再下载压缩包，主要步骤如下：</p>
-<ol>
-<li><p>在浏览器打开链接 *<a href="http://hg.openjdk.java.net/jdk/jdk14/*%EF%BC%9A">http://hg.openjdk.java.net/jdk/jdk14/*：</a></p>
-<p><img src="/image/image-20200511232123290.png" alt="image-20200511232123290"></p>
-</li>
-<li><p>点击左侧菜单栏 <em>browse</em> 链接：</p>
-<p><img src="/image/image-20200511232253789.png" alt="image-20200511232253789"></p>
-</li>
-<li><p>然后再点击左侧菜单栏 <em>zip</em> 链接，即可进行下载。</p>
-</li>
-</ol>
-</li>
-</ul>
-<p>通过代码管理工具 Mercurial 的获取方式，你可以从版本管理中看到代码提交的记录和日志，能更加精确地了解 Java 代码发生的变化。此种方式的缺点是 clone 的速度很慢，虽然代码总大小只有几百MB，但小文件数量众多，而且该代码仓库在国内没有 CDN 节点，经常在 clone 的过程中出现中断的情况。</p>
-<p>通过从官网下载压缩包的获取方式，在国内同样也会有网络慢的问题。在网络不稳定的情况下，会出现只能下载到 1.5M 左右的残缺包。</p>
-<p>所以，如果想从官网获取源码，建议科学上网。</p>
-<p>对于不具备科学上网条件的用户，可以去 github 上的镜像库（<a href="https://github.com/unofficial-openjdk/openjdk/releases">https://github.com/unofficial-openjdk/openjdk/releases</a>）下载相应的 release 版本。</p>
-<p>本文的编译示例采用的是 <a href="https://github.com/unofficial-openjdk/openjdk/releases/tag/jdk-14%2B36">jdk-14+36</a> 版本，源码包大小为 185.2MB，解压缩之后为 763.6MB。</p>
-<h2 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h2><p>在准备工作完成后，就可以编译 OpenJDK 了。</p>
-<p>首先，将下载下来的源码解压到指定文件目录。本示例的目录是 <code>~/src/openjdk-jdk-14-36</code>。解压后的文件目录如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ cd ~/src/openjdk-jdk-14-36 </span><br><span class="line">➜  openjdk-jdk-14-36 ll</span><br><span class="line">total 80</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.1K  2  7 02:10 ADDITIONAL_LICENSE_INFO</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   1.5K  2  7 02:10 ASSEMBLY_EXCEPTION</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff    19K  2  7 02:10 LICENSE</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.7K  2  7 02:10 Makefile</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   341B  2  7 02:10 README</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 bin</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   1.6K  2  7 02:10 configure</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 doc</span><br><span class="line">drwxrwxr-x@ 69 bobotang  staff   2.2K  2  7 02:10 make</span><br><span class="line">drwxrwxr-x@ 81 bobotang  staff   2.5K  5  7 23:43 src</span><br><span class="line">drwxrwxr-x@ 14 bobotang  staff   448B  2  7 02:10 test</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>NOTE：目录不要包含中文字符或空格等其他特殊字符</p>
-</blockquote>
-<p>接下来，需要为源码目录下的一些配置文件赋予可执行权限。</p>
-<p>执行命令 <code>chmod +x ./configure </code>，为 <code>configure</code> 文件赋予可执行权限：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 chmod +x ./configure                             </span><br><span class="line">➜  openjdk-jdk-14-36 ll</span><br><span class="line">total 80</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.1K  2  7 02:10 ADDITIONAL_LICENSE_INFO</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   1.5K  2  7 02:10 ASSEMBLY_EXCEPTION</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff    19K  2  7 02:10 LICENSE</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.7K  2  7 02:10 Makefile</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   341B  2  7 02:10 README</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 bin</span><br><span class="line">-rwxrwxr-x@  1 bobotang  staff   1.6K  2  7 02:10 configure</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 doc</span><br><span class="line">drwxrwxr-x@ 69 bobotang  staff   2.2K  2  7 02:10 make</span><br><span class="line">drwxrwxr-x@ 81 bobotang  staff   2.5K  5  7 23:43 src</span><br><span class="line">drwxrwxr-x@ 14 bobotang  staff   448B  2  7 02:10 test</span><br></pre></td></tr></table></figure>
-
-
-
-<p>执行命令 <code>chmod +x build/.configure-support/generated-configure.sh</code> 为 <code>build/.configure-support/generated-configure.sh</code> 脚本文件赋予可执行权限：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 sudo chmod +x build/.configure-support/generated-configure.sh</span><br><span class="line">➜  openjdk-jdk-14-36 ll build/.configure-support/</span><br><span class="line">total 6272</span><br><span class="line">-rwxr-xr-x  1 root  staff   3.0M  5  8 09:41 generated-configure.sh</span><br></pre></td></tr></table></figure>
-
-
-
-<p>配置好可执行权限后，执行以下语句进行编译检测：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 ./configure --enable-debug --with-jvm-variants=server </span><br></pre></td></tr></table></figure>
-
-<p>如果检测通过，你可以看到以下输出：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">A new configuration has been successfully created in</span><br><span class="line">/Users/bobotang/src/openjdk-jdk-14-36/build/macosx-x86_64-server-fastdebug</span><br><span class="line">using configure arguments &#x27;--enable-debug --with-jvm-variants=server&#x27;.</span><br><span class="line"></span><br><span class="line">Configuration summary:</span><br><span class="line">* Debug level:    fastdebug</span><br><span class="line">* HS debug level: fastdebug</span><br><span class="line">* JVM variants:   server</span><br><span class="line">* JVM features:   server: &#x27;aot cds compiler1 compiler2 dtrace epsilongc g1gc graal jfr jni-check jvmci jvmti management nmt parallelgc serialgc services shenandoahgc vm-structs zgc&#x27; </span><br><span class="line">* OpenJDK target: OS: macosx, CPU architecture: x86, address length: 64</span><br><span class="line">* Version string: 14-internal+0-adhoc.root.openjdk-jdk-14-36 (14-internal)</span><br><span class="line"></span><br><span class="line">Tools summary:</span><br><span class="line">* Boot JDK:       openjdk version &quot;14&quot; 2020-03-17 OpenJDK Runtime Environment (build 14+36-1461) OpenJDK 64-Bit Server VM (build 14+36-1461, mixed mode, sharing)  (at /Library/Java/JavaVirtualMachines/jdk-14.jdk/Contents/Home)</span><br><span class="line">* Toolchain:      clang (clang/LLVM from Xcode 11.4.1)</span><br><span class="line">* C Compiler:     Version 11.0.3 (at /usr/bin/clang)</span><br><span class="line">* C++ Compiler:   Version 11.0.3 (at /usr/bin/clang++)</span><br><span class="line"></span><br><span class="line">Build performance summary:</span><br><span class="line">* Cores to use:   4</span><br><span class="line">* Memory limit:   8192 MB</span><br></pre></td></tr></table></figure>
-
-
-
-<p>编译检查通过后，就可以通过命令 <code>make images</code> 生成 OpenJDK 了。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 sudo make images</span><br></pre></td></tr></table></figure>
-
-<p>如果你看到以下输出，就说明构建成功了：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Creating jdk image</span><br><span class="line">WARNING: Using incubator modules: jdk.incubator.jpackage, jdk.incubator.foreign</span><br><span class="line">Creating CDS archive for jdk image</span><br><span class="line">Finished building target &#x27;images&#x27; in configuration &#x27;macosx-x86_64-server-fastdebug&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>你可以查看 <code>build</code> 目录下生成的文件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 ll build/macosx-x86_64-server-fastdebug</span><br><span class="line">total 216</span><br><span class="line">-rw-r--r--   1 root  staff   1.3K  5  8 10:10 Makefile</span><br><span class="line">-rw-r--r--   1 root  staff   2.9K  5  8 10:10 bootcycle-spec.gmk</span><br><span class="line">-rw-r--r--   1 root  staff    18K  5  8 10:49 build.log</span><br><span class="line">-rw-r--r--   1 root  staff   8.7K  5  8 10:10 buildjdk-spec.gmk</span><br><span class="line">drwxr-xr-x  46 root  staff   1.4K  5  8 10:44 buildtools</span><br><span class="line">-rwxr-xr-x   1 root  staff   3.8K  5  8 10:10 compare.sh</span><br><span class="line">drwxr-xr-x   5 root  staff   160B  5  8 10:10 configure-support</span><br><span class="line">-rw-r--r--   1 root  staff    21K  5  8 10:10 configure.log</span><br><span class="line">drwxr-xr-x   3 root  staff    96B  5  8 10:17 hotspot</span><br><span class="line">drwxr-xr-x   7 root  staff   224B  5  8 10:47 images</span><br><span class="line">drwxr-xr-x  12 root  staff   384B  5  8 10:43 jdk</span><br><span class="line">drwxr-xr-x  10 root  staff   320B  5  8 10:16 make-support</span><br><span class="line">-rw-r--r--   1 root  staff    36K  5  8 10:10 spec.gmk</span><br><span class="line">drwxr-xr-x  27 root  staff   864B  5  8 10:44 support</span><br></pre></td></tr></table></figure>
-
-<p>执行 java -version 查看编译后的 OpenJDK 版本：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 build/macosx-x86_64-server-fastdebug/jdk/bin/java -version </span><br><span class="line">openjdk version &quot;14-internal&quot; 2020-03-17</span><br><span class="line">OpenJDK Runtime Environment (fastdebug build 14-internal+0-adhoc.root.openjdk-jdk-14-36)</span><br><span class="line">OpenJDK 64-Bit Server VM (fastdebug build 14-internal+0-adhoc.root.openjdk-jdk-14-36, mixed mode)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>至此，OpenJDK 已经成功编译。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>JDK</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？</title>
-    <url>/2021/07/05/the-product-minded-software-engineer/</url>
-    <content><![CDATA[<p>近日在网上读到一篇标题为<a href="https://blog.pragmaticengineer.com/the-product-minded-engineer">《The Product-Minded Software Engineer》</a>的文章，该文讲述了具有产品思维的软件工程师都具备哪些特点，在文末也给出了如何成为具有产品思维的软件工程师的秘诀。读完很有感触，身处现如今的互联网环境，工程师如果还只专注于技术，未免有些狭隘。毕竟工程师的价值并不只体现在技术层面上，还应体现在产品、商业等层面上。</p>
-<p>文章很好，于是就把它翻译了出来，以期大家一起学习探讨，共同提高。</p>
-<hr>
-<p>具有产品思维的工程师是指那些对产品本身非常感兴趣的开发人员。他们会想去了解每个产品决策背后的原因，以及用户如何使用他们的产品，同时他们也乐于参与产品决策。如果他们决定放弃工程的乐趣（即放弃从事工程师工作），他们很可能会成为一名优秀的产品经理。我曾经与许多具有产品思维的优秀工程师一起工作，并认为自己也是这样的开发人员。在开发世界级产品的公司中，具有产品思维的工程师能把团队的影响力提升到一个新的水平。</p>
-<p>Atlassian 公司的产品经理 Sherif Mansour 写了一篇关于产品工程师以及产品经理如何识别这些产品工程师并与他们良好合作的优秀文章。他的观点很相似：</p>
-<blockquote>
-<p>在我过去十年的产品管理工作中，我得出的结论是，产品工程师是帮助你构建成功的产品、扩展自己并成为更好的产品经理的关键因素。</p>
-</blockquote>
-<p>他还引用了 Shopify 的工程主管 Jean-Michel Lemieux 的话，他对产品工程师的定义是这样的：</p>
-<blockquote>
-<p>一旦你有了产品基础，你就需要这些积极问“为什么”的开发人员、这些渴望使用技术解决人类/用户问题的工程师、还有那些具有同理心的人来获得神奇的体验。这就是我书中对产品工程师的定义。优秀的产品工程师知道在构建阶段需要考虑最小可爱产品的正确深度，而不好的产品工程师则会砍掉过多的产品功能需求。</p>
-</blockquote>
-<p>开发面向用户功能的、并与产品经理合作的团队，是具有产品思维的工程师可以产生巨大影响的环境。他们常常会成为主要贡献者、产品经理的首选人员、并且也常晋升为团队领导。那么，具有产品思维的工程师的关键特征是什么，如何才能变得更加具有产品思维？本文总结了我观察到的这类人共有的 9 个特征，以及我对工程师培养他们的产品思维肌肉的建议。</p>
-<h2 id="1-积极主动地对待产品理念或观点"><a href="#1-积极主动地对待产品理念或观点" class="headerlink" title="1. 积极主动地对待产品理念或观点"></a>1. 积极主动地对待产品理念或观点</h2><p>具有产品思维的工程师不会满足于拿到需求说明后就匆匆忙忙地实现它。他们会思考其他的创意，并找产品经理提出这些想法。他们会经常挑战现有的需求说明，建议其他可能更优的替代性方法。</p>
-<h2 id="2-对业务、用户行为和数据的兴趣"><a href="#2-对业务、用户行为和数据的兴趣" class="headerlink" title="2. 对业务、用户行为和数据的兴趣"></a>2. 对业务、用户行为和数据的兴趣</h2><p>具有产品思维的工程师们的想法和创意都不是凭空得来的。他们会花时间去了解企业是如何商业运作的，产品又是如何配合商业运作，以及最终要达到什么样的商业目标。此外，他们也会去换位思考，试图理解产品将给用户带来什么感受，以及用户如何从使用产品中受益。他们通常会直接去深入研究商业数据和用户测量指标，并尽其所能获取这些数据。如果可能的话，他们会直接访问相关数据，或者找产品经理、数据专家去要这些信息。工程师们这样做，往往是出于他们好奇的天性。这也是我观察到的下一个特征。</p>
-<h2 id="3-好奇心和对“为什么”的浓厚兴趣"><a href="#3-好奇心和对“为什么”的浓厚兴趣" class="headerlink" title="3. 好奇心和对“为什么”的浓厚兴趣"></a>3. 好奇心和对“为什么”的浓厚兴趣</h2><p>具有产品意识的工程师喜欢去理解所有事物背后的那个“为什么? ”。为什么产品要开发这个功能、而不开发另一个功能呢？为什么要首先发布这一里程碑，而不是选择另一个更简单的里程碑呢？如何进行测量——为什么我们不选择一种更全面彻底的度量方式来测量呢？</p>
-<p>他们能够自主地找到他们能够找到的答案。他们也会向产品经理和其他业务人员寻求帮助，找寻其他与产品相关问题的答案。尽管他们经常会问很多问题，但是他们都会设法不让其他人觉得不爽，因为他们已经与那些同事建立起了牢固的关系。</p>
-<h2 id="4-强大的沟通能力，建立与非工程师同事良好的关系"><a href="#4-强大的沟通能力，建立与非工程师同事良好的关系" class="headerlink" title="4. 强大的沟通能力，建立与非工程师同事良好的关系"></a>4. 强大的沟通能力，建立与非工程师同事良好的关系</h2><p>具有产品意识的工程师喜欢与软件工程领域外的同事们交谈，了解他们在做什么、为什么做。他们善于沟通，充分显示他们对于学习其他学科工作方式的浓厚兴趣。我经常看到他们和其他专业的同事们一起喝咖啡、吃午饭或者在走廊上聊天。</p>
-<h2 id="5-提前在产品和工程两方面做出权衡"><a href="#5-提前在产品和工程两方面做出权衡" class="headerlink" title="5. 提前在产品和工程两方面做出权衡"></a>5. 提前在产品和工程两方面做出权衡</h2><p>因为具有产品思维的工程师们对产品的原理以及软件工程都有深刻的理解，他们可以提出非常独到的建议，而很少有别人可以做到。例如，在确定产品构建的工作范围时，打造产品某项关键功能的编程工作量可能非常巨大。许多工程师会开始寻找减少工作量的方法，并试图明确减少工作量对该项关键功能可能会产生的影响。</p>
-<p>具有产品意识的工程师会从两个角度来解决这个问题：一方面在工程方面进行取舍，明确可能对产品产生的影响；同时在另一方面，他们还会开始对产品功能进行取舍，评估对工程工作量的影响。他们经常会去找产品经理，在保持产品体验相似的前提下，建议构建一个完全不同的功能，从而使得编程的工作量大幅降低。</p>
-<p>兼顾产品和工程、平衡两者的影响，是具有产品意识的工程师们拥有的独特优势。他们可以快速地在同一枚硬币的两面之间来回切换：产品特性、工程工作量和两者的平衡。由于他们利用其工程和产品两方面的洞察力，在头脑中快速完成上述权衡，所以他们能够很快得出有价值的结论。</p>
-<h2 id="6-以务实的方式处理边缘案例"><a href="#6-以务实的方式处理边缘案例" class="headerlink" title="6. 以务实的方式处理边缘案例"></a>6. 以务实的方式处理边缘案例</h2><p>边缘案例是一件很有意思的事情。有的工程师经常会忘记边缘案例的存在，最后从产品测试人员或最终用户那里得到反馈之后，才不得不回过头来解决这些问题。这是一个极端，而另一方面，如果在一个新产品或功能中试图处理所有可能的边缘情况，则可能会耗费大量的时间。</p>
-<p>具有产品意识的工程师会很快制定出关于边缘案例的计划，并思考如何减少工作量，并经常会找到不需要额外工作量的解决方案。他们专注于“最小可爱产品”的概念，评估边缘案例的影响和处理所需的工作量。他们会提供很好的折衷建议: 在发布早期版本之前，列出大多数可能出错的地方，并提出需要解决哪些边缘案例的建议。</p>
-<p>例如，对于一个千分之一的用户可能会遇到的错误，他们会考虑修复这一错误涉及的工作量，以及如果什么都不做会发生的后果。在产品验证过程中，客服专员是否可以在这个案例中帮助用户？用户下一次再遇到同样问题可以自己尝试成功解决吗？对产品进行略微调整，是否就可以避免边缘案例？</p>
-<h2 id="7-快速的产品验证周期"><a href="#7-快速的产品验证周期" class="headerlink" title="7. 快速的产品验证周期"></a>7. 快速的产品验证周期</h2><p>甚至在开发的产品功能可以上线之前，具有产品思维的工程师们早就已经找到创造性的方法来获取早期的反馈意见。他们可以和同事一起进行走廊测试，可以向产品经理演示尚在开发中的功能，也可以在 Beta 版本发布前组织整个团队来一场“漏洞大扫荡”，当然还有许多其他创造性的方法。他们会一直思考这个问题：“我们怎样才能验证用户们会像我们预期的那样来使用这个功能？”</p>
-<h2 id="8-对产品功能从头至尾负责到底"><a href="#8-对产品功能从头至尾负责到底" class="headerlink" title="8. 对产品功能从头至尾负责到底"></a>8. 对产品功能从头至尾负责到底</h2><p>经验丰富的工程师们都会对他们的工作从头至尾负责到底：从拿到产品规范到部署实施，再到发布产品并最终验证产品能否正常工作。除了上述这些工作以外，具有产品意识的工程师通常会举一反三、再进一步。</p>
-<p>他们坚信，只有在获得用户行为和商业指标的结果之后，他们的工作才算全部完成。产品上线后，他们仍然会积极与产品经理、数据专家和客户支持渠道保持密切沟通，以便了解产品功能在现实世界中的使用情况。要获得足够得出结论的可靠数据通常需要几周时间。即使他们可能已经接手下一个新项目，他们仍然会把检查上一项目的成果作为首要任务之一。这并不是一项特别耗时的活动，但是特别需要一种锲而不舍的精神，推动那些想要知道自己的辛勤劳动究竟效果如何的工程师们，去坚持探寻答案。</p>
-<p>当开发的某项功能表现得不如预期时，他们会特别好奇问题出在哪里？他们对于找到产品计划和现实世界结果之间存在差距的根本原因怀有浓厚的兴趣，程度不亚于他们在代码库中找到难以复现的缺陷并成功除错。他们经常会花费大量的时间，就某些假设和心得与产品经理和数据专家展开辩论。</p>
-<h2 id="9-通过反复循环的学习，形成强大的产品本能"><a href="#9-通过反复循环的学习，形成强大的产品本能" class="headerlink" title="9. 通过反复循环的学习，形成强大的产品本能"></a>9. 通过反复循环的学习，形成强大的产品本能</h2><p>对于有产品意识的工程师来说，一个典型的项目通常是这样的：</p>
-<ol>
-<li>他们会提出很多问题，来准确理解构建产品功能的原因；</li>
-<li>他们会提供建议和取舍方案，其中某些建议会反映在修订后的产品设计规范中；</li>
-<li>他们会很快开发出相关功能，以便尽早得到反馈意见；</li>
-<li>在产品发布之后，他们会积极跟进了解相关产品功能是否符合预期；</li>
-<li>如果没有达到预期，他们会深入挖掘原因，并学到产品在现实世界中使用的新知识。</li>
-</ol>
-<p>每完成一个项目，他们对产品的理解就会加深，他们开始培养起越来越好的产品直觉。等到下一个项目，他们会贡献更多有价值的建议。随着时间推移，他们会成为产品经理最愿意去讨教的大专家，在新的项目还未开始之前就会提前去征求他们的意见。他们将名声在外，为持续的职业发展打开更多的大门。</p>
-<h2 id="成为更有产品思维的工程师的秘诀"><a href="#成为更有产品思维的工程师的秘诀" class="headerlink" title="成为更有产品思维的工程师的秘诀"></a>成为更有产品思维的工程师的秘诀</h2><p>如果你在开发面向用户的产品，这里有一些我认为效果很好的技巧，可以增强你的产品思维。</p>
-<ul>
-<li><strong>了解公司成功的方式和原因。</strong>商业模式是什么？钱是怎么赚的？哪部分最赚钱，公司哪部分发展最快？原因是什么？你的团队如何适应这一切？</li>
-<li>与你的产品经理建立牢固的关系。大多数产品经理会抓住机会指导工程师。让工程师对产品感兴趣意味着他们可以更好地扩展自己。在进来之前，问很多产品问题，花时间建立这种关系，并向你的产品经理明确表示，你想更多地参与到产品中来。</li>
-<li>参与用户研究、客户支持和其他活动，你可以在其中了解更多有关产品如何运作的信息。与设计师、用户体验人员、数据科学家、运营人员和其他经常跟用户互动的人员结伴。</li>
-<li>提出有充分依据的产品建议。在你对业务、产品和利益相关者都有一个很好的了解之后：就要采取主动。你可以为你正在进行的项目提出一些小建议。或者，你可以建议进行更大的努力，概述工程工作和产品工作，以便在待办事项中轻松确定优先级。</li>
-<li>为你正在进行的项目提供产品/工程取舍。不仅要考虑对你团队正在构建的产品功能进行工程方面的取舍，还要建议可以减少工程工作量的产品权衡。对其他人的反馈持开放态度。</li>
-<li>经常向你的产品经理寻求反馈。成为一名具有产品思维的优秀工程师意味着你已经在现有的工程技能组合之上建立了良好的产品技能。向你提供有关你在产品技能方面的表现的反馈的最佳人选是你的产品经理。就他们对你的产品建议的价值提出反馈意见，并就需要进一步发展的领域征求意见。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>翻译</tag>
       </tags>
   </entry>
   <entry>
@@ -2073,6 +1928,773 @@
         <tag>理财</tag>
         <tag>定投</tag>
         <tag>计划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？</title>
+    <url>/2021/07/05/the-product-minded-software-engineer/</url>
+    <content><![CDATA[<p>近日在网上读到一篇标题为<a href="https://blog.pragmaticengineer.com/the-product-minded-engineer">《The Product-Minded Software Engineer》</a>的文章，该文讲述了具有产品思维的软件工程师都具备哪些特点，在文末也给出了如何成为具有产品思维的软件工程师的秘诀。读完很有感触，身处现如今的互联网环境，工程师如果还只专注于技术，未免有些狭隘。毕竟工程师的价值并不只体现在技术层面上，还应体现在产品、商业等层面上。</p>
+<p>文章很好，于是就把它翻译了出来，以期大家一起学习探讨，共同提高。</p>
+<hr>
+<p>具有产品思维的工程师是指那些对产品本身非常感兴趣的开发人员。他们会想去了解每个产品决策背后的原因，以及用户如何使用他们的产品，同时他们也乐于参与产品决策。如果他们决定放弃工程的乐趣（即放弃从事工程师工作），他们很可能会成为一名优秀的产品经理。我曾经与许多具有产品思维的优秀工程师一起工作，并认为自己也是这样的开发人员。在开发世界级产品的公司中，具有产品思维的工程师能把团队的影响力提升到一个新的水平。</p>
+<p>Atlassian 公司的产品经理 Sherif Mansour 写了一篇关于产品工程师以及产品经理如何识别这些产品工程师并与他们良好合作的优秀文章。他的观点很相似：</p>
+<blockquote>
+<p>在我过去十年的产品管理工作中，我得出的结论是，产品工程师是帮助你构建成功的产品、扩展自己并成为更好的产品经理的关键因素。</p>
+</blockquote>
+<p>他还引用了 Shopify 的工程主管 Jean-Michel Lemieux 的话，他对产品工程师的定义是这样的：</p>
+<blockquote>
+<p>一旦你有了产品基础，你就需要这些积极问“为什么”的开发人员、这些渴望使用技术解决人类/用户问题的工程师、还有那些具有同理心的人来获得神奇的体验。这就是我书中对产品工程师的定义。优秀的产品工程师知道在构建阶段需要考虑最小可爱产品的正确深度，而不好的产品工程师则会砍掉过多的产品功能需求。</p>
+</blockquote>
+<p>开发面向用户功能的、并与产品经理合作的团队，是具有产品思维的工程师可以产生巨大影响的环境。他们常常会成为主要贡献者、产品经理的首选人员、并且也常晋升为团队领导。那么，具有产品思维的工程师的关键特征是什么，如何才能变得更加具有产品思维？本文总结了我观察到的这类人共有的 9 个特征，以及我对工程师培养他们的产品思维肌肉的建议。</p>
+<h2 id="1-积极主动地对待产品理念或观点"><a href="#1-积极主动地对待产品理念或观点" class="headerlink" title="1. 积极主动地对待产品理念或观点"></a>1. 积极主动地对待产品理念或观点</h2><p>具有产品思维的工程师不会满足于拿到需求说明后就匆匆忙忙地实现它。他们会思考其他的创意，并找产品经理提出这些想法。他们会经常挑战现有的需求说明，建议其他可能更优的替代性方法。</p>
+<h2 id="2-对业务、用户行为和数据的兴趣"><a href="#2-对业务、用户行为和数据的兴趣" class="headerlink" title="2. 对业务、用户行为和数据的兴趣"></a>2. 对业务、用户行为和数据的兴趣</h2><p>具有产品思维的工程师们的想法和创意都不是凭空得来的。他们会花时间去了解企业是如何商业运作的，产品又是如何配合商业运作，以及最终要达到什么样的商业目标。此外，他们也会去换位思考，试图理解产品将给用户带来什么感受，以及用户如何从使用产品中受益。他们通常会直接去深入研究商业数据和用户测量指标，并尽其所能获取这些数据。如果可能的话，他们会直接访问相关数据，或者找产品经理、数据专家去要这些信息。工程师们这样做，往往是出于他们好奇的天性。这也是我观察到的下一个特征。</p>
+<h2 id="3-好奇心和对“为什么”的浓厚兴趣"><a href="#3-好奇心和对“为什么”的浓厚兴趣" class="headerlink" title="3. 好奇心和对“为什么”的浓厚兴趣"></a>3. 好奇心和对“为什么”的浓厚兴趣</h2><p>具有产品意识的工程师喜欢去理解所有事物背后的那个“为什么? ”。为什么产品要开发这个功能、而不开发另一个功能呢？为什么要首先发布这一里程碑，而不是选择另一个更简单的里程碑呢？如何进行测量——为什么我们不选择一种更全面彻底的度量方式来测量呢？</p>
+<p>他们能够自主地找到他们能够找到的答案。他们也会向产品经理和其他业务人员寻求帮助，找寻其他与产品相关问题的答案。尽管他们经常会问很多问题，但是他们都会设法不让其他人觉得不爽，因为他们已经与那些同事建立起了牢固的关系。</p>
+<h2 id="4-强大的沟通能力，建立与非工程师同事良好的关系"><a href="#4-强大的沟通能力，建立与非工程师同事良好的关系" class="headerlink" title="4. 强大的沟通能力，建立与非工程师同事良好的关系"></a>4. 强大的沟通能力，建立与非工程师同事良好的关系</h2><p>具有产品意识的工程师喜欢与软件工程领域外的同事们交谈，了解他们在做什么、为什么做。他们善于沟通，充分显示他们对于学习其他学科工作方式的浓厚兴趣。我经常看到他们和其他专业的同事们一起喝咖啡、吃午饭或者在走廊上聊天。</p>
+<h2 id="5-提前在产品和工程两方面做出权衡"><a href="#5-提前在产品和工程两方面做出权衡" class="headerlink" title="5. 提前在产品和工程两方面做出权衡"></a>5. 提前在产品和工程两方面做出权衡</h2><p>因为具有产品思维的工程师们对产品的原理以及软件工程都有深刻的理解，他们可以提出非常独到的建议，而很少有别人可以做到。例如，在确定产品构建的工作范围时，打造产品某项关键功能的编程工作量可能非常巨大。许多工程师会开始寻找减少工作量的方法，并试图明确减少工作量对该项关键功能可能会产生的影响。</p>
+<p>具有产品意识的工程师会从两个角度来解决这个问题：一方面在工程方面进行取舍，明确可能对产品产生的影响；同时在另一方面，他们还会开始对产品功能进行取舍，评估对工程工作量的影响。他们经常会去找产品经理，在保持产品体验相似的前提下，建议构建一个完全不同的功能，从而使得编程的工作量大幅降低。</p>
+<p>兼顾产品和工程、平衡两者的影响，是具有产品意识的工程师们拥有的独特优势。他们可以快速地在同一枚硬币的两面之间来回切换：产品特性、工程工作量和两者的平衡。由于他们利用其工程和产品两方面的洞察力，在头脑中快速完成上述权衡，所以他们能够很快得出有价值的结论。</p>
+<h2 id="6-以务实的方式处理边缘案例"><a href="#6-以务实的方式处理边缘案例" class="headerlink" title="6. 以务实的方式处理边缘案例"></a>6. 以务实的方式处理边缘案例</h2><p>边缘案例是一件很有意思的事情。有的工程师经常会忘记边缘案例的存在，最后从产品测试人员或最终用户那里得到反馈之后，才不得不回过头来解决这些问题。这是一个极端，而另一方面，如果在一个新产品或功能中试图处理所有可能的边缘情况，则可能会耗费大量的时间。</p>
+<p>具有产品意识的工程师会很快制定出关于边缘案例的计划，并思考如何减少工作量，并经常会找到不需要额外工作量的解决方案。他们专注于“最小可爱产品”的概念，评估边缘案例的影响和处理所需的工作量。他们会提供很好的折衷建议: 在发布早期版本之前，列出大多数可能出错的地方，并提出需要解决哪些边缘案例的建议。</p>
+<p>例如，对于一个千分之一的用户可能会遇到的错误，他们会考虑修复这一错误涉及的工作量，以及如果什么都不做会发生的后果。在产品验证过程中，客服专员是否可以在这个案例中帮助用户？用户下一次再遇到同样问题可以自己尝试成功解决吗？对产品进行略微调整，是否就可以避免边缘案例？</p>
+<h2 id="7-快速的产品验证周期"><a href="#7-快速的产品验证周期" class="headerlink" title="7. 快速的产品验证周期"></a>7. 快速的产品验证周期</h2><p>甚至在开发的产品功能可以上线之前，具有产品思维的工程师们早就已经找到创造性的方法来获取早期的反馈意见。他们可以和同事一起进行走廊测试，可以向产品经理演示尚在开发中的功能，也可以在 Beta 版本发布前组织整个团队来一场“漏洞大扫荡”，当然还有许多其他创造性的方法。他们会一直思考这个问题：“我们怎样才能验证用户们会像我们预期的那样来使用这个功能？”</p>
+<h2 id="8-对产品功能从头至尾负责到底"><a href="#8-对产品功能从头至尾负责到底" class="headerlink" title="8. 对产品功能从头至尾负责到底"></a>8. 对产品功能从头至尾负责到底</h2><p>经验丰富的工程师们都会对他们的工作从头至尾负责到底：从拿到产品规范到部署实施，再到发布产品并最终验证产品能否正常工作。除了上述这些工作以外，具有产品意识的工程师通常会举一反三、再进一步。</p>
+<p>他们坚信，只有在获得用户行为和商业指标的结果之后，他们的工作才算全部完成。产品上线后，他们仍然会积极与产品经理、数据专家和客户支持渠道保持密切沟通，以便了解产品功能在现实世界中的使用情况。要获得足够得出结论的可靠数据通常需要几周时间。即使他们可能已经接手下一个新项目，他们仍然会把检查上一项目的成果作为首要任务之一。这并不是一项特别耗时的活动，但是特别需要一种锲而不舍的精神，推动那些想要知道自己的辛勤劳动究竟效果如何的工程师们，去坚持探寻答案。</p>
+<p>当开发的某项功能表现得不如预期时，他们会特别好奇问题出在哪里？他们对于找到产品计划和现实世界结果之间存在差距的根本原因怀有浓厚的兴趣，程度不亚于他们在代码库中找到难以复现的缺陷并成功除错。他们经常会花费大量的时间，就某些假设和心得与产品经理和数据专家展开辩论。</p>
+<h2 id="9-通过反复循环的学习，形成强大的产品本能"><a href="#9-通过反复循环的学习，形成强大的产品本能" class="headerlink" title="9. 通过反复循环的学习，形成强大的产品本能"></a>9. 通过反复循环的学习，形成强大的产品本能</h2><p>对于有产品意识的工程师来说，一个典型的项目通常是这样的：</p>
+<ol>
+<li>他们会提出很多问题，来准确理解构建产品功能的原因；</li>
+<li>他们会提供建议和取舍方案，其中某些建议会反映在修订后的产品设计规范中；</li>
+<li>他们会很快开发出相关功能，以便尽早得到反馈意见；</li>
+<li>在产品发布之后，他们会积极跟进了解相关产品功能是否符合预期；</li>
+<li>如果没有达到预期，他们会深入挖掘原因，并学到产品在现实世界中使用的新知识。</li>
+</ol>
+<p>每完成一个项目，他们对产品的理解就会加深，他们开始培养起越来越好的产品直觉。等到下一个项目，他们会贡献更多有价值的建议。随着时间推移，他们会成为产品经理最愿意去讨教的大专家，在新的项目还未开始之前就会提前去征求他们的意见。他们将名声在外，为持续的职业发展打开更多的大门。</p>
+<h2 id="成为更有产品思维的工程师的秘诀"><a href="#成为更有产品思维的工程师的秘诀" class="headerlink" title="成为更有产品思维的工程师的秘诀"></a>成为更有产品思维的工程师的秘诀</h2><p>如果你在开发面向用户的产品，这里有一些我认为效果很好的技巧，可以增强你的产品思维。</p>
+<ul>
+<li><strong>了解公司成功的方式和原因。</strong>商业模式是什么？钱是怎么赚的？哪部分最赚钱，公司哪部分发展最快？原因是什么？你的团队如何适应这一切？</li>
+<li>与你的产品经理建立牢固的关系。大多数产品经理会抓住机会指导工程师。让工程师对产品感兴趣意味着他们可以更好地扩展自己。在进来之前，问很多产品问题，花时间建立这种关系，并向你的产品经理明确表示，你想更多地参与到产品中来。</li>
+<li>参与用户研究、客户支持和其他活动，你可以在其中了解更多有关产品如何运作的信息。与设计师、用户体验人员、数据科学家、运营人员和其他经常跟用户互动的人员结伴。</li>
+<li>提出有充分依据的产品建议。在你对业务、产品和利益相关者都有一个很好的了解之后：就要采取主动。你可以为你正在进行的项目提出一些小建议。或者，你可以建议进行更大的努力，概述工程工作和产品工作，以便在待办事项中轻松确定优先级。</li>
+<li>为你正在进行的项目提供产品/工程取舍。不仅要考虑对你团队正在构建的产品功能进行工程方面的取舍，还要建议可以减少工程工作量的产品权衡。对其他人的反馈持开放态度。</li>
+<li>经常向你的产品经理寻求反馈。成为一名具有产品思维的优秀工程师意味着你已经在现有的工程技能组合之上建立了良好的产品技能。向你提供有关你在产品技能方面的表现的反馈的最佳人选是你的产品经理。就他们对你的产品建议的价值提出反馈意见，并就需要进一步发展的领域征求意见。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>翻译</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>退休金计划：三十年一千万参考</title>
+    <url>/2021/07/18/investment-plan-reference/</url>
+    <content><![CDATA[<p>本参考计划根据 <a href="https://www.calculator.net/investment-calculator.html?ctype=returnrate&ctargetamountv=10000000&cstartingprinciplev=0&cyearsv=30&cinterestratev=23&ccompound=annually&ccontributeamountv=2000&cadditionat1=end&ciadditionat1=monthly&printit=0">投资计算器</a> 生成，这里假设你的：</p>
+<p>目标金额：10,000,000元</p>
+<p>起始金额：0元</p>
+<p>每月月末定投：2000元</p>
+<p>投资年限：30年</p>
+<p>则需要 14.469% 的年回报率才能达到 ￥10,000,000.00 的目标。</p>
+<p>期末账户明细：</p>
+<table>
+<thead>
+<tr>
+<th><strong>期末账户余额</strong></th>
+<th><strong>¥10,000,000.00</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>起始金额</td>
+<td>¥0.00</td>
+</tr>
+<tr>
+<td>净投入</td>
+<td>¥720,000.00</td>
+</tr>
+<tr>
+<td>累计收益</td>
+<td>¥9,280,000.00</td>
+</tr>
+</tbody></table>
+<p>年度计划：</p>
+<table>
+<thead>
+<tr>
+<th>年度</th>
+<th>起始本金</th>
+<th>起始金额</th>
+<th>收益</th>
+<th>期末资产</th>
+<th>期末本金</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>￥0.00</td>
+<td>￥0.00</td>
+<td>￥1,552.73</td>
+<td>￥25,552.73</td>
+<td>￥24,000.00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>￥24,000.00</td>
+<td>￥25,552.73</td>
+<td>￥5,249.85</td>
+<td>￥54,802.58</td>
+<td>￥48,000.00</td>
+</tr>
+<tr>
+<td>3</td>
+<td>￥48,000.00</td>
+<td>￥54,802.58</td>
+<td>￥9,481.90</td>
+<td>￥88,284.48</td>
+<td>￥72,000.00</td>
+</tr>
+<tr>
+<td>4</td>
+<td>￥72,000.00</td>
+<td>￥88,284.48</td>
+<td>￥14,326.27</td>
+<td>￥126,610.75</td>
+<td>￥96,000.00</td>
+</tr>
+<tr>
+<td>5</td>
+<td>￥96,000.00</td>
+<td>￥126,610.75</td>
+<td>￥19,871.55</td>
+<td>￥170,482.30</td>
+<td>￥120,000.00</td>
+</tr>
+<tr>
+<td>6</td>
+<td>￥120,000.00</td>
+<td>￥170,482.30</td>
+<td>￥26,219.15</td>
+<td>￥220,701.45</td>
+<td>￥144,000.00</td>
+</tr>
+<tr>
+<td>7</td>
+<td>￥144,000.00</td>
+<td>￥220,701.45</td>
+<td>￥33,485.18</td>
+<td>￥278,186.62</td>
+<td>￥168,000.00</td>
+</tr>
+<tr>
+<td>8</td>
+<td>￥168,000.00</td>
+<td>￥278,186.62</td>
+<td>￥41,802.47</td>
+<td>￥343,989.10</td>
+<td>￥192,000.00</td>
+</tr>
+<tr>
+<td>9</td>
+<td>￥192,000.00</td>
+<td>￥343,989.10</td>
+<td>￥51,323.19</td>
+<td>￥419,312.28</td>
+<td>￥216,000.00</td>
+</tr>
+<tr>
+<td>10</td>
+<td>￥216,000.00</td>
+<td>￥419,312.28</td>
+<td>￥62,221.41</td>
+<td>￥505,533.68</td>
+<td>￥240,000.00</td>
+</tr>
+<tr>
+<td>11</td>
+<td>￥240,000.00</td>
+<td>￥505,533.68</td>
+<td>￥74,696.46</td>
+<td>￥604,230.13</td>
+<td>￥264,000.00</td>
+</tr>
+<tr>
+<td>12</td>
+<td>￥264,000.00</td>
+<td>￥604,230.13</td>
+<td>￥88,976.42</td>
+<td>￥717,206.58</td>
+<td>￥288,000.00</td>
+</tr>
+<tr>
+<td>13</td>
+<td>￥288,000.00</td>
+<td>￥717,206.58</td>
+<td>￥105,322.58</td>
+<td>￥846,529.15</td>
+<td>￥312,000.00</td>
+</tr>
+<tr>
+<td>14</td>
+<td>￥312,000.00</td>
+<td>￥846,529.15</td>
+<td>￥124,033.75</td>
+<td>￥994,562.91</td>
+<td>￥336,000.00</td>
+</tr>
+<tr>
+<td>15</td>
+<td>￥336,000.00</td>
+<td>￥994,562.91</td>
+<td>￥145,452.19</td>
+<td>￥1,164,015.11</td>
+<td>￥360,000.00</td>
+</tr>
+<tr>
+<td>16</td>
+<td>￥360,000.00</td>
+<td>￥1,164,015.11</td>
+<td>￥169,969.58</td>
+<td>￥1,357,984.68</td>
+<td>￥384,000.00</td>
+</tr>
+<tr>
+<td>17</td>
+<td>￥384,000.00</td>
+<td>￥1,357,984.68</td>
+<td>￥198,034.28</td>
+<td>￥1,580,018.97</td>
+<td>￥408,000.00</td>
+</tr>
+<tr>
+<td>18</td>
+<td>￥408,000.00</td>
+<td>￥1,580,018.97</td>
+<td>￥230,159.57</td>
+<td>￥1,834,178.54</td>
+<td>￥432,000.00</td>
+</tr>
+<tr>
+<td>19</td>
+<td>￥432,000.00</td>
+<td>￥1,834,178.54</td>
+<td>￥266,932.93</td>
+<td>￥2,125,111.47</td>
+<td>￥456,000.00</td>
+</tr>
+<tr>
+<td>20</td>
+<td>￥456,000.00</td>
+<td>￥2,125,111.47</td>
+<td>￥309,026.88</td>
+<td>￥2,458,138.37</td>
+<td>￥480,000.00</td>
+</tr>
+<tr>
+<td>21</td>
+<td>￥480,000.00</td>
+<td>￥2,458,138.37</td>
+<td>￥357,211.28</td>
+<td>￥2,839,349.64</td>
+<td>￥504,000.00</td>
+</tr>
+<tr>
+<td>22</td>
+<td>￥504,000.00</td>
+<td>￥2,839,349.64</td>
+<td>￥412,367.25</td>
+<td>￥3,275,716.90</td>
+<td>￥528,000.00</td>
+</tr>
+<tr>
+<td>23</td>
+<td>￥528,000.00</td>
+<td>￥3,275,716.90</td>
+<td>￥475,503.55</td>
+<td>￥3,775,220.46</td>
+<td>￥552,000.00</td>
+</tr>
+<tr>
+<td>24</td>
+<td>￥552,000.00</td>
+<td>￥3,775,220.46</td>
+<td>￥547,774.78</td>
+<td>￥4,346,995.25</td>
+<td>￥576,000.00</td>
+</tr>
+<tr>
+<td>25</td>
+<td>￥576,000.00</td>
+<td>￥4,346,995.25</td>
+<td>￥630,502.67</td>
+<td>￥5,001,497.93</td>
+<td>￥600,000.00</td>
+</tr>
+<tr>
+<td>26</td>
+<td>￥600,000.00</td>
+<td>￥5,001,497.93</td>
+<td>￥725,200.13</td>
+<td>￥5,750,698.07</td>
+<td>￥624,000.00</td>
+</tr>
+<tr>
+<td>27</td>
+<td>￥624,000.00</td>
+<td>￥5,750,698.07</td>
+<td>￥833,599.00</td>
+<td>￥6,608,297.08</td>
+<td>￥648,000.00</td>
+</tr>
+<tr>
+<td>28</td>
+<td>￥648,000.00</td>
+<td>￥6,608,297.08</td>
+<td>￥957,681.70</td>
+<td>￥7,589,978.79</td>
+<td>￥672,000.00</td>
+</tr>
+<tr>
+<td>29</td>
+<td>￥672,000.00</td>
+<td>￥7,589,978.79</td>
+<td>￥1,099,717.43</td>
+<td>￥8,713,696.23</td>
+<td>￥696,000.00</td>
+</tr>
+<tr>
+<td>30</td>
+<td>￥696,000.00</td>
+<td>￥8,713,696.23</td>
+<td>￥1,262,303.78</td>
+<td>￥10,000,000.00</td>
+<td>￥720,000.00</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>退休金计划：2031-2035年定投执行计划</title>
+    <url>/2021/07/10/investment-plan-2031-2035/</url>
+    <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第三个五年行动计划——2031-2035年定投计划。</p>
+<p>本计划目标：净投入达 120,000 元。</p>
+<p>计划具体内容为 2031 - 2035 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
+<p>（未制定）</p>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
+        <tag>计划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>退休金计划：每月定投基金2000元，30年后资产总额达到多少？</title>
+    <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
+    <content><![CDATA[<h2 id="突发奇想"><a href="#突发奇想" class="headerlink" title="突发奇想"></a>突发奇想</h2><p>前段时间突发奇想，如果每个月拿出2000元用于投资理财，如定投基金，那30年后资产总额会达到多少呢？</p>
+<p>根据网上查到的资料，如果年化收益率为 14.5%，每月末坚持定投 2000 元，那么 30 年后资产总额将高达 1000 万元！！！看到这个结果，顿时心动不已。毕竟这 30 年的净投入才 72 万（2000 × 12 × 30 = 720000），收益竟达到了 928 万之多。</p>
+<h2 id="回到现实"><a href="#回到现实" class="headerlink" title="回到现实"></a>回到现实</h2><p>但这真的有可能实现吗？</p>
+<p>其实我不是怀疑在这样的假设下得出这样的结果。随着年期的增长，复利效应引发的倍数增长会越来越显著，而 30 年的时长，是足以见识到复利的威力和魅力的。</p>
+<p>问题是预期年化收益率 14.5% 能达到吗？公认的投资大师沃伦・巴菲特，具有四十多年投资年限，他的平均年化收益率也只是 20.3%。作为一个普通人，30 年的年化收益率要达到 14.5%，可能性有多大？即使能达到，每月定投 2000 元并坚持 30 年，是否又能做到呢？尤其是在市场出现极端恐慌或极端火热的时候，还能心如止水，仍坚定不移地按月定投吗？</p>
+<h2 id="一次大胆的尝试"><a href="#一次大胆的尝试" class="headerlink" title="一次大胆的尝试"></a>一次大胆的尝试</h2><p>说实话，三十年的平均年化收益率要达到将近15%，我是一点把握都没有。而且也没有多少信心能够坚持下去。我得承认自己是一个普通人，没有过多的时间精力花费在研究投资上，本身也缺乏相关的专业能力。但这并不意味着我会放弃尝试的机会。相反，我倒是跃跃欲试，就当作是为自己储蓄退休金，因为三十年后也差不多快到了我该退休的年纪。</p>
+<p>既然决定要去尝试，那就必须面对现实，尽最大的努力去解决这些问题，即使问题的解决方案并不是最优的。</p>
+<p>首先，关于年化收益率问题，如果自己没有能力达到，那是不是通过选择优秀的基金进行定投的方式来解决呢？要找到跨越牛熊周期的（时间一般超过八年）、平均年化收益率达到14.5% 的基金，虽没有想象中那么简单，但也没有想象中的困难。很多明星基金经理，如张坤、谢治宇、朱少醒等，他们手上管理的基金大多都能达到这个年化收益率。</p>
+<p>比如，朱少醒的富国天惠成长混合A基金，成立十五年翻了 21 倍，平均年化收益率高达 23.94%。当然，过去的业绩不代表未来的业绩，未来也有可能会更换基金经理。平均年化收益率也不代表每年都是一层不变，而是有的年度可能是高于这个值，有的年度是低于这个值，甚至是负数。</p>
+<p>长期来看，优秀基金经理的投资业绩肯定会比自己好很多。</p>
+<p>其次，关于每月坚持定投问题。一项目标计划需要持续三十年之久，这中间存在很多“拦路虎”，将来可能会以各种各样的方式影响计划的顺利执行。甚至有时候出现一些“致命性”的因素，导致整个计划不得不终止。比如一个常见的问题是缺少每月可用于定投的资金；比如可能会碰到最大的问题是出现特殊情况需要卖出基金；比如定投过程中还可能遇到坚持不下来的问题，等等。</p>
+<p>那有没有方法让这长达三十年的定投计划的执行可以变得稍微顺利些呢？</p>
+<p>我现在能想到的，一个是保障每月收入稳定，并且每月定投的钱一定要用“闲钱”，同时还要不断提高收入，为计划的顺利执行挖出一条深深的护城河，避免出现需要终止计划的情况。</p>
+<p>另外一个是可以将三十年的长期目标计划分阶段拆解成中期目标计划（五年计划或十年计划）、短期目标计划，最后变成一步步切实可行的行动计划和容易量化的行动目标，并在执行的过程中不断地给予自己反馈（计划进度图表等）。</p>
+<p>就像打怪升级一样，当你努力完成一定量的阶段目标之后，每次看到自己的储蓄金额（净投入）在慢慢增长，总资产也在慢慢地接近下一阶段目标，甚至是接近总目标，那种每天都在一点一点的慢慢变富的成就感和满足感就不由自主地产生了。</p>
+<p>在漫长且枯燥的定投过程中，成就感和满足感是可以增添我们坚持的动力和信心。</p>
+<p>再次，关于无视市场情绪问题。</p>
+<p>人的弱点有很多，自私、妒嫉、虚荣、胆小、好逸恶劳、优柔寡断、刚愎自用，等等。在股市中，每个人或多或少都会展现自己人性的弱点，其中比较典型的是贪婪与恐惧。</p>
+<p>在股市火爆的时候，有多少人还能按既定计划坚持定投，而不是匆匆止盈或者加大杠杆买入？在市场暴跌的时候，即使是优秀的基金，也是有可能出现很大的回撤，如上文提到的基金——富国天惠成长混合A，过去最大回撤也达到了 58.9%。当 100 块跌去 58.9 块，还有多少人能不割肉离场并坚持拿住？</p>
+<p>无视市场情绪，其实就是克服人性弱点，过程非常难，需要很大的毅力。</p>
+<p>个人的想法是，既然选择了大家公认（或自己个人认为）的优秀基金经理管理的基金，就相当于把自己的资金交给基金经理，由他们进行管理和投资。我们要做的是相信他们的专业能力是能够根据市场行情变化做出较为理性的判断，而不是瞎操心。剩下要做的是这些在我看来更重要的事情：保持健康、认真过好自己的生活、多花时间陪伴家人孩子、专注于自己的事业、增加收入的来源等。</p>
+<p>最后，还有一个关于通货膨胀问题。</p>
+<p>受通货膨胀因素影响，未来是否会增加每月定投金额？</p>
+<p>目前没有明确的想法。不过随着收入的上涨，从上涨的这部分收入里拿出一小部分资金投入到退休金计划，享受时间复利带来的收益，确实是一个不错的选择。需要强调的是新增加的这一部分资金，最好还是长时间不会用到的“闲钱”。</p>
+<h2 id="制定计划"><a href="#制定计划" class="headerlink" title="制定计划"></a>制定计划</h2><p>以下是我根据自身的情况制定了一项长期计划——退休金计划。</p>
+<p>计划内容：</p>
+<ul>
+<li>计划目标：退休金额达到 10,000,000 元；</li>
+<li>定投基金：富国天惠成长混合A（161005）；</li>
+<li>定投金额：2000 元/月；</li>
+<li>定投日期：每月 10 号和 24 号，如遇节假日或休息日，则根据情况提前在最近一个交易日定投，或顺延至下一个交易日定投；</li>
+<li>定投年限：30年；</li>
+<li>预期平均年回报率：14.5%；</li>
+<li>计划停止执行条件：提前完成目标金额或 30 年时间已到（2051年2月）；</li>
+<li>定投当天更新净投入和总资产记录；</li>
+<li>其他补充：根据未来的实际情况，决定是否更换定投基金、增加每月定投金额等。</li>
+</ul>
+<p>计划本身比较简单，关键是要<strong>坚定不移地去执行</strong>。</p>
+<h2 id="分阶段执行计划"><a href="#分阶段执行计划" class="headerlink" title="分阶段执行计划"></a>分阶段执行计划</h2><p>长期目标如果不细化或拆解成可执行的计划，往往很难实现。越是宏大的目标，越要细化成中期或短期内可实现的小目标。否则就容易因为目标过于宏大而感到难以实现，最终选择放弃。</p>
+<p>结合本人实际情况，退休金计划大概细化为六个“五年计划”。同时为便于记录统计，“五年计划”的起止时间以自然年为基准时间。详细计划如下：</p>
+<p><a href="/2021/07/10/investment-plan-2021-2025/">2021-2025年定投执行计划</a></p>
+<p><a href="/2021/07/10/investment-plan-2026-2030/">2026-2030年定投执行计划</a></p>
+<p><a href="/2021/07/10/investment-plan-2031-2035/">2031-2035年定投执行计划</a></p>
+<p>2036-2040年定投执行计划</p>
+<p>2041-2045年定投执行计划</p>
+<p>2046-2050年定投执行计划</p>
+<p>2051年（1月、2月）定投执行计划</p>
+<h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
+    <div id="echarts5155" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts4867" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('echarts5155'));
+    var bar_chart = echarts.init(document.getElementById('echarts4867'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var dates = [];
+        var invest_data = [];
+        var total_data = [];
+        var records = data.data;
+        var options = data.options;
+        var len = records.length;
+        var newestData = records[len - 1];
+
+        for (var i = 0; i < len; i++){
+          dates.push(records[i][0]);
+          invest_data.push(records[i][2]);
+          total_data.push(records[i][3]);
+        }
+        options.xAxis.data = dates;
+        options.series[0].data = invest_data;
+        options.series[1].data = total_data;
+        myChart.setOption(options);
+
+        var labelRight = {
+          position: 'right'
+        };
+      
+        var bar_options = {
+          title: {
+              text: '账户资产明细',
+              subtext: '金额（元）',
+              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
+          },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              }
+          },
+          grid: {
+              top: 80,
+              bottom: 30
+          },
+          xAxis: {
+              type: 'value',
+              position: 'top',
+              splitLine: {
+                  lineStyle: {
+                      type: 'dashed'
+                  }
+              }
+          },
+          yAxis: {
+              type: 'category',
+              axisLine: {show: false},
+              axisLabel: {show: false},
+              axisTick: {show: false},
+              splitLine: {show: false},
+              data: ['收益', '净投入', '总资产']
+          },
+          series: [
+              {
+                  name: '人民币',
+                  type: 'bar',
+                  stack: '总量',
+                  label: {
+                      show: true,
+                      formatter: '{b}'
+                  },
+                  data: [
+                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
+                      {value: newestData[2], label: labelRight},
+                      {value: newestData[3], label: labelRight},
+                  ],
+                  itemStyle: {
+                    normal: {
+        　　　　　　　　//这里是重点
+                        color: function(params) {
+                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
+                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                }
+              }
+          ]
+      };
+        bar_chart.setOption(bar_options);
+    });
+    </script>
+    
+
+<blockquote>
+<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
+</blockquote>
+<p>第一个五年目标（2021年3月-2025年12月），目标净投入 <strong>116,000</strong> 元；</p>
+<p>详见 <a href="/2021/07/17/investment-plan-progress/">退休金计划：进度看板</a></p>
+<h2 id="年度计划参考"><a href="#年度计划参考" class="headerlink" title="年度计划参考"></a>年度计划参考</h2><p>详见 <a href="/2021/07/18/investment-plan-reference">退休金计划：三十年一千万参考</a></p>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>退休金计划：进度看板</title>
+    <url>/2021/07/17/investment-plan-progress/</url>
+    <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
+<h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
+    <div id="echarts4973" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts5966" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('echarts4973'));
+    var bar_chart = echarts.init(document.getElementById('echarts5966'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var dates = [];
+        var invest_data = [];
+        var total_data = [];
+        var records = data.data;
+        var options = data.options;
+        var len = records.length;
+        var newestData = records[len - 1];
+
+        for (var i = 0; i < len; i++){
+          dates.push(records[i][0]);
+          invest_data.push(records[i][2]);
+          total_data.push(records[i][3]);
+        }
+        options.xAxis.data = dates;
+        options.series[0].data = invest_data;
+        options.series[1].data = total_data;
+        myChart.setOption(options);
+
+        var labelRight = {
+          position: 'right'
+        };
+      
+        var bar_options = {
+          title: {
+              text: '账户资产明细',
+              subtext: '金额（元）',
+              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
+          },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              }
+          },
+          grid: {
+              top: 80,
+              bottom: 30
+          },
+          xAxis: {
+              type: 'value',
+              position: 'top',
+              splitLine: {
+                  lineStyle: {
+                      type: 'dashed'
+                  }
+              }
+          },
+          yAxis: {
+              type: 'category',
+              axisLine: {show: false},
+              axisLabel: {show: false},
+              axisTick: {show: false},
+              splitLine: {show: false},
+              data: ['收益', '净投入', '总资产']
+          },
+          series: [
+              {
+                  name: '人民币',
+                  type: 'bar',
+                  stack: '总量',
+                  label: {
+                      show: true,
+                      formatter: '{b}'
+                  },
+                  data: [
+                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
+                      {value: newestData[2], label: labelRight},
+                      {value: newestData[3], label: labelRight},
+                  ],
+                  itemStyle: {
+                    normal: {
+        　　　　　　　　//这里是重点
+                        color: function(params) {
+                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
+                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                }
+              }
+          ]
+      };
+        bar_chart.setOption(bar_options);
+    });
+    </script>
+    
+
+<blockquote>
+<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
+</blockquote>
+<h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
+    <div id="echarts3070" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts3070'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var records = data.data;
+        var len = records.length;
+        var newestData = records[len - 1];
+        
+        var dashboard_chart_id_options = {
+          title: {
+            name: "textShadowOffsetXt",
+            text: "",
+            textStyle: {
+              color: "#fff"
+            }
+          },
+          backgroundColor: "#17326b",
+          grid: {
+            left: "10",
+            top: "10",
+            right: "10",
+            bottom: "10",
+            containLabel: true
+          },
+          xAxis: {
+            type: 'value',
+            splitLine: { show: false },
+            axisLabel: { show: false },
+            axisTick: { show: false },
+            axisLine: { show: false }
+          },
+          yAxis: [
+            {
+              type: 'category',
+              axisTick: { show: false },
+              axisLine: { show: false },
+              axisLabel: {
+                color: "black",
+                fontSize: 14,
+                textStyle: {
+                  color: '#fff'
+                }
+              },
+              data: ["今年净投入", "一五净投入", "一五总资产", "计划总资产"],
+              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
+              inverse: true
+            },
+            {
+              type: 'category',
+              axisTick: { show: false },
+              axisLine: { show: false },
+              axisLabel: {
+                color: "black",
+                fontSize: 14,
+                textStyle: {
+                  color: '#fff'
+                }
+              },
+              data: ['20,000', '116,000', '170,000', '10,000,000'],
+              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
+              inverse: true
+            }
+          ],
+          series: [
+            {
+              name: "%",
+              type: "bar",
+              barWidth: 19,
+              data: [(newestData[2] / 20000 * 100).toFixed(2), (newestData[2] / 116000 * 100).toFixed(2), (newestData[3] / 170000 * 100).toFixed(2), (newestData[3] / 10000000 * 100).toFixed(2)],
+              label: {
+                show: true,
+                //position    : 'middle',
+                offset: [20, 2],
+                formatter: '{c}{a}',
+                color: '#fff',
+                fontSize: 15
+              },
+              barCategoryGap: 20,
+              itemStyle: {
+                normal: {
+                  barBorderRadius: 10,
+                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+                    offset: 0,
+                    color: '#fdc830'
+                  }, {
+                    offset: 1,
+                    color: '#f37335'
+                  }]),
+                }
+              },
+              zlevel: 1
+        
+            }, {
+              name: "进度条背景",
+              type: "bar",
+              barGap: "-100%",
+              barWidth: 19,
+              data: [100, 100, 100, 100],
+              color: "#2e5384",
+              itemStyle: {
+                normal: {
+                  barBorderRadius: 10
+                }
+              },
+            }
+          ]
+        };
+        dashboard_chart_id_chart.setOption(dashboard_chart_id_options);
+    });
+    </script>
+    
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
       </tags>
   </entry>
   <entry>
@@ -2980,714 +3602,158 @@
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：2031-2035年定投执行计划</title>
-    <url>/2021/07/10/investment-plan-2031-2035/</url>
-    <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第三个五年行动计划——2031-2035年定投计划。</p>
-<p>本计划目标：净投入达 120,000 元。</p>
-<p>计划具体内容为 2031 - 2035 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
-<p>（未制定）</p>
+    <title>使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</title>
+    <url>/2020/06/29/java-list-string-join/</url>
+    <content><![CDATA[<p>在日常开发工作中，经常会遇到需要将 <code>List&lt;String&gt;</code> 转换为使用某个符号连接的字符串。如将 <code>List&lt;String&gt;</code> 转换为按英文逗号（<code>,</code>）分隔的字符串：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：</span></span><br><span class="line"><span class="comment">// Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>最容易想到的拼接方式，是通过 <code>for</code> 循环来实现。不过，如果你使用 Java 8 或以上的版本进行开发，实现该功能将变得非常简单，通常有以下两种方法。</p>
+<p><strong>方法一：使用 <code>String.join</code>，主要代码如下：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示 String.join 方法的使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line">        System.out.println(String.join(<span class="string">&quot;,&quot;</span>, weekList));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>方法二：采用流的方式（<code>stream()</code>）来写，就像下面这样，仍然能够得到同样的结果：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示流方式（stream）进行拼接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        String str = weekList.stream().collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>此外，如果你想在连接成字符串之前，先对元素进行其他的操作，如过滤元素、转成大写等，采用流的方式实现也很方便。以下代码展示如何将整个字符串在连接之前先转为大写：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示在连接之前先将元素转为大写</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">      String str = String str = weekList.stream()</span><br><span class="line">                .map(String::toUpperCase)</span><br><span class="line">                .collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">      </span><br><span class="line">      System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>（END）</p>
 ]]></content>
       <categories>
-        <category>投资理财</category>
+        <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-        <tag>计划</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：三十年一千万参考</title>
-    <url>/2021/07/18/investment-plan-reference/</url>
-    <content><![CDATA[<p>本参考计划根据 <a href="https://www.calculator.net/investment-calculator.html?ctype=returnrate&ctargetamountv=10000000&cstartingprinciplev=0&cyearsv=30&cinterestratev=23&ccompound=annually&ccontributeamountv=2000&cadditionat1=end&ciadditionat1=monthly&printit=0">投资计算器</a> 生成，这里假设你的：</p>
-<p>目标金额：10,000,000元</p>
-<p>起始金额：0元</p>
-<p>每月月末定投：2000元</p>
-<p>投资年限：30年</p>
-<p>则需要 14.469% 的年回报率才能达到 ￥10,000,000.00 的目标。</p>
-<p>期末账户明细：</p>
-<table>
-<thead>
-<tr>
-<th><strong>期末账户余额</strong></th>
-<th><strong>¥10,000,000.00</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>起始金额</td>
-<td>¥0.00</td>
-</tr>
-<tr>
-<td>净投入</td>
-<td>¥720,000.00</td>
-</tr>
-<tr>
-<td>累计收益</td>
-<td>¥9,280,000.00</td>
-</tr>
-</tbody></table>
-<p>年度计划：</p>
-<table>
-<thead>
-<tr>
-<th>年度</th>
-<th>起始本金</th>
-<th>起始金额</th>
-<th>收益</th>
-<th>期末资产</th>
-<th>期末本金</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>￥0.00</td>
-<td>￥0.00</td>
-<td>￥1,552.73</td>
-<td>￥25,552.73</td>
-<td>￥24,000.00</td>
-</tr>
-<tr>
-<td>2</td>
-<td>￥24,000.00</td>
-<td>￥25,552.73</td>
-<td>￥5,249.85</td>
-<td>￥54,802.58</td>
-<td>￥48,000.00</td>
-</tr>
-<tr>
-<td>3</td>
-<td>￥48,000.00</td>
-<td>￥54,802.58</td>
-<td>￥9,481.90</td>
-<td>￥88,284.48</td>
-<td>￥72,000.00</td>
-</tr>
-<tr>
-<td>4</td>
-<td>￥72,000.00</td>
-<td>￥88,284.48</td>
-<td>￥14,326.27</td>
-<td>￥126,610.75</td>
-<td>￥96,000.00</td>
-</tr>
-<tr>
-<td>5</td>
-<td>￥96,000.00</td>
-<td>￥126,610.75</td>
-<td>￥19,871.55</td>
-<td>￥170,482.30</td>
-<td>￥120,000.00</td>
-</tr>
-<tr>
-<td>6</td>
-<td>￥120,000.00</td>
-<td>￥170,482.30</td>
-<td>￥26,219.15</td>
-<td>￥220,701.45</td>
-<td>￥144,000.00</td>
-</tr>
-<tr>
-<td>7</td>
-<td>￥144,000.00</td>
-<td>￥220,701.45</td>
-<td>￥33,485.18</td>
-<td>￥278,186.62</td>
-<td>￥168,000.00</td>
-</tr>
-<tr>
-<td>8</td>
-<td>￥168,000.00</td>
-<td>￥278,186.62</td>
-<td>￥41,802.47</td>
-<td>￥343,989.10</td>
-<td>￥192,000.00</td>
-</tr>
-<tr>
-<td>9</td>
-<td>￥192,000.00</td>
-<td>￥343,989.10</td>
-<td>￥51,323.19</td>
-<td>￥419,312.28</td>
-<td>￥216,000.00</td>
-</tr>
-<tr>
-<td>10</td>
-<td>￥216,000.00</td>
-<td>￥419,312.28</td>
-<td>￥62,221.41</td>
-<td>￥505,533.68</td>
-<td>￥240,000.00</td>
-</tr>
-<tr>
-<td>11</td>
-<td>￥240,000.00</td>
-<td>￥505,533.68</td>
-<td>￥74,696.46</td>
-<td>￥604,230.13</td>
-<td>￥264,000.00</td>
-</tr>
-<tr>
-<td>12</td>
-<td>￥264,000.00</td>
-<td>￥604,230.13</td>
-<td>￥88,976.42</td>
-<td>￥717,206.58</td>
-<td>￥288,000.00</td>
-</tr>
-<tr>
-<td>13</td>
-<td>￥288,000.00</td>
-<td>￥717,206.58</td>
-<td>￥105,322.58</td>
-<td>￥846,529.15</td>
-<td>￥312,000.00</td>
-</tr>
-<tr>
-<td>14</td>
-<td>￥312,000.00</td>
-<td>￥846,529.15</td>
-<td>￥124,033.75</td>
-<td>￥994,562.91</td>
-<td>￥336,000.00</td>
-</tr>
-<tr>
-<td>15</td>
-<td>￥336,000.00</td>
-<td>￥994,562.91</td>
-<td>￥145,452.19</td>
-<td>￥1,164,015.11</td>
-<td>￥360,000.00</td>
-</tr>
-<tr>
-<td>16</td>
-<td>￥360,000.00</td>
-<td>￥1,164,015.11</td>
-<td>￥169,969.58</td>
-<td>￥1,357,984.68</td>
-<td>￥384,000.00</td>
-</tr>
-<tr>
-<td>17</td>
-<td>￥384,000.00</td>
-<td>￥1,357,984.68</td>
-<td>￥198,034.28</td>
-<td>￥1,580,018.97</td>
-<td>￥408,000.00</td>
-</tr>
-<tr>
-<td>18</td>
-<td>￥408,000.00</td>
-<td>￥1,580,018.97</td>
-<td>￥230,159.57</td>
-<td>￥1,834,178.54</td>
-<td>￥432,000.00</td>
-</tr>
-<tr>
-<td>19</td>
-<td>￥432,000.00</td>
-<td>￥1,834,178.54</td>
-<td>￥266,932.93</td>
-<td>￥2,125,111.47</td>
-<td>￥456,000.00</td>
-</tr>
-<tr>
-<td>20</td>
-<td>￥456,000.00</td>
-<td>￥2,125,111.47</td>
-<td>￥309,026.88</td>
-<td>￥2,458,138.37</td>
-<td>￥480,000.00</td>
-</tr>
-<tr>
-<td>21</td>
-<td>￥480,000.00</td>
-<td>￥2,458,138.37</td>
-<td>￥357,211.28</td>
-<td>￥2,839,349.64</td>
-<td>￥504,000.00</td>
-</tr>
-<tr>
-<td>22</td>
-<td>￥504,000.00</td>
-<td>￥2,839,349.64</td>
-<td>￥412,367.25</td>
-<td>￥3,275,716.90</td>
-<td>￥528,000.00</td>
-</tr>
-<tr>
-<td>23</td>
-<td>￥528,000.00</td>
-<td>￥3,275,716.90</td>
-<td>￥475,503.55</td>
-<td>￥3,775,220.46</td>
-<td>￥552,000.00</td>
-</tr>
-<tr>
-<td>24</td>
-<td>￥552,000.00</td>
-<td>￥3,775,220.46</td>
-<td>￥547,774.78</td>
-<td>￥4,346,995.25</td>
-<td>￥576,000.00</td>
-</tr>
-<tr>
-<td>25</td>
-<td>￥576,000.00</td>
-<td>￥4,346,995.25</td>
-<td>￥630,502.67</td>
-<td>￥5,001,497.93</td>
-<td>￥600,000.00</td>
-</tr>
-<tr>
-<td>26</td>
-<td>￥600,000.00</td>
-<td>￥5,001,497.93</td>
-<td>￥725,200.13</td>
-<td>￥5,750,698.07</td>
-<td>￥624,000.00</td>
-</tr>
-<tr>
-<td>27</td>
-<td>￥624,000.00</td>
-<td>￥5,750,698.07</td>
-<td>￥833,599.00</td>
-<td>￥6,608,297.08</td>
-<td>￥648,000.00</td>
-</tr>
-<tr>
-<td>28</td>
-<td>￥648,000.00</td>
-<td>￥6,608,297.08</td>
-<td>￥957,681.70</td>
-<td>￥7,589,978.79</td>
-<td>￥672,000.00</td>
-</tr>
-<tr>
-<td>29</td>
-<td>￥672,000.00</td>
-<td>￥7,589,978.79</td>
-<td>￥1,099,717.43</td>
-<td>￥8,713,696.23</td>
-<td>￥696,000.00</td>
-</tr>
-<tr>
-<td>30</td>
-<td>￥696,000.00</td>
-<td>￥8,713,696.23</td>
-<td>￥1,262,303.78</td>
-<td>￥10,000,000.00</td>
-<td>￥720,000.00</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>退休金计划：每月定投基金2000元，30年后资产总额达到多少？</title>
-    <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
-    <content><![CDATA[<h2 id="突发奇想"><a href="#突发奇想" class="headerlink" title="突发奇想"></a>突发奇想</h2><p>前段时间突发奇想，如果每个月拿出2000元用于投资理财，如定投基金，那30年后资产总额会达到多少呢？</p>
-<p>根据网上查到的资料，如果年化收益率为 14.5%，每月末坚持定投 2000 元，那么 30 年后资产总额将高达 1000 万元！！！看到这个结果，顿时心动不已。毕竟这 30 年的净投入才 72 万（2000 × 12 × 30 = 720000），收益竟达到了 928 万之多。</p>
-<h2 id="回到现实"><a href="#回到现实" class="headerlink" title="回到现实"></a>回到现实</h2><p>但这真的有可能实现吗？</p>
-<p>其实我不是怀疑在这样的假设下得出这样的结果。随着年期的增长，复利效应引发的倍数增长会越来越显著，而 30 年的时长，是足以见识到复利的威力和魅力的。</p>
-<p>问题是预期年化收益率 14.5% 能达到吗？公认的投资大师沃伦・巴菲特，具有四十多年投资年限，他的平均年化收益率也只是 20.3%。作为一个普通人，30 年的年化收益率要达到 14.5%，可能性有多大？即使能达到，每月定投 2000 元并坚持 30 年，是否又能做到呢？尤其是在市场出现极端恐慌或极端火热的时候，还能心如止水，仍坚定不移地按月定投吗？</p>
-<h2 id="一次大胆的尝试"><a href="#一次大胆的尝试" class="headerlink" title="一次大胆的尝试"></a>一次大胆的尝试</h2><p>说实话，三十年的平均年化收益率要达到将近15%，我是一点把握都没有。而且也没有多少信心能够坚持下去。我得承认自己是一个普通人，没有过多的时间精力花费在研究投资上，本身也缺乏相关的专业能力。但这并不意味着我会放弃尝试的机会。相反，我倒是跃跃欲试，就当作是为自己储蓄退休金，因为三十年后也差不多快到了我该退休的年纪。</p>
-<p>既然决定要去尝试，那就必须面对现实，尽最大的努力去解决这些问题，即使问题的解决方案并不是最优的。</p>
-<p>首先，关于年化收益率问题，如果自己没有能力达到，那是不是通过选择优秀的基金进行定投的方式来解决呢？要找到跨越牛熊周期的（时间一般超过八年）、平均年化收益率达到14.5% 的基金，虽没有想象中那么简单，但也没有想象中的困难。很多明星基金经理，如张坤、谢治宇、朱少醒等，他们手上管理的基金大多都能达到这个年化收益率。</p>
-<p>比如，朱少醒的富国天惠成长混合A基金，成立十五年翻了 21 倍，平均年化收益率高达 23.94%。当然，过去的业绩不代表未来的业绩，未来也有可能会更换基金经理。平均年化收益率也不代表每年都是一层不变，而是有的年度可能是高于这个值，有的年度是低于这个值，甚至是负数。</p>
-<p>长期来看，优秀基金经理的投资业绩肯定会比自己好很多。</p>
-<p>其次，关于每月坚持定投问题。一项目标计划需要持续三十年之久，这中间存在很多“拦路虎”，将来可能会以各种各样的方式影响计划的顺利执行。甚至有时候出现一些“致命性”的因素，导致整个计划不得不终止。比如一个常见的问题是缺少每月可用于定投的资金；比如可能会碰到最大的问题是出现特殊情况需要卖出基金；比如定投过程中还可能遇到坚持不下来的问题，等等。</p>
-<p>那有没有方法让这长达三十年的定投计划的执行可以变得稍微顺利些呢？</p>
-<p>我现在能想到的，一个是保障每月收入稳定，并且每月定投的钱一定要用“闲钱”，同时还要不断提高收入，为计划的顺利执行挖出一条深深的护城河，避免出现需要终止计划的情况。</p>
-<p>另外一个是可以将三十年的长期目标计划分阶段拆解成中期目标计划（五年计划或十年计划）、短期目标计划，最后变成一步步切实可行的行动计划和容易量化的行动目标，并在执行的过程中不断地给予自己反馈（计划进度图表等）。</p>
-<p>就像打怪升级一样，当你努力完成一定量的阶段目标之后，每次看到自己的储蓄金额（净投入）在慢慢增长，总资产也在慢慢地接近下一阶段目标，甚至是接近总目标，那种每天都在一点一点的慢慢变富的成就感和满足感就不由自主地产生了。</p>
-<p>在漫长且枯燥的定投过程中，成就感和满足感是可以增添我们坚持的动力和信心。</p>
-<p>再次，关于无视市场情绪问题。</p>
-<p>人的弱点有很多，自私、妒嫉、虚荣、胆小、好逸恶劳、优柔寡断、刚愎自用，等等。在股市中，每个人或多或少都会展现自己人性的弱点，其中比较典型的是贪婪与恐惧。</p>
-<p>在股市火爆的时候，有多少人还能按既定计划坚持定投，而不是匆匆止盈或者加大杠杆买入？在市场暴跌的时候，即使是优秀的基金，也是有可能出现很大的回撤，如上文提到的基金——富国天惠成长混合A，过去最大回撤也达到了 58.9%。当 100 块跌去 58.9 块，还有多少人能不割肉离场并坚持拿住？</p>
-<p>无视市场情绪，其实就是克服人性弱点，过程非常难，需要很大的毅力。</p>
-<p>个人的想法是，既然选择了大家公认（或自己个人认为）的优秀基金经理管理的基金，就相当于把自己的资金交给基金经理，由他们进行管理和投资。我们要做的是相信他们的专业能力是能够根据市场行情变化做出较为理性的判断，而不是瞎操心。剩下要做的是这些在我看来更重要的事情：保持健康、认真过好自己的生活、多花时间陪伴家人孩子、专注于自己的事业、增加收入的来源等。</p>
-<p>最后，还有一个关于通货膨胀问题。</p>
-<p>受通货膨胀因素影响，未来是否会增加每月定投金额？</p>
-<p>目前没有明确的想法。不过随着收入的上涨，从上涨的这部分收入里拿出一小部分资金投入到退休金计划，享受时间复利带来的收益，确实是一个不错的选择。需要强调的是新增加的这一部分资金，最好还是长时间不会用到的“闲钱”。</p>
-<h2 id="制定计划"><a href="#制定计划" class="headerlink" title="制定计划"></a>制定计划</h2><p>以下是我根据自身的情况制定了一项长期计划——退休金计划。</p>
-<p>计划内容：</p>
+    <title>在macOS编译JDK14</title>
+    <url>/2020/05/08/apache-kafka-intro/</url>
+    <content><![CDATA[<h2 id="一、系统环境"><a href="#一、系统环境" class="headerlink" title="一、系统环境"></a>一、系统环境</h2><p>操作系统：macOS 10.15.4（Catalina）</p>
+<p>处理器：2.6 GHz 双核Intel Core i5</p>
+<p>内存：8G</p>
+<p>硬盘：512G</p>
+<blockquote>
+<p>NOTE:  在 macOS 平台编译 OpenJDK 14，操作系统版本官方建议至少使用 Mac OS X 10.13（High Sierra），可用磁盘空间建议至少 6 GB。</p>
+</blockquote>
+<h2 id="二、准备工作"><a href="#二、准备工作" class="headerlink" title="二、准备工作"></a>二、准备工作</h2><h3 id="2-1-Boot-JDK"><a href="#2-1-Boot-JDK" class="headerlink" title="2.1 Boot JDK"></a>2.1 Boot JDK</h3><p>矛盾的是，为了编译 OpenJDK，我们需要预先安装一个版本的 JDK，官方称这个 JDK 为 Boot JDK，即引导 JDK。</p>
+<h4 id="何为-Boot-JDK"><a href="#何为-Boot-JDK" class="headerlink" title="何为 Boot JDK"></a>何为 Boot JDK</h4><p>我们知道，OpenJDK 源码由多个部分组成，包括 HotSpot、JDK 类库、JAXP 等。其中一部分的代码是使用 C/C++ 编写的，如 HotSpot；而更多的代码其实是使用 Java 实现的，如我们熟知的 JDK 类库。编译这些 Java 代码就需要用到另一个已经编译的 JDK，官方称这个 JDK 为 Bootstrap JDK，即引导 JDK，作用是编译 OpenJDK 源码中 Java 代码。</p>
+<h4 id="如何选择-Boot-JDK-的版本"><a href="#如何选择-Boot-JDK-的版本" class="headerlink" title="如何选择 Boot JDK 的版本"></a>如何选择 Boot JDK 的版本</h4><p>Bootstrap JDK 的版本与我们要编译的 OpenJDK 版本有关。假设要编译的 OpenJDK 的大版本号为 <em>N</em>，那么 Bootstrap JDK 大版本号最小为 <em>N-1</em> 版本。</p>
+<p>如本文要编译的 OpenJDK 的大版本号为 14，那 Bootstrap JDK 的大版本号就需要 13 或 13 之后的版本。这里选择的大版本号是 13 ：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ java -version</span><br><span class="line">openjdk version &quot;13.0.2&quot; 2020-01-14</span><br><span class="line">OpenJDK Runtime Environment (build 13.0.2+8)</span><br><span class="line">OpenJDK 64-Bit Server VM (build 13.0.2+8, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-安装-Xcode"><a href="#2-2-安装-Xcode" class="headerlink" title="2.2 安装 Xcode"></a>2.2 安装 Xcode</h3><p>直接通过电脑的 App Store 安装最新版 Xcode 即可。</p>
+<p>为什么需要安装 Xcode？这是因为 Xcode 提供了编译 OpenJDK 所需要 CLang 编译器以及 Makefile 中用到的其他外部命令。</p>
+<h3 id="2-3-获取源码"><a href="#2-3-获取源码" class="headerlink" title="2.3 获取源码"></a>2.3 获取源码</h3><p>从 OpenJDK 官网获取源码有以下两种方式：</p>
 <ul>
-<li>计划目标：退休金额达到 10,000,000 元；</li>
-<li>定投基金：富国天惠成长混合A（161005）；</li>
-<li>定投金额：2000 元/月；</li>
-<li>定投日期：每月 10 号和 24 号，如遇节假日或休息日，则根据情况提前在最近一个交易日定投，或顺延至下一个交易日定投；</li>
-<li>定投年限：30年；</li>
-<li>预期平均年回报率：14.5%；</li>
-<li>计划停止执行条件：提前完成目标金额或 30 年时间已到（2051年2月）；</li>
-<li>定投当天更新净投入和总资产记录；</li>
-<li>其他补充：根据未来的实际情况，决定是否更换定投基金、增加每月定投金额等。</li>
+<li><p>一种是通过代码管理工具 Mercurial 从 Repository（<a href="http://hg.openjdk.java.net/jdk/jdk14/">http://hg.openjdk.java.net/jdk/jdk14/</a>） 中取得源码：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hg clone http://hg.openjdk.java.net/jdk/jdk14/</span><br></pre></td></tr></table></figure></li>
+<li><p>另一种是先在仓库中打包出源码压缩包，再下载压缩包，主要步骤如下：</p>
+<ol>
+<li><p>在浏览器打开链接 *<a href="http://hg.openjdk.java.net/jdk/jdk14/*%EF%BC%9A">http://hg.openjdk.java.net/jdk/jdk14/*：</a></p>
+<p><img src="/image/image-20200511232123290.png" alt="image-20200511232123290"></p>
+</li>
+<li><p>点击左侧菜单栏 <em>browse</em> 链接：</p>
+<p><img src="/image/image-20200511232253789.png" alt="image-20200511232253789"></p>
+</li>
+<li><p>然后再点击左侧菜单栏 <em>zip</em> 链接，即可进行下载。</p>
+</li>
+</ol>
+</li>
 </ul>
-<p>计划本身比较简单，关键是要<strong>坚定不移地去执行</strong>。</p>
-<h2 id="分阶段执行计划"><a href="#分阶段执行计划" class="headerlink" title="分阶段执行计划"></a>分阶段执行计划</h2><p>长期目标如果不细化或拆解成可执行的计划，往往很难实现。越是宏大的目标，越要细化成中期或短期内可实现的小目标。否则就容易因为目标过于宏大而感到难以实现，最终选择放弃。</p>
-<p>结合本人实际情况，退休金计划大概细化为六个“五年计划”。同时为便于记录统计，“五年计划”的起止时间以自然年为基准时间。详细计划如下：</p>
-<p><a href="/2021/07/10/investment-plan-2021-2025/">2021-2025年定投执行计划</a></p>
-<p><a href="/2021/07/10/investment-plan-2026-2030/">2026-2030年定投执行计划</a></p>
-<p><a href="/2021/07/10/investment-plan-2031-2035/">2031-2035年定投执行计划</a></p>
-<p>2036-2040年定投执行计划</p>
-<p>2041-2045年定投执行计划</p>
-<p>2046-2050年定投执行计划</p>
-<p>2051年（1月、2月）定投执行计划</p>
-<h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts917" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts488" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts917'));
-    var bar_chart = echarts.init(document.getElementById('echarts488'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var dates = [];
-        var invest_data = [];
-        var total_data = [];
-        var records = data.data;
-        var options = data.options;
-        var len = records.length;
-        var newestData = records[len - 1];
-
-        for (var i = 0; i < len; i++){
-          dates.push(records[i][0]);
-          invest_data.push(records[i][2]);
-          total_data.push(records[i][3]);
-        }
-        options.xAxis.data = dates;
-        options.series[0].data = invest_data;
-        options.series[1].data = total_data;
-        myChart.setOption(options);
-
-        var labelRight = {
-          position: 'right'
-        };
-      
-        var bar_options = {
-          title: {
-              text: '账户资产明细',
-              subtext: '金额（元）',
-              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
-          },
-          tooltip: {
-              trigger: 'axis',
-              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-              }
-          },
-          grid: {
-              top: 80,
-              bottom: 30
-          },
-          xAxis: {
-              type: 'value',
-              position: 'top',
-              splitLine: {
-                  lineStyle: {
-                      type: 'dashed'
-                  }
-              }
-          },
-          yAxis: {
-              type: 'category',
-              axisLine: {show: false},
-              axisLabel: {show: false},
-              axisTick: {show: false},
-              splitLine: {show: false},
-              data: ['收益', '净投入', '总资产']
-          },
-          series: [
-              {
-                  name: '人民币',
-                  type: 'bar',
-                  stack: '总量',
-                  label: {
-                      show: true,
-                      formatter: '{b}'
-                  },
-                  data: [
-                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
-                      {value: newestData[2], label: labelRight},
-                      {value: newestData[3], label: labelRight},
-                  ],
-                  itemStyle: {
-                    normal: {
-        　　　　　　　　//这里是重点
-                        color: function(params) {
-                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
-                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
-                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
-                            return colorList[params.dataIndex]
-                        }
-                    }
-                }
-              }
-          ]
-      };
-        bar_chart.setOption(bar_options);
-    });
-    </script>
-    
+<p>通过代码管理工具 Mercurial 的获取方式，你可以从版本管理中看到代码提交的记录和日志，能更加精确地了解 Java 代码发生的变化。此种方式的缺点是 clone 的速度很慢，虽然代码总大小只有几百MB，但小文件数量众多，而且该代码仓库在国内没有 CDN 节点，经常在 clone 的过程中出现中断的情况。</p>
+<p>通过从官网下载压缩包的获取方式，在国内同样也会有网络慢的问题。在网络不稳定的情况下，会出现只能下载到 1.5M 左右的残缺包。</p>
+<p>所以，如果想从官网获取源码，建议科学上网。</p>
+<p>对于不具备科学上网条件的用户，可以去 github 上的镜像库（<a href="https://github.com/unofficial-openjdk/openjdk/releases">https://github.com/unofficial-openjdk/openjdk/releases</a>）下载相应的 release 版本。</p>
+<p>本文的编译示例采用的是 <a href="https://github.com/unofficial-openjdk/openjdk/releases/tag/jdk-14%2B36">jdk-14+36</a> 版本，源码包大小为 185.2MB，解压缩之后为 763.6MB。</p>
+<h2 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h2><p>在准备工作完成后，就可以编译 OpenJDK 了。</p>
+<p>首先，将下载下来的源码解压到指定文件目录。本示例的目录是 <code>~/src/openjdk-jdk-14-36</code>。解压后的文件目录如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ cd ~/src/openjdk-jdk-14-36 </span><br><span class="line">➜  openjdk-jdk-14-36 ll</span><br><span class="line">total 80</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.1K  2  7 02:10 ADDITIONAL_LICENSE_INFO</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   1.5K  2  7 02:10 ASSEMBLY_EXCEPTION</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff    19K  2  7 02:10 LICENSE</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.7K  2  7 02:10 Makefile</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   341B  2  7 02:10 README</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 bin</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   1.6K  2  7 02:10 configure</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 doc</span><br><span class="line">drwxrwxr-x@ 69 bobotang  staff   2.2K  2  7 02:10 make</span><br><span class="line">drwxrwxr-x@ 81 bobotang  staff   2.5K  5  7 23:43 src</span><br><span class="line">drwxrwxr-x@ 14 bobotang  staff   448B  2  7 02:10 test</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
+<p>NOTE：目录不要包含中文字符或空格等其他特殊字符</p>
 </blockquote>
-<p>第一个五年目标（2021年3月-2025年12月），目标净投入 <strong>116,000</strong> 元；</p>
-<p>详见 <a href="/2021/07/17/investment-plan-progress/">退休金计划：进度看板</a></p>
-<h2 id="年度计划参考"><a href="#年度计划参考" class="headerlink" title="年度计划参考"></a>年度计划参考</h2><p>详见 <a href="/2021/07/18/investment-plan-reference">退休金计划：三十年一千万参考</a></p>
+<p>接下来，需要为源码目录下的一些配置文件赋予可执行权限。</p>
+<p>执行命令 <code>chmod +x ./configure </code>，为 <code>configure</code> 文件赋予可执行权限：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 chmod +x ./configure                             </span><br><span class="line">➜  openjdk-jdk-14-36 ll</span><br><span class="line">total 80</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.1K  2  7 02:10 ADDITIONAL_LICENSE_INFO</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   1.5K  2  7 02:10 ASSEMBLY_EXCEPTION</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff    19K  2  7 02:10 LICENSE</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.7K  2  7 02:10 Makefile</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   341B  2  7 02:10 README</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 bin</span><br><span class="line">-rwxrwxr-x@  1 bobotang  staff   1.6K  2  7 02:10 configure</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 doc</span><br><span class="line">drwxrwxr-x@ 69 bobotang  staff   2.2K  2  7 02:10 make</span><br><span class="line">drwxrwxr-x@ 81 bobotang  staff   2.5K  5  7 23:43 src</span><br><span class="line">drwxrwxr-x@ 14 bobotang  staff   448B  2  7 02:10 test</span><br></pre></td></tr></table></figure>
+
+
+
+<p>执行命令 <code>chmod +x build/.configure-support/generated-configure.sh</code> 为 <code>build/.configure-support/generated-configure.sh</code> 脚本文件赋予可执行权限：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 sudo chmod +x build/.configure-support/generated-configure.sh</span><br><span class="line">➜  openjdk-jdk-14-36 ll build/.configure-support/</span><br><span class="line">total 6272</span><br><span class="line">-rwxr-xr-x  1 root  staff   3.0M  5  8 09:41 generated-configure.sh</span><br></pre></td></tr></table></figure>
+
+
+
+<p>配置好可执行权限后，执行以下语句进行编译检测：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 ./configure --enable-debug --with-jvm-variants=server </span><br></pre></td></tr></table></figure>
+
+<p>如果检测通过，你可以看到以下输出：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">A new configuration has been successfully created in</span><br><span class="line">/Users/bobotang/src/openjdk-jdk-14-36/build/macosx-x86_64-server-fastdebug</span><br><span class="line">using configure arguments &#x27;--enable-debug --with-jvm-variants=server&#x27;.</span><br><span class="line"></span><br><span class="line">Configuration summary:</span><br><span class="line">* Debug level:    fastdebug</span><br><span class="line">* HS debug level: fastdebug</span><br><span class="line">* JVM variants:   server</span><br><span class="line">* JVM features:   server: &#x27;aot cds compiler1 compiler2 dtrace epsilongc g1gc graal jfr jni-check jvmci jvmti management nmt parallelgc serialgc services shenandoahgc vm-structs zgc&#x27; </span><br><span class="line">* OpenJDK target: OS: macosx, CPU architecture: x86, address length: 64</span><br><span class="line">* Version string: 14-internal+0-adhoc.root.openjdk-jdk-14-36 (14-internal)</span><br><span class="line"></span><br><span class="line">Tools summary:</span><br><span class="line">* Boot JDK:       openjdk version &quot;14&quot; 2020-03-17 OpenJDK Runtime Environment (build 14+36-1461) OpenJDK 64-Bit Server VM (build 14+36-1461, mixed mode, sharing)  (at /Library/Java/JavaVirtualMachines/jdk-14.jdk/Contents/Home)</span><br><span class="line">* Toolchain:      clang (clang/LLVM from Xcode 11.4.1)</span><br><span class="line">* C Compiler:     Version 11.0.3 (at /usr/bin/clang)</span><br><span class="line">* C++ Compiler:   Version 11.0.3 (at /usr/bin/clang++)</span><br><span class="line"></span><br><span class="line">Build performance summary:</span><br><span class="line">* Cores to use:   4</span><br><span class="line">* Memory limit:   8192 MB</span><br></pre></td></tr></table></figure>
+
+
+
+<p>编译检查通过后，就可以通过命令 <code>make images</code> 生成 OpenJDK 了。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 sudo make images</span><br></pre></td></tr></table></figure>
+
+<p>如果你看到以下输出，就说明构建成功了：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Creating jdk image</span><br><span class="line">WARNING: Using incubator modules: jdk.incubator.jpackage, jdk.incubator.foreign</span><br><span class="line">Creating CDS archive for jdk image</span><br><span class="line">Finished building target &#x27;images&#x27; in configuration &#x27;macosx-x86_64-server-fastdebug&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>你可以查看 <code>build</code> 目录下生成的文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 ll build/macosx-x86_64-server-fastdebug</span><br><span class="line">total 216</span><br><span class="line">-rw-r--r--   1 root  staff   1.3K  5  8 10:10 Makefile</span><br><span class="line">-rw-r--r--   1 root  staff   2.9K  5  8 10:10 bootcycle-spec.gmk</span><br><span class="line">-rw-r--r--   1 root  staff    18K  5  8 10:49 build.log</span><br><span class="line">-rw-r--r--   1 root  staff   8.7K  5  8 10:10 buildjdk-spec.gmk</span><br><span class="line">drwxr-xr-x  46 root  staff   1.4K  5  8 10:44 buildtools</span><br><span class="line">-rwxr-xr-x   1 root  staff   3.8K  5  8 10:10 compare.sh</span><br><span class="line">drwxr-xr-x   5 root  staff   160B  5  8 10:10 configure-support</span><br><span class="line">-rw-r--r--   1 root  staff    21K  5  8 10:10 configure.log</span><br><span class="line">drwxr-xr-x   3 root  staff    96B  5  8 10:17 hotspot</span><br><span class="line">drwxr-xr-x   7 root  staff   224B  5  8 10:47 images</span><br><span class="line">drwxr-xr-x  12 root  staff   384B  5  8 10:43 jdk</span><br><span class="line">drwxr-xr-x  10 root  staff   320B  5  8 10:16 make-support</span><br><span class="line">-rw-r--r--   1 root  staff    36K  5  8 10:10 spec.gmk</span><br><span class="line">drwxr-xr-x  27 root  staff   864B  5  8 10:44 support</span><br></pre></td></tr></table></figure>
+
+<p>执行 java -version 查看编译后的 OpenJDK 版本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 build/macosx-x86_64-server-fastdebug/jdk/bin/java -version </span><br><span class="line">openjdk version &quot;14-internal&quot; 2020-03-17</span><br><span class="line">OpenJDK Runtime Environment (fastdebug build 14-internal+0-adhoc.root.openjdk-jdk-14-36)</span><br><span class="line">OpenJDK 64-Bit Server VM (fastdebug build 14-internal+0-adhoc.root.openjdk-jdk-14-36, mixed mode)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>至此，OpenJDK 已经成功编译。</p>
+<p>（END）</p>
 ]]></content>
       <categories>
-        <category>投资理财</category>
+        <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
+        <tag>JDK</tag>
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：进度看板</title>
-    <url>/2021/07/17/investment-plan-progress/</url>
-    <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
-<h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts8016" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts555" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts8016'));
-    var bar_chart = echarts.init(document.getElementById('echarts555'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var dates = [];
-        var invest_data = [];
-        var total_data = [];
-        var records = data.data;
-        var options = data.options;
-        var len = records.length;
-        var newestData = records[len - 1];
-
-        for (var i = 0; i < len; i++){
-          dates.push(records[i][0]);
-          invest_data.push(records[i][2]);
-          total_data.push(records[i][3]);
-        }
-        options.xAxis.data = dates;
-        options.series[0].data = invest_data;
-        options.series[1].data = total_data;
-        myChart.setOption(options);
-
-        var labelRight = {
-          position: 'right'
-        };
-      
-        var bar_options = {
-          title: {
-              text: '账户资产明细',
-              subtext: '金额（元）',
-              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
-          },
-          tooltip: {
-              trigger: 'axis',
-              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-              }
-          },
-          grid: {
-              top: 80,
-              bottom: 30
-          },
-          xAxis: {
-              type: 'value',
-              position: 'top',
-              splitLine: {
-                  lineStyle: {
-                      type: 'dashed'
-                  }
-              }
-          },
-          yAxis: {
-              type: 'category',
-              axisLine: {show: false},
-              axisLabel: {show: false},
-              axisTick: {show: false},
-              splitLine: {show: false},
-              data: ['收益', '净投入', '总资产']
-          },
-          series: [
-              {
-                  name: '人民币',
-                  type: 'bar',
-                  stack: '总量',
-                  label: {
-                      show: true,
-                      formatter: '{b}'
-                  },
-                  data: [
-                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
-                      {value: newestData[2], label: labelRight},
-                      {value: newestData[3], label: labelRight},
-                  ],
-                  itemStyle: {
-                    normal: {
-        　　　　　　　　//这里是重点
-                        color: function(params) {
-                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
-                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
-                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
-                            return colorList[params.dataIndex]
-                        }
-                    }
-                }
-              }
-          ]
-      };
-        bar_chart.setOption(bar_options);
-    });
-    </script>
-    
-
-<blockquote>
-<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
+    <title>袁隆平：稻子熟了，妈妈，我来看您了</title>
+    <url>/2021/05/24/ylp-1/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>“他们说，我用一粒种子改变了世界。我知道，这粒种子，是妈妈您在我幼年时种下的！”</strong><br> <br>2010年，在袁隆平院士80华诞，湖南卫视为他举办了“为了大地的丰收”专场文艺晚会，晚会上，袁院士写给母亲的信《妈妈，稻子熟了》感动了在场所有观众，字里行间，说不尽对母亲的思念与愧疚。</p>
+<p>袁隆平动情写到：“没能多陪伴母亲，是我永远的后悔与遗憾。”今天，袁隆平院士逝世，读完这封旧信的网友纷纷留言：“读到一半就已泪流满面，可爱的袁爷爷，要去和妈妈团聚了。”<br> <br>我们整理了信件原文，纪念袁隆平院士一路走好。<br> <br>以下为信件原文。</p>
 </blockquote>
-<h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts3808" style="width: 100%;height: 200px;margin: 0 auto"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts3808'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var records = data.data;
-        var len = records.length;
-        var newestData = records[len - 1];
-        
-        var dashboard_chart_id_options = {
-          title: {
-            name: "textShadowOffsetXt",
-            text: "",
-            textStyle: {
-              color: "#fff"
-            }
-          },
-          backgroundColor: "#17326b",
-          grid: {
-            left: "10",
-            top: "10",
-            right: "10",
-            bottom: "10",
-            containLabel: true
-          },
-          xAxis: {
-            type: 'value',
-            splitLine: { show: false },
-            axisLabel: { show: false },
-            axisTick: { show: false },
-            axisLine: { show: false }
-          },
-          yAxis: [
-            {
-              type: 'category',
-              axisTick: { show: false },
-              axisLine: { show: false },
-              axisLabel: {
-                color: "black",
-                fontSize: 14,
-                textStyle: {
-                  color: '#fff'
-                }
-              },
-              data: ["今年净投入", "一五净投入", "一五总资产", "计划总资产"],
-              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
-              inverse: true
-            },
-            {
-              type: 'category',
-              axisTick: { show: false },
-              axisLine: { show: false },
-              axisLabel: {
-                color: "black",
-                fontSize: 14,
-                textStyle: {
-                  color: '#fff'
-                }
-              },
-              data: ['20,000', '116,000', '170,000', '10,000,000'],
-              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
-              inverse: true
-            }
-          ],
-          series: [
-            {
-              name: "%",
-              type: "bar",
-              barWidth: 19,
-              data: [(newestData[2] / 20000 * 100).toFixed(2), (newestData[2] / 116000 * 100).toFixed(2), (newestData[3] / 170000 * 100).toFixed(2), (newestData[3] / 10000000 * 100).toFixed(2)],
-              label: {
-                show: true,
-                //position    : 'middle',
-                offset: [20, 2],
-                formatter: '{c}{a}',
-                color: '#fff',
-                fontSize: 15
-              },
-              barCategoryGap: 20,
-              itemStyle: {
-                normal: {
-                  barBorderRadius: 10,
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-                    offset: 0,
-                    color: '#fdc830'
-                  }, {
-                    offset: 1,
-                    color: '#f37335'
-                  }]),
-                }
-              },
-              zlevel: 1
-        
-            }, {
-              name: "进度条背景",
-              type: "bar",
-              barGap: "-100%",
-              barWidth: 19,
-              data: [100, 100, 100, 100],
-              color: "#2e5384",
-              itemStyle: {
-                normal: {
-                  barBorderRadius: 10
-                }
-              },
-            }
-          ]
-        };
-        dashboard_chart_id_chart.setOption(dashboard_chart_id_options);
-    });
-    </script>
-    
+<p>本来想一个人静静地陪您说会话，安江的乡亲们实在是太热情了，天这么热，他们还一直陪着，谢谢他们了。</p>
+<p>妈妈，您在安江，我在长沙，隔得很远很远。我在梦里总是想着您，想着安江这个地方。</p>
+<p>人事难料啊，您这样一位习惯了繁华都市的大家闺秀，最后竟会永远留在这么一个偏远的小山村。还记得吗？1957年，我要从重庆的大学分配到这儿，是您陪着我，脸贴着地图，手指顺着密密麻麻的细线，找了很久，才找到地图上这么一个小点点。当时您叹了口气说：<strong>“孩子，你到那儿，是要吃苦的呀……”</strong></p>
+<p>我说：“我年轻，我还有一把小提琴。”</p>
+<p>没想到的是，为了我，为了帮我带小孩，把您也拖到了安江。最后，受累吃苦的，是妈妈您哪！您哪里走得惯乡间的田埂！我总记得，每次都要小孙孙牵着您的手，您才敢走过屋前屋后的田间小道。</p>
+<p>安江是我的一切，我却忘了，对一辈子都生活在大城市里的您来说，70岁了，一切还要重新来适应。我从来没有问过您有什么难处，我总以为会有时间的，会有时间的，等我闲一点一定好好地陪陪您……</p>
+<p>哪想到，直到您走的时候，我还在长沙忙着开会。那天正好是中秋节，全国的同行都来了，搞杂交水稻不容易啊，我又是召集人，怎么着也得陪大家过这个节啊，只是儿子永远亏欠妈妈您了……</p>
+<p>其实我知道，那个时候已经是您的最后时刻。我总盼望着妈妈您能多撑两天。谁知道，即便是天不亮就往安江赶，我还是没能见上妈妈您最后一面。</p>
+<p>太晚了，一切都太晚了，我真的好后悔。妈妈，当时您一定等了我很久，盼了我很长，您一定有很多话要对儿子说，有很多事要交代。可我怎么就那么糊涂呢！这么多年，为什么我就不能少下一次田，少做一次实验，少出一天差，坐下来静静地好好陪陪您。哪怕……哪怕就一次。</p>
+<p>妈妈，每当我的研究取得成果，每当我在国际讲坛上谈笑风生，每当我接过一座又一座奖杯，我总是对人说，这辈子对我影响最深的人就是妈妈您啊！</p>
+<p>无法想象，没有您的英语启蒙，在一片闭塞中，我怎么能够阅读世界上最先进的科学文献，用超越那个时代的视野，去寻访遗传学大师孟德尔和摩尔根？无法想象，在那段颠沛流离的岁月中，从北平到汉口，从桃源到重庆，没有您的执著和鼓励，我怎么能获得系统的现代教育，获得在大江大河中自由翱翔的胆识？无法想象，没有您在摇篮前跟我讲尼采，讲这位昂扬着生命力、意志力的伟大哲人，我怎么能够在千百次的失败中坚信，必然有一粒种子可以使万千民众告别饥饿？</p>
+<p>他们说，我用一粒种子改变了世界。<strong>我知道，这粒种子，是妈妈您在我幼年时种下的！</strong></p>
+<p>稻子熟了，妈妈，您能闻到吗？安江可好？那里的田埂是不是还留着熟悉的欢笑？隔着21年的时光，我依稀看见，小孙孙牵着您的手，走过稻浪的背影；我还要告诉您，一辈子没有耕种过的母亲，稻芒划过手掌，稻草在场上堆积成垛，谷子在阳光中毕剥作响，水田在西晒下泛出橙黄的味道。这都是儿子要跟您说的话，说不完的话啊……</p>
+<p><strong>妈妈，稻子熟了，我想您了！</strong></p>
+<blockquote>
+<p>剪报来源<br>公众号：中央政法委长安剑<br>链　接：<a href="https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A">https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A</a><br>日　期：2021-05-23</p>
+</blockquote>
 ]]></content>
       <categories>
-        <category>投资理财</category>
+        <category>剪报</category>
       </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-      </tags>
   </entry>
   <entry>
     <title>袁隆平：我的两个梦</title>
@@ -3724,35 +3790,6 @@
 <p><em>文/袁隆平</em><br><em>编辑/点苍</em><br><strong>（原文刊于《 人民日报 》2019年10月23日第20 版）</strong></p>
 <blockquote>
 <p>剪报来源<br>公众号： 侠客岛<br>链　接：<a href="https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw">https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw</a><br>日　期：2021-05-22</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>剪报</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>袁隆平：稻子熟了，妈妈，我来看您了</title>
-    <url>/2021/05/24/ylp-1/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>“他们说，我用一粒种子改变了世界。我知道，这粒种子，是妈妈您在我幼年时种下的！”</strong><br> <br>2010年，在袁隆平院士80华诞，湖南卫视为他举办了“为了大地的丰收”专场文艺晚会，晚会上，袁院士写给母亲的信《妈妈，稻子熟了》感动了在场所有观众，字里行间，说不尽对母亲的思念与愧疚。</p>
-<p>袁隆平动情写到：“没能多陪伴母亲，是我永远的后悔与遗憾。”今天，袁隆平院士逝世，读完这封旧信的网友纷纷留言：“读到一半就已泪流满面，可爱的袁爷爷，要去和妈妈团聚了。”<br> <br>我们整理了信件原文，纪念袁隆平院士一路走好。<br> <br>以下为信件原文。</p>
-</blockquote>
-<p>本来想一个人静静地陪您说会话，安江的乡亲们实在是太热情了，天这么热，他们还一直陪着，谢谢他们了。</p>
-<p>妈妈，您在安江，我在长沙，隔得很远很远。我在梦里总是想着您，想着安江这个地方。</p>
-<p>人事难料啊，您这样一位习惯了繁华都市的大家闺秀，最后竟会永远留在这么一个偏远的小山村。还记得吗？1957年，我要从重庆的大学分配到这儿，是您陪着我，脸贴着地图，手指顺着密密麻麻的细线，找了很久，才找到地图上这么一个小点点。当时您叹了口气说：<strong>“孩子，你到那儿，是要吃苦的呀……”</strong></p>
-<p>我说：“我年轻，我还有一把小提琴。”</p>
-<p>没想到的是，为了我，为了帮我带小孩，把您也拖到了安江。最后，受累吃苦的，是妈妈您哪！您哪里走得惯乡间的田埂！我总记得，每次都要小孙孙牵着您的手，您才敢走过屋前屋后的田间小道。</p>
-<p>安江是我的一切，我却忘了，对一辈子都生活在大城市里的您来说，70岁了，一切还要重新来适应。我从来没有问过您有什么难处，我总以为会有时间的，会有时间的，等我闲一点一定好好地陪陪您……</p>
-<p>哪想到，直到您走的时候，我还在长沙忙着开会。那天正好是中秋节，全国的同行都来了，搞杂交水稻不容易啊，我又是召集人，怎么着也得陪大家过这个节啊，只是儿子永远亏欠妈妈您了……</p>
-<p>其实我知道，那个时候已经是您的最后时刻。我总盼望着妈妈您能多撑两天。谁知道，即便是天不亮就往安江赶，我还是没能见上妈妈您最后一面。</p>
-<p>太晚了，一切都太晚了，我真的好后悔。妈妈，当时您一定等了我很久，盼了我很长，您一定有很多话要对儿子说，有很多事要交代。可我怎么就那么糊涂呢！这么多年，为什么我就不能少下一次田，少做一次实验，少出一天差，坐下来静静地好好陪陪您。哪怕……哪怕就一次。</p>
-<p>妈妈，每当我的研究取得成果，每当我在国际讲坛上谈笑风生，每当我接过一座又一座奖杯，我总是对人说，这辈子对我影响最深的人就是妈妈您啊！</p>
-<p>无法想象，没有您的英语启蒙，在一片闭塞中，我怎么能够阅读世界上最先进的科学文献，用超越那个时代的视野，去寻访遗传学大师孟德尔和摩尔根？无法想象，在那段颠沛流离的岁月中，从北平到汉口，从桃源到重庆，没有您的执著和鼓励，我怎么能获得系统的现代教育，获得在大江大河中自由翱翔的胆识？无法想象，没有您在摇篮前跟我讲尼采，讲这位昂扬着生命力、意志力的伟大哲人，我怎么能够在千百次的失败中坚信，必然有一粒种子可以使万千民众告别饥饿？</p>
-<p>他们说，我用一粒种子改变了世界。<strong>我知道，这粒种子，是妈妈您在我幼年时种下的！</strong></p>
-<p>稻子熟了，妈妈，您能闻到吗？安江可好？那里的田埂是不是还留着熟悉的欢笑？隔着21年的时光，我依稀看见，小孙孙牵着您的手，走过稻浪的背影；我还要告诉您，一辈子没有耕种过的母亲，稻芒划过手掌，稻草在场上堆积成垛，谷子在阳光中毕剥作响，水田在西晒下泛出橙黄的味道。这都是儿子要跟您说的话，说不完的话啊……</p>
-<p><strong>妈妈，稻子熟了，我想您了！</strong></p>
-<blockquote>
-<p>剪报来源<br>公众号：中央政法委长安剑<br>链　接：<a href="https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A">https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A</a><br>日　期：2021-05-23</p>
 </blockquote>
 ]]></content>
       <categories>

@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HashMap核心功能源码解读（一）：概述 | JohnsonLin</title><meta name="keywords" content="Java"><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。 HashMap特性HashMap 是 Map 接口的一个基于哈希表实现，主要用来存储键值对数据。作为一个使用频率较高的集合类，了解它的特性有助于我们在实践中正确使用它。 首先，HashMap 允许键为 null 和值为 null。 其次，Hash">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMap核心功能源码解读（一）：概述">
+<meta property="og:url" content="http://linjiangxiong.com/2021/07/22/hashmap-core-code-analysis-1/index.html">
+<meta property="og:site_name" content="JohnsonLin">
+<meta property="og:description" content="在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。 HashMap特性HashMap 是 Map 接口的一个基于哈希表实现，主要用来存储键值对数据。作为一个使用频率较高的集合类，了解它的特性有助于我们在实践中正确使用它。 首先，HashMap 允许键为 null 和值为 null。 其次，Hash">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/07/19/fzMo5a14AYthxyv.jpg">
+<meta property="article:published_time" content="2021-07-22T15:39:47.000Z">
+<meta property="article:modified_time" content="2021-07-22T15:42:13.454Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/07/19/fzMo5a14AYthxyv.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://linjiangxiong.com/2021/07/22/hashmap-core-code-analysis-1/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HashMap核心功能源码解读（一）：概述',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-22 23:42:13'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><noscript><style>#nav{opacity:1}.justified-gallery img{opacity:1}#post-meta time,#recent-posts time{display:inline!important}</style></noscript> <link rel="stylesheet" href="/css/ud.css" /><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/07/19/fzMo5a14AYthxyv.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">JohnsonLin</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">HashMap核心功能源码解读（一）：概述</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-22T15:39:47.000Z" title="发表于 2021-07-22 23:39:47">2021-07-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-07-22T15:42:13.454Z" title="更新于 2021-07-22 23:42:13">2021-07-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HashMap核心功能源码解读（一）：概述"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。</p>
+<h2 id="HashMap特性"><a href="#HashMap特性" class="headerlink" title="HashMap特性"></a>HashMap特性</h2><p>HashMap 是 Map 接口的一个基于哈希表实现，主要用来存储键值对数据。作为一个使用频率较高的集合类，了解它的特性有助于我们在实践中正确使用它。</p>
+<p>首先，HashMap 允许键为 null 和值为 null。</p>
+<p>其次，HashMap 不保证 Map 的有序性，即不保证遍历 HashMap 输出元素的顺序与其插入的顺序相同（可能存在顺序相同情况）。另外，HashMap 也不保证其顺序在一段时间内保持不变。如果需要在项目中保证 Map 有序性的话，可以使用 LinkedHashMap 代替 HashMap。</p>
+<p>再次，HashMap 是不同步的，即 HashMap 不是线程安全的。如果多个线程同时访问同一个 HashMap 实例，并且其中至少有一个线程从结构上修改了 HashMap 实例时，会导致数据不一致的情况发生。这里的“从结构上修改”是指对 HashMap 实例进行添加或删除元素的操作，仅修改已包含的键对应的值话，就不是从结构上修改。</p>
+<p>在需要线程安全环境中，可以在创建 HashMap 实例时使用 <code>Collections.synchronizedMap</code> 方法对其进行“包装”，以防止对 HashMap 的意外非同步访问：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map m = Collection.synchronizedMap(<span class="keyword">new</span> HashMap (…));</span><br></pre></td></tr></table></figure>
+
+<p>另外，也可以用 ConcurrentHashMap 代替 HashMap。</p>
+<p>最后，HashMap 的所有“集合视图方法”返回的迭代器是快速失败（fail-fast）的。如果在创建迭代器之后，除了通过迭代器本身的 remove 方法之外，在任何时候以任何方式从结构上修改 HashMap 实例时，迭代器都会抛出 ConcurrentModificationException 异常。因此，在面对并发修改时，迭代器会快速、干净利落地失败，而不是在未来某个不确定的时间出现随意的、不确定的行为风险。</p>
+<p>注意，迭代器的快速失败行为是无法保证的，因为一般而言，在存在非同步并发修改的情况下，不可能做出任何硬保证。快速失败的迭代器会尽最大努力抛出 <code>ConcurrentModificationException</code> 异常。因此，编写依赖于此异常的正确性的程序是错误的：迭代器的快速失败行为应该只用于检测错误。</p>
+<h2 id="HashMap性能"><a href="#HashMap性能" class="headerlink" title="HashMap性能"></a>HashMap性能</h2><p>如果哈希函数可以把元素均匀打散到不同的哈希桶中，那么 HashMap 的基本操作（get 和 put）能达到常数级时间的性能。这意味着理想情况下，HashMap 的基本操作的时间复杂度为 O(1)，执行时间不随数据规模（键值对数量）的增大而增长。</p>
+<p>但是在真实的情况下，当你往 HashMap 中写入大量数据后，就可能发现操作有时候会变慢了。这其实是因为哈希冲突和扩容带来的性能影响。</p>
+<p>在 HashMap 中，有两个参数——<strong>初始容量（initial capacity）和装载因子（load factor）</strong>，与哈希冲突和扩容这两个性能因素有直接关系。</p>
+<p>初始容量，顾名思义就是哈希表创建时的容量，这里的容量是指哈希表的哈希桶数。装载因子是衡量哈希表在其容量自动扩容之前允许达到多满的指标。当哈希表中的条目数超过负载因子和当前容量的乘积时，即</p>
+<p>条目数 &gt;= 哈希表容量 × 装载因子</p>
+<p>将对哈希表进行重新哈希（即重新构建内部数据结构），使哈希表的桶数为原来的两倍。</p>
+<p>一般来说，默认的装载因子（为 0.75）可以在时间和空间的开销上做到很好的权衡。较大的值虽然可以减少空间开销，但会增加查找成本（反映在 HashMap 的大多数操作中，包括 get 和 put 操作）。</p>
+<p>在设置初始容量时，应考虑映射中的预期条目数及其装载因子，以尽量减少重新哈希操作的次数。如果初始容量大于最大条目数除以负载因子，则不会发生重新哈希操作。</p>
+<p>如果有大量的键值对数据要存储在 HashMap 实例中，那么在创建时就指定一个足够大的容量来存储这些数据，会比随着表增长的需要而自动执行重新哈希更加高效。</p>
+<p>注意，如果使用大量的具有相同哈希码（hashCode()）的键，无疑会降低哈希表的性能。为了改善影响，当键是可比较时，可以使用键之间的比较顺序来帮助打破联系。</p>
+<p>另外，遍历 HashMap 所需的时间与 HashMap 实例的“容量”（指哈希桶数量）加上其大小（指键值映射数量）成正比。所以，如果你看重遍历 HashMap 的性能，那么不要把它初始容量设置得太大或把装载因子设置得太小就非常重要了。</p>
+<h2 id="TreeMap-Hashtable-和-HashMap"><a href="#TreeMap-Hashtable-和-HashMap" class="headerlink" title="TreeMap, Hashtable 和 HashMap"></a>TreeMap, Hashtable 和 HashMap</h2><p>TreeMap 是基于红黑树的一种提供顺序访问的 Map，和 HashMap 不同，它的 get、put、remove 之类操作都是 O（log(n)）的时间复杂度，具体顺序可以由指定的 Comparator 来决定，或者根据键的自然顺序来判断。</p>
+<p>Hashtable 大致相当于 HashMap ，只是 HashMap 是非线程安全的并且允许空值。</p>
+<p>需要注意的是，Hashtable 是遗留类，不建议在项目中使用。在非线程安全环境中，可以直接用 HashMap 代替 Hashtable；在需要线程安全环境中，可以用 ConcurrentHashMap 代替 Hashtable，因为 ConcurrentHashMap 引入了分段锁，并发性更好。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文概述了 HashMap 允许键为 null 和值为 null、不保证有序性、非线程安全、迭代器快速失败（fail-over）等特性，影响 HashMap 性能的参数，以及在实践中应该注意的地方，同时在文末简单对比了 TreeMap, Hashtable 和 HashMap 有什么不同。下一篇文章开始将对 HashMap 核心功能源码进行解读。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2021/07/22/hashmap-core-code-analysis-1/">http://linjiangxiong.com/2021/07/22/hashmap-core-code-analysis-1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://linjiangxiong.com" target="_blank">JohnsonLin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/07/19/fzMo5a14AYthxyv.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/07/18/investment-plan-reference/"><img class="next-cover" src="https://i.loli.net/2021/07/19/rqjH8AKdFsIPe2t.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">退休金计划：三十年一千万参考</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/08/30/how-to-install-jdk-1-8-on-centos-7/" title="CentOS7下安装JDK1.8"><img class="cover" src="https://i.loli.net/2021/07/19/fzMo5a14AYthxyv.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-08-30</div><div class="title">CentOS7下安装JDK1.8</div></div></a></div><div><a href="/2020/06/29/java-list-string-join/" title="使用Java将List<String>元素按指定分隔符连接成字符串"><img class="cover" src="/image/java-logo.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-29</div><div class="title">使用Java将List<String>元素按指定分隔符连接成字符串</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Johnson Lin</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HashMap%E7%89%B9%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">HashMap特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HashMap%E6%80%A7%E8%83%BD"><span class="toc-number">2.</span> <span class="toc-text">HashMap性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TreeMap-Hashtable-%E5%92%8C-HashMap"><span class="toc-number">3.</span> <span class="toc-text">TreeMap, Hashtable 和 HashMap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/22/hashmap-core-code-analysis-1/" title="HashMap核心功能源码解读（一）：概述"><img src="https://i.loli.net/2021/07/19/fzMo5a14AYthxyv.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HashMap核心功能源码解读（一）：概述"/></a><div class="content"><a class="title" href="/2021/07/22/hashmap-core-code-analysis-1/" title="HashMap核心功能源码解读（一）：概述">HashMap核心功能源码解读（一）：概述</a><time datetime="2021-07-22T15:39:47.000Z" title="发表于 2021-07-22 23:39:47">2021-07-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/18/investment-plan-reference/" title="退休金计划：三十年一千万参考"><img src="https://i.loli.net/2021/07/19/rqjH8AKdFsIPe2t.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="退休金计划：三十年一千万参考"/></a><div class="content"><a class="title" href="/2021/07/18/investment-plan-reference/" title="退休金计划：三十年一千万参考">退休金计划：三十年一千万参考</a><time datetime="2021-07-18T14:56:19.000Z" title="发表于 2021-07-18 22:56:19">2021-07-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/17/investment-plan-progress/" title="退休金计划：进度看板"><img src="https://i.loli.net/2021/07/19/r3GNhKlTjP1SgAb.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="退休金计划：进度看板"/></a><div class="content"><a class="title" href="/2021/07/17/investment-plan-progress/" title="退休金计划：进度看板">退休金计划：进度看板</a><time datetime="2021-07-17T02:20:39.000Z" title="发表于 2021-07-17 10:20:39">2021-07-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/15/mzd-1/" title="毛泽东：体育之研究"><img src="/image/60e43c606093a_60e43ce3bcc52.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="毛泽东：体育之研究"/></a><div class="content"><a class="title" href="/2021/07/15/mzd-1/" title="毛泽东：体育之研究">毛泽东：体育之研究</a><time datetime="2021-07-15T15:35:55.000Z" title="发表于 2021-07-15 23:35:55">2021-07-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/10/investment-plan-2031-2035/" title="退休金计划：2031-2035年定投执行计划"><img src="https://i.loli.net/2021/07/12/4eWHh9RFNmcOEMJ.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="退休金计划：2031-2035年定投执行计划"/></a><div class="content"><a class="title" href="/2021/07/10/investment-plan-2031-2035/" title="退休金计划：2031-2035年定投执行计划">退休金计划：2031-2035年定投执行计划</a><time datetime="2021-07-10T06:42:25.000Z" title="发表于 2021-07-10 14:42:25">2021-07-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2021 By Johnson Lin</div><div class="footer_custom_text"><p><a href="http://beian.miit.gov.cn" target="_blank" style="color:\#aaa;font-size:13px; margin-right:6px;">粤ICP备19079162号</a> <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44010602007495" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;color:\#aaa;font-size:13px;"> <img src="/image/beian.png" style="float:left; margin-right:5px;">粤公网安备 44010602007495号</a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
