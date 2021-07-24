@@ -200,14 +200,14 @@ gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
 <p>2046-2050年定投执行计划</p>
 <p>2051年（1月、2月）定投执行计划</p>
 <h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts7998" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts3639" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts2524" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts3702" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts7998'));
-    var bar_chart = echarts.init(document.getElementById('echarts3639'));
+    var myChart = echarts.init(document.getElementById('echarts2524'));
+    var bar_chart = echarts.init(document.getElementById('echarts3702'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -286,7 +286,7 @@ gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
         　　　　　　　　//这里是重点
                         color: function(params) {
                           //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
-                            var colorList = ['#91c7ae', '#fc8452', '#5470c6' ]
+                            var colorList = ['#ff4040', '#fc8452', '#5470c6' ]
                             // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
                             return colorList[params.dataIndex]
                         }
