@@ -1180,181 +1180,6 @@
       </tags>
   </entry>
   <entry>
-    <title>HashMap核心功能源码解读（二）：哈希函数</title>
-    <url>/2021/07/27/hashmap-core-code-analysis-2/</url>
-    <content><![CDATA[<blockquote>
-<p>如无特别说明，本文源码基于 JDK 1.8 进行解读。</p>
-</blockquote>
-<p>从 HashMap 的源码中的 <code>get(Object key)</code> 和 <code>put(K key, V value)</code> 两个基本操作方法中，我们可以发现，要从一个 HashMap 中获取某个 key 对应的哈希桶位置，需要先通过 <code>hash(Object key)</code> 方法计算出 hash 值，再通过位运算 <code>(n - 1) &amp; hash</code> 得出哈希桶位置。</p>
-<p>相关源码如下（这里以 <code>get(Object key)</code> 方法为入口）：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取 key 的哈希值</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> h;</span><br><span class="line">    <span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取 key 对应的值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    Node&lt;K,V&gt; e;</span><br><span class="line">    <span class="keyword">return</span> (e = getNode(hash(key), key)) == <span class="keyword">null</span> ? <span class="keyword">null</span> : e.value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取 key 对应的值，具体获取逻辑</span></span><br><span class="line"><span class="function"><span class="keyword">final</span> Node&lt;K,V&gt; <span class="title">getNode</span><span class="params">(<span class="keyword">int</span> hash, Object key)</span> </span>&#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; first, e; <span class="keyword">int</span> n; K k;</span><br><span class="line">    <span class="keyword">if</span> ((tab = table) != <span class="keyword">null</span> &amp;&amp; (n = tab.length) &gt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">        (first = tab[(n - <span class="number">1</span>) &amp; hash]) != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (first.hash == hash &amp;&amp; <span class="comment">// always check first node</span></span><br><span class="line">            ((k = first.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">            <span class="keyword">return</span> first;</span><br><span class="line">        <span class="keyword">if</span> ((e = first.next) != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (first <span class="keyword">instanceof</span> TreeNode)</span><br><span class="line">                <span class="keyword">return</span> ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">                    <span class="keyword">return</span> e;</span><br><span class="line">            &#125; <span class="keyword">while</span> ((e = e.next) != <span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>我们可以把 HashMap 的哈希函数归结为以下两个步骤：</p>
-<ul>
-<li>计算 key 的哈希值 hash；</li>
-<li>将哈希桶数量 n 减去 1，再与哈希值 hash 做按位与运算。</li>
-</ul>
-<p>具体的哈希逻辑如下图：</p>
-<p><img src="https://i.loli.net/2021/07/23/KYjLohqnFcp5ewz.png" alt="哈希逻辑"></p>
-<p>其中， h 为 key 的哈希码（通过 <code>hashCode()</code> 获取），hash 为 key 的哈希值，pos 为哈希桶位置（哈希数组下标）。</p>
-<p>整个逻辑比较简单，也符合哈希函数的简单高效的特性。不过，你可能会对其中两个位运算的步骤感到疑惑：</p>
-<ul>
-<li>第一，为什么 hash 要取 <code>h ^ (h &gt;&gt;&gt; 16)</code>，直接取 h 不行吗？</li>
-<li>第二，为什么获取哈希桶位置是 <code>(n - 1) &amp; hash</code>，而不是常用的取模运算 <code>hash % n</code>？ </li>
-</ul>
-<p>接下来，我们就聊聊这两个问题。作为一个常用的映射类，为了尽可能提升 HashMap 的性能，JDK 的开发者都做了哪些巧妙的设计和优化。</p>
-<p>我们先来看看第二个问题，因为知道了 <code>(n - 1) &amp; hash</code> 是怎么设计的，就会很容易理解 hash 值不直接使用 h，而是用 <code>h ^ (h &gt;&gt;&gt; 16)</code> 的原因。</p>
-<h2 id="为什么获取哈希桶位置是-n-1-amp-hash？"><a href="#为什么获取哈希桶位置是-n-1-amp-hash？" class="headerlink" title="为什么获取哈希桶位置是 (n - 1) &amp; hash？"></a>为什么获取哈希桶位置是 <code>(n - 1) &amp; hash</code>？</h2><p>这里的 n 代表哈希表的长度（或称哈希桶数量，对应 HashMap 数组结构的大小），其大小被设计为 2 的幂，如 </p>
-<p>$$<br>2^0, 2^1, 2^2,⋯, 2^m<br>$$</p>
-<p>这么设计是因为恰好可以保证 <code>(n - 1) &amp; hash</code> 的运算结果的范围总是在 [0, n-1] 内，即总是在 HashMap 数组的下标之内。</p>
-<p>例如：</p>
-<p>当 hash = 7，n = 16 时，(n - 1) &amp; hash = 7；</p>
-<p>当 hash = 19，n = 16 时，(n - 1) &amp; hash = 3；</p>
-<p>当 hash = -9，n = 16 时，(n - 1) &amp; hash = 7。</p>
-<p>可运行以下代码进行校验：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashMapTmpApp</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 哈希表长度</span></span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">16</span>;</span><br><span class="line">        <span class="comment">// hashCode数组</span></span><br><span class="line">        <span class="keyword">int</span>[] hashCodes = &#123;<span class="number">7</span>, <span class="number">19</span>, -<span class="number">9</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> hash : hashCodes) &#123;</span><br><span class="line">            System.out.printf(<span class="string">&quot;(%d - 1) &amp; %d = %d \r\n&quot;</span>, n, hash, (n - <span class="number">1</span>) &amp; hash);</span><br><span class="line">            System.out.println(hash % <span class="number">16</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment">    (16 - 1) &amp; 7 = 7</span></span><br><span class="line"><span class="comment">    (16 - 1) &amp; 19 = 3</span></span><br><span class="line"><span class="comment">    (16 - 1) &amp; -9 = 7</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那为什么哈希表的长度被设计为 2 的幂时，<code>(n - 1) &amp; hash</code> 的结果恰好可以保证在哈希数组范围 [0, n-1] 内呢？</p>
-<p>在回答这个问题之前，我们先来看看按位与运算的规则：</p>
-<p>$$<br>1\&amp;1=1<br>$$</p>
-<p>$$<br>1\&amp;0=0<br>$$</p>
-<p>$$<br>0\&amp;1=0<br>$$</p>
-<p>$$<br>0\&amp;0=0<br>$$</p>
-<p>当对应的两个二进位数都为 1 时，相应的结果位才为 1，否则为 0。</p>
-<p>其实这里还有一个相对比较“隐蔽的规律或者现象”：<strong>当两个二进制数进行按位与运算时，如果其中一个二进制数的某一个位为 1，则按位与运算的结果的相应位上是保留了另一个二进制数在该位上的数。</strong></p>
-<p>有点绕口，我们举例来说明。</p>
-<p>假设存在两个二进制数 A 和 B， 其中，A = 1100，第三、四位都为 1，</p>
-<p>当 B = 0110 时，A &amp; B = 0100，运算结果的第三位为 1，第四位为 0，即保留了二进制数 B 的第三、四位上的数；</p>
-<p>当 B = 1001 时，A &amp; B = 1000，运算结果的第三位为 0、第四位为 1，即保留了二进制数 B 的第三、四位上的数；</p>
-<p>理解了按位与运算的这一规律之后，我们再来看 n 和 n - 1 的二进制表示的规律。</p>
-<p>我们知道，哈希表的长度 n 被设计为 2 的幂，我们记为 </p>
-<p>$$<br>n = 2 ^ m，m = 1, 2, 3, ⋯<br>$$</p>
-<p>当 m = 1 时，n = 2，n - 1 = 1，其对应的二进制如下表：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>十进制</th>
-<th>二进制</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>n</td>
-<td>2</td>
-<td>0000 0000 0000 0000 0000 0000 0000 0010</td>
-</tr>
-<tr>
-<td>n - 1</td>
-<td>1</td>
-<td>0000 0000 0000 0000 0000 0000 0000 0001</td>
-</tr>
-</tbody></table>
-<p>当 m = 2 时，n = 4, n - 1 = 3，其对应的二进制如下表：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>十进制</th>
-<th>二进制</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>n</td>
-<td>4</td>
-<td>0000 0000 0000 0000 0000 0000 0000 0100</td>
-</tr>
-<tr>
-<td>n - 1</td>
-<td>3</td>
-<td>0000 0000 0000 0000 0000 0000 0000 0011</td>
-</tr>
-</tbody></table>
-<p>当 m = 3 时，n = 8, n - 1 = 7，其对应的二进制如下表：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>十进制</th>
-<th>二进制</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>n</td>
-<td>8</td>
-<td>0000 0000 0000 0000 0000 0000 0000 1000</td>
-</tr>
-<tr>
-<td>n - 1</td>
-<td>7</td>
-<td>0000 0000 0000 0000 0000 0000 0000 0111</td>
-</tr>
-</tbody></table>
-<p>当 m = 4 时，n = 16, n - 1 = 15，其对应的二进制如下表：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>十进制</th>
-<th>二进制</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>n</td>
-<td>16</td>
-<td>0000 0000 0000 0000 0000 0000 0001 0000</td>
-</tr>
-<tr>
-<td>n - 1</td>
-<td>15</td>
-<td>0000 0000 0000 0000 0000 0000 0000 1111</td>
-</tr>
-</tbody></table>
-<p>可以发现，$n=2^m$ 的二进制形式为 1 后面跟着 m 个 0，$n-1=2^m-1$ 的二进制形式为后面有 m 个 1。</p>
-<p>结合以上的按位与运算规律和二进制数规律，可以得出这个结论，无论 hash 的值是多少，将其转成二进制，跟 n - 1 的二进制进行按位与运算，得到二进制结果，前 (32 - m) 位都为 0，后 m 位为 hash 的二进制数的后 m 位。这也就是说二进制的结果大小被限制在后 m 位，对应十进制大小范围就是 $0$ 到 $2^m-1$。</p>
-<p>例如，假设哈希表长度 n = 16，即 $n=2^4$，那么 $n - 1 = 15$，其对应的二进制为：</p>
-<p>0000 0000 0000 0000 0000 0000 0000 1111。</p>
-<p>将其与 hash 的二进制数进行按位与运算，得到二进制结果，前 28 位都为 0，后 4 位为 hash 二进制数的后 4 位，相当于保留 hash 的二进制数后 4 位。</p>
-<p>所以，</p>
-<p>0000 0000 0000 0000 0000 0000 0000 1111 &amp; hash </p>
-<p>的结果一定是在</p>
-<p>0000 0000 0000 0000 0000 0000 0000 0000 </p>
-<p>到</p>
-<p>0000 0000 0000 0000 0000 0000 0000 1111 </p>
-<p>之间，对应的十进制范围就是 [0, 15]。</p>
-<p>到这里，应该能理解通过位运算 <code>(n - 1) &amp; hash</code> 得到的结果，最终也能正确映射到哈希桶的位置。</p>
-<p>我们知道，位运算是计算机底层的操作，运行速度要比模运算快。而且，如果使用 <code>hash % n</code> 来计算哈希桶位置，还要考虑 hash 小于 0 的情况。在追求极致性能上，多一个小小的判断无疑都会造成性能的损耗。这就是为什么获取哈希桶位置是 <code>(n - 1) &amp; hash</code>，而不是 <code>hash % n</code> 的原因。</p>
-<p>简而言之，就是<strong>通过位运算来提升哈希表性能。</strong></p>
-<p>理解了第二个问题，现在我们回过头来看第一个问题。</p>
-<h2 id="为什么-hash-要取-h-h-gt-gt-gt-16-？"><a href="#为什么-hash-要取-h-h-gt-gt-gt-16-？" class="headerlink" title="为什么 hash 要取 h ^ (h &gt;&gt;&gt; 16)？"></a>为什么 hash 要取 <code>h ^ (h &gt;&gt;&gt; 16)</code>？</h2><p>通过上面的分析知道，<code>(n - 1) &amp; hash</code> 的运算结果就是保留了 hash 的二进制数后 m 位，其中，$n = 2^m$。</p>
-<p>这意味着，只要 hash 值的二进制数后 m 位是一样的，那么最终计算出来的哈希桶位置 pos 肯定都是一样的（我们把这称为<strong>哈希冲突</strong>）。</p>
-<p>例如，当 m = 4 时，n = 16，以下 hash 值，它们的二进制数后 4 位相同，都为 1011，那么通过 <code>(n - 1) &amp; hash</code> 计算出的哈希桶位置都是一样的。</p>
-<p>0000 0100 0000 0000 0000 0000 1000 1011，<br>0000 0110 0000 0000 0000 0000 0100 1011，<br>0000 0001 0000 0000 0000 1111 0100 1011，<br>0011 0010 0000 0000 0000 1000 0000 1011。</p>
-<p>计算过程如下：</p>
-<p>(n - 1) &amp; hash = 15 &amp; hash</p>
-<p>转为二进制：</p>
-<p>0000 0000 0000 0000 0000 0000 0000 1111 &amp; hash</p>
-<p>将上例 hash 值的二进制数代入，最终计算出的结果为：</p>
-<p>0000 0000 0000 0000 0000 0000 0000 1011。</p>
-<p>为了降低这种哈希冲突的概率，JDK 的开发者通过合并 h 的高位和低位来增加随机性。具体的操作就是将 h 无符号右移 16 位，并将 h 与右移后的结果进行了异或运算。</p>
-<p>如将二进制数 h = 0000 0100 0100 0001 0000 0000 1000 1011 无符号右移 16 位，结果为：</p>
-<p>h &gt;&gt;&gt; 16 = 0000 0000 0000 0000 0000 0100 0100 0001</p>
-<p>通过异或运算合并 h 的高位和低位：</p>
-<p>h ^ (h &gt;&gt;&gt; 16) =<br>0000 0100 0100 0001 0000 0000 1000 1011 ^<br>0000 0000 0000 0000 0000 0100 0100 0001 =<br>0000 0100 0100 0001 0000 0100 1100 1010</p>
-<p>最后再通过按位与运算计算出哈希桶位置：</p>
-<p>(n - 1) &amp; hash =<br>0000 0000 0000 0000 0000 0000 0000 1111 &amp;<br>0000 0100 0100 0001 0000 0100 1100 1010 =<br>0000 0000 0000 0000 0000 0000 0000 1010</p>
-<p>也就是说，虽然 h 的后 4 位 1011 跟上面例子中的二进制后 4 位相同，但经过合并高位和低位，最终计算出的哈希桶位置是不同的。这在一定程度上降低了哈希冲突的概率。</p>
-<p>不过，这仅仅是一种在速度、实用性和位运算质量方面的一种折衷方式。因为即使不通过合并高位和低位的方式处理，许多常见的哈希值本来也能合理均匀分布，所以也就不会从这种方式中受益。并且，在实际使用中，当存在大量哈希冲突时，HashMap 还会把链表进行树化，即转化为红黑树进行处理。所以，通过右移和异或运算，是在尽可能少影响原本性能的基础上，通过合并高位和低位来增加随机性。否则，高位上的数可能永远不会参与到哈希桶位置的计算中。</p>
-<p>简而言之，就是<strong>通过合并 key 的 hashCode 值的高位和低位，以此来加大随机性，从而在一定程度上降低哈希冲突概率。</strong></p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文通过源码分析了 HashMap 的哈希函数，并着重分析了函数中的所使用到位运算。把 key 的 hashCode 值从高位移到低位，并使用异或运算，目的是降低哈希冲突概率。使用按位与运算代替取模运算，则是为了提高性能。</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？</title>
     <url>/2021/07/05/the-product-minded-software-engineer/</url>
     <content><![CDATA[<p>近日在网上读到一篇标题为<a href="https://blog.pragmaticengineer.com/the-product-minded-engineer">《The Product-Minded Software Engineer》</a>的文章，该文讲述了具有产品思维的软件工程师都具备哪些特点，在文末也给出了如何成为具有产品思维的软件工程师的秘诀。读完很有感触，身处现如今的互联网环境，工程师如果还只专注于技术，未免有些狭隘。毕竟工程师的价值并不只体现在技术层面上，还应体现在产品、商业等层面上。</p>
@@ -3501,11 +3326,187 @@
       </tags>
   </entry>
   <entry>
+    <title>HashMap核心功能源码解读（二）：哈希函数</title>
+    <url>/2021/07/27/hashmap-core-code-analysis-2/</url>
+    <content><![CDATA[<blockquote>
+<p>如无特别说明，本文源码基于 JDK 1.8 进行解读。</p>
+</blockquote>
+<p>从 HashMap 的源码中的 <code>get(Object key)</code> 和 <code>put(K key, V value)</code> 两个基本操作方法中，我们可以发现，要从一个 HashMap 中获取某个 key 对应的哈希桶位置，需要先通过 <code>hash(Object key)</code> 方法计算出 hash 值，再通过位运算 <code>(n - 1) &amp; hash</code> 得出哈希桶位置。</p>
+<p>相关源码如下（这里以 <code>get(Object key)</code> 方法为入口）：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取 key 的哈希值</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> h;</span><br><span class="line">    <span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取 key 对应的值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    Node&lt;K,V&gt; e;</span><br><span class="line">    <span class="keyword">return</span> (e = getNode(hash(key), key)) == <span class="keyword">null</span> ? <span class="keyword">null</span> : e.value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取 key 对应的值，具体获取逻辑</span></span><br><span class="line"><span class="function"><span class="keyword">final</span> Node&lt;K,V&gt; <span class="title">getNode</span><span class="params">(<span class="keyword">int</span> hash, Object key)</span> </span>&#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; first, e; <span class="keyword">int</span> n; K k;</span><br><span class="line">    <span class="keyword">if</span> ((tab = table) != <span class="keyword">null</span> &amp;&amp; (n = tab.length) &gt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">        (first = tab[(n - <span class="number">1</span>) &amp; hash]) != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (first.hash == hash &amp;&amp; <span class="comment">// always check first node</span></span><br><span class="line">            ((k = first.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">            <span class="keyword">return</span> first;</span><br><span class="line">        <span class="keyword">if</span> ((e = first.next) != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (first <span class="keyword">instanceof</span> TreeNode)</span><br><span class="line">                <span class="keyword">return</span> ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">                    <span class="keyword">return</span> e;</span><br><span class="line">            &#125; <span class="keyword">while</span> ((e = e.next) != <span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>我们可以把 HashMap 的哈希函数归结为以下两个步骤：</p>
+<ul>
+<li>计算 key 的哈希值 hash；</li>
+<li>将哈希桶数量 n 减去 1，再与哈希值 hash 做按位与运算。</li>
+</ul>
+<p>具体的哈希逻辑如下图：</p>
+<p><img src="https://i.loli.net/2021/07/23/KYjLohqnFcp5ewz.png" alt="哈希逻辑"></p>
+<p>其中， h 为 key 的哈希码（通过 <code>hashCode()</code> 获取），hash 为 key 的哈希值，pos 为哈希桶位置（哈希数组下标）。</p>
+<p>整个逻辑比较简单，也符合哈希函数的简单高效的特性。不过，你可能会对其中两个位运算的步骤感到疑惑：</p>
+<ul>
+<li>第一，为什么 hash 要取 <code>h ^ (h &gt;&gt;&gt; 16)</code>，直接取 h 不行吗？</li>
+<li>第二，为什么获取哈希桶位置是 <code>(n - 1) &amp; hash</code>，而不是常用的取模运算 <code>hash % n</code>？ </li>
+</ul>
+<p>接下来，我们就聊聊这两个问题。作为一个常用的映射类，为了尽可能提升 HashMap 的性能，JDK 的开发者都做了哪些巧妙的设计和优化。</p>
+<p>我们先来看看第二个问题，因为知道了 <code>(n - 1) &amp; hash</code> 是怎么设计的，就会很容易理解 hash 值不直接使用 h，而是用 <code>h ^ (h &gt;&gt;&gt; 16)</code> 的原因。</p>
+<h2 id="为什么获取哈希桶位置是-n-1-amp-hash？"><a href="#为什么获取哈希桶位置是-n-1-amp-hash？" class="headerlink" title="为什么获取哈希桶位置是 (n - 1) &amp; hash？"></a>为什么获取哈希桶位置是 <code>(n - 1) &amp; hash</code>？</h2><p>这里的 n 代表哈希表的长度（或称哈希桶数量，对应 HashMap 数组结构的大小），其大小被设计为 2 的幂，如 </p>
+<p>$$<br>2^0, 2^1, 2^2,⋯, 2^m<br>$$</p>
+<p>这么设计是因为恰好可以保证 <code>(n - 1) &amp; hash</code> 的运算结果的范围总是在 [0, n-1] 内，即总是在 HashMap 数组的下标之内。</p>
+<p>例如：</p>
+<p>当 hash = 7，n = 16 时，(n - 1) &amp; hash = 7；</p>
+<p>当 hash = 19，n = 16 时，(n - 1) &amp; hash = 3；</p>
+<p>当 hash = -9，n = 16 时，(n - 1) &amp; hash = 7。</p>
+<p>可运行以下代码进行校验：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashMapTmpApp</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 哈希表长度</span></span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">16</span>;</span><br><span class="line">        <span class="comment">// hashCode数组</span></span><br><span class="line">        <span class="keyword">int</span>[] hashCodes = &#123;<span class="number">7</span>, <span class="number">19</span>, -<span class="number">9</span>&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> hash : hashCodes) &#123;</span><br><span class="line">            System.out.printf(<span class="string">&quot;(%d - 1) &amp; %d = %d \r\n&quot;</span>, n, hash, (n - <span class="number">1</span>) &amp; hash);</span><br><span class="line">            System.out.println(hash % <span class="number">16</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment">    (16 - 1) &amp; 7 = 7</span></span><br><span class="line"><span class="comment">    (16 - 1) &amp; 19 = 3</span></span><br><span class="line"><span class="comment">    (16 - 1) &amp; -9 = 7</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那为什么哈希表的长度被设计为 2 的幂时，<code>(n - 1) &amp; hash</code> 的结果恰好可以保证在哈希数组范围 [0, n-1] 内呢？</p>
+<p>在回答这个问题之前，我们先来看看按位与运算的规则：</p>
+<p>$$<br>1\&amp;1=1<br>$$</p>
+<p>$$<br>1\&amp;0=0<br>$$</p>
+<p>$$<br>0\&amp;1=0<br>$$</p>
+<p>$$<br>0\&amp;0=0<br>$$</p>
+<p>当对应的两个二进位数都为 1 时，相应的结果位才为 1，否则为 0。</p>
+<p>其实这里还有一个相对比较“隐蔽的规律或者现象”：<strong>当两个二进制数进行按位与运算时，如果其中一个二进制数的某一个位为 1，则按位与运算的结果的相应位上是保留了另一个二进制数在该位上的数。</strong></p>
+<p>有点绕口，我们举例来说明。</p>
+<p>假设存在两个二进制数 A 和 B， 其中，A = 1100，第三、四位都为 1，</p>
+<p>当 B = 0110 时，A &amp; B = 0100，运算结果的第三位为 1，第四位为 0，即保留了二进制数 B 的第三、四位上的数；</p>
+<p>当 B = 1001 时，A &amp; B = 1000，运算结果的第三位为 0、第四位为 1，即保留了二进制数 B 的第三、四位上的数；</p>
+<p>理解了按位与运算的这一规律之后，我们再来看 n 和 n - 1 的二进制表示的规律。</p>
+<p>我们知道，哈希表的长度 n 被设计为 2 的幂，我们记为 </p>
+<p>$$<br>n = 2 ^ m，m = 1, 2, 3, ⋯<br>$$</p>
+<p>当 m = 1 时，n = 2，n - 1 = 1，其对应的二进制如下表：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>十进制</th>
+<th>二进制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>n</td>
+<td>2</td>
+<td>0000 0000 0000 0000 0000 0000 0000 0010</td>
+</tr>
+<tr>
+<td>n - 1</td>
+<td>1</td>
+<td>0000 0000 0000 0000 0000 0000 0000 0001</td>
+</tr>
+</tbody></table>
+<p>当 m = 2 时，n = 4, n - 1 = 3，其对应的二进制如下表：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>十进制</th>
+<th>二进制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>n</td>
+<td>4</td>
+<td>0000 0000 0000 0000 0000 0000 0000 0100</td>
+</tr>
+<tr>
+<td>n - 1</td>
+<td>3</td>
+<td>0000 0000 0000 0000 0000 0000 0000 0011</td>
+</tr>
+</tbody></table>
+<p>当 m = 3 时，n = 8, n - 1 = 7，其对应的二进制如下表：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>十进制</th>
+<th>二进制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>n</td>
+<td>8</td>
+<td>0000 0000 0000 0000 0000 0000 0000 1000</td>
+</tr>
+<tr>
+<td>n - 1</td>
+<td>7</td>
+<td>0000 0000 0000 0000 0000 0000 0000 0111</td>
+</tr>
+</tbody></table>
+<p>当 m = 4 时，n = 16, n - 1 = 15，其对应的二进制如下表：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>十进制</th>
+<th>二进制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>n</td>
+<td>16</td>
+<td>0000 0000 0000 0000 0000 0000 0001 0000</td>
+</tr>
+<tr>
+<td>n - 1</td>
+<td>15</td>
+<td>0000 0000 0000 0000 0000 0000 0000 1111</td>
+</tr>
+</tbody></table>
+<p>可以发现，$n=2^m$ 的二进制形式为 1 后面跟着 m 个 0，$n-1=2^m-1$ 的二进制形式为后面有 m 个 1。</p>
+<p>结合以上的按位与运算规律和二进制数规律，可以得出这个结论，无论 hash 的值是多少，将其转成二进制，跟 n - 1 的二进制进行按位与运算，得到二进制结果，前 (32 - m) 位都为 0，后 m 位为 hash 的二进制数的后 m 位。这也就是说二进制的结果大小被限制在后 m 位，对应十进制大小范围就是 $0$ 到 $2^m-1$。</p>
+<p>例如，假设哈希表长度 n = 16，即 $n=2^4$，那么 $n - 1 = 15$，其对应的二进制为：</p>
+<p>0000 0000 0000 0000 0000 0000 0000 1111。</p>
+<p>将其与 hash 的二进制数进行按位与运算，得到二进制结果，前 28 位都为 0，后 4 位为 hash 二进制数的后 4 位，相当于保留 hash 的二进制数后 4 位。</p>
+<p>所以，</p>
+<p>0000 0000 0000 0000 0000 0000 0000 1111 &amp; hash </p>
+<p>的结果一定是在</p>
+<p>0000 0000 0000 0000 0000 0000 0000 0000 </p>
+<p>到</p>
+<p>0000 0000 0000 0000 0000 0000 0000 1111 </p>
+<p>之间，对应的十进制范围就是 [0, 15]。</p>
+<p>到这里，应该能理解通过位运算 <code>(n - 1) &amp; hash</code> 得到的结果，最终也能正确映射到哈希桶的位置。</p>
+<p>我们知道，位运算是计算机底层的操作，运行速度要比模运算快。而且，如果使用 <code>hash % n</code> 来计算哈希桶位置，还要考虑 hash 小于 0 的情况。在追求极致性能上，多一个小小的判断无疑都会造成性能的损耗。这就是为什么获取哈希桶位置是 <code>(n - 1) &amp; hash</code>，而不是 <code>hash % n</code> 的原因。</p>
+<p>简而言之，就是<strong>通过位运算来提升哈希表性能。</strong></p>
+<p>理解了第二个问题，现在我们回过头来看第一个问题。</p>
+<h2 id="为什么-hash-要取-h-h-gt-gt-gt-16-？"><a href="#为什么-hash-要取-h-h-gt-gt-gt-16-？" class="headerlink" title="为什么 hash 要取 h ^ (h &gt;&gt;&gt; 16)？"></a>为什么 hash 要取 <code>h ^ (h &gt;&gt;&gt; 16)</code>？</h2><p>通过上面的分析知道，<code>(n - 1) &amp; hash</code> 的运算结果就是保留了 hash 的二进制数后 m 位，其中，$n = 2^m$。</p>
+<p>这意味着，只要 hash 值的二进制数后 m 位是一样的，那么最终计算出来的哈希桶位置 pos 肯定都是一样的（我们把这称为<strong>哈希冲突</strong>）。</p>
+<p>例如，当 m = 4 时，n = 16，以下 hash 值，它们的二进制数后 4 位相同，都为 1011，那么通过 <code>(n - 1) &amp; hash</code> 计算出的哈希桶位置都是一样的。</p>
+<p>0000 0100 0000 0000 0000 0000 1000 1011，<br>0000 0110 0000 0000 0000 0000 0100 1011，<br>0000 0001 0000 0000 0000 1111 0100 1011，<br>0011 0010 0000 0000 0000 1000 0000 1011。</p>
+<p>计算过程如下：</p>
+<p>(n - 1) &amp; hash = 15 &amp; hash</p>
+<p>转为二进制：</p>
+<p>0000 0000 0000 0000 0000 0000 0000 1111 &amp; hash</p>
+<p>将上例 hash 值的二进制数代入，最终计算出的结果为：</p>
+<p>0000 0000 0000 0000 0000 0000 0000 1011。</p>
+<p>为了降低这种哈希冲突的概率，JDK 的开发者通过合并 h 的高位和低位来增加随机性。具体的操作就是将 h 无符号右移 16 位，并将 h 与右移后的结果进行了异或运算。</p>
+<p>如将二进制数 h = 0000 0100 0100 0001 0000 0000 1000 1011 无符号右移 16 位，结果为：</p>
+<p>h &gt;&gt;&gt; 16 = 0000 0000 0000 0000 0000 0100 0100 0001</p>
+<p>通过异或运算合并 h 的高位和低位：</p>
+<p>h ^ (h &gt;&gt;&gt; 16) =<br>0000 0100 0100 0001 0000 0000 1000 1011 ^<br>0000 0000 0000 0000 0000 0100 0100 0001 =<br>0000 0100 0100 0001 0000 0100 1100 1010</p>
+<p>最后再通过按位与运算计算出哈希桶位置：</p>
+<p>(n - 1) &amp; hash =<br>0000 0000 0000 0000 0000 0000 0000 1111 &amp;<br>0000 0100 0100 0001 0000 0100 1100 1010 =<br>0000 0000 0000 0000 0000 0000 0000 1010</p>
+<p>也就是说，虽然 h 的后 4 位 1011 跟上面例子中的二进制后 4 位相同，但经过合并高位和低位，最终计算出的哈希桶位置是不同的。这在一定程度上降低了哈希冲突的概率。</p>
+<p>不过，这仅仅是一种在速度、实用性和位运算质量方面的一种折衷方式。因为即使不通过合并高位和低位的方式处理，许多常见的哈希值本来也能合理均匀分布，所以也就不会从这种方式中受益。并且，在实际使用中，当存在大量哈希冲突时，HashMap 还会把链表进行树化，即转化为红黑树进行处理。所以，通过右移和异或运算，是在尽可能少影响原本性能的基础上，通过合并高位和低位来增加随机性。否则，高位上的数可能永远不会参与到哈希桶位置的计算中。</p>
+<p>简而言之，就是<strong>通过合并 key 的 hashCode 值的高位和低位，以此来加大随机性，从而在一定程度上降低哈希冲突概率。</strong></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文通过源码分析了 HashMap 的哈希函数，并着重分析了函数中的所使用到位运算。把 key 的 hashCode 值从高位移到低位，并使用异或运算，目的是降低哈希冲突概率。使用按位与运算代替取模运算，则是为了提高性能。</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>退休金计划：投资日志20210727</title>
     <url>/2021/07/27/investment-plan-record-20210727/</url>
     <content><![CDATA[<p>昨天下午的时候，同事见面打招呼问的是你买鞋了吗？</p>
 <p>今天下午就变成了你“割肉”了吗？这两天你亏了多少？</p>
 <p>有种“这世界真是瞬息万变”的感慨。</p>
+<hr>
 <p>股票市场这几天连着大跌，退休金计划需不需要临时发起定投呢？</p>
 <p>答案是否定的。</p>
 <p>一是因为退休金计划是一项长期投资，市场短期震荡调整，从长远角度来看，这种调整就会显得微不足道了。</p>
@@ -3573,14 +3574,14 @@
 <p>2046-2050年定投执行计划</p>
 <p>2051年（1月、2月）定投执行计划</p>
 <h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts6542" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts8537" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts2392" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts6712" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts6542'));
-    var bar_chart = echarts.init(document.getElementById('echarts8537'));
+    var myChart = echarts.init(document.getElementById('echarts2392'));
+    var bar_chart = echarts.init(document.getElementById('echarts6712'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3693,14 +3694,14 @@
     <url>/2021/07/17/investment-plan-progress/</url>
     <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
 <h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts7966" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts161" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts5458" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts5776" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts7966'));
-    var bar_chart = echarts.init(document.getElementById('echarts161'));
+    var myChart = echarts.init(document.getElementById('echarts5458'));
+    var bar_chart = echarts.init(document.getElementById('echarts5776'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3797,12 +3798,12 @@
 <p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
 </blockquote>
 <h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts1697" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <div id="echarts944" style="width: 100%;height: 200px;margin: 0 auto"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts1697'));
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts944'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
