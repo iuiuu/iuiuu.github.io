@@ -1,6 +1,1023 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>CentOS7下安装JDK1.8</title>
+    <url>/2019/08/30/how-to-install-jdk-1-8-on-centos-7/</url>
+    <content><![CDATA[<h2 id="安装Java-幵发工具包（JDK）"><a href="#安装Java-幵发工具包（JDK）" class="headerlink" title="安装Java 幵发工具包（JDK）"></a>安装Java 幵发工具包（JDK）</h2><span id="more"></span>
+<ol>
+<li><p>从 Oracle 官网下载 1.8 版本的<a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">安装包 </a>（网速慢的同学请移步<a href="https://pan.baidu.com/s/13-dtHfGUxb9c2aFzHOqqwg">国内镜像</a>，提取码为 <strong>rjqx</strong>），本次安装的JDK版本为 <code>jdk-8u221-linux-x64.tar.gz</code>；</p>
+</li>
+<li><p>上传至服务器（系统为 CentOS7.3），存放目录为 <code>/home</code>；</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">scp ~/Downloads/jdk-8u221-linux-x64.tar.gz root@192.168.3.67:/home</span><br></pre></td></tr></table></figure></li>
+<li><p>新建JDK安装目录 <code>/usr/local/java</code>，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /usr/local/java</span><br></pre></td></tr></table></figure></li>
+<li><p>解压文件 <code>jdk-8u221-linux-x64.tar.gz</code> 至安装目录 <code>/usr/local/java</code>，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -zxvf jdk-8u221-linux-x64.tar.gz -C /usr/local/java/</span><br></pre></td></tr></table></figure></li>
+<li><p>安装完成之后需要配置环境变量，将以下代码追加到文件 <code>profile</code> 末尾；</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> JAVA_HOME为JDK安装目录</span></span><br><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_221</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>具体操作如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[johnson@localhost home]# vim /etc/profile</span><br><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_221</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span><br></pre></td></tr></table></figure></li>
+<li><p>执行命令 <code>source /etc/profile</code> 使刚刚新加的环境变量生效；</p>
+</li>
+<li><p>执行命令 <code>java -version</code> 检测安装是否成功，若安装并配置成功，可以看到以输出；如果得到诸如“-bash: java: 未找到命令 ”就需要退回去反复检査安装和配置步骤是否正确。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[johnson@localhost home]# java -version</span><br><span class="line">java version &quot;1.8.0_221&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_221-b11)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.221-b11, mixed mode)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><p>如果 CentOS 系统中集成了 OpenJDK，那么需要先卸载自带的 OpenJDK 才能安装标准版 JDK，卸载具体步骤如下：</p>
+<ol>
+<li><p>系统终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -qa | grep java</span><br></pre></td></tr></table></figure>
+
+<p>若系统中集成了 OpenJDK，会出现 xxxx_openjdk_xxxx 的信息；</p>
+</li>
+<li><p>删除 OpenJDK，在终端输入以下命令即可删除成功：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -e –-nodeps xxxx_openjdk_xxxx </span><br></pre></td></tr></table></figure>
+
+<p>也可以把上面两条命令合并成一条命令，一次性删除成功：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -e --nodeps rpm -qa | grep java</span><br></pre></td></tr></table></figure>
+
+<p>或者使用以下卸载命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum -y remove xxxx_openjdk_xxxx</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Java-术语说明"><a href="#Java-术语说明" class="headerlink" title="Java 术语说明"></a>Java 术语说明</h2><p>表 2-1 Java 术语</p>
+<table>
+<thead>
+<tr>
+<th>术语名</th>
+<th>缩写</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Java Development Kit</td>
+<td>JDK</td>
+<td>编写 Java 程序的程序员使用的软件</td>
+</tr>
+<tr>
+<td>Java Runtime Environment</td>
+<td>JRE</td>
+<td>运行 Java 程序的用户使用的软件</td>
+</tr>
+<tr>
+<td>Server JRE</td>
+<td>–</td>
+<td>在服务器上运行 Java 程序的软件</td>
+</tr>
+<tr>
+<td>Standard Edition</td>
+<td>SE</td>
+<td>用于桌面或简单服务器应用的 Java 平台</td>
+</tr>
+<tr>
+<td>Enterprise Edition</td>
+<td>EE</td>
+<td>用于复杂服务器应用的 Java 平台</td>
+</tr>
+<tr>
+<td>Micro Edition</td>
+<td>ME</td>
+<td>用于手机和其他小型设备的 Java 平台</td>
+</tr>
+<tr>
+<td>Java FX</td>
+<td>–</td>
+<td>用于图形化用户界面的一个替代工具包，在 Oracle 的 Java SE 发布版本中提供</td>
+</tr>
+<tr>
+<td>OpenJDK</td>
+<td>–</td>
+<td>JavaSE的一个免费幵源实现，不包含浏览器集成或JavaFX</td>
+</tr>
+<tr>
+<td>Java 2</td>
+<td>J2</td>
+<td>一个过时的术语，用于描述 1998 年 〜 2006 年之间的 Java 版本</td>
+</tr>
+<tr>
+<td>Software Development Kit</td>
+<td>SDK</td>
+<td>一个过时的术语， 用于描述 1998 年 ~ 2006 年之间的 JDK</td>
+</tr>
+<tr>
+<td>Update</td>
+<td>u</td>
+<td>Oracle 的术语， 表示 bug 修正版本</td>
+</tr>
+<tr>
+<td>NetBeans</td>
+<td>–</td>
+<td>Oracle 的集成开发环境</td>
+</tr>
+</tbody></table>
+<p>摘至《Java核心技术 卷I 基础知识（原书第十版）》</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL多表更新（关联表更新）</title>
+    <url>/2019/08/18/mysql-update-multiple-tables-with-one-query/</url>
+    <content><![CDATA[<p>在开发过程中，有时会遇到需要将某张表的字段值根据条件动态地更新到另一张表字段的问题，即通过一张表的字段修改另一张关联表中的内容。比如，存在两张表A（表名：test_a）、B（表名：test_b），他们的表结构如下：</p>
+<span id="more"></span>
+
+<p><strong>表A（test_a）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>user_id</th>
+<th>dept_id</th>
+<th>update_time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>34242</td>
+<td>313</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>35322</td>
+<td>320</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>35639</td>
+<td>321</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>表B（test_b）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>user_id</th>
+<th>patient_id</th>
+<th>dept_id</th>
+<th>create_time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>34242</td>
+<td>342</td>
+<td>0</td>
+<td>2018-05-23 09:33:45</td>
+</tr>
+<tr>
+<td>2</td>
+<td>35322</td>
+<td>365</td>
+<td>0</td>
+<td>2018-05-24 00:13:05</td>
+</tr>
+<tr>
+<td>3</td>
+<td>35639</td>
+<td>398</td>
+<td>0</td>
+<td>2018-05-24 00:43:18</td>
+</tr>
+</tbody></table>
+<p>现在我们需要将表A的 <em>dept_id</em> 字段值根据 <em>user_id</em> 字段同步到表B的 <em>dept_id</em> 字段中，即用表A中的 <em>dept_id</em> 字段数据去更新表B中的 <em>dept_id</em> 字段，条件是表A的 <em>user_id</em> 字段值与表B的 <em>user_id</em> 字段值相等时进行更新。</p>
+<p>在MySQL中我们有几种方法可以做到：</p>
+<p>方法一：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id </span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br></pre></td></tr></table></figure>
+
+<p>方法二：（通过 INNER JOIN）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
+
+<p>方法三：（通过 LEFT JOIN）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
+
+<p>方法四：（通过子查询）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_b b </span><br><span class="line"><span class="keyword">SET</span> dept_id <span class="operator">=</span> ( <span class="keyword">SELECT</span> dept_id <span class="keyword">FROM</span> test_a <span class="keyword">WHERE</span> user_id <span class="operator">=</span> b.user_id );</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码片断都是在两张表之间做关联，但只更新其中一张表的数据。其实，除了更新其中一张表的数据外，方法一、方法二和方法三是可以同时更新两张表的数据，如：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 以下代码无实际意义，目的是方便记录</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法一</span></span><br><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法二：（通过 INNER JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法三：（通过 LEFT JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b</span><br><span class="line"><span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id</span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br></pre></td></tr></table></figure>
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis根据通配符批量删除Key</title>
+    <url>/2019/09/03/redis-batch-delete/</url>
+    <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
+<blockquote>
+<p>Redis的 <code>del</code> 命令支持删除给定的一个或多个 key，并返回被删除 key 的数量。如命令 <code>del key1 key2 key3</code>。</p>
+</blockquote>
+<p>比如要删除所有以 WxMpSessionKey 开头的 Key，可以使用如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[redis@iztz9ploifbvce ~]# redis-cli -h 192.168.182.227 -p 1379 keys &quot;WxMpSessionKey*&quot; |xargs redis-cli -h 192.168.182.227 -p 1379 del</span><br><span class="line">(integer) 2674</span><br></pre></td></tr></table></figure>
+
+<p>如果连接 Redis 的 HOST 为 127.0.0.1，端口号也为默认的 6379，则以上的命令可以简写为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli keys &quot;WxMpSessionKey*&quot; |xargs redis-cli del</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring Boot 2.x 集成Jpa示例</title>
+    <url>/2019/12/25/spring-boot-2_x-jpa/</url>
+    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
+
+<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 redis 中的值如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
+<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Jpa</tag>
+        <tag>Spring Boot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring Boot 2.x 集成Redis示例</title>
+    <url>/2019/12/19/spring-boot-2_x-redis/</url>
+    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
+
+<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 redis 中的值如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
+<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+        <tag>Spring Boot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Git常用命令】查看/修改远程仓库地址</title>
+    <url>/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</url>
+    <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Git修改远程仓库地址"><a href="#Git修改远程仓库地址" class="headerlink" title="Git修改远程仓库地址"></a>Git修改远程仓库地址</h2><p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote set-url origin new.git.url/here</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将远程仓库地址改为 HTTPS 协议</span></span><br><span class="line">git remote set-url origin https://gogs.linjiangxiong.com/ljx/devops-doc.git</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看修改后的地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【ZooKeeper启动失败】Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</title>
+    <url>/2019/12/12/zookeeper-problem-1/</url>
+    <content><![CDATA[<p>在 CentOS 7 系统中安装好 ZooKeeper 后，进入安装目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/bin/</code>，使用命令 <code>./zkServer.sh start</code> 启动，发现启动失败：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... FAILED TO START</span><br></pre></td></tr></table></figure>
+
+<p>进入目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/logs</code>，查看日志文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ cd /usr/local/zookeeper/apache-zookeeper-3.5.6/logs</span><br><span class="line">[zookeeperu@202 bin]$ vim ./zookeeper-jump-server-202.out</span><br></pre></td></tr></table></figure>
+
+<p>可看到以下错误信息：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</span><br></pre></td></tr></table></figure>
+
+<p>出现 <code>Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</code> 错误，是因为我在安装时，选用了 <code>apache-zookeeper-&#123;version&#125;.tar.gz</code> 包而不是 <code>apache-zookeeper-&#123;version&#125;-bin.tar.gz</code> 包，后面使用 <code>apache-zookeeper-3.5.6-bin.tar.gz</code> （<strong>文件名包含bin</strong>）重新安装后，解决了问题：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6-bin/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... STARTED</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+        <tag>ZooKeeper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用Markdown优雅地编写接口文档（排版示例）</title>
+    <url>/2019/07/24/markdown-api-document/</url>
+    <content><![CDATA[<blockquote>
+<p>本排版示例整理于两年前，当时是用来在公司推广使用 Markdown 编写开发文档的，现在稍微作了些修改，去掉一些与公司接口相关的信息。希望该示例能够对小伙伴们在以后编写文档时有所帮助，也希望能够得到大家关于文档排版方面的建议。<br>使用 Markdown 编写接口文档最主要的好处，一个是可以让你更专注于内容本身，另外一个是 Markdown编写的文档能用代码管理工具（Git、SVN等）进行有效的版本管理（如版本对比）。</p>
+</blockquote>
+<span id="more"></span>
+
+<p>本示例显示效果如下：（<a href="https://github.com/iuiuu/markdown-api-document">源文件链接：https://github.com/iuiuu/markdown-api-document</a>）</p>
+<h1 id="AA公司BC平台接口文档-v3-2-0"><a href="#AA公司BC平台接口文档-v3-2-0" class="headerlink" title="AA公司BC平台接口文档 v3.2.0"></a>AA公司BC平台接口文档 v3.2.0</h1><h2 id="1-规范说明"><a href="#1-规范说明" class="headerlink" title="1 规范说明"></a>1 规范说明</h2><h3 id="1-1-通信协议"><a href="#1-1-通信协议" class="headerlink" title="1.1 通信协议"></a>1.1 通信协议</h3><p>HTTPS协议</p>
+<h3 id="1-2-请求方法"><a href="#1-2-请求方法" class="headerlink" title="1.2 请求方法"></a>1.2 请求方法</h3><p>所有接口只支持POST方法发起请求。</p>
+<h3 id="1-3-字符编码"><a href="#1-3-字符编码" class="headerlink" title="1.3 字符编码"></a>1.3 字符编码</h3><p>HTTP通讯及报文BASE64编码均采用UTF-8字符集编码格式。</p>
+<h3 id="1-4-格式说明"><a href="#1-4-格式说明" class="headerlink" title="1.4 格式说明"></a>1.4 格式说明</h3><p>元素出现要求说明：</p>
+<table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">R</td>
+<td align="left">报文中该元素必须出现（Required）</td>
+</tr>
+<tr>
+<td align="center">O</td>
+<td align="left">报文中该元素可选出现（Optional）</td>
+</tr>
+<tr>
+<td align="center">C</td>
+<td align="left">报文中该元素在一定条件下出现（Conditional）</td>
+</tr>
+</tbody></table>
+<h3 id="1-5-报文规范说明"><a href="#1-5-报文规范说明" class="headerlink" title="1.5 报文规范说明"></a>1.5 报文规范说明</h3><ol>
+<li><p>报文规范仅针对交易请求数据进行描述；  </p>
+</li>
+<li><p>报文规范中请求报文的内容为Https请求报文中RequestData值的明文内容；</p>
+</li>
+<li><p>报文规范分为请求报文和响应报文。请求报文描述由发起方，响应报文由报文接收方响应。</p>
+</li>
+</ol>
+<h3 id="1-6-请求报文结构"><a href="#1-6-请求报文结构" class="headerlink" title="1.6 请求报文结构"></a>1.6 请求报文结构</h3><p>接口只接收两个参数 <strong>RequestData</strong> 和 <strong>SignData</strong> ，其中RequestData的值为请求内容，SignData的值为签名内容。</p>
+<h4 id="1-6-1-参数说明"><a href="#1-6-1-参数说明" class="headerlink" title="1.6.1 参数说明"></a>1.6.1 参数说明</h4><p><strong>RequestData（请求内容）：</strong> 其明文为每次请求的具体参数，采用 JSON 格式，依次经过 DES 加密（以UTF-8编码、BASE64编码输出结果）和 URLEncode 后，作为 RequestData 的值。  </p>
+<p><strong>SignData（签名内容）：</strong> 请求参数（明文）的MD5加密字符串，用于校验RequestData是否合法。</p>
+<h4 id="1-6-2-请求内容（RequestData）明文结构说明"><a href="#1-6-2-请求内容（RequestData）明文结构说明" class="headerlink" title="1.6.2 请求内容（RequestData）明文结构说明"></a>1.6.2 请求内容（RequestData）明文结构说明</h4><p>采用JSON格式，其中包含Header（公有参数）、Body（私有参数）节点：</p>
+<table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">描述</th>
+<th align="left">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">公共参数</td>
+<td align="left">每个接口都包含的通用参数，以JSON格式存放在Header属性</td>
+<td align="left">详见以下公共参数说明</td>
+</tr>
+<tr>
+<td align="left">私有参数</td>
+<td align="left">每个接口特有的参数，以JSON格式存放在Body属性</td>
+<td align="left">详见每个接口定义</td>
+</tr>
+</tbody></table>
+<p><strong>公共参数说明：</strong></p>
+<p>公共参数（Header）是用于标识产品及接口鉴权的参数，每次请求均需要携带这些参数：</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数名称</th>
+<th align="left">类型</th>
+<th align="left">出现要求</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Token</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">用户登录后token，没有登录则为空字符串</td>
+</tr>
+<tr>
+<td align="left">Version</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">接口版本号</td>
+</tr>
+<tr>
+<td align="left">SystemId</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">机构号，请求的系统Id</td>
+</tr>
+<tr>
+<td align="left">Timestamp</td>
+<td align="left">long</td>
+<td align="left">R</td>
+<td align="left">当前UNIX时间戳</td>
+</tr>
+</tbody></table>
+<h4 id="1-6-3-校验流程："><a href="#1-6-3-校验流程：" class="headerlink" title="1.6.3 校验流程："></a>1.6.3 校验流程：</h4><p>服务端接收到请求后首先对RequestData进行DES解密出JSON字符串，然后对JSON字符串进行MD5加密，加密后的值与请求中的SignData值进行对比，如对比通过，视为合法请求，否则视为非法请求。</p>
+<p><strong>DES加密/解密函数示例：</strong></p>
+<p>C#版：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// 进行DES加密。</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">/// &lt;param name=&quot;decryptString&quot;&gt;要加密的字符串。&lt;/param&gt;</span><br><span class="line">/// &lt;param name=&quot;secretKey&quot;&gt;密钥，且必须为8位。&lt;/param&gt;</span><br><span class="line">/// &lt;returns&gt;以Base64格式返回的加密字符串。&lt;/returns&gt;</span><br><span class="line">public static string DesEncrypt(string decryptString, string secretKey)</span><br><span class="line">&#123;</span><br><span class="line">    using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())</span><br><span class="line">    &#123;</span><br><span class="line">        byte[] inputByteArray = Encoding.UTF8.GetBytes(decryptString);</span><br><span class="line">        des.Key = Encoding.ASCII.GetBytes(secretKey);</span><br><span class="line">        des.IV = Encoding.ASCII.GetBytes(secretKey);</span><br><span class="line">        MemoryStream ms = new MemoryStream();</span><br><span class="line">        using (CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(), CryptoStreamMode.Write))</span><br><span class="line">        &#123;</span><br><span class="line">            cs.Write(inputByteArray, 0, inputByteArray.Length);</span><br><span class="line">            cs.FlushFinalBlock();</span><br><span class="line">            cs.Close();</span><br><span class="line">        &#125;</span><br><span class="line">        string str = Convert.ToBase64String(ms.ToArray());</span><br><span class="line">        ms.Close();</span><br><span class="line">        return str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// 进行DES解密。</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">/// &lt;param name=&quot;encryptedString&quot;&gt;要解密的以Base64&lt;/param&gt;</span><br><span class="line">/// &lt;param name=&quot;secretKey&quot;&gt;密钥，且必须为8位。&lt;/param&gt;</span><br><span class="line">/// &lt;returns&gt;已解密的字符串。&lt;/returns&gt;</span><br><span class="line">public static string DesDecrypt(string encryptedString, string secretKey)</span><br><span class="line">&#123;</span><br><span class="line">    byte[] inputByteArray = Convert.FromBase64String(encryptedString);</span><br><span class="line">    using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())</span><br><span class="line">    &#123;</span><br><span class="line">        des.Key = Encoding.ASCII.GetBytes(secretKey);</span><br><span class="line">        des.IV = Encoding.ASCII.GetBytes(secretKey);</span><br><span class="line">        MemoryStream ms = new MemoryStream();</span><br><span class="line">        using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write))</span><br><span class="line">        &#123;</span><br><span class="line">            cs.Write(inputByteArray, 0, inputByteArray.Length);</span><br><span class="line">            cs.FlushFinalBlock();</span><br><span class="line">            cs.Close();</span><br><span class="line">        &#125;</span><br><span class="line">        string str = Encoding.UTF8.GetString(ms.ToArray());</span><br><span class="line">        ms.Close();</span><br><span class="line">        return str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>JAVA版：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/* DES解密 */</span><br><span class="line">public static String decrypt(String message, String key) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">    byte[] bytesrc = Base64.decode(message);</span><br><span class="line">    //convertHexString(message);</span><br><span class="line">    Cipher cipher = Cipher.getInstance(&quot;DES/CBC/PKCS5Padding&quot;);</span><br><span class="line">    DESKeySpec desKeySpec = new DESKeySpec(key.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">    SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&quot;DES&quot;);</span><br><span class="line">    SecretKey secretKey = keyFactory.generateSecret(desKeySpec);</span><br><span class="line">    IvParameterSpec iv = new IvParameterSpec(key.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">    cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);</span><br><span class="line">    byte[] retByte = cipher.doFinal(bytesrc);</span><br><span class="line">    return new String(retByte);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/* DES加密 */</span><br><span class="line">public static byte[] encrypt(String message, String key) throws Exception &#123;</span><br><span class="line">    Cipher cipher = Cipher.getInstance(&quot;DES/CBC/PKCS5Padding&quot;);</span><br><span class="line">    DESKeySpec desKeySpec = new DESKeySpec(key.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">    SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&quot;DES&quot;);</span><br><span class="line">    SecretKey secretKey = keyFactory.generateSecret(desKeySpec);</span><br><span class="line">    IvParameterSpec iv = new IvParameterSpec(key.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">    cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv);</span><br><span class="line">    return cipher.doFinal(message.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-6-4-DES密钥"><a href="#1-6-4-DES密钥" class="headerlink" title="1.6.4 DES密钥"></a>1.6.4 DES密钥</h4><p>测试环境：az2ih1uY</p>
+<p>生产环境：另外提供。</p>
+<h4 id="1-6-5-请求报文示例"><a href="#1-6-5-请求报文示例" class="headerlink" title="1.6.5 请求报文示例"></a>1.6.5 请求报文示例</h4><p>请求内容明文：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Header&quot;:&#123;</span><br><span class="line">        &quot;Token&quot;:&quot;2366CF921FAD44CCBB07FF9CD02FC90E&quot;,</span><br><span class="line">        &quot;Version&quot;:&quot;3.2.0&quot;,</span><br><span class="line">        &quot;SystemId&quot;:100,</span><br><span class="line">        &quot;Timestamp&quot;:1502870664</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;Body&quot;:&#123;</span><br><span class="line">        &quot;Mobile&quot;:&quot;18520322032&quot;,</span><br><span class="line">        &quot;Password&quot;:&quot;acb000000&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>请求报文示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url?RequestData=UFAYIRF21XzGoaAaEU54qoDBYaFkT2KbRpWxKZuqqltApdIneF7AjlEArPLsg3%2Fo1Pu7FHFmsKZn%0A9KJb%2BGuwx0P%2F3jzv2TgwUpVtgwEdfd0vIRfqEF4jCouldaxxVBjbHvd%2F08pUoYJDNZJLvNrJ%2BsK4%0A79de92T0Cyu4hKNMUPtVI7Tp0IC%2BBw%3D%3D&amp;SignData=0865c7d625f90d3bb5457f5d9ac3725d</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-7-响应报文结构"><a href="#1-7-响应报文结构" class="headerlink" title="1.7 响应报文结构"></a>1.7 响应报文结构</h3><h4 id="1-7-1-结构说明"><a href="#1-7-1-结构说明" class="headerlink" title="1.7.1 结构说明"></a>1.7.1 结构说明</h4><p>所有接口响应均采用JSON格式，如无特殊说明，每次请求的返回值中，都包含下列字段：</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数名称</th>
+<th align="left">类型</th>
+<th align="left">出现要求</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Code</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">响应码，代码定义请见“附录A 响应吗说明”</td>
+</tr>
+<tr>
+<td align="left">Msg</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">响应描述</td>
+</tr>
+<tr>
+<td align="left">Data</td>
+<td align="left">object</td>
+<td align="left">R</td>
+<td align="left">每个接口特有的参数，详见每个接口定义</td>
+</tr>
+</tbody></table>
+<h4 id="1-7-2-响应报文示例"><a href="#1-7-2-响应报文示例" class="headerlink" title="1.7.2 响应报文示例"></a>1.7.2 响应报文示例</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Code&quot;:200,</span><br><span class="line">    &quot;Msg&quot;:&quot;调用成功&quot;,</span><br><span class="line">    &quot;Data&quot;:&#123;</span><br><span class="line">        &quot;Channel&quot;:&quot;A10086&quot;,</span><br><span class="line">        &quot;Type&quot;:7004</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="2-接口定义"><a href="#2-接口定义" class="headerlink" title="2. 接口定义"></a>2. 接口定义</h2><h3 id="2-1-密码登录"><a href="#2-1-密码登录" class="headerlink" title="2.1 密码登录"></a>2.1 密码登录</h3><ul>
+<li><strong>接口说明：</strong> 密码登录</li>
+<li><strong>接口地址：</strong> /account/signin</li>
+</ul>
+<h4 id="2-1-1-请求参数"><a href="#2-1-1-请求参数" class="headerlink" title="2.1.1 请求参数"></a>2.1.1 请求参数</h4><table>
+<thead>
+<tr>
+<th align="left">参数名称</th>
+<th align="left">类型</th>
+<th align="left">出现要求</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Header</td>
+<td align="left">&nbsp;</td>
+<td align="left">R</td>
+<td align="left">请求报文头</td>
+</tr>
+<tr>
+<td align="left">&emsp;Token</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">用户登录后token，没有登录则为空字符串</td>
+</tr>
+<tr>
+<td align="left">&emsp;Version</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">接口版本号</td>
+</tr>
+<tr>
+<td align="left">&emsp;SystemId</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">机构号，请求的系统Id</td>
+</tr>
+<tr>
+<td align="left">&emsp;Timestamp</td>
+<td align="left">long</td>
+<td align="left">R</td>
+<td align="left">当前UNIX时间戳</td>
+</tr>
+<tr>
+<td align="left">Body</td>
+<td align="left">&nbsp;</td>
+<td align="left">R</td>
+<td align="left">&nbsp;</td>
+</tr>
+<tr>
+<td align="left">&emsp;Mobile</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">手机号</td>
+</tr>
+<tr>
+<td align="left">&emsp;Password</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">密码</td>
+</tr>
+</tbody></table>
+<p>请求示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Header&quot;:&#123;</span><br><span class="line">        &quot;Token&quot;:&quot;&quot;,</span><br><span class="line">        &quot;Version&quot;:&quot;3.2.0&quot;,</span><br><span class="line">        &quot;SystemId&quot;:100,</span><br><span class="line">        &quot;Timestamp&quot;:1502870664</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;Body&quot;:&#123;</span><br><span class="line">        &quot;Mobile&quot;:&quot;18520322032&quot;,</span><br><span class="line">        &quot;Password&quot;:&quot;acb000000&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="2-1-2-返回结果"><a href="#2-1-2-返回结果" class="headerlink" title="2.1.2 返回结果"></a>2.1.2 返回结果</h4><table>
+<thead>
+<tr>
+<th align="left">参数名称</th>
+<th align="left">类型</th>
+<th align="left">出现要求</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Code</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">响应码，代码定义请见“附录A 响应吗说明”</td>
+</tr>
+<tr>
+<td align="left">Msg</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">&nbsp;</td>
+</tr>
+<tr>
+<td align="left">Data</td>
+<td align="left">object</td>
+<td align="left">R</td>
+<td align="left">&nbsp;</td>
+</tr>
+<tr>
+<td align="left">&emsp;UserId</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">用户Id</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Code&quot;:200,</span><br><span class="line">    &quot;Msg&quot;:&quot;登录成功&quot;,</span><br><span class="line">    &quot;Data&quot;:&#123;</span><br><span class="line">        &quot;UserId&quot;:&quot;7D916C7283434955A235C17DD9B71C64&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-获取登录用户信息"><a href="#2-2-获取登录用户信息" class="headerlink" title="2.2 获取登录用户信息"></a>2.2 获取登录用户信息</h3><ul>
+<li><strong>接口说明：</strong> 获取登录用户信息</li>
+<li><strong>接口地址：</strong> /account/profile</li>
+</ul>
+<h4 id="2-2-1-请求参数"><a href="#2-2-1-请求参数" class="headerlink" title="2.2.1 请求参数"></a>2.2.1 请求参数</h4><table>
+<thead>
+<tr>
+<th align="left">参数名称</th>
+<th align="left">类型</th>
+<th align="left">出现要求</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Header</td>
+<td align="left">&nbsp;</td>
+<td align="left">R</td>
+<td align="left">请求报文头</td>
+</tr>
+<tr>
+<td align="left">&emsp;Token</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">用户登录后token，没有登录则为空字符串</td>
+</tr>
+<tr>
+<td align="left">&emsp;Version</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">接口版本号</td>
+</tr>
+<tr>
+<td align="left">&emsp;SystemId</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">机构号，请求的系统Id</td>
+</tr>
+<tr>
+<td align="left">&emsp;Timestamp</td>
+<td align="left">long</td>
+<td align="left">R</td>
+<td align="left">当前UNIX时间戳</td>
+</tr>
+<tr>
+<td align="left">Body</td>
+<td align="left">&nbsp;</td>
+<td align="left">R</td>
+<td align="left">&nbsp;</td>
+</tr>
+</tbody></table>
+<p>请求示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;Header&quot;:&#123;</span><br><span class="line">        &quot;Token&quot;:&quot;CA64A439E7C344B0BA7F5C825E17C7AB&quot;,</span><br><span class="line">        &quot;Version&quot;:&quot;3.2.0&quot;,</span><br><span class="line">        &quot;SystemId&quot;:100,</span><br><span class="line">        &quot;Timestamp&quot;:1502870664</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;Body&quot;:null</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="2-2-2-返回结果"><a href="#2-2-2-返回结果" class="headerlink" title="2.2.2 返回结果"></a>2.2.2 返回结果</h4><table>
+<thead>
+<tr>
+<th align="left">参数名称</th>
+<th align="left">类型</th>
+<th align="left">出现要求</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Code</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">响应码，代码定义请见“附录A 响应吗说明”</td>
+</tr>
+<tr>
+<td align="left">Msg</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">&nbsp;</td>
+</tr>
+<tr>
+<td align="left">Data</td>
+<td align="left">object</td>
+<td align="left">R</td>
+<td align="left">&nbsp;</td>
+</tr>
+<tr>
+<td align="left">&emsp;UserId</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">用户Id</td>
+</tr>
+<tr>
+<td align="left">&emsp;RealName</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">姓名</td>
+</tr>
+<tr>
+<td align="left">&emsp;ImageUrl</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">头像</td>
+</tr>
+<tr>
+<td align="left">&emsp;Score</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">积分</td>
+</tr>
+<tr>
+<td align="left">&emsp;Nickname</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">昵称</td>
+</tr>
+<tr>
+<td align="left">&emsp;Sex</td>
+<td align="left">int</td>
+<td align="left">R</td>
+<td align="left">性别：0-未知、1-男、2-女</td>
+</tr>
+<tr>
+<td align="left">&emsp;Title</td>
+<td align="left">string</td>
+<td align="left">R</td>
+<td align="left">头衔</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Code&quot;:200,</span><br><span class="line">    &quot;Msg&quot;:&quot;处理成功&quot;,</span><br><span class="line">    &quot;Data&quot;:&#123;</span><br><span class="line">        &quot;UserId&quot;:&quot;7D916C7283434955A235C17DD9B71C64&quot;,</span><br><span class="line">        &quot;RealName&quot;:&quot;张三&quot;,</span><br><span class="line">        &quot;ImageUrl&quot;:&quot;https://img.xx.net/afdicew8751.png&quot;,</span><br><span class="line">        &quot;Score&quot;:4732,</span><br><span class="line">        &quot;Nickname&quot;:&quot;张冠李戴&quot;,</span><br><span class="line">        &quot;Sex&quot;:1,</span><br><span class="line">        &quot;Title&quot;:&quot;侠客Lv4&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="3-附录A-响应码说明"><a href="#3-附录A-响应码说明" class="headerlink" title="3 附录A 响应码说明"></a>3 附录A 响应码说明</h2><table>
+<thead>
+<tr>
+<th align="left">响应码</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">200</td>
+<td align="left">处理成功</td>
+</tr>
+<tr>
+<td align="left">301</td>
+<td align="left">解析报文错误</td>
+</tr>
+<tr>
+<td align="left">302</td>
+<td align="left">无效调用凭证</td>
+</tr>
+<tr>
+<td align="left">303</td>
+<td align="left">参数不正确</td>
+</tr>
+<tr>
+<td align="left">500</td>
+<td align="left">系统内部错误</td>
+</tr>
+<tr>
+<td align="left">999</td>
+<td align="left">处理失败</td>
+</tr>
+</tbody></table>
+<h2 id="4-附录B-币种"><a href="#4-附录B-币种" class="headerlink" title="4 附录B 币种"></a>4 附录B 币种</h2><table>
+<thead>
+<tr>
+<th align="left">币种</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">RMB</td>
+<td align="left">人民币</td>
+</tr>
+<tr>
+<td align="left">HKD</td>
+<td align="left">港币</td>
+</tr>
+<tr>
+<td align="left">JPY</td>
+<td align="left">日元</td>
+</tr>
+<tr>
+<td align="left">TWD</td>
+<td align="left">新台币</td>
+</tr>
+<tr>
+<td align="left">USD</td>
+<td align="left">美元</td>
+</tr>
+<tr>
+<td align="left">VND</td>
+<td align="left">越南盾</td>
+</tr>
+<tr>
+<td align="left">THB</td>
+<td align="left">泰铢</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Markdown</tag>
+        <tag>接口文档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗马数字（上）——拼写规则</title>
+    <url>/2019/06/26/rules-of-reading-and-writing-roman-numerals/</url>
+    <content><![CDATA[<h3 id="罗马数字符号"><a href="#罗马数字符号" class="headerlink" title="罗马数字符号"></a>罗马数字符号</h3><p>罗马数字是总共由 7 个字母符号表示：<strong>I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和 M（1000）。</strong></p>
+<span id="more"></span>
+
+<p>表一：罗马数字对应的阿拉伯数字</p>
+<table>
+<thead>
+<tr>
+<th align="center">罗马数字</th>
+<th align="center">阿拉伯数字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">I</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">V</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">X</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">L</td>
+<td align="center">50</td>
+</tr>
+<tr>
+<td align="center">C</td>
+<td align="center">100</td>
+</tr>
+<tr>
+<td align="center">D</td>
+<td align="center">500</td>
+</tr>
+<tr>
+<td align="center">M</td>
+<td align="center">1000</td>
+</tr>
+</tbody></table>
+<p>他们按照以下 4 个规则可以组合成表示任意的正整数。</p>
+<h3 id="规则-1"><a href="#规则-1" class="headerlink" title="规则 1"></a>规则 1</h3><p><strong>一个罗马数字重复多少次，就表示这个数多少倍</strong>，比如罗马数字 I 表示的是数字 1，重复两次，即 II，表示的数字是 2，同理，III 表示数字 3，XX 表示数字 20，CC 表示数字 200 等；</p>
+<p>需要注意的是，<strong>同一个罗马数字最多只能连续重复 3 次</strong>，如数字 400 就不能表示为 CCCC（重复了 4 次），而是要用 CD 来表示，数字40不能表示为 XXXX（同样重复了 4 次），而要表示为 XL 等。</p>
+<p>但有一种特殊情况，因为古罗马人用 IV 作为古罗马神话主神朱庇特（IVPITER，古罗马字母里没有 J 和 U）名字的简写，他们不希望神的名字看上去像个数字，因此<strong>有时用 IIII 代替 IV</strong>。</p>
+<p>另外，<strong>符号 D、L 和 V 不可以连续重复出现</strong>，比如用 DD 表示 1000 的写法是错误的，正确的是要用 M，表示 1500 的罗马数字是 MD，而不是 DDD。</p>
+<h3 id="规则-2"><a href="#规则-2" class="headerlink" title="规则 2"></a>规则 2</h3><p><strong>如果在较大的罗马数字后面（右边）放置较小的罗马数字，表示的数字为这些数字相加得到的数</strong>，如较大的罗马数字 V 后面放置较小的罗马数字 I，即 VI，表示的数字则为 V 与 I 相加得到数 6。</p>
+<p>同理，<br>VII = 7 (5 + 2 = 7)<br>LXXX = 80 (50 + 10 + 10 + 10 = 80)<br>MC = 1100 (1000 + 100 = 1100)</p>
+<h3 id="规则-3"><a href="#规则-3" class="headerlink" title="规则 3"></a>规则 3</h3><p><strong>如果在较大的罗马数字前面（左边）放置在较小的罗马数字，表示的数是用较大的数减去较小的数所得到的值</strong>，如较大的罗马数字 V 前面或左边放置较小的罗马数字 I，即 IV，表示的数字则为 V 减去 I 得到的数 4。</p>
+<p>同理，<br>IX = 9 (10 – 1 = 9)<br>XC = 90 (100 – 10 = 90)</p>
+<p>用这种方式来表示罗马数字时，有以下几点需要注意：</p>
+<p><strong>i) 充当减数的只能是 I，C 或 X</strong>，不能是 L 或 V，即罗马数字对应的数是 10 的 n 次幂才能充当减数。另外，由于 M 在罗马字母中表示的数最大，也不能充当减数（罗马数字没有 0 或负整数）。</p>
+<blockquote>
+<p>被减数 - 减数 = 差，<br>如 32 - 10 = 22，<br>被减数是 32，减数是 10，差是 22。</p>
+</blockquote>
+<p>表二：被减数的只能是 I，C 或 X</p>
+<table>
+<thead>
+<tr>
+<th>罗马数字</th>
+<th>阿拉伯数字</th>
+<th>10 的 n 次幂</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>I</td>
+<td>1</td>
+<td>$10^0 = 1$</td>
+<td>10的0次幂</td>
+</tr>
+<tr>
+<td>X</td>
+<td>10</td>
+<td>$10^1 = 10$</td>
+<td>10的1次幂</td>
+</tr>
+<tr>
+<td>C</td>
+<td>100</td>
+<td>$10^2 = 100$</td>
+<td>10的2次幂</td>
+</tr>
+</tbody></table>
+<p>比如数字 45，<br>不能写成 VL（50 - 5），<br>而是要写成 XLV（XL + V，即 40 + 5）；</p>
+<p><strong>ii) 只能从一个罗马数字中减去另一个罗马数字，而不能减去两个或两个以上的罗马数字</strong>，比如说数字 8，<br>不能写成 IIX（X - I - I，即 10 - 1 - 1 = 8），<br>而是要写成 VIII（V + I + I + I，即 5 + 1 + 1 + 1 = 8）；</p>
+<p><strong>iii) 从一个罗马数字（设为 a）中减去另一个罗马数字（设为 b）所得的差（设为 c），不能超过减数（即 b）的 10 倍以上。</strong><br>例如，<br>你可以从数字 10 中减去 1，<br>因为 10 - 1 = 9，9 比 1 的 10 倍（10）小；<br>但是不能从数字 100 中减去 1，<br>因为 100 - 1 = 99，99 比 1 的 10 倍（10）大。<br>所以，<br>数字 9 可以用 IX 来表示，<br>但数字 100 不能用 IC 来表示，<br>而是要用 XCIX（XC + IX，即 90 + 9 = 99）来表示。</p>
+<p><em><strong>总结第 i) 点和第 iii) 点，可以得到以下规则：</strong></em><br><em><strong>符号 I 只能出现在符号 V 或 X 的前面（左边）；</strong></em><br><em><strong>符号 X 只能出现在符号 L 或 C 的前面（左边）；</strong></em><br><em><strong>符号 C 只能出现在符号 D 或 M 的前面（左边）。</strong></em></p>
+<h3 id="规则-4"><a href="#规则-4" class="headerlink" title="规则 4"></a>规则 4</h3><p><strong>如果在罗马数字上方加一条横线，表示将该数值乘以 1000，即原数的 1000 倍，如果上方有两条横线，表示的数字是原数的 1, 000, 000 倍。</strong></p>
+<p>如：</p>
+<p>$\overline{M}=1, 000, 000$</p>
+<p>$\overline{V}=5, 000$</p>
+<p>$\overline{\overline{X}} = 10, 000, 000 $</p>
+<hr>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>尝试应用上述规则，写出以下阿拉伯数字对应的罗马数字<br>35，<br>65，<br>99</p>
+<p>求解过程如下：<br>35 = 10 + 10 + 10 + 5，即 X + X + X + V（XXXV），所以 35 = XXXV；<br>65 = 50 + 10 + 5，即 L + X + V（LXV），所以 65 = LXV；<br>99 = （100 - 10）+（10 - 1），即 XC + IX（XCIX）所以 99 = XCIX 。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>罗马数字</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗马数字（中）——起源与用途</title>
+    <url>/2019/07/01/history-of-roman-numerals/</url>
+    <content><![CDATA[<h2 id="一、罗马数字的诞生与进化"><a href="#一、罗马数字的诞生与进化" class="headerlink" title="一、罗马数字的诞生与进化"></a>一、罗马数字的诞生与进化</h2><p>罗马数字起源于古罗马帝国，拥有一个漫长而复杂的历史，始于公元前 8 世纪至 9 世纪，与古罗马帝国在帕兰丁山（Palantine Hill）周围建立的时间大致相同。不过，罗马数字的盛行时间比帝国本身还要长，直到 14 世纪前仍被广泛使用。</p>
+<span id="more"></span>
+
+<p>在设计上，罗马数字存在一些缺陷：</p>
+<ol>
+<li><p>没有表示零（0）的符号；</p>
+</li>
+<li><p>也没有用于计数超过几千数值的实际方法，只有通过在数字符号上方添加横线来表示它们的值的倍数来修正。</p>
+</li>
+</ol>
+<p>复杂的社会、经济管理，建造像斗兽场和君士坦丁大拱门这样的大型纪念碑，都离不开大量的数学技能。而罗马数字的这些缺陷并没有阻止古罗马的学者和建筑师们建立一个伟大的帝国。</p>
+<p>在公元 11 世纪时，阿拉伯数字传入欧洲。阿拉伯数字始创于印度，采用 0、1、2、3、4、5、6、7、8、9 共 10 个计数符号。采取位值法，高位在左，低位在右，从左往右书写。借助一些简单的数学符号（小数点、负号等），阿拉伯数字可以明确的表示所有的有理数。这是对罗马数字的一个很大的改进。</p>
+<p>于是，人们开始逐渐使用阿拉伯数字作为日常生活中的记数系统，而罗马数字的使用更是随着创造它的帝国的崩溃而减少。到公元 14 世纪时，罗马数字已被阿拉伯数字所取代，成为在欧洲被广泛使用的记数系统。现在阿拉伯数字已成为目前使用最广泛的记数系统，通行于全世界。</p>
+<h2 id="二、罗马数字的现代用途"><a href="#二、罗马数字的现代用途" class="headerlink" title="二、罗马数字的现代用途"></a>二、罗马数字的现代用途</h2><p>从某种角度上，可以说罗马数字经受住了时间的考验，并没有随着罗马帝国的消亡而结束。它的优雅感和复古风格确保了它不会在未来某个时候消失。今天，我们仍然使用罗马数字来表达某些东西，如：</p>
+<p>在天文学领域中，用于为卫星编号，如木卫一，木卫二，木卫三。<br>在化学领域中，用于表示元素周期表中的元素组：IA族，IIA族，IIIA族，IVA族，VA族，VIA族，VIIA族，IB族，IIB族，IIIB族，IVB族，VB族，VIB族，VIIB族，VIII族。<br>钟表表盘符号：Ⅰ、Ⅱ、Ⅲ、Ⅳ（IIII）、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ、Ⅹ、Ⅺ、Ⅻ。<br>有序列表（ordered list）的编号（多用小写字母），例如：<br>i) 第一项<br>ii) 第二项<br>iii) 第三项<br>书籍和章节标题<br>君王的名字，如 Louis XIV（路易十四）、Charles II（查理二世）。<br>教皇的名字，如 Alexander VIII（亚历山大八世）、John Paul II（约翰·保罗二世）。<br>其他命名，如 iPhone X，氨酚伪麻美芬片（Ⅱ）。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>罗马数字</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通过yum方式在CentOS7系统安装MySQL8</title>
+    <url>/2019/12/28/how-to-install-mysql8-on-centos7/</url>
+    <content><![CDATA[<h2 id="一、添加-MySQL-YUM-源"><a href="#一、添加-MySQL-YUM-源" class="headerlink" title="一、添加 MySQL YUM 源"></a>一、添加 MySQL YUM 源</h2><p>根据自己的操作系统版本选择合适的安装源（<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a>），这里选择的是 CentOS 7，MySQL 8。点击 Download 按钮，进入下载页。可以直接下载 rpm 文件，再上传到 CentOS 7 系统，也可以通过复制链接地址（地址为：<a href="https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm%EF%BC%89%EF%BC%8C%E8%BF%9B%E5%85%A5">https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm），进入</a> CentOS 7 系统，通过 <code>wget</code> 命令下载。</p>
+<span id="more"></span>
+
+<p><img src="/image/20191228194455039.png" alt="CentOS 7 &amp; MySQL "></p>
+<p>这里以进入 CentOS 7 系统，通过 <code>wget</code> 命令下载为例，展示如何添加 MySQL yum 源，相关命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入存放 rpm 文件的目录</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /homw/software</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载 rpm 文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过 rpm -Uvh 安装</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm</span> </span><br></pre></td></tr></table></figure>
+
+<h2 id="二、安装MySQL"><a href="#二、安装MySQL" class="headerlink" title="二、安装MySQL"></a>二、安装MySQL</h2><p>安装好 yum 源后，直接通过以下命令即可安装 MySQL，非常简单，安装过程中会有两次让你确认下载或安装，直接输入 y 即可。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装 MySQL</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install mysql-community-server</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、启动MySQL"><a href="#三、启动MySQL" class="headerlink" title="三、启动MySQL"></a>三、启动MySQL</h2><p>启动 MySQL 命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl start mysqld</span></span><br></pre></td></tr></table></figure>
+
+<p>可通过如下命令查看 MySQL 运行状态：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl status mysqld</span></span><br></pre></td></tr></table></figure>
+
+<p>若输出以下的信息，则说明 MySQL 已经在运行中了。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo systemctl status mysqld</span><br><span class="line">● mysqld.service - MySQL Server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Fri 2019-12-27 15:48:33 CST; 11s ago</span><br><span class="line">     Docs: man:mysqld(8)</span><br><span class="line">           http://dev.mysql.com/doc/refman/en/using-systemd.html</span><br><span class="line">  Process: 22383 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 22459 (mysqld)</span><br><span class="line">   Status: &quot;Server is operational&quot;</span><br><span class="line">   CGroup: /system.slice/mysqld.service</span><br><span class="line">           └─22459 /usr/sbin/mysqld</span><br><span class="line"></span><br><span class="line">Dec 27 15:48:25 202 systemd[1]: Starting MySQL Server...</span><br><span class="line">Dec 27 15:48:33 202 systemd[1]: Started MySQL Server.</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、MySQL-8-root-用户默认登录密码问题"><a href="#四、MySQL-8-root-用户默认登录密码问题" class="headerlink" title="四、MySQL 8 root 用户默认登录密码问题"></a>四、MySQL 8 root 用户默认登录密码问题</h2><p>在 CentOS 7 系统中，通过 yum 方式安装 MySQL 8，需要使用以下命令查看 root 用户的默认密码：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo grep <span class="string">&quot;temporary password&quot;</span> /var/<span class="built_in">log</span>/mysqld.log</span></span><br></pre></td></tr></table></figure>
+
+<p>返回结果最后冒号后面的字符串就是root的默认密码。</p>
+<blockquote>
+<p>如果提示不存在 /var/log/mysqld.log 文件，请确保您已经通过步骤三，启动过一次 MySQL 服务。这里再提下 MySQL服务的启动命令是：<em><strong>systemctl start mysqld.service</strong></em></p>
+</blockquote>
+<p>如以下的输出，root 用户的登录密码为 <strong>Eea*eoqoI9:I</strong>。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo grep &quot;temporary password&quot; /var/log/mysqld.log</span><br><span class="line">[sudo] password for mysqlu: </span><br><span class="line">2019-12-27T07:48:29.009116Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: Eea*eoqoI9:I</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、登录MySQL，并修改默认密码"><a href="#五、登录MySQL，并修改默认密码" class="headerlink" title="五、登录MySQL，并修改默认密码"></a>五、登录MySQL，并修改默认密码</h2><p>知道 MySQL 的 root 用户密码后，即可登录 MySQL 了：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mysql -uroot -p</span> </span><br><span class="line">Enter password: # 这里输入密码</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 17</span><br><span class="line">Server version: 8.0.18</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
+
+<p>进入 MySQL 后，还不能做其他操作，会一直提示你修改默认密码，比如切换到 <code>mysql</code> 数据库：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash">  use mysql;</span></span><br><span class="line">ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</span><br></pre></td></tr></table></figure>
+
+<p>修改默认密码的命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ALTER user &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;新密码&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>其中 <strong>MySQL 8 以上的密码策略限制必须要包含大小写字母、数字和特殊符号。</strong>如：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> ALTER user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;2020Super_Star&#x27;</span>;</span></span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>至此，你再执行其他命令，而不会提示你需要修改密码了。</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HashMap核心功能源码解读（一）：概述</title>
     <url>/2021/07/22/hashmap-core-code-analysis-1/</url>
     <content><![CDATA[<p>在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。</p>
@@ -632,8 +1649,8 @@
 <tr>
 <td>2021/8/10</td>
 <td>1,000</td>
-<td></td>
-<td></td>
+<td>2021/8/10</td>
+<td>1,000</td>
 <td></td>
 </tr>
 <tr>
@@ -2713,14 +3730,14 @@
 <p>2046-2050年定投执行计划</p>
 <p>2051年（1月、2月）定投执行计划</p>
 <h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts9222" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts2355" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts1871" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts3166" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts9222'));
-    var bar_chart = echarts.init(document.getElementById('echarts2355'));
+    var myChart = echarts.init(document.getElementById('echarts1871'));
+    var bar_chart = echarts.init(document.getElementById('echarts3166'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -2833,14 +3850,14 @@
     <url>/2021/07/17/investment-plan-progress/</url>
     <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
 <h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts8752" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts7544" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts8321" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts5671" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts8752'));
-    var bar_chart = echarts.init(document.getElementById('echarts7544'));
+    var myChart = echarts.init(document.getElementById('echarts8321'));
+    var bar_chart = echarts.init(document.getElementById('echarts5671'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -2937,12 +3954,12 @@
 <p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
 </blockquote>
 <h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts394" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <div id="echarts5590" style="width: 100%;height: 200px;margin: 0 auto"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts394'));
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts5590'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3064,1027 +4081,10 @@
       </tags>
   </entry>
   <entry>
-    <title>CentOS7下安装JDK1.8</title>
-    <url>/2019/08/30/how-to-install-jdk-1-8-on-centos-7/</url>
-    <content><![CDATA[<h2 id="安装Java-幵发工具包（JDK）"><a href="#安装Java-幵发工具包（JDK）" class="headerlink" title="安装Java 幵发工具包（JDK）"></a>安装Java 幵发工具包（JDK）</h2><span id="more"></span>
-<ol>
-<li><p>从 Oracle 官网下载 1.8 版本的<a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">安装包 </a>（网速慢的同学请移步<a href="https://pan.baidu.com/s/13-dtHfGUxb9c2aFzHOqqwg">国内镜像</a>，提取码为 <strong>rjqx</strong>），本次安装的JDK版本为 <code>jdk-8u221-linux-x64.tar.gz</code>；</p>
-</li>
-<li><p>上传至服务器（系统为 CentOS7.3），存放目录为 <code>/home</code>；</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">scp ~/Downloads/jdk-8u221-linux-x64.tar.gz root@192.168.3.67:/home</span><br></pre></td></tr></table></figure></li>
-<li><p>新建JDK安装目录 <code>/usr/local/java</code>，</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /usr/local/java</span><br></pre></td></tr></table></figure></li>
-<li><p>解压文件 <code>jdk-8u221-linux-x64.tar.gz</code> 至安装目录 <code>/usr/local/java</code>，</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -zxvf jdk-8u221-linux-x64.tar.gz -C /usr/local/java/</span><br></pre></td></tr></table></figure></li>
-<li><p>安装完成之后需要配置环境变量，将以下代码追加到文件 <code>profile</code> 末尾；</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> JAVA_HOME为JDK安装目录</span></span><br><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_221</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span><br></pre></td></tr></table></figure>
-
-<p>具体操作如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[johnson@localhost home]# vim /etc/profile</span><br><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_221</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span><br></pre></td></tr></table></figure></li>
-<li><p>执行命令 <code>source /etc/profile</code> 使刚刚新加的环境变量生效；</p>
-</li>
-<li><p>执行命令 <code>java -version</code> 检测安装是否成功，若安装并配置成功，可以看到以输出；如果得到诸如“-bash: java: 未找到命令 ”就需要退回去反复检査安装和配置步骤是否正确。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[johnson@localhost home]# java -version</span><br><span class="line">java version &quot;1.8.0_221&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_221-b11)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.221-b11, mixed mode)</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><p>如果 CentOS 系统中集成了 OpenJDK，那么需要先卸载自带的 OpenJDK 才能安装标准版 JDK，卸载具体步骤如下：</p>
-<ol>
-<li><p>系统终端输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -qa | grep java</span><br></pre></td></tr></table></figure>
-
-<p>若系统中集成了 OpenJDK，会出现 xxxx_openjdk_xxxx 的信息；</p>
-</li>
-<li><p>删除 OpenJDK，在终端输入以下命令即可删除成功：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -e –-nodeps xxxx_openjdk_xxxx </span><br></pre></td></tr></table></figure>
-
-<p>也可以把上面两条命令合并成一条命令，一次性删除成功：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -e --nodeps rpm -qa | grep java</span><br></pre></td></tr></table></figure>
-
-<p>或者使用以下卸载命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum -y remove xxxx_openjdk_xxxx</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="Java-术语说明"><a href="#Java-术语说明" class="headerlink" title="Java 术语说明"></a>Java 术语说明</h2><p>表 2-1 Java 术语</p>
-<table>
-<thead>
-<tr>
-<th>术语名</th>
-<th>缩写</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Java Development Kit</td>
-<td>JDK</td>
-<td>编写 Java 程序的程序员使用的软件</td>
-</tr>
-<tr>
-<td>Java Runtime Environment</td>
-<td>JRE</td>
-<td>运行 Java 程序的用户使用的软件</td>
-</tr>
-<tr>
-<td>Server JRE</td>
-<td>–</td>
-<td>在服务器上运行 Java 程序的软件</td>
-</tr>
-<tr>
-<td>Standard Edition</td>
-<td>SE</td>
-<td>用于桌面或简单服务器应用的 Java 平台</td>
-</tr>
-<tr>
-<td>Enterprise Edition</td>
-<td>EE</td>
-<td>用于复杂服务器应用的 Java 平台</td>
-</tr>
-<tr>
-<td>Micro Edition</td>
-<td>ME</td>
-<td>用于手机和其他小型设备的 Java 平台</td>
-</tr>
-<tr>
-<td>Java FX</td>
-<td>–</td>
-<td>用于图形化用户界面的一个替代工具包，在 Oracle 的 Java SE 发布版本中提供</td>
-</tr>
-<tr>
-<td>OpenJDK</td>
-<td>–</td>
-<td>JavaSE的一个免费幵源实现，不包含浏览器集成或JavaFX</td>
-</tr>
-<tr>
-<td>Java 2</td>
-<td>J2</td>
-<td>一个过时的术语，用于描述 1998 年 〜 2006 年之间的 Java 版本</td>
-</tr>
-<tr>
-<td>Software Development Kit</td>
-<td>SDK</td>
-<td>一个过时的术语， 用于描述 1998 年 ~ 2006 年之间的 JDK</td>
-</tr>
-<tr>
-<td>Update</td>
-<td>u</td>
-<td>Oracle 的术语， 表示 bug 修正版本</td>
-</tr>
-<tr>
-<td>NetBeans</td>
-<td>–</td>
-<td>Oracle 的集成开发环境</td>
-</tr>
-</tbody></table>
-<p>摘至《Java核心技术 卷I 基础知识（原书第十版）》</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>CentOS7</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redis根据通配符批量删除Key</title>
-    <url>/2019/09/03/redis-batch-delete/</url>
-    <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
-<blockquote>
-<p>Redis的 <code>del</code> 命令支持删除给定的一个或多个 key，并返回被删除 key 的数量。如命令 <code>del key1 key2 key3</code>。</p>
-</blockquote>
-<p>比如要删除所有以 WxMpSessionKey 开头的 Key，可以使用如下命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[redis@iztz9ploifbvce ~]# redis-cli -h 192.168.182.227 -p 1379 keys &quot;WxMpSessionKey*&quot; |xargs redis-cli -h 192.168.182.227 -p 1379 del</span><br><span class="line">(integer) 2674</span><br></pre></td></tr></table></figure>
-
-<p>如果连接 Redis 的 HOST 为 127.0.0.1，端口号也为默认的 6379，则以上的命令可以简写为：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli keys &quot;WxMpSessionKey*&quot; |xargs redis-cli del</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL多表更新（关联表更新）</title>
-    <url>/2019/08/18/mysql-update-multiple-tables-with-one-query/</url>
-    <content><![CDATA[<p>在开发过程中，有时会遇到需要将某张表的字段值根据条件动态地更新到另一张表字段的问题，即通过一张表的字段修改另一张关联表中的内容。比如，存在两张表A（表名：test_a）、B（表名：test_b），他们的表结构如下：</p>
-<span id="more"></span>
-
-<p><strong>表A（test_a）：</strong></p>
-<table>
-<thead>
-<tr>
-<th>id</th>
-<th>user_id</th>
-<th>dept_id</th>
-<th>update_time</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>34242</td>
-<td>313</td>
-<td></td>
-</tr>
-<tr>
-<td>2</td>
-<td>35322</td>
-<td>320</td>
-<td></td>
-</tr>
-<tr>
-<td>3</td>
-<td>35639</td>
-<td>321</td>
-<td></td>
-</tr>
-</tbody></table>
-<p><strong>表B（test_b）：</strong></p>
-<table>
-<thead>
-<tr>
-<th>id</th>
-<th>user_id</th>
-<th>patient_id</th>
-<th>dept_id</th>
-<th>create_time</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>34242</td>
-<td>342</td>
-<td>0</td>
-<td>2018-05-23 09:33:45</td>
-</tr>
-<tr>
-<td>2</td>
-<td>35322</td>
-<td>365</td>
-<td>0</td>
-<td>2018-05-24 00:13:05</td>
-</tr>
-<tr>
-<td>3</td>
-<td>35639</td>
-<td>398</td>
-<td>0</td>
-<td>2018-05-24 00:43:18</td>
-</tr>
-</tbody></table>
-<p>现在我们需要将表A的 <em>dept_id</em> 字段值根据 <em>user_id</em> 字段同步到表B的 <em>dept_id</em> 字段中，即用表A中的 <em>dept_id</em> 字段数据去更新表B中的 <em>dept_id</em> 字段，条件是表A的 <em>user_id</em> 字段值与表B的 <em>user_id</em> 字段值相等时进行更新。</p>
-<p>在MySQL中我们有几种方法可以做到：</p>
-<p>方法一：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id </span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br></pre></td></tr></table></figure>
-
-<p>方法二：（通过 INNER JOIN）</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
-
-<p>方法三：（通过 LEFT JOIN）</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
-
-<p>方法四：（通过子查询）</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_b b </span><br><span class="line"><span class="keyword">SET</span> dept_id <span class="operator">=</span> ( <span class="keyword">SELECT</span> dept_id <span class="keyword">FROM</span> test_a <span class="keyword">WHERE</span> user_id <span class="operator">=</span> b.user_id );</span><br></pre></td></tr></table></figure>
-
-<p>上面的代码片断都是在两张表之间做关联，但只更新其中一张表的数据。其实，除了更新其中一张表的数据外，方法一、方法二和方法三是可以同时更新两张表的数据，如：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 以下代码无实际意义，目的是方便记录</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法一</span></span><br><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法二：（通过 INNER JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法三：（通过 LEFT JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b</span><br><span class="line"><span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id</span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br></pre></td></tr></table></figure>
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring Boot 2.x 集成Jpa示例</title>
-    <url>/2019/12/25/spring-boot-2_x-jpa/</url>
-    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
-
-<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 redis 中的值如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
-<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Jpa</tag>
-        <tag>Spring Boot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring Boot 2.x 集成Redis示例</title>
-    <url>/2019/12/19/spring-boot-2_x-redis/</url>
-    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
-
-<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 redis 中的值如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
-<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-        <tag>Spring Boot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【Git常用命令】查看/修改远程仓库地址</title>
-    <url>/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</url>
-    <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
-
-<p>e.g.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Git修改远程仓库地址"><a href="#Git修改远程仓库地址" class="headerlink" title="Git修改远程仓库地址"></a>Git修改远程仓库地址</h2><p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote set-url origin new.git.url/here</span><br></pre></td></tr></table></figure>
-
-<p>e.g.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将远程仓库地址改为 HTTPS 协议</span></span><br><span class="line">git remote set-url origin https://gogs.linjiangxiong.com/ljx/devops-doc.git</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看修改后的地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【ZooKeeper启动失败】Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</title>
-    <url>/2019/12/12/zookeeper-problem-1/</url>
-    <content><![CDATA[<p>在 CentOS 7 系统中安装好 ZooKeeper 后，进入安装目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/bin/</code>，使用命令 <code>./zkServer.sh start</code> 启动，发现启动失败：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... FAILED TO START</span><br></pre></td></tr></table></figure>
-
-<p>进入目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/logs</code>，查看日志文件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ cd /usr/local/zookeeper/apache-zookeeper-3.5.6/logs</span><br><span class="line">[zookeeperu@202 bin]$ vim ./zookeeper-jump-server-202.out</span><br></pre></td></tr></table></figure>
-
-<p>可看到以下错误信息：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</span><br></pre></td></tr></table></figure>
-
-<p>出现 <code>Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</code> 错误，是因为我在安装时，选用了 <code>apache-zookeeper-&#123;version&#125;.tar.gz</code> 包而不是 <code>apache-zookeeper-&#123;version&#125;-bin.tar.gz</code> 包，后面使用 <code>apache-zookeeper-3.5.6-bin.tar.gz</code> （<strong>文件名包含bin</strong>）重新安装后，解决了问题：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6-bin/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... STARTED</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>CentOS7</tag>
-        <tag>ZooKeeper</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>用Markdown优雅地编写接口文档（排版示例）</title>
-    <url>/2019/07/24/markdown-api-document/</url>
-    <content><![CDATA[<blockquote>
-<p>本排版示例整理于两年前，当时是用来在公司推广使用 Markdown 编写开发文档的，现在稍微作了些修改，去掉一些与公司接口相关的信息。希望该示例能够对小伙伴们在以后编写文档时有所帮助，也希望能够得到大家关于文档排版方面的建议。<br>使用 Markdown 编写接口文档最主要的好处，一个是可以让你更专注于内容本身，另外一个是 Markdown编写的文档能用代码管理工具（Git、SVN等）进行有效的版本管理（如版本对比）。</p>
-</blockquote>
-<span id="more"></span>
-
-<p>本示例显示效果如下：（<a href="https://github.com/iuiuu/markdown-api-document">源文件链接：https://github.com/iuiuu/markdown-api-document</a>）</p>
-<h1 id="AA公司BC平台接口文档-v3-2-0"><a href="#AA公司BC平台接口文档-v3-2-0" class="headerlink" title="AA公司BC平台接口文档 v3.2.0"></a>AA公司BC平台接口文档 v3.2.0</h1><h2 id="1-规范说明"><a href="#1-规范说明" class="headerlink" title="1 规范说明"></a>1 规范说明</h2><h3 id="1-1-通信协议"><a href="#1-1-通信协议" class="headerlink" title="1.1 通信协议"></a>1.1 通信协议</h3><p>HTTPS协议</p>
-<h3 id="1-2-请求方法"><a href="#1-2-请求方法" class="headerlink" title="1.2 请求方法"></a>1.2 请求方法</h3><p>所有接口只支持POST方法发起请求。</p>
-<h3 id="1-3-字符编码"><a href="#1-3-字符编码" class="headerlink" title="1.3 字符编码"></a>1.3 字符编码</h3><p>HTTP通讯及报文BASE64编码均采用UTF-8字符集编码格式。</p>
-<h3 id="1-4-格式说明"><a href="#1-4-格式说明" class="headerlink" title="1.4 格式说明"></a>1.4 格式说明</h3><p>元素出现要求说明：</p>
-<table>
-<thead>
-<tr>
-<th align="center">符号</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">R</td>
-<td align="left">报文中该元素必须出现（Required）</td>
-</tr>
-<tr>
-<td align="center">O</td>
-<td align="left">报文中该元素可选出现（Optional）</td>
-</tr>
-<tr>
-<td align="center">C</td>
-<td align="left">报文中该元素在一定条件下出现（Conditional）</td>
-</tr>
-</tbody></table>
-<h3 id="1-5-报文规范说明"><a href="#1-5-报文规范说明" class="headerlink" title="1.5 报文规范说明"></a>1.5 报文规范说明</h3><ol>
-<li><p>报文规范仅针对交易请求数据进行描述；  </p>
-</li>
-<li><p>报文规范中请求报文的内容为Https请求报文中RequestData值的明文内容；</p>
-</li>
-<li><p>报文规范分为请求报文和响应报文。请求报文描述由发起方，响应报文由报文接收方响应。</p>
-</li>
-</ol>
-<h3 id="1-6-请求报文结构"><a href="#1-6-请求报文结构" class="headerlink" title="1.6 请求报文结构"></a>1.6 请求报文结构</h3><p>接口只接收两个参数 <strong>RequestData</strong> 和 <strong>SignData</strong> ，其中RequestData的值为请求内容，SignData的值为签名内容。</p>
-<h4 id="1-6-1-参数说明"><a href="#1-6-1-参数说明" class="headerlink" title="1.6.1 参数说明"></a>1.6.1 参数说明</h4><p><strong>RequestData（请求内容）：</strong> 其明文为每次请求的具体参数，采用 JSON 格式，依次经过 DES 加密（以UTF-8编码、BASE64编码输出结果）和 URLEncode 后，作为 RequestData 的值。  </p>
-<p><strong>SignData（签名内容）：</strong> 请求参数（明文）的MD5加密字符串，用于校验RequestData是否合法。</p>
-<h4 id="1-6-2-请求内容（RequestData）明文结构说明"><a href="#1-6-2-请求内容（RequestData）明文结构说明" class="headerlink" title="1.6.2 请求内容（RequestData）明文结构说明"></a>1.6.2 请求内容（RequestData）明文结构说明</h4><p>采用JSON格式，其中包含Header（公有参数）、Body（私有参数）节点：</p>
-<table>
-<thead>
-<tr>
-<th align="left">名称</th>
-<th align="left">描述</th>
-<th align="left">备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">公共参数</td>
-<td align="left">每个接口都包含的通用参数，以JSON格式存放在Header属性</td>
-<td align="left">详见以下公共参数说明</td>
-</tr>
-<tr>
-<td align="left">私有参数</td>
-<td align="left">每个接口特有的参数，以JSON格式存放在Body属性</td>
-<td align="left">详见每个接口定义</td>
-</tr>
-</tbody></table>
-<p><strong>公共参数说明：</strong></p>
-<p>公共参数（Header）是用于标识产品及接口鉴权的参数，每次请求均需要携带这些参数：</p>
-<table>
-<thead>
-<tr>
-<th align="left">参数名称</th>
-<th align="left">类型</th>
-<th align="left">出现要求</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Token</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">用户登录后token，没有登录则为空字符串</td>
-</tr>
-<tr>
-<td align="left">Version</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">接口版本号</td>
-</tr>
-<tr>
-<td align="left">SystemId</td>
-<td align="left">int</td>
-<td align="left">R</td>
-<td align="left">机构号，请求的系统Id</td>
-</tr>
-<tr>
-<td align="left">Timestamp</td>
-<td align="left">long</td>
-<td align="left">R</td>
-<td align="left">当前UNIX时间戳</td>
-</tr>
-</tbody></table>
-<h4 id="1-6-3-校验流程："><a href="#1-6-3-校验流程：" class="headerlink" title="1.6.3 校验流程："></a>1.6.3 校验流程：</h4><p>服务端接收到请求后首先对RequestData进行DES解密出JSON字符串，然后对JSON字符串进行MD5加密，加密后的值与请求中的SignData值进行对比，如对比通过，视为合法请求，否则视为非法请求。</p>
-<p><strong>DES加密/解密函数示例：</strong></p>
-<p>C#版：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// 进行DES加密。</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">/// &lt;param name=&quot;decryptString&quot;&gt;要加密的字符串。&lt;/param&gt;</span><br><span class="line">/// &lt;param name=&quot;secretKey&quot;&gt;密钥，且必须为8位。&lt;/param&gt;</span><br><span class="line">/// &lt;returns&gt;以Base64格式返回的加密字符串。&lt;/returns&gt;</span><br><span class="line">public static string DesEncrypt(string decryptString, string secretKey)</span><br><span class="line">&#123;</span><br><span class="line">    using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())</span><br><span class="line">    &#123;</span><br><span class="line">        byte[] inputByteArray = Encoding.UTF8.GetBytes(decryptString);</span><br><span class="line">        des.Key = Encoding.ASCII.GetBytes(secretKey);</span><br><span class="line">        des.IV = Encoding.ASCII.GetBytes(secretKey);</span><br><span class="line">        MemoryStream ms = new MemoryStream();</span><br><span class="line">        using (CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(), CryptoStreamMode.Write))</span><br><span class="line">        &#123;</span><br><span class="line">            cs.Write(inputByteArray, 0, inputByteArray.Length);</span><br><span class="line">            cs.FlushFinalBlock();</span><br><span class="line">            cs.Close();</span><br><span class="line">        &#125;</span><br><span class="line">        string str = Convert.ToBase64String(ms.ToArray());</span><br><span class="line">        ms.Close();</span><br><span class="line">        return str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// 进行DES解密。</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">/// &lt;param name=&quot;encryptedString&quot;&gt;要解密的以Base64&lt;/param&gt;</span><br><span class="line">/// &lt;param name=&quot;secretKey&quot;&gt;密钥，且必须为8位。&lt;/param&gt;</span><br><span class="line">/// &lt;returns&gt;已解密的字符串。&lt;/returns&gt;</span><br><span class="line">public static string DesDecrypt(string encryptedString, string secretKey)</span><br><span class="line">&#123;</span><br><span class="line">    byte[] inputByteArray = Convert.FromBase64String(encryptedString);</span><br><span class="line">    using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())</span><br><span class="line">    &#123;</span><br><span class="line">        des.Key = Encoding.ASCII.GetBytes(secretKey);</span><br><span class="line">        des.IV = Encoding.ASCII.GetBytes(secretKey);</span><br><span class="line">        MemoryStream ms = new MemoryStream();</span><br><span class="line">        using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write))</span><br><span class="line">        &#123;</span><br><span class="line">            cs.Write(inputByteArray, 0, inputByteArray.Length);</span><br><span class="line">            cs.FlushFinalBlock();</span><br><span class="line">            cs.Close();</span><br><span class="line">        &#125;</span><br><span class="line">        string str = Encoding.UTF8.GetString(ms.ToArray());</span><br><span class="line">        ms.Close();</span><br><span class="line">        return str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>JAVA版：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/* DES解密 */</span><br><span class="line">public static String decrypt(String message, String key) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">    byte[] bytesrc = Base64.decode(message);</span><br><span class="line">    //convertHexString(message);</span><br><span class="line">    Cipher cipher = Cipher.getInstance(&quot;DES/CBC/PKCS5Padding&quot;);</span><br><span class="line">    DESKeySpec desKeySpec = new DESKeySpec(key.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">    SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&quot;DES&quot;);</span><br><span class="line">    SecretKey secretKey = keyFactory.generateSecret(desKeySpec);</span><br><span class="line">    IvParameterSpec iv = new IvParameterSpec(key.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">    cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);</span><br><span class="line">    byte[] retByte = cipher.doFinal(bytesrc);</span><br><span class="line">    return new String(retByte);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/* DES加密 */</span><br><span class="line">public static byte[] encrypt(String message, String key) throws Exception &#123;</span><br><span class="line">    Cipher cipher = Cipher.getInstance(&quot;DES/CBC/PKCS5Padding&quot;);</span><br><span class="line">    DESKeySpec desKeySpec = new DESKeySpec(key.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">    SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&quot;DES&quot;);</span><br><span class="line">    SecretKey secretKey = keyFactory.generateSecret(desKeySpec);</span><br><span class="line">    IvParameterSpec iv = new IvParameterSpec(key.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">    cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv);</span><br><span class="line">    return cipher.doFinal(message.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-6-4-DES密钥"><a href="#1-6-4-DES密钥" class="headerlink" title="1.6.4 DES密钥"></a>1.6.4 DES密钥</h4><p>测试环境：az2ih1uY</p>
-<p>生产环境：另外提供。</p>
-<h4 id="1-6-5-请求报文示例"><a href="#1-6-5-请求报文示例" class="headerlink" title="1.6.5 请求报文示例"></a>1.6.5 请求报文示例</h4><p>请求内容明文：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Header&quot;:&#123;</span><br><span class="line">        &quot;Token&quot;:&quot;2366CF921FAD44CCBB07FF9CD02FC90E&quot;,</span><br><span class="line">        &quot;Version&quot;:&quot;3.2.0&quot;,</span><br><span class="line">        &quot;SystemId&quot;:100,</span><br><span class="line">        &quot;Timestamp&quot;:1502870664</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;Body&quot;:&#123;</span><br><span class="line">        &quot;Mobile&quot;:&quot;18520322032&quot;,</span><br><span class="line">        &quot;Password&quot;:&quot;acb000000&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>请求报文示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url?RequestData=UFAYIRF21XzGoaAaEU54qoDBYaFkT2KbRpWxKZuqqltApdIneF7AjlEArPLsg3%2Fo1Pu7FHFmsKZn%0A9KJb%2BGuwx0P%2F3jzv2TgwUpVtgwEdfd0vIRfqEF4jCouldaxxVBjbHvd%2F08pUoYJDNZJLvNrJ%2BsK4%0A79de92T0Cyu4hKNMUPtVI7Tp0IC%2BBw%3D%3D&amp;SignData=0865c7d625f90d3bb5457f5d9ac3725d</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-7-响应报文结构"><a href="#1-7-响应报文结构" class="headerlink" title="1.7 响应报文结构"></a>1.7 响应报文结构</h3><h4 id="1-7-1-结构说明"><a href="#1-7-1-结构说明" class="headerlink" title="1.7.1 结构说明"></a>1.7.1 结构说明</h4><p>所有接口响应均采用JSON格式，如无特殊说明，每次请求的返回值中，都包含下列字段：</p>
-<table>
-<thead>
-<tr>
-<th align="left">参数名称</th>
-<th align="left">类型</th>
-<th align="left">出现要求</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Code</td>
-<td align="left">int</td>
-<td align="left">R</td>
-<td align="left">响应码，代码定义请见“附录A 响应吗说明”</td>
-</tr>
-<tr>
-<td align="left">Msg</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">响应描述</td>
-</tr>
-<tr>
-<td align="left">Data</td>
-<td align="left">object</td>
-<td align="left">R</td>
-<td align="left">每个接口特有的参数，详见每个接口定义</td>
-</tr>
-</tbody></table>
-<h4 id="1-7-2-响应报文示例"><a href="#1-7-2-响应报文示例" class="headerlink" title="1.7.2 响应报文示例"></a>1.7.2 响应报文示例</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Code&quot;:200,</span><br><span class="line">    &quot;Msg&quot;:&quot;调用成功&quot;,</span><br><span class="line">    &quot;Data&quot;:&#123;</span><br><span class="line">        &quot;Channel&quot;:&quot;A10086&quot;,</span><br><span class="line">        &quot;Type&quot;:7004</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="2-接口定义"><a href="#2-接口定义" class="headerlink" title="2. 接口定义"></a>2. 接口定义</h2><h3 id="2-1-密码登录"><a href="#2-1-密码登录" class="headerlink" title="2.1 密码登录"></a>2.1 密码登录</h3><ul>
-<li><strong>接口说明：</strong> 密码登录</li>
-<li><strong>接口地址：</strong> /account/signin</li>
-</ul>
-<h4 id="2-1-1-请求参数"><a href="#2-1-1-请求参数" class="headerlink" title="2.1.1 请求参数"></a>2.1.1 请求参数</h4><table>
-<thead>
-<tr>
-<th align="left">参数名称</th>
-<th align="left">类型</th>
-<th align="left">出现要求</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Header</td>
-<td align="left">&nbsp;</td>
-<td align="left">R</td>
-<td align="left">请求报文头</td>
-</tr>
-<tr>
-<td align="left">&emsp;Token</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">用户登录后token，没有登录则为空字符串</td>
-</tr>
-<tr>
-<td align="left">&emsp;Version</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">接口版本号</td>
-</tr>
-<tr>
-<td align="left">&emsp;SystemId</td>
-<td align="left">int</td>
-<td align="left">R</td>
-<td align="left">机构号，请求的系统Id</td>
-</tr>
-<tr>
-<td align="left">&emsp;Timestamp</td>
-<td align="left">long</td>
-<td align="left">R</td>
-<td align="left">当前UNIX时间戳</td>
-</tr>
-<tr>
-<td align="left">Body</td>
-<td align="left">&nbsp;</td>
-<td align="left">R</td>
-<td align="left">&nbsp;</td>
-</tr>
-<tr>
-<td align="left">&emsp;Mobile</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">手机号</td>
-</tr>
-<tr>
-<td align="left">&emsp;Password</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">密码</td>
-</tr>
-</tbody></table>
-<p>请求示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Header&quot;:&#123;</span><br><span class="line">        &quot;Token&quot;:&quot;&quot;,</span><br><span class="line">        &quot;Version&quot;:&quot;3.2.0&quot;,</span><br><span class="line">        &quot;SystemId&quot;:100,</span><br><span class="line">        &quot;Timestamp&quot;:1502870664</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;Body&quot;:&#123;</span><br><span class="line">        &quot;Mobile&quot;:&quot;18520322032&quot;,</span><br><span class="line">        &quot;Password&quot;:&quot;acb000000&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<h4 id="2-1-2-返回结果"><a href="#2-1-2-返回结果" class="headerlink" title="2.1.2 返回结果"></a>2.1.2 返回结果</h4><table>
-<thead>
-<tr>
-<th align="left">参数名称</th>
-<th align="left">类型</th>
-<th align="left">出现要求</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Code</td>
-<td align="left">int</td>
-<td align="left">R</td>
-<td align="left">响应码，代码定义请见“附录A 响应吗说明”</td>
-</tr>
-<tr>
-<td align="left">Msg</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">&nbsp;</td>
-</tr>
-<tr>
-<td align="left">Data</td>
-<td align="left">object</td>
-<td align="left">R</td>
-<td align="left">&nbsp;</td>
-</tr>
-<tr>
-<td align="left">&emsp;UserId</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">用户Id</td>
-</tr>
-</tbody></table>
-<p>示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Code&quot;:200,</span><br><span class="line">    &quot;Msg&quot;:&quot;登录成功&quot;,</span><br><span class="line">    &quot;Data&quot;:&#123;</span><br><span class="line">        &quot;UserId&quot;:&quot;7D916C7283434955A235C17DD9B71C64&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-2-获取登录用户信息"><a href="#2-2-获取登录用户信息" class="headerlink" title="2.2 获取登录用户信息"></a>2.2 获取登录用户信息</h3><ul>
-<li><strong>接口说明：</strong> 获取登录用户信息</li>
-<li><strong>接口地址：</strong> /account/profile</li>
-</ul>
-<h4 id="2-2-1-请求参数"><a href="#2-2-1-请求参数" class="headerlink" title="2.2.1 请求参数"></a>2.2.1 请求参数</h4><table>
-<thead>
-<tr>
-<th align="left">参数名称</th>
-<th align="left">类型</th>
-<th align="left">出现要求</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Header</td>
-<td align="left">&nbsp;</td>
-<td align="left">R</td>
-<td align="left">请求报文头</td>
-</tr>
-<tr>
-<td align="left">&emsp;Token</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">用户登录后token，没有登录则为空字符串</td>
-</tr>
-<tr>
-<td align="left">&emsp;Version</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">接口版本号</td>
-</tr>
-<tr>
-<td align="left">&emsp;SystemId</td>
-<td align="left">int</td>
-<td align="left">R</td>
-<td align="left">机构号，请求的系统Id</td>
-</tr>
-<tr>
-<td align="left">&emsp;Timestamp</td>
-<td align="left">long</td>
-<td align="left">R</td>
-<td align="left">当前UNIX时间戳</td>
-</tr>
-<tr>
-<td align="left">Body</td>
-<td align="left">&nbsp;</td>
-<td align="left">R</td>
-<td align="left">&nbsp;</td>
-</tr>
-</tbody></table>
-<p>请求示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;Header&quot;:&#123;</span><br><span class="line">        &quot;Token&quot;:&quot;CA64A439E7C344B0BA7F5C825E17C7AB&quot;,</span><br><span class="line">        &quot;Version&quot;:&quot;3.2.0&quot;,</span><br><span class="line">        &quot;SystemId&quot;:100,</span><br><span class="line">        &quot;Timestamp&quot;:1502870664</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;Body&quot;:null</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<h4 id="2-2-2-返回结果"><a href="#2-2-2-返回结果" class="headerlink" title="2.2.2 返回结果"></a>2.2.2 返回结果</h4><table>
-<thead>
-<tr>
-<th align="left">参数名称</th>
-<th align="left">类型</th>
-<th align="left">出现要求</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Code</td>
-<td align="left">int</td>
-<td align="left">R</td>
-<td align="left">响应码，代码定义请见“附录A 响应吗说明”</td>
-</tr>
-<tr>
-<td align="left">Msg</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">&nbsp;</td>
-</tr>
-<tr>
-<td align="left">Data</td>
-<td align="left">object</td>
-<td align="left">R</td>
-<td align="left">&nbsp;</td>
-</tr>
-<tr>
-<td align="left">&emsp;UserId</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">用户Id</td>
-</tr>
-<tr>
-<td align="left">&emsp;RealName</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">姓名</td>
-</tr>
-<tr>
-<td align="left">&emsp;ImageUrl</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">头像</td>
-</tr>
-<tr>
-<td align="left">&emsp;Score</td>
-<td align="left">int</td>
-<td align="left">R</td>
-<td align="left">积分</td>
-</tr>
-<tr>
-<td align="left">&emsp;Nickname</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">昵称</td>
-</tr>
-<tr>
-<td align="left">&emsp;Sex</td>
-<td align="left">int</td>
-<td align="left">R</td>
-<td align="left">性别：0-未知、1-男、2-女</td>
-</tr>
-<tr>
-<td align="left">&emsp;Title</td>
-<td align="left">string</td>
-<td align="left">R</td>
-<td align="left">头衔</td>
-</tr>
-</tbody></table>
-<p>示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Code&quot;:200,</span><br><span class="line">    &quot;Msg&quot;:&quot;处理成功&quot;,</span><br><span class="line">    &quot;Data&quot;:&#123;</span><br><span class="line">        &quot;UserId&quot;:&quot;7D916C7283434955A235C17DD9B71C64&quot;,</span><br><span class="line">        &quot;RealName&quot;:&quot;张三&quot;,</span><br><span class="line">        &quot;ImageUrl&quot;:&quot;https://img.xx.net/afdicew8751.png&quot;,</span><br><span class="line">        &quot;Score&quot;:4732,</span><br><span class="line">        &quot;Nickname&quot;:&quot;张冠李戴&quot;,</span><br><span class="line">        &quot;Sex&quot;:1,</span><br><span class="line">        &quot;Title&quot;:&quot;侠客Lv4&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="3-附录A-响应码说明"><a href="#3-附录A-响应码说明" class="headerlink" title="3 附录A 响应码说明"></a>3 附录A 响应码说明</h2><table>
-<thead>
-<tr>
-<th align="left">响应码</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">200</td>
-<td align="left">处理成功</td>
-</tr>
-<tr>
-<td align="left">301</td>
-<td align="left">解析报文错误</td>
-</tr>
-<tr>
-<td align="left">302</td>
-<td align="left">无效调用凭证</td>
-</tr>
-<tr>
-<td align="left">303</td>
-<td align="left">参数不正确</td>
-</tr>
-<tr>
-<td align="left">500</td>
-<td align="left">系统内部错误</td>
-</tr>
-<tr>
-<td align="left">999</td>
-<td align="left">处理失败</td>
-</tr>
-</tbody></table>
-<h2 id="4-附录B-币种"><a href="#4-附录B-币种" class="headerlink" title="4 附录B 币种"></a>4 附录B 币种</h2><table>
-<thead>
-<tr>
-<th align="left">币种</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">RMB</td>
-<td align="left">人民币</td>
-</tr>
-<tr>
-<td align="left">HKD</td>
-<td align="left">港币</td>
-</tr>
-<tr>
-<td align="left">JPY</td>
-<td align="left">日元</td>
-</tr>
-<tr>
-<td align="left">TWD</td>
-<td align="left">新台币</td>
-</tr>
-<tr>
-<td align="left">USD</td>
-<td align="left">美元</td>
-</tr>
-<tr>
-<td align="left">VND</td>
-<td align="left">越南盾</td>
-</tr>
-<tr>
-<td align="left">THB</td>
-<td align="left">泰铢</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Markdown</tag>
-        <tag>接口文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>罗马数字（上）——拼写规则</title>
-    <url>/2019/06/26/rules-of-reading-and-writing-roman-numerals/</url>
-    <content><![CDATA[<h3 id="罗马数字符号"><a href="#罗马数字符号" class="headerlink" title="罗马数字符号"></a>罗马数字符号</h3><p>罗马数字是总共由 7 个字母符号表示：<strong>I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和 M（1000）。</strong></p>
-<span id="more"></span>
-
-<p>表一：罗马数字对应的阿拉伯数字</p>
-<table>
-<thead>
-<tr>
-<th align="center">罗马数字</th>
-<th align="center">阿拉伯数字</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">I</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">V</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center">X</td>
-<td align="center">10</td>
-</tr>
-<tr>
-<td align="center">L</td>
-<td align="center">50</td>
-</tr>
-<tr>
-<td align="center">C</td>
-<td align="center">100</td>
-</tr>
-<tr>
-<td align="center">D</td>
-<td align="center">500</td>
-</tr>
-<tr>
-<td align="center">M</td>
-<td align="center">1000</td>
-</tr>
-</tbody></table>
-<p>他们按照以下 4 个规则可以组合成表示任意的正整数。</p>
-<h3 id="规则-1"><a href="#规则-1" class="headerlink" title="规则 1"></a>规则 1</h3><p><strong>一个罗马数字重复多少次，就表示这个数多少倍</strong>，比如罗马数字 I 表示的是数字 1，重复两次，即 II，表示的数字是 2，同理，III 表示数字 3，XX 表示数字 20，CC 表示数字 200 等；</p>
-<p>需要注意的是，<strong>同一个罗马数字最多只能连续重复 3 次</strong>，如数字 400 就不能表示为 CCCC（重复了 4 次），而是要用 CD 来表示，数字40不能表示为 XXXX（同样重复了 4 次），而要表示为 XL 等。</p>
-<p>但有一种特殊情况，因为古罗马人用 IV 作为古罗马神话主神朱庇特（IVPITER，古罗马字母里没有 J 和 U）名字的简写，他们不希望神的名字看上去像个数字，因此<strong>有时用 IIII 代替 IV</strong>。</p>
-<p>另外，<strong>符号 D、L 和 V 不可以连续重复出现</strong>，比如用 DD 表示 1000 的写法是错误的，正确的是要用 M，表示 1500 的罗马数字是 MD，而不是 DDD。</p>
-<h3 id="规则-2"><a href="#规则-2" class="headerlink" title="规则 2"></a>规则 2</h3><p><strong>如果在较大的罗马数字后面（右边）放置较小的罗马数字，表示的数字为这些数字相加得到的数</strong>，如较大的罗马数字 V 后面放置较小的罗马数字 I，即 VI，表示的数字则为 V 与 I 相加得到数 6。</p>
-<p>同理，<br>VII = 7 (5 + 2 = 7)<br>LXXX = 80 (50 + 10 + 10 + 10 = 80)<br>MC = 1100 (1000 + 100 = 1100)</p>
-<h3 id="规则-3"><a href="#规则-3" class="headerlink" title="规则 3"></a>规则 3</h3><p><strong>如果在较大的罗马数字前面（左边）放置在较小的罗马数字，表示的数是用较大的数减去较小的数所得到的值</strong>，如较大的罗马数字 V 前面或左边放置较小的罗马数字 I，即 IV，表示的数字则为 V 减去 I 得到的数 4。</p>
-<p>同理，<br>IX = 9 (10 – 1 = 9)<br>XC = 90 (100 – 10 = 90)</p>
-<p>用这种方式来表示罗马数字时，有以下几点需要注意：</p>
-<p><strong>i) 充当减数的只能是 I，C 或 X</strong>，不能是 L 或 V，即罗马数字对应的数是 10 的 n 次幂才能充当减数。另外，由于 M 在罗马字母中表示的数最大，也不能充当减数（罗马数字没有 0 或负整数）。</p>
-<blockquote>
-<p>被减数 - 减数 = 差，<br>如 32 - 10 = 22，<br>被减数是 32，减数是 10，差是 22。</p>
-</blockquote>
-<p>表二：被减数的只能是 I，C 或 X</p>
-<table>
-<thead>
-<tr>
-<th>罗马数字</th>
-<th>阿拉伯数字</th>
-<th>10 的 n 次幂</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>I</td>
-<td>1</td>
-<td>$10^0 = 1$</td>
-<td>10的0次幂</td>
-</tr>
-<tr>
-<td>X</td>
-<td>10</td>
-<td>$10^1 = 10$</td>
-<td>10的1次幂</td>
-</tr>
-<tr>
-<td>C</td>
-<td>100</td>
-<td>$10^2 = 100$</td>
-<td>10的2次幂</td>
-</tr>
-</tbody></table>
-<p>比如数字 45，<br>不能写成 VL（50 - 5），<br>而是要写成 XLV（XL + V，即 40 + 5）；</p>
-<p><strong>ii) 只能从一个罗马数字中减去另一个罗马数字，而不能减去两个或两个以上的罗马数字</strong>，比如说数字 8，<br>不能写成 IIX（X - I - I，即 10 - 1 - 1 = 8），<br>而是要写成 VIII（V + I + I + I，即 5 + 1 + 1 + 1 = 8）；</p>
-<p><strong>iii) 从一个罗马数字（设为 a）中减去另一个罗马数字（设为 b）所得的差（设为 c），不能超过减数（即 b）的 10 倍以上。</strong><br>例如，<br>你可以从数字 10 中减去 1，<br>因为 10 - 1 = 9，9 比 1 的 10 倍（10）小；<br>但是不能从数字 100 中减去 1，<br>因为 100 - 1 = 99，99 比 1 的 10 倍（10）大。<br>所以，<br>数字 9 可以用 IX 来表示，<br>但数字 100 不能用 IC 来表示，<br>而是要用 XCIX（XC + IX，即 90 + 9 = 99）来表示。</p>
-<p><em><strong>总结第 i) 点和第 iii) 点，可以得到以下规则：</strong></em><br><em><strong>符号 I 只能出现在符号 V 或 X 的前面（左边）；</strong></em><br><em><strong>符号 X 只能出现在符号 L 或 C 的前面（左边）；</strong></em><br><em><strong>符号 C 只能出现在符号 D 或 M 的前面（左边）。</strong></em></p>
-<h3 id="规则-4"><a href="#规则-4" class="headerlink" title="规则 4"></a>规则 4</h3><p><strong>如果在罗马数字上方加一条横线，表示将该数值乘以 1000，即原数的 1000 倍，如果上方有两条横线，表示的数字是原数的 1, 000, 000 倍。</strong></p>
-<p>如：</p>
-<p>$\overline{M}=1, 000, 000$</p>
-<p>$\overline{V}=5, 000$</p>
-<p>$\overline{\overline{X}} = 10, 000, 000 $</p>
-<hr>
-<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>尝试应用上述规则，写出以下阿拉伯数字对应的罗马数字<br>35，<br>65，<br>99</p>
-<p>求解过程如下：<br>35 = 10 + 10 + 10 + 5，即 X + X + X + V（XXXV），所以 35 = XXXV；<br>65 = 50 + 10 + 5，即 L + X + V（LXV），所以 65 = LXV；<br>99 = （100 - 10）+（10 - 1），即 XC + IX（XCIX）所以 99 = XCIX 。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-        <tag>罗马数字</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>罗马数字（中）——起源与用途</title>
-    <url>/2019/07/01/history-of-roman-numerals/</url>
-    <content><![CDATA[<h2 id="一、罗马数字的诞生与进化"><a href="#一、罗马数字的诞生与进化" class="headerlink" title="一、罗马数字的诞生与进化"></a>一、罗马数字的诞生与进化</h2><p>罗马数字起源于古罗马帝国，拥有一个漫长而复杂的历史，始于公元前 8 世纪至 9 世纪，与古罗马帝国在帕兰丁山（Palantine Hill）周围建立的时间大致相同。不过，罗马数字的盛行时间比帝国本身还要长，直到 14 世纪前仍被广泛使用。</p>
-<span id="more"></span>
-
-<p>在设计上，罗马数字存在一些缺陷：</p>
-<ol>
-<li><p>没有表示零（0）的符号；</p>
-</li>
-<li><p>也没有用于计数超过几千数值的实际方法，只有通过在数字符号上方添加横线来表示它们的值的倍数来修正。</p>
-</li>
-</ol>
-<p>复杂的社会、经济管理，建造像斗兽场和君士坦丁大拱门这样的大型纪念碑，都离不开大量的数学技能。而罗马数字的这些缺陷并没有阻止古罗马的学者和建筑师们建立一个伟大的帝国。</p>
-<p>在公元 11 世纪时，阿拉伯数字传入欧洲。阿拉伯数字始创于印度，采用 0、1、2、3、4、5、6、7、8、9 共 10 个计数符号。采取位值法，高位在左，低位在右，从左往右书写。借助一些简单的数学符号（小数点、负号等），阿拉伯数字可以明确的表示所有的有理数。这是对罗马数字的一个很大的改进。</p>
-<p>于是，人们开始逐渐使用阿拉伯数字作为日常生活中的记数系统，而罗马数字的使用更是随着创造它的帝国的崩溃而减少。到公元 14 世纪时，罗马数字已被阿拉伯数字所取代，成为在欧洲被广泛使用的记数系统。现在阿拉伯数字已成为目前使用最广泛的记数系统，通行于全世界。</p>
-<h2 id="二、罗马数字的现代用途"><a href="#二、罗马数字的现代用途" class="headerlink" title="二、罗马数字的现代用途"></a>二、罗马数字的现代用途</h2><p>从某种角度上，可以说罗马数字经受住了时间的考验，并没有随着罗马帝国的消亡而结束。它的优雅感和复古风格确保了它不会在未来某个时候消失。今天，我们仍然使用罗马数字来表达某些东西，如：</p>
-<p>在天文学领域中，用于为卫星编号，如木卫一，木卫二，木卫三。<br>在化学领域中，用于表示元素周期表中的元素组：IA族，IIA族，IIIA族，IVA族，VA族，VIA族，VIIA族，IB族，IIB族，IIIB族，IVB族，VB族，VIB族，VIIB族，VIII族。<br>钟表表盘符号：Ⅰ、Ⅱ、Ⅲ、Ⅳ（IIII）、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ、Ⅹ、Ⅺ、Ⅻ。<br>有序列表（ordered list）的编号（多用小写字母），例如：<br>i) 第一项<br>ii) 第二项<br>iii) 第三项<br>书籍和章节标题<br>君王的名字，如 Louis XIV（路易十四）、Charles II（查理二世）。<br>教皇的名字，如 Alexander VIII（亚历山大八世）、John Paul II（约翰·保罗二世）。<br>其他命名，如 iPhone X，氨酚伪麻美芬片（Ⅱ）。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-        <tag>罗马数字</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通过yum方式在CentOS7系统安装MySQL8</title>
-    <url>/2019/12/28/how-to-install-mysql8-on-centos7/</url>
-    <content><![CDATA[<h2 id="一、添加-MySQL-YUM-源"><a href="#一、添加-MySQL-YUM-源" class="headerlink" title="一、添加 MySQL YUM 源"></a>一、添加 MySQL YUM 源</h2><p>根据自己的操作系统版本选择合适的安装源（<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a>），这里选择的是 CentOS 7，MySQL 8。点击 Download 按钮，进入下载页。可以直接下载 rpm 文件，再上传到 CentOS 7 系统，也可以通过复制链接地址（地址为：<a href="https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm%EF%BC%89%EF%BC%8C%E8%BF%9B%E5%85%A5">https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm），进入</a> CentOS 7 系统，通过 <code>wget</code> 命令下载。</p>
-<span id="more"></span>
-
-<p><img src="/image/20191228194455039.png" alt="CentOS 7 &amp; MySQL "></p>
-<p>这里以进入 CentOS 7 系统，通过 <code>wget</code> 命令下载为例，展示如何添加 MySQL yum 源，相关命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入存放 rpm 文件的目录</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /homw/software</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载 rpm 文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过 rpm -Uvh 安装</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm</span> </span><br></pre></td></tr></table></figure>
-
-<h2 id="二、安装MySQL"><a href="#二、安装MySQL" class="headerlink" title="二、安装MySQL"></a>二、安装MySQL</h2><p>安装好 yum 源后，直接通过以下命令即可安装 MySQL，非常简单，安装过程中会有两次让你确认下载或安装，直接输入 y 即可。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装 MySQL</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install mysql-community-server</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="三、启动MySQL"><a href="#三、启动MySQL" class="headerlink" title="三、启动MySQL"></a>三、启动MySQL</h2><p>启动 MySQL 命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl start mysqld</span></span><br></pre></td></tr></table></figure>
-
-<p>可通过如下命令查看 MySQL 运行状态：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl status mysqld</span></span><br></pre></td></tr></table></figure>
-
-<p>若输出以下的信息，则说明 MySQL 已经在运行中了。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo systemctl status mysqld</span><br><span class="line">● mysqld.service - MySQL Server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Fri 2019-12-27 15:48:33 CST; 11s ago</span><br><span class="line">     Docs: man:mysqld(8)</span><br><span class="line">           http://dev.mysql.com/doc/refman/en/using-systemd.html</span><br><span class="line">  Process: 22383 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 22459 (mysqld)</span><br><span class="line">   Status: &quot;Server is operational&quot;</span><br><span class="line">   CGroup: /system.slice/mysqld.service</span><br><span class="line">           └─22459 /usr/sbin/mysqld</span><br><span class="line"></span><br><span class="line">Dec 27 15:48:25 202 systemd[1]: Starting MySQL Server...</span><br><span class="line">Dec 27 15:48:33 202 systemd[1]: Started MySQL Server.</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、MySQL-8-root-用户默认登录密码问题"><a href="#四、MySQL-8-root-用户默认登录密码问题" class="headerlink" title="四、MySQL 8 root 用户默认登录密码问题"></a>四、MySQL 8 root 用户默认登录密码问题</h2><p>在 CentOS 7 系统中，通过 yum 方式安装 MySQL 8，需要使用以下命令查看 root 用户的默认密码：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo grep <span class="string">&quot;temporary password&quot;</span> /var/<span class="built_in">log</span>/mysqld.log</span></span><br></pre></td></tr></table></figure>
-
-<p>返回结果最后冒号后面的字符串就是root的默认密码。</p>
-<blockquote>
-<p>如果提示不存在 /var/log/mysqld.log 文件，请确保您已经通过步骤三，启动过一次 MySQL 服务。这里再提下 MySQL服务的启动命令是：<em><strong>systemctl start mysqld.service</strong></em></p>
-</blockquote>
-<p>如以下的输出，root 用户的登录密码为 <strong>Eea*eoqoI9:I</strong>。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo grep &quot;temporary password&quot; /var/log/mysqld.log</span><br><span class="line">[sudo] password for mysqlu: </span><br><span class="line">2019-12-27T07:48:29.009116Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: Eea*eoqoI9:I</span><br></pre></td></tr></table></figure>
-
-<h2 id="五、登录MySQL，并修改默认密码"><a href="#五、登录MySQL，并修改默认密码" class="headerlink" title="五、登录MySQL，并修改默认密码"></a>五、登录MySQL，并修改默认密码</h2><p>知道 MySQL 的 root 用户密码后，即可登录 MySQL 了：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mysql -uroot -p</span> </span><br><span class="line">Enter password: # 这里输入密码</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 17</span><br><span class="line">Server version: 8.0.18</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
-
-<p>进入 MySQL 后，还不能做其他操作，会一直提示你修改默认密码，比如切换到 <code>mysql</code> 数据库：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash">  use mysql;</span></span><br><span class="line">ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</span><br></pre></td></tr></table></figure>
-
-<p>修改默认密码的命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ALTER user &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;新密码&#x27;;</span><br></pre></td></tr></table></figure>
-
-<p>其中 <strong>MySQL 8 以上的密码策略限制必须要包含大小写字母、数字和特殊符号。</strong>如：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> ALTER user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;2020Super_Star&#x27;</span>;</span></span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>至此，你再执行其他命令，而不会提示你需要修改密码了。</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>小记：2021年8月</title>
     <url>/2021/08/05/note-202108/</url>
     <content><![CDATA[<h2 id="2021年8月2日"><a href="#2021年8月2日" class="headerlink" title="2021年8月2日"></a>2021年8月2日</h2><p><strong>1 梦</strong></p>
-<p>昨晚梦到皮蛋，把我气醒了。梦到内容大概如下：</p>
+<p>昨晚梦到皮蛋，可把我气醒了。梦里大概是这样子：</p>
 <p>皮蛋生了七只小猫咪，有黑色的，有白色的，有橘黄色的还有混色的。但我发现的时候，其中的三只被他吃了，另外四只被绳子绑在一起，浸泡在洗脸盆上，盆上还有水。皮蛋打算溺死他自己的猫咪仔。把我气死了，拿起棍子准备教训皮蛋。结果，他一下子就跑去躲了，打不到他，我像个泼妇骂街一样，边骂边教育他，告诉他这些是你的仔，怎么可以这么残忍对待它们。。</p>
 <p>骂着骂着，突然想到小猫咪还在水盆里泡着呢，就马上冲回去，把小猫咪捞出来，解了绳子，感觉这些小猫咪像是要快饿死了。皮蛋又抓不到，不然还可以让皮蛋给小猫咪喂奶。</p>
 <p>没办法，想到小猫咪可以喝牛奶，又去冰箱找。边翻边想，刚出生的小猫咪可以喝冰的牛奶吗？哎呀，不管那么多了，拉肚子总比被饿死好吧？于是继续翻啊、找啊，但就是没有找到牛奶，急死了。后面冷静点，才想起我已经不喝牛奶很久了，冰箱怎么可能会有牛奶？这一瞬间，我彻底崩溃了，一直在责怪和质问自己。为什么我现在不喝牛奶了？！以前不是每晚睡之前都要喝一瓶的吗？！怎么不能过几天再不想喝牛奶？！就算不喝牛奶，冰箱也要备着啊？！为什么？！</p>
@@ -4489,6 +4489,27 @@
 <p><strong>妈妈，稻子熟了，我想您了！</strong></p>
 <blockquote>
 <p>剪报来源<br>公众号：中央政法委长安剑<br>链　接：<a href="https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A">https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A</a><br>日　期：2021-05-23</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>剪报</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>马龙：只要心怀热爱，永远都是当打之年！</title>
+    <url>/2021/08/09/ml-1/</url>
+    <content><![CDATA[<p>　　我的东京奥运会之旅圆满结束，无论单打冠军，还是团体金牌，都是我和我的队友、教练员，以及背后默默付出的陪练、队医、保障团队，团结一心共同奋斗出来的荣耀勋章。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/webp/22047870/1628479869744-8167087d-339d-47b1-9b11-02a218a4898e.webp#align=left&display=inline&height=960&margin=%5Bobject%20Object%5D&originHeight=1920&originWidth=1080&size=0&status=done&style=none&width=540"></p>
+<p>　　当国歌响起，五星红旗缓缓升起，那一刻，我感慨万千。过去5年的甘苦画面历历在目。</p>
+<p>　　<strong>2018年下半年至2019年初，我因伤远离国际赛场8个月，其间有3个月没有碰球，那是我职业生涯最艰难的一段时期，但我从没有想过放弃，因为乒乓球已经成为我生命中无法替代的一部分。</strong>我告诉自己，只要还有机会，我就一定要坚持训练，重新回到赛场。</p>
+<p>　　终于，我来到了东京——第三次踏上了奥运会的赛场。强大的对手、紧张的气氛，让我感到熟悉又兴奋。最让我难忘的，还是与队友们并肩作战的经历。团体赛半决赛和决赛的两场双打，我和搭档许昕把赛前准备的战术打出来了，我真切地感受到了奥运会乒乓球比赛带给我的享受。</p>
+<p>　　连续两届奥运会获得单打和团体两项金牌，许多人认为这是个了不起的成就。对此，我心怀感激，乒乓球带给了我一段精彩的人生。<strong>同时我也要感谢祖国和广大人民的支持和信任，这正是中国乒乓球事业不断向前的力量源泉。</strong></p>
+<p>　　我已经32岁了，我觉得自己的身体状况还不错。<strong>事实上，不少比我年长的选手依然在赛场充满斗志，这对我也是一种激励。只要心怀热爱，永远都是当打之年！</strong></p>
+<hr>
+<p>来源：人民日报（2021年8月8日 第07版），原标题《心怀热爱，人生就会精彩（奥林匹克与我）》，作者：马龙，记者范佳元、孙龙飞采访整理</p>
+<p>本期编辑：胡程远、石磊</p>
+<blockquote>
+<p>剪报来源<br>公众号：人民日报<br>链　接：<a href="https://mp.weixin.qq.com/s/kgjVfCvWg1mein0v6w0u7Q">https://mp.weixin.qq.com/s/kgjVfCvWg1mein0v6w0u7Q</a><br>日　期：2021-08-08</p>
 </blockquote>
 ]]></content>
       <categories>
