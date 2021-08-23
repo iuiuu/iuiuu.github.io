@@ -282,30 +282,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【Git常用命令】查看/修改远程仓库地址</title>
-    <url>/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</url>
-    <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
-
-<p>e.g.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Git修改远程仓库地址"><a href="#Git修改远程仓库地址" class="headerlink" title="Git修改远程仓库地址"></a>Git修改远程仓库地址</h2><p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote set-url origin new.git.url/here</span><br></pre></td></tr></table></figure>
-
-<p>e.g.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将远程仓库地址改为 HTTPS 协议</span></span><br><span class="line">git remote set-url origin https://gogs.linjiangxiong.com/ljx/devops-doc.git</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看修改后的地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring Boot 2.x 集成Redis示例</title>
     <url>/2019/12/19/spring-boot-2_x-redis/</url>
     <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
@@ -366,6 +342,30 @@
       <tags>
         <tag>CentOS7</tag>
         <tag>ZooKeeper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Git常用命令】查看/修改远程仓库地址</title>
+    <url>/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</url>
+    <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Git修改远程仓库地址"><a href="#Git修改远程仓库地址" class="headerlink" title="Git修改远程仓库地址"></a>Git修改远程仓库地址</h2><p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote set-url origin new.git.url/here</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将远程仓库地址改为 HTTPS 协议</span></span><br><span class="line">git remote set-url origin https://gogs.linjiangxiong.com/ljx/devops-doc.git</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看修改后的地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -827,89 +827,6 @@
       </tags>
   </entry>
   <entry>
-    <title>罗马数字（中）——起源与用途</title>
-    <url>/2019/07/01/history-of-roman-numerals/</url>
-    <content><![CDATA[<h2 id="一、罗马数字的诞生与进化"><a href="#一、罗马数字的诞生与进化" class="headerlink" title="一、罗马数字的诞生与进化"></a>一、罗马数字的诞生与进化</h2><p>罗马数字起源于古罗马帝国，拥有一个漫长而复杂的历史，始于公元前 8 世纪至 9 世纪，与古罗马帝国在帕兰丁山（Palantine Hill）周围建立的时间大致相同。不过，罗马数字的盛行时间比帝国本身还要长，直到 14 世纪前仍被广泛使用。</p>
-<span id="more"></span>
-
-<p>在设计上，罗马数字存在一些缺陷：</p>
-<ol>
-<li><p>没有表示零（0）的符号；</p>
-</li>
-<li><p>也没有用于计数超过几千数值的实际方法，只有通过在数字符号上方添加横线来表示它们的值的倍数来修正。</p>
-</li>
-</ol>
-<p>复杂的社会、经济管理，建造像斗兽场和君士坦丁大拱门这样的大型纪念碑，都离不开大量的数学技能。而罗马数字的这些缺陷并没有阻止古罗马的学者和建筑师们建立一个伟大的帝国。</p>
-<p>在公元 11 世纪时，阿拉伯数字传入欧洲。阿拉伯数字始创于印度，采用 0、1、2、3、4、5、6、7、8、9 共 10 个计数符号。采取位值法，高位在左，低位在右，从左往右书写。借助一些简单的数学符号（小数点、负号等），阿拉伯数字可以明确的表示所有的有理数。这是对罗马数字的一个很大的改进。</p>
-<p>于是，人们开始逐渐使用阿拉伯数字作为日常生活中的记数系统，而罗马数字的使用更是随着创造它的帝国的崩溃而减少。到公元 14 世纪时，罗马数字已被阿拉伯数字所取代，成为在欧洲被广泛使用的记数系统。现在阿拉伯数字已成为目前使用最广泛的记数系统，通行于全世界。</p>
-<h2 id="二、罗马数字的现代用途"><a href="#二、罗马数字的现代用途" class="headerlink" title="二、罗马数字的现代用途"></a>二、罗马数字的现代用途</h2><p>从某种角度上，可以说罗马数字经受住了时间的考验，并没有随着罗马帝国的消亡而结束。它的优雅感和复古风格确保了它不会在未来某个时候消失。今天，我们仍然使用罗马数字来表达某些东西，如：</p>
-<p>在天文学领域中，用于为卫星编号，如木卫一，木卫二，木卫三。<br>在化学领域中，用于表示元素周期表中的元素组：IA族，IIA族，IIIA族，IVA族，VA族，VIA族，VIIA族，IB族，IIB族，IIIB族，IVB族，VB族，VIB族，VIIB族，VIII族。<br>钟表表盘符号：Ⅰ、Ⅱ、Ⅲ、Ⅳ（IIII）、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ、Ⅹ、Ⅺ、Ⅻ。<br>有序列表（ordered list）的编号（多用小写字母），例如：<br>i) 第一项<br>ii) 第二项<br>iii) 第三项<br>书籍和章节标题<br>君王的名字，如 Louis XIV（路易十四）、Charles II（查理二世）。<br>教皇的名字，如 Alexander VIII（亚历山大八世）、John Paul II（约翰·保罗二世）。<br>其他命名，如 iPhone X，氨酚伪麻美芬片（Ⅱ）。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-        <tag>罗马数字</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通过yum方式在CentOS7系统安装MySQL8</title>
-    <url>/2019/12/28/how-to-install-mysql8-on-centos7/</url>
-    <content><![CDATA[<h2 id="一、添加-MySQL-YUM-源"><a href="#一、添加-MySQL-YUM-源" class="headerlink" title="一、添加 MySQL YUM 源"></a>一、添加 MySQL YUM 源</h2><p>根据自己的操作系统版本选择合适的安装源（<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a>），这里选择的是 CentOS 7，MySQL 8。点击 Download 按钮，进入下载页。可以直接下载 rpm 文件，再上传到 CentOS 7 系统，也可以通过复制链接地址（地址为：<a href="https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm%EF%BC%89%EF%BC%8C%E8%BF%9B%E5%85%A5">https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm），进入</a> CentOS 7 系统，通过 <code>wget</code> 命令下载。</p>
-<span id="more"></span>
-
-<p><img src="/image/20191228194455039.png" alt="CentOS 7 &amp; MySQL "></p>
-<p>这里以进入 CentOS 7 系统，通过 <code>wget</code> 命令下载为例，展示如何添加 MySQL yum 源，相关命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入存放 rpm 文件的目录</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /homw/software</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载 rpm 文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过 rpm -Uvh 安装</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm</span> </span><br></pre></td></tr></table></figure>
-
-<h2 id="二、安装MySQL"><a href="#二、安装MySQL" class="headerlink" title="二、安装MySQL"></a>二、安装MySQL</h2><p>安装好 yum 源后，直接通过以下命令即可安装 MySQL，非常简单，安装过程中会有两次让你确认下载或安装，直接输入 y 即可。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装 MySQL</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install mysql-community-server</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="三、启动MySQL"><a href="#三、启动MySQL" class="headerlink" title="三、启动MySQL"></a>三、启动MySQL</h2><p>启动 MySQL 命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl start mysqld</span></span><br></pre></td></tr></table></figure>
-
-<p>可通过如下命令查看 MySQL 运行状态：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl status mysqld</span></span><br></pre></td></tr></table></figure>
-
-<p>若输出以下的信息，则说明 MySQL 已经在运行中了。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo systemctl status mysqld</span><br><span class="line">● mysqld.service - MySQL Server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Fri 2019-12-27 15:48:33 CST; 11s ago</span><br><span class="line">     Docs: man:mysqld(8)</span><br><span class="line">           http://dev.mysql.com/doc/refman/en/using-systemd.html</span><br><span class="line">  Process: 22383 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 22459 (mysqld)</span><br><span class="line">   Status: &quot;Server is operational&quot;</span><br><span class="line">   CGroup: /system.slice/mysqld.service</span><br><span class="line">           └─22459 /usr/sbin/mysqld</span><br><span class="line"></span><br><span class="line">Dec 27 15:48:25 202 systemd[1]: Starting MySQL Server...</span><br><span class="line">Dec 27 15:48:33 202 systemd[1]: Started MySQL Server.</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、MySQL-8-root-用户默认登录密码问题"><a href="#四、MySQL-8-root-用户默认登录密码问题" class="headerlink" title="四、MySQL 8 root 用户默认登录密码问题"></a>四、MySQL 8 root 用户默认登录密码问题</h2><p>在 CentOS 7 系统中，通过 yum 方式安装 MySQL 8，需要使用以下命令查看 root 用户的默认密码：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo grep <span class="string">&quot;temporary password&quot;</span> /var/<span class="built_in">log</span>/mysqld.log</span></span><br></pre></td></tr></table></figure>
-
-<p>返回结果最后冒号后面的字符串就是root的默认密码。</p>
-<blockquote>
-<p>如果提示不存在 /var/log/mysqld.log 文件，请确保您已经通过步骤三，启动过一次 MySQL 服务。这里再提下 MySQL服务的启动命令是：<em><strong>systemctl start mysqld.service</strong></em></p>
-</blockquote>
-<p>如以下的输出，root 用户的登录密码为 <strong>Eea*eoqoI9:I</strong>。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo grep &quot;temporary password&quot; /var/log/mysqld.log</span><br><span class="line">[sudo] password for mysqlu: </span><br><span class="line">2019-12-27T07:48:29.009116Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: Eea*eoqoI9:I</span><br></pre></td></tr></table></figure>
-
-<h2 id="五、登录MySQL，并修改默认密码"><a href="#五、登录MySQL，并修改默认密码" class="headerlink" title="五、登录MySQL，并修改默认密码"></a>五、登录MySQL，并修改默认密码</h2><p>知道 MySQL 的 root 用户密码后，即可登录 MySQL 了：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mysql -uroot -p</span> </span><br><span class="line">Enter password: # 这里输入密码</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 17</span><br><span class="line">Server version: 8.0.18</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
-
-<p>进入 MySQL 后，还不能做其他操作，会一直提示你修改默认密码，比如切换到 <code>mysql</code> 数据库：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash">  use mysql;</span></span><br><span class="line">ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</span><br></pre></td></tr></table></figure>
-
-<p>修改默认密码的命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ALTER user &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;新密码&#x27;;</span><br></pre></td></tr></table></figure>
-
-<p>其中 <strong>MySQL 8 以上的密码策略限制必须要包含大小写字母、数字和特殊符号。</strong>如：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> ALTER user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;2020Super_Star&#x27;</span>;</span></span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>至此，你再执行其他命令，而不会提示你需要修改密码了。</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>罗马数字（上）——拼写规则</title>
     <url>/2019/06/26/rules-of-reading-and-writing-roman-numerals/</url>
     <content><![CDATA[<h3 id="罗马数字符号"><a href="#罗马数字符号" class="headerlink" title="罗马数字符号"></a>罗马数字符号</h3><p>罗马数字是总共由 7 个字母符号表示：<strong>I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和 M（1000）。</strong></p>
@@ -1015,6 +932,89 @@
       <tags>
         <tag>数学</tag>
         <tag>罗马数字</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗马数字（中）——起源与用途</title>
+    <url>/2019/07/01/history-of-roman-numerals/</url>
+    <content><![CDATA[<h2 id="一、罗马数字的诞生与进化"><a href="#一、罗马数字的诞生与进化" class="headerlink" title="一、罗马数字的诞生与进化"></a>一、罗马数字的诞生与进化</h2><p>罗马数字起源于古罗马帝国，拥有一个漫长而复杂的历史，始于公元前 8 世纪至 9 世纪，与古罗马帝国在帕兰丁山（Palantine Hill）周围建立的时间大致相同。不过，罗马数字的盛行时间比帝国本身还要长，直到 14 世纪前仍被广泛使用。</p>
+<span id="more"></span>
+
+<p>在设计上，罗马数字存在一些缺陷：</p>
+<ol>
+<li><p>没有表示零（0）的符号；</p>
+</li>
+<li><p>也没有用于计数超过几千数值的实际方法，只有通过在数字符号上方添加横线来表示它们的值的倍数来修正。</p>
+</li>
+</ol>
+<p>复杂的社会、经济管理，建造像斗兽场和君士坦丁大拱门这样的大型纪念碑，都离不开大量的数学技能。而罗马数字的这些缺陷并没有阻止古罗马的学者和建筑师们建立一个伟大的帝国。</p>
+<p>在公元 11 世纪时，阿拉伯数字传入欧洲。阿拉伯数字始创于印度，采用 0、1、2、3、4、5、6、7、8、9 共 10 个计数符号。采取位值法，高位在左，低位在右，从左往右书写。借助一些简单的数学符号（小数点、负号等），阿拉伯数字可以明确的表示所有的有理数。这是对罗马数字的一个很大的改进。</p>
+<p>于是，人们开始逐渐使用阿拉伯数字作为日常生活中的记数系统，而罗马数字的使用更是随着创造它的帝国的崩溃而减少。到公元 14 世纪时，罗马数字已被阿拉伯数字所取代，成为在欧洲被广泛使用的记数系统。现在阿拉伯数字已成为目前使用最广泛的记数系统，通行于全世界。</p>
+<h2 id="二、罗马数字的现代用途"><a href="#二、罗马数字的现代用途" class="headerlink" title="二、罗马数字的现代用途"></a>二、罗马数字的现代用途</h2><p>从某种角度上，可以说罗马数字经受住了时间的考验，并没有随着罗马帝国的消亡而结束。它的优雅感和复古风格确保了它不会在未来某个时候消失。今天，我们仍然使用罗马数字来表达某些东西，如：</p>
+<p>在天文学领域中，用于为卫星编号，如木卫一，木卫二，木卫三。<br>在化学领域中，用于表示元素周期表中的元素组：IA族，IIA族，IIIA族，IVA族，VA族，VIA族，VIIA族，IB族，IIB族，IIIB族，IVB族，VB族，VIB族，VIIB族，VIII族。<br>钟表表盘符号：Ⅰ、Ⅱ、Ⅲ、Ⅳ（IIII）、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ、Ⅹ、Ⅺ、Ⅻ。<br>有序列表（ordered list）的编号（多用小写字母），例如：<br>i) 第一项<br>ii) 第二项<br>iii) 第三项<br>书籍和章节标题<br>君王的名字，如 Louis XIV（路易十四）、Charles II（查理二世）。<br>教皇的名字，如 Alexander VIII（亚历山大八世）、John Paul II（约翰·保罗二世）。<br>其他命名，如 iPhone X，氨酚伪麻美芬片（Ⅱ）。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>罗马数字</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通过yum方式在CentOS7系统安装MySQL8</title>
+    <url>/2019/12/28/how-to-install-mysql8-on-centos7/</url>
+    <content><![CDATA[<h2 id="一、添加-MySQL-YUM-源"><a href="#一、添加-MySQL-YUM-源" class="headerlink" title="一、添加 MySQL YUM 源"></a>一、添加 MySQL YUM 源</h2><p>根据自己的操作系统版本选择合适的安装源（<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a>），这里选择的是 CentOS 7，MySQL 8。点击 Download 按钮，进入下载页。可以直接下载 rpm 文件，再上传到 CentOS 7 系统，也可以通过复制链接地址（地址为：<a href="https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm%EF%BC%89%EF%BC%8C%E8%BF%9B%E5%85%A5">https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm），进入</a> CentOS 7 系统，通过 <code>wget</code> 命令下载。</p>
+<span id="more"></span>
+
+<p><img src="/image/20191228194455039.png" alt="CentOS 7 &amp; MySQL "></p>
+<p>这里以进入 CentOS 7 系统，通过 <code>wget</code> 命令下载为例，展示如何添加 MySQL yum 源，相关命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入存放 rpm 文件的目录</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /homw/software</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载 rpm 文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过 rpm -Uvh 安装</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm</span> </span><br></pre></td></tr></table></figure>
+
+<h2 id="二、安装MySQL"><a href="#二、安装MySQL" class="headerlink" title="二、安装MySQL"></a>二、安装MySQL</h2><p>安装好 yum 源后，直接通过以下命令即可安装 MySQL，非常简单，安装过程中会有两次让你确认下载或安装，直接输入 y 即可。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装 MySQL</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install mysql-community-server</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、启动MySQL"><a href="#三、启动MySQL" class="headerlink" title="三、启动MySQL"></a>三、启动MySQL</h2><p>启动 MySQL 命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl start mysqld</span></span><br></pre></td></tr></table></figure>
+
+<p>可通过如下命令查看 MySQL 运行状态：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl status mysqld</span></span><br></pre></td></tr></table></figure>
+
+<p>若输出以下的信息，则说明 MySQL 已经在运行中了。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo systemctl status mysqld</span><br><span class="line">● mysqld.service - MySQL Server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Fri 2019-12-27 15:48:33 CST; 11s ago</span><br><span class="line">     Docs: man:mysqld(8)</span><br><span class="line">           http://dev.mysql.com/doc/refman/en/using-systemd.html</span><br><span class="line">  Process: 22383 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 22459 (mysqld)</span><br><span class="line">   Status: &quot;Server is operational&quot;</span><br><span class="line">   CGroup: /system.slice/mysqld.service</span><br><span class="line">           └─22459 /usr/sbin/mysqld</span><br><span class="line"></span><br><span class="line">Dec 27 15:48:25 202 systemd[1]: Starting MySQL Server...</span><br><span class="line">Dec 27 15:48:33 202 systemd[1]: Started MySQL Server.</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、MySQL-8-root-用户默认登录密码问题"><a href="#四、MySQL-8-root-用户默认登录密码问题" class="headerlink" title="四、MySQL 8 root 用户默认登录密码问题"></a>四、MySQL 8 root 用户默认登录密码问题</h2><p>在 CentOS 7 系统中，通过 yum 方式安装 MySQL 8，需要使用以下命令查看 root 用户的默认密码：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo grep <span class="string">&quot;temporary password&quot;</span> /var/<span class="built_in">log</span>/mysqld.log</span></span><br></pre></td></tr></table></figure>
+
+<p>返回结果最后冒号后面的字符串就是root的默认密码。</p>
+<blockquote>
+<p>如果提示不存在 /var/log/mysqld.log 文件，请确保您已经通过步骤三，启动过一次 MySQL 服务。这里再提下 MySQL服务的启动命令是：<em><strong>systemctl start mysqld.service</strong></em></p>
+</blockquote>
+<p>如以下的输出，root 用户的登录密码为 <strong>Eea*eoqoI9:I</strong>。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo grep &quot;temporary password&quot; /var/log/mysqld.log</span><br><span class="line">[sudo] password for mysqlu: </span><br><span class="line">2019-12-27T07:48:29.009116Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: Eea*eoqoI9:I</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、登录MySQL，并修改默认密码"><a href="#五、登录MySQL，并修改默认密码" class="headerlink" title="五、登录MySQL，并修改默认密码"></a>五、登录MySQL，并修改默认密码</h2><p>知道 MySQL 的 root 用户密码后，即可登录 MySQL 了：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mysql -uroot -p</span> </span><br><span class="line">Enter password: # 这里输入密码</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 17</span><br><span class="line">Server version: 8.0.18</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
+
+<p>进入 MySQL 后，还不能做其他操作，会一直提示你修改默认密码，比如切换到 <code>mysql</code> 数据库：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash">  use mysql;</span></span><br><span class="line">ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</span><br></pre></td></tr></table></figure>
+
+<p>修改默认密码的命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ALTER user &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;新密码&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>其中 <strong>MySQL 8 以上的密码策略限制必须要包含大小写字母、数字和特殊符号。</strong>如：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> ALTER user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;2020Super_Star&#x27;</span>;</span></span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>至此，你再执行其他命令，而不会提示你需要修改密码了。</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -2444,716 +2444,6 @@
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：2031-2035年定投执行计划</title>
-    <url>/2021/07/10/investment-plan-2031-2035/</url>
-    <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第三个五年行动计划——2031-2035年定投计划。</p>
-<p>本计划目标：净投入达 120,000 元。</p>
-<p>计划具体内容为 2031 - 2035 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
-<p>（未制定）</p>
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-        <tag>退休金计划</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>退休金计划：三十年一千万参考</title>
-    <url>/2021/07/18/investment-plan-reference/</url>
-    <content><![CDATA[<p>本参考计划根据 <a href="https://www.calculator.net/investment-calculator.html?ctype=returnrate&ctargetamountv=10000000&cstartingprinciplev=0&cyearsv=30&cinterestratev=23&ccompound=annually&ccontributeamountv=2000&cadditionat1=end&ciadditionat1=monthly&printit=0">投资计算器</a> 生成，这里假设你的：</p>
-<p>目标金额：10,000,000元</p>
-<p>起始金额：0元</p>
-<p>每月月末定投：2000元</p>
-<p>投资年限：30年</p>
-<p>则需要 14.469% 的年回报率才能达到 ￥10,000,000.00 的目标。</p>
-<p>期末账户明细：</p>
-<table>
-<thead>
-<tr>
-<th><strong>期末账户余额</strong></th>
-<th><strong>¥10,000,000.00</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>起始金额</td>
-<td>¥0.00</td>
-</tr>
-<tr>
-<td>净投入</td>
-<td>¥720,000.00</td>
-</tr>
-<tr>
-<td>累计收益</td>
-<td>¥9,280,000.00</td>
-</tr>
-</tbody></table>
-<p>年度计划：</p>
-<table>
-<thead>
-<tr>
-<th>年度</th>
-<th>起始本金</th>
-<th>起始金额</th>
-<th>收益</th>
-<th>期末资产</th>
-<th>期末本金</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>￥0.00</td>
-<td>￥0.00</td>
-<td>￥1,552.73</td>
-<td>￥25,552.73</td>
-<td>￥24,000.00</td>
-</tr>
-<tr>
-<td>2</td>
-<td>￥24,000.00</td>
-<td>￥25,552.73</td>
-<td>￥5,249.85</td>
-<td>￥54,802.58</td>
-<td>￥48,000.00</td>
-</tr>
-<tr>
-<td>3</td>
-<td>￥48,000.00</td>
-<td>￥54,802.58</td>
-<td>￥9,481.90</td>
-<td>￥88,284.48</td>
-<td>￥72,000.00</td>
-</tr>
-<tr>
-<td>4</td>
-<td>￥72,000.00</td>
-<td>￥88,284.48</td>
-<td>￥14,326.27</td>
-<td>￥126,610.75</td>
-<td>￥96,000.00</td>
-</tr>
-<tr>
-<td>5</td>
-<td>￥96,000.00</td>
-<td>￥126,610.75</td>
-<td>￥19,871.55</td>
-<td>￥170,482.30</td>
-<td>￥120,000.00</td>
-</tr>
-<tr>
-<td>6</td>
-<td>￥120,000.00</td>
-<td>￥170,482.30</td>
-<td>￥26,219.15</td>
-<td>￥220,701.45</td>
-<td>￥144,000.00</td>
-</tr>
-<tr>
-<td>7</td>
-<td>￥144,000.00</td>
-<td>￥220,701.45</td>
-<td>￥33,485.18</td>
-<td>￥278,186.62</td>
-<td>￥168,000.00</td>
-</tr>
-<tr>
-<td>8</td>
-<td>￥168,000.00</td>
-<td>￥278,186.62</td>
-<td>￥41,802.47</td>
-<td>￥343,989.10</td>
-<td>￥192,000.00</td>
-</tr>
-<tr>
-<td>9</td>
-<td>￥192,000.00</td>
-<td>￥343,989.10</td>
-<td>￥51,323.19</td>
-<td>￥419,312.28</td>
-<td>￥216,000.00</td>
-</tr>
-<tr>
-<td>10</td>
-<td>￥216,000.00</td>
-<td>￥419,312.28</td>
-<td>￥62,221.41</td>
-<td>￥505,533.68</td>
-<td>￥240,000.00</td>
-</tr>
-<tr>
-<td>11</td>
-<td>￥240,000.00</td>
-<td>￥505,533.68</td>
-<td>￥74,696.46</td>
-<td>￥604,230.13</td>
-<td>￥264,000.00</td>
-</tr>
-<tr>
-<td>12</td>
-<td>￥264,000.00</td>
-<td>￥604,230.13</td>
-<td>￥88,976.42</td>
-<td>￥717,206.58</td>
-<td>￥288,000.00</td>
-</tr>
-<tr>
-<td>13</td>
-<td>￥288,000.00</td>
-<td>￥717,206.58</td>
-<td>￥105,322.58</td>
-<td>￥846,529.15</td>
-<td>￥312,000.00</td>
-</tr>
-<tr>
-<td>14</td>
-<td>￥312,000.00</td>
-<td>￥846,529.15</td>
-<td>￥124,033.75</td>
-<td>￥994,562.91</td>
-<td>￥336,000.00</td>
-</tr>
-<tr>
-<td>15</td>
-<td>￥336,000.00</td>
-<td>￥994,562.91</td>
-<td>￥145,452.19</td>
-<td>￥1,164,015.11</td>
-<td>￥360,000.00</td>
-</tr>
-<tr>
-<td>16</td>
-<td>￥360,000.00</td>
-<td>￥1,164,015.11</td>
-<td>￥169,969.58</td>
-<td>￥1,357,984.68</td>
-<td>￥384,000.00</td>
-</tr>
-<tr>
-<td>17</td>
-<td>￥384,000.00</td>
-<td>￥1,357,984.68</td>
-<td>￥198,034.28</td>
-<td>￥1,580,018.97</td>
-<td>￥408,000.00</td>
-</tr>
-<tr>
-<td>18</td>
-<td>￥408,000.00</td>
-<td>￥1,580,018.97</td>
-<td>￥230,159.57</td>
-<td>￥1,834,178.54</td>
-<td>￥432,000.00</td>
-</tr>
-<tr>
-<td>19</td>
-<td>￥432,000.00</td>
-<td>￥1,834,178.54</td>
-<td>￥266,932.93</td>
-<td>￥2,125,111.47</td>
-<td>￥456,000.00</td>
-</tr>
-<tr>
-<td>20</td>
-<td>￥456,000.00</td>
-<td>￥2,125,111.47</td>
-<td>￥309,026.88</td>
-<td>￥2,458,138.37</td>
-<td>￥480,000.00</td>
-</tr>
-<tr>
-<td>21</td>
-<td>￥480,000.00</td>
-<td>￥2,458,138.37</td>
-<td>￥357,211.28</td>
-<td>￥2,839,349.64</td>
-<td>￥504,000.00</td>
-</tr>
-<tr>
-<td>22</td>
-<td>￥504,000.00</td>
-<td>￥2,839,349.64</td>
-<td>￥412,367.25</td>
-<td>￥3,275,716.90</td>
-<td>￥528,000.00</td>
-</tr>
-<tr>
-<td>23</td>
-<td>￥528,000.00</td>
-<td>￥3,275,716.90</td>
-<td>￥475,503.55</td>
-<td>￥3,775,220.46</td>
-<td>￥552,000.00</td>
-</tr>
-<tr>
-<td>24</td>
-<td>￥552,000.00</td>
-<td>￥3,775,220.46</td>
-<td>￥547,774.78</td>
-<td>￥4,346,995.25</td>
-<td>￥576,000.00</td>
-</tr>
-<tr>
-<td>25</td>
-<td>￥576,000.00</td>
-<td>￥4,346,995.25</td>
-<td>￥630,502.67</td>
-<td>￥5,001,497.93</td>
-<td>￥600,000.00</td>
-</tr>
-<tr>
-<td>26</td>
-<td>￥600,000.00</td>
-<td>￥5,001,497.93</td>
-<td>￥725,200.13</td>
-<td>￥5,750,698.07</td>
-<td>￥624,000.00</td>
-</tr>
-<tr>
-<td>27</td>
-<td>￥624,000.00</td>
-<td>￥5,750,698.07</td>
-<td>￥833,599.00</td>
-<td>￥6,608,297.08</td>
-<td>￥648,000.00</td>
-</tr>
-<tr>
-<td>28</td>
-<td>￥648,000.00</td>
-<td>￥6,608,297.08</td>
-<td>￥957,681.70</td>
-<td>￥7,589,978.79</td>
-<td>￥672,000.00</td>
-</tr>
-<tr>
-<td>29</td>
-<td>￥672,000.00</td>
-<td>￥7,589,978.79</td>
-<td>￥1,099,717.43</td>
-<td>￥8,713,696.23</td>
-<td>￥696,000.00</td>
-</tr>
-<tr>
-<td>30</td>
-<td>￥696,000.00</td>
-<td>￥8,713,696.23</td>
-<td>￥1,262,303.78</td>
-<td>￥10,000,000.00</td>
-<td>￥720,000.00</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>退休金计划</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>退休金计划：每月定投基金2000元，30年后资产总额达到多少？</title>
-    <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
-    <content><![CDATA[<h2 id="突发奇想"><a href="#突发奇想" class="headerlink" title="突发奇想"></a>突发奇想</h2><p>前段时间突发奇想，如果每个月拿出2000元用于投资理财，如定投基金，那30年后资产总额会达到多少呢？</p>
-<p>根据网上查到的资料，如果年化收益率为 14.5%，每月末坚持定投 2000 元，那么 30 年后资产总额将高达 1000 万元！！！看到这个结果，顿时心动不已。毕竟这 30 年的净投入才 72 万（2000 × 12 × 30 = 720000），收益竟达到了 928 万之多。</p>
-<h2 id="回到现实"><a href="#回到现实" class="headerlink" title="回到现实"></a>回到现实</h2><p>但这真的有可能实现吗？</p>
-<p>其实我不是怀疑在这样的假设下得出这样的结果。随着年期的增长，复利效应引发的倍数增长会越来越显著，而 30 年的时长，是足以见识到复利的威力和魅力的。</p>
-<p>问题是预期年化收益率 14.5% 能达到吗？公认的投资大师沃伦・巴菲特，具有四十多年投资年限，他的平均年化收益率也只是 20.3%。作为一个普通人，30 年的年化收益率要达到 14.5%，可能性有多大？即使能达到，每月定投 2000 元并坚持 30 年，是否又能做到呢？尤其是在市场出现极端恐慌或极端火热的时候，还能心如止水，仍坚定不移地按月定投吗？</p>
-<h2 id="一次大胆的尝试"><a href="#一次大胆的尝试" class="headerlink" title="一次大胆的尝试"></a>一次大胆的尝试</h2><p>说实话，三十年的平均年化收益率要达到将近15%，我是一点把握都没有。而且也没有多少信心能够坚持下去。我得承认自己是一个普通人，没有过多的时间精力花费在研究投资上，本身也缺乏相关的专业能力。但这并不意味着我会放弃尝试的机会。相反，我倒是跃跃欲试，就当作是为自己储蓄退休金，因为三十年后也差不多快到了我该退休的年纪。</p>
-<p>既然决定要去尝试，那就必须面对现实，尽最大的努力去解决这些问题，即使问题的解决方案并不是最优的。</p>
-<p>首先，关于年化收益率问题，如果自己没有能力达到，那是不是通过选择优秀的基金进行定投的方式来解决呢？要找到跨越牛熊周期的（时间一般超过八年）、平均年化收益率达到14.5% 的基金，虽没有想象中那么简单，但也没有想象中的困难。很多明星基金经理，如张坤、谢治宇、朱少醒等，他们手上管理的基金大多都能达到这个年化收益率。</p>
-<p>比如，朱少醒的富国天惠成长混合A基金，成立十五年翻了 21 倍，平均年化收益率高达 23.94%。当然，过去的业绩不代表未来的业绩，未来也有可能会更换基金经理。平均年化收益率也不代表每年都是一层不变，而是有的年度可能是高于这个值，有的年度是低于这个值，甚至是负数。</p>
-<p>长期来看，优秀基金经理的投资业绩肯定会比自己好很多。</p>
-<p>其次，关于每月坚持定投问题。一项目标计划需要持续三十年之久，这中间存在很多“拦路虎”，将来可能会以各种各样的方式影响计划的顺利执行。甚至有时候出现一些“致命性”的因素，导致整个计划不得不终止。比如一个常见的问题是缺少每月可用于定投的资金；比如可能会碰到最大的问题是出现特殊情况需要卖出基金；比如定投过程中还可能遇到坚持不下来的问题，等等。</p>
-<p>那有没有方法让这长达三十年的定投计划的执行可以变得稍微顺利些呢？</p>
-<p>我现在能想到的，一个是保障每月收入稳定，并且每月定投的钱一定要用“闲钱”，同时还要不断提高收入，为计划的顺利执行挖出一条深深的护城河，避免出现需要终止计划的情况。</p>
-<p>另外一个是可以将三十年的长期目标计划分阶段拆解成中期目标计划（五年计划或十年计划）、短期目标计划，最后变成一步步切实可行的行动计划和容易量化的行动目标，并在执行的过程中不断地给予自己反馈（计划进度图表等）。</p>
-<p>就像打怪升级一样，当你努力完成一定量的阶段目标之后，每次看到自己的储蓄金额（净投入）在慢慢增长，总资产也在慢慢地接近下一阶段目标，甚至是接近总目标，那种每天都在一点一点的慢慢变富的成就感和满足感就不由自主地产生了。</p>
-<p>在漫长且枯燥的定投过程中，成就感和满足感是可以增添我们坚持的动力和信心。</p>
-<p>再次，关于无视市场情绪问题。</p>
-<p>人的弱点有很多，自私、妒嫉、虚荣、胆小、好逸恶劳、优柔寡断、刚愎自用，等等。在股市中，每个人或多或少都会展现自己人性的弱点，其中比较典型的是贪婪与恐惧。</p>
-<p>在股市火爆的时候，有多少人还能按既定计划坚持定投，而不是匆匆止盈或者加大杠杆买入？在市场暴跌的时候，即使是优秀的基金，也是有可能出现很大的回撤，如上文提到的基金——富国天惠成长混合A，过去最大回撤也达到了 58.9%。当 100 块跌去 58.9 块，还有多少人能不割肉离场并坚持拿住？</p>
-<p>无视市场情绪，其实就是克服人性弱点，过程非常难，需要很大的毅力。</p>
-<p>个人的想法是，既然选择了大家公认（或自己个人认为）的优秀基金经理管理的基金，就相当于把自己的资金交给基金经理，由他们进行管理和投资。我们要做的是相信他们的专业能力是能够根据市场行情变化做出较为理性的判断，而不是瞎操心。剩下要做的是这些在我看来更重要的事情：保持健康、认真过好自己的生活、多花时间陪伴家人孩子、专注于自己的事业、增加收入的来源等。</p>
-<p>最后，还有一个关于通货膨胀问题。</p>
-<p>受通货膨胀因素影响，未来是否会增加每月定投金额？</p>
-<p>目前没有明确的想法。不过随着收入的上涨，从上涨的这部分收入里拿出一小部分资金投入到退休金计划，享受时间复利带来的收益，确实是一个不错的选择。需要强调的是新增加的这一部分资金，最好还是长时间不会用到的“闲钱”。</p>
-<h2 id="制定计划"><a href="#制定计划" class="headerlink" title="制定计划"></a>制定计划</h2><p>以下是我根据自身的情况制定了一项长期计划——退休金计划。</p>
-<p>计划内容：</p>
-<ul>
-<li>计划目标：退休金额达到 10,000,000 元；</li>
-<li>定投基金：富国天惠成长混合A（161005）；</li>
-<li>定投金额：2000 元/月；</li>
-<li>定投日期：每月 10 号和 24 号，如遇节假日或休息日，则根据情况提前在最近一个交易日定投，或顺延至下一个交易日定投；</li>
-<li>定投年限：30年；</li>
-<li>预期平均年回报率：14.5%；</li>
-<li>计划停止执行条件：提前完成目标金额或 30 年时间已到（2051年2月）；</li>
-<li>定投当天更新净投入和总资产记录；</li>
-<li>其他补充：根据未来的实际情况，决定是否更换定投基金、增加每月定投金额等。</li>
-</ul>
-<p>计划本身比较简单，关键是要<strong>坚定不移地去执行</strong>。</p>
-<h2 id="分阶段执行计划"><a href="#分阶段执行计划" class="headerlink" title="分阶段执行计划"></a>分阶段执行计划</h2><p>长期目标如果不细化或拆解成可执行的计划，往往很难实现。越是宏大的目标，越要细化成中期或短期内可实现的小目标。否则就容易因为目标过于宏大而感到难以实现，最终选择放弃。</p>
-<p>结合本人实际情况，退休金计划大概细化为六个“五年计划”。同时为便于记录统计，“五年计划”的起止时间以自然年为基准时间。详细计划如下：</p>
-<p><a href="/2021/07/10/investment-plan-2021-2025/">2021-2025年定投执行计划</a></p>
-<p><a href="/2021/07/10/investment-plan-2026-2030/">2026-2030年定投执行计划</a></p>
-<p><a href="/2021/07/10/investment-plan-2031-2035/">2031-2035年定投执行计划</a></p>
-<p>2036-2040年定投执行计划</p>
-<p>2041-2045年定投执行计划</p>
-<p>2046-2050年定投执行计划</p>
-<p>2051年（1月、2月）定投执行计划</p>
-<h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts8834" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts4070" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts8834'));
-    var bar_chart = echarts.init(document.getElementById('echarts4070'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var dates = [];
-        var invest_data = [];
-        var total_data = [];
-        var records = data.data;
-        var options = data.options;
-        var len = records.length;
-        var newestData = records[len - 1];
-
-        for (var i = 0; i < len; i++){
-          dates.push(records[i][0]);
-          invest_data.push(records[i][2]);
-          total_data.push(records[i][3]);
-        }
-        options.xAxis.data = dates;
-        options.series[0].data = invest_data;
-        options.series[1].data = total_data;
-        myChart.setOption(options);
-
-        var labelRight = {
-          position: 'right'
-        };
-      
-        var bar_options = {
-          title: {
-              text: '账户资产明细',
-              subtext: '金额（元）',
-              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
-          },
-          tooltip: {
-              trigger: 'axis',
-              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-              }
-          },
-          grid: {
-              top: 80,
-              bottom: 30
-          },
-          xAxis: {
-              type: 'value',
-              position: 'top',
-              splitLine: {
-                  lineStyle: {
-                      type: 'dashed'
-                  }
-              }
-          },
-          yAxis: {
-              type: 'category',
-              axisLine: {show: false},
-              axisLabel: {show: false},
-              axisTick: {show: false},
-              splitLine: {show: false},
-              data: ['收益', '净投入', '总资产']
-          },
-          series: [
-              {
-                  name: '人民币',
-                  type: 'bar',
-                  stack: '总量',
-                  label: {
-                      show: true,
-                      formatter: '{b}'
-                  },
-                  data: [
-                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
-                      {value: newestData[2], label: labelRight},
-                      {value: newestData[3], label: labelRight},
-                  ],
-                  itemStyle: {
-                    normal: {
-        　　　　　　　　//这里是重点
-                        color: function(params) {
-                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
-                            var colorList = ['#ff4040', '#fc8452', '#5470c6' ]
-                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
-                            return colorList[params.dataIndex]
-                        }
-                    }
-                }
-              }
-          ]
-      };
-        bar_chart.setOption(bar_options);
-    });
-    </script>
-    
-
-<blockquote>
-<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
-</blockquote>
-<p>第一个五年目标（2021年3月-2025年12月），目标净投入 <strong>116,000</strong> 元；</p>
-<p>详见 <a href="/2021/07/17/investment-plan-progress/">退休金计划：进度看板</a></p>
-<h2 id="年度计划参考"><a href="#年度计划参考" class="headerlink" title="年度计划参考"></a>年度计划参考</h2><p>详见 <a href="/2021/07/18/investment-plan-reference">退休金计划：三十年一千万参考</a></p>
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>退休金计划</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>退休金计划：进度看板</title>
-    <url>/2021/07/17/investment-plan-progress/</url>
-    <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
-<h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts4560" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts2271" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts4560'));
-    var bar_chart = echarts.init(document.getElementById('echarts2271'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var dates = [];
-        var invest_data = [];
-        var total_data = [];
-        var records = data.data;
-        var options = data.options;
-        var len = records.length;
-        var newestData = records[len - 1];
-
-        for (var i = 0; i < len; i++){
-          dates.push(records[i][0]);
-          invest_data.push(records[i][2]);
-          total_data.push(records[i][3]);
-        }
-        options.xAxis.data = dates;
-        options.series[0].data = invest_data;
-        options.series[1].data = total_data;
-        myChart.setOption(options);
-
-        var labelRight = {
-          position: 'right'
-        };
-      
-        var bar_options = {
-          title: {
-              text: '账户资产明细',
-              subtext: '金额（元）',
-              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
-          },
-          tooltip: {
-              trigger: 'axis',
-              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-              }
-          },
-          grid: {
-              top: 80,
-              bottom: 30
-          },
-          xAxis: {
-              type: 'value',
-              position: 'top',
-              splitLine: {
-                  lineStyle: {
-                      type: 'dashed'
-                  }
-              }
-          },
-          yAxis: {
-              type: 'category',
-              axisLine: {show: false},
-              axisLabel: {show: false},
-              axisTick: {show: false},
-              splitLine: {show: false},
-              data: ['收益', '净投入', '总资产']
-          },
-          series: [
-              {
-                  name: '人民币',
-                  type: 'bar',
-                  stack: '总量',
-                  label: {
-                      show: true,
-                      formatter: '{b}'
-                  },
-                  data: [
-                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
-                      {value: newestData[2], label: labelRight},
-                      {value: newestData[3], label: labelRight},
-                  ],
-                  itemStyle: {
-                    normal: {
-        　　　　　　　　//这里是重点
-                        color: function(params) {
-                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
-                            var colorList = ['#ff4040', '#fc8452', '#5470c6' ]
-                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
-                            return colorList[params.dataIndex]
-                        }
-                    }
-                }
-              }
-          ]
-      };
-        bar_chart.setOption(bar_options);
-    });
-    </script>
-    
-
-<blockquote>
-<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
-</blockquote>
-<h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts5977" style="width: 100%;height: 200px;margin: 0 auto"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts5977'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var records = data.data;
-        var len = records.length;
-        var newestData = records[len - 1];
-        
-        var dashboard_chart_id_options = {
-          title: {
-            name: "textShadowOffsetXt",
-            text: "",
-            textStyle: {
-              color: "#fff"
-            }
-          },
-          backgroundColor: "#17326b",
-          grid: {
-            left: "10",
-            top: "10",
-            right: "10",
-            bottom: "10",
-            containLabel: true
-          },
-          xAxis: {
-            type: 'value',
-            splitLine: { show: false },
-            axisLabel: { show: false },
-            axisTick: { show: false },
-            axisLine: { show: false }
-          },
-          yAxis: [
-            {
-              type: 'category',
-              axisTick: { show: false },
-              axisLine: { show: false },
-              axisLabel: {
-                color: "black",
-                fontSize: 14,
-                textStyle: {
-                  color: '#fff'
-                }
-              },
-              data: ["今年净投入", "一五净投入", "一五总资产", "计划总资产"],
-              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
-              inverse: true
-            },
-            {
-              type: 'category',
-              axisTick: { show: false },
-              axisLine: { show: false },
-              axisLabel: {
-                color: "black",
-                fontSize: 14,
-                textStyle: {
-                  color: '#fff'
-                }
-              },
-              data: ['20,000', '116,000', '170,000', '10,000,000'],
-              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
-              inverse: true
-            }
-          ],
-          series: [
-            {
-              name: "%",
-              type: "bar",
-              barWidth: 19,
-              data: [(newestData[2] / 20000 * 100).toFixed(2), (newestData[2] / 116000 * 100).toFixed(2), (newestData[3] / 170000 * 100).toFixed(2), (newestData[3] / 10000000 * 100).toFixed(2)],
-              label: {
-                show: true,
-                //position    : 'middle',
-                offset: [20, 2],
-                formatter: '{c}{a}',
-                color: '#fff',
-                fontSize: 15
-              },
-              barCategoryGap: 20,
-              itemStyle: {
-                normal: {
-                  barBorderRadius: 10,
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-                    offset: 0,
-                    color: '#fdc830'
-                  }, {
-                    offset: 1,
-                    color: '#f37335'
-                  }]),
-                }
-              },
-              zlevel: 1
-        
-            }, {
-              name: "进度条背景",
-              type: "bar",
-              barGap: "-100%",
-              barWidth: 19,
-              data: [100, 100, 100, 100],
-              color: "#2e5384",
-              itemStyle: {
-                normal: {
-                  barBorderRadius: 10
-                }
-              },
-            }
-          ]
-        };
-        dashboard_chart_id_chart.setOption(dashboard_chart_id_options);
-    });
-    </script>
-    
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>退休金计划</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>退休金计划：2026-2030年定投执行计划</title>
     <url>/2021/07/10/investment-plan-2026-2030/</url>
     <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第二个五年行动计划——2026-2030年定投计划。</p>
@@ -4058,6 +3348,481 @@
       </tags>
   </entry>
   <entry>
+    <title>退休金计划：2031-2035年定投执行计划</title>
+    <url>/2021/07/10/investment-plan-2031-2035/</url>
+    <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第三个五年行动计划——2031-2035年定投计划。</p>
+<p>本计划目标：净投入达 120,000 元。</p>
+<p>计划具体内容为 2031 - 2035 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
+<p>（未制定）</p>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
+        <tag>退休金计划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>退休金计划：三十年一千万参考</title>
+    <url>/2021/07/18/investment-plan-reference/</url>
+    <content><![CDATA[<p>本参考计划根据 <a href="https://www.calculator.net/investment-calculator.html?ctype=returnrate&ctargetamountv=10000000&cstartingprinciplev=0&cyearsv=30&cinterestratev=23&ccompound=annually&ccontributeamountv=2000&cadditionat1=end&ciadditionat1=monthly&printit=0">投资计算器</a> 生成，这里假设你的：</p>
+<p>目标金额：10,000,000元</p>
+<p>起始金额：0元</p>
+<p>每月月末定投：2000元</p>
+<p>投资年限：30年</p>
+<p>则需要 14.469% 的年回报率才能达到 ￥10,000,000.00 的目标。</p>
+<p>期末账户明细：</p>
+<table>
+<thead>
+<tr>
+<th><strong>期末账户余额</strong></th>
+<th><strong>¥10,000,000.00</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>起始金额</td>
+<td>¥0.00</td>
+</tr>
+<tr>
+<td>净投入</td>
+<td>¥720,000.00</td>
+</tr>
+<tr>
+<td>累计收益</td>
+<td>¥9,280,000.00</td>
+</tr>
+</tbody></table>
+<p>年度计划：</p>
+<table>
+<thead>
+<tr>
+<th>年度</th>
+<th>起始本金</th>
+<th>起始金额</th>
+<th>收益</th>
+<th>期末资产</th>
+<th>期末本金</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>￥0.00</td>
+<td>￥0.00</td>
+<td>￥1,552.73</td>
+<td>￥25,552.73</td>
+<td>￥24,000.00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>￥24,000.00</td>
+<td>￥25,552.73</td>
+<td>￥5,249.85</td>
+<td>￥54,802.58</td>
+<td>￥48,000.00</td>
+</tr>
+<tr>
+<td>3</td>
+<td>￥48,000.00</td>
+<td>￥54,802.58</td>
+<td>￥9,481.90</td>
+<td>￥88,284.48</td>
+<td>￥72,000.00</td>
+</tr>
+<tr>
+<td>4</td>
+<td>￥72,000.00</td>
+<td>￥88,284.48</td>
+<td>￥14,326.27</td>
+<td>￥126,610.75</td>
+<td>￥96,000.00</td>
+</tr>
+<tr>
+<td>5</td>
+<td>￥96,000.00</td>
+<td>￥126,610.75</td>
+<td>￥19,871.55</td>
+<td>￥170,482.30</td>
+<td>￥120,000.00</td>
+</tr>
+<tr>
+<td>6</td>
+<td>￥120,000.00</td>
+<td>￥170,482.30</td>
+<td>￥26,219.15</td>
+<td>￥220,701.45</td>
+<td>￥144,000.00</td>
+</tr>
+<tr>
+<td>7</td>
+<td>￥144,000.00</td>
+<td>￥220,701.45</td>
+<td>￥33,485.18</td>
+<td>￥278,186.62</td>
+<td>￥168,000.00</td>
+</tr>
+<tr>
+<td>8</td>
+<td>￥168,000.00</td>
+<td>￥278,186.62</td>
+<td>￥41,802.47</td>
+<td>￥343,989.10</td>
+<td>￥192,000.00</td>
+</tr>
+<tr>
+<td>9</td>
+<td>￥192,000.00</td>
+<td>￥343,989.10</td>
+<td>￥51,323.19</td>
+<td>￥419,312.28</td>
+<td>￥216,000.00</td>
+</tr>
+<tr>
+<td>10</td>
+<td>￥216,000.00</td>
+<td>￥419,312.28</td>
+<td>￥62,221.41</td>
+<td>￥505,533.68</td>
+<td>￥240,000.00</td>
+</tr>
+<tr>
+<td>11</td>
+<td>￥240,000.00</td>
+<td>￥505,533.68</td>
+<td>￥74,696.46</td>
+<td>￥604,230.13</td>
+<td>￥264,000.00</td>
+</tr>
+<tr>
+<td>12</td>
+<td>￥264,000.00</td>
+<td>￥604,230.13</td>
+<td>￥88,976.42</td>
+<td>￥717,206.58</td>
+<td>￥288,000.00</td>
+</tr>
+<tr>
+<td>13</td>
+<td>￥288,000.00</td>
+<td>￥717,206.58</td>
+<td>￥105,322.58</td>
+<td>￥846,529.15</td>
+<td>￥312,000.00</td>
+</tr>
+<tr>
+<td>14</td>
+<td>￥312,000.00</td>
+<td>￥846,529.15</td>
+<td>￥124,033.75</td>
+<td>￥994,562.91</td>
+<td>￥336,000.00</td>
+</tr>
+<tr>
+<td>15</td>
+<td>￥336,000.00</td>
+<td>￥994,562.91</td>
+<td>￥145,452.19</td>
+<td>￥1,164,015.11</td>
+<td>￥360,000.00</td>
+</tr>
+<tr>
+<td>16</td>
+<td>￥360,000.00</td>
+<td>￥1,164,015.11</td>
+<td>￥169,969.58</td>
+<td>￥1,357,984.68</td>
+<td>￥384,000.00</td>
+</tr>
+<tr>
+<td>17</td>
+<td>￥384,000.00</td>
+<td>￥1,357,984.68</td>
+<td>￥198,034.28</td>
+<td>￥1,580,018.97</td>
+<td>￥408,000.00</td>
+</tr>
+<tr>
+<td>18</td>
+<td>￥408,000.00</td>
+<td>￥1,580,018.97</td>
+<td>￥230,159.57</td>
+<td>￥1,834,178.54</td>
+<td>￥432,000.00</td>
+</tr>
+<tr>
+<td>19</td>
+<td>￥432,000.00</td>
+<td>￥1,834,178.54</td>
+<td>￥266,932.93</td>
+<td>￥2,125,111.47</td>
+<td>￥456,000.00</td>
+</tr>
+<tr>
+<td>20</td>
+<td>￥456,000.00</td>
+<td>￥2,125,111.47</td>
+<td>￥309,026.88</td>
+<td>￥2,458,138.37</td>
+<td>￥480,000.00</td>
+</tr>
+<tr>
+<td>21</td>
+<td>￥480,000.00</td>
+<td>￥2,458,138.37</td>
+<td>￥357,211.28</td>
+<td>￥2,839,349.64</td>
+<td>￥504,000.00</td>
+</tr>
+<tr>
+<td>22</td>
+<td>￥504,000.00</td>
+<td>￥2,839,349.64</td>
+<td>￥412,367.25</td>
+<td>￥3,275,716.90</td>
+<td>￥528,000.00</td>
+</tr>
+<tr>
+<td>23</td>
+<td>￥528,000.00</td>
+<td>￥3,275,716.90</td>
+<td>￥475,503.55</td>
+<td>￥3,775,220.46</td>
+<td>￥552,000.00</td>
+</tr>
+<tr>
+<td>24</td>
+<td>￥552,000.00</td>
+<td>￥3,775,220.46</td>
+<td>￥547,774.78</td>
+<td>￥4,346,995.25</td>
+<td>￥576,000.00</td>
+</tr>
+<tr>
+<td>25</td>
+<td>￥576,000.00</td>
+<td>￥4,346,995.25</td>
+<td>￥630,502.67</td>
+<td>￥5,001,497.93</td>
+<td>￥600,000.00</td>
+</tr>
+<tr>
+<td>26</td>
+<td>￥600,000.00</td>
+<td>￥5,001,497.93</td>
+<td>￥725,200.13</td>
+<td>￥5,750,698.07</td>
+<td>￥624,000.00</td>
+</tr>
+<tr>
+<td>27</td>
+<td>￥624,000.00</td>
+<td>￥5,750,698.07</td>
+<td>￥833,599.00</td>
+<td>￥6,608,297.08</td>
+<td>￥648,000.00</td>
+</tr>
+<tr>
+<td>28</td>
+<td>￥648,000.00</td>
+<td>￥6,608,297.08</td>
+<td>￥957,681.70</td>
+<td>￥7,589,978.79</td>
+<td>￥672,000.00</td>
+</tr>
+<tr>
+<td>29</td>
+<td>￥672,000.00</td>
+<td>￥7,589,978.79</td>
+<td>￥1,099,717.43</td>
+<td>￥8,713,696.23</td>
+<td>￥696,000.00</td>
+</tr>
+<tr>
+<td>30</td>
+<td>￥696,000.00</td>
+<td>￥8,713,696.23</td>
+<td>￥1,262,303.78</td>
+<td>￥10,000,000.00</td>
+<td>￥720,000.00</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>退休金计划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>退休金计划：每月定投基金2000元，30年后资产总额达到多少？</title>
+    <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
+    <content><![CDATA[<h2 id="突发奇想"><a href="#突发奇想" class="headerlink" title="突发奇想"></a>突发奇想</h2><p>前段时间突发奇想，如果每个月拿出2000元用于投资理财，如定投基金，那30年后资产总额会达到多少呢？</p>
+<p>根据网上查到的资料，如果年化收益率为 14.5%，每月末坚持定投 2000 元，那么 30 年后资产总额将高达 1000 万元！！！看到这个结果，顿时心动不已。毕竟这 30 年的净投入才 72 万（2000 × 12 × 30 = 720000），收益竟达到了 928 万之多。</p>
+<h2 id="回到现实"><a href="#回到现实" class="headerlink" title="回到现实"></a>回到现实</h2><p>但这真的有可能实现吗？</p>
+<p>其实我不是怀疑在这样的假设下得出这样的结果。随着年期的增长，复利效应引发的倍数增长会越来越显著，而 30 年的时长，是足以见识到复利的威力和魅力的。</p>
+<p>问题是预期年化收益率 14.5% 能达到吗？公认的投资大师沃伦・巴菲特，具有四十多年投资年限，他的平均年化收益率也只是 20.3%。作为一个普通人，30 年的年化收益率要达到 14.5%，可能性有多大？即使能达到，每月定投 2000 元并坚持 30 年，是否又能做到呢？尤其是在市场出现极端恐慌或极端火热的时候，还能心如止水，仍坚定不移地按月定投吗？</p>
+<h2 id="一次大胆的尝试"><a href="#一次大胆的尝试" class="headerlink" title="一次大胆的尝试"></a>一次大胆的尝试</h2><p>说实话，三十年的平均年化收益率要达到将近15%，我是一点把握都没有。而且也没有多少信心能够坚持下去。我得承认自己是一个普通人，没有过多的时间精力花费在研究投资上，本身也缺乏相关的专业能力。但这并不意味着我会放弃尝试的机会。相反，我倒是跃跃欲试，就当作是为自己储蓄退休金，因为三十年后也差不多快到了我该退休的年纪。</p>
+<p>既然决定要去尝试，那就必须面对现实，尽最大的努力去解决这些问题，即使问题的解决方案并不是最优的。</p>
+<p>首先，关于年化收益率问题，如果自己没有能力达到，那是不是通过选择优秀的基金进行定投的方式来解决呢？要找到跨越牛熊周期的（时间一般超过八年）、平均年化收益率达到14.5% 的基金，虽没有想象中那么简单，但也没有想象中的困难。很多明星基金经理，如张坤、谢治宇、朱少醒等，他们手上管理的基金大多都能达到这个年化收益率。</p>
+<p>比如，朱少醒的富国天惠成长混合A基金，成立十五年翻了 21 倍，平均年化收益率高达 23.94%。当然，过去的业绩不代表未来的业绩，未来也有可能会更换基金经理。平均年化收益率也不代表每年都是一层不变，而是有的年度可能是高于这个值，有的年度是低于这个值，甚至是负数。</p>
+<p>长期来看，优秀基金经理的投资业绩肯定会比自己好很多。</p>
+<p>其次，关于每月坚持定投问题。一项目标计划需要持续三十年之久，这中间存在很多“拦路虎”，将来可能会以各种各样的方式影响计划的顺利执行。甚至有时候出现一些“致命性”的因素，导致整个计划不得不终止。比如一个常见的问题是缺少每月可用于定投的资金；比如可能会碰到最大的问题是出现特殊情况需要卖出基金；比如定投过程中还可能遇到坚持不下来的问题，等等。</p>
+<p>那有没有方法让这长达三十年的定投计划的执行可以变得稍微顺利些呢？</p>
+<p>我现在能想到的，一个是保障每月收入稳定，并且每月定投的钱一定要用“闲钱”，同时还要不断提高收入，为计划的顺利执行挖出一条深深的护城河，避免出现需要终止计划的情况。</p>
+<p>另外一个是可以将三十年的长期目标计划分阶段拆解成中期目标计划（五年计划或十年计划）、短期目标计划，最后变成一步步切实可行的行动计划和容易量化的行动目标，并在执行的过程中不断地给予自己反馈（计划进度图表等）。</p>
+<p>就像打怪升级一样，当你努力完成一定量的阶段目标之后，每次看到自己的储蓄金额（净投入）在慢慢增长，总资产也在慢慢地接近下一阶段目标，甚至是接近总目标，那种每天都在一点一点的慢慢变富的成就感和满足感就不由自主地产生了。</p>
+<p>在漫长且枯燥的定投过程中，成就感和满足感是可以增添我们坚持的动力和信心。</p>
+<p>再次，关于无视市场情绪问题。</p>
+<p>人的弱点有很多，自私、妒嫉、虚荣、胆小、好逸恶劳、优柔寡断、刚愎自用，等等。在股市中，每个人或多或少都会展现自己人性的弱点，其中比较典型的是贪婪与恐惧。</p>
+<p>在股市火爆的时候，有多少人还能按既定计划坚持定投，而不是匆匆止盈或者加大杠杆买入？在市场暴跌的时候，即使是优秀的基金，也是有可能出现很大的回撤，如上文提到的基金——富国天惠成长混合A，过去最大回撤也达到了 58.9%。当 100 块跌去 58.9 块，还有多少人能不割肉离场并坚持拿住？</p>
+<p>无视市场情绪，其实就是克服人性弱点，过程非常难，需要很大的毅力。</p>
+<p>个人的想法是，既然选择了大家公认（或自己个人认为）的优秀基金经理管理的基金，就相当于把自己的资金交给基金经理，由他们进行管理和投资。我们要做的是相信他们的专业能力是能够根据市场行情变化做出较为理性的判断，而不是瞎操心。剩下要做的是这些在我看来更重要的事情：保持健康、认真过好自己的生活、多花时间陪伴家人孩子、专注于自己的事业、增加收入的来源等。</p>
+<p>最后，还有一个关于通货膨胀问题。</p>
+<p>受通货膨胀因素影响，未来是否会增加每月定投金额？</p>
+<p>目前没有明确的想法。不过随着收入的上涨，从上涨的这部分收入里拿出一小部分资金投入到退休金计划，享受时间复利带来的收益，确实是一个不错的选择。需要强调的是新增加的这一部分资金，最好还是长时间不会用到的“闲钱”。</p>
+<h2 id="制定计划"><a href="#制定计划" class="headerlink" title="制定计划"></a>制定计划</h2><p>以下是我根据自身的情况制定了一项长期计划——退休金计划。</p>
+<p>计划内容：</p>
+<ul>
+<li>计划目标：退休金额达到 10,000,000 元；</li>
+<li>定投基金：富国天惠成长混合A（161005）；</li>
+<li>定投金额：2000 元/月；</li>
+<li>定投日期：每月 10 号和 24 号，如遇节假日或休息日，则根据情况提前在最近一个交易日定投，或顺延至下一个交易日定投；</li>
+<li>定投年限：30年；</li>
+<li>预期平均年回报率：14.5%；</li>
+<li>计划停止执行条件：提前完成目标金额或 30 年时间已到（2051年2月）；</li>
+<li>定投当天更新净投入和总资产记录；</li>
+<li>其他补充：根据未来的实际情况，决定是否更换定投基金、增加每月定投金额等。</li>
+</ul>
+<p>计划本身比较简单，关键是要<strong>坚定不移地去执行</strong>。</p>
+<h2 id="分阶段执行计划"><a href="#分阶段执行计划" class="headerlink" title="分阶段执行计划"></a>分阶段执行计划</h2><p>长期目标如果不细化或拆解成可执行的计划，往往很难实现。越是宏大的目标，越要细化成中期或短期内可实现的小目标。否则就容易因为目标过于宏大而感到难以实现，最终选择放弃。</p>
+<p>结合本人实际情况，退休金计划大概细化为六个“五年计划”。同时为便于记录统计，“五年计划”的起止时间以自然年为基准时间。详细计划如下：</p>
+<p><a href="/2021/07/10/investment-plan-2021-2025/">2021-2025年定投执行计划</a></p>
+<p><a href="/2021/07/10/investment-plan-2026-2030/">2026-2030年定投执行计划</a></p>
+<p><a href="/2021/07/10/investment-plan-2031-2035/">2031-2035年定投执行计划</a></p>
+<p>2036-2040年定投执行计划</p>
+<p>2041-2045年定投执行计划</p>
+<p>2046-2050年定投执行计划</p>
+<p>2051年（1月、2月）定投执行计划</p>
+<h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
+    <div id="echarts4792" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts1703" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('echarts4792'));
+    var bar_chart = echarts.init(document.getElementById('echarts1703'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var dates = [];
+        var invest_data = [];
+        var total_data = [];
+        var records = data.data;
+        var options = data.options;
+        var len = records.length;
+        var newestData = records[len - 1];
+
+        for (var i = 0; i < len; i++){
+          dates.push(records[i][0]);
+          invest_data.push(records[i][2]);
+          total_data.push(records[i][3]);
+        }
+        options.xAxis.data = dates;
+        options.series[0].data = invest_data;
+        options.series[1].data = total_data;
+        myChart.setOption(options);
+
+        var labelRight = {
+          position: 'right'
+        };
+      
+        var bar_options = {
+          title: {
+              text: '账户资产明细',
+              subtext: '金额（元）',
+              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
+          },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              }
+          },
+          grid: {
+              top: 80,
+              bottom: 30
+          },
+          xAxis: {
+              type: 'value',
+              position: 'top',
+              splitLine: {
+                  lineStyle: {
+                      type: 'dashed'
+                  }
+              }
+          },
+          yAxis: {
+              type: 'category',
+              axisLine: {show: false},
+              axisLabel: {show: false},
+              axisTick: {show: false},
+              splitLine: {show: false},
+              data: ['收益', '净投入', '总资产']
+          },
+          series: [
+              {
+                  name: '人民币',
+                  type: 'bar',
+                  stack: '总量',
+                  label: {
+                      show: true,
+                      formatter: '{b}'
+                  },
+                  data: [
+                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
+                      {value: newestData[2], label: labelRight},
+                      {value: newestData[3], label: labelRight},
+                  ],
+                  itemStyle: {
+                    normal: {
+        　　　　　　　　//这里是重点
+                        color: function(params) {
+                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                            var colorList = ['#ff4040', '#fc8452', '#5470c6' ]
+                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                }
+              }
+          ]
+      };
+        bar_chart.setOption(bar_options);
+    });
+    </script>
+    
+
+<blockquote>
+<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
+</blockquote>
+<p>第一个五年目标（2021年3月-2025年12月），目标净投入 <strong>116,000</strong> 元；</p>
+<p>详见 <a href="/2021/07/17/investment-plan-progress/">退休金计划：进度看板</a></p>
+<h2 id="年度计划参考"><a href="#年度计划参考" class="headerlink" title="年度计划参考"></a>年度计划参考</h2><p>详见 <a href="/2021/07/18/investment-plan-reference">退休金计划：三十年一千万参考</a></p>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>退休金计划</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>退休金计划：投资日志20210727</title>
     <url>/2021/07/27/investment-plan-record-20210727/</url>
     <content><![CDATA[<p>昨天下午的时候，同事见面打招呼问的是你买鞋了吗？</p>
@@ -4081,25 +3846,271 @@
       </tags>
   </entry>
   <entry>
-    <title>小记：2021年8月</title>
-    <url>/2021/08/05/note-202108/</url>
-    <content><![CDATA[<h2 id="2021年8月2日"><a href="#2021年8月2日" class="headerlink" title="2021年8月2日"></a>2021年8月2日</h2><p><strong>1 梦</strong></p>
-<p>昨晚梦到皮蛋，可把我气醒了。梦里大概是这样子：</p>
-<p>皮蛋生了七只小猫咪，有黑色的，有白色的，有橘黄色的还有混色的。但我发现的时候，其中的三只被他吃了，另外四只被绳子绑在一起，浸泡在洗脸盆上，盆上还有水。皮蛋打算溺死他自己的猫咪仔。把我气死了，拿起棍子准备教训皮蛋。结果，他一下子就跑去躲了，打不到他，我像个泼妇骂街一样，边骂边教育他，告诉他这些是你的仔，怎么可以这么残忍对待它们。。</p>
-<p>骂着骂着，突然想到小猫咪还在水盆里泡着呢，就马上冲回去，把小猫咪捞出来，解了绳子，感觉这些小猫咪像是要快饿死了。皮蛋又抓不到，不然还可以让皮蛋给小猫咪喂奶。</p>
-<p>没办法，想到小猫咪可以喝牛奶，又去冰箱找。边翻边想，刚出生的小猫咪可以喝冰的牛奶吗？哎呀，不管那么多了，拉肚子总比被饿死好吧？于是继续翻啊、找啊，但就是没有找到牛奶，急死了。后面冷静点，才想起我已经不喝牛奶很久了，冰箱怎么可能会有牛奶？这一瞬间，我彻底崩溃了，一直在责怪和质问自己。为什么我现在不喝牛奶了？！以前不是每晚睡之前都要喝一瓶的吗？！怎么不能过几天再不想喝牛奶？！就算不喝牛奶，冰箱也要备着啊？！为什么？！</p>
-<p>实在压抑到有些难受，还好醒了，睁着眼睛躺在床上，回忆着这个梦的始末，怒火中烧。清醒一点后发现，皮蛋不是公猫吗？还是一只做了绝育手术的公猫，他怎么会生小猫咪呢？</p>
-<p>哦，原来是一场梦啊，真是奇奇怪怪的梦！看了下手机，现在快早上5点了，起来喝点水，倒头再睡会，今天还要上班。</p>
-<p><strong>2 活在当下</strong></p>
-<p>夏天的时候就盼望着冬天的到来，而冬天的时候又期待着夏天的到来，一点都没有活在当下啊。</p>
-<p><strong>3 专注呼吸</strong></p>
-<p>每当我开始专注于自己的呼吸时，脑袋里总有各种各样的想法蹦跶出来。而当我结束专注呼吸训练准备记录他们的时候，他们又一下子不见了踪影。真是奇怪的脑袋</p>
+    <title>退休金计划：进度看板</title>
+    <url>/2021/07/17/investment-plan-progress/</url>
+    <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
+<h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
+    <div id="echarts2097" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts5211" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('echarts2097'));
+    var bar_chart = echarts.init(document.getElementById('echarts5211'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var dates = [];
+        var invest_data = [];
+        var total_data = [];
+        var records = data.data;
+        var options = data.options;
+        var len = records.length;
+        var newestData = records[len - 1];
+
+        for (var i = 0; i < len; i++){
+          dates.push(records[i][0]);
+          invest_data.push(records[i][2]);
+          total_data.push(records[i][3]);
+        }
+        options.xAxis.data = dates;
+        options.series[0].data = invest_data;
+        options.series[1].data = total_data;
+        myChart.setOption(options);
+
+        var labelRight = {
+          position: 'right'
+        };
+      
+        var bar_options = {
+          title: {
+              text: '账户资产明细',
+              subtext: '金额（元）',
+              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
+          },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              }
+          },
+          grid: {
+              top: 80,
+              bottom: 30
+          },
+          xAxis: {
+              type: 'value',
+              position: 'top',
+              splitLine: {
+                  lineStyle: {
+                      type: 'dashed'
+                  }
+              }
+          },
+          yAxis: {
+              type: 'category',
+              axisLine: {show: false},
+              axisLabel: {show: false},
+              axisTick: {show: false},
+              splitLine: {show: false},
+              data: ['收益', '净投入', '总资产']
+          },
+          series: [
+              {
+                  name: '人民币',
+                  type: 'bar',
+                  stack: '总量',
+                  label: {
+                      show: true,
+                      formatter: '{b}'
+                  },
+                  data: [
+                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
+                      {value: newestData[2], label: labelRight},
+                      {value: newestData[3], label: labelRight},
+                  ],
+                  itemStyle: {
+                    normal: {
+        　　　　　　　　//这里是重点
+                        color: function(params) {
+                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                            var colorList = ['#ff4040', '#fc8452', '#5470c6' ]
+                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                }
+              }
+          ]
+      };
+        bar_chart.setOption(bar_options);
+    });
+    </script>
+    
+
+<blockquote>
+<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
+</blockquote>
+<h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
+    <div id="echarts887" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts887'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var records = data.data;
+        var len = records.length;
+        var newestData = records[len - 1];
+        
+        var dashboard_chart_id_options = {
+          title: {
+            name: "textShadowOffsetXt",
+            text: "",
+            textStyle: {
+              color: "#fff"
+            }
+          },
+          backgroundColor: "#17326b",
+          grid: {
+            left: "10",
+            top: "10",
+            right: "10",
+            bottom: "10",
+            containLabel: true
+          },
+          xAxis: {
+            type: 'value',
+            splitLine: { show: false },
+            axisLabel: { show: false },
+            axisTick: { show: false },
+            axisLine: { show: false }
+          },
+          yAxis: [
+            {
+              type: 'category',
+              axisTick: { show: false },
+              axisLine: { show: false },
+              axisLabel: {
+                color: "black",
+                fontSize: 14,
+                textStyle: {
+                  color: '#fff'
+                }
+              },
+              data: ["今年净投入", "一五净投入", "一五总资产", "计划总资产"],
+              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
+              inverse: true
+            },
+            {
+              type: 'category',
+              axisTick: { show: false },
+              axisLine: { show: false },
+              axisLabel: {
+                color: "black",
+                fontSize: 14,
+                textStyle: {
+                  color: '#fff'
+                }
+              },
+              data: ['20,000', '116,000', '170,000', '10,000,000'],
+              max: 4, // 关键：设置y刻度最大值，相当于设置总体行高
+              inverse: true
+            }
+          ],
+          series: [
+            {
+              name: "%",
+              type: "bar",
+              barWidth: 19,
+              data: [(newestData[2] / 20000 * 100).toFixed(2), (newestData[2] / 116000 * 100).toFixed(2), (newestData[3] / 170000 * 100).toFixed(2), (newestData[3] / 10000000 * 100).toFixed(2)],
+              label: {
+                show: true,
+                //position    : 'middle',
+                offset: [20, 2],
+                formatter: '{c}{a}',
+                color: '#fff',
+                fontSize: 15
+              },
+              barCategoryGap: 20,
+              itemStyle: {
+                normal: {
+                  barBorderRadius: 10,
+                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+                    offset: 0,
+                    color: '#fdc830'
+                  }, {
+                    offset: 1,
+                    color: '#f37335'
+                  }]),
+                }
+              },
+              zlevel: 1
+        
+            }, {
+              name: "进度条背景",
+              type: "bar",
+              barGap: "-100%",
+              barWidth: 19,
+              data: [100, 100, 100, 100],
+              color: "#2e5384",
+              itemStyle: {
+                normal: {
+                  barBorderRadius: 10
+                }
+              },
+            }
+          ]
+        };
+        dashboard_chart_id_chart.setOption(dashboard_chart_id_options);
+    });
+    </script>
+    
 ]]></content>
       <categories>
-        <category>小记</category>
+        <category>投资理财</category>
       </categories>
       <tags>
-        <tag>所思所想所悟</tag>
+        <tag>理财</tag>
+        <tag>退休金计划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CentOS7 系统中，如何禁止Linux系统用户通过SSH登录服务器？</title>
+    <url>/2020/03/20/how-to-limit-what-users-can-log-onto-system-via-ssh/</url>
+    <content><![CDATA[<p>出于安全考虑，有时候我们会禁止系统上的某些用户使用 <code>ssh</code> 命令登录服务器。例如，用于启动 MongoDB 服务的用户 mongod，就不允许通过 <code>ssh</code> 命令进行登录。在 CentOS 7 系统中，可以通过修改配置文件 <em>/etc/ssh/sshd_config</em> 达到禁用的目的。</p>
+<h2 id="一、单个用户"><a href="#一、单个用户" class="headerlink" title="一、单个用户"></a>一、单个用户</h2><p>这里以禁用 mongod 用户为例，具体步骤如下：</p>
+<ul>
+<li><p>打开配置文件 <em>/etc/ssh/sshd_config</em>，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure></li>
+<li><p>在文件末尾加入以下内容，只允许后面的用户使用 <code>ssh</code> 命令登陆，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyUsers    mongod</span><br></pre></td></tr></table></figure></li>
+<li><p>保存文件修改，并退出，重启 <code>ssh</code> 服务，即可禁用 <strong>mongod</strong> 用户通过 <code>ssh</code> 命令登陆。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">service sshd restart</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="二、多个用户"><a href="#二、多个用户" class="headerlink" title="二、多个用户"></a>二、多个用户</h2><p>若需要禁用多个系统帐户使用 <code>ssh</code> 命令登陆服务器，只需把系统账户名追加在 <strong>DenyUsers</strong> 行尾，并以空格隔开即可，如禁用 mongod、kafka、robbot 三个用户：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyUsers    mongod kafka robbot</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、用户组"><a href="#三、用户组" class="headerlink" title="三、用户组"></a>三、用户组</h2><p>我们也可以通过增加以下内容来禁止用户组通过 <code>ssh</code> 命令登陆服务器：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyGroups   groupname1 groupname2</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p><strong>NOTE：修改完配置文件，必须重新启动 <code>ssh</code> 服务才能生效。</strong></p>
+</blockquote>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
       </tags>
   </entry>
   <entry>
@@ -4186,39 +4197,6 @@
       </tags>
   </entry>
   <entry>
-    <title>CentOS7 系统中，如何禁止Linux系统用户通过SSH登录服务器？</title>
-    <url>/2020/03/20/how-to-limit-what-users-can-log-onto-system-via-ssh/</url>
-    <content><![CDATA[<p>出于安全考虑，有时候我们会禁止系统上的某些用户使用 <code>ssh</code> 命令登录服务器。例如，用于启动 MongoDB 服务的用户 mongod，就不允许通过 <code>ssh</code> 命令进行登录。在 CentOS 7 系统中，可以通过修改配置文件 <em>/etc/ssh/sshd_config</em> 达到禁用的目的。</p>
-<h2 id="一、单个用户"><a href="#一、单个用户" class="headerlink" title="一、单个用户"></a>一、单个用户</h2><p>这里以禁用 mongod 用户为例，具体步骤如下：</p>
-<ul>
-<li><p>打开配置文件 <em>/etc/ssh/sshd_config</em>，</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure></li>
-<li><p>在文件末尾加入以下内容，只允许后面的用户使用 <code>ssh</code> 命令登陆，</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyUsers    mongod</span><br></pre></td></tr></table></figure></li>
-<li><p>保存文件修改，并退出，重启 <code>ssh</code> 服务，即可禁用 <strong>mongod</strong> 用户通过 <code>ssh</code> 命令登陆。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">service sshd restart</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="二、多个用户"><a href="#二、多个用户" class="headerlink" title="二、多个用户"></a>二、多个用户</h2><p>若需要禁用多个系统帐户使用 <code>ssh</code> 命令登陆服务器，只需把系统账户名追加在 <strong>DenyUsers</strong> 行尾，并以空格隔开即可，如禁用 mongod、kafka、robbot 三个用户：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyUsers    mongod kafka robbot</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、用户组"><a href="#三、用户组" class="headerlink" title="三、用户组"></a>三、用户组</h2><p>我们也可以通过增加以下内容来禁止用户组通过 <code>ssh</code> 命令登陆服务器：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyGroups   groupname1 groupname2</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p><strong>NOTE：修改完配置文件，必须重新启动 <code>ssh</code> 服务才能生效。</strong></p>
-</blockquote>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>CentOS7</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Elasticsearch倒排索引简介</title>
     <url>/2020/08/04/elasticsearch-inverted-index-intro/</url>
     <content><![CDATA[<h2 id="什么是倒排索引"><a href="#什么是倒排索引" class="headerlink" title="什么是倒排索引"></a>什么是倒排索引</h2><p>倒排索引（Inverted index，亦称反向索引），是一种索引方法，用来存储在全文搜索下某个单词在某一个文档或某一组文档中的存储位置的映射。</p>
@@ -4263,6 +4241,74 @@
       </categories>
       <tags>
         <tag>Elasticsearch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Homebrew在macOS上安装Elasticsearch</title>
+    <url>/2020/08/02/install-elasticsearch-on-macos-with-homebrew/</url>
+    <content><![CDATA[<p>在 macOS 上通过 Homwbrew 安装 Elasticsearch 非常简单，首先通过 <code>brew tap</code> 命令关联 Elastic Homebrew 存储库：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew tap elastic/tap</span><br></pre></td></tr></table></figure>
+
+<p>接下来就可以使用 <code>brew install</code> 命令安装最新发布的 Elasticsearch 的默认发行版：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install elastic/tap/elasticsearch-full</span><br></pre></td></tr></table></figure>
+
+<p>如果你看到类似以下的输出内容，就表示安装成功：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Pruned 0 symbolic links and 3 directories from /usr/local</span><br></pre></td></tr></table></figure>
+
+
+
+<p>通过 brew 安装的 Elasticsearch，其配置文件，日志和数据目录存储在以下位置：</p>
+<p><strong>HOME（主目录）</strong>，位于 <code>/usr/local/Cellar/elasticsearch-full/7.8.1/</code>；</p>
+<p><strong>bin （可执行文件所在目录）</strong>位于 <code>ll /usr/local/Cellar/elasticsearch-full/7.8.1/bin</code>；</p>
+<p><strong>config（配置文件）</strong>位于 <code>/usr/local/etc/elasticsearch</code>；</p>
+<p><strong>data（数据存储目录）</strong>位于 <code>/usr/local/var/lib/elasticsearch</code>；</p>
+<p><strong>log（日志文件）</strong>位于 <code>/usr/local/var/log/elasticsearch</code>；</p>
+<p><strong>plugins（插件存放目录）</strong>位于 <code>/usr/local/var/elasticsearch/plugins </code>。</p>
+<p>具体执行输出如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ brew tap elastic/tap</span><br><span class="line">Updating Homebrew...</span><br><span class="line">==&gt; Auto-updated Homebrew!</span><br><span class="line">Updated 1 tap (homebrew/core).</span><br><span class="line">==&gt; New Formulae</span><br><span class="line">act                 chart-testing       dnsprobe            golangci-lint       kubie               never               reg                 termcolor</span><br><span class="line">apidoc              chrony              dosbox-staging      gradle-profiler     ldpl                ngs                 rqlite              thanos</span><br><span class="line">arb                 clair               duckscript          gulp-cli            litecli             notmuch-mutt        scw@1               vgrep</span><br><span class="line">argo                cloudformation-cli  eksctl              hy                  logcli              oci-cli             sdns                wgcf</span><br><span class="line">argocd              coconut             fennel              jimtcl              loki                omake               simdjson            yj</span><br><span class="line">arrayfire           colfer              folderify           jinx                lunchy              ory-hydra           smlpkg              z.lua</span><br><span class="line">awsweeper           copilot             functionalplus      jsonnet-bundler     lunchy-go           osi                 so</span><br><span class="line">bond                cortex              gateway-go          k9s                 marked              pipgrip             solidity</span><br><span class="line">cadence             croaring            gcc@9               kona                naabu               promtail            standardese</span><br><span class="line">chalk-cli           cubejs-cli          git-hooks-go        ksync               nanorc              python@3.7          subfinder</span><br><span class="line">==&gt; Updated Formulae</span><br><span class="line">Updated 3971 formulae.</span><br><span class="line">==&gt; Renamed Formulae</span><br><span class="line">elasticsearch@6.8 -&gt; elasticsearch@6                                            kibana@6.8 -&gt; kibana@6</span><br><span class="line">==&gt; Deleted Formulae</span><br><span class="line">cargo-completion                elasticsearch@2.4               i386-elf-grub                   python                          tomee-jax-rs</span><br><span class="line">cryptopp                        elasticsearch@5.6               kibana@5.6                      sflowtool</span><br><span class="line"></span><br><span class="line">==&gt; Tapping elastic/tap</span><br><span class="line">Cloning into &#x27;/usr/local/Homebrew/Library/Taps/elastic/homebrew-tap&#x27;...</span><br><span class="line">remote: Enumerating objects: 44, done.</span><br><span class="line">remote: Counting objects: 100% (44/44), done.</span><br><span class="line">remote: Compressing objects: 100% (26/26), done.</span><br><span class="line">remote: Total 530 (delta 28), reused 24 (delta 18), pack-reused 486</span><br><span class="line">Receiving objects: 100% (530/530), 133.37 KiB | 31.00 KiB/s, done.</span><br><span class="line">Resolving deltas: 100% (398/398), done.</span><br><span class="line">Tapped 19 formulae (44 files, 234.2KB).</span><br><span class="line">➜  ~ brew install elastic/tap/elasticsearch-full</span><br><span class="line">Updating Homebrew...</span><br><span class="line">==&gt; Auto-updated Homebrew!</span><br><span class="line">Updated 1 tap (homebrew/core).</span><br><span class="line">==&gt; Updated Formulae</span><br><span class="line">Updated 8 formulae.</span><br><span class="line"></span><br><span class="line">==&gt; Installing elasticsearch-full from elastic/tap</span><br><span class="line">==&gt; Downloading https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.8.1-darwin-x86_64.tar.gz?tap=elastic/homebrew-tap</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">####################################################################### 100.0%</span></span></span><br><span class="line">Warning: tried to install empty array to /usr/local/etc/elasticsearch/jvm.options.d</span><br><span class="line">==&gt; codesign -f -s - /usr/local/Cellar/elasticsearch-full/7.8.1/libexec/modules/x-pack-ml/platform/darwin-x86_64/controller.app --deep</span><br><span class="line">==&gt; find /usr/local/Cellar/elasticsearch-full/7.8.1/libexec/jdk.app/Contents/Home/bin -type f -exec codesign -f -s - &#123;&#125; ;</span><br><span class="line">==&gt; Caveats</span><br><span class="line">Data:    /usr/local/var/lib/elasticsearch/elasticsearch_bobotang/</span><br><span class="line">Logs:    /usr/local/var/log/elasticsearch/elasticsearch_bobotang.log</span><br><span class="line">Plugins: /usr/local/var/elasticsearch/plugins/</span><br><span class="line">Config:  /usr/local/etc/elasticsearch/</span><br><span class="line"></span><br><span class="line">To have launchd start elastic/tap/elasticsearch-full now and restart at login:</span><br><span class="line">  brew services start elastic/tap/elasticsearch-full</span><br><span class="line">Or, if you don&#x27;t want/need a background service you can just run:</span><br><span class="line">  elasticsearch</span><br><span class="line">==&gt; Summary</span><br><span class="line">🍺  /usr/local/Cellar/elasticsearch-full/7.8.1: 901 files, 473.6MB, built in 15 seconds</span><br><span class="line">==&gt; `brew cleanup` has not been run in 30 days, running now...</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/gettext--0.20.2_1.catalina.bottle.tar.gz... (8.4MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/gnupg--2.2.20.catalina.bottle.tar.gz... (4.3MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/libevent--2.1.11_1.catalina.bottle.tar.gz... (1.2MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/libgcrypt--1.8.5.catalina.bottle.tar.gz... (1MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/redis--6.0.5.catalina.bottle.tar.gz... (1.8MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/unbound--1.10.1.catalina.bottle.tar.gz... (2.5MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gmp... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/pinentry... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libidn2... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libksba... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/autojump... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/ncurses... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/nettle... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libunistring... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/utf8proc... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libassuan... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libgpg-error... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libgcrypt... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gettext... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/pwgen... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/tmux... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libtasn1... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libevent... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/openssl@1.1... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/unbound... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libusb... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gnupg... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/p11-kit... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libffi... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/telnet... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gnutls... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/npth... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/adns... (64B)</span><br><span class="line">Pruned 0 symbolic links and 3 directories from /usr/local</span><br><span class="line">➜  ~ </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Elasticsearch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</title>
+    <url>/2020/06/29/java-list-string-join/</url>
+    <content><![CDATA[<p>在日常开发工作中，经常会遇到需要将 <code>List&lt;String&gt;</code> 转换为使用某个符号连接的字符串。如将 <code>List&lt;String&gt;</code> 转换为按英文逗号（<code>,</code>）分隔的字符串：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：</span></span><br><span class="line"><span class="comment">// Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>最容易想到的拼接方式，是通过 <code>for</code> 循环来实现。不过，如果你使用 Java 8 或以上的版本进行开发，实现该功能将变得非常简单，通常有以下两种方法。</p>
+<p><strong>方法一：使用 <code>String.join</code>，主要代码如下：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示 String.join 方法的使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line">        System.out.println(String.join(<span class="string">&quot;,&quot;</span>, weekList));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>方法二：采用流的方式（<code>stream()</code>）来写，就像下面这样，仍然能够得到同样的结果：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示流方式（stream）进行拼接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        String str = weekList.stream().collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>此外，如果你想在连接成字符串之前，先对元素进行其他的操作，如过滤元素、转成大写等，采用流的方式实现也很方便。以下代码展示如何将整个字符串在连接之前先转为大写：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示在连接之前先将元素转为大写</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">      String str = String str = weekList.stream()</span><br><span class="line">                .map(String::toUpperCase)</span><br><span class="line">                .collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">      </span><br><span class="line">      System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -4358,71 +4404,25 @@
       </tags>
   </entry>
   <entry>
-    <title>使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</title>
-    <url>/2020/06/29/java-list-string-join/</url>
-    <content><![CDATA[<p>在日常开发工作中，经常会遇到需要将 <code>List&lt;String&gt;</code> 转换为使用某个符号连接的字符串。如将 <code>List&lt;String&gt;</code> 转换为按英文逗号（<code>,</code>）分隔的字符串：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：</span></span><br><span class="line"><span class="comment">// Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>最容易想到的拼接方式，是通过 <code>for</code> 循环来实现。不过，如果你使用 Java 8 或以上的版本进行开发，实现该功能将变得非常简单，通常有以下两种方法。</p>
-<p><strong>方法一：使用 <code>String.join</code>，主要代码如下：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示 String.join 方法的使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line">        System.out.println(String.join(<span class="string">&quot;,&quot;</span>, weekList));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>方法二：采用流的方式（<code>stream()</code>）来写，就像下面这样，仍然能够得到同样的结果：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示流方式（stream）进行拼接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        String str = weekList.stream().collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>此外，如果你想在连接成字符串之前，先对元素进行其他的操作，如过滤元素、转成大写等，采用流的方式实现也很方便。以下代码展示如何将整个字符串在连接之前先转为大写：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示在连接之前先将元素转为大写</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">      String str = String str = weekList.stream()</span><br><span class="line">                .map(String::toUpperCase)</span><br><span class="line">                .collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">      </span><br><span class="line">      System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>（END）</p>
+    <title>小记：2021年8月</title>
+    <url>/2021/08/05/note-202108/</url>
+    <content><![CDATA[<h2 id="2021年8月2日"><a href="#2021年8月2日" class="headerlink" title="2021年8月2日"></a>2021年8月2日</h2><p><strong>1 梦</strong></p>
+<p>昨晚梦到皮蛋，可把我气醒了。梦里大概是这样子：</p>
+<p>皮蛋生了七只小猫咪，有黑色的，有白色的，有橘黄色的还有混色的。但我发现的时候，其中的三只被他吃了，另外四只被绳子绑在一起，浸泡在洗脸盆上，盆上还有水。皮蛋打算溺死他自己的猫咪仔。把我气死了，拿起棍子准备教训皮蛋。结果，他一下子就跑去躲了，打不到他，我像个泼妇骂街一样，边骂边教育他，告诉他这些是你的仔，怎么可以这么残忍对待它们。。</p>
+<p>骂着骂着，突然想到小猫咪还在水盆里泡着呢，就马上冲回去，把小猫咪捞出来，解了绳子，感觉这些小猫咪像是要快饿死了。皮蛋又抓不到，不然还可以让皮蛋给小猫咪喂奶。</p>
+<p>没办法，想到小猫咪可以喝牛奶，又去冰箱找。边翻边想，刚出生的小猫咪可以喝冰的牛奶吗？哎呀，不管那么多了，拉肚子总比被饿死好吧？于是继续翻啊、找啊，但就是没有找到牛奶，急死了。后面冷静点，才想起我已经不喝牛奶很久了，冰箱怎么可能会有牛奶？这一瞬间，我彻底崩溃了，一直在责怪和质问自己。为什么我现在不喝牛奶了？！以前不是每晚睡之前都要喝一瓶的吗？！怎么不能过几天再不想喝牛奶？！就算不喝牛奶，冰箱也要备着啊？！为什么？！</p>
+<p>实在压抑到有些难受，还好醒了，睁着眼睛躺在床上，回忆着这个梦的始末，怒火中烧。清醒一点后发现，皮蛋不是公猫吗？还是一只做了绝育手术的公猫，他怎么会生小猫咪呢？</p>
+<p>哦，原来是一场梦啊，真是奇奇怪怪的梦！看了下手机，现在快早上5点了，起来喝点水，倒头再睡会，今天还要上班。</p>
+<p><strong>2 活在当下</strong></p>
+<p>夏天的时候就盼望着冬天的到来，而冬天的时候又期待着夏天的到来，一点都没有活在当下啊。</p>
+<p><strong>3 专注呼吸</strong></p>
+<p>每当我开始专注于自己的呼吸时，脑袋里总有各种各样的想法蹦跶出来。而当我结束专注呼吸训练准备记录他们的时候，他们又一下子不见了踪影。真是奇怪的脑袋</p>
 ]]></content>
       <categories>
-        <category>编程文摘</category>
+        <category>小记</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Homebrew在macOS上安装Elasticsearch</title>
-    <url>/2020/08/02/install-elasticsearch-on-macos-with-homebrew/</url>
-    <content><![CDATA[<p>在 macOS 上通过 Homwbrew 安装 Elasticsearch 非常简单，首先通过 <code>brew tap</code> 命令关联 Elastic Homebrew 存储库：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew tap elastic/tap</span><br></pre></td></tr></table></figure>
-
-<p>接下来就可以使用 <code>brew install</code> 命令安装最新发布的 Elasticsearch 的默认发行版：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install elastic/tap/elasticsearch-full</span><br></pre></td></tr></table></figure>
-
-<p>如果你看到类似以下的输出内容，就表示安装成功：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Pruned 0 symbolic links and 3 directories from /usr/local</span><br></pre></td></tr></table></figure>
-
-
-
-<p>通过 brew 安装的 Elasticsearch，其配置文件，日志和数据目录存储在以下位置：</p>
-<p><strong>HOME（主目录）</strong>，位于 <code>/usr/local/Cellar/elasticsearch-full/7.8.1/</code>；</p>
-<p><strong>bin （可执行文件所在目录）</strong>位于 <code>ll /usr/local/Cellar/elasticsearch-full/7.8.1/bin</code>；</p>
-<p><strong>config（配置文件）</strong>位于 <code>/usr/local/etc/elasticsearch</code>；</p>
-<p><strong>data（数据存储目录）</strong>位于 <code>/usr/local/var/lib/elasticsearch</code>；</p>
-<p><strong>log（日志文件）</strong>位于 <code>/usr/local/var/log/elasticsearch</code>；</p>
-<p><strong>plugins（插件存放目录）</strong>位于 <code>/usr/local/var/elasticsearch/plugins </code>。</p>
-<p>具体执行输出如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ brew tap elastic/tap</span><br><span class="line">Updating Homebrew...</span><br><span class="line">==&gt; Auto-updated Homebrew!</span><br><span class="line">Updated 1 tap (homebrew/core).</span><br><span class="line">==&gt; New Formulae</span><br><span class="line">act                 chart-testing       dnsprobe            golangci-lint       kubie               never               reg                 termcolor</span><br><span class="line">apidoc              chrony              dosbox-staging      gradle-profiler     ldpl                ngs                 rqlite              thanos</span><br><span class="line">arb                 clair               duckscript          gulp-cli            litecli             notmuch-mutt        scw@1               vgrep</span><br><span class="line">argo                cloudformation-cli  eksctl              hy                  logcli              oci-cli             sdns                wgcf</span><br><span class="line">argocd              coconut             fennel              jimtcl              loki                omake               simdjson            yj</span><br><span class="line">arrayfire           colfer              folderify           jinx                lunchy              ory-hydra           smlpkg              z.lua</span><br><span class="line">awsweeper           copilot             functionalplus      jsonnet-bundler     lunchy-go           osi                 so</span><br><span class="line">bond                cortex              gateway-go          k9s                 marked              pipgrip             solidity</span><br><span class="line">cadence             croaring            gcc@9               kona                naabu               promtail            standardese</span><br><span class="line">chalk-cli           cubejs-cli          git-hooks-go        ksync               nanorc              python@3.7          subfinder</span><br><span class="line">==&gt; Updated Formulae</span><br><span class="line">Updated 3971 formulae.</span><br><span class="line">==&gt; Renamed Formulae</span><br><span class="line">elasticsearch@6.8 -&gt; elasticsearch@6                                            kibana@6.8 -&gt; kibana@6</span><br><span class="line">==&gt; Deleted Formulae</span><br><span class="line">cargo-completion                elasticsearch@2.4               i386-elf-grub                   python                          tomee-jax-rs</span><br><span class="line">cryptopp                        elasticsearch@5.6               kibana@5.6                      sflowtool</span><br><span class="line"></span><br><span class="line">==&gt; Tapping elastic/tap</span><br><span class="line">Cloning into &#x27;/usr/local/Homebrew/Library/Taps/elastic/homebrew-tap&#x27;...</span><br><span class="line">remote: Enumerating objects: 44, done.</span><br><span class="line">remote: Counting objects: 100% (44/44), done.</span><br><span class="line">remote: Compressing objects: 100% (26/26), done.</span><br><span class="line">remote: Total 530 (delta 28), reused 24 (delta 18), pack-reused 486</span><br><span class="line">Receiving objects: 100% (530/530), 133.37 KiB | 31.00 KiB/s, done.</span><br><span class="line">Resolving deltas: 100% (398/398), done.</span><br><span class="line">Tapped 19 formulae (44 files, 234.2KB).</span><br><span class="line">➜  ~ brew install elastic/tap/elasticsearch-full</span><br><span class="line">Updating Homebrew...</span><br><span class="line">==&gt; Auto-updated Homebrew!</span><br><span class="line">Updated 1 tap (homebrew/core).</span><br><span class="line">==&gt; Updated Formulae</span><br><span class="line">Updated 8 formulae.</span><br><span class="line"></span><br><span class="line">==&gt; Installing elasticsearch-full from elastic/tap</span><br><span class="line">==&gt; Downloading https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.8.1-darwin-x86_64.tar.gz?tap=elastic/homebrew-tap</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">####################################################################### 100.0%</span></span></span><br><span class="line">Warning: tried to install empty array to /usr/local/etc/elasticsearch/jvm.options.d</span><br><span class="line">==&gt; codesign -f -s - /usr/local/Cellar/elasticsearch-full/7.8.1/libexec/modules/x-pack-ml/platform/darwin-x86_64/controller.app --deep</span><br><span class="line">==&gt; find /usr/local/Cellar/elasticsearch-full/7.8.1/libexec/jdk.app/Contents/Home/bin -type f -exec codesign -f -s - &#123;&#125; ;</span><br><span class="line">==&gt; Caveats</span><br><span class="line">Data:    /usr/local/var/lib/elasticsearch/elasticsearch_bobotang/</span><br><span class="line">Logs:    /usr/local/var/log/elasticsearch/elasticsearch_bobotang.log</span><br><span class="line">Plugins: /usr/local/var/elasticsearch/plugins/</span><br><span class="line">Config:  /usr/local/etc/elasticsearch/</span><br><span class="line"></span><br><span class="line">To have launchd start elastic/tap/elasticsearch-full now and restart at login:</span><br><span class="line">  brew services start elastic/tap/elasticsearch-full</span><br><span class="line">Or, if you don&#x27;t want/need a background service you can just run:</span><br><span class="line">  elasticsearch</span><br><span class="line">==&gt; Summary</span><br><span class="line">🍺  /usr/local/Cellar/elasticsearch-full/7.8.1: 901 files, 473.6MB, built in 15 seconds</span><br><span class="line">==&gt; `brew cleanup` has not been run in 30 days, running now...</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/gettext--0.20.2_1.catalina.bottle.tar.gz... (8.4MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/gnupg--2.2.20.catalina.bottle.tar.gz... (4.3MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/libevent--2.1.11_1.catalina.bottle.tar.gz... (1.2MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/libgcrypt--1.8.5.catalina.bottle.tar.gz... (1MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/redis--6.0.5.catalina.bottle.tar.gz... (1.8MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/unbound--1.10.1.catalina.bottle.tar.gz... (2.5MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gmp... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/pinentry... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libidn2... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libksba... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/autojump... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/ncurses... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/nettle... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libunistring... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/utf8proc... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libassuan... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libgpg-error... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libgcrypt... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gettext... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/pwgen... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/tmux... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libtasn1... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libevent... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/openssl@1.1... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/unbound... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libusb... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gnupg... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/p11-kit... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libffi... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/telnet... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gnutls... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/npth... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/adns... (64B)</span><br><span class="line">Pruned 0 symbolic links and 3 directories from /usr/local</span><br><span class="line">➜  ~ </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Elasticsearch</tag>
+        <tag>所思所想所悟</tag>
       </tags>
   </entry>
   <entry>
@@ -4434,10 +4434,10 @@
 <h2 id="为什么需要学管理？"><a href="#为什么需要学管理？" class="headerlink" title="为什么需要学管理？"></a>为什么需要学管理？</h2><p>对于互联网技术人来说，“管理”作为一项综合能力不再是一个可选项，无论是否身在技术管理岗，未来的职业发展都会围绕着<strong>技术和管理</strong>这两条腿在走路，一条腿是走不远的。</p>
 <h2 id="重点内容"><a href="#重点内容" class="headerlink" title="重点内容"></a>重点内容</h2><ol>
 <li><strong>自我倾听。</strong>理顺内心的纠结与彷徨，心无旁骛地走上管理之路。</li>
-<li><strong>角色认知。</strong>提供一个管理工作的“全景图”，以方便按图索骥地_<strong>了解管理工作所涵盖的方方面面。</strong>_</li>
-<li><strong>管理方法。</strong>“管理三部曲”——_<strong>管理规划、团队建设和任务管理</strong>_，探讨**<em>“看方向”“带人”和“做事”</em>**的这三个关键的管理内容。</li>
-<li><strong>管理沟通。</strong>探讨管理沟通的**<em>工具和技巧</em><strong>，并探讨</strong><em>向上、向下、横向</em>**等典型沟通场景下的沟通要点。</li>
-<li><strong>管理之路。</strong>主要探讨**<em>如何积累管理方法论</em>**，以及_<strong>如何成为自己所期待的管理者。</strong>_</li>
+<li><strong>角色认知。</strong>提供一个管理工作的“全景图”，以方便按图索骥地<em><strong>了解管理工作所涵盖的方方面面。</strong></em></li>
+<li><strong>管理方法。</strong>“管理三部曲”——<em><strong>管理规划、团队建设和任务管理</strong></em>，探讨<em><strong>“看方向”“带人”和“做事”</strong></em>的这三个关键的管理内容。</li>
+<li><strong>管理沟通。</strong>探讨管理沟通的<em><strong>工具和技巧</strong></em>，并探讨<em><strong>向上、向下、横向</strong></em>等典型沟通场景下的沟通要点。</li>
+<li><strong>管理之路。</strong>主要探讨<em><strong>如何积累管理方法论</strong></em>，以及<em><strong>如何成为自己所期待的管理者。</strong></em></li>
 </ol>
 <h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><ul>
 <li><p>自我倾听</p>
@@ -4481,7 +4481,7 @@
     <url>/2021/08/10/technology-management-1/</url>
     <content><![CDATA[<h2 id="技术人常见的职业发展方向"><a href="#技术人常见的职业发展方向" class="headerlink" title="技术人常见的职业发展方向"></a>技术人常见的职业发展方向</h2><p><img src="/image/column/tech-mg/1629193567069-f3f58680-f2e6-4305-b8e7-4d3f09914adf.png"></p>
 <p>技术类、管理类、创业类和顾问类方向的技能清单：</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/22047870/1628231014471-78f3c500-6793-4ad5-8bd7-d60d3e02404f.png#align=left&display=inline&height=472&margin=%5Bobject%20Object%5D&name=%E6%8A%80%E8%83%BD%E6%B8%85%E5%8D%95&originHeight=472&originWidth=382&size=0&status=done&style=none&width=382" alt="技能清单"><br>无论走在哪条路上，有些能力是共通的，比如<strong>规划、带人、沟通、执行等管理能力</strong>。</p>
+<p><img src="/image/column/tech-mg/1628231014471-78f3c500-6793-4ad5-8bd7-d60d3e02404f.png" alt="技能清单"><br>无论走在哪条路上，有些能力是共通的，比如<strong>规划、带人、沟通、执行等管理能力</strong>。</p>
 <h2 id="要不要做管理？"><a href="#要不要做管理？" class="headerlink" title="要不要做管理？"></a>要不要做管理？</h2><p>要不要做管理问题应从<strong>初衷和意愿</strong>两方面考虑。</p>
 <h3 id="“做管理”是否更符合初衷？"><a href="#“做管理”是否更符合初衷？" class="headerlink" title="“做管理”是否更符合初衷？"></a>“做管理”是否更符合初衷？</h3><p>仔细思考自己做管理是因为外驱力还是内驱力？<strong>外驱让我们可以做好本职工作，而内驱才能让我们成就卓越。</strong></p>
 <p><strong>外驱力</strong><br>外部的推力和诱惑，如不得已的选择、别人眼里的成功、不辜负组织的期待、对做管理的主观遐想等。</p>
@@ -4523,7 +4523,7 @@
 <li><strong>自己的优势、能力以及所负责的工作内容；</strong></li>
 <li><strong>得到他人的支持（资源提供者、伙伴/同行者、导师榜样、家人/朋友）。</strong></li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/22047870/1628238415051-6e3a052c-4604-4af9-9a5f-05251eb81817.png#align=left&display=inline&height=324&margin=%5Bobject%20Object%5D&originHeight=648&originWidth=1146&size=0&status=done&style=none&width=573"></p>
+<p><img src="/image/column/tech-mg/1628238415051-6e3a052c-4604-4af9-9a5f-05251eb81817.png"></p>
 <blockquote>
 <p>TIPS：</p>
 <ol>
@@ -4534,7 +4534,7 @@
 </ol>
 </blockquote>
 <p>“天时”“地利”“人和”这三类管理之路的外部因素都具备了（如下图），自然可以更顺利地走上管理岗位。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/22047870/1628244980896-3120e339-3202-421b-acc2-552c6b5b9345.png#align=left&display=inline&height=308&margin=%5Bobject%20Object%5D&originHeight=616&originWidth=1306&size=0&status=done&style=none&width=653"></p>
+<p><img src="/image/column/tech-mg/1628244980896-3120e339-3202-421b-acc2-552c6b5b9345.png"></p>
 <p>但如果不具备这些外部因素，而你还想往管理方向走的话，那么以下这些之前可能并没做过的、公司也不会因此就给你多发薪水的工作，在编码之余依然要去关心：</p>
 <ul>
 <li>项目的流程该怎么改进；</li>
@@ -4658,27 +4658,31 @@
 <li><strong>无法带领一个团队</strong>。由于视角局限，所以还不具备带领团队的能力。</li>
 </ul>
 <h3 id="第二类：大包大揽、唯我最强"><a href="#第二类：大包大揽、唯我最强" class="headerlink" title="第二类：大包大揽、唯我最强"></a>第二类：大包大揽、唯我最强</h3><p>常见的相关说法有：</p>
-<pre><code>                          - “某某做得太慢了，还是我来做吧，他半天的工作，我两个小时就搞定了。”（包工作）
-                          - “团队离了我就不转了，里里外外都靠我操心，他们都担不起这个责任。” （包责任）
-                          - “某某的工作主要靠我……”“在我的指导下，某某才……”“这件事主要是我做的……”（包功劳）
-</code></pre>
+<ul>
+<li>“某某做得太慢了，还是我来做吧，他半天的工作，我两个小时就搞定了。”（包工作）</li>
+<li>“团队离了我就不转了，里里外外都靠我操心，他们都担不起这个责任。” （包责任）</li>
+<li>“某某的工作主要靠我……”“在我的指导下，某某才……”“这件事主要是我做的……”（包功劳）</li>
+</ul>
 <p>可能会带来这样的后果：</p>
-<pre><code>                          - **梯队问题**：大树底下寸草不生，梯队迟迟培养不起来。因为梯队的培养需要授权，需要让高潜人才有发挥空间并承担相应的责任。
-                          - **激励问题**：由于管理者冲得太靠前，团队成员积极性受挫，遇事往后缩。
-                          - **个人发展问题**：由于得不到团队成员的有效支持，自己又忙又累，做不了更大的业务。
-</code></pre>
+<ul>
+<li><strong>梯队问题</strong>：大树底下寸草不生，梯队迟迟培养不起来。因为梯队的培养需要授权，需要让高潜人才有发挥空间并承担相应的责任。</li>
+<li><strong>激励问题</strong>：由于管理者冲得太靠前，团队成员积极性受挫，遇事往后缩。</li>
+<li><strong>个人发展问题</strong>：由于得不到团队成员的有效支持，自己又忙又累，做不了更大的业务。</li>
+</ul>
 <blockquote>
 <p>有些成熟公司如京东就有规定，_<strong>如果你没有培养出可以完全顶替你位置的人，你是不能晋升的。</strong>_</p>
 </blockquote>
 <h3 id="第三类：带头大哥、当家保姆"><a href="#第三类：带头大哥、当家保姆" class="headerlink" title="第三类：带头大哥、当家保姆"></a>第三类：带头大哥、当家保姆</h3><p>常见的相关说法有：</p>
-<pre><code>                          - “好好干，我不会亏待你的，我绝不会让跟着我的兄弟们吃亏！”
-                          - “某某可能会不高兴，可能会离职，怎么办呢？”
-                          - “某某技术比我强，我给他打好下手就行了。”
-</code></pre>
+<ul>
+<li>“好好干，我不会亏待你的，我绝不会让跟着我的兄弟们吃亏！”</li>
+<li>“某某可能会不高兴，可能会离职，怎么办呢？”</li>
+<li>“某某技术比我强，我给他打好下手就行了。”</li>
+</ul>
 <p>这类问题带来的后果大体如下：</p>
-<pre><code>                          - **不职业的管理风格和文化**，这会给公司带来很大的潜在风险。
-                          - **团队没有方向**，所以很难有正确的判断和决策。
-</code></pre>
+<ul>
+<li><strong>不职业的管理风格和文化</strong>，这会给公司带来很大的潜在风险。</li>
+<li><strong>团队没有方向</strong>，所以很难有正确的判断和决策。</li>
+</ul>
 <blockquote>
 <ol>
 <li>“带头大哥”式的管理者，讲究的是兄弟感情，在他们心目中，不但兄弟的工作是我的， 兄弟人也是我的。这类管理者可能在某些情况下特别有战斗力，但是一旦情况有变，对公司的破坏性也是非常大的，因为他忘记了他带的<strong>团队是公司的资源</strong>，而不是自己的，所以不可能成为一个职业的管理者。</li>
@@ -4686,31 +4690,35 @@
 </ol>
 </blockquote>
 <h3 id="第四类：单一视角、固化思维"><a href="#第四类：单一视角、固化思维" class="headerlink" title="第四类：单一视角、固化思维"></a>第四类：单一视角、固化思维</h3><p>常见的相关说法有：</p>
-<pre><code>                          - “人手不够，没人，这真做不了，要做就得招人。”
-                          - “让团队加班的话，得给大家发加班费，不然没法提升积极性。”
-                          - “像某某那样的人才适合做管理，我跟他太不一样了，所以不适合做管理。”
-                          - “还有个 Bug 没修复，不能发布，我们一直都是这么规定的。”
-</code></pre>
+<ul>
+<li>“人手不够，没人，这真做不了，要做就得招人。”</li>
+<li>“让团队加班的话，得给大家发加班费，不然没法提升积极性。”</li>
+<li>“像某某那样的人才适合做管理，我跟他太不一样了，所以不适合做管理。”</li>
+<li>“还有个 Bug 没修复，不能发布，我们一直都是这么规定的。”</li>
+</ul>
 <p>造成的后果是：</p>
-<pre><code>                          - **习惯性卡住**。遇到问题和困难，很容易被卡住，到处都是绕不过去的鸿沟。
-                          - **认知层次低**。由于被单一惯性思维所支配，认知层次和考虑问题的维度无法提升。
-                          - **难堪重任**。由于创造性地解决问题的能力不足，难以承担具有挑战性的工作。
-</code></pre>
+<ul>
+<li><strong>习惯性卡住</strong>。遇到问题和困难，很容易被卡住，到处都是绕不过去的鸿沟。</li>
+<li><strong>认知层次低</strong>。由于被单一惯性思维所支配，认知层次和考虑问题的维度无法提升。</li>
+<li><strong>难堪重任</strong>。由于创造性地解决问题的能力不足，难以承担具有挑战性的工作。</li>
+</ul>
 <h3 id="第五类：自扫门前雪、固守边界"><a href="#第五类：自扫门前雪、固守边界" class="headerlink" title="第五类：自扫门前雪、固守边界"></a>第五类：自扫门前雪、固守边界</h3><p>常见的相关说法有：</p>
-<pre><code>                          - “这个是测试的问题，这个是产品的问题，这个是别的部门的问题。”
-                          - “产品经理一点逻辑都没有，没法沟通。”
-                          - “这事不赖我们团队，是某某团队没有按时完成。”
-                          - “我查过了，不是我们的问题，惩罚不到我们。”
-</code></pre>
+<ul>
+<li>“这个是测试的问题，这个是产品的问题，这个是别的部门的问题。”</li>
+<li>“产品经理一点逻辑都没有，没法沟通。”</li>
+<li>“这事不赖我们团队，是某某团队没有按时完成。”</li>
+<li>“我查过了，不是我们的问题，惩罚不到我们。”</li>
+</ul>
 <p>所以，这类问题明显的管理者，常常带来这样的后果：</p>
-<pre><code>                          - **项目推进不畅，从而影响全局的结果**。
-                          - **自我设限，因此个人成长受限**。
-                          - **个人影响力无法扩展**。因为目光和手脚都局限在团队内，所以无法在更大的范围产生影响力，也就无法成为更高级的管理者。
-</code></pre>
+<ul>
+<li><strong>项目推进不畅，从而影响全局的结果</strong>。</li>
+<li><strong>自我设限，因此个人成长受限</strong>。</li>
+<li><strong>个人影响力无法扩展</strong>。因为目光和手脚都局限在团队内，所以无法在更大的范围产生影响力，也就无法成为更高级的管理者。</li>
+</ul>
 <blockquote>
 <p>角色和责任的边界划分，是为了分工和合作，但由于很多大型项目有赖于多个团队一起协作完成，所以又需要有人主动站出来，去承担边界模糊的那部分职责。作为一个员工，边界分明无可厚非，但是作为一个管理者，就需要以全局的目标为己任，才能拿到公司要的业绩结果。<br>作为管理者，是要站高一层来看待问题的。</p>
 </blockquote>
-<h3 id="第六类：患得患失"><a href="#第六类：患得患失" class="headerlink" title="第六类：患得患失"></a>第六类：患得患失</h3><p>**<br>常见的说法有： </p>
+<h3 id="第六类：患得患失"><a href="#第六类：患得患失" class="headerlink" title="第六类：患得患失"></a>第六类：患得患失</h3><p>常见的说法有： </p>
 <ul>
 <li>“突然不写代码了，感觉吃饭的家伙没了，心里发虚。”</li>
 <li>“管理工作太琐碎，感觉离技术越来越远，现在特别担心个人发展。” </li>
@@ -4724,7 +4732,6 @@
 <li><strong>对技术的看法太狭隘，从而影响技术判断力的提升</strong>。</li>
 <li>由于<strong>误判</strong>，可能会错失一个好的发展平台。</li>
 </ul>
-<p>**<br>**<br>**<br>**<br>**<br>**</p>
 ]]></content>
       <categories>
         <category>读书学习笔记</category>
@@ -4732,35 +4739,6 @@
       <tags>
         <tag>技术管理</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>袁隆平：稻子熟了，妈妈，我来看您了</title>
-    <url>/2021/05/24/ylp-1/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>“他们说，我用一粒种子改变了世界。我知道，这粒种子，是妈妈您在我幼年时种下的！”</strong><br> <br>2010年，在袁隆平院士80华诞，湖南卫视为他举办了“为了大地的丰收”专场文艺晚会，晚会上，袁院士写给母亲的信《妈妈，稻子熟了》感动了在场所有观众，字里行间，说不尽对母亲的思念与愧疚。</p>
-<p>袁隆平动情写到：“没能多陪伴母亲，是我永远的后悔与遗憾。”今天，袁隆平院士逝世，读完这封旧信的网友纷纷留言：“读到一半就已泪流满面，可爱的袁爷爷，要去和妈妈团聚了。”<br> <br>我们整理了信件原文，纪念袁隆平院士一路走好。<br> <br>以下为信件原文。</p>
-</blockquote>
-<p>本来想一个人静静地陪您说会话，安江的乡亲们实在是太热情了，天这么热，他们还一直陪着，谢谢他们了。</p>
-<p>妈妈，您在安江，我在长沙，隔得很远很远。我在梦里总是想着您，想着安江这个地方。</p>
-<p>人事难料啊，您这样一位习惯了繁华都市的大家闺秀，最后竟会永远留在这么一个偏远的小山村。还记得吗？1957年，我要从重庆的大学分配到这儿，是您陪着我，脸贴着地图，手指顺着密密麻麻的细线，找了很久，才找到地图上这么一个小点点。当时您叹了口气说：<strong>“孩子，你到那儿，是要吃苦的呀……”</strong></p>
-<p>我说：“我年轻，我还有一把小提琴。”</p>
-<p>没想到的是，为了我，为了帮我带小孩，把您也拖到了安江。最后，受累吃苦的，是妈妈您哪！您哪里走得惯乡间的田埂！我总记得，每次都要小孙孙牵着您的手，您才敢走过屋前屋后的田间小道。</p>
-<p>安江是我的一切，我却忘了，对一辈子都生活在大城市里的您来说，70岁了，一切还要重新来适应。我从来没有问过您有什么难处，我总以为会有时间的，会有时间的，等我闲一点一定好好地陪陪您……</p>
-<p>哪想到，直到您走的时候，我还在长沙忙着开会。那天正好是中秋节，全国的同行都来了，搞杂交水稻不容易啊，我又是召集人，怎么着也得陪大家过这个节啊，只是儿子永远亏欠妈妈您了……</p>
-<p>其实我知道，那个时候已经是您的最后时刻。我总盼望着妈妈您能多撑两天。谁知道，即便是天不亮就往安江赶，我还是没能见上妈妈您最后一面。</p>
-<p>太晚了，一切都太晚了，我真的好后悔。妈妈，当时您一定等了我很久，盼了我很长，您一定有很多话要对儿子说，有很多事要交代。可我怎么就那么糊涂呢！这么多年，为什么我就不能少下一次田，少做一次实验，少出一天差，坐下来静静地好好陪陪您。哪怕……哪怕就一次。</p>
-<p>妈妈，每当我的研究取得成果，每当我在国际讲坛上谈笑风生，每当我接过一座又一座奖杯，我总是对人说，这辈子对我影响最深的人就是妈妈您啊！</p>
-<p>无法想象，没有您的英语启蒙，在一片闭塞中，我怎么能够阅读世界上最先进的科学文献，用超越那个时代的视野，去寻访遗传学大师孟德尔和摩尔根？无法想象，在那段颠沛流离的岁月中，从北平到汉口，从桃源到重庆，没有您的执著和鼓励，我怎么能获得系统的现代教育，获得在大江大河中自由翱翔的胆识？无法想象，没有您在摇篮前跟我讲尼采，讲这位昂扬着生命力、意志力的伟大哲人，我怎么能够在千百次的失败中坚信，必然有一粒种子可以使万千民众告别饥饿？</p>
-<p>他们说，我用一粒种子改变了世界。<strong>我知道，这粒种子，是妈妈您在我幼年时种下的！</strong></p>
-<p>稻子熟了，妈妈，您能闻到吗？安江可好？那里的田埂是不是还留着熟悉的欢笑？隔着21年的时光，我依稀看见，小孙孙牵着您的手，走过稻浪的背影；我还要告诉您，一辈子没有耕种过的母亲，稻芒划过手掌，稻草在场上堆积成垛，谷子在阳光中毕剥作响，水田在西晒下泛出橙黄的味道。这都是儿子要跟您说的话，说不完的话啊……</p>
-<p><strong>妈妈，稻子熟了，我想您了！</strong></p>
-<blockquote>
-<p>剪报来源<br>公众号：中央政法委长安剑<br>链　接：<a href="https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A">https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A</a><br>日　期：2021-05-23</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>剪报</category>
-      </categories>
   </entry>
   <entry>
     <title>袁隆平：我的两个梦</title>
@@ -4797,6 +4775,35 @@
 <p><em>文/袁隆平</em><br><em>编辑/点苍</em><br><strong>（原文刊于《 人民日报 》2019年10月23日第20 版）</strong></p>
 <blockquote>
 <p>剪报来源<br>公众号： 侠客岛<br>链　接：<a href="https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw">https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw</a><br>日　期：2021-05-22</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>剪报</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>袁隆平：稻子熟了，妈妈，我来看您了</title>
+    <url>/2021/05/24/ylp-1/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>“他们说，我用一粒种子改变了世界。我知道，这粒种子，是妈妈您在我幼年时种下的！”</strong><br> <br>2010年，在袁隆平院士80华诞，湖南卫视为他举办了“为了大地的丰收”专场文艺晚会，晚会上，袁院士写给母亲的信《妈妈，稻子熟了》感动了在场所有观众，字里行间，说不尽对母亲的思念与愧疚。</p>
+<p>袁隆平动情写到：“没能多陪伴母亲，是我永远的后悔与遗憾。”今天，袁隆平院士逝世，读完这封旧信的网友纷纷留言：“读到一半就已泪流满面，可爱的袁爷爷，要去和妈妈团聚了。”<br> <br>我们整理了信件原文，纪念袁隆平院士一路走好。<br> <br>以下为信件原文。</p>
+</blockquote>
+<p>本来想一个人静静地陪您说会话，安江的乡亲们实在是太热情了，天这么热，他们还一直陪着，谢谢他们了。</p>
+<p>妈妈，您在安江，我在长沙，隔得很远很远。我在梦里总是想着您，想着安江这个地方。</p>
+<p>人事难料啊，您这样一位习惯了繁华都市的大家闺秀，最后竟会永远留在这么一个偏远的小山村。还记得吗？1957年，我要从重庆的大学分配到这儿，是您陪着我，脸贴着地图，手指顺着密密麻麻的细线，找了很久，才找到地图上这么一个小点点。当时您叹了口气说：<strong>“孩子，你到那儿，是要吃苦的呀……”</strong></p>
+<p>我说：“我年轻，我还有一把小提琴。”</p>
+<p>没想到的是，为了我，为了帮我带小孩，把您也拖到了安江。最后，受累吃苦的，是妈妈您哪！您哪里走得惯乡间的田埂！我总记得，每次都要小孙孙牵着您的手，您才敢走过屋前屋后的田间小道。</p>
+<p>安江是我的一切，我却忘了，对一辈子都生活在大城市里的您来说，70岁了，一切还要重新来适应。我从来没有问过您有什么难处，我总以为会有时间的，会有时间的，等我闲一点一定好好地陪陪您……</p>
+<p>哪想到，直到您走的时候，我还在长沙忙着开会。那天正好是中秋节，全国的同行都来了，搞杂交水稻不容易啊，我又是召集人，怎么着也得陪大家过这个节啊，只是儿子永远亏欠妈妈您了……</p>
+<p>其实我知道，那个时候已经是您的最后时刻。我总盼望着妈妈您能多撑两天。谁知道，即便是天不亮就往安江赶，我还是没能见上妈妈您最后一面。</p>
+<p>太晚了，一切都太晚了，我真的好后悔。妈妈，当时您一定等了我很久，盼了我很长，您一定有很多话要对儿子说，有很多事要交代。可我怎么就那么糊涂呢！这么多年，为什么我就不能少下一次田，少做一次实验，少出一天差，坐下来静静地好好陪陪您。哪怕……哪怕就一次。</p>
+<p>妈妈，每当我的研究取得成果，每当我在国际讲坛上谈笑风生，每当我接过一座又一座奖杯，我总是对人说，这辈子对我影响最深的人就是妈妈您啊！</p>
+<p>无法想象，没有您的英语启蒙，在一片闭塞中，我怎么能够阅读世界上最先进的科学文献，用超越那个时代的视野，去寻访遗传学大师孟德尔和摩尔根？无法想象，在那段颠沛流离的岁月中，从北平到汉口，从桃源到重庆，没有您的执著和鼓励，我怎么能获得系统的现代教育，获得在大江大河中自由翱翔的胆识？无法想象，没有您在摇篮前跟我讲尼采，讲这位昂扬着生命力、意志力的伟大哲人，我怎么能够在千百次的失败中坚信，必然有一粒种子可以使万千民众告别饥饿？</p>
+<p>他们说，我用一粒种子改变了世界。<strong>我知道，这粒种子，是妈妈您在我幼年时种下的！</strong></p>
+<p>稻子熟了，妈妈，您能闻到吗？安江可好？那里的田埂是不是还留着熟悉的欢笑？隔着21年的时光，我依稀看见，小孙孙牵着您的手，走过稻浪的背影；我还要告诉您，一辈子没有耕种过的母亲，稻芒划过手掌，稻草在场上堆积成垛，谷子在阳光中毕剥作响，水田在西晒下泛出橙黄的味道。这都是儿子要跟您说的话，说不完的话啊……</p>
+<p><strong>妈妈，稻子熟了，我想您了！</strong></p>
+<blockquote>
+<p>剪报来源<br>公众号：中央政法委长安剑<br>链　接：<a href="https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A">https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A</a><br>日　期：2021-05-23</p>
 </blockquote>
 ]]></content>
       <categories>
