@@ -121,6 +121,136 @@
       </tags>
   </entry>
   <entry>
+    <title>Spring Boot 2.x 集成Jpa示例</title>
+    <url>/2019/12/25/spring-boot-2_x-jpa/</url>
+    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
+
+<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 redis 中的值如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
+<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Jpa</tag>
+        <tag>Spring Boot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis根据通配符批量删除Key</title>
+    <url>/2019/09/03/redis-batch-delete/</url>
+    <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
+<blockquote>
+<p>Redis的 <code>del</code> 命令支持删除给定的一个或多个 key，并返回被删除 key 的数量。如命令 <code>del key1 key2 key3</code>。</p>
+</blockquote>
+<p>比如要删除所有以 WxMpSessionKey 开头的 Key，可以使用如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[redis@iztz9ploifbvce ~]# redis-cli -h 192.168.182.227 -p 1379 keys &quot;WxMpSessionKey*&quot; |xargs redis-cli -h 192.168.182.227 -p 1379 del</span><br><span class="line">(integer) 2674</span><br></pre></td></tr></table></figure>
+
+<p>如果连接 Redis 的 HOST 为 127.0.0.1，端口号也为默认的 6379，则以上的命令可以简写为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli keys &quot;WxMpSessionKey*&quot; |xargs redis-cli del</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring Boot 2.x 集成Redis示例</title>
+    <url>/2019/12/19/spring-boot-2_x-redis/</url>
+    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
+
+<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 redis 中的值如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
+<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Spring Boot</tag>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Git常用命令】查看/修改远程仓库地址</title>
+    <url>/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</url>
+    <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Git修改远程仓库地址"><a href="#Git修改远程仓库地址" class="headerlink" title="Git修改远程仓库地址"></a>Git修改远程仓库地址</h2><p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote set-url origin new.git.url/here</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将远程仓库地址改为 HTTPS 协议</span></span><br><span class="line">git remote set-url origin https://gogs.linjiangxiong.com/ljx/devops-doc.git</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看修改后的地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL多表更新（关联表更新）</title>
     <url>/2019/08/18/mysql-update-multiple-tables-with-one-query/</url>
     <content><![CDATA[<p>在开发过程中，有时会遇到需要将某张表的字段值根据条件动态地更新到另一张表字段的问题，即通过一张表的字段修改另一张关联表中的内容。比如，存在两张表A（表名：test_a）、B（表名：test_b），他们的表结构如下：</p>
@@ -216,112 +346,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Redis根据通配符批量删除Key</title>
-    <url>/2019/09/03/redis-batch-delete/</url>
-    <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
-<blockquote>
-<p>Redis的 <code>del</code> 命令支持删除给定的一个或多个 key，并返回被删除 key 的数量。如命令 <code>del key1 key2 key3</code>。</p>
-</blockquote>
-<p>比如要删除所有以 WxMpSessionKey 开头的 Key，可以使用如下命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[redis@iztz9ploifbvce ~]# redis-cli -h 192.168.182.227 -p 1379 keys &quot;WxMpSessionKey*&quot; |xargs redis-cli -h 192.168.182.227 -p 1379 del</span><br><span class="line">(integer) 2674</span><br></pre></td></tr></table></figure>
-
-<p>如果连接 Redis 的 HOST 为 127.0.0.1，端口号也为默认的 6379，则以上的命令可以简写为：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli keys &quot;WxMpSessionKey*&quot; |xargs redis-cli del</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring Boot 2.x 集成Jpa示例</title>
-    <url>/2019/12/25/spring-boot-2_x-jpa/</url>
-    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
-
-<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 redis 中的值如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
-<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Jpa</tag>
-        <tag>Spring Boot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring Boot 2.x 集成Redis示例</title>
-    <url>/2019/12/19/spring-boot-2_x-redis/</url>
-    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
-
-<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 redis 中的值如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
-<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-        <tag>Spring Boot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【ZooKeeper启动失败】Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</title>
     <url>/2019/12/12/zookeeper-problem-1/</url>
     <content><![CDATA[<p>在 CentOS 7 系统中安装好 ZooKeeper 后，进入安装目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/bin/</code>，使用命令 <code>./zkServer.sh start</code> 启动，发现启动失败：</p>
@@ -345,27 +369,111 @@
       </tags>
   </entry>
   <entry>
-    <title>【Git常用命令】查看/修改远程仓库地址</title>
-    <url>/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</url>
-    <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+    <title>罗马数字（上）——拼写规则</title>
+    <url>/2019/06/26/rules-of-reading-and-writing-roman-numerals/</url>
+    <content><![CDATA[<h3 id="罗马数字符号"><a href="#罗马数字符号" class="headerlink" title="罗马数字符号"></a>罗马数字符号</h3><p>罗马数字是总共由 7 个字母符号表示：<strong>I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和 M（1000）。</strong></p>
+<span id="more"></span>
 
-<p>e.g.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Git修改远程仓库地址"><a href="#Git修改远程仓库地址" class="headerlink" title="Git修改远程仓库地址"></a>Git修改远程仓库地址</h2><p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote set-url origin new.git.url/here</span><br></pre></td></tr></table></figure>
-
-<p>e.g.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将远程仓库地址改为 HTTPS 协议</span></span><br><span class="line">git remote set-url origin https://gogs.linjiangxiong.com/ljx/devops-doc.git</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看修改后的地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
-
+<p>表一：罗马数字对应的阿拉伯数字</p>
+<table>
+<thead>
+<tr>
+<th align="center">罗马数字</th>
+<th align="center">阿拉伯数字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">I</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">V</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">X</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">L</td>
+<td align="center">50</td>
+</tr>
+<tr>
+<td align="center">C</td>
+<td align="center">100</td>
+</tr>
+<tr>
+<td align="center">D</td>
+<td align="center">500</td>
+</tr>
+<tr>
+<td align="center">M</td>
+<td align="center">1000</td>
+</tr>
+</tbody></table>
+<p>他们按照以下 4 个规则可以组合成表示任意的正整数。</p>
+<h3 id="规则-1"><a href="#规则-1" class="headerlink" title="规则 1"></a>规则 1</h3><p><strong>一个罗马数字重复多少次，就表示这个数多少倍</strong>，比如罗马数字 I 表示的是数字 1，重复两次，即 II，表示的数字是 2，同理，III 表示数字 3，XX 表示数字 20，CC 表示数字 200 等；</p>
+<p>需要注意的是，<strong>同一个罗马数字最多只能连续重复 3 次</strong>，如数字 400 就不能表示为 CCCC（重复了 4 次），而是要用 CD 来表示，数字40不能表示为 XXXX（同样重复了 4 次），而要表示为 XL 等。</p>
+<p>但有一种特殊情况，因为古罗马人用 IV 作为古罗马神话主神朱庇特（IVPITER，古罗马字母里没有 J 和 U）名字的简写，他们不希望神的名字看上去像个数字，因此<strong>有时用 IIII 代替 IV</strong>。</p>
+<p>另外，<strong>符号 D、L 和 V 不可以连续重复出现</strong>，比如用 DD 表示 1000 的写法是错误的，正确的是要用 M，表示 1500 的罗马数字是 MD，而不是 DDD。</p>
+<h3 id="规则-2"><a href="#规则-2" class="headerlink" title="规则 2"></a>规则 2</h3><p><strong>如果在较大的罗马数字后面（右边）放置较小的罗马数字，表示的数字为这些数字相加得到的数</strong>，如较大的罗马数字 V 后面放置较小的罗马数字 I，即 VI，表示的数字则为 V 与 I 相加得到数 6。</p>
+<p>同理，<br>VII = 7 (5 + 2 = 7)<br>LXXX = 80 (50 + 10 + 10 + 10 = 80)<br>MC = 1100 (1000 + 100 = 1100)</p>
+<h3 id="规则-3"><a href="#规则-3" class="headerlink" title="规则 3"></a>规则 3</h3><p><strong>如果在较大的罗马数字前面（左边）放置在较小的罗马数字，表示的数是用较大的数减去较小的数所得到的值</strong>，如较大的罗马数字 V 前面或左边放置较小的罗马数字 I，即 IV，表示的数字则为 V 减去 I 得到的数 4。</p>
+<p>同理，<br>IX = 9 (10 – 1 = 9)<br>XC = 90 (100 – 10 = 90)</p>
+<p>用这种方式来表示罗马数字时，有以下几点需要注意：</p>
+<p><strong>i) 充当减数的只能是 I，C 或 X</strong>，不能是 L 或 V，即罗马数字对应的数是 10 的 n 次幂才能充当减数。另外，由于 M 在罗马字母中表示的数最大，也不能充当减数（罗马数字没有 0 或负整数）。</p>
+<blockquote>
+<p>被减数 - 减数 = 差，<br>如 32 - 10 = 22，<br>被减数是 32，减数是 10，差是 22。</p>
+</blockquote>
+<p>表二：被减数的只能是 I，C 或 X</p>
+<table>
+<thead>
+<tr>
+<th>罗马数字</th>
+<th>阿拉伯数字</th>
+<th>10 的 n 次幂</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>I</td>
+<td>1</td>
+<td>$10^0 = 1$</td>
+<td>10的0次幂</td>
+</tr>
+<tr>
+<td>X</td>
+<td>10</td>
+<td>$10^1 = 10$</td>
+<td>10的1次幂</td>
+</tr>
+<tr>
+<td>C</td>
+<td>100</td>
+<td>$10^2 = 100$</td>
+<td>10的2次幂</td>
+</tr>
+</tbody></table>
+<p>比如数字 45，<br>不能写成 VL（50 - 5），<br>而是要写成 XLV（XL + V，即 40 + 5）；</p>
+<p><strong>ii) 只能从一个罗马数字中减去另一个罗马数字，而不能减去两个或两个以上的罗马数字</strong>，比如说数字 8，<br>不能写成 IIX（X - I - I，即 10 - 1 - 1 = 8），<br>而是要写成 VIII（V + I + I + I，即 5 + 1 + 1 + 1 = 8）；</p>
+<p><strong>iii) 从一个罗马数字（设为 a）中减去另一个罗马数字（设为 b）所得的差（设为 c），不能超过减数（即 b）的 10 倍以上。</strong><br>例如，<br>你可以从数字 10 中减去 1，<br>因为 10 - 1 = 9，9 比 1 的 10 倍（10）小；<br>但是不能从数字 100 中减去 1，<br>因为 100 - 1 = 99，99 比 1 的 10 倍（10）大。<br>所以，<br>数字 9 可以用 IX 来表示，<br>但数字 100 不能用 IC 来表示，<br>而是要用 XCIX（XC + IX，即 90 + 9 = 99）来表示。</p>
+<p><em><strong>总结第 i) 点和第 iii) 点，可以得到以下规则：</strong></em><br><em><strong>符号 I 只能出现在符号 V 或 X 的前面（左边）；</strong></em><br><em><strong>符号 X 只能出现在符号 L 或 C 的前面（左边）；</strong></em><br><em><strong>符号 C 只能出现在符号 D 或 M 的前面（左边）。</strong></em></p>
+<h3 id="规则-4"><a href="#规则-4" class="headerlink" title="规则 4"></a>规则 4</h3><p><strong>如果在罗马数字上方加一条横线，表示将该数值乘以 1000，即原数的 1000 倍，如果上方有两条横线，表示的数字是原数的 1, 000, 000 倍。</strong></p>
+<p>如：</p>
+<p>$\overline{M}=1, 000, 000$</p>
+<p>$\overline{V}=5, 000$</p>
+<p>$\overline{\overline{X}} = 10, 000, 000 $</p>
+<hr>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>尝试应用上述规则，写出以下阿拉伯数字对应的罗马数字<br>35，<br>65，<br>99</p>
+<p>求解过程如下：<br>35 = 10 + 10 + 10 + 5，即 X + X + X + V（XXXV），所以 35 = XXXV；<br>65 = 50 + 10 + 5，即 L + X + V（LXV），所以 65 = LXV；<br>99 = （100 - 10）+（10 - 1），即 XC + IX（XCIX）所以 99 = XCIX 。</p>
 <p>（END）</p>
 ]]></content>
       <categories>
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>Git</tag>
+        <tag>数学</tag>
+        <tag>罗马数字</tag>
       </tags>
   </entry>
   <entry>
@@ -824,114 +932,6 @@
       <tags>
         <tag>Markdown</tag>
         <tag>接口文档</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>罗马数字（上）——拼写规则</title>
-    <url>/2019/06/26/rules-of-reading-and-writing-roman-numerals/</url>
-    <content><![CDATA[<h3 id="罗马数字符号"><a href="#罗马数字符号" class="headerlink" title="罗马数字符号"></a>罗马数字符号</h3><p>罗马数字是总共由 7 个字母符号表示：<strong>I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和 M（1000）。</strong></p>
-<span id="more"></span>
-
-<p>表一：罗马数字对应的阿拉伯数字</p>
-<table>
-<thead>
-<tr>
-<th align="center">罗马数字</th>
-<th align="center">阿拉伯数字</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">I</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">V</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center">X</td>
-<td align="center">10</td>
-</tr>
-<tr>
-<td align="center">L</td>
-<td align="center">50</td>
-</tr>
-<tr>
-<td align="center">C</td>
-<td align="center">100</td>
-</tr>
-<tr>
-<td align="center">D</td>
-<td align="center">500</td>
-</tr>
-<tr>
-<td align="center">M</td>
-<td align="center">1000</td>
-</tr>
-</tbody></table>
-<p>他们按照以下 4 个规则可以组合成表示任意的正整数。</p>
-<h3 id="规则-1"><a href="#规则-1" class="headerlink" title="规则 1"></a>规则 1</h3><p><strong>一个罗马数字重复多少次，就表示这个数多少倍</strong>，比如罗马数字 I 表示的是数字 1，重复两次，即 II，表示的数字是 2，同理，III 表示数字 3，XX 表示数字 20，CC 表示数字 200 等；</p>
-<p>需要注意的是，<strong>同一个罗马数字最多只能连续重复 3 次</strong>，如数字 400 就不能表示为 CCCC（重复了 4 次），而是要用 CD 来表示，数字40不能表示为 XXXX（同样重复了 4 次），而要表示为 XL 等。</p>
-<p>但有一种特殊情况，因为古罗马人用 IV 作为古罗马神话主神朱庇特（IVPITER，古罗马字母里没有 J 和 U）名字的简写，他们不希望神的名字看上去像个数字，因此<strong>有时用 IIII 代替 IV</strong>。</p>
-<p>另外，<strong>符号 D、L 和 V 不可以连续重复出现</strong>，比如用 DD 表示 1000 的写法是错误的，正确的是要用 M，表示 1500 的罗马数字是 MD，而不是 DDD。</p>
-<h3 id="规则-2"><a href="#规则-2" class="headerlink" title="规则 2"></a>规则 2</h3><p><strong>如果在较大的罗马数字后面（右边）放置较小的罗马数字，表示的数字为这些数字相加得到的数</strong>，如较大的罗马数字 V 后面放置较小的罗马数字 I，即 VI，表示的数字则为 V 与 I 相加得到数 6。</p>
-<p>同理，<br>VII = 7 (5 + 2 = 7)<br>LXXX = 80 (50 + 10 + 10 + 10 = 80)<br>MC = 1100 (1000 + 100 = 1100)</p>
-<h3 id="规则-3"><a href="#规则-3" class="headerlink" title="规则 3"></a>规则 3</h3><p><strong>如果在较大的罗马数字前面（左边）放置在较小的罗马数字，表示的数是用较大的数减去较小的数所得到的值</strong>，如较大的罗马数字 V 前面或左边放置较小的罗马数字 I，即 IV，表示的数字则为 V 减去 I 得到的数 4。</p>
-<p>同理，<br>IX = 9 (10 – 1 = 9)<br>XC = 90 (100 – 10 = 90)</p>
-<p>用这种方式来表示罗马数字时，有以下几点需要注意：</p>
-<p><strong>i) 充当减数的只能是 I，C 或 X</strong>，不能是 L 或 V，即罗马数字对应的数是 10 的 n 次幂才能充当减数。另外，由于 M 在罗马字母中表示的数最大，也不能充当减数（罗马数字没有 0 或负整数）。</p>
-<blockquote>
-<p>被减数 - 减数 = 差，<br>如 32 - 10 = 22，<br>被减数是 32，减数是 10，差是 22。</p>
-</blockquote>
-<p>表二：被减数的只能是 I，C 或 X</p>
-<table>
-<thead>
-<tr>
-<th>罗马数字</th>
-<th>阿拉伯数字</th>
-<th>10 的 n 次幂</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>I</td>
-<td>1</td>
-<td>$10^0 = 1$</td>
-<td>10的0次幂</td>
-</tr>
-<tr>
-<td>X</td>
-<td>10</td>
-<td>$10^1 = 10$</td>
-<td>10的1次幂</td>
-</tr>
-<tr>
-<td>C</td>
-<td>100</td>
-<td>$10^2 = 100$</td>
-<td>10的2次幂</td>
-</tr>
-</tbody></table>
-<p>比如数字 45，<br>不能写成 VL（50 - 5），<br>而是要写成 XLV（XL + V，即 40 + 5）；</p>
-<p><strong>ii) 只能从一个罗马数字中减去另一个罗马数字，而不能减去两个或两个以上的罗马数字</strong>，比如说数字 8，<br>不能写成 IIX（X - I - I，即 10 - 1 - 1 = 8），<br>而是要写成 VIII（V + I + I + I，即 5 + 1 + 1 + 1 = 8）；</p>
-<p><strong>iii) 从一个罗马数字（设为 a）中减去另一个罗马数字（设为 b）所得的差（设为 c），不能超过减数（即 b）的 10 倍以上。</strong><br>例如，<br>你可以从数字 10 中减去 1，<br>因为 10 - 1 = 9，9 比 1 的 10 倍（10）小；<br>但是不能从数字 100 中减去 1，<br>因为 100 - 1 = 99，99 比 1 的 10 倍（10）大。<br>所以，<br>数字 9 可以用 IX 来表示，<br>但数字 100 不能用 IC 来表示，<br>而是要用 XCIX（XC + IX，即 90 + 9 = 99）来表示。</p>
-<p><em><strong>总结第 i) 点和第 iii) 点，可以得到以下规则：</strong></em><br><em><strong>符号 I 只能出现在符号 V 或 X 的前面（左边）；</strong></em><br><em><strong>符号 X 只能出现在符号 L 或 C 的前面（左边）；</strong></em><br><em><strong>符号 C 只能出现在符号 D 或 M 的前面（左边）。</strong></em></p>
-<h3 id="规则-4"><a href="#规则-4" class="headerlink" title="规则 4"></a>规则 4</h3><p><strong>如果在罗马数字上方加一条横线，表示将该数值乘以 1000，即原数的 1000 倍，如果上方有两条横线，表示的数字是原数的 1, 000, 000 倍。</strong></p>
-<p>如：</p>
-<p>$\overline{M}=1, 000, 000$</p>
-<p>$\overline{V}=5, 000$</p>
-<p>$\overline{\overline{X}} = 10, 000, 000 $</p>
-<hr>
-<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>尝试应用上述规则，写出以下阿拉伯数字对应的罗马数字<br>35，<br>65，<br>99</p>
-<p>求解过程如下：<br>35 = 10 + 10 + 10 + 5，即 X + X + X + V（XXXV），所以 35 = XXXV；<br>65 = 50 + 10 + 5，即 L + X + V（LXV），所以 65 = LXV；<br>99 = （100 - 10）+（10 - 1），即 XC + IX（XCIX）所以 99 = XCIX 。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-        <tag>罗马数字</tag>
       </tags>
   </entry>
   <entry>
@@ -1565,882 +1565,6 @@
       <tags>
         <tag>翻译</tag>
         <tag>位运算</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>退休金计划：2021-2025年定投执行计划</title>
-    <url>/2021/07/10/investment-plan-2021-2025/</url>
-    <content><![CDATA[<p>本计划是根据 <strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 而制定的第一个五年行动计划——2021-2025年定投计划。</p>
-<p>本计划目标：净投入达 120,000 元。</p>
-<p>计划具体内容为 2021 - 2025 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
-<h2 id="2021年定投计划"><a href="#2021年定投计划" class="headerlink" title="2021年定投计划"></a>2021年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2021/3/31</td>
-<td>1,000</td>
-<td>2021/3/31</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/4/10</td>
-<td>1,000</td>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td>补投</td>
-</tr>
-<tr>
-<td>2021/4/24</td>
-<td>1,000</td>
-<td>2021/6/5</td>
-<td>1,000</td>
-<td>补投</td>
-</tr>
-<tr>
-<td>2021/5/10</td>
-<td>1,000</td>
-<td>2021/5/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/6/10</td>
-<td>1,000</td>
-<td>2021/6/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/6/24</td>
-<td>1,000</td>
-<td>2021/6/24</td>
-<td>2,000</td>
-<td>每月2000，故3月补投一笔</td>
-</tr>
-<tr>
-<td>2021/7/10</td>
-<td>1,000</td>
-<td>2021/7/12</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/7/24</td>
-<td>1,000</td>
-<td>2021/7/23</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/8/10</td>
-<td>1,000</td>
-<td>2021/8/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="2022年定投计划"><a href="#2022年定投计划" class="headerlink" title="2022年定投计划"></a>2022年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2022/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="2023年定投计划"><a href="#2023年定投计划" class="headerlink" title="2023年定投计划"></a>2023年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2023/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="2024年定投计划"><a href="#2024年定投计划" class="headerlink" title="2024年定投计划"></a>2024年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2024/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="2025年定投计划"><a href="#2025年定投计划" class="headerlink" title="2025年定投计划"></a>2025年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2025/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-        <tag>退休金计划</tag>
       </tags>
   </entry>
   <entry>
@@ -3365,6 +2489,882 @@
       </tags>
   </entry>
   <entry>
+    <title>退休金计划：2021-2025年定投执行计划</title>
+    <url>/2021/07/10/investment-plan-2021-2025/</url>
+    <content><![CDATA[<p>本计划是根据 <strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 而制定的第一个五年行动计划——2021-2025年定投计划。</p>
+<p>本计划目标：净投入达 120,000 元。</p>
+<p>计划具体内容为 2021 - 2025 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
+<h2 id="2021年定投计划"><a href="#2021年定投计划" class="headerlink" title="2021年定投计划"></a>2021年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2021/3/31</td>
+<td>1,000</td>
+<td>2021/3/31</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/4/10</td>
+<td>1,000</td>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td>补投</td>
+</tr>
+<tr>
+<td>2021/4/24</td>
+<td>1,000</td>
+<td>2021/6/5</td>
+<td>1,000</td>
+<td>补投</td>
+</tr>
+<tr>
+<td>2021/5/10</td>
+<td>1,000</td>
+<td>2021/5/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/6/10</td>
+<td>1,000</td>
+<td>2021/6/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/6/24</td>
+<td>1,000</td>
+<td>2021/6/24</td>
+<td>2,000</td>
+<td>每月2000，故3月补投一笔</td>
+</tr>
+<tr>
+<td>2021/7/10</td>
+<td>1,000</td>
+<td>2021/7/12</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/7/24</td>
+<td>1,000</td>
+<td>2021/7/23</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/8/10</td>
+<td>1,000</td>
+<td>2021/8/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2022年定投计划"><a href="#2022年定投计划" class="headerlink" title="2022年定投计划"></a>2022年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2022/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2023年定投计划"><a href="#2023年定投计划" class="headerlink" title="2023年定投计划"></a>2023年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2023/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2024年定投计划"><a href="#2024年定投计划" class="headerlink" title="2024年定投计划"></a>2024年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2024/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2025年定投计划"><a href="#2025年定投计划" class="headerlink" title="2025年定投计划"></a>2025年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2025/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
+        <tag>退休金计划</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>退休金计划：三十年一千万参考</title>
     <url>/2021/07/18/investment-plan-reference/</url>
     <content><![CDATA[<p>本参考计划根据 <a href="https://www.calculator.net/investment-calculator.html?ctype=returnrate&ctargetamountv=10000000&cstartingprinciplev=0&cyearsv=30&cinterestratev=23&ccompound=annually&ccontributeamountv=2000&cadditionat1=end&ciadditionat1=monthly&printit=0">投资计算器</a> 生成，这里假设你的：</p>
@@ -3657,6 +3657,29 @@
       </tags>
   </entry>
   <entry>
+    <title>退休金计划：投资日志20210727</title>
+    <url>/2021/07/27/investment-plan-record-20210727/</url>
+    <content><![CDATA[<p>昨天下午的时候，同事见面打招呼问的是你买鞋了吗？</p>
+<p>今天下午就变成了你“割肉”了吗？这两天你亏了多少？</p>
+<p>有种“这世界真是瞬息万变”的感慨。</p>
+<hr>
+<p>股票市场这几天连着大跌，退休金计划需不需要临时发起定投呢？</p>
+<p>答案是否定的。</p>
+<p>一是因为退休金计划是一项长期投资，市场短期震荡调整，从长远角度来看，这种调整就会显得微不足道了。</p>
+<p>二是因为现在追加资金进去，也无法保证明天是否会继续下跌，即使明天涨了，也难保未来不会出现比今天下跌得更厉害的情况。</p>
+<p>所以平常心对待就好。</p>
+<p>如果未来加大了每月定投金额，那肯定是因为未来每月的固定收入增长了，这点是毋庸置疑的。退休金计划不会根据市场行情的变化而调整定投的频率和金额，只需“无脑”地按既定计划执行即可。</p>
+<p>当然，遇到这种大跌行情，假若出现低估值蓝筹股或指数基金，“逢低买入”也未尝不可。只不过这个资金跟退休金计划的资金一定是分开管理，互不影响的。</p>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>退休金计划</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>退休金计划：每月定投基金2000元，30年后资产总额达到多少？</title>
     <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
     <content><![CDATA[<h2 id="突发奇想"><a href="#突发奇想" class="headerlink" title="突发奇想"></a>突发奇想</h2><p>前段时间突发奇想，如果每个月拿出2000元用于投资理财，如定投基金，那30年后资产总额会达到多少呢？</p>
@@ -3707,14 +3730,14 @@
 <p>2046-2050年定投执行计划</p>
 <p>2051年（1月、2月）定投执行计划</p>
 <h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts4792" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts1703" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts2915" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts5645" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts4792'));
-    var bar_chart = echarts.init(document.getElementById('echarts1703'));
+    var myChart = echarts.init(document.getElementById('echarts2915'));
+    var bar_chart = echarts.init(document.getElementById('echarts5645'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3823,41 +3846,18 @@
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：投资日志20210727</title>
-    <url>/2021/07/27/investment-plan-record-20210727/</url>
-    <content><![CDATA[<p>昨天下午的时候，同事见面打招呼问的是你买鞋了吗？</p>
-<p>今天下午就变成了你“割肉”了吗？这两天你亏了多少？</p>
-<p>有种“这世界真是瞬息万变”的感慨。</p>
-<hr>
-<p>股票市场这几天连着大跌，退休金计划需不需要临时发起定投呢？</p>
-<p>答案是否定的。</p>
-<p>一是因为退休金计划是一项长期投资，市场短期震荡调整，从长远角度来看，这种调整就会显得微不足道了。</p>
-<p>二是因为现在追加资金进去，也无法保证明天是否会继续下跌，即使明天涨了，也难保未来不会出现比今天下跌得更厉害的情况。</p>
-<p>所以平常心对待就好。</p>
-<p>如果未来加大了每月定投金额，那肯定是因为未来每月的固定收入增长了，这点是毋庸置疑的。退休金计划不会根据市场行情的变化而调整定投的频率和金额，只需“无脑”地按既定计划执行即可。</p>
-<p>当然，遇到这种大跌行情，假若出现低估值蓝筹股或指数基金，“逢低买入”也未尝不可。只不过这个资金跟退休金计划的资金一定是分开管理，互不影响的。</p>
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>退休金计划</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>退休金计划：进度看板</title>
     <url>/2021/07/17/investment-plan-progress/</url>
     <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
 <h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts2097" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts5211" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts3497" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts1907" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts2097'));
-    var bar_chart = echarts.init(document.getElementById('echarts5211'));
+    var myChart = echarts.init(document.getElementById('echarts3497'));
+    var bar_chart = echarts.init(document.getElementById('echarts1907'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3954,12 +3954,12 @@
 <p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
 </blockquote>
 <h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts887" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <div id="echarts8978" style="width: 100%;height: 200px;margin: 0 auto"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts887'));
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts8978'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -4081,36 +4081,25 @@
       </tags>
   </entry>
   <entry>
-    <title>CentOS7 系统中，如何禁止Linux系统用户通过SSH登录服务器？</title>
-    <url>/2020/03/20/how-to-limit-what-users-can-log-onto-system-via-ssh/</url>
-    <content><![CDATA[<p>出于安全考虑，有时候我们会禁止系统上的某些用户使用 <code>ssh</code> 命令登录服务器。例如，用于启动 MongoDB 服务的用户 mongod，就不允许通过 <code>ssh</code> 命令进行登录。在 CentOS 7 系统中，可以通过修改配置文件 <em>/etc/ssh/sshd_config</em> 达到禁用的目的。</p>
-<h2 id="一、单个用户"><a href="#一、单个用户" class="headerlink" title="一、单个用户"></a>一、单个用户</h2><p>这里以禁用 mongod 用户为例，具体步骤如下：</p>
-<ul>
-<li><p>打开配置文件 <em>/etc/ssh/sshd_config</em>，</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure></li>
-<li><p>在文件末尾加入以下内容，只允许后面的用户使用 <code>ssh</code> 命令登陆，</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyUsers    mongod</span><br></pre></td></tr></table></figure></li>
-<li><p>保存文件修改，并退出，重启 <code>ssh</code> 服务，即可禁用 <strong>mongod</strong> 用户通过 <code>ssh</code> 命令登陆。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">service sshd restart</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="二、多个用户"><a href="#二、多个用户" class="headerlink" title="二、多个用户"></a>二、多个用户</h2><p>若需要禁用多个系统帐户使用 <code>ssh</code> 命令登陆服务器，只需把系统账户名追加在 <strong>DenyUsers</strong> 行尾，并以空格隔开即可，如禁用 mongod、kafka、robbot 三个用户：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyUsers    mongod kafka robbot</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、用户组"><a href="#三、用户组" class="headerlink" title="三、用户组"></a>三、用户组</h2><p>我们也可以通过增加以下内容来禁止用户组通过 <code>ssh</code> 命令登陆服务器：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyGroups   groupname1 groupname2</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p><strong>NOTE：修改完配置文件，必须重新启动 <code>ssh</code> 服务才能生效。</strong></p>
-</blockquote>
-<p>（END）</p>
+    <title>小记：2021年8月</title>
+    <url>/2021/08/05/note-202108/</url>
+    <content><![CDATA[<h2 id="2021年8月2日"><a href="#2021年8月2日" class="headerlink" title="2021年8月2日"></a>2021年8月2日</h2><p><strong>1 梦</strong></p>
+<p>昨晚梦到皮蛋，可把我气醒了。梦里大概是这样子：</p>
+<p>皮蛋生了七只小猫咪，有黑色的，有白色的，有橘黄色的还有混色的。但我发现的时候，其中的三只被他吃了，另外四只被绳子绑在一起，浸泡在洗脸盆上，盆上还有水。皮蛋打算溺死他自己的猫咪仔。把我气死了，拿起棍子准备教训皮蛋。结果，他一下子就跑去躲了，打不到他，我像个泼妇骂街一样，边骂边教育他，告诉他这些是你的仔，怎么可以这么残忍对待它们。。</p>
+<p>骂着骂着，突然想到小猫咪还在水盆里泡着呢，就马上冲回去，把小猫咪捞出来，解了绳子，感觉这些小猫咪像是要快饿死了。皮蛋又抓不到，不然还可以让皮蛋给小猫咪喂奶。</p>
+<p>没办法，想到小猫咪可以喝牛奶，又去冰箱找。边翻边想，刚出生的小猫咪可以喝冰的牛奶吗？哎呀，不管那么多了，拉肚子总比被饿死好吧？于是继续翻啊、找啊，但就是没有找到牛奶，急死了。后面冷静点，才想起我已经不喝牛奶很久了，冰箱怎么可能会有牛奶？这一瞬间，我彻底崩溃了，一直在责怪和质问自己。为什么我现在不喝牛奶了？！以前不是每晚睡之前都要喝一瓶的吗？！怎么不能过几天再不想喝牛奶？！就算不喝牛奶，冰箱也要备着啊？！为什么？！</p>
+<p>实在压抑到有些难受，还好醒了，睁着眼睛躺在床上，回忆着这个梦的始末，怒火中烧。清醒一点后发现，皮蛋不是公猫吗？还是一只做了绝育手术的公猫，他怎么会生小猫咪呢？</p>
+<p>哦，原来是一场梦啊，真是奇奇怪怪的梦！看了下手机，现在快早上5点了，起来喝点水，倒头再睡会，今天还要上班。</p>
+<p><strong>2 活在当下</strong></p>
+<p>夏天的时候就盼望着冬天的到来，而冬天的时候又期待着夏天的到来，一点都没有活在当下啊。</p>
+<p><strong>3 专注呼吸</strong></p>
+<p>每当我开始专注于自己的呼吸时，脑袋里总有各种各样的想法蹦跶出来。而当我结束专注呼吸训练准备记录他们的时候，他们又一下子不见了踪影。真是奇怪的脑袋</p>
 ]]></content>
       <categories>
-        <category>编程文摘</category>
+        <category>小记</category>
       </categories>
       <tags>
-        <tag>CentOS7</tag>
+        <tag>所思所想所悟</tag>
       </tags>
   </entry>
   <entry>
@@ -4194,6 +4183,39 @@
       </categories>
       <tags>
         <tag>Kafka</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CentOS7 系统中，如何禁止Linux系统用户通过SSH登录服务器？</title>
+    <url>/2020/03/20/how-to-limit-what-users-can-log-onto-system-via-ssh/</url>
+    <content><![CDATA[<p>出于安全考虑，有时候我们会禁止系统上的某些用户使用 <code>ssh</code> 命令登录服务器。例如，用于启动 MongoDB 服务的用户 mongod，就不允许通过 <code>ssh</code> 命令进行登录。在 CentOS 7 系统中，可以通过修改配置文件 <em>/etc/ssh/sshd_config</em> 达到禁用的目的。</p>
+<h2 id="一、单个用户"><a href="#一、单个用户" class="headerlink" title="一、单个用户"></a>一、单个用户</h2><p>这里以禁用 mongod 用户为例，具体步骤如下：</p>
+<ul>
+<li><p>打开配置文件 <em>/etc/ssh/sshd_config</em>，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure></li>
+<li><p>在文件末尾加入以下内容，只允许后面的用户使用 <code>ssh</code> 命令登陆，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyUsers    mongod</span><br></pre></td></tr></table></figure></li>
+<li><p>保存文件修改，并退出，重启 <code>ssh</code> 服务，即可禁用 <strong>mongod</strong> 用户通过 <code>ssh</code> 命令登陆。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">service sshd restart</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="二、多个用户"><a href="#二、多个用户" class="headerlink" title="二、多个用户"></a>二、多个用户</h2><p>若需要禁用多个系统帐户使用 <code>ssh</code> 命令登陆服务器，只需把系统账户名追加在 <strong>DenyUsers</strong> 行尾，并以空格隔开即可，如禁用 mongod、kafka、robbot 三个用户：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyUsers    mongod kafka robbot</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、用户组"><a href="#三、用户组" class="headerlink" title="三、用户组"></a>三、用户组</h2><p>我们也可以通过增加以下内容来禁止用户组通过 <code>ssh</code> 命令登陆服务器：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyGroups   groupname1 groupname2</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p><strong>NOTE：修改完配置文件，必须重新启动 <code>ssh</code> 服务才能生效。</strong></p>
+</blockquote>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
       </tags>
   </entry>
   <entry>
@@ -4401,28 +4423,6 @@
       </categories>
       <tags>
         <tag>JDK</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>小记：2021年8月</title>
-    <url>/2021/08/05/note-202108/</url>
-    <content><![CDATA[<h2 id="2021年8月2日"><a href="#2021年8月2日" class="headerlink" title="2021年8月2日"></a>2021年8月2日</h2><p><strong>1 梦</strong></p>
-<p>昨晚梦到皮蛋，可把我气醒了。梦里大概是这样子：</p>
-<p>皮蛋生了七只小猫咪，有黑色的，有白色的，有橘黄色的还有混色的。但我发现的时候，其中的三只被他吃了，另外四只被绳子绑在一起，浸泡在洗脸盆上，盆上还有水。皮蛋打算溺死他自己的猫咪仔。把我气死了，拿起棍子准备教训皮蛋。结果，他一下子就跑去躲了，打不到他，我像个泼妇骂街一样，边骂边教育他，告诉他这些是你的仔，怎么可以这么残忍对待它们。。</p>
-<p>骂着骂着，突然想到小猫咪还在水盆里泡着呢，就马上冲回去，把小猫咪捞出来，解了绳子，感觉这些小猫咪像是要快饿死了。皮蛋又抓不到，不然还可以让皮蛋给小猫咪喂奶。</p>
-<p>没办法，想到小猫咪可以喝牛奶，又去冰箱找。边翻边想，刚出生的小猫咪可以喝冰的牛奶吗？哎呀，不管那么多了，拉肚子总比被饿死好吧？于是继续翻啊、找啊，但就是没有找到牛奶，急死了。后面冷静点，才想起我已经不喝牛奶很久了，冰箱怎么可能会有牛奶？这一瞬间，我彻底崩溃了，一直在责怪和质问自己。为什么我现在不喝牛奶了？！以前不是每晚睡之前都要喝一瓶的吗？！怎么不能过几天再不想喝牛奶？！就算不喝牛奶，冰箱也要备着啊？！为什么？！</p>
-<p>实在压抑到有些难受，还好醒了，睁着眼睛躺在床上，回忆着这个梦的始末，怒火中烧。清醒一点后发现，皮蛋不是公猫吗？还是一只做了绝育手术的公猫，他怎么会生小猫咪呢？</p>
-<p>哦，原来是一场梦啊，真是奇奇怪怪的梦！看了下手机，现在快早上5点了，起来喝点水，倒头再睡会，今天还要上班。</p>
-<p><strong>2 活在当下</strong></p>
-<p>夏天的时候就盼望着冬天的到来，而冬天的时候又期待着夏天的到来，一点都没有活在当下啊。</p>
-<p><strong>3 专注呼吸</strong></p>
-<p>每当我开始专注于自己的呼吸时，脑袋里总有各种各样的想法蹦跶出来。而当我结束专注呼吸训练准备记录他们的时候，他们又一下子不见了踪影。真是奇怪的脑袋</p>
-]]></content>
-      <categories>
-        <category>小记</category>
-      </categories>
-      <tags>
-        <tag>所思所想所悟</tag>
       </tags>
   </entry>
   <entry>
