@@ -1018,6 +1018,329 @@
       </tags>
   </entry>
   <entry>
+    <title>Apache Kafka（一）：简介</title>
+    <url>/2020/03/17/apache-kafka-intro/</url>
+    <content><![CDATA[<h2 id="Kafka简介"><a href="#Kafka简介" class="headerlink" title="Kafka简介"></a>Kafka简介</h2><p>Kafka 最早是由 LinkedIn 公司开发的一套分布式的高性能消息引擎服务，于 2011 年初开源，并于 2012 年 10 月 23 日从 Apache 孵化器毕业，成为 Apache 的顶级项目。</p>
+<p>Kafka 最初的设计目的是用于处理海量的日志，后来历经多年发展和完善，如今的 Kafka 集消息系统、存储系统和流式处理平台于一身，在消息引擎领域是执牛耳者，在大数据工程领域、流计算领域也起着举足轻重的作用，具有非常广阔的应用场景。</p>
+<h2 id="为什么要掌握Kafka"><a href="#为什么要掌握Kafka" class="headerlink" title="为什么要掌握Kafka"></a>为什么要掌握Kafka</h2><p>因为掌握了 Kafka，手上就多了一份拿高薪的筹码。</p>
+<p>援引美国 2019 年 Dice 技术薪资报告中的数据，在十大薪资最高的技术技能中，掌握 Kafka 以平均每年 12.7554 万美元排名第二！虽然这是美国人才市场的数据，但从国内互联网公司的技术招聘需求中，我们也可以看出 Kafka 在国内的行情也是水涨船高。</p>
+<p>（查看完整报告：<a href="https://marketing.dice.com/pdf/Dice_TechSalaryReport2019.pdf">https://marketing.dice.com/pdf/Dice_TechSalaryReport2019.pdf</a>）</p>
+<h2 id="如何全面掌握Kafka"><a href="#如何全面掌握Kafka" class="headerlink" title="如何全面掌握Kafka"></a>如何全面掌握Kafka</h2><p>作为一名软件开发工程师，在学习开源项目时，最好是采取“自顶向下”的学习方法，即先初步掌握开源项目的基本使用、功能原理、关键设计等，然后再深入到源码，学习其关键技术是如何实现的，以及其代码写作方式等。</p>
+<p>对于学习 Kafka 也不例外。具体步骤如下：</p>
+<ul>
+<li>安装、运行 Kafka。</li>
+<li>选择合适的 Kafka 客户端，学习官网上的示例代码，并尝试修改示例代码，如修改输入值、或使用其他的 API 功能，观测修改后的运行结果。此时可编写一个简单的程序（如生产者、消费者程序）进行验证。</li>
+<li>通读 Kafka 的设计文档，了解消息队列设计的关键决策部分，并确保理解了那些可能影响可靠性、稳定性和性能的参数。</li>
+<li>学习 Kafka 的高级功能，如拦截器、幂等性生产者、事务、流处理应用开发等。</li>
+<li>研究原理，如生产者消息分区机制、副本机制、重平衡等。</li>
+<li>深入源码，学习关键原理背后的具体编码如何实现。但不建议通读源码（此种方法效率特别低，效果也不好），最好是带着明确目的去研究源码，做到有的放矢，才能事半功倍。</li>
+</ul>
+<p>在实际应用中，你可能还需要学会管理和监控 Kafka，并从 Kafka 在真实负载下的表现，找出系统可能存在的瓶颈，保障系统的稳定性和提升系统的性能。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Kafka</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Apache Kafka（二）：CentOS 7下安装Apache Kafka</title>
+    <url>/2020/03/19/how-to-install-apache-kafka-on-centos7/</url>
+    <content><![CDATA[<h2 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h2><p>Kafka 服务端代码是用 Scala 开发语言编写的，Scala 是 JVM 系语言中的一种，这意味着用 Scala 编写的源代码编译之后也是 Java 字节码，并运行在 Java 虚拟机上。因此，在开始安装 Kafka 之前，我们需要先在系统上安装 JDK（Java SE Development Kit， Java SE开发套件），JDK 包含的 JRE（Java SE Runtime Environment，Java 运行时环境）是运行 Java 应用程序所必需的。</p>
+<p>多数情况下，推荐安装 JDK 8 及以上的版本，因为 Kafka 自 2.0.0 版本开始，就已经正式摒弃对 Java 7 的支持了。本文安装示例采用的是 JDK 8 版本。</p>
+<p>在 CentOS 7 安装 JDK 可参考这篇博文—— <a href="https://www.linjiangxiong.com/2019/08/30/how-to-install-jdk-1-8-on-centos-7/">CentOS7下安装JDK1.8</a></p>
+<p>另外，运行 Kafka 还需要安装 Apache ZooKeeper 服务，该服务是用来同步分布式进程。ZooKeeper 安装可参考这篇博文——<a href="https://www.linjiangxiong.com/2019/12/12/how-to-install-zookeeper-on-centos7/">在CentOS7系统安装和配置ZooKeeper</a>。</p>
+<h2 id="安装Kafka"><a href="#安装Kafka" class="headerlink" title="安装Kafka"></a>安装Kafka</h2><p>推荐将 Kafka 安装在 Unix 操作系统（如 Solaris）或 Linux 操作系统（如 CentOS）上。这是因为在 Windows 系统上可获得的支持有限。</p>
+<p>本安装示例选择的是 CentOS 7 系统。具体安装步骤如下：</p>
+<ol>
+<li><p>从 Kafka 官网下载页 <a href="https://kafka.apache.org/downloads">https://kafka.apache.org/downloads</a> 获取安装文件，当前最新的稳定版本是 2.4.1，于 2020 年 3 月 12 日发行。这里选择下载二进制文件  <em>kafka_2.12-2.4.1.tgz</em>。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://mirror.bit.edu.cn/apache/kafka/2.4.1/kafka_2.12-2.4.1.tgz</span><br></pre></td></tr></table></figure></li>
+<li><p>创建 Kafka 安装目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /usr/local/kafka</span><br></pre></td></tr></table></figure></li>
+<li><p>解压缩文件 <em>kafka_2.12-2.4.1.tgz</em> 至目录 <code>/usr/local/kafka</code>：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar xvzf kafka_2.12-2.4.1.tgz -C /usr/local/kafka --strip 1</span><br></pre></td></tr></table></figure></li>
+<li><p>进入目录 <code>/usr/local/kafka</code>，可以看到以下子目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@185 home]# cd /usr/local/kafka/</span><br><span class="line">[root@185 kafka]# ll</span><br><span class="line">总用量 56</span><br><span class="line">drwxr-xr-x 3 root root  4096 3月   3 08:34 bin</span><br><span class="line">drwxr-xr-x 2 root root  4096 3月   3 08:34 config</span><br><span class="line">drwxr-xr-x 2 root root  8192 3月  19 15:06 libs</span><br><span class="line">-rw-r--r-- 1 root root 32216 3月   3 08:32 LICENSE</span><br><span class="line">-rw-r--r-- 1 root root   337 3月   3 08:32 NOTICE</span><br><span class="line">drwxr-xr-x 2 root root    44 3月   3 08:34 site-docs</span><br></pre></td></tr></table></figure>
+
+<p>其中，</p>
+<ul>
+<li><p><code>/bin</code>目录下是操作 Kafka 的可执行脚本（.sh 文件），还包含在 windows 系统下的可执行脚本（.bat 文件），包括 Kafka 启动/停止脚本、消费者性能测试脚本、生产者性能测试脚本、分区重分配脚本等；</p>
+</li>
+<li><p><code>/config</code>目录是存放配置文件；</p>
+</li>
+<li><p><code>/libs</code>目录是存放依赖库文件；</p>
+</li>
+<li><p><code>/logs</code>目录存放的是 Kafka 的运行日志文件。</p>
+</li>
+</ul>
+</li>
+<li><p>打开配置文件<code>config/server.properties</code>，修改 listeners 配置和 zookeeper 地址，具体如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim ./config/server.properties</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 监听地址</span></span><br><span class="line">listeners=PLAINTEXT://172.16.1.182:9092</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> zookeeper 地址</span></span><br><span class="line">zookeeper.connect=172.16.1.188:2181</span><br></pre></td></tr></table></figure></li>
+<li><p>在启动 Kafka 服务之前，为保障系统安全，添加运行 Kafka 服务的账号，并以较低权限账号运行 Kafka 服务，且禁用该账号的 <code>ssh</code> 登录权限。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 添加 kafka 账号</span></span><br><span class="line">useradd kafka</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置 kafka 账号密码</span></span><br><span class="line">passwd kafka</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将目录的所有者和组设置为 kafka</span></span><br><span class="line">chown -R kafka:kafka /usr/local/kafka/</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>为保障系统安全，添加运行 Kafka 服务的账号，并以较低权限账号运行 Kafka 服务，且禁用该账号的登录权限。</p>
+<p>切换至 kafka 账号：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">su kafka</span><br></pre></td></tr></table></figure></li>
+<li><p>启动 Kafka 服务，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/kafka-server-start.sh ./config/server.properties</span><br></pre></td></tr></table></figure>
+
+<p>以守护进程（后台进程）的方式启动：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/kafka-server-start.sh ./config/server.properties &amp;</span><br></pre></td></tr></table></figure></li>
+<li><p>停止 Kafka 服务：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/kafka-server-stop.sh</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Kafka</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CentOS7 系统中，如何禁止Linux系统用户通过SSH登录服务器？</title>
+    <url>/2020/03/20/how-to-limit-what-users-can-log-onto-system-via-ssh/</url>
+    <content><![CDATA[<p>出于安全考虑，有时候我们会禁止系统上的某些用户使用 <code>ssh</code> 命令登录服务器。例如，用于启动 MongoDB 服务的用户 mongod，就不允许通过 <code>ssh</code> 命令进行登录。在 CentOS 7 系统中，可以通过修改配置文件 <em>/etc/ssh/sshd_config</em> 达到禁用的目的。</p>
+<h2 id="一、单个用户"><a href="#一、单个用户" class="headerlink" title="一、单个用户"></a>一、单个用户</h2><p>这里以禁用 mongod 用户为例，具体步骤如下：</p>
+<ul>
+<li><p>打开配置文件 <em>/etc/ssh/sshd_config</em>，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure></li>
+<li><p>在文件末尾加入以下内容，只允许后面的用户使用 <code>ssh</code> 命令登陆，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyUsers    mongod</span><br></pre></td></tr></table></figure></li>
+<li><p>保存文件修改，并退出，重启 <code>ssh</code> 服务，即可禁用 <strong>mongod</strong> 用户通过 <code>ssh</code> 命令登陆。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">service sshd restart</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="二、多个用户"><a href="#二、多个用户" class="headerlink" title="二、多个用户"></a>二、多个用户</h2><p>若需要禁用多个系统帐户使用 <code>ssh</code> 命令登陆服务器，只需把系统账户名追加在 <strong>DenyUsers</strong> 行尾，并以空格隔开即可，如禁用 mongod、kafka、robbot 三个用户：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyUsers    mongod kafka robbot</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、用户组"><a href="#三、用户组" class="headerlink" title="三、用户组"></a>三、用户组</h2><p>我们也可以通过增加以下内容来禁止用户组通过 <code>ssh</code> 命令登陆服务器：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyGroups   groupname1 groupname2</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p><strong>NOTE：修改完配置文件，必须重新启动 <code>ssh</code> 服务才能生效。</strong></p>
+</blockquote>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Elasticsearch倒排索引简介</title>
+    <url>/2020/08/04/elasticsearch-inverted-index-intro/</url>
+    <content><![CDATA[<h2 id="什么是倒排索引"><a href="#什么是倒排索引" class="headerlink" title="什么是倒排索引"></a>什么是倒排索引</h2><p>倒排索引（Inverted index，亦称反向索引），是一种索引方法，用来存储在全文搜索下某个单词在某一个文档或某一组文档中的存储位置的映射。</p>
+<h2 id="倒排索引的数据结构"><a href="#倒排索引的数据结构" class="headerlink" title="倒排索引的数据结构"></a>倒排索引的数据结构</h2><p>倒排索引是文档检索系统中最常用的一种数据据构。它包含两部分——<strong>单词词典（Term Dictionary）和倒排列表（Posting List）</strong>。</p>
+<p>其中，单词词典是用来记录所有文档的单词，记录单词到倒排列表的关系，所以单词词典一般也会比较大，为满足快速地插入与查询，通常采用 B+ 树或者哈希链表法来实现。</p>
+<p>而倒排列表是用来记录单词对应的文档结合，由倒排索引项（Posting）组成。</p>
+<p>倒排索引项结构主要包括以下四项内容：</p>
+<ul>
+<li>文档ID；</li>
+<li>词频（TF）——该单词在文档中的出现次数，用于相关性评分；</li>
+<li>位置（Position）——单词在文档中分词的位置，用于语句搜索（Phrase Query）；</li>
+<li>偏移（Offset）——记录单词的开始、结束位置，用于高亮显示。</li>
+</ul>
+<p>倒排索引项结构示例：</p>
+<table>
+<thead>
+<tr>
+<th>Document ID</th>
+<th>TF</th>
+<th>Position</th>
+<th>Offset</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10001</td>
+<td>2</td>
+<td>1</td>
+<td>&lt;20, 32&gt;</td>
+</tr>
+<tr>
+<td>10002</td>
+<td>10</td>
+<td>23</td>
+<td>&lt;7, 10&gt;</td>
+</tr>
+</tbody></table>
+<p>在 Elasticsearch 的 JSON 文档中的每个字段，默认情况下都有自己的倒排索引，我们可以根据需要对某些字段不做索引，优点是节省存储空间，缺点是该字段无法被搜索。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Elasticsearch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Homebrew在macOS上安装Elasticsearch</title>
+    <url>/2020/08/02/install-elasticsearch-on-macos-with-homebrew/</url>
+    <content><![CDATA[<p>在 macOS 上通过 Homwbrew 安装 Elasticsearch 非常简单，首先通过 <code>brew tap</code> 命令关联 Elastic Homebrew 存储库：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew tap elastic/tap</span><br></pre></td></tr></table></figure>
+
+<p>接下来就可以使用 <code>brew install</code> 命令安装最新发布的 Elasticsearch 的默认发行版：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install elastic/tap/elasticsearch-full</span><br></pre></td></tr></table></figure>
+
+<p>如果你看到类似以下的输出内容，就表示安装成功：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Pruned 0 symbolic links and 3 directories from /usr/local</span><br></pre></td></tr></table></figure>
+
+
+
+<p>通过 brew 安装的 Elasticsearch，其配置文件，日志和数据目录存储在以下位置：</p>
+<p><strong>HOME（主目录）</strong>，位于 <code>/usr/local/Cellar/elasticsearch-full/7.8.1/</code>；</p>
+<p><strong>bin （可执行文件所在目录）</strong>位于 <code>ll /usr/local/Cellar/elasticsearch-full/7.8.1/bin</code>；</p>
+<p><strong>config（配置文件）</strong>位于 <code>/usr/local/etc/elasticsearch</code>；</p>
+<p><strong>data（数据存储目录）</strong>位于 <code>/usr/local/var/lib/elasticsearch</code>；</p>
+<p><strong>log（日志文件）</strong>位于 <code>/usr/local/var/log/elasticsearch</code>；</p>
+<p><strong>plugins（插件存放目录）</strong>位于 <code>/usr/local/var/elasticsearch/plugins </code>。</p>
+<p>具体执行输出如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ brew tap elastic/tap</span><br><span class="line">Updating Homebrew...</span><br><span class="line">==&gt; Auto-updated Homebrew!</span><br><span class="line">Updated 1 tap (homebrew/core).</span><br><span class="line">==&gt; New Formulae</span><br><span class="line">act                 chart-testing       dnsprobe            golangci-lint       kubie               never               reg                 termcolor</span><br><span class="line">apidoc              chrony              dosbox-staging      gradle-profiler     ldpl                ngs                 rqlite              thanos</span><br><span class="line">arb                 clair               duckscript          gulp-cli            litecli             notmuch-mutt        scw@1               vgrep</span><br><span class="line">argo                cloudformation-cli  eksctl              hy                  logcli              oci-cli             sdns                wgcf</span><br><span class="line">argocd              coconut             fennel              jimtcl              loki                omake               simdjson            yj</span><br><span class="line">arrayfire           colfer              folderify           jinx                lunchy              ory-hydra           smlpkg              z.lua</span><br><span class="line">awsweeper           copilot             functionalplus      jsonnet-bundler     lunchy-go           osi                 so</span><br><span class="line">bond                cortex              gateway-go          k9s                 marked              pipgrip             solidity</span><br><span class="line">cadence             croaring            gcc@9               kona                naabu               promtail            standardese</span><br><span class="line">chalk-cli           cubejs-cli          git-hooks-go        ksync               nanorc              python@3.7          subfinder</span><br><span class="line">==&gt; Updated Formulae</span><br><span class="line">Updated 3971 formulae.</span><br><span class="line">==&gt; Renamed Formulae</span><br><span class="line">elasticsearch@6.8 -&gt; elasticsearch@6                                            kibana@6.8 -&gt; kibana@6</span><br><span class="line">==&gt; Deleted Formulae</span><br><span class="line">cargo-completion                elasticsearch@2.4               i386-elf-grub                   python                          tomee-jax-rs</span><br><span class="line">cryptopp                        elasticsearch@5.6               kibana@5.6                      sflowtool</span><br><span class="line"></span><br><span class="line">==&gt; Tapping elastic/tap</span><br><span class="line">Cloning into &#x27;/usr/local/Homebrew/Library/Taps/elastic/homebrew-tap&#x27;...</span><br><span class="line">remote: Enumerating objects: 44, done.</span><br><span class="line">remote: Counting objects: 100% (44/44), done.</span><br><span class="line">remote: Compressing objects: 100% (26/26), done.</span><br><span class="line">remote: Total 530 (delta 28), reused 24 (delta 18), pack-reused 486</span><br><span class="line">Receiving objects: 100% (530/530), 133.37 KiB | 31.00 KiB/s, done.</span><br><span class="line">Resolving deltas: 100% (398/398), done.</span><br><span class="line">Tapped 19 formulae (44 files, 234.2KB).</span><br><span class="line">➜  ~ brew install elastic/tap/elasticsearch-full</span><br><span class="line">Updating Homebrew...</span><br><span class="line">==&gt; Auto-updated Homebrew!</span><br><span class="line">Updated 1 tap (homebrew/core).</span><br><span class="line">==&gt; Updated Formulae</span><br><span class="line">Updated 8 formulae.</span><br><span class="line"></span><br><span class="line">==&gt; Installing elasticsearch-full from elastic/tap</span><br><span class="line">==&gt; Downloading https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.8.1-darwin-x86_64.tar.gz?tap=elastic/homebrew-tap</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">####################################################################### 100.0%</span></span></span><br><span class="line">Warning: tried to install empty array to /usr/local/etc/elasticsearch/jvm.options.d</span><br><span class="line">==&gt; codesign -f -s - /usr/local/Cellar/elasticsearch-full/7.8.1/libexec/modules/x-pack-ml/platform/darwin-x86_64/controller.app --deep</span><br><span class="line">==&gt; find /usr/local/Cellar/elasticsearch-full/7.8.1/libexec/jdk.app/Contents/Home/bin -type f -exec codesign -f -s - &#123;&#125; ;</span><br><span class="line">==&gt; Caveats</span><br><span class="line">Data:    /usr/local/var/lib/elasticsearch/elasticsearch_bobotang/</span><br><span class="line">Logs:    /usr/local/var/log/elasticsearch/elasticsearch_bobotang.log</span><br><span class="line">Plugins: /usr/local/var/elasticsearch/plugins/</span><br><span class="line">Config:  /usr/local/etc/elasticsearch/</span><br><span class="line"></span><br><span class="line">To have launchd start elastic/tap/elasticsearch-full now and restart at login:</span><br><span class="line">  brew services start elastic/tap/elasticsearch-full</span><br><span class="line">Or, if you don&#x27;t want/need a background service you can just run:</span><br><span class="line">  elasticsearch</span><br><span class="line">==&gt; Summary</span><br><span class="line">🍺  /usr/local/Cellar/elasticsearch-full/7.8.1: 901 files, 473.6MB, built in 15 seconds</span><br><span class="line">==&gt; `brew cleanup` has not been run in 30 days, running now...</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/gettext--0.20.2_1.catalina.bottle.tar.gz... (8.4MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/gnupg--2.2.20.catalina.bottle.tar.gz... (4.3MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/libevent--2.1.11_1.catalina.bottle.tar.gz... (1.2MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/libgcrypt--1.8.5.catalina.bottle.tar.gz... (1MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/redis--6.0.5.catalina.bottle.tar.gz... (1.8MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/unbound--1.10.1.catalina.bottle.tar.gz... (2.5MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gmp... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/pinentry... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libidn2... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libksba... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/autojump... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/ncurses... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/nettle... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libunistring... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/utf8proc... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libassuan... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libgpg-error... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libgcrypt... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gettext... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/pwgen... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/tmux... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libtasn1... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libevent... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/openssl@1.1... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/unbound... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libusb... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gnupg... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/p11-kit... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libffi... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/telnet... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gnutls... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/npth... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/adns... (64B)</span><br><span class="line">Pruned 0 symbolic links and 3 directories from /usr/local</span><br><span class="line">➜  ~ </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Elasticsearch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</title>
+    <url>/2020/06/29/java-list-string-join/</url>
+    <content><![CDATA[<p>在日常开发工作中，经常会遇到需要将 <code>List&lt;String&gt;</code> 转换为使用某个符号连接的字符串。如将 <code>List&lt;String&gt;</code> 转换为按英文逗号（<code>,</code>）分隔的字符串：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：</span></span><br><span class="line"><span class="comment">// Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>最容易想到的拼接方式，是通过 <code>for</code> 循环来实现。不过，如果你使用 Java 8 或以上的版本进行开发，实现该功能将变得非常简单，通常有以下两种方法。</p>
+<p><strong>方法一：使用 <code>String.join</code>，主要代码如下：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示 String.join 方法的使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line">        System.out.println(String.join(<span class="string">&quot;,&quot;</span>, weekList));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>方法二：采用流的方式（<code>stream()</code>）来写，就像下面这样，仍然能够得到同样的结果：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示流方式（stream）进行拼接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        String str = weekList.stream().collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>此外，如果你想在连接成字符串之前，先对元素进行其他的操作，如过滤元素、转成大写等，采用流的方式实现也很方便。以下代码展示如何将整个字符串在连接之前先转为大写：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示在连接之前先将元素转为大写</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">      String str = String str = weekList.stream()</span><br><span class="line">                .map(String::toUpperCase)</span><br><span class="line">                .collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">      </span><br><span class="line">      System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在macOS编译JDK14</title>
+    <url>/2020/05/08/apache-kafka-intro/</url>
+    <content><![CDATA[<h2 id="一、系统环境"><a href="#一、系统环境" class="headerlink" title="一、系统环境"></a>一、系统环境</h2><p>操作系统：macOS 10.15.4（Catalina）</p>
+<p>处理器：2.6 GHz 双核Intel Core i5</p>
+<p>内存：8G</p>
+<p>硬盘：512G</p>
+<blockquote>
+<p>NOTE:  在 macOS 平台编译 OpenJDK 14，操作系统版本官方建议至少使用 Mac OS X 10.13（High Sierra），可用磁盘空间建议至少 6 GB。</p>
+</blockquote>
+<h2 id="二、准备工作"><a href="#二、准备工作" class="headerlink" title="二、准备工作"></a>二、准备工作</h2><h3 id="2-1-Boot-JDK"><a href="#2-1-Boot-JDK" class="headerlink" title="2.1 Boot JDK"></a>2.1 Boot JDK</h3><p>矛盾的是，为了编译 OpenJDK，我们需要预先安装一个版本的 JDK，官方称这个 JDK 为 Boot JDK，即引导 JDK。</p>
+<h4 id="何为-Boot-JDK"><a href="#何为-Boot-JDK" class="headerlink" title="何为 Boot JDK"></a>何为 Boot JDK</h4><p>我们知道，OpenJDK 源码由多个部分组成，包括 HotSpot、JDK 类库、JAXP 等。其中一部分的代码是使用 C/C++ 编写的，如 HotSpot；而更多的代码其实是使用 Java 实现的，如我们熟知的 JDK 类库。编译这些 Java 代码就需要用到另一个已经编译的 JDK，官方称这个 JDK 为 Bootstrap JDK，即引导 JDK，作用是编译 OpenJDK 源码中 Java 代码。</p>
+<h4 id="如何选择-Boot-JDK-的版本"><a href="#如何选择-Boot-JDK-的版本" class="headerlink" title="如何选择 Boot JDK 的版本"></a>如何选择 Boot JDK 的版本</h4><p>Bootstrap JDK 的版本与我们要编译的 OpenJDK 版本有关。假设要编译的 OpenJDK 的大版本号为 <em>N</em>，那么 Bootstrap JDK 大版本号最小为 <em>N-1</em> 版本。</p>
+<p>如本文要编译的 OpenJDK 的大版本号为 14，那 Bootstrap JDK 的大版本号就需要 13 或 13 之后的版本。这里选择的大版本号是 13 ：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ java -version</span><br><span class="line">openjdk version &quot;13.0.2&quot; 2020-01-14</span><br><span class="line">OpenJDK Runtime Environment (build 13.0.2+8)</span><br><span class="line">OpenJDK 64-Bit Server VM (build 13.0.2+8, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-安装-Xcode"><a href="#2-2-安装-Xcode" class="headerlink" title="2.2 安装 Xcode"></a>2.2 安装 Xcode</h3><p>直接通过电脑的 App Store 安装最新版 Xcode 即可。</p>
+<p>为什么需要安装 Xcode？这是因为 Xcode 提供了编译 OpenJDK 所需要 CLang 编译器以及 Makefile 中用到的其他外部命令。</p>
+<h3 id="2-3-获取源码"><a href="#2-3-获取源码" class="headerlink" title="2.3 获取源码"></a>2.3 获取源码</h3><p>从 OpenJDK 官网获取源码有以下两种方式：</p>
+<ul>
+<li><p>一种是通过代码管理工具 Mercurial 从 Repository（<a href="http://hg.openjdk.java.net/jdk/jdk14/">http://hg.openjdk.java.net/jdk/jdk14/</a>） 中取得源码：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hg clone http://hg.openjdk.java.net/jdk/jdk14/</span><br></pre></td></tr></table></figure></li>
+<li><p>另一种是先在仓库中打包出源码压缩包，再下载压缩包，主要步骤如下：</p>
+<ol>
+<li><p>在浏览器打开链接 *<a href="http://hg.openjdk.java.net/jdk/jdk14/*%EF%BC%9A">http://hg.openjdk.java.net/jdk/jdk14/*：</a></p>
+<p><img src="/image/image-20200511232123290.png" alt="image-20200511232123290"></p>
+</li>
+<li><p>点击左侧菜单栏 <em>browse</em> 链接：</p>
+<p><img src="/image/image-20200511232253789.png" alt="image-20200511232253789"></p>
+</li>
+<li><p>然后再点击左侧菜单栏 <em>zip</em> 链接，即可进行下载。</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>通过代码管理工具 Mercurial 的获取方式，你可以从版本管理中看到代码提交的记录和日志，能更加精确地了解 Java 代码发生的变化。此种方式的缺点是 clone 的速度很慢，虽然代码总大小只有几百MB，但小文件数量众多，而且该代码仓库在国内没有 CDN 节点，经常在 clone 的过程中出现中断的情况。</p>
+<p>通过从官网下载压缩包的获取方式，在国内同样也会有网络慢的问题。在网络不稳定的情况下，会出现只能下载到 1.5M 左右的残缺包。</p>
+<p>所以，如果想从官网获取源码，建议科学上网。</p>
+<p>对于不具备科学上网条件的用户，可以去 github 上的镜像库（<a href="https://github.com/unofficial-openjdk/openjdk/releases">https://github.com/unofficial-openjdk/openjdk/releases</a>）下载相应的 release 版本。</p>
+<p>本文的编译示例采用的是 <a href="https://github.com/unofficial-openjdk/openjdk/releases/tag/jdk-14%2B36">jdk-14+36</a> 版本，源码包大小为 185.2MB，解压缩之后为 763.6MB。</p>
+<h2 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h2><p>在准备工作完成后，就可以编译 OpenJDK 了。</p>
+<p>首先，将下载下来的源码解压到指定文件目录。本示例的目录是 <code>~/src/openjdk-jdk-14-36</code>。解压后的文件目录如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ cd ~/src/openjdk-jdk-14-36 </span><br><span class="line">➜  openjdk-jdk-14-36 ll</span><br><span class="line">total 80</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.1K  2  7 02:10 ADDITIONAL_LICENSE_INFO</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   1.5K  2  7 02:10 ASSEMBLY_EXCEPTION</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff    19K  2  7 02:10 LICENSE</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.7K  2  7 02:10 Makefile</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   341B  2  7 02:10 README</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 bin</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   1.6K  2  7 02:10 configure</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 doc</span><br><span class="line">drwxrwxr-x@ 69 bobotang  staff   2.2K  2  7 02:10 make</span><br><span class="line">drwxrwxr-x@ 81 bobotang  staff   2.5K  5  7 23:43 src</span><br><span class="line">drwxrwxr-x@ 14 bobotang  staff   448B  2  7 02:10 test</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>NOTE：目录不要包含中文字符或空格等其他特殊字符</p>
+</blockquote>
+<p>接下来，需要为源码目录下的一些配置文件赋予可执行权限。</p>
+<p>执行命令 <code>chmod +x ./configure </code>，为 <code>configure</code> 文件赋予可执行权限：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 chmod +x ./configure                             </span><br><span class="line">➜  openjdk-jdk-14-36 ll</span><br><span class="line">total 80</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.1K  2  7 02:10 ADDITIONAL_LICENSE_INFO</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   1.5K  2  7 02:10 ASSEMBLY_EXCEPTION</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff    19K  2  7 02:10 LICENSE</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.7K  2  7 02:10 Makefile</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   341B  2  7 02:10 README</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 bin</span><br><span class="line">-rwxrwxr-x@  1 bobotang  staff   1.6K  2  7 02:10 configure</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 doc</span><br><span class="line">drwxrwxr-x@ 69 bobotang  staff   2.2K  2  7 02:10 make</span><br><span class="line">drwxrwxr-x@ 81 bobotang  staff   2.5K  5  7 23:43 src</span><br><span class="line">drwxrwxr-x@ 14 bobotang  staff   448B  2  7 02:10 test</span><br></pre></td></tr></table></figure>
+
+
+
+<p>执行命令 <code>chmod +x build/.configure-support/generated-configure.sh</code> 为 <code>build/.configure-support/generated-configure.sh</code> 脚本文件赋予可执行权限：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 sudo chmod +x build/.configure-support/generated-configure.sh</span><br><span class="line">➜  openjdk-jdk-14-36 ll build/.configure-support/</span><br><span class="line">total 6272</span><br><span class="line">-rwxr-xr-x  1 root  staff   3.0M  5  8 09:41 generated-configure.sh</span><br></pre></td></tr></table></figure>
+
+
+
+<p>配置好可执行权限后，执行以下语句进行编译检测：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 ./configure --enable-debug --with-jvm-variants=server </span><br></pre></td></tr></table></figure>
+
+<p>如果检测通过，你可以看到以下输出：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">A new configuration has been successfully created in</span><br><span class="line">/Users/bobotang/src/openjdk-jdk-14-36/build/macosx-x86_64-server-fastdebug</span><br><span class="line">using configure arguments &#x27;--enable-debug --with-jvm-variants=server&#x27;.</span><br><span class="line"></span><br><span class="line">Configuration summary:</span><br><span class="line">* Debug level:    fastdebug</span><br><span class="line">* HS debug level: fastdebug</span><br><span class="line">* JVM variants:   server</span><br><span class="line">* JVM features:   server: &#x27;aot cds compiler1 compiler2 dtrace epsilongc g1gc graal jfr jni-check jvmci jvmti management nmt parallelgc serialgc services shenandoahgc vm-structs zgc&#x27; </span><br><span class="line">* OpenJDK target: OS: macosx, CPU architecture: x86, address length: 64</span><br><span class="line">* Version string: 14-internal+0-adhoc.root.openjdk-jdk-14-36 (14-internal)</span><br><span class="line"></span><br><span class="line">Tools summary:</span><br><span class="line">* Boot JDK:       openjdk version &quot;14&quot; 2020-03-17 OpenJDK Runtime Environment (build 14+36-1461) OpenJDK 64-Bit Server VM (build 14+36-1461, mixed mode, sharing)  (at /Library/Java/JavaVirtualMachines/jdk-14.jdk/Contents/Home)</span><br><span class="line">* Toolchain:      clang (clang/LLVM from Xcode 11.4.1)</span><br><span class="line">* C Compiler:     Version 11.0.3 (at /usr/bin/clang)</span><br><span class="line">* C++ Compiler:   Version 11.0.3 (at /usr/bin/clang++)</span><br><span class="line"></span><br><span class="line">Build performance summary:</span><br><span class="line">* Cores to use:   4</span><br><span class="line">* Memory limit:   8192 MB</span><br></pre></td></tr></table></figure>
+
+
+
+<p>编译检查通过后，就可以通过命令 <code>make images</code> 生成 OpenJDK 了。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 sudo make images</span><br></pre></td></tr></table></figure>
+
+<p>如果你看到以下输出，就说明构建成功了：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Creating jdk image</span><br><span class="line">WARNING: Using incubator modules: jdk.incubator.jpackage, jdk.incubator.foreign</span><br><span class="line">Creating CDS archive for jdk image</span><br><span class="line">Finished building target &#x27;images&#x27; in configuration &#x27;macosx-x86_64-server-fastdebug&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>你可以查看 <code>build</code> 目录下生成的文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 ll build/macosx-x86_64-server-fastdebug</span><br><span class="line">total 216</span><br><span class="line">-rw-r--r--   1 root  staff   1.3K  5  8 10:10 Makefile</span><br><span class="line">-rw-r--r--   1 root  staff   2.9K  5  8 10:10 bootcycle-spec.gmk</span><br><span class="line">-rw-r--r--   1 root  staff    18K  5  8 10:49 build.log</span><br><span class="line">-rw-r--r--   1 root  staff   8.7K  5  8 10:10 buildjdk-spec.gmk</span><br><span class="line">drwxr-xr-x  46 root  staff   1.4K  5  8 10:44 buildtools</span><br><span class="line">-rwxr-xr-x   1 root  staff   3.8K  5  8 10:10 compare.sh</span><br><span class="line">drwxr-xr-x   5 root  staff   160B  5  8 10:10 configure-support</span><br><span class="line">-rw-r--r--   1 root  staff    21K  5  8 10:10 configure.log</span><br><span class="line">drwxr-xr-x   3 root  staff    96B  5  8 10:17 hotspot</span><br><span class="line">drwxr-xr-x   7 root  staff   224B  5  8 10:47 images</span><br><span class="line">drwxr-xr-x  12 root  staff   384B  5  8 10:43 jdk</span><br><span class="line">drwxr-xr-x  10 root  staff   320B  5  8 10:16 make-support</span><br><span class="line">-rw-r--r--   1 root  staff    36K  5  8 10:10 spec.gmk</span><br><span class="line">drwxr-xr-x  27 root  staff   864B  5  8 10:44 support</span><br></pre></td></tr></table></figure>
+
+<p>执行 java -version 查看编译后的 OpenJDK 版本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 build/macosx-x86_64-server-fastdebug/jdk/bin/java -version </span><br><span class="line">openjdk version &quot;14-internal&quot; 2020-03-17</span><br><span class="line">OpenJDK Runtime Environment (fastdebug build 14-internal+0-adhoc.root.openjdk-jdk-14-36)</span><br><span class="line">OpenJDK 64-Bit Server VM (fastdebug build 14-internal+0-adhoc.root.openjdk-jdk-14-36, mixed mode)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>至此，OpenJDK 已经成功编译。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>JDK</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HashMap核心功能源码解读（一）：概述</title>
     <url>/2021/07/22/hashmap-core-code-analysis-1/</url>
     <content><![CDATA[<p>在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。</p>
@@ -1565,6 +1888,882 @@
       <tags>
         <tag>翻译</tag>
         <tag>位运算</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>退休金计划：2021-2025年定投执行计划</title>
+    <url>/2021/07/10/investment-plan-2021-2025/</url>
+    <content><![CDATA[<p>本计划是根据 <strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 而制定的第一个五年行动计划——2021-2025年定投计划。</p>
+<p>本计划目标：净投入达 120,000 元。</p>
+<p>计划具体内容为 2021 - 2025 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
+<h2 id="2021年定投计划"><a href="#2021年定投计划" class="headerlink" title="2021年定投计划"></a>2021年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2021/3/31</td>
+<td>1,000</td>
+<td>2021/3/31</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/4/10</td>
+<td>1,000</td>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td>补投</td>
+</tr>
+<tr>
+<td>2021/4/24</td>
+<td>1,000</td>
+<td>2021/6/5</td>
+<td>1,000</td>
+<td>补投</td>
+</tr>
+<tr>
+<td>2021/5/10</td>
+<td>1,000</td>
+<td>2021/5/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/6/10</td>
+<td>1,000</td>
+<td>2021/6/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/6/24</td>
+<td>1,000</td>
+<td>2021/6/24</td>
+<td>2,000</td>
+<td>每月2000，故3月补投一笔</td>
+</tr>
+<tr>
+<td>2021/7/10</td>
+<td>1,000</td>
+<td>2021/7/12</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/7/24</td>
+<td>1,000</td>
+<td>2021/7/23</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/8/10</td>
+<td>1,000</td>
+<td>2021/8/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/8/24</td>
+<td>1,000</td>
+<td>2021/8/24</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/9/10</td>
+<td>1,000</td>
+<td>2021/9/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2021/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2022年定投计划"><a href="#2022年定投计划" class="headerlink" title="2022年定投计划"></a>2022年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2022/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2023年定投计划"><a href="#2023年定投计划" class="headerlink" title="2023年定投计划"></a>2023年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2023/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2024年定投计划"><a href="#2024年定投计划" class="headerlink" title="2024年定投计划"></a>2024年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2024/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2025年定投计划"><a href="#2025年定投计划" class="headerlink" title="2025年定投计划"></a>2025年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2025/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
+        <tag>退休金计划</tag>
       </tags>
   </entry>
   <entry>
@@ -2804,882 +4003,6 @@
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：2021-2025年定投执行计划</title>
-    <url>/2021/07/10/investment-plan-2021-2025/</url>
-    <content><![CDATA[<p>本计划是根据 <strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 而制定的第一个五年行动计划——2021-2025年定投计划。</p>
-<p>本计划目标：净投入达 120,000 元。</p>
-<p>计划具体内容为 2021 - 2025 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
-<h2 id="2021年定投计划"><a href="#2021年定投计划" class="headerlink" title="2021年定投计划"></a>2021年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2021/3/31</td>
-<td>1,000</td>
-<td>2021/3/31</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/4/10</td>
-<td>1,000</td>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td>补投</td>
-</tr>
-<tr>
-<td>2021/4/24</td>
-<td>1,000</td>
-<td>2021/6/5</td>
-<td>1,000</td>
-<td>补投</td>
-</tr>
-<tr>
-<td>2021/5/10</td>
-<td>1,000</td>
-<td>2021/5/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/6/10</td>
-<td>1,000</td>
-<td>2021/6/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/6/24</td>
-<td>1,000</td>
-<td>2021/6/24</td>
-<td>2,000</td>
-<td>每月2000，故3月补投一笔</td>
-</tr>
-<tr>
-<td>2021/7/10</td>
-<td>1,000</td>
-<td>2021/7/12</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/7/24</td>
-<td>1,000</td>
-<td>2021/7/23</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/8/10</td>
-<td>1,000</td>
-<td>2021/8/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/8/24</td>
-<td>1,000</td>
-<td>2021/8/24</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2021/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="2022年定投计划"><a href="#2022年定投计划" class="headerlink" title="2022年定投计划"></a>2022年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2022/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="2023年定投计划"><a href="#2023年定投计划" class="headerlink" title="2023年定投计划"></a>2023年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2023/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="2024年定投计划"><a href="#2024年定投计划" class="headerlink" title="2024年定投计划"></a>2024年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2024/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="2025年定投计划"><a href="#2025年定投计划" class="headerlink" title="2025年定投计划"></a>2025年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2025/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-        <tag>退休金计划</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>退休金计划：每月定投基金2000元，30年后资产总额达到多少？</title>
     <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
     <content><![CDATA[<h2 id="突发奇想"><a href="#突发奇想" class="headerlink" title="突发奇想"></a>突发奇想</h2><p>前段时间突发奇想，如果每个月拿出2000元用于投资理财，如定投基金，那30年后资产总额会达到多少呢？</p>
@@ -3730,14 +4053,14 @@
 <p>2046-2050年定投执行计划</p>
 <p>2051年（1月、2月）定投执行计划</p>
 <h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts5640" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts9126" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts8558" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts6213" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts5640'));
-    var bar_chart = echarts.init(document.getElementById('echarts9126'));
+    var myChart = echarts.init(document.getElementById('echarts8558'));
+    var bar_chart = echarts.init(document.getElementById('echarts6213'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3850,14 +4173,14 @@
     <url>/2021/07/17/investment-plan-progress/</url>
     <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
 <h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts7884" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts8936" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts2930" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts6464" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts7884'));
-    var bar_chart = echarts.init(document.getElementById('echarts8936'));
+    var myChart = echarts.init(document.getElementById('echarts2930'));
+    var bar_chart = echarts.init(document.getElementById('echarts6464'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3954,12 +4277,12 @@
 <p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
 </blockquote>
 <h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts4781" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <div id="echarts9655" style="width: 100%;height: 200px;margin: 0 auto"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts4781'));
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts9655'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -4078,351 +4401,6 @@
       <tags>
         <tag>理财</tag>
         <tag>退休金计划</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>小记：2021年8月</title>
-    <url>/2021/08/05/note-202108/</url>
-    <content><![CDATA[<h2 id="2021年8月2日"><a href="#2021年8月2日" class="headerlink" title="2021年8月2日"></a>2021年8月2日</h2><p><strong>1 梦</strong></p>
-<p>昨晚梦到皮蛋，可把我气醒了。梦里大概是这样子：</p>
-<p>皮蛋生了七只小猫咪，有黑色的，有白色的，有橘黄色的还有混色的。但我发现的时候，其中的三只被他吃了，另外四只被绳子绑在一起，浸泡在洗脸盆上，盆上还有水。皮蛋打算溺死他自己的猫咪仔。把我气死了，拿起棍子准备教训皮蛋。结果，他一下子就跑去躲了，打不到他，我像个泼妇骂街一样，边骂边教育他，告诉他这些是你的仔，怎么可以这么残忍对待它们。。</p>
-<p>骂着骂着，突然想到小猫咪还在水盆里泡着呢，就马上冲回去，把小猫咪捞出来，解了绳子，感觉这些小猫咪像是要快饿死了。皮蛋又抓不到，不然还可以让皮蛋给小猫咪喂奶。</p>
-<p>没办法，想到小猫咪可以喝牛奶，又去冰箱找。边翻边想，刚出生的小猫咪可以喝冰的牛奶吗？哎呀，不管那么多了，拉肚子总比被饿死好吧？于是继续翻啊、找啊，但就是没有找到牛奶，急死了。后面冷静点，才想起我已经不喝牛奶很久了，冰箱怎么可能会有牛奶？这一瞬间，我彻底崩溃了，一直在责怪和质问自己。为什么我现在不喝牛奶了？！以前不是每晚睡之前都要喝一瓶的吗？！怎么不能过几天再不想喝牛奶？！就算不喝牛奶，冰箱也要备着啊？！为什么？！</p>
-<p>实在压抑到有些难受，还好醒了，睁着眼睛躺在床上，回忆着这个梦的始末，怒火中烧。清醒一点后发现，皮蛋不是公猫吗？还是一只做了绝育手术的公猫，他怎么会生小猫咪呢？</p>
-<p>哦，原来是一场梦啊，真是奇奇怪怪的梦！看了下手机，现在快早上5点了，起来喝点水，倒头再睡会，今天还要上班。</p>
-<p><strong>2 活在当下</strong></p>
-<p>夏天的时候就盼望着冬天的到来，而冬天的时候又期待着夏天的到来，一点都没有活在当下啊。</p>
-<p><strong>3 专注呼吸</strong></p>
-<p>每当我开始专注于自己的呼吸时，脑袋里总有各种各样的想法蹦跶出来。而当我结束专注呼吸训练准备记录他们的时候，他们又一下子不见了踪影。真是奇怪的脑袋</p>
-]]></content>
-      <categories>
-        <category>小记</category>
-      </categories>
-      <tags>
-        <tag>所思所想所悟</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CentOS7 系统中，如何禁止Linux系统用户通过SSH登录服务器？</title>
-    <url>/2020/03/20/how-to-limit-what-users-can-log-onto-system-via-ssh/</url>
-    <content><![CDATA[<p>出于安全考虑，有时候我们会禁止系统上的某些用户使用 <code>ssh</code> 命令登录服务器。例如，用于启动 MongoDB 服务的用户 mongod，就不允许通过 <code>ssh</code> 命令进行登录。在 CentOS 7 系统中，可以通过修改配置文件 <em>/etc/ssh/sshd_config</em> 达到禁用的目的。</p>
-<h2 id="一、单个用户"><a href="#一、单个用户" class="headerlink" title="一、单个用户"></a>一、单个用户</h2><p>这里以禁用 mongod 用户为例，具体步骤如下：</p>
-<ul>
-<li><p>打开配置文件 <em>/etc/ssh/sshd_config</em>，</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure></li>
-<li><p>在文件末尾加入以下内容，只允许后面的用户使用 <code>ssh</code> 命令登陆，</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyUsers    mongod</span><br></pre></td></tr></table></figure></li>
-<li><p>保存文件修改，并退出，重启 <code>ssh</code> 服务，即可禁用 <strong>mongod</strong> 用户通过 <code>ssh</code> 命令登陆。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">service sshd restart</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="二、多个用户"><a href="#二、多个用户" class="headerlink" title="二、多个用户"></a>二、多个用户</h2><p>若需要禁用多个系统帐户使用 <code>ssh</code> 命令登陆服务器，只需把系统账户名追加在 <strong>DenyUsers</strong> 行尾，并以空格隔开即可，如禁用 mongod、kafka、robbot 三个用户：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyUsers    mongod kafka robbot</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、用户组"><a href="#三、用户组" class="headerlink" title="三、用户组"></a>三、用户组</h2><p>我们也可以通过增加以下内容来禁止用户组通过 <code>ssh</code> 命令登陆服务器：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DenyGroups   groupname1 groupname2</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p><strong>NOTE：修改完配置文件，必须重新启动 <code>ssh</code> 服务才能生效。</strong></p>
-</blockquote>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>CentOS7</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Apache Kafka（二）：CentOS 7下安装Apache Kafka</title>
-    <url>/2020/03/19/how-to-install-apache-kafka-on-centos7/</url>
-    <content><![CDATA[<h2 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h2><p>Kafka 服务端代码是用 Scala 开发语言编写的，Scala 是 JVM 系语言中的一种，这意味着用 Scala 编写的源代码编译之后也是 Java 字节码，并运行在 Java 虚拟机上。因此，在开始安装 Kafka 之前，我们需要先在系统上安装 JDK（Java SE Development Kit， Java SE开发套件），JDK 包含的 JRE（Java SE Runtime Environment，Java 运行时环境）是运行 Java 应用程序所必需的。</p>
-<p>多数情况下，推荐安装 JDK 8 及以上的版本，因为 Kafka 自 2.0.0 版本开始，就已经正式摒弃对 Java 7 的支持了。本文安装示例采用的是 JDK 8 版本。</p>
-<p>在 CentOS 7 安装 JDK 可参考这篇博文—— <a href="https://www.linjiangxiong.com/2019/08/30/how-to-install-jdk-1-8-on-centos-7/">CentOS7下安装JDK1.8</a></p>
-<p>另外，运行 Kafka 还需要安装 Apache ZooKeeper 服务，该服务是用来同步分布式进程。ZooKeeper 安装可参考这篇博文——<a href="https://www.linjiangxiong.com/2019/12/12/how-to-install-zookeeper-on-centos7/">在CentOS7系统安装和配置ZooKeeper</a>。</p>
-<h2 id="安装Kafka"><a href="#安装Kafka" class="headerlink" title="安装Kafka"></a>安装Kafka</h2><p>推荐将 Kafka 安装在 Unix 操作系统（如 Solaris）或 Linux 操作系统（如 CentOS）上。这是因为在 Windows 系统上可获得的支持有限。</p>
-<p>本安装示例选择的是 CentOS 7 系统。具体安装步骤如下：</p>
-<ol>
-<li><p>从 Kafka 官网下载页 <a href="https://kafka.apache.org/downloads">https://kafka.apache.org/downloads</a> 获取安装文件，当前最新的稳定版本是 2.4.1，于 2020 年 3 月 12 日发行。这里选择下载二进制文件  <em>kafka_2.12-2.4.1.tgz</em>。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://mirror.bit.edu.cn/apache/kafka/2.4.1/kafka_2.12-2.4.1.tgz</span><br></pre></td></tr></table></figure></li>
-<li><p>创建 Kafka 安装目录：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /usr/local/kafka</span><br></pre></td></tr></table></figure></li>
-<li><p>解压缩文件 <em>kafka_2.12-2.4.1.tgz</em> 至目录 <code>/usr/local/kafka</code>：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar xvzf kafka_2.12-2.4.1.tgz -C /usr/local/kafka --strip 1</span><br></pre></td></tr></table></figure></li>
-<li><p>进入目录 <code>/usr/local/kafka</code>，可以看到以下子目录：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@185 home]# cd /usr/local/kafka/</span><br><span class="line">[root@185 kafka]# ll</span><br><span class="line">总用量 56</span><br><span class="line">drwxr-xr-x 3 root root  4096 3月   3 08:34 bin</span><br><span class="line">drwxr-xr-x 2 root root  4096 3月   3 08:34 config</span><br><span class="line">drwxr-xr-x 2 root root  8192 3月  19 15:06 libs</span><br><span class="line">-rw-r--r-- 1 root root 32216 3月   3 08:32 LICENSE</span><br><span class="line">-rw-r--r-- 1 root root   337 3月   3 08:32 NOTICE</span><br><span class="line">drwxr-xr-x 2 root root    44 3月   3 08:34 site-docs</span><br></pre></td></tr></table></figure>
-
-<p>其中，</p>
-<ul>
-<li><p><code>/bin</code>目录下是操作 Kafka 的可执行脚本（.sh 文件），还包含在 windows 系统下的可执行脚本（.bat 文件），包括 Kafka 启动/停止脚本、消费者性能测试脚本、生产者性能测试脚本、分区重分配脚本等；</p>
-</li>
-<li><p><code>/config</code>目录是存放配置文件；</p>
-</li>
-<li><p><code>/libs</code>目录是存放依赖库文件；</p>
-</li>
-<li><p><code>/logs</code>目录存放的是 Kafka 的运行日志文件。</p>
-</li>
-</ul>
-</li>
-<li><p>打开配置文件<code>config/server.properties</code>，修改 listeners 配置和 zookeeper 地址，具体如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim ./config/server.properties</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 监听地址</span></span><br><span class="line">listeners=PLAINTEXT://172.16.1.182:9092</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> zookeeper 地址</span></span><br><span class="line">zookeeper.connect=172.16.1.188:2181</span><br></pre></td></tr></table></figure></li>
-<li><p>在启动 Kafka 服务之前，为保障系统安全，添加运行 Kafka 服务的账号，并以较低权限账号运行 Kafka 服务，且禁用该账号的 <code>ssh</code> 登录权限。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 添加 kafka 账号</span></span><br><span class="line">useradd kafka</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置 kafka 账号密码</span></span><br><span class="line">passwd kafka</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将目录的所有者和组设置为 kafka</span></span><br><span class="line">chown -R kafka:kafka /usr/local/kafka/</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p>为保障系统安全，添加运行 Kafka 服务的账号，并以较低权限账号运行 Kafka 服务，且禁用该账号的登录权限。</p>
-<p>切换至 kafka 账号：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">su kafka</span><br></pre></td></tr></table></figure></li>
-<li><p>启动 Kafka 服务，</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/kafka-server-start.sh ./config/server.properties</span><br></pre></td></tr></table></figure>
-
-<p>以守护进程（后台进程）的方式启动：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/kafka-server-start.sh ./config/server.properties &amp;</span><br></pre></td></tr></table></figure></li>
-<li><p>停止 Kafka 服务：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/kafka-server-stop.sh</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Kafka</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Elasticsearch倒排索引简介</title>
-    <url>/2020/08/04/elasticsearch-inverted-index-intro/</url>
-    <content><![CDATA[<h2 id="什么是倒排索引"><a href="#什么是倒排索引" class="headerlink" title="什么是倒排索引"></a>什么是倒排索引</h2><p>倒排索引（Inverted index，亦称反向索引），是一种索引方法，用来存储在全文搜索下某个单词在某一个文档或某一组文档中的存储位置的映射。</p>
-<h2 id="倒排索引的数据结构"><a href="#倒排索引的数据结构" class="headerlink" title="倒排索引的数据结构"></a>倒排索引的数据结构</h2><p>倒排索引是文档检索系统中最常用的一种数据据构。它包含两部分——<strong>单词词典（Term Dictionary）和倒排列表（Posting List）</strong>。</p>
-<p>其中，单词词典是用来记录所有文档的单词，记录单词到倒排列表的关系，所以单词词典一般也会比较大，为满足快速地插入与查询，通常采用 B+ 树或者哈希链表法来实现。</p>
-<p>而倒排列表是用来记录单词对应的文档结合，由倒排索引项（Posting）组成。</p>
-<p>倒排索引项结构主要包括以下四项内容：</p>
-<ul>
-<li>文档ID；</li>
-<li>词频（TF）——该单词在文档中的出现次数，用于相关性评分；</li>
-<li>位置（Position）——单词在文档中分词的位置，用于语句搜索（Phrase Query）；</li>
-<li>偏移（Offset）——记录单词的开始、结束位置，用于高亮显示。</li>
-</ul>
-<p>倒排索引项结构示例：</p>
-<table>
-<thead>
-<tr>
-<th>Document ID</th>
-<th>TF</th>
-<th>Position</th>
-<th>Offset</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>10001</td>
-<td>2</td>
-<td>1</td>
-<td>&lt;20, 32&gt;</td>
-</tr>
-<tr>
-<td>10002</td>
-<td>10</td>
-<td>23</td>
-<td>&lt;7, 10&gt;</td>
-</tr>
-</tbody></table>
-<p>在 Elasticsearch 的 JSON 文档中的每个字段，默认情况下都有自己的倒排索引，我们可以根据需要对某些字段不做索引，优点是节省存储空间，缺点是该字段无法被搜索。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Elasticsearch</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Homebrew在macOS上安装Elasticsearch</title>
-    <url>/2020/08/02/install-elasticsearch-on-macos-with-homebrew/</url>
-    <content><![CDATA[<p>在 macOS 上通过 Homwbrew 安装 Elasticsearch 非常简单，首先通过 <code>brew tap</code> 命令关联 Elastic Homebrew 存储库：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew tap elastic/tap</span><br></pre></td></tr></table></figure>
-
-<p>接下来就可以使用 <code>brew install</code> 命令安装最新发布的 Elasticsearch 的默认发行版：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install elastic/tap/elasticsearch-full</span><br></pre></td></tr></table></figure>
-
-<p>如果你看到类似以下的输出内容，就表示安装成功：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Pruned 0 symbolic links and 3 directories from /usr/local</span><br></pre></td></tr></table></figure>
-
-
-
-<p>通过 brew 安装的 Elasticsearch，其配置文件，日志和数据目录存储在以下位置：</p>
-<p><strong>HOME（主目录）</strong>，位于 <code>/usr/local/Cellar/elasticsearch-full/7.8.1/</code>；</p>
-<p><strong>bin （可执行文件所在目录）</strong>位于 <code>ll /usr/local/Cellar/elasticsearch-full/7.8.1/bin</code>；</p>
-<p><strong>config（配置文件）</strong>位于 <code>/usr/local/etc/elasticsearch</code>；</p>
-<p><strong>data（数据存储目录）</strong>位于 <code>/usr/local/var/lib/elasticsearch</code>；</p>
-<p><strong>log（日志文件）</strong>位于 <code>/usr/local/var/log/elasticsearch</code>；</p>
-<p><strong>plugins（插件存放目录）</strong>位于 <code>/usr/local/var/elasticsearch/plugins </code>。</p>
-<p>具体执行输出如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ brew tap elastic/tap</span><br><span class="line">Updating Homebrew...</span><br><span class="line">==&gt; Auto-updated Homebrew!</span><br><span class="line">Updated 1 tap (homebrew/core).</span><br><span class="line">==&gt; New Formulae</span><br><span class="line">act                 chart-testing       dnsprobe            golangci-lint       kubie               never               reg                 termcolor</span><br><span class="line">apidoc              chrony              dosbox-staging      gradle-profiler     ldpl                ngs                 rqlite              thanos</span><br><span class="line">arb                 clair               duckscript          gulp-cli            litecli             notmuch-mutt        scw@1               vgrep</span><br><span class="line">argo                cloudformation-cli  eksctl              hy                  logcli              oci-cli             sdns                wgcf</span><br><span class="line">argocd              coconut             fennel              jimtcl              loki                omake               simdjson            yj</span><br><span class="line">arrayfire           colfer              folderify           jinx                lunchy              ory-hydra           smlpkg              z.lua</span><br><span class="line">awsweeper           copilot             functionalplus      jsonnet-bundler     lunchy-go           osi                 so</span><br><span class="line">bond                cortex              gateway-go          k9s                 marked              pipgrip             solidity</span><br><span class="line">cadence             croaring            gcc@9               kona                naabu               promtail            standardese</span><br><span class="line">chalk-cli           cubejs-cli          git-hooks-go        ksync               nanorc              python@3.7          subfinder</span><br><span class="line">==&gt; Updated Formulae</span><br><span class="line">Updated 3971 formulae.</span><br><span class="line">==&gt; Renamed Formulae</span><br><span class="line">elasticsearch@6.8 -&gt; elasticsearch@6                                            kibana@6.8 -&gt; kibana@6</span><br><span class="line">==&gt; Deleted Formulae</span><br><span class="line">cargo-completion                elasticsearch@2.4               i386-elf-grub                   python                          tomee-jax-rs</span><br><span class="line">cryptopp                        elasticsearch@5.6               kibana@5.6                      sflowtool</span><br><span class="line"></span><br><span class="line">==&gt; Tapping elastic/tap</span><br><span class="line">Cloning into &#x27;/usr/local/Homebrew/Library/Taps/elastic/homebrew-tap&#x27;...</span><br><span class="line">remote: Enumerating objects: 44, done.</span><br><span class="line">remote: Counting objects: 100% (44/44), done.</span><br><span class="line">remote: Compressing objects: 100% (26/26), done.</span><br><span class="line">remote: Total 530 (delta 28), reused 24 (delta 18), pack-reused 486</span><br><span class="line">Receiving objects: 100% (530/530), 133.37 KiB | 31.00 KiB/s, done.</span><br><span class="line">Resolving deltas: 100% (398/398), done.</span><br><span class="line">Tapped 19 formulae (44 files, 234.2KB).</span><br><span class="line">➜  ~ brew install elastic/tap/elasticsearch-full</span><br><span class="line">Updating Homebrew...</span><br><span class="line">==&gt; Auto-updated Homebrew!</span><br><span class="line">Updated 1 tap (homebrew/core).</span><br><span class="line">==&gt; Updated Formulae</span><br><span class="line">Updated 8 formulae.</span><br><span class="line"></span><br><span class="line">==&gt; Installing elasticsearch-full from elastic/tap</span><br><span class="line">==&gt; Downloading https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.8.1-darwin-x86_64.tar.gz?tap=elastic/homebrew-tap</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">####################################################################### 100.0%</span></span></span><br><span class="line">Warning: tried to install empty array to /usr/local/etc/elasticsearch/jvm.options.d</span><br><span class="line">==&gt; codesign -f -s - /usr/local/Cellar/elasticsearch-full/7.8.1/libexec/modules/x-pack-ml/platform/darwin-x86_64/controller.app --deep</span><br><span class="line">==&gt; find /usr/local/Cellar/elasticsearch-full/7.8.1/libexec/jdk.app/Contents/Home/bin -type f -exec codesign -f -s - &#123;&#125; ;</span><br><span class="line">==&gt; Caveats</span><br><span class="line">Data:    /usr/local/var/lib/elasticsearch/elasticsearch_bobotang/</span><br><span class="line">Logs:    /usr/local/var/log/elasticsearch/elasticsearch_bobotang.log</span><br><span class="line">Plugins: /usr/local/var/elasticsearch/plugins/</span><br><span class="line">Config:  /usr/local/etc/elasticsearch/</span><br><span class="line"></span><br><span class="line">To have launchd start elastic/tap/elasticsearch-full now and restart at login:</span><br><span class="line">  brew services start elastic/tap/elasticsearch-full</span><br><span class="line">Or, if you don&#x27;t want/need a background service you can just run:</span><br><span class="line">  elasticsearch</span><br><span class="line">==&gt; Summary</span><br><span class="line">🍺  /usr/local/Cellar/elasticsearch-full/7.8.1: 901 files, 473.6MB, built in 15 seconds</span><br><span class="line">==&gt; `brew cleanup` has not been run in 30 days, running now...</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/gettext--0.20.2_1.catalina.bottle.tar.gz... (8.4MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/gnupg--2.2.20.catalina.bottle.tar.gz... (4.3MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/libevent--2.1.11_1.catalina.bottle.tar.gz... (1.2MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/libgcrypt--1.8.5.catalina.bottle.tar.gz... (1MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/redis--6.0.5.catalina.bottle.tar.gz... (1.8MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Caches/Homebrew/unbound--1.10.1.catalina.bottle.tar.gz... (2.5MB)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gmp... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/pinentry... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libidn2... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libksba... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/autojump... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/ncurses... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/nettle... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libunistring... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/utf8proc... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libassuan... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libgpg-error... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libgcrypt... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gettext... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/pwgen... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/tmux... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libtasn1... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libevent... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/openssl@1.1... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/unbound... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libusb... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gnupg... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/p11-kit... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/libffi... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/telnet... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/gnutls... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/npth... (64B)</span><br><span class="line">Removing: /Users/bobotang/Library/Logs/Homebrew/adns... (64B)</span><br><span class="line">Pruned 0 symbolic links and 3 directories from /usr/local</span><br><span class="line">➜  ~ </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Elasticsearch</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Apache Kafka（一）：简介</title>
-    <url>/2020/03/17/apache-kafka-intro/</url>
-    <content><![CDATA[<h2 id="Kafka简介"><a href="#Kafka简介" class="headerlink" title="Kafka简介"></a>Kafka简介</h2><p>Kafka 最早是由 LinkedIn 公司开发的一套分布式的高性能消息引擎服务，于 2011 年初开源，并于 2012 年 10 月 23 日从 Apache 孵化器毕业，成为 Apache 的顶级项目。</p>
-<p>Kafka 最初的设计目的是用于处理海量的日志，后来历经多年发展和完善，如今的 Kafka 集消息系统、存储系统和流式处理平台于一身，在消息引擎领域是执牛耳者，在大数据工程领域、流计算领域也起着举足轻重的作用，具有非常广阔的应用场景。</p>
-<h2 id="为什么要掌握Kafka"><a href="#为什么要掌握Kafka" class="headerlink" title="为什么要掌握Kafka"></a>为什么要掌握Kafka</h2><p>因为掌握了 Kafka，手上就多了一份拿高薪的筹码。</p>
-<p>援引美国 2019 年 Dice 技术薪资报告中的数据，在十大薪资最高的技术技能中，掌握 Kafka 以平均每年 12.7554 万美元排名第二！虽然这是美国人才市场的数据，但从国内互联网公司的技术招聘需求中，我们也可以看出 Kafka 在国内的行情也是水涨船高。</p>
-<p>（查看完整报告：<a href="https://marketing.dice.com/pdf/Dice_TechSalaryReport2019.pdf">https://marketing.dice.com/pdf/Dice_TechSalaryReport2019.pdf</a>）</p>
-<h2 id="如何全面掌握Kafka"><a href="#如何全面掌握Kafka" class="headerlink" title="如何全面掌握Kafka"></a>如何全面掌握Kafka</h2><p>作为一名软件开发工程师，在学习开源项目时，最好是采取“自顶向下”的学习方法，即先初步掌握开源项目的基本使用、功能原理、关键设计等，然后再深入到源码，学习其关键技术是如何实现的，以及其代码写作方式等。</p>
-<p>对于学习 Kafka 也不例外。具体步骤如下：</p>
-<ul>
-<li>安装、运行 Kafka。</li>
-<li>选择合适的 Kafka 客户端，学习官网上的示例代码，并尝试修改示例代码，如修改输入值、或使用其他的 API 功能，观测修改后的运行结果。此时可编写一个简单的程序（如生产者、消费者程序）进行验证。</li>
-<li>通读 Kafka 的设计文档，了解消息队列设计的关键决策部分，并确保理解了那些可能影响可靠性、稳定性和性能的参数。</li>
-<li>学习 Kafka 的高级功能，如拦截器、幂等性生产者、事务、流处理应用开发等。</li>
-<li>研究原理，如生产者消息分区机制、副本机制、重平衡等。</li>
-<li>深入源码，学习关键原理背后的具体编码如何实现。但不建议通读源码（此种方法效率特别低，效果也不好），最好是带着明确目的去研究源码，做到有的放矢，才能事半功倍。</li>
-</ul>
-<p>在实际应用中，你可能还需要学会管理和监控 Kafka，并从 Kafka 在真实负载下的表现，找出系统可能存在的瓶颈，保障系统的稳定性和提升系统的性能。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Kafka</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</title>
-    <url>/2020/06/29/java-list-string-join/</url>
-    <content><![CDATA[<p>在日常开发工作中，经常会遇到需要将 <code>List&lt;String&gt;</code> 转换为使用某个符号连接的字符串。如将 <code>List&lt;String&gt;</code> 转换为按英文逗号（<code>,</code>）分隔的字符串：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：</span></span><br><span class="line"><span class="comment">// Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>最容易想到的拼接方式，是通过 <code>for</code> 循环来实现。不过，如果你使用 Java 8 或以上的版本进行开发，实现该功能将变得非常简单，通常有以下两种方法。</p>
-<p><strong>方法一：使用 <code>String.join</code>，主要代码如下：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示 String.join 方法的使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line">        System.out.println(String.join(<span class="string">&quot;,&quot;</span>, weekList));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>方法二：采用流的方式（<code>stream()</code>）来写，就像下面这样，仍然能够得到同样的结果：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示流方式（stream）进行拼接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        String str = weekList.stream().collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>此外，如果你想在连接成字符串之前，先对元素进行其他的操作，如过滤元素、转成大写等，采用流的方式实现也很方便。以下代码展示如何将整个字符串在连接之前先转为大写：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示在连接之前先将元素转为大写</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">      String str = String str = weekList.stream()</span><br><span class="line">                .map(String::toUpperCase)</span><br><span class="line">                .collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">      </span><br><span class="line">      System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在macOS编译JDK14</title>
-    <url>/2020/05/08/apache-kafka-intro/</url>
-    <content><![CDATA[<h2 id="一、系统环境"><a href="#一、系统环境" class="headerlink" title="一、系统环境"></a>一、系统环境</h2><p>操作系统：macOS 10.15.4（Catalina）</p>
-<p>处理器：2.6 GHz 双核Intel Core i5</p>
-<p>内存：8G</p>
-<p>硬盘：512G</p>
-<blockquote>
-<p>NOTE:  在 macOS 平台编译 OpenJDK 14，操作系统版本官方建议至少使用 Mac OS X 10.13（High Sierra），可用磁盘空间建议至少 6 GB。</p>
-</blockquote>
-<h2 id="二、准备工作"><a href="#二、准备工作" class="headerlink" title="二、准备工作"></a>二、准备工作</h2><h3 id="2-1-Boot-JDK"><a href="#2-1-Boot-JDK" class="headerlink" title="2.1 Boot JDK"></a>2.1 Boot JDK</h3><p>矛盾的是，为了编译 OpenJDK，我们需要预先安装一个版本的 JDK，官方称这个 JDK 为 Boot JDK，即引导 JDK。</p>
-<h4 id="何为-Boot-JDK"><a href="#何为-Boot-JDK" class="headerlink" title="何为 Boot JDK"></a>何为 Boot JDK</h4><p>我们知道，OpenJDK 源码由多个部分组成，包括 HotSpot、JDK 类库、JAXP 等。其中一部分的代码是使用 C/C++ 编写的，如 HotSpot；而更多的代码其实是使用 Java 实现的，如我们熟知的 JDK 类库。编译这些 Java 代码就需要用到另一个已经编译的 JDK，官方称这个 JDK 为 Bootstrap JDK，即引导 JDK，作用是编译 OpenJDK 源码中 Java 代码。</p>
-<h4 id="如何选择-Boot-JDK-的版本"><a href="#如何选择-Boot-JDK-的版本" class="headerlink" title="如何选择 Boot JDK 的版本"></a>如何选择 Boot JDK 的版本</h4><p>Bootstrap JDK 的版本与我们要编译的 OpenJDK 版本有关。假设要编译的 OpenJDK 的大版本号为 <em>N</em>，那么 Bootstrap JDK 大版本号最小为 <em>N-1</em> 版本。</p>
-<p>如本文要编译的 OpenJDK 的大版本号为 14，那 Bootstrap JDK 的大版本号就需要 13 或 13 之后的版本。这里选择的大版本号是 13 ：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ java -version</span><br><span class="line">openjdk version &quot;13.0.2&quot; 2020-01-14</span><br><span class="line">OpenJDK Runtime Environment (build 13.0.2+8)</span><br><span class="line">OpenJDK 64-Bit Server VM (build 13.0.2+8, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-2-安装-Xcode"><a href="#2-2-安装-Xcode" class="headerlink" title="2.2 安装 Xcode"></a>2.2 安装 Xcode</h3><p>直接通过电脑的 App Store 安装最新版 Xcode 即可。</p>
-<p>为什么需要安装 Xcode？这是因为 Xcode 提供了编译 OpenJDK 所需要 CLang 编译器以及 Makefile 中用到的其他外部命令。</p>
-<h3 id="2-3-获取源码"><a href="#2-3-获取源码" class="headerlink" title="2.3 获取源码"></a>2.3 获取源码</h3><p>从 OpenJDK 官网获取源码有以下两种方式：</p>
-<ul>
-<li><p>一种是通过代码管理工具 Mercurial 从 Repository（<a href="http://hg.openjdk.java.net/jdk/jdk14/">http://hg.openjdk.java.net/jdk/jdk14/</a>） 中取得源码：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hg clone http://hg.openjdk.java.net/jdk/jdk14/</span><br></pre></td></tr></table></figure></li>
-<li><p>另一种是先在仓库中打包出源码压缩包，再下载压缩包，主要步骤如下：</p>
-<ol>
-<li><p>在浏览器打开链接 *<a href="http://hg.openjdk.java.net/jdk/jdk14/*%EF%BC%9A">http://hg.openjdk.java.net/jdk/jdk14/*：</a></p>
-<p><img src="/image/image-20200511232123290.png" alt="image-20200511232123290"></p>
-</li>
-<li><p>点击左侧菜单栏 <em>browse</em> 链接：</p>
-<p><img src="/image/image-20200511232253789.png" alt="image-20200511232253789"></p>
-</li>
-<li><p>然后再点击左侧菜单栏 <em>zip</em> 链接，即可进行下载。</p>
-</li>
-</ol>
-</li>
-</ul>
-<p>通过代码管理工具 Mercurial 的获取方式，你可以从版本管理中看到代码提交的记录和日志，能更加精确地了解 Java 代码发生的变化。此种方式的缺点是 clone 的速度很慢，虽然代码总大小只有几百MB，但小文件数量众多，而且该代码仓库在国内没有 CDN 节点，经常在 clone 的过程中出现中断的情况。</p>
-<p>通过从官网下载压缩包的获取方式，在国内同样也会有网络慢的问题。在网络不稳定的情况下，会出现只能下载到 1.5M 左右的残缺包。</p>
-<p>所以，如果想从官网获取源码，建议科学上网。</p>
-<p>对于不具备科学上网条件的用户，可以去 github 上的镜像库（<a href="https://github.com/unofficial-openjdk/openjdk/releases">https://github.com/unofficial-openjdk/openjdk/releases</a>）下载相应的 release 版本。</p>
-<p>本文的编译示例采用的是 <a href="https://github.com/unofficial-openjdk/openjdk/releases/tag/jdk-14%2B36">jdk-14+36</a> 版本，源码包大小为 185.2MB，解压缩之后为 763.6MB。</p>
-<h2 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h2><p>在准备工作完成后，就可以编译 OpenJDK 了。</p>
-<p>首先，将下载下来的源码解压到指定文件目录。本示例的目录是 <code>~/src/openjdk-jdk-14-36</code>。解压后的文件目录如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  ~ cd ~/src/openjdk-jdk-14-36 </span><br><span class="line">➜  openjdk-jdk-14-36 ll</span><br><span class="line">total 80</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.1K  2  7 02:10 ADDITIONAL_LICENSE_INFO</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   1.5K  2  7 02:10 ASSEMBLY_EXCEPTION</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff    19K  2  7 02:10 LICENSE</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.7K  2  7 02:10 Makefile</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   341B  2  7 02:10 README</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 bin</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   1.6K  2  7 02:10 configure</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 doc</span><br><span class="line">drwxrwxr-x@ 69 bobotang  staff   2.2K  2  7 02:10 make</span><br><span class="line">drwxrwxr-x@ 81 bobotang  staff   2.5K  5  7 23:43 src</span><br><span class="line">drwxrwxr-x@ 14 bobotang  staff   448B  2  7 02:10 test</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>NOTE：目录不要包含中文字符或空格等其他特殊字符</p>
-</blockquote>
-<p>接下来，需要为源码目录下的一些配置文件赋予可执行权限。</p>
-<p>执行命令 <code>chmod +x ./configure </code>，为 <code>configure</code> 文件赋予可执行权限：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 chmod +x ./configure                             </span><br><span class="line">➜  openjdk-jdk-14-36 ll</span><br><span class="line">total 80</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.1K  2  7 02:10 ADDITIONAL_LICENSE_INFO</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   1.5K  2  7 02:10 ASSEMBLY_EXCEPTION</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff    19K  2  7 02:10 LICENSE</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   2.7K  2  7 02:10 Makefile</span><br><span class="line">-rw-rw-r--@  1 bobotang  staff   341B  2  7 02:10 README</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 bin</span><br><span class="line">-rwxrwxr-x@  1 bobotang  staff   1.6K  2  7 02:10 configure</span><br><span class="line">drwxrwxr-x@  9 bobotang  staff   288B  2  7 02:10 doc</span><br><span class="line">drwxrwxr-x@ 69 bobotang  staff   2.2K  2  7 02:10 make</span><br><span class="line">drwxrwxr-x@ 81 bobotang  staff   2.5K  5  7 23:43 src</span><br><span class="line">drwxrwxr-x@ 14 bobotang  staff   448B  2  7 02:10 test</span><br></pre></td></tr></table></figure>
-
-
-
-<p>执行命令 <code>chmod +x build/.configure-support/generated-configure.sh</code> 为 <code>build/.configure-support/generated-configure.sh</code> 脚本文件赋予可执行权限：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 sudo chmod +x build/.configure-support/generated-configure.sh</span><br><span class="line">➜  openjdk-jdk-14-36 ll build/.configure-support/</span><br><span class="line">total 6272</span><br><span class="line">-rwxr-xr-x  1 root  staff   3.0M  5  8 09:41 generated-configure.sh</span><br></pre></td></tr></table></figure>
-
-
-
-<p>配置好可执行权限后，执行以下语句进行编译检测：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 ./configure --enable-debug --with-jvm-variants=server </span><br></pre></td></tr></table></figure>
-
-<p>如果检测通过，你可以看到以下输出：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">A new configuration has been successfully created in</span><br><span class="line">/Users/bobotang/src/openjdk-jdk-14-36/build/macosx-x86_64-server-fastdebug</span><br><span class="line">using configure arguments &#x27;--enable-debug --with-jvm-variants=server&#x27;.</span><br><span class="line"></span><br><span class="line">Configuration summary:</span><br><span class="line">* Debug level:    fastdebug</span><br><span class="line">* HS debug level: fastdebug</span><br><span class="line">* JVM variants:   server</span><br><span class="line">* JVM features:   server: &#x27;aot cds compiler1 compiler2 dtrace epsilongc g1gc graal jfr jni-check jvmci jvmti management nmt parallelgc serialgc services shenandoahgc vm-structs zgc&#x27; </span><br><span class="line">* OpenJDK target: OS: macosx, CPU architecture: x86, address length: 64</span><br><span class="line">* Version string: 14-internal+0-adhoc.root.openjdk-jdk-14-36 (14-internal)</span><br><span class="line"></span><br><span class="line">Tools summary:</span><br><span class="line">* Boot JDK:       openjdk version &quot;14&quot; 2020-03-17 OpenJDK Runtime Environment (build 14+36-1461) OpenJDK 64-Bit Server VM (build 14+36-1461, mixed mode, sharing)  (at /Library/Java/JavaVirtualMachines/jdk-14.jdk/Contents/Home)</span><br><span class="line">* Toolchain:      clang (clang/LLVM from Xcode 11.4.1)</span><br><span class="line">* C Compiler:     Version 11.0.3 (at /usr/bin/clang)</span><br><span class="line">* C++ Compiler:   Version 11.0.3 (at /usr/bin/clang++)</span><br><span class="line"></span><br><span class="line">Build performance summary:</span><br><span class="line">* Cores to use:   4</span><br><span class="line">* Memory limit:   8192 MB</span><br></pre></td></tr></table></figure>
-
-
-
-<p>编译检查通过后，就可以通过命令 <code>make images</code> 生成 OpenJDK 了。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 sudo make images</span><br></pre></td></tr></table></figure>
-
-<p>如果你看到以下输出，就说明构建成功了：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Creating jdk image</span><br><span class="line">WARNING: Using incubator modules: jdk.incubator.jpackage, jdk.incubator.foreign</span><br><span class="line">Creating CDS archive for jdk image</span><br><span class="line">Finished building target &#x27;images&#x27; in configuration &#x27;macosx-x86_64-server-fastdebug&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>你可以查看 <code>build</code> 目录下生成的文件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 ll build/macosx-x86_64-server-fastdebug</span><br><span class="line">total 216</span><br><span class="line">-rw-r--r--   1 root  staff   1.3K  5  8 10:10 Makefile</span><br><span class="line">-rw-r--r--   1 root  staff   2.9K  5  8 10:10 bootcycle-spec.gmk</span><br><span class="line">-rw-r--r--   1 root  staff    18K  5  8 10:49 build.log</span><br><span class="line">-rw-r--r--   1 root  staff   8.7K  5  8 10:10 buildjdk-spec.gmk</span><br><span class="line">drwxr-xr-x  46 root  staff   1.4K  5  8 10:44 buildtools</span><br><span class="line">-rwxr-xr-x   1 root  staff   3.8K  5  8 10:10 compare.sh</span><br><span class="line">drwxr-xr-x   5 root  staff   160B  5  8 10:10 configure-support</span><br><span class="line">-rw-r--r--   1 root  staff    21K  5  8 10:10 configure.log</span><br><span class="line">drwxr-xr-x   3 root  staff    96B  5  8 10:17 hotspot</span><br><span class="line">drwxr-xr-x   7 root  staff   224B  5  8 10:47 images</span><br><span class="line">drwxr-xr-x  12 root  staff   384B  5  8 10:43 jdk</span><br><span class="line">drwxr-xr-x  10 root  staff   320B  5  8 10:16 make-support</span><br><span class="line">-rw-r--r--   1 root  staff    36K  5  8 10:10 spec.gmk</span><br><span class="line">drwxr-xr-x  27 root  staff   864B  5  8 10:44 support</span><br></pre></td></tr></table></figure>
-
-<p>执行 java -version 查看编译后的 OpenJDK 版本：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">➜  openjdk-jdk-14-36 build/macosx-x86_64-server-fastdebug/jdk/bin/java -version </span><br><span class="line">openjdk version &quot;14-internal&quot; 2020-03-17</span><br><span class="line">OpenJDK Runtime Environment (fastdebug build 14-internal+0-adhoc.root.openjdk-jdk-14-36)</span><br><span class="line">OpenJDK 64-Bit Server VM (fastdebug build 14-internal+0-adhoc.root.openjdk-jdk-14-36, mixed mode)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>至此，OpenJDK 已经成功编译。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>JDK</tag>
       </tags>
   </entry>
   <entry>
@@ -4741,6 +4719,35 @@
       </tags>
   </entry>
   <entry>
+    <title>袁隆平：稻子熟了，妈妈，我来看您了</title>
+    <url>/2021/05/24/ylp-1/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>“他们说，我用一粒种子改变了世界。我知道，这粒种子，是妈妈您在我幼年时种下的！”</strong><br> <br>2010年，在袁隆平院士80华诞，湖南卫视为他举办了“为了大地的丰收”专场文艺晚会，晚会上，袁院士写给母亲的信《妈妈，稻子熟了》感动了在场所有观众，字里行间，说不尽对母亲的思念与愧疚。</p>
+<p>袁隆平动情写到：“没能多陪伴母亲，是我永远的后悔与遗憾。”今天，袁隆平院士逝世，读完这封旧信的网友纷纷留言：“读到一半就已泪流满面，可爱的袁爷爷，要去和妈妈团聚了。”<br> <br>我们整理了信件原文，纪念袁隆平院士一路走好。<br> <br>以下为信件原文。</p>
+</blockquote>
+<p>本来想一个人静静地陪您说会话，安江的乡亲们实在是太热情了，天这么热，他们还一直陪着，谢谢他们了。</p>
+<p>妈妈，您在安江，我在长沙，隔得很远很远。我在梦里总是想着您，想着安江这个地方。</p>
+<p>人事难料啊，您这样一位习惯了繁华都市的大家闺秀，最后竟会永远留在这么一个偏远的小山村。还记得吗？1957年，我要从重庆的大学分配到这儿，是您陪着我，脸贴着地图，手指顺着密密麻麻的细线，找了很久，才找到地图上这么一个小点点。当时您叹了口气说：<strong>“孩子，你到那儿，是要吃苦的呀……”</strong></p>
+<p>我说：“我年轻，我还有一把小提琴。”</p>
+<p>没想到的是，为了我，为了帮我带小孩，把您也拖到了安江。最后，受累吃苦的，是妈妈您哪！您哪里走得惯乡间的田埂！我总记得，每次都要小孙孙牵着您的手，您才敢走过屋前屋后的田间小道。</p>
+<p>安江是我的一切，我却忘了，对一辈子都生活在大城市里的您来说，70岁了，一切还要重新来适应。我从来没有问过您有什么难处，我总以为会有时间的，会有时间的，等我闲一点一定好好地陪陪您……</p>
+<p>哪想到，直到您走的时候，我还在长沙忙着开会。那天正好是中秋节，全国的同行都来了，搞杂交水稻不容易啊，我又是召集人，怎么着也得陪大家过这个节啊，只是儿子永远亏欠妈妈您了……</p>
+<p>其实我知道，那个时候已经是您的最后时刻。我总盼望着妈妈您能多撑两天。谁知道，即便是天不亮就往安江赶，我还是没能见上妈妈您最后一面。</p>
+<p>太晚了，一切都太晚了，我真的好后悔。妈妈，当时您一定等了我很久，盼了我很长，您一定有很多话要对儿子说，有很多事要交代。可我怎么就那么糊涂呢！这么多年，为什么我就不能少下一次田，少做一次实验，少出一天差，坐下来静静地好好陪陪您。哪怕……哪怕就一次。</p>
+<p>妈妈，每当我的研究取得成果，每当我在国际讲坛上谈笑风生，每当我接过一座又一座奖杯，我总是对人说，这辈子对我影响最深的人就是妈妈您啊！</p>
+<p>无法想象，没有您的英语启蒙，在一片闭塞中，我怎么能够阅读世界上最先进的科学文献，用超越那个时代的视野，去寻访遗传学大师孟德尔和摩尔根？无法想象，在那段颠沛流离的岁月中，从北平到汉口，从桃源到重庆，没有您的执著和鼓励，我怎么能获得系统的现代教育，获得在大江大河中自由翱翔的胆识？无法想象，没有您在摇篮前跟我讲尼采，讲这位昂扬着生命力、意志力的伟大哲人，我怎么能够在千百次的失败中坚信，必然有一粒种子可以使万千民众告别饥饿？</p>
+<p>他们说，我用一粒种子改变了世界。<strong>我知道，这粒种子，是妈妈您在我幼年时种下的！</strong></p>
+<p>稻子熟了，妈妈，您能闻到吗？安江可好？那里的田埂是不是还留着熟悉的欢笑？隔着21年的时光，我依稀看见，小孙孙牵着您的手，走过稻浪的背影；我还要告诉您，一辈子没有耕种过的母亲，稻芒划过手掌，稻草在场上堆积成垛，谷子在阳光中毕剥作响，水田在西晒下泛出橙黄的味道。这都是儿子要跟您说的话，说不完的话啊……</p>
+<p><strong>妈妈，稻子熟了，我想您了！</strong></p>
+<blockquote>
+<p>剪报来源<br>公众号：中央政法委长安剑<br>链　接：<a href="https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A">https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A</a><br>日　期：2021-05-23</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>剪报</category>
+      </categories>
+  </entry>
+  <entry>
     <title>袁隆平：我的两个梦</title>
     <url>/2021/05/24/ylp-2/</url>
     <content><![CDATA[<blockquote>
@@ -4782,35 +4789,6 @@
       </categories>
   </entry>
   <entry>
-    <title>袁隆平：稻子熟了，妈妈，我来看您了</title>
-    <url>/2021/05/24/ylp-1/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>“他们说，我用一粒种子改变了世界。我知道，这粒种子，是妈妈您在我幼年时种下的！”</strong><br> <br>2010年，在袁隆平院士80华诞，湖南卫视为他举办了“为了大地的丰收”专场文艺晚会，晚会上，袁院士写给母亲的信《妈妈，稻子熟了》感动了在场所有观众，字里行间，说不尽对母亲的思念与愧疚。</p>
-<p>袁隆平动情写到：“没能多陪伴母亲，是我永远的后悔与遗憾。”今天，袁隆平院士逝世，读完这封旧信的网友纷纷留言：“读到一半就已泪流满面，可爱的袁爷爷，要去和妈妈团聚了。”<br> <br>我们整理了信件原文，纪念袁隆平院士一路走好。<br> <br>以下为信件原文。</p>
-</blockquote>
-<p>本来想一个人静静地陪您说会话，安江的乡亲们实在是太热情了，天这么热，他们还一直陪着，谢谢他们了。</p>
-<p>妈妈，您在安江，我在长沙，隔得很远很远。我在梦里总是想着您，想着安江这个地方。</p>
-<p>人事难料啊，您这样一位习惯了繁华都市的大家闺秀，最后竟会永远留在这么一个偏远的小山村。还记得吗？1957年，我要从重庆的大学分配到这儿，是您陪着我，脸贴着地图，手指顺着密密麻麻的细线，找了很久，才找到地图上这么一个小点点。当时您叹了口气说：<strong>“孩子，你到那儿，是要吃苦的呀……”</strong></p>
-<p>我说：“我年轻，我还有一把小提琴。”</p>
-<p>没想到的是，为了我，为了帮我带小孩，把您也拖到了安江。最后，受累吃苦的，是妈妈您哪！您哪里走得惯乡间的田埂！我总记得，每次都要小孙孙牵着您的手，您才敢走过屋前屋后的田间小道。</p>
-<p>安江是我的一切，我却忘了，对一辈子都生活在大城市里的您来说，70岁了，一切还要重新来适应。我从来没有问过您有什么难处，我总以为会有时间的，会有时间的，等我闲一点一定好好地陪陪您……</p>
-<p>哪想到，直到您走的时候，我还在长沙忙着开会。那天正好是中秋节，全国的同行都来了，搞杂交水稻不容易啊，我又是召集人，怎么着也得陪大家过这个节啊，只是儿子永远亏欠妈妈您了……</p>
-<p>其实我知道，那个时候已经是您的最后时刻。我总盼望着妈妈您能多撑两天。谁知道，即便是天不亮就往安江赶，我还是没能见上妈妈您最后一面。</p>
-<p>太晚了，一切都太晚了，我真的好后悔。妈妈，当时您一定等了我很久，盼了我很长，您一定有很多话要对儿子说，有很多事要交代。可我怎么就那么糊涂呢！这么多年，为什么我就不能少下一次田，少做一次实验，少出一天差，坐下来静静地好好陪陪您。哪怕……哪怕就一次。</p>
-<p>妈妈，每当我的研究取得成果，每当我在国际讲坛上谈笑风生，每当我接过一座又一座奖杯，我总是对人说，这辈子对我影响最深的人就是妈妈您啊！</p>
-<p>无法想象，没有您的英语启蒙，在一片闭塞中，我怎么能够阅读世界上最先进的科学文献，用超越那个时代的视野，去寻访遗传学大师孟德尔和摩尔根？无法想象，在那段颠沛流离的岁月中，从北平到汉口，从桃源到重庆，没有您的执著和鼓励，我怎么能获得系统的现代教育，获得在大江大河中自由翱翔的胆识？无法想象，没有您在摇篮前跟我讲尼采，讲这位昂扬着生命力、意志力的伟大哲人，我怎么能够在千百次的失败中坚信，必然有一粒种子可以使万千民众告别饥饿？</p>
-<p>他们说，我用一粒种子改变了世界。<strong>我知道，这粒种子，是妈妈您在我幼年时种下的！</strong></p>
-<p>稻子熟了，妈妈，您能闻到吗？安江可好？那里的田埂是不是还留着熟悉的欢笑？隔着21年的时光，我依稀看见，小孙孙牵着您的手，走过稻浪的背影；我还要告诉您，一辈子没有耕种过的母亲，稻芒划过手掌，稻草在场上堆积成垛，谷子在阳光中毕剥作响，水田在西晒下泛出橙黄的味道。这都是儿子要跟您说的话，说不完的话啊……</p>
-<p><strong>妈妈，稻子熟了，我想您了！</strong></p>
-<blockquote>
-<p>剪报来源<br>公众号：中央政法委长安剑<br>链　接：<a href="https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A">https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A</a><br>日　期：2021-05-23</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>剪报</category>
-      </categories>
-  </entry>
-  <entry>
     <title>马龙：只要心怀热爱，永远都是当打之年！</title>
     <url>/2021/08/09/ml-1/</url>
     <content><![CDATA[<p>　　我的东京奥运会之旅圆满结束，无论单打冠军，还是团体金牌，都是我和我的队友、教练员，以及背后默默付出的陪练、队医、保障团队，团结一心共同奋斗出来的荣耀勋章。</p>
@@ -4830,6 +4808,28 @@
       <categories>
         <category>剪报</category>
       </categories>
+  </entry>
+  <entry>
+    <title>小记：2021年8月</title>
+    <url>/2021/08/05/note-202108/</url>
+    <content><![CDATA[<h2 id="2021年8月2日"><a href="#2021年8月2日" class="headerlink" title="2021年8月2日"></a>2021年8月2日</h2><p><strong>1 梦</strong></p>
+<p>昨晚梦到皮蛋，可把我气醒了。梦里大概是这样子：</p>
+<p>皮蛋生了七只小猫咪，有黑色的，有白色的，有橘黄色的还有混色的。但我发现的时候，其中的三只被他吃了，另外四只被绳子绑在一起，浸泡在洗脸盆上，盆上还有水。皮蛋打算溺死他自己的猫咪仔。把我气死了，拿起棍子准备教训皮蛋。结果，他一下子就跑去躲了，打不到他，我像个泼妇骂街一样，边骂边教育他，告诉他这些是你的仔，怎么可以这么残忍对待它们。。</p>
+<p>骂着骂着，突然想到小猫咪还在水盆里泡着呢，就马上冲回去，把小猫咪捞出来，解了绳子，感觉这些小猫咪像是要快饿死了。皮蛋又抓不到，不然还可以让皮蛋给小猫咪喂奶。</p>
+<p>没办法，想到小猫咪可以喝牛奶，又去冰箱找。边翻边想，刚出生的小猫咪可以喝冰的牛奶吗？哎呀，不管那么多了，拉肚子总比被饿死好吧？于是继续翻啊、找啊，但就是没有找到牛奶，急死了。后面冷静点，才想起我已经不喝牛奶很久了，冰箱怎么可能会有牛奶？这一瞬间，我彻底崩溃了，一直在责怪和质问自己。为什么我现在不喝牛奶了？！以前不是每晚睡之前都要喝一瓶的吗？！怎么不能过几天再不想喝牛奶？！就算不喝牛奶，冰箱也要备着啊？！为什么？！</p>
+<p>实在压抑到有些难受，还好醒了，睁着眼睛躺在床上，回忆着这个梦的始末，怒火中烧。清醒一点后发现，皮蛋不是公猫吗？还是一只做了绝育手术的公猫，他怎么会生小猫咪呢？</p>
+<p>哦，原来是一场梦啊，真是奇奇怪怪的梦！看了下手机，现在快早上5点了，起来喝点水，倒头再睡会，今天还要上班。</p>
+<p><strong>2 活在当下</strong></p>
+<p>夏天的时候就盼望着冬天的到来，而冬天的时候又期待着夏天的到来，一点都没有活在当下啊。</p>
+<p><strong>3 专注呼吸</strong></p>
+<p>每当我开始专注于自己的呼吸时，脑袋里总有各种各样的想法蹦跶出来。而当我结束专注呼吸训练准备记录他们的时候，他们又一下子不见了踪影。真是奇怪的脑袋</p>
+]]></content>
+      <categories>
+        <category>小记</category>
+      </categories>
+      <tags>
+        <tag>所思所想所悟</tag>
+      </tags>
   </entry>
   <entry>
     <title>关于MySQL数据库自增主键，说几个容易被忽略的点</title>
@@ -7636,6 +7636,26 @@
       </tags>
   </entry>
   <entry>
+    <title>毛泽东：体育之研究</title>
+    <url>/2021/07/15/mzd-1/</url>
+    <content><![CDATA[<h2 id="前-言"><a href="#前-言" class="headerlink" title="前   言"></a><strong>前   言</strong></h2><p>国力苶弱，武风不振，民族之体质，日趋轻细。此甚可忧之现象也。提倡之者，不得其本，久而无效。长是不改，弱且加甚。夫命中致远，外部之事，结果之事也。体力充实，内部之事，原因之事也。体不坚实，则见兵而畏之，何有于命中，何有于致远？坚实在于锻炼。锻炼在于自觉。今之提倡者，非不设种种之方法，然而无效者，外力不足以动其心，不知何为体育之真义。体育果有如何之价值，效果云何，著手何处，皆茫乎如在雾中，其无效亦宜。欲图体育之效，非动其主观，促其对体育之自觉不可。苟自觉矣，则体育之条目，可不言而自知，命中致远之效，亦当不求而自至矣。不佞深感体育之要，伤提倡者之不得其当，知海内同志，同此病而相怜者必多。不自惭赧，贡其愚见，以资商榷。所言并非皆己实行，尚多空言理想之处，不敢为欺。倘辱不遗，赐之教诲，所虚心百拜者也。</p>
+<h2 id="第一-释体育"><a href="#第一-释体育" class="headerlink" title="第一  释体育"></a><strong>第一  释体育</strong></h2><p>自有生民以来，智识有愚闇，无不知自卫其生者。是故西山之薇，饥极必食；井上之李，不容不咽；巢木以为居；皮兽以为衣；盖发乎天能，不知所以然也。然而未精也。有圣人者出，于是乎有礼，饮食起居，皆有节度。故”子之燕居，申申如也，夭夭如也”；”食饐而谒，鱼馁而肉败，不食”；”射于矍相之圃，盖观者如墙堵焉”。人体之组成，与群动无不同，而群动不能及人之寿，所以制其生者无节度也。人则以节度制其生，愈降于后而愈明，于是乎有体育。体育者，养生之道也。<br>东西之所明者不一：庄子效法于庖丁，仲尼取资于射御；现今文明诸国，德为最盛，其斗剑之风，播于全国；日本则有武士道，近且因吾国之绪余，造成柔术，觥觥乎可观已。而考其内容，皆先精究生理，详于官体之构造，脉络之运行，何方发达为早，何部较有偏缺，其体育即准此为程序，抑其过而救其所不及。故其结论，在使身体平均发达。由此言之，体育者，人类自其养生之道，使身体平均发达，而有规则次序之可言者也。</p>
+<h2 id="第二-体育在吾人之位置"><a href="#第二-体育在吾人之位置" class="headerlink" title="第二 体育在吾人之位置"></a><strong>第二 体育在吾人之位置</strong></h2><p>体育一道，配德育与智育，而德智皆寄于体。无体是无德智也。顾知之者或寡矣。或以为重在智识，或曰道德也。夫知识则诚可贵矣，人之所以异于动物者此耳。顾徒知识之何载乎？道德亦诚可贵矣，所以立群道平人己者此耳。顾徒道德之何寓乎？体者，为知识之载而为道德之寓者也。其载知识也如车，其寓道德也如舍。<br>体者，载知识之车而寓道德之舍也。儿童及年入小学，小学之时，宜专注重于身体之发育，而知识之增进道德之养成次之。宜以养护为主，而以教授训练为辅。今盖多不知之，故儿童缘读书而得疾病或至夭殇者有之矣。中学及中学以上，宜三育并重，今人则多偏于智。中学之年，身体之发育尚未完成，乃今培之者少而倾之者多，发育不将有中止之势乎？吾国学制，课程密如牛毛，虽成年之人，顽强之身，犹莫能举，况未成年者乎？况弱者乎？<br>观其意，教者若特设此繁重之课，以困学生，蹂躏其身而残贼其生，有不受者则罚之；智力过人者，则令加读某种某种之书，甘言以恬之，厚赏以诱之。嗟乎，此所谓贼夫人之子欤！学者亦若恶此生之永年，必欲摧折之，以身为殉而不悔。何其梦梦如是也！人独患无身耳，他复何患？求所以善其身者，他事亦随之矣。善其身无过于体育。体育于吾人实占第一之位置。体强壮而后学问道德之进修勇而收效远。于吾人研究之中，宜视为重要之部。”学有本末，事有终始，知所先后，则近道矣。”此之谓也。</p>
+<h2 id="第三-前此体育之弊及吾人自处之道"><a href="#第三-前此体育之弊及吾人自处之道" class="headerlink" title="第三 前此体育之弊及吾人自处之道"></a><strong>第三 前此体育之弊及吾人自处之道</strong></h2><p>三育并重，然昔之为学者，详德智而略于体。及其弊也。偻身俯首，纤纤素手，登山则气迫，涉水则足痉。故有颜子而短命，有贾生而早夭，王勃卢照邻或幼伤或坐废。此皆有甚高之德与智也，一旦身不存，德智则从之而隳矣。惟北方之强，任金革死而不厌。燕赵多悲歌慷慨之士。烈士武臣，多出凉州。清之初世，颜习斋李刚主文而兼武。习斋远跋千里之外，学击剑之术于塞北，与勇士角而胜焉。故其言曰：”文武缺一岂道乎？”顾炎武南人也，好居于北，不喜乘船而喜乘马。此数古人者，皆可师者也。<br>学校既起，采各国之成法，风习稍稍改矣。然办学之人，犹未脱陈旧一流，囿于所习，不能骤变，或少注意及之，亦惟是外面铺张，不揣其本而齐其末。故愚观现今之体育，率多有形式而无实质。非不有体操课程也，非不有体操教员也，然而受体操之益者少。非徒无益，又有害焉。教者发令，学者强应，身顺而心违，精神受无量之痛苦，精神苦而身亦苦矣。盖一体操之终，未有不貌瘁神伤者也。饮食不求洁，无机之物、微生之菌，入于体中，化为疾病；室内光线不足，则目力受害不小；桌椅长短不合，削趾适履，则躯干受亏；其余类此者尚多，不能尽也。<br>然则为吾侪学者之计如之何？学校之设备，教师之教训，乃外的客观的也。吾人盖尚有内的主观的。夫内断于心，百体从令。祸福无不自己求之者，我欲仁斯仁至，况于体育乎。苟自之不振，虽使外的客观的尽善尽美，亦犹之乎不能受意也。故讲体育必自自动始。</p>
+<h2 id="第四-体育之效"><a href="#第四-体育之效" class="headerlink" title="第四 体育之效"></a><strong>第四 体育之效</strong></h2><p>人者动物也，则动尚矣。人者有理性的动物也，则动必有道。然何贵乎此动邪？何贵乎此有道之动邪？动以营生也，此浅言之也；动以卫国也，此大言之也。皆非本义。动也者，盖养乎吾生乐乎吾心而已。朱子主敬，陆子主静。静，静也；敬，非动也，亦静而已。老子曰无动为大。释氏务求寂静。静坐之法，为朱陆之徒者咸尊之。近有因是子者，言静坐法，自诩其法之神，而鄙运动者之自损其体。是或一道，然予未敢效之也。愚拙之见，天地盖惟有动而已。<br>动之属于人类而有规则之可言者曰体育。前既言之，体育之效，则强筋骨也。愚昔尝闻，人之官骸肌络，及时而定，不复再可改易，大抵二十五岁以后，即一成无变。今乃知其不然。人之身盖日日变易者：新陈代谢之作用不绝行于各部组织之间，目不明可以明，耳不聪可以聪，虽六七十之人犹有改易官骸之效，事盖有必至者。又闻弱者难以转而为强，今亦知其非是。盖生而强者，滥用其强，不戒于种种嗜欲，以渐戕贼其身，自谓天生好身手，得此已足，尚待锻炼？故至强者或终转为至弱。至于弱者，则恒自悯其身之下全，而惧其生之不永，兢业自持。<br>于消极方面，则深戒嗜欲，不敢使有损失。于积极方面，则勤自锻炼，增益其所不能。久之遂变而为强矣。故生而强者不必自喜也，生而弱者不必自悲也。吾生而弱乎，或者夭之诱我以至于强，未可知也。东西著称之体育家，若美之罗斯福、德之孙棠、日本之嘉纳，皆以至弱之身，而得至强之效。又尝闻之，精神身体，不能并完。用思想之人，每歉于体；而体魄蛮健者，多缺于思。其说亦谬。<br>此盖指薄志弱行之人，非所以概乎君子也。孔子七十二而死，未闻其身体不健；释迹往来传道，死年亦高；邪苏不幸以冤死；至于摩诃末，左持经典，右执利剑，征压一世。此皆古之所谓圣人，而最大之思想家也。今之伍秩庸先生，七十有余岁矣，自谓可至百余岁，彼亦用思想之人也；王湘绮死年七十余，而康健矍铄。为是说者，其何以解邪？总之，勤体育则强筋骨，强筋骨则体质可变，弱可转强，身心可以并完。此盖非天命而全乎人力也。<br>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄。苟野蛮其体魄矣，则文明之精神随之。夫知识之事，认识世间之事物而判断其理也。于此有须于体者焉。直观则赖乎耳目，思索则赖乎脑筋，耳目脑筋之谓体，体全而知识之事以全。故可谓间接从体育以得知识。今世百科之学，无论学校独修，总须力能胜任。力能胜任者，体之强者也。不能胜任者，其弱者也。强弱分，而所任之区域以殊矣。<br>非第增知识也，又足以调感情。感情之于人，其力极大。古人以理性制之，故曰”主人翁常惺惺否”，又曰”以理制心”。然理性出于心，心存乎体。常观罢弱之人，往往为感情所役，而无力以自拔；五官不全及肢体有缺者，多困于一偏之情，而理性不足以救之。故身体健全，感情斯正，可谓不易之理。以例言之：吾人遇某种不快之事，受其刺激，心神震荡，难于制止，苟加以严急之运动，立可汰去陈旧之观念，而复使脑筋清明，效盖可立而待也。<br>非第调感情也，又足以强意志。体育之大效，盖尤在此矣。夫体育之主旨，武勇也。武勇之目，若猛烈，若不畏，若敢为，若耐久，皆意志之事。取例明之，如冷水浴足以练习猛烈与不畏，又足以练习敢为。凡各种之运动，持续不改，皆有练习耐久之益。若长距离之赛跑，于耐久之练习尤著。夫力拔山气盖世，猛烈而已；不斩楼兰誓不还，不畏而已；化家为国，敢为而已；八年于外，三过其门而不入，耐久而已。要皆可于日常体育之小基之。意志也者，固人生事业之先躯也。<br>肢体纤小者举止轻浮，肤理缓弛者心意柔钝，身体之影响于心理也如是。体育之效，至于强筋骨，因而增知识，因而调感情，因而强意志。筋骨者，吾人之身；知识、感情、意志者，吾人之心。身心皆适，是谓俱泰。故夫体育非他，养乎吾生、乐乎吾心而已。</p>
+<h2 id="第五-不好运动之原因"><a href="#第五-不好运动之原因" class="headerlink" title="第五 不好运动之原因"></a><strong>第五 不好运动之原因</strong></h2><p>运动力体育之最要者。今之学者多不好运动，其原因盖有四焉：一则无自觉心也。一事之见于行为也，必先动其喜为此事之情，尤必先有对于此事明白周详知其所以然之智。明白周详知所以然者，即自觉心也。人多不知运动对于自己有如何之关系，或知其大略，亦未至于亲切严密之度。无以发其智，因无以动其情。夫能研究各种科学孜孜不倦者，以其关系于己者切也。今日不为，他日将无以谋生。而运动则无此自觉，此其咎由于自己不能深省者半，而教师不知所以开之亦占其半也。一则积习难返也。我国历来重文，羞齿短后，动有好汉不当兵之语。<br>虽知运动当行之理，与各国运动致强之效，然旧观念之力尚强，其于新观念之运动，盖犹在迎拒参半之列。故不好运动，亦无怪其然。一则提倡不力也。此又有两种：其一，今之所称教育家，多不诺体育。自己不知体育，徒耳其名，亦从而体育之，所以出之也不诚，所以行之也无术，遂减学者研究之心。夫荡子而言自立，沉湎而言节饮，固无人信之矣。其次，教体操者多无学识，语言鄙俚，闻者塞耳。所知惟此一技，又未必精，日日相见者，惟此机械之动作而已。<br>夫徒有形式而无精意以贯注之者，其事不可一日存，而今之体操实如是。一则学者以运动力可羞也。以愚所考察，此实为不运动之大原因矣。夫衣裳檐檐（注：将木字旁换成衣字旁）、行止于于、瞻视舒徐而夷犹者，美好之态，而社会之所尚也。忽尔张臂露足，伸肢屈体，此何为者邪？宁非大可怪者邪？故有深知身体不可不运动，且甚思实行，竟不能实行者；有群行群止能运动，单独行动则不能者；有燕居私室能运动，稠人广众则不能者。一言蔽之，害羞之一念为之耳。四者皆不好运动之原因。第一与第四属于主观，改之在己；第二与第三属于客观，改之在人，君子求己，在人者听之可矣。</p>
+<h2 id="第六-运动之方法贵少"><a href="#第六-运动之方法贵少" class="headerlink" title="第六 运动之方法贵少"></a><strong>第六 运动之方法贵少</strong></h2><p>愚自伤体弱，因欲研究卫生之术。顾古人言者亦不少矣。近今学校有体操、坊间有书册，冥心务泛，终难得益。盖此事不重言谈，重在实行，苟能实行，得一道半法已足，曾文正行临睡洗脚、食后千步之法，得益不少。有老者年八十犹康健，问之，曰：”吾惟不饱食耳。”今之体操，诸法樊陈，更仆尽之，宁止数十百种？巢林止于一枝，饮河止于满腹。吾人惟此身耳，惟此官骸藏络耳，虽百其法，不外欲使血脉流通。夫法之致其效者一，一法之效然，百法之效亦然，则余之九十九法可废也。目不两视而明，耳不两听而聪，筋骨之锻炼而百其方法，是扰之也。<br>欲其有效，未见其能有效矣。夫应诸方之用，与锻一己之身者，不同。浪桥所以适于航海，持竿所以适于逾高，游戏宜乎小学，兵式宜乎中学以上，此应诸方之用者也。运动筋骸使血脉流通，此锻一己之身者也。应诸方之用者其法宜多，锻一己之身者其法宜少。近之学者，多误此意，故其失有二：一则好运动者，以多为善，几欲一人之身，百般俱备，甚至无一益身者；一则不好运动者，见人之技艺多，吾所知者少，则绝弃之而不为，其宜多者不必善，务广而荒，又何贵乎？少者不必不善，虽一手一足之屈伸，苟以为常，亦有益焉。明乎此，而后体育始有进步可言矣。</p>
+<h2 id="第七-运动应注意事项"><a href="#第七-运动应注意事项" class="headerlink" title="第七 运动应注意事项"></a><strong>第七 运动应注意事项</strong></h2><p>凡事皆宜有恒，运动亦然。有两人于此，其于运动也，一人时作时辍，一人到底不懈，则效不效必有分矣。运动而有恒，第一能生兴味。凡静者不能自动，必有所以动之者。动之无过于兴味。凡科学皆宜引起多方之兴味，而于运动尤然。人静处则甚逸，发动则甚劳，人恒好逸而恶劳，使无物焉以促之，则不足以移其势而变其好恶之心。<br>而此兴味之起，由于日日运动不辍。最好于才起临睡行两次运动，裸体最善，次则薄衣，多衣甚碍事。日以为常，使此运动之观念，相连而不绝，今日之运动，承乎昨日之运动，而又引起明日之运动。每次不必久，三十分钟已足。如此自生一种之兴味焉。第二能生快乐。运动既久，成效大著，发生自己价值之念。以之为学则胜任愉快，以之修德则日起有功，心中无限快乐，亦缘有恒而得也。快乐与兴味有辨。兴味者运动之始，快乐者运动之终。兴味生于进行，快乐生于结果。二者自异。<br>有恒矣，而不用心，亦难有效。走马观花，虽日日观，犹无观也。心在鸿鹄，虽与俱学，勿若之矣。故运动有注全力之道焉。运动之时，心在运动，闲思杂虑，一切屏去，运心于血脉如何流通，筋肉如何张弛，关节如何反复，呼吸如何出入。而运作按节，屈伸进退，皆一一踏实。朱子论主一无适，谓吃饭则想着吃饭，穿衣则想着穿衣。注全力于运动之时者，亦若是则已耳。<br>文明柔顺，君子之容。虽然，非所以语于运动也。运动宜蛮拙。骑突枪鸣十荡十决，暗噁颓山岳、叱咤变风云，力拔项王之山，勇贯由基之札，其道盖存乎蛮拙，而无与于纤巧之事。运动之进取宜蛮，蛮则气力雄，筋骨劲。运动之方法宜拙，拙则资守实，练习易。二者在初行运动之人为尤要。运动所宜注意者三：有恒一也，注全力二也，蛮拙三也。他所当注意者尚多。举其要者如此。</p>
+<h2 id="第八-运动一得之商榷"><a href="#第八-运动一得之商榷" class="headerlink" title="第八 运动一得之商榷"></a><strong>第八 运动一得之商榷</strong></h2><p>愚既粗涉各种运动，以其皆系外铄而无当于一己之心得。乃提挚各种运动之长，自成一种运动，得此运动之益，颇为不少。凡分六段：手部也，足部也，躯干部也，头部也，打击运动也，调和运动也。段之中有节，凡二十有七节。以其为六段，因名之曰六段运动。兹述于后，世之君子，幸教正焉。<br><strong>一、手部运动，坐势</strong><br>1．握拳向前屈伸。左右参，三次（左右参者，左动右息，右动左息，相参互也）。<br>2．握拳屈时前侧后半圆形运动。左右参，三次。<br>3．握拳向前面下方屈伸。左右并，三次（左右并者，并动不相参互）。<br>4．手仰向外拿。左右参，三次。<br>5．手复向外拿。左右参，三次。<br>6．伸指屈时前刺。左右参，三次。<br><strong>二、足部运动，坐势</strong><br>1．手握拳左右垂。足就原位一前屈，一后斜伸。左右参，三次。2．手握拳前平。足一侧伸，一前屈。伸者可易位，屈者惟趾立。臀跟相接。左右参，三次。3．手握拳左右垂。足一支一揭。左右参，三次。4．手握拳左右垂。足一支一前踢。左右参，三次。5．手握拳左右垂。足一前屈，一后伸。屈者在原位，伸者易位，两足略在直线上。左右参，三次。6．手释拳。全身一起一蹲，蹲时臀跟略接，三次。<br><strong>三、躯干部运动，立势</strong><br>1．身向前后屈。三次（手握拳，下同）。<br>2．手一上伸，一下垂。绷张左右胸肋，左右各一次。<br>3．手一侧垂，一前斜垂。绷张左右背肋，左右各一次。<br>4．足丁字势。手左右横荡。扭捩腰胁。左右各一次。<br><strong>四、头部运动，坐势</strong><br>1．头前后屈。三次。<br>2．头左右转。三次。<br>3．用手按摩额部、颊部、鼻部、唇部、喉部、耳部、后颈部。<br>4．自由运动。头大体位置不动，用意使皮肤及下颚运动。五次。<br><strong>五、打击运动，不定势</strong><br>(打击运动者，以拳遍击身体各处，使血液奔注，筋肉坚实，为此运动之主）<br>1．手部，右手击左手，左手击右手<br>(1) 前膊，上面、下面、左面、右面<br>(2) 后膊，上面、下面、左面、右面<br>2．肩部<br>3．胸部<br>4．胁部<br>5．背部<br>6．腹部<br>7．臀部<br>8．腿部，上腿、下腿<br><strong>六、调和运动，不定势</strong><br>1．跳舞，十余次<br>2．深呼吸，三次</p>
+<blockquote>
+<p>剪报来源<br>公众号： 考研体育人<br>链　接：<a href="https://mp.weixin.qq.com/s/P3CjCEXDsekDTcWw2vLMFg">https://mp.weixin.qq.com/s/P3CjCEXDsekDTcWw2vLMFg</a><br>日　期：2020-07-13</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>剪报</category>
+      </categories>
+  </entry>
+  <entry>
     <title>李大钊：青春</title>
     <url>/2021/05/01/ldz-1/</url>
     <content><![CDATA[<blockquote>
@@ -7653,26 +7673,6 @@
 <p><img src="https://i.loli.net/2021/07/20/Ixv8WzT9nJS6Gth.png" alt="本文刊登于《新青年》杂志第二卷第一号，1916年9月1日"><br>本文刊登于《新青年》杂志第二卷第一号，1916年9月1日</p>
 <blockquote>
 <p>剪报来源<br>公众号： 北京大学人文社会科学研究院<br>链　接：<a href="https://mp.weixin.qq.com/s/0Rg-uyGIjNULo7D74a6Dtw">https://mp.weixin.qq.com/s/0Rg-uyGIjNULo7D74a6Dtw</a><br>日　期：2021-04-28</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>剪报</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>毛泽东：体育之研究</title>
-    <url>/2021/07/15/mzd-1/</url>
-    <content><![CDATA[<h2 id="前-言"><a href="#前-言" class="headerlink" title="前   言"></a><strong>前   言</strong></h2><p>国力苶弱，武风不振，民族之体质，日趋轻细。此甚可忧之现象也。提倡之者，不得其本，久而无效。长是不改，弱且加甚。夫命中致远，外部之事，结果之事也。体力充实，内部之事，原因之事也。体不坚实，则见兵而畏之，何有于命中，何有于致远？坚实在于锻炼。锻炼在于自觉。今之提倡者，非不设种种之方法，然而无效者，外力不足以动其心，不知何为体育之真义。体育果有如何之价值，效果云何，著手何处，皆茫乎如在雾中，其无效亦宜。欲图体育之效，非动其主观，促其对体育之自觉不可。苟自觉矣，则体育之条目，可不言而自知，命中致远之效，亦当不求而自至矣。不佞深感体育之要，伤提倡者之不得其当，知海内同志，同此病而相怜者必多。不自惭赧，贡其愚见，以资商榷。所言并非皆己实行，尚多空言理想之处，不敢为欺。倘辱不遗，赐之教诲，所虚心百拜者也。</p>
-<h2 id="第一-释体育"><a href="#第一-释体育" class="headerlink" title="第一  释体育"></a><strong>第一  释体育</strong></h2><p>自有生民以来，智识有愚闇，无不知自卫其生者。是故西山之薇，饥极必食；井上之李，不容不咽；巢木以为居；皮兽以为衣；盖发乎天能，不知所以然也。然而未精也。有圣人者出，于是乎有礼，饮食起居，皆有节度。故”子之燕居，申申如也，夭夭如也”；”食饐而谒，鱼馁而肉败，不食”；”射于矍相之圃，盖观者如墙堵焉”。人体之组成，与群动无不同，而群动不能及人之寿，所以制其生者无节度也。人则以节度制其生，愈降于后而愈明，于是乎有体育。体育者，养生之道也。<br>东西之所明者不一：庄子效法于庖丁，仲尼取资于射御；现今文明诸国，德为最盛，其斗剑之风，播于全国；日本则有武士道，近且因吾国之绪余，造成柔术，觥觥乎可观已。而考其内容，皆先精究生理，详于官体之构造，脉络之运行，何方发达为早，何部较有偏缺，其体育即准此为程序，抑其过而救其所不及。故其结论，在使身体平均发达。由此言之，体育者，人类自其养生之道，使身体平均发达，而有规则次序之可言者也。</p>
-<h2 id="第二-体育在吾人之位置"><a href="#第二-体育在吾人之位置" class="headerlink" title="第二 体育在吾人之位置"></a><strong>第二 体育在吾人之位置</strong></h2><p>体育一道，配德育与智育，而德智皆寄于体。无体是无德智也。顾知之者或寡矣。或以为重在智识，或曰道德也。夫知识则诚可贵矣，人之所以异于动物者此耳。顾徒知识之何载乎？道德亦诚可贵矣，所以立群道平人己者此耳。顾徒道德之何寓乎？体者，为知识之载而为道德之寓者也。其载知识也如车，其寓道德也如舍。<br>体者，载知识之车而寓道德之舍也。儿童及年入小学，小学之时，宜专注重于身体之发育，而知识之增进道德之养成次之。宜以养护为主，而以教授训练为辅。今盖多不知之，故儿童缘读书而得疾病或至夭殇者有之矣。中学及中学以上，宜三育并重，今人则多偏于智。中学之年，身体之发育尚未完成，乃今培之者少而倾之者多，发育不将有中止之势乎？吾国学制，课程密如牛毛，虽成年之人，顽强之身，犹莫能举，况未成年者乎？况弱者乎？<br>观其意，教者若特设此繁重之课，以困学生，蹂躏其身而残贼其生，有不受者则罚之；智力过人者，则令加读某种某种之书，甘言以恬之，厚赏以诱之。嗟乎，此所谓贼夫人之子欤！学者亦若恶此生之永年，必欲摧折之，以身为殉而不悔。何其梦梦如是也！人独患无身耳，他复何患？求所以善其身者，他事亦随之矣。善其身无过于体育。体育于吾人实占第一之位置。体强壮而后学问道德之进修勇而收效远。于吾人研究之中，宜视为重要之部。”学有本末，事有终始，知所先后，则近道矣。”此之谓也。</p>
-<h2 id="第三-前此体育之弊及吾人自处之道"><a href="#第三-前此体育之弊及吾人自处之道" class="headerlink" title="第三 前此体育之弊及吾人自处之道"></a><strong>第三 前此体育之弊及吾人自处之道</strong></h2><p>三育并重，然昔之为学者，详德智而略于体。及其弊也。偻身俯首，纤纤素手，登山则气迫，涉水则足痉。故有颜子而短命，有贾生而早夭，王勃卢照邻或幼伤或坐废。此皆有甚高之德与智也，一旦身不存，德智则从之而隳矣。惟北方之强，任金革死而不厌。燕赵多悲歌慷慨之士。烈士武臣，多出凉州。清之初世，颜习斋李刚主文而兼武。习斋远跋千里之外，学击剑之术于塞北，与勇士角而胜焉。故其言曰：”文武缺一岂道乎？”顾炎武南人也，好居于北，不喜乘船而喜乘马。此数古人者，皆可师者也。<br>学校既起，采各国之成法，风习稍稍改矣。然办学之人，犹未脱陈旧一流，囿于所习，不能骤变，或少注意及之，亦惟是外面铺张，不揣其本而齐其末。故愚观现今之体育，率多有形式而无实质。非不有体操课程也，非不有体操教员也，然而受体操之益者少。非徒无益，又有害焉。教者发令，学者强应，身顺而心违，精神受无量之痛苦，精神苦而身亦苦矣。盖一体操之终，未有不貌瘁神伤者也。饮食不求洁，无机之物、微生之菌，入于体中，化为疾病；室内光线不足，则目力受害不小；桌椅长短不合，削趾适履，则躯干受亏；其余类此者尚多，不能尽也。<br>然则为吾侪学者之计如之何？学校之设备，教师之教训，乃外的客观的也。吾人盖尚有内的主观的。夫内断于心，百体从令。祸福无不自己求之者，我欲仁斯仁至，况于体育乎。苟自之不振，虽使外的客观的尽善尽美，亦犹之乎不能受意也。故讲体育必自自动始。</p>
-<h2 id="第四-体育之效"><a href="#第四-体育之效" class="headerlink" title="第四 体育之效"></a><strong>第四 体育之效</strong></h2><p>人者动物也，则动尚矣。人者有理性的动物也，则动必有道。然何贵乎此动邪？何贵乎此有道之动邪？动以营生也，此浅言之也；动以卫国也，此大言之也。皆非本义。动也者，盖养乎吾生乐乎吾心而已。朱子主敬，陆子主静。静，静也；敬，非动也，亦静而已。老子曰无动为大。释氏务求寂静。静坐之法，为朱陆之徒者咸尊之。近有因是子者，言静坐法，自诩其法之神，而鄙运动者之自损其体。是或一道，然予未敢效之也。愚拙之见，天地盖惟有动而已。<br>动之属于人类而有规则之可言者曰体育。前既言之，体育之效，则强筋骨也。愚昔尝闻，人之官骸肌络，及时而定，不复再可改易，大抵二十五岁以后，即一成无变。今乃知其不然。人之身盖日日变易者：新陈代谢之作用不绝行于各部组织之间，目不明可以明，耳不聪可以聪，虽六七十之人犹有改易官骸之效，事盖有必至者。又闻弱者难以转而为强，今亦知其非是。盖生而强者，滥用其强，不戒于种种嗜欲，以渐戕贼其身，自谓天生好身手，得此已足，尚待锻炼？故至强者或终转为至弱。至于弱者，则恒自悯其身之下全，而惧其生之不永，兢业自持。<br>于消极方面，则深戒嗜欲，不敢使有损失。于积极方面，则勤自锻炼，增益其所不能。久之遂变而为强矣。故生而强者不必自喜也，生而弱者不必自悲也。吾生而弱乎，或者夭之诱我以至于强，未可知也。东西著称之体育家，若美之罗斯福、德之孙棠、日本之嘉纳，皆以至弱之身，而得至强之效。又尝闻之，精神身体，不能并完。用思想之人，每歉于体；而体魄蛮健者，多缺于思。其说亦谬。<br>此盖指薄志弱行之人，非所以概乎君子也。孔子七十二而死，未闻其身体不健；释迹往来传道，死年亦高；邪苏不幸以冤死；至于摩诃末，左持经典，右执利剑，征压一世。此皆古之所谓圣人，而最大之思想家也。今之伍秩庸先生，七十有余岁矣，自谓可至百余岁，彼亦用思想之人也；王湘绮死年七十余，而康健矍铄。为是说者，其何以解邪？总之，勤体育则强筋骨，强筋骨则体质可变，弱可转强，身心可以并完。此盖非天命而全乎人力也。<br>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄。苟野蛮其体魄矣，则文明之精神随之。夫知识之事，认识世间之事物而判断其理也。于此有须于体者焉。直观则赖乎耳目，思索则赖乎脑筋，耳目脑筋之谓体，体全而知识之事以全。故可谓间接从体育以得知识。今世百科之学，无论学校独修，总须力能胜任。力能胜任者，体之强者也。不能胜任者，其弱者也。强弱分，而所任之区域以殊矣。<br>非第增知识也，又足以调感情。感情之于人，其力极大。古人以理性制之，故曰”主人翁常惺惺否”，又曰”以理制心”。然理性出于心，心存乎体。常观罢弱之人，往往为感情所役，而无力以自拔；五官不全及肢体有缺者，多困于一偏之情，而理性不足以救之。故身体健全，感情斯正，可谓不易之理。以例言之：吾人遇某种不快之事，受其刺激，心神震荡，难于制止，苟加以严急之运动，立可汰去陈旧之观念，而复使脑筋清明，效盖可立而待也。<br>非第调感情也，又足以强意志。体育之大效，盖尤在此矣。夫体育之主旨，武勇也。武勇之目，若猛烈，若不畏，若敢为，若耐久，皆意志之事。取例明之，如冷水浴足以练习猛烈与不畏，又足以练习敢为。凡各种之运动，持续不改，皆有练习耐久之益。若长距离之赛跑，于耐久之练习尤著。夫力拔山气盖世，猛烈而已；不斩楼兰誓不还，不畏而已；化家为国，敢为而已；八年于外，三过其门而不入，耐久而已。要皆可于日常体育之小基之。意志也者，固人生事业之先躯也。<br>肢体纤小者举止轻浮，肤理缓弛者心意柔钝，身体之影响于心理也如是。体育之效，至于强筋骨，因而增知识，因而调感情，因而强意志。筋骨者，吾人之身；知识、感情、意志者，吾人之心。身心皆适，是谓俱泰。故夫体育非他，养乎吾生、乐乎吾心而已。</p>
-<h2 id="第五-不好运动之原因"><a href="#第五-不好运动之原因" class="headerlink" title="第五 不好运动之原因"></a><strong>第五 不好运动之原因</strong></h2><p>运动力体育之最要者。今之学者多不好运动，其原因盖有四焉：一则无自觉心也。一事之见于行为也，必先动其喜为此事之情，尤必先有对于此事明白周详知其所以然之智。明白周详知所以然者，即自觉心也。人多不知运动对于自己有如何之关系，或知其大略，亦未至于亲切严密之度。无以发其智，因无以动其情。夫能研究各种科学孜孜不倦者，以其关系于己者切也。今日不为，他日将无以谋生。而运动则无此自觉，此其咎由于自己不能深省者半，而教师不知所以开之亦占其半也。一则积习难返也。我国历来重文，羞齿短后，动有好汉不当兵之语。<br>虽知运动当行之理，与各国运动致强之效，然旧观念之力尚强，其于新观念之运动，盖犹在迎拒参半之列。故不好运动，亦无怪其然。一则提倡不力也。此又有两种：其一，今之所称教育家，多不诺体育。自己不知体育，徒耳其名，亦从而体育之，所以出之也不诚，所以行之也无术，遂减学者研究之心。夫荡子而言自立，沉湎而言节饮，固无人信之矣。其次，教体操者多无学识，语言鄙俚，闻者塞耳。所知惟此一技，又未必精，日日相见者，惟此机械之动作而已。<br>夫徒有形式而无精意以贯注之者，其事不可一日存，而今之体操实如是。一则学者以运动力可羞也。以愚所考察，此实为不运动之大原因矣。夫衣裳檐檐（注：将木字旁换成衣字旁）、行止于于、瞻视舒徐而夷犹者，美好之态，而社会之所尚也。忽尔张臂露足，伸肢屈体，此何为者邪？宁非大可怪者邪？故有深知身体不可不运动，且甚思实行，竟不能实行者；有群行群止能运动，单独行动则不能者；有燕居私室能运动，稠人广众则不能者。一言蔽之，害羞之一念为之耳。四者皆不好运动之原因。第一与第四属于主观，改之在己；第二与第三属于客观，改之在人，君子求己，在人者听之可矣。</p>
-<h2 id="第六-运动之方法贵少"><a href="#第六-运动之方法贵少" class="headerlink" title="第六 运动之方法贵少"></a><strong>第六 运动之方法贵少</strong></h2><p>愚自伤体弱，因欲研究卫生之术。顾古人言者亦不少矣。近今学校有体操、坊间有书册，冥心务泛，终难得益。盖此事不重言谈，重在实行，苟能实行，得一道半法已足，曾文正行临睡洗脚、食后千步之法，得益不少。有老者年八十犹康健，问之，曰：”吾惟不饱食耳。”今之体操，诸法樊陈，更仆尽之，宁止数十百种？巢林止于一枝，饮河止于满腹。吾人惟此身耳，惟此官骸藏络耳，虽百其法，不外欲使血脉流通。夫法之致其效者一，一法之效然，百法之效亦然，则余之九十九法可废也。目不两视而明，耳不两听而聪，筋骨之锻炼而百其方法，是扰之也。<br>欲其有效，未见其能有效矣。夫应诸方之用，与锻一己之身者，不同。浪桥所以适于航海，持竿所以适于逾高，游戏宜乎小学，兵式宜乎中学以上，此应诸方之用者也。运动筋骸使血脉流通，此锻一己之身者也。应诸方之用者其法宜多，锻一己之身者其法宜少。近之学者，多误此意，故其失有二：一则好运动者，以多为善，几欲一人之身，百般俱备，甚至无一益身者；一则不好运动者，见人之技艺多，吾所知者少，则绝弃之而不为，其宜多者不必善，务广而荒，又何贵乎？少者不必不善，虽一手一足之屈伸，苟以为常，亦有益焉。明乎此，而后体育始有进步可言矣。</p>
-<h2 id="第七-运动应注意事项"><a href="#第七-运动应注意事项" class="headerlink" title="第七 运动应注意事项"></a><strong>第七 运动应注意事项</strong></h2><p>凡事皆宜有恒，运动亦然。有两人于此，其于运动也，一人时作时辍，一人到底不懈，则效不效必有分矣。运动而有恒，第一能生兴味。凡静者不能自动，必有所以动之者。动之无过于兴味。凡科学皆宜引起多方之兴味，而于运动尤然。人静处则甚逸，发动则甚劳，人恒好逸而恶劳，使无物焉以促之，则不足以移其势而变其好恶之心。<br>而此兴味之起，由于日日运动不辍。最好于才起临睡行两次运动，裸体最善，次则薄衣，多衣甚碍事。日以为常，使此运动之观念，相连而不绝，今日之运动，承乎昨日之运动，而又引起明日之运动。每次不必久，三十分钟已足。如此自生一种之兴味焉。第二能生快乐。运动既久，成效大著，发生自己价值之念。以之为学则胜任愉快，以之修德则日起有功，心中无限快乐，亦缘有恒而得也。快乐与兴味有辨。兴味者运动之始，快乐者运动之终。兴味生于进行，快乐生于结果。二者自异。<br>有恒矣，而不用心，亦难有效。走马观花，虽日日观，犹无观也。心在鸿鹄，虽与俱学，勿若之矣。故运动有注全力之道焉。运动之时，心在运动，闲思杂虑，一切屏去，运心于血脉如何流通，筋肉如何张弛，关节如何反复，呼吸如何出入。而运作按节，屈伸进退，皆一一踏实。朱子论主一无适，谓吃饭则想着吃饭，穿衣则想着穿衣。注全力于运动之时者，亦若是则已耳。<br>文明柔顺，君子之容。虽然，非所以语于运动也。运动宜蛮拙。骑突枪鸣十荡十决，暗噁颓山岳、叱咤变风云，力拔项王之山，勇贯由基之札，其道盖存乎蛮拙，而无与于纤巧之事。运动之进取宜蛮，蛮则气力雄，筋骨劲。运动之方法宜拙，拙则资守实，练习易。二者在初行运动之人为尤要。运动所宜注意者三：有恒一也，注全力二也，蛮拙三也。他所当注意者尚多。举其要者如此。</p>
-<h2 id="第八-运动一得之商榷"><a href="#第八-运动一得之商榷" class="headerlink" title="第八 运动一得之商榷"></a><strong>第八 运动一得之商榷</strong></h2><p>愚既粗涉各种运动，以其皆系外铄而无当于一己之心得。乃提挚各种运动之长，自成一种运动，得此运动之益，颇为不少。凡分六段：手部也，足部也，躯干部也，头部也，打击运动也，调和运动也。段之中有节，凡二十有七节。以其为六段，因名之曰六段运动。兹述于后，世之君子，幸教正焉。<br><strong>一、手部运动，坐势</strong><br>1．握拳向前屈伸。左右参，三次（左右参者，左动右息，右动左息，相参互也）。<br>2．握拳屈时前侧后半圆形运动。左右参，三次。<br>3．握拳向前面下方屈伸。左右并，三次（左右并者，并动不相参互）。<br>4．手仰向外拿。左右参，三次。<br>5．手复向外拿。左右参，三次。<br>6．伸指屈时前刺。左右参，三次。<br><strong>二、足部运动，坐势</strong><br>1．手握拳左右垂。足就原位一前屈，一后斜伸。左右参，三次。2．手握拳前平。足一侧伸，一前屈。伸者可易位，屈者惟趾立。臀跟相接。左右参，三次。3．手握拳左右垂。足一支一揭。左右参，三次。4．手握拳左右垂。足一支一前踢。左右参，三次。5．手握拳左右垂。足一前屈，一后伸。屈者在原位，伸者易位，两足略在直线上。左右参，三次。6．手释拳。全身一起一蹲，蹲时臀跟略接，三次。<br><strong>三、躯干部运动，立势</strong><br>1．身向前后屈。三次（手握拳，下同）。<br>2．手一上伸，一下垂。绷张左右胸肋，左右各一次。<br>3．手一侧垂，一前斜垂。绷张左右背肋，左右各一次。<br>4．足丁字势。手左右横荡。扭捩腰胁。左右各一次。<br><strong>四、头部运动，坐势</strong><br>1．头前后屈。三次。<br>2．头左右转。三次。<br>3．用手按摩额部、颊部、鼻部、唇部、喉部、耳部、后颈部。<br>4．自由运动。头大体位置不动，用意使皮肤及下颚运动。五次。<br><strong>五、打击运动，不定势</strong><br>(打击运动者，以拳遍击身体各处，使血液奔注，筋肉坚实，为此运动之主）<br>1．手部，右手击左手，左手击右手<br>(1) 前膊，上面、下面、左面、右面<br>(2) 后膊，上面、下面、左面、右面<br>2．肩部<br>3．胸部<br>4．胁部<br>5．背部<br>6．腹部<br>7．臀部<br>8．腿部，上腿、下腿<br><strong>六、调和运动，不定势</strong><br>1．跳舞，十余次<br>2．深呼吸，三次</p>
-<blockquote>
-<p>剪报来源<br>公众号： 考研体育人<br>链　接：<a href="https://mp.weixin.qq.com/s/P3CjCEXDsekDTcWw2vLMFg">https://mp.weixin.qq.com/s/P3CjCEXDsekDTcWw2vLMFg</a><br>日　期：2020-07-13</p>
 </blockquote>
 ]]></content>
       <categories>
