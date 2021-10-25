@@ -242,50 +242,43 @@
       </tags>
   </entry>
   <entry>
-    <title>【ZooKeeper启动失败】Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</title>
-    <url>/2019/12/12/zookeeper-problem-1/</url>
-    <content><![CDATA[<p>在 CentOS 7 系统中安装好 ZooKeeper 后，进入安装目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/bin/</code>，使用命令 <code>./zkServer.sh start</code> 启动，发现启动失败：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... FAILED TO START</span><br></pre></td></tr></table></figure>
+    <title>Spring Boot 2.x 集成Jpa示例</title>
+    <url>/2019/12/25/spring-boot-2_x-jpa/</url>
+    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
-<p>进入目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/logs</code>，查看日志文件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ cd /usr/local/zookeeper/apache-zookeeper-3.5.6/logs</span><br><span class="line">[zookeeperu@202 bin]$ vim ./zookeeper-jump-server-202.out</span><br></pre></td></tr></table></figure>
+<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
 
-<p>可看到以下错误信息：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</span><br></pre></td></tr></table></figure>
+<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
 
-<p>出现 <code>Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</code> 错误，是因为我在安装时，选用了 <code>apache-zookeeper-&#123;version&#125;.tar.gz</code> 包而不是 <code>apache-zookeeper-&#123;version&#125;-bin.tar.gz</code> 包，后面使用 <code>apache-zookeeper-3.5.6-bin.tar.gz</code> （<strong>文件名包含bin</strong>）重新安装后，解决了问题：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6-bin/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... STARTED</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 redis 中的值如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
+<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
 ]]></content>
       <categories>
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>CentOS7</tag>
-        <tag>ZooKeeper</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【Git常用命令】查看/修改远程仓库地址</title>
-    <url>/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</url>
-    <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
-
-<p>e.g.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Git修改远程仓库地址"><a href="#Git修改远程仓库地址" class="headerlink" title="Git修改远程仓库地址"></a>Git修改远程仓库地址</h2><p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote set-url origin new.git.url/here</span><br></pre></td></tr></table></figure>
-
-<p>e.g.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将远程仓库地址改为 HTTPS 协议</span></span><br><span class="line">git remote set-url origin https://gogs.linjiangxiong.com/ljx/devops-doc.git</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看修改后的地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
+        <tag>Jpa</tag>
+        <tag>Spring Boot</tag>
       </tags>
   </entry>
   <entry>
@@ -329,43 +322,158 @@
       </tags>
   </entry>
   <entry>
-    <title>Spring Boot 2.x 集成Jpa示例</title>
-    <url>/2019/12/25/spring-boot-2_x-jpa/</url>
-    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+    <title>【Git常用命令】查看/修改远程仓库地址</title>
+    <url>/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</url>
+    <content><![CDATA[<h2 id="Git查看远程仓库地址"><a href="#Git查看远程仓库地址" class="headerlink" title="Git查看远程仓库地址"></a>Git查看远程仓库地址</h2><p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
 
-<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
+<p>e.g.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看远程仓库地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	http://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
 
-<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="Git修改远程仓库地址"><a href="#Git修改远程仓库地址" class="headerlink" title="Git修改远程仓库地址"></a>Git修改远程仓库地址</h2><p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote set-url origin new.git.url/here</span><br></pre></td></tr></table></figure>
 
-<span id="more"></span>
+<p>e.g.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将远程仓库地址改为 HTTPS 协议</span></span><br><span class="line">git remote set-url origin https://gogs.linjiangxiong.com/ljx/devops-doc.git</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看修改后的地址</span></span><br><span class="line">git remote -v</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (fetch)</span><br><span class="line">origin	https://gogs.linjiangxiong.com/ljx/devops-doc.git (push)</span><br></pre></td></tr></table></figure>
 
-<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 redis 中的值如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
-<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
+<p>（END）</p>
 ]]></content>
       <categories>
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>Spring Boot</tag>
-        <tag>Jpa</tag>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【ZooKeeper启动失败】Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</title>
+    <url>/2019/12/12/zookeeper-problem-1/</url>
+    <content><![CDATA[<p>在 CentOS 7 系统中安装好 ZooKeeper 后，进入安装目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/bin/</code>，使用命令 <code>./zkServer.sh start</code> 启动，发现启动失败：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... FAILED TO START</span><br></pre></td></tr></table></figure>
+
+<p>进入目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/logs</code>，查看日志文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ cd /usr/local/zookeeper/apache-zookeeper-3.5.6/logs</span><br><span class="line">[zookeeperu@202 bin]$ vim ./zookeeper-jump-server-202.out</span><br></pre></td></tr></table></figure>
+
+<p>可看到以下错误信息：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</span><br></pre></td></tr></table></figure>
+
+<p>出现 <code>Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</code> 错误，是因为我在安装时，选用了 <code>apache-zookeeper-&#123;version&#125;.tar.gz</code> 包而不是 <code>apache-zookeeper-&#123;version&#125;-bin.tar.gz</code> 包，后面使用 <code>apache-zookeeper-3.5.6-bin.tar.gz</code> （<strong>文件名包含bin</strong>）重新安装后，解决了问题：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6-bin/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... STARTED</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+        <tag>ZooKeeper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗马数字（上）——拼写规则</title>
+    <url>/2019/06/26/rules-of-reading-and-writing-roman-numerals/</url>
+    <content><![CDATA[<h3 id="罗马数字符号"><a href="#罗马数字符号" class="headerlink" title="罗马数字符号"></a>罗马数字符号</h3><p>罗马数字是总共由 7 个字母符号表示：<strong>I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和 M（1000）。</strong></p>
+<span id="more"></span>
+
+<p>表一：罗马数字对应的阿拉伯数字</p>
+<table>
+<thead>
+<tr>
+<th align="center">罗马数字</th>
+<th align="center">阿拉伯数字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">I</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">V</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">X</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">L</td>
+<td align="center">50</td>
+</tr>
+<tr>
+<td align="center">C</td>
+<td align="center">100</td>
+</tr>
+<tr>
+<td align="center">D</td>
+<td align="center">500</td>
+</tr>
+<tr>
+<td align="center">M</td>
+<td align="center">1000</td>
+</tr>
+</tbody></table>
+<p>他们按照以下 4 个规则可以组合成表示任意的正整数。</p>
+<h3 id="规则-1"><a href="#规则-1" class="headerlink" title="规则 1"></a>规则 1</h3><p><strong>一个罗马数字重复多少次，就表示这个数多少倍</strong>，比如罗马数字 I 表示的是数字 1，重复两次，即 II，表示的数字是 2，同理，III 表示数字 3，XX 表示数字 20，CC 表示数字 200 等；</p>
+<p>需要注意的是，<strong>同一个罗马数字最多只能连续重复 3 次</strong>，如数字 400 就不能表示为 CCCC（重复了 4 次），而是要用 CD 来表示，数字40不能表示为 XXXX（同样重复了 4 次），而要表示为 XL 等。</p>
+<p>但有一种特殊情况，因为古罗马人用 IV 作为古罗马神话主神朱庇特（IVPITER，古罗马字母里没有 J 和 U）名字的简写，他们不希望神的名字看上去像个数字，因此<strong>有时用 IIII 代替 IV</strong>。</p>
+<p>另外，<strong>符号 D、L 和 V 不可以连续重复出现</strong>，比如用 DD 表示 1000 的写法是错误的，正确的是要用 M，表示 1500 的罗马数字是 MD，而不是 DDD。</p>
+<h3 id="规则-2"><a href="#规则-2" class="headerlink" title="规则 2"></a>规则 2</h3><p><strong>如果在较大的罗马数字后面（右边）放置较小的罗马数字，表示的数字为这些数字相加得到的数</strong>，如较大的罗马数字 V 后面放置较小的罗马数字 I，即 VI，表示的数字则为 V 与 I 相加得到数 6。</p>
+<p>同理，<br>VII = 7 (5 + 2 = 7)<br>LXXX = 80 (50 + 10 + 10 + 10 = 80)<br>MC = 1100 (1000 + 100 = 1100)</p>
+<h3 id="规则-3"><a href="#规则-3" class="headerlink" title="规则 3"></a>规则 3</h3><p><strong>如果在较大的罗马数字前面（左边）放置在较小的罗马数字，表示的数是用较大的数减去较小的数所得到的值</strong>，如较大的罗马数字 V 前面或左边放置较小的罗马数字 I，即 IV，表示的数字则为 V 减去 I 得到的数 4。</p>
+<p>同理，<br>IX = 9 (10 – 1 = 9)<br>XC = 90 (100 – 10 = 90)</p>
+<p>用这种方式来表示罗马数字时，有以下几点需要注意：</p>
+<p><strong>i) 充当减数的只能是 I，C 或 X</strong>，不能是 L 或 V，即罗马数字对应的数是 10 的 n 次幂才能充当减数。另外，由于 M 在罗马字母中表示的数最大，也不能充当减数（罗马数字没有 0 或负整数）。</p>
+<blockquote>
+<p>被减数 - 减数 = 差，<br>如 32 - 10 = 22，<br>被减数是 32，减数是 10，差是 22。</p>
+</blockquote>
+<p>表二：被减数的只能是 I，C 或 X</p>
+<table>
+<thead>
+<tr>
+<th>罗马数字</th>
+<th>阿拉伯数字</th>
+<th>10 的 n 次幂</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>I</td>
+<td>1</td>
+<td>$10^0 = 1$</td>
+<td>10的0次幂</td>
+</tr>
+<tr>
+<td>X</td>
+<td>10</td>
+<td>$10^1 = 10$</td>
+<td>10的1次幂</td>
+</tr>
+<tr>
+<td>C</td>
+<td>100</td>
+<td>$10^2 = 100$</td>
+<td>10的2次幂</td>
+</tr>
+</tbody></table>
+<p>比如数字 45，<br>不能写成 VL（50 - 5），<br>而是要写成 XLV（XL + V，即 40 + 5）；</p>
+<p><strong>ii) 只能从一个罗马数字中减去另一个罗马数字，而不能减去两个或两个以上的罗马数字</strong>，比如说数字 8，<br>不能写成 IIX（X - I - I，即 10 - 1 - 1 = 8），<br>而是要写成 VIII（V + I + I + I，即 5 + 1 + 1 + 1 = 8）；</p>
+<p><strong>iii) 从一个罗马数字（设为 a）中减去另一个罗马数字（设为 b）所得的差（设为 c），不能超过减数（即 b）的 10 倍以上。</strong><br>例如，<br>你可以从数字 10 中减去 1，<br>因为 10 - 1 = 9，9 比 1 的 10 倍（10）小；<br>但是不能从数字 100 中减去 1，<br>因为 100 - 1 = 99，99 比 1 的 10 倍（10）大。<br>所以，<br>数字 9 可以用 IX 来表示，<br>但数字 100 不能用 IC 来表示，<br>而是要用 XCIX（XC + IX，即 90 + 9 = 99）来表示。</p>
+<p><em><strong>总结第 i) 点和第 iii) 点，可以得到以下规则：</strong></em><br><em><strong>符号 I 只能出现在符号 V 或 X 的前面（左边）；</strong></em><br><em><strong>符号 X 只能出现在符号 L 或 C 的前面（左边）；</strong></em><br><em><strong>符号 C 只能出现在符号 D 或 M 的前面（左边）。</strong></em></p>
+<h3 id="规则-4"><a href="#规则-4" class="headerlink" title="规则 4"></a>规则 4</h3><p><strong>如果在罗马数字上方加一条横线，表示将该数值乘以 1000，即原数的 1000 倍，如果上方有两条横线，表示的数字是原数的 1, 000, 000 倍。</strong></p>
+<p>如：</p>
+<p>$\overline{M}=1, 000, 000$</p>
+<p>$\overline{V}=5, 000$</p>
+<p>$\overline{\overline{X}} = 10, 000, 000 $</p>
+<hr>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>尝试应用上述规则，写出以下阿拉伯数字对应的罗马数字<br>35，<br>65，<br>99</p>
+<p>求解过程如下：<br>35 = 10 + 10 + 10 + 5，即 X + X + X + V（XXXV），所以 35 = XXXV；<br>65 = 50 + 10 + 5，即 L + X + V（LXV），所以 65 = LXV；<br>99 = （100 - 10）+（10 - 1），即 XC + IX（XCIX）所以 99 = XCIX 。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>罗马数字</tag>
       </tags>
   </entry>
   <entry>
@@ -827,114 +935,6 @@
       </tags>
   </entry>
   <entry>
-    <title>罗马数字（上）——拼写规则</title>
-    <url>/2019/06/26/rules-of-reading-and-writing-roman-numerals/</url>
-    <content><![CDATA[<h3 id="罗马数字符号"><a href="#罗马数字符号" class="headerlink" title="罗马数字符号"></a>罗马数字符号</h3><p>罗马数字是总共由 7 个字母符号表示：<strong>I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和 M（1000）。</strong></p>
-<span id="more"></span>
-
-<p>表一：罗马数字对应的阿拉伯数字</p>
-<table>
-<thead>
-<tr>
-<th align="center">罗马数字</th>
-<th align="center">阿拉伯数字</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">I</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">V</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center">X</td>
-<td align="center">10</td>
-</tr>
-<tr>
-<td align="center">L</td>
-<td align="center">50</td>
-</tr>
-<tr>
-<td align="center">C</td>
-<td align="center">100</td>
-</tr>
-<tr>
-<td align="center">D</td>
-<td align="center">500</td>
-</tr>
-<tr>
-<td align="center">M</td>
-<td align="center">1000</td>
-</tr>
-</tbody></table>
-<p>他们按照以下 4 个规则可以组合成表示任意的正整数。</p>
-<h3 id="规则-1"><a href="#规则-1" class="headerlink" title="规则 1"></a>规则 1</h3><p><strong>一个罗马数字重复多少次，就表示这个数多少倍</strong>，比如罗马数字 I 表示的是数字 1，重复两次，即 II，表示的数字是 2，同理，III 表示数字 3，XX 表示数字 20，CC 表示数字 200 等；</p>
-<p>需要注意的是，<strong>同一个罗马数字最多只能连续重复 3 次</strong>，如数字 400 就不能表示为 CCCC（重复了 4 次），而是要用 CD 来表示，数字40不能表示为 XXXX（同样重复了 4 次），而要表示为 XL 等。</p>
-<p>但有一种特殊情况，因为古罗马人用 IV 作为古罗马神话主神朱庇特（IVPITER，古罗马字母里没有 J 和 U）名字的简写，他们不希望神的名字看上去像个数字，因此<strong>有时用 IIII 代替 IV</strong>。</p>
-<p>另外，<strong>符号 D、L 和 V 不可以连续重复出现</strong>，比如用 DD 表示 1000 的写法是错误的，正确的是要用 M，表示 1500 的罗马数字是 MD，而不是 DDD。</p>
-<h3 id="规则-2"><a href="#规则-2" class="headerlink" title="规则 2"></a>规则 2</h3><p><strong>如果在较大的罗马数字后面（右边）放置较小的罗马数字，表示的数字为这些数字相加得到的数</strong>，如较大的罗马数字 V 后面放置较小的罗马数字 I，即 VI，表示的数字则为 V 与 I 相加得到数 6。</p>
-<p>同理，<br>VII = 7 (5 + 2 = 7)<br>LXXX = 80 (50 + 10 + 10 + 10 = 80)<br>MC = 1100 (1000 + 100 = 1100)</p>
-<h3 id="规则-3"><a href="#规则-3" class="headerlink" title="规则 3"></a>规则 3</h3><p><strong>如果在较大的罗马数字前面（左边）放置在较小的罗马数字，表示的数是用较大的数减去较小的数所得到的值</strong>，如较大的罗马数字 V 前面或左边放置较小的罗马数字 I，即 IV，表示的数字则为 V 减去 I 得到的数 4。</p>
-<p>同理，<br>IX = 9 (10 – 1 = 9)<br>XC = 90 (100 – 10 = 90)</p>
-<p>用这种方式来表示罗马数字时，有以下几点需要注意：</p>
-<p><strong>i) 充当减数的只能是 I，C 或 X</strong>，不能是 L 或 V，即罗马数字对应的数是 10 的 n 次幂才能充当减数。另外，由于 M 在罗马字母中表示的数最大，也不能充当减数（罗马数字没有 0 或负整数）。</p>
-<blockquote>
-<p>被减数 - 减数 = 差，<br>如 32 - 10 = 22，<br>被减数是 32，减数是 10，差是 22。</p>
-</blockquote>
-<p>表二：被减数的只能是 I，C 或 X</p>
-<table>
-<thead>
-<tr>
-<th>罗马数字</th>
-<th>阿拉伯数字</th>
-<th>10 的 n 次幂</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>I</td>
-<td>1</td>
-<td>$10^0 = 1$</td>
-<td>10的0次幂</td>
-</tr>
-<tr>
-<td>X</td>
-<td>10</td>
-<td>$10^1 = 10$</td>
-<td>10的1次幂</td>
-</tr>
-<tr>
-<td>C</td>
-<td>100</td>
-<td>$10^2 = 100$</td>
-<td>10的2次幂</td>
-</tr>
-</tbody></table>
-<p>比如数字 45，<br>不能写成 VL（50 - 5），<br>而是要写成 XLV（XL + V，即 40 + 5）；</p>
-<p><strong>ii) 只能从一个罗马数字中减去另一个罗马数字，而不能减去两个或两个以上的罗马数字</strong>，比如说数字 8，<br>不能写成 IIX（X - I - I，即 10 - 1 - 1 = 8），<br>而是要写成 VIII（V + I + I + I，即 5 + 1 + 1 + 1 = 8）；</p>
-<p><strong>iii) 从一个罗马数字（设为 a）中减去另一个罗马数字（设为 b）所得的差（设为 c），不能超过减数（即 b）的 10 倍以上。</strong><br>例如，<br>你可以从数字 10 中减去 1，<br>因为 10 - 1 = 9，9 比 1 的 10 倍（10）小；<br>但是不能从数字 100 中减去 1，<br>因为 100 - 1 = 99，99 比 1 的 10 倍（10）大。<br>所以，<br>数字 9 可以用 IX 来表示，<br>但数字 100 不能用 IC 来表示，<br>而是要用 XCIX（XC + IX，即 90 + 9 = 99）来表示。</p>
-<p><em><strong>总结第 i) 点和第 iii) 点，可以得到以下规则：</strong></em><br><em><strong>符号 I 只能出现在符号 V 或 X 的前面（左边）；</strong></em><br><em><strong>符号 X 只能出现在符号 L 或 C 的前面（左边）；</strong></em><br><em><strong>符号 C 只能出现在符号 D 或 M 的前面（左边）。</strong></em></p>
-<h3 id="规则-4"><a href="#规则-4" class="headerlink" title="规则 4"></a>规则 4</h3><p><strong>如果在罗马数字上方加一条横线，表示将该数值乘以 1000，即原数的 1000 倍，如果上方有两条横线，表示的数字是原数的 1, 000, 000 倍。</strong></p>
-<p>如：</p>
-<p>$\overline{M}=1, 000, 000$</p>
-<p>$\overline{V}=5, 000$</p>
-<p>$\overline{\overline{X}} = 10, 000, 000 $</p>
-<hr>
-<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>尝试应用上述规则，写出以下阿拉伯数字对应的罗马数字<br>35，<br>65，<br>99</p>
-<p>求解过程如下：<br>35 = 10 + 10 + 10 + 5，即 X + X + X + V（XXXV），所以 35 = XXXV；<br>65 = 50 + 10 + 5，即 L + X + V（LXV），所以 65 = LXV；<br>99 = （100 - 10）+（10 - 1），即 XC + IX（XCIX）所以 99 = XCIX 。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-        <tag>罗马数字</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>罗马数字（中）——起源与用途</title>
     <url>/2019/07/01/history-of-roman-numerals/</url>
     <content><![CDATA[<h2 id="一、罗马数字的诞生与进化"><a href="#一、罗马数字的诞生与进化" class="headerlink" title="一、罗马数字的诞生与进化"></a>一、罗马数字的诞生与进化</h2><p>罗马数字起源于古罗马帝国，拥有一个漫长而复杂的历史，始于公元前 8 世纪至 9 世纪，与古罗马帝国在帕兰丁山（Palantine Hill）周围建立的时间大致相同。不过，罗马数字的盛行时间比帝国本身还要长，直到 14 世纪前仍被广泛使用。</p>
@@ -1015,6 +1015,43 @@
       </categories>
       <tags>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HashMap核心功能源码解读（一）：概述</title>
+    <url>/2021/07/22/hashmap-core-code-analysis-1/</url>
+    <content><![CDATA[<p>在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。</p>
+<h2 id="HashMap特性"><a href="#HashMap特性" class="headerlink" title="HashMap特性"></a>HashMap特性</h2><p>HashMap 是 Map 接口的一个基于哈希表实现，主要用来存储键值对数据。作为一个使用频率较高的集合类，了解它的特性有助于我们在实践中正确使用它。</p>
+<p>首先，HashMap 允许键为 null 和值为 null。</p>
+<p>其次，HashMap 不保证 Map 的有序性，即不保证遍历 HashMap 输出元素的顺序与其插入的顺序相同（可能存在顺序相同情况）。另外，HashMap 也不保证其顺序在一段时间内保持不变。如果需要在项目中保证 Map 有序性的话，可以使用 LinkedHashMap 代替 HashMap。</p>
+<p>再次，HashMap 是不同步的，即 HashMap 不是线程安全的。如果多个线程同时访问同一个 HashMap 实例，并且其中至少有一个线程从结构上修改了 HashMap 实例时，会导致数据不一致的情况发生。这里的“从结构上修改”是指对 HashMap 实例进行添加或删除元素的操作，仅修改已包含的键对应的值话，就不是从结构上修改。</p>
+<p>在需要线程安全环境中，可以在创建 HashMap 实例时使用 <code>Collections.synchronizedMap</code> 方法对其进行“包装”，以防止对 HashMap 的意外非同步访问：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map m = Collection.synchronizedMap(<span class="keyword">new</span> HashMap (…));</span><br></pre></td></tr></table></figure>
+
+<p>另外，也可以用 ConcurrentHashMap 代替 HashMap。</p>
+<p>最后，HashMap 的所有“集合视图方法”返回的迭代器是快速失败（fail-fast）的。如果在创建迭代器之后，除了通过迭代器本身的 remove 方法之外，在任何时候以任何方式从结构上修改 HashMap 实例时，迭代器都会抛出 ConcurrentModificationException 异常。因此，在面对并发修改时，迭代器会快速、干净利落地失败，而不是在未来某个不确定的时间出现随意的、不确定的行为风险。</p>
+<p>注意，迭代器的快速失败行为是无法保证的，因为一般而言，在存在非同步并发修改的情况下，不可能做出任何硬保证。快速失败的迭代器会尽最大努力抛出 <code>ConcurrentModificationException</code> 异常。因此，编写依赖于此异常的正确性的程序是错误的：迭代器的快速失败行为应该只用于检测错误。</p>
+<h2 id="HashMap性能"><a href="#HashMap性能" class="headerlink" title="HashMap性能"></a>HashMap性能</h2><p>如果哈希函数可以把元素均匀打散到不同的哈希桶中，那么 HashMap 的基本操作（get 和 put）能达到常数级时间的性能。这意味着理想情况下，HashMap 的基本操作的时间复杂度为 O(1)，执行时间不随数据规模（键值对数量）的增大而增长。</p>
+<p>但是在真实的情况下，当你往 HashMap 中写入大量数据后，就可能发现操作有时候会变慢了。这其实是因为哈希冲突和扩容带来的性能影响。</p>
+<p>在 HashMap 中，有两个参数——<strong>初始容量（initial capacity）和装载因子（load factor）</strong>，与哈希冲突和扩容这两个性能因素有直接关系。</p>
+<p>初始容量，顾名思义就是哈希表创建时的容量，这里的容量是指哈希表的哈希桶数。装载因子是衡量哈希表在其容量自动扩容之前允许达到多满的指标。当哈希表中的条目数超过负载因子和当前容量的乘积时，即</p>
+<p>条目数 &gt;= 哈希表容量 × 装载因子</p>
+<p>将对哈希表进行重新哈希（即重新构建内部数据结构），使哈希表的桶数为原来的两倍。</p>
+<p>一般来说，默认的装载因子（为 0.75）可以在时间和空间的开销上做到很好的权衡。较大的值虽然可以减少空间开销，但会增加查找成本（反映在 HashMap 的大多数操作中，包括 get 和 put 操作）。</p>
+<p>在设置初始容量时，应考虑映射中的预期条目数及其装载因子，以尽量减少重新哈希操作的次数。如果初始容量大于最大条目数除以负载因子，则不会发生重新哈希操作。</p>
+<p>如果有大量的键值对数据要存储在 HashMap 实例中，那么在创建时就指定一个足够大的容量来存储这些数据，会比随着表增长的需要而自动执行重新哈希更加高效。</p>
+<p>注意，如果使用大量的具有相同哈希码（hashCode()）的键，无疑会降低哈希表的性能。为了改善影响，当键是可比较时，可以使用键之间的比较顺序来帮助打破联系。</p>
+<p>另外，遍历 HashMap 所需的时间与 HashMap 实例的“容量”（指哈希桶数量）加上其大小（指键值映射数量）成正比。所以，如果你看重遍历 HashMap 的性能，那么不要把它初始容量设置得太大或把装载因子设置得太小就非常重要了。</p>
+<h2 id="TreeMap-Hashtable-和-HashMap"><a href="#TreeMap-Hashtable-和-HashMap" class="headerlink" title="TreeMap, Hashtable 和 HashMap"></a>TreeMap, Hashtable 和 HashMap</h2><p>TreeMap 是基于红黑树的一种提供顺序访问的 Map，和 HashMap 不同，它的 get、put、remove 之类操作都是 O（log(n)）的时间复杂度，具体顺序可以由指定的 Comparator 来决定，或者根据键的自然顺序来判断。</p>
+<p>Hashtable 大致相当于 HashMap ，只是 HashMap 是非线程安全的并且允许空值。</p>
+<p>需要注意的是，Hashtable 是遗留类，不建议在项目中使用。在非线程安全环境中，可以直接用 HashMap 代替 Hashtable；在需要线程安全环境中，可以用 ConcurrentHashMap 代替 Hashtable，因为 ConcurrentHashMap 引入了分段锁，并发性更好。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文概述了 HashMap 允许键为 null 和值为 null、不保证有序性、非线程安全、迭代器快速失败（fail-over）等特性，影响 HashMap 性能的参数，以及在实践中应该注意的地方，同时在文末简单对比了 TreeMap, Hashtable 和 HashMap 有什么不同。下一篇文章开始将对 HashMap 核心功能源码进行解读。</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1247,23 +1284,6 @@
       </categories>
       <tags>
         <tag>翻译</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>退休金计划：2031-2035年定投执行计划</title>
-    <url>/2021/07/10/investment-plan-2031-2035/</url>
-    <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第三个五年行动计划——2031-2035年定投计划。</p>
-<p>本计划目标：净投入达 120,000 元。</p>
-<p>计划具体内容为 2031 - 2035 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
-<p>（未制定）</p>
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-        <tag>退休金计划</tag>
       </tags>
   </entry>
   <entry>
@@ -3047,321 +3067,20 @@
       </tags>
   </entry>
   <entry>
-    <title>HashMap核心功能源码解读（一）：概述</title>
-    <url>/2021/07/22/hashmap-core-code-analysis-1/</url>
-    <content><![CDATA[<p>在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。</p>
-<h2 id="HashMap特性"><a href="#HashMap特性" class="headerlink" title="HashMap特性"></a>HashMap特性</h2><p>HashMap 是 Map 接口的一个基于哈希表实现，主要用来存储键值对数据。作为一个使用频率较高的集合类，了解它的特性有助于我们在实践中正确使用它。</p>
-<p>首先，HashMap 允许键为 null 和值为 null。</p>
-<p>其次，HashMap 不保证 Map 的有序性，即不保证遍历 HashMap 输出元素的顺序与其插入的顺序相同（可能存在顺序相同情况）。另外，HashMap 也不保证其顺序在一段时间内保持不变。如果需要在项目中保证 Map 有序性的话，可以使用 LinkedHashMap 代替 HashMap。</p>
-<p>再次，HashMap 是不同步的，即 HashMap 不是线程安全的。如果多个线程同时访问同一个 HashMap 实例，并且其中至少有一个线程从结构上修改了 HashMap 实例时，会导致数据不一致的情况发生。这里的“从结构上修改”是指对 HashMap 实例进行添加或删除元素的操作，仅修改已包含的键对应的值话，就不是从结构上修改。</p>
-<p>在需要线程安全环境中，可以在创建 HashMap 实例时使用 <code>Collections.synchronizedMap</code> 方法对其进行“包装”，以防止对 HashMap 的意外非同步访问：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map m = Collection.synchronizedMap(<span class="keyword">new</span> HashMap (…));</span><br></pre></td></tr></table></figure>
-
-<p>另外，也可以用 ConcurrentHashMap 代替 HashMap。</p>
-<p>最后，HashMap 的所有“集合视图方法”返回的迭代器是快速失败（fail-fast）的。如果在创建迭代器之后，除了通过迭代器本身的 remove 方法之外，在任何时候以任何方式从结构上修改 HashMap 实例时，迭代器都会抛出 ConcurrentModificationException 异常。因此，在面对并发修改时，迭代器会快速、干净利落地失败，而不是在未来某个不确定的时间出现随意的、不确定的行为风险。</p>
-<p>注意，迭代器的快速失败行为是无法保证的，因为一般而言，在存在非同步并发修改的情况下，不可能做出任何硬保证。快速失败的迭代器会尽最大努力抛出 <code>ConcurrentModificationException</code> 异常。因此，编写依赖于此异常的正确性的程序是错误的：迭代器的快速失败行为应该只用于检测错误。</p>
-<h2 id="HashMap性能"><a href="#HashMap性能" class="headerlink" title="HashMap性能"></a>HashMap性能</h2><p>如果哈希函数可以把元素均匀打散到不同的哈希桶中，那么 HashMap 的基本操作（get 和 put）能达到常数级时间的性能。这意味着理想情况下，HashMap 的基本操作的时间复杂度为 O(1)，执行时间不随数据规模（键值对数量）的增大而增长。</p>
-<p>但是在真实的情况下，当你往 HashMap 中写入大量数据后，就可能发现操作有时候会变慢了。这其实是因为哈希冲突和扩容带来的性能影响。</p>
-<p>在 HashMap 中，有两个参数——<strong>初始容量（initial capacity）和装载因子（load factor）</strong>，与哈希冲突和扩容这两个性能因素有直接关系。</p>
-<p>初始容量，顾名思义就是哈希表创建时的容量，这里的容量是指哈希表的哈希桶数。装载因子是衡量哈希表在其容量自动扩容之前允许达到多满的指标。当哈希表中的条目数超过负载因子和当前容量的乘积时，即</p>
-<p>条目数 &gt;= 哈希表容量 × 装载因子</p>
-<p>将对哈希表进行重新哈希（即重新构建内部数据结构），使哈希表的桶数为原来的两倍。</p>
-<p>一般来说，默认的装载因子（为 0.75）可以在时间和空间的开销上做到很好的权衡。较大的值虽然可以减少空间开销，但会增加查找成本（反映在 HashMap 的大多数操作中，包括 get 和 put 操作）。</p>
-<p>在设置初始容量时，应考虑映射中的预期条目数及其装载因子，以尽量减少重新哈希操作的次数。如果初始容量大于最大条目数除以负载因子，则不会发生重新哈希操作。</p>
-<p>如果有大量的键值对数据要存储在 HashMap 实例中，那么在创建时就指定一个足够大的容量来存储这些数据，会比随着表增长的需要而自动执行重新哈希更加高效。</p>
-<p>注意，如果使用大量的具有相同哈希码（hashCode()）的键，无疑会降低哈希表的性能。为了改善影响，当键是可比较时，可以使用键之间的比较顺序来帮助打破联系。</p>
-<p>另外，遍历 HashMap 所需的时间与 HashMap 实例的“容量”（指哈希桶数量）加上其大小（指键值映射数量）成正比。所以，如果你看重遍历 HashMap 的性能，那么不要把它初始容量设置得太大或把装载因子设置得太小就非常重要了。</p>
-<h2 id="TreeMap-Hashtable-和-HashMap"><a href="#TreeMap-Hashtable-和-HashMap" class="headerlink" title="TreeMap, Hashtable 和 HashMap"></a>TreeMap, Hashtable 和 HashMap</h2><p>TreeMap 是基于红黑树的一种提供顺序访问的 Map，和 HashMap 不同，它的 get、put、remove 之类操作都是 O（log(n)）的时间复杂度，具体顺序可以由指定的 Comparator 来决定，或者根据键的自然顺序来判断。</p>
-<p>Hashtable 大致相当于 HashMap ，只是 HashMap 是非线程安全的并且允许空值。</p>
-<p>需要注意的是，Hashtable 是遗留类，不建议在项目中使用。在非线程安全环境中，可以直接用 HashMap 代替 Hashtable；在需要线程安全环境中，可以用 ConcurrentHashMap 代替 Hashtable，因为 ConcurrentHashMap 引入了分段锁，并发性更好。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文概述了 HashMap 允许键为 null 和值为 null、不保证有序性、非线程安全、迭代器快速失败（fail-over）等特性，影响 HashMap 性能的参数，以及在实践中应该注意的地方，同时在文末简单对比了 TreeMap, Hashtable 和 HashMap 有什么不同。下一篇文章开始将对 HashMap 核心功能源码进行解读。</p>
+    <title>退休金计划：2031-2035年定投执行计划</title>
+    <url>/2021/07/10/investment-plan-2031-2035/</url>
+    <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第三个五年行动计划——2031-2035年定投计划。</p>
+<p>本计划目标：净投入达 120,000 元。</p>
+<p>计划具体内容为 2031 - 2035 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
+<p>（未制定）</p>
 ]]></content>
       <categories>
-        <category>编程文摘</category>
+        <category>投资理财</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>谈谈异或运算</title>
-    <url>/2021/08/02/bitwise-operation-xor-trick/</url>
-    <content><![CDATA[<p>本文翻译自 Florian 于 2020 年 3 月发表的一篇英文博客<a href="https://florian.github.io/xor-trick/">《That XOR Trick》</a>。</p>
-<hr>
-<p>有一大堆流行的面试问题可以通过以下两种方式之一解决：要么以合理的方式使用常见的数据结构和算法，要么以一种看似难以理解的方式使用异或运算 XOR 的某些特性。</p>
-<p>虽然在面试中指望异或运算 XOR 解决方案似乎并不合理，但弄清楚它们的工作原理还是很有趣的。实际上，它们都基于同一个基本窍门，我们将在本文中以自下而上的方式将其推导出来。之后我们再来看 XOR 窍门的一系列应用，例如解决以下这个流行的面试题：</p>
-<blockquote>
-<p>给定一个由 n - 1 个整数组成的数组，这些整数的范围在 1 到 n 之间。除了一个数字缺失之外，其余每个数字均只出现一次。找出这个缺失的数字。</p>
-</blockquote>
-<p>当然，有许多直截了当的方法可以解决这个问题，但还有一种可能令人意想不到的方法——使用 XOR。</p>
-<h2 id="XOR"><a href="#XOR" class="headerlink" title="XOR"></a>XOR</h2><p>XOR 是一种应用于位的逻辑运算符。我们用 <code>^</code> 表示它。如果它作为输入携带的两个位是相同的，那么它的结果就为 0，否则就为 1。这实现了一个异或运算，即只有一个参数必须是 1 才能使最终结果为 1。我们可以使用真值表来证明这一点：</p>
-<table>
-<thead>
-<tr>
-<th><code>x</code></th>
-<th><code>y</code></th>
-<th><code>x ^ y</code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-</tr>
-</tbody></table>
-<p>大多数编程语言将 <code>^</code> 实现为按位运算符，这意味着 XOR 单独应用于位串（例如一个字节）中的每个位。</p>
-<p>例如： </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0011 ^ 0101 = 0110 </span><br></pre></td></tr></table></figure>
-
-<p>因为 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0 ^ 0 = 0 </span><br><span class="line"></span><br><span class="line">0 ^ 1 = 1 </span><br><span class="line"></span><br><span class="line">1 ^ 0 = 1 </span><br><span class="line"></span><br><span class="line">1 ^ 1 = 0 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>因此，我们可以将 XOR 应用于任何事物，而不仅仅是布尔值。</p>
-<h2 id="推导出一些有用的特性"><a href="#推导出一些有用的特性" class="headerlink" title="推导出一些有用的特性"></a>推导出一些有用的特性</h2><p>我们可以从之前的定义中推导出一堆特性。下面我们一一梳理一遍，然后组合起来解决前面提到的面试题。</p>
-<h3 id="恒等律：x-0-x"><a href="#恒等律：x-0-x" class="headerlink" title="恒等律：x ^ 0 = x"></a>恒等律：<code>x ^ 0 = x</code></h3><p>如果 XOR 的两个参数之一为 0，则剩余的那个参数就是结果。该结论可通过检查以下真值表中 <code>y = 0</code> 的行（即第一行和第三行）直接得出：</p>
-<table>
-<thead>
-<tr>
-<th align="center"><code>x</code></th>
-<th align="center"><code>y</code></th>
-<th align="center"><code>x ^ y</code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><strong>0</strong></td>
-<td align="center"><strong>0</strong></td>
-<td align="center"><strong>0</strong></td>
-</tr>
-<tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center"><strong>1</strong></td>
-<td align="center"><strong>0</strong></td>
-<td align="center"><strong>1</strong></td>
-</tr>
-<tr>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-</tr>
-</tbody></table>
-<h3 id="归零律：x-x-0"><a href="#归零律：x-x-0" class="headerlink" title="归零律：x ^ x = 0"></a>归零律：<code>x ^ x = 0</code></h3><p>如果两个参数相同，则结果始终为 0。同样，我们可以通过检查真值表得出该结论。这次我们检查 <code>x = y</code> 的行，即第一行和最后一行。</p>
-<table>
-<thead>
-<tr>
-<th align="center"><code>x</code></th>
-<th align="center"><code>y</code></th>
-<th align="center"><code>x ^ y</code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><strong>0</strong></td>
-<td align="center"><strong>0</strong></td>
-<td align="center"><strong>0</strong></td>
-</tr>
-<tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center"><strong>1</strong></td>
-<td align="center"><strong>1</strong></td>
-<td align="center"><strong>0</strong></td>
-</tr>
-</tbody></table>
-<p>直观地说，这意味着如果我们对相同的参数应用 XOR，它们会相互抵消。</p>
-<h3 id="交换律：x-y-y-x"><a href="#交换律：x-y-y-x" class="headerlink" title="交换律：x ^ y = y ^ x"></a>交换律：<code>x ^ y = y ^ x</code></h3><p>XOR 是可交换的，这意味着我们可以更改应用 XOR 的顺序。为了证明这一点，我们可以检查 <code>x ^ y</code> 和 <code>y ^ x</code> 的真值表：</p>
-<table>
-<thead>
-<tr>
-<th align="center"><code>x</code></th>
-<th align="center"><code>y</code></th>
-<th align="center"><code>x ^ y</code></th>
-<th align="center"><code>y ^ x</code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-</tbody></table>
-<p>正如我们所看到的，<code>x ^ y</code> 和 <code>y ^ x</code> 总是以相同的值结束。</p>
-<h3 id="XOR-操作序列"><a href="#XOR-操作序列" class="headerlink" title="XOR 操作序列"></a>XOR 操作序列</h3><p>通过结合以上这些规律，我们可以推断出以下这个一切背后的核心启迪：</p>
-<blockquote>
-<p><strong>XOR 诀窍：</strong>如果存在一个 XOR 操作系列 <code>a ^ b ^ c ^ ...</code>，那么我们可以删除所有成对的重复值而不影响结果。</p>
-</blockquote>
-<p>交换律允许我们可以对 XOR 进行重新排序，以便使重复的元素彼此相邻。由于 <code>x ^ x = 0</code> 和 <code>a ^ 0 = a</code>，所以每一对重复值对结果没有影响。</p>
-<p>让我们来看一个例子：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> a ^ b ^ c ^ a ^ b      # 应用交换率</span><br><span class="line">= a ^ a ^ b ^ b ^ c     # 应用 x ^ x = 0</span><br><span class="line">= 0 ^ 0 ^ c             # 应用 x ^ 0 = x (和交换率)</span><br><span class="line">= c</span><br></pre></td></tr></table></figure>
-
-<p>因为 <code>^</code> 是一个按位运算符，所以不管 <code>a</code>、<code>b</code> 和 <code>c</code> 是什么类型的值，这都会起作用。这个诀窍实际上是 XOR 在许多情况下看似神奇使用的核心。</p>
-<h2 id="应用一：就地交换"><a href="#应用一：就地交换" class="headerlink" title="应用一：就地交换"></a>应用一：就地交换</h2><p>在解决找出缺失数字的问题之前，我们先从这个更简单的问题开始：</p>
-<blockquote>
-<p>就地交换两个值 x 和 y，即不使用任何辅助变量。</p>
-</blockquote>
-<p>实际上使用以下三条 XOR 指令可以轻松解决该问题：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">x ^= y</span><br><span class="line">y ^= x</span><br><span class="line">x ^= y</span><br></pre></td></tr></table></figure>
-
-<p>看起来好像有点神秘。为什么执行这三条指令最终会交换 x, y 的值呢？</p>
-<p>为了弄清它的原理，我们一起把这些指令一步一步地过一遍。每条指令后的注释显示 (x, y) 的当前值：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">x ^= y # =&gt;                      (x ^ y, y)</span><br><span class="line">y ^= x # =&gt; (x ^ y, y ^ x ^ y) = (x ^ y, x)</span><br><span class="line">x ^= y # =&gt; (x ^ y ^ x, x)     = (y, x)</span><br></pre></td></tr></table></figure>
-
-<p>我们可以看到，这实际上只是使用了前文推导出来的特性而已。</p>
-<p><em>这里的基本原理就是将 <code>x ^ y</code> 放在一个变量中，将 <code>x</code> 放在另一个变量中，这样就可以让我们完美地重建 <code>y</code>。一旦 <code>x ^ y</code> 被存储（指令 1），我们就可以将 <code>x</code> 放入另一个变量（指令 2），然后再用它来将 <code>x ^ y</code> 更改为 <code>y</code>（指令 3）</em>。</p>
-<h2 id="应用二：寻找缺失的数字"><a href="#应用二：寻找缺失的数字" class="headerlink" title="应用二：寻找缺失的数字"></a>应用二：寻找缺失的数字</h2><p>现在，我们来解决本文开头提出的问题：</p>
-<blockquote>
-<p>给定一个由 n - 1 个整数组成的数组 A，这些整数的范围在 1 到 n 之间。除了一个数字缺失之外，其余每个数字均只出现一次。找出那个缺失的数字。</p>
-</blockquote>
-<p>当然，有很多直截了当的方法可以解决这个问题，不过这里我们准备使用 XOR 的方法来解决这个问题。</p>
-<p>从 XOR 技巧我们知道，对于一条 XOR 序列的语句，我们可以移除所有成对的重复元素。不过，如果我们只是对给定数组中的所有值进行异或，我们就不能用到该技巧，因为没有重复元素：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A[0] ^ A[1] ^ ... ^ A[n - 2]</span><br></pre></td></tr></table></figure>
-
-<p>注意 <code>A[n - 2]</code> 是 <code>n - 1</code> 个元素数组的最后一个索引。</p>
-<p>此外，我们还可以把 1 和 n 之间的所有值也加进来一并进行异或：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 ^ 2 ^ ... ^ n ^ A[0] ^ A[1] ^ ... ^ A[n - 2]</span><br></pre></td></tr></table></figure>
-
-<p>这样，我们得到的 XOR 操作序列，它们的元素出现如下：</p>
-<ul>
-<li>给定数组中的所有值现在会出现两次：<ul>
-<li>一次是 1 到 n 之间的所有值；</li>
-<li>一次是本来就存在于给定的原始数组中。</li>
-</ul>
-</li>
-<li>缺失数字只会出现一次：<ul>
-<li>一次是 1 到 n 之间的所有值。</li>
-</ul>
-</li>
-</ul>
-<p>如果对所有这些值进行异或，根据异或技巧，实质上就是移除了所有出现两次的数字。也就是说，留下来的数字恰好就是我们一开始要寻找的缺失数字。</p>
-<p>编码后，如下所示：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_missing</span>(<span class="params">A, n</span>):</span></span><br><span class="line">  result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># XOR of all the values from 1 to n</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">    result ^= value</span><br><span class="line"></span><br><span class="line">  <span class="comment"># XOR of all values in the given array</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> A:</span><br><span class="line">    result ^= value</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
-
-<p>单看代码的话，看起来像是一个难以理解的算法。然而，当知道了 XOR 技巧的原理时，就变得相当简单。我认为这也说明了为什么在面试中指望这个解决方案是不合理的：它要求了解一个非常特殊的技巧，但除此之外并不需要太多算法层面上的思考。</p>
-<p>在继续说明下一个应用之前，这里再多说两点。</p>
-<h3 id="推广到整数之外"><a href="#推广到整数之外" class="headerlink" title="推广到整数之外"></a>推广到整数之外</h3><p>尽管到目前为止我们一直讨论的都是 1 到 n 的整数，不过并不仅限于整数。实际上，前面的算法适用于<br> (1) 一些潜在元素集 和<br> (2) 一组实际出现的元素<br> 的任何情况。这些集合可能仅在缺失那个元素上有所不同。这对整数很有效，因为潜在元素的集合正好对应于从 1 到 n 的元素。</p>
-<p>可以想象元素不是 1 到 n 的整数情况的应用：</p>
-<ul>
-<li>潜在元素集是 <code>Person</code> 对象，我们要从值列表中找到缺失的 <code>Person</code></li>
-<li>潜在元素集是图中的所有节点，我们要找出缺失的节点</li>
-<li>潜在元素的集合是一般的整数（不一定是从 1 到 n），我们要找到缺失的那个整数</li>
-</ul>
-<h3 id="使用算术运算符而不是-XOR"><a href="#使用算术运算符而不是-XOR" class="headerlink" title="使用算术运算符而不是 XOR"></a>使用算术运算符而不是 XOR</h3><p>如果读到这里，该算法看起来仍有点神奇的话（我希望不是），那么考虑如何使用算术运算符获得相同的结果可能会有所帮助。这实际上相当简单：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_missing</span>(<span class="params">A, n</span>):</span></span><br><span class="line">  result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Add all the values from 1 to n</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">    result += value</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Subtract all values in the given array</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> A:</span><br><span class="line">    result -= value</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
-
-<p>把所有潜在的整数相加，然后减去实际出现的整数。该解决方案不是很好，因为需要处理数值溢出情况和需要元素的某些属性类型支持 <code>+</code>、<code>-</code> 运算。不过元素相互抵消的逻辑是一样的，因为每个元素出现次数是确定的（一次为正，一次为负）。</p>
-<h2 id="应用三：找出重复的数字"><a href="#应用三：找出重复的数字" class="headerlink" title="应用三：找出重复的数字"></a>应用三：找出重复的数字</h2><p>有趣的是：我们可以把完全相同的解决方案应用到类似的面试题：</p>
-<blockquote>
-<p>给定一个由 n + 1 个整数组成的数组 A，这些整数的范围在 1 到 n 之间。除了一个数字重复之外，其余每个数字均只出现一次。找出这个重复的数字。</p>
-</blockquote>
-<p>思考一下，如果我们只运用与之前的解决方案完全相同的算法，会出现什么情况。我们会得到 XOR 序列语句，其中元素出现如下：</p>
-<ul>
-<li><p>给定列表中的重复的值出现了 3 次：</p>
-<ul>
-<li>一次是 1 到 n 之间的所有值；</li>
-<li>两次是本来就存在于给定的原始数组中（因为重复）。</li>
-</ul>
-</li>
-<li><p>给定列表中的所有其他值出现两次：</p>
-<ul>
-<li>一次从取 1 到 n 之间的所有值</li>
-<li>一次是本来就存在于给定的原始数组中。</li>
-</ul>
-</li>
-</ul>
-<p>如前所述，所有成对的重复元素会相互抵消。这意味着，剩下的恰好就是我们正要寻找的元素——在原始数组中重复的元素。此元素出现 3 次，结合 XOR，简化后正是此元素本身：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> x ^ x ^ x</span><br><span class="line">= x ^ 0</span><br><span class="line">= x</span><br></pre></td></tr></table></figure>
-
-<p>其他所有元素相互抵消，因为它们恰好出现两次。</p>
-<h2 id="应用四：找出两个缺失-重复的数字"><a href="#应用四：找出两个缺失-重复的数字" class="headerlink" title="应用四：找出两个缺失/重复的数字"></a>应用四：找出两个缺失/重复的数字</h2><p>实际上我们可以更进一步，考虑以下稍微有些难度的问题：</p>
-<blockquote>
-<p>给定一个由 n - 2 个整数组成的数组 A，这些整数的范围在 1 到 n 之间。除了两个数字缺失之外，其余每个数字均只出现一次。找出这两个缺失的数字。</p>
-</blockquote>
-<p>和之前一样，在找出两个重复的数字而不是两个缺失的数字时，问题是完全等价的。</p>
-<p>相信你已经猜到怎么做了，不过还是延用之前的讲述方法，以完全相同的方式开始：思考一下，如果我们使用之前的 XOR 算法，会出现什么情况。如果这样做，我们将再次得到 XOR 序列语句，除了我们正要寻找的那两个，其余所有元素相互抵消。</p>
-<p>我们用 <code>u</code> 和 <code>v</code> 来表示这两个缺失的元素，主要是因为我们之前没有用到这些字母。应用前面的算法后，我们就剩下 <code>u ^ v</code>。接下来该怎么做？我们需要以某种方式从这个值中提取 <code>u</code> 和 <code>v</code>，但现在还不清楚怎么做。</p>
-<h3 id="根据查看-u-v-的结果进行分区"><a href="#根据查看-u-v-的结果进行分区" class="headerlink" title="根据查看 u ^ v 的结果进行分区"></a>根据查看 <code>u ^ v</code> 的结果进行分区</h3><p>幸运的是，我们可以通过运用本文前面讲过的内容来弄清楚该怎么做。</p>
-<p>本文早些时候提到：</p>
-<blockquote>
-<p>如果 XOR 作为输入携带的两个位是一样的，则结果为 0，否则为 1。</p>
-</blockquote>
-<p>也就是说，对于 <code>u ^ v</code> 结果中的各个位的值，如果为 0 就表示 <code>u</code> 和 <code>v</code> 在该位具有相同的值。如果为 1 就表示 <code>u</code> 和 <code>v</code> 在该位具有不同的值。</p>
-<p>现在，我们先从 <code>u ^ v</code> 结果中找到第一个值为 1 的位（记为 <code>i</code>），根据上面的结论，<code>u</code> 和 <code>v</code> 在第 <code>i</code> 位的值一定是不同的。然后，根据元素在这个位的值（0 或 1），对数组 A 和从 1 到 n 的数字集中的元素进行分区。最终得到的两个分区，每个分区包含两个集合：</p>
-<ol>
-<li>分区 0（元素第 i 位为 0）<ol>
-<li>从 1 到 n 的数字集合，其中元素的第 i 位为 0</li>
-<li>数组 A，其中元素的第 i 位为 0</li>
-</ol>
-</li>
-<li>分区 1（元素第 i 位为 1）<ol>
-<li>从 1 到 n 的数字集合，其中元素的第 i 位为 1</li>
-<li>数组 A，其中元素的第 i 位为 1</li>
-</ol>
-</li>
-</ol>
-<p>因为 <code>u</code> 和 <code>v</code> 在位置 <code>i</code> 上不同，所以这两个元素肯定分布在不同的分区中。</p>
-<h3 id="简化问题"><a href="#简化问题" class="headerlink" title="简化问题"></a>简化问题</h3><p>接下来，我们运用本文早些时候提到的另一个见解：</p>
-<blockquote>
-<p>尽管到目前为止我们一直讨论的都是 1 到 n 的整数，不过并不仅限于整数。实际上，前面的算法适用于<br> (1) 一些潜在元素集 和<br> (2) 一组实际出现的元素<br> 的任何情况。这些集合可能仅在缺失（或重复）那个元素上有所不同。</p>
-</blockquote>
-<p>这两个集合（指潜在元素集和实际出现的元素集）与我们在每个分区中的集合完全对应。因此，我们可以通过将这个想法用于其中一个分区来搜索元素 <code>u</code>，从而找到缺失的元素。然后再将其用于另一个分区来找到 <code>v</code>。</p>
-<p>这实际上是一个很好的解决方法：我们有效地将这个新问题简化为我们先前解决的问题的一般形式。</p>
-<h2 id="达到极限"><a href="#达到极限" class="headerlink" title="达到极限"></a>达到极限</h2><p>你可能会想尝试更进一步，旨在解决两个以上缺失值的问题。我没有对此进行仔细的思考，但我认为这是我们停止使用 XOR 的地方。如果缺失（或重复）两个以上的元素，则无法分析 XOR 结果上各个位的值，因为无论是 0 还是 1 都可能有多种组合作为结果。</p>
-<p>问题似乎需要更复杂的解决方案，这些解决方案不再基于 XOR。</p>
-<h2 id="最后的想法"><a href="#最后的想法" class="headerlink" title="最后的想法"></a>最后的想法</h2><p>如前所述，基于此诀窍的面试题似乎不是一个好主意。他们需要知道一个稍微有点晦涩的诀窍，但是一旦知道了这个诀窍，就没有什么需要解决的了（除了应用四）。也几乎没有一种方法可以展示算法思维（除了简化），也没有很好的方法来利用数据结构。</p>
-<p>然而，我发现了解这个诀窍实际上是如何工作的非常酷。 XOR 似乎具有解决所有这些问题的正确特性。像 XOR 这样基本的东西可以用来构建这里描述的所有东西，这也很美妙。</p>
-<p>感谢 Eugen 的讨论促成了这篇文章。一起弄清楚所有这些是如何工作的很有趣。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>翻译</tag>
-        <tag>位运算</tag>
+        <tag>理财</tag>
+        <tag>定投</tag>
+        <tag>退休金计划</tag>
       </tags>
   </entry>
   <entry>
@@ -3657,6 +3376,287 @@
       </tags>
   </entry>
   <entry>
+    <title>谈谈异或运算</title>
+    <url>/2021/08/02/bitwise-operation-xor-trick/</url>
+    <content><![CDATA[<p>本文翻译自 Florian 于 2020 年 3 月发表的一篇英文博客<a href="https://florian.github.io/xor-trick/">《That XOR Trick》</a>。</p>
+<hr>
+<p>有一大堆流行的面试问题可以通过以下两种方式之一解决：要么以合理的方式使用常见的数据结构和算法，要么以一种看似难以理解的方式使用异或运算 XOR 的某些特性。</p>
+<p>虽然在面试中指望异或运算 XOR 解决方案似乎并不合理，但弄清楚它们的工作原理还是很有趣的。实际上，它们都基于同一个基本窍门，我们将在本文中以自下而上的方式将其推导出来。之后我们再来看 XOR 窍门的一系列应用，例如解决以下这个流行的面试题：</p>
+<blockquote>
+<p>给定一个由 n - 1 个整数组成的数组，这些整数的范围在 1 到 n 之间。除了一个数字缺失之外，其余每个数字均只出现一次。找出这个缺失的数字。</p>
+</blockquote>
+<p>当然，有许多直截了当的方法可以解决这个问题，但还有一种可能令人意想不到的方法——使用 XOR。</p>
+<h2 id="XOR"><a href="#XOR" class="headerlink" title="XOR"></a>XOR</h2><p>XOR 是一种应用于位的逻辑运算符。我们用 <code>^</code> 表示它。如果它作为输入携带的两个位是相同的，那么它的结果就为 0，否则就为 1。这实现了一个异或运算，即只有一个参数必须是 1 才能使最终结果为 1。我们可以使用真值表来证明这一点：</p>
+<table>
+<thead>
+<tr>
+<th><code>x</code></th>
+<th><code>y</code></th>
+<th><code>x ^ y</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>大多数编程语言将 <code>^</code> 实现为按位运算符，这意味着 XOR 单独应用于位串（例如一个字节）中的每个位。</p>
+<p>例如： </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0011 ^ 0101 = 0110 </span><br></pre></td></tr></table></figure>
+
+<p>因为 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0 ^ 0 = 0 </span><br><span class="line"></span><br><span class="line">0 ^ 1 = 1 </span><br><span class="line"></span><br><span class="line">1 ^ 0 = 1 </span><br><span class="line"></span><br><span class="line">1 ^ 1 = 0 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>因此，我们可以将 XOR 应用于任何事物，而不仅仅是布尔值。</p>
+<h2 id="推导出一些有用的特性"><a href="#推导出一些有用的特性" class="headerlink" title="推导出一些有用的特性"></a>推导出一些有用的特性</h2><p>我们可以从之前的定义中推导出一堆特性。下面我们一一梳理一遍，然后组合起来解决前面提到的面试题。</p>
+<h3 id="恒等律：x-0-x"><a href="#恒等律：x-0-x" class="headerlink" title="恒等律：x ^ 0 = x"></a>恒等律：<code>x ^ 0 = x</code></h3><p>如果 XOR 的两个参数之一为 0，则剩余的那个参数就是结果。该结论可通过检查以下真值表中 <code>y = 0</code> 的行（即第一行和第三行）直接得出：</p>
+<table>
+<thead>
+<tr>
+<th align="center"><code>x</code></th>
+<th align="center"><code>y</code></th>
+<th align="center"><code>x ^ y</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>0</strong></td>
+</tr>
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center"><strong>1</strong></td>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>1</strong></td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+</tr>
+</tbody></table>
+<h3 id="归零律：x-x-0"><a href="#归零律：x-x-0" class="headerlink" title="归零律：x ^ x = 0"></a>归零律：<code>x ^ x = 0</code></h3><p>如果两个参数相同，则结果始终为 0。同样，我们可以通过检查真值表得出该结论。这次我们检查 <code>x = y</code> 的行，即第一行和最后一行。</p>
+<table>
+<thead>
+<tr>
+<th align="center"><code>x</code></th>
+<th align="center"><code>y</code></th>
+<th align="center"><code>x ^ y</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>0</strong></td>
+</tr>
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center"><strong>1</strong></td>
+<td align="center"><strong>1</strong></td>
+<td align="center"><strong>0</strong></td>
+</tr>
+</tbody></table>
+<p>直观地说，这意味着如果我们对相同的参数应用 XOR，它们会相互抵消。</p>
+<h3 id="交换律：x-y-y-x"><a href="#交换律：x-y-y-x" class="headerlink" title="交换律：x ^ y = y ^ x"></a>交换律：<code>x ^ y = y ^ x</code></h3><p>XOR 是可交换的，这意味着我们可以更改应用 XOR 的顺序。为了证明这一点，我们可以检查 <code>x ^ y</code> 和 <code>y ^ x</code> 的真值表：</p>
+<table>
+<thead>
+<tr>
+<th align="center"><code>x</code></th>
+<th align="center"><code>y</code></th>
+<th align="center"><code>x ^ y</code></th>
+<th align="center"><code>y ^ x</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+</tbody></table>
+<p>正如我们所看到的，<code>x ^ y</code> 和 <code>y ^ x</code> 总是以相同的值结束。</p>
+<h3 id="XOR-操作序列"><a href="#XOR-操作序列" class="headerlink" title="XOR 操作序列"></a>XOR 操作序列</h3><p>通过结合以上这些规律，我们可以推断出以下这个一切背后的核心启迪：</p>
+<blockquote>
+<p><strong>XOR 诀窍：</strong>如果存在一个 XOR 操作系列 <code>a ^ b ^ c ^ ...</code>，那么我们可以删除所有成对的重复值而不影响结果。</p>
+</blockquote>
+<p>交换律允许我们可以对 XOR 进行重新排序，以便使重复的元素彼此相邻。由于 <code>x ^ x = 0</code> 和 <code>a ^ 0 = a</code>，所以每一对重复值对结果没有影响。</p>
+<p>让我们来看一个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> a ^ b ^ c ^ a ^ b      # 应用交换率</span><br><span class="line">= a ^ a ^ b ^ b ^ c     # 应用 x ^ x = 0</span><br><span class="line">= 0 ^ 0 ^ c             # 应用 x ^ 0 = x (和交换率)</span><br><span class="line">= c</span><br></pre></td></tr></table></figure>
+
+<p>因为 <code>^</code> 是一个按位运算符，所以不管 <code>a</code>、<code>b</code> 和 <code>c</code> 是什么类型的值，这都会起作用。这个诀窍实际上是 XOR 在许多情况下看似神奇使用的核心。</p>
+<h2 id="应用一：就地交换"><a href="#应用一：就地交换" class="headerlink" title="应用一：就地交换"></a>应用一：就地交换</h2><p>在解决找出缺失数字的问题之前，我们先从这个更简单的问题开始：</p>
+<blockquote>
+<p>就地交换两个值 x 和 y，即不使用任何辅助变量。</p>
+</blockquote>
+<p>实际上使用以下三条 XOR 指令可以轻松解决该问题：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">x ^= y</span><br><span class="line">y ^= x</span><br><span class="line">x ^= y</span><br></pre></td></tr></table></figure>
+
+<p>看起来好像有点神秘。为什么执行这三条指令最终会交换 x, y 的值呢？</p>
+<p>为了弄清它的原理，我们一起把这些指令一步一步地过一遍。每条指令后的注释显示 (x, y) 的当前值：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">x ^= y # =&gt;                      (x ^ y, y)</span><br><span class="line">y ^= x # =&gt; (x ^ y, y ^ x ^ y) = (x ^ y, x)</span><br><span class="line">x ^= y # =&gt; (x ^ y ^ x, x)     = (y, x)</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到，这实际上只是使用了前文推导出来的特性而已。</p>
+<p><em>这里的基本原理就是将 <code>x ^ y</code> 放在一个变量中，将 <code>x</code> 放在另一个变量中，这样就可以让我们完美地重建 <code>y</code>。一旦 <code>x ^ y</code> 被存储（指令 1），我们就可以将 <code>x</code> 放入另一个变量（指令 2），然后再用它来将 <code>x ^ y</code> 更改为 <code>y</code>（指令 3）</em>。</p>
+<h2 id="应用二：寻找缺失的数字"><a href="#应用二：寻找缺失的数字" class="headerlink" title="应用二：寻找缺失的数字"></a>应用二：寻找缺失的数字</h2><p>现在，我们来解决本文开头提出的问题：</p>
+<blockquote>
+<p>给定一个由 n - 1 个整数组成的数组 A，这些整数的范围在 1 到 n 之间。除了一个数字缺失之外，其余每个数字均只出现一次。找出那个缺失的数字。</p>
+</blockquote>
+<p>当然，有很多直截了当的方法可以解决这个问题，不过这里我们准备使用 XOR 的方法来解决这个问题。</p>
+<p>从 XOR 技巧我们知道，对于一条 XOR 序列的语句，我们可以移除所有成对的重复元素。不过，如果我们只是对给定数组中的所有值进行异或，我们就不能用到该技巧，因为没有重复元素：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A[0] ^ A[1] ^ ... ^ A[n - 2]</span><br></pre></td></tr></table></figure>
+
+<p>注意 <code>A[n - 2]</code> 是 <code>n - 1</code> 个元素数组的最后一个索引。</p>
+<p>此外，我们还可以把 1 和 n 之间的所有值也加进来一并进行异或：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 ^ 2 ^ ... ^ n ^ A[0] ^ A[1] ^ ... ^ A[n - 2]</span><br></pre></td></tr></table></figure>
+
+<p>这样，我们得到的 XOR 操作序列，它们的元素出现如下：</p>
+<ul>
+<li>给定数组中的所有值现在会出现两次：<ul>
+<li>一次是 1 到 n 之间的所有值；</li>
+<li>一次是本来就存在于给定的原始数组中。</li>
+</ul>
+</li>
+<li>缺失数字只会出现一次：<ul>
+<li>一次是 1 到 n 之间的所有值。</li>
+</ul>
+</li>
+</ul>
+<p>如果对所有这些值进行异或，根据异或技巧，实质上就是移除了所有出现两次的数字。也就是说，留下来的数字恰好就是我们一开始要寻找的缺失数字。</p>
+<p>编码后，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_missing</span>(<span class="params">A, n</span>):</span></span><br><span class="line">  result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># XOR of all the values from 1 to n</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">    result ^= value</span><br><span class="line"></span><br><span class="line">  <span class="comment"># XOR of all values in the given array</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> A:</span><br><span class="line">    result ^= value</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+
+<p>单看代码的话，看起来像是一个难以理解的算法。然而，当知道了 XOR 技巧的原理时，就变得相当简单。我认为这也说明了为什么在面试中指望这个解决方案是不合理的：它要求了解一个非常特殊的技巧，但除此之外并不需要太多算法层面上的思考。</p>
+<p>在继续说明下一个应用之前，这里再多说两点。</p>
+<h3 id="推广到整数之外"><a href="#推广到整数之外" class="headerlink" title="推广到整数之外"></a>推广到整数之外</h3><p>尽管到目前为止我们一直讨论的都是 1 到 n 的整数，不过并不仅限于整数。实际上，前面的算法适用于<br> (1) 一些潜在元素集 和<br> (2) 一组实际出现的元素<br> 的任何情况。这些集合可能仅在缺失那个元素上有所不同。这对整数很有效，因为潜在元素的集合正好对应于从 1 到 n 的元素。</p>
+<p>可以想象元素不是 1 到 n 的整数情况的应用：</p>
+<ul>
+<li>潜在元素集是 <code>Person</code> 对象，我们要从值列表中找到缺失的 <code>Person</code></li>
+<li>潜在元素集是图中的所有节点，我们要找出缺失的节点</li>
+<li>潜在元素的集合是一般的整数（不一定是从 1 到 n），我们要找到缺失的那个整数</li>
+</ul>
+<h3 id="使用算术运算符而不是-XOR"><a href="#使用算术运算符而不是-XOR" class="headerlink" title="使用算术运算符而不是 XOR"></a>使用算术运算符而不是 XOR</h3><p>如果读到这里，该算法看起来仍有点神奇的话（我希望不是），那么考虑如何使用算术运算符获得相同的结果可能会有所帮助。这实际上相当简单：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_missing</span>(<span class="params">A, n</span>):</span></span><br><span class="line">  result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Add all the values from 1 to n</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">    result += value</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Subtract all values in the given array</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> A:</span><br><span class="line">    result -= value</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+
+<p>把所有潜在的整数相加，然后减去实际出现的整数。该解决方案不是很好，因为需要处理数值溢出情况和需要元素的某些属性类型支持 <code>+</code>、<code>-</code> 运算。不过元素相互抵消的逻辑是一样的，因为每个元素出现次数是确定的（一次为正，一次为负）。</p>
+<h2 id="应用三：找出重复的数字"><a href="#应用三：找出重复的数字" class="headerlink" title="应用三：找出重复的数字"></a>应用三：找出重复的数字</h2><p>有趣的是：我们可以把完全相同的解决方案应用到类似的面试题：</p>
+<blockquote>
+<p>给定一个由 n + 1 个整数组成的数组 A，这些整数的范围在 1 到 n 之间。除了一个数字重复之外，其余每个数字均只出现一次。找出这个重复的数字。</p>
+</blockquote>
+<p>思考一下，如果我们只运用与之前的解决方案完全相同的算法，会出现什么情况。我们会得到 XOR 序列语句，其中元素出现如下：</p>
+<ul>
+<li><p>给定列表中的重复的值出现了 3 次：</p>
+<ul>
+<li>一次是 1 到 n 之间的所有值；</li>
+<li>两次是本来就存在于给定的原始数组中（因为重复）。</li>
+</ul>
+</li>
+<li><p>给定列表中的所有其他值出现两次：</p>
+<ul>
+<li>一次从取 1 到 n 之间的所有值</li>
+<li>一次是本来就存在于给定的原始数组中。</li>
+</ul>
+</li>
+</ul>
+<p>如前所述，所有成对的重复元素会相互抵消。这意味着，剩下的恰好就是我们正要寻找的元素——在原始数组中重复的元素。此元素出现 3 次，结合 XOR，简化后正是此元素本身：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> x ^ x ^ x</span><br><span class="line">= x ^ 0</span><br><span class="line">= x</span><br></pre></td></tr></table></figure>
+
+<p>其他所有元素相互抵消，因为它们恰好出现两次。</p>
+<h2 id="应用四：找出两个缺失-重复的数字"><a href="#应用四：找出两个缺失-重复的数字" class="headerlink" title="应用四：找出两个缺失/重复的数字"></a>应用四：找出两个缺失/重复的数字</h2><p>实际上我们可以更进一步，考虑以下稍微有些难度的问题：</p>
+<blockquote>
+<p>给定一个由 n - 2 个整数组成的数组 A，这些整数的范围在 1 到 n 之间。除了两个数字缺失之外，其余每个数字均只出现一次。找出这两个缺失的数字。</p>
+</blockquote>
+<p>和之前一样，在找出两个重复的数字而不是两个缺失的数字时，问题是完全等价的。</p>
+<p>相信你已经猜到怎么做了，不过还是延用之前的讲述方法，以完全相同的方式开始：思考一下，如果我们使用之前的 XOR 算法，会出现什么情况。如果这样做，我们将再次得到 XOR 序列语句，除了我们正要寻找的那两个，其余所有元素相互抵消。</p>
+<p>我们用 <code>u</code> 和 <code>v</code> 来表示这两个缺失的元素，主要是因为我们之前没有用到这些字母。应用前面的算法后，我们就剩下 <code>u ^ v</code>。接下来该怎么做？我们需要以某种方式从这个值中提取 <code>u</code> 和 <code>v</code>，但现在还不清楚怎么做。</p>
+<h3 id="根据查看-u-v-的结果进行分区"><a href="#根据查看-u-v-的结果进行分区" class="headerlink" title="根据查看 u ^ v 的结果进行分区"></a>根据查看 <code>u ^ v</code> 的结果进行分区</h3><p>幸运的是，我们可以通过运用本文前面讲过的内容来弄清楚该怎么做。</p>
+<p>本文早些时候提到：</p>
+<blockquote>
+<p>如果 XOR 作为输入携带的两个位是一样的，则结果为 0，否则为 1。</p>
+</blockquote>
+<p>也就是说，对于 <code>u ^ v</code> 结果中的各个位的值，如果为 0 就表示 <code>u</code> 和 <code>v</code> 在该位具有相同的值。如果为 1 就表示 <code>u</code> 和 <code>v</code> 在该位具有不同的值。</p>
+<p>现在，我们先从 <code>u ^ v</code> 结果中找到第一个值为 1 的位（记为 <code>i</code>），根据上面的结论，<code>u</code> 和 <code>v</code> 在第 <code>i</code> 位的值一定是不同的。然后，根据元素在这个位的值（0 或 1），对数组 A 和从 1 到 n 的数字集中的元素进行分区。最终得到的两个分区，每个分区包含两个集合：</p>
+<ol>
+<li>分区 0（元素第 i 位为 0）<ol>
+<li>从 1 到 n 的数字集合，其中元素的第 i 位为 0</li>
+<li>数组 A，其中元素的第 i 位为 0</li>
+</ol>
+</li>
+<li>分区 1（元素第 i 位为 1）<ol>
+<li>从 1 到 n 的数字集合，其中元素的第 i 位为 1</li>
+<li>数组 A，其中元素的第 i 位为 1</li>
+</ol>
+</li>
+</ol>
+<p>因为 <code>u</code> 和 <code>v</code> 在位置 <code>i</code> 上不同，所以这两个元素肯定分布在不同的分区中。</p>
+<h3 id="简化问题"><a href="#简化问题" class="headerlink" title="简化问题"></a>简化问题</h3><p>接下来，我们运用本文早些时候提到的另一个见解：</p>
+<blockquote>
+<p>尽管到目前为止我们一直讨论的都是 1 到 n 的整数，不过并不仅限于整数。实际上，前面的算法适用于<br> (1) 一些潜在元素集 和<br> (2) 一组实际出现的元素<br> 的任何情况。这些集合可能仅在缺失（或重复）那个元素上有所不同。</p>
+</blockquote>
+<p>这两个集合（指潜在元素集和实际出现的元素集）与我们在每个分区中的集合完全对应。因此，我们可以通过将这个想法用于其中一个分区来搜索元素 <code>u</code>，从而找到缺失的元素。然后再将其用于另一个分区来找到 <code>v</code>。</p>
+<p>这实际上是一个很好的解决方法：我们有效地将这个新问题简化为我们先前解决的问题的一般形式。</p>
+<h2 id="达到极限"><a href="#达到极限" class="headerlink" title="达到极限"></a>达到极限</h2><p>你可能会想尝试更进一步，旨在解决两个以上缺失值的问题。我没有对此进行仔细的思考，但我认为这是我们停止使用 XOR 的地方。如果缺失（或重复）两个以上的元素，则无法分析 XOR 结果上各个位的值，因为无论是 0 还是 1 都可能有多种组合作为结果。</p>
+<p>问题似乎需要更复杂的解决方案，这些解决方案不再基于 XOR。</p>
+<h2 id="最后的想法"><a href="#最后的想法" class="headerlink" title="最后的想法"></a>最后的想法</h2><p>如前所述，基于此诀窍的面试题似乎不是一个好主意。他们需要知道一个稍微有点晦涩的诀窍，但是一旦知道了这个诀窍，就没有什么需要解决的了（除了应用四）。也几乎没有一种方法可以展示算法思维（除了简化），也没有很好的方法来利用数据结构。</p>
+<p>然而，我发现了解这个诀窍实际上是如何工作的非常酷。 XOR 似乎具有解决所有这些问题的正确特性。像 XOR 这样基本的东西可以用来构建这里描述的所有东西，这也很美妙。</p>
+<p>感谢 Eugen 的讨论促成了这篇文章。一起弄清楚所有这些是如何工作的很有趣。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>翻译</tag>
+        <tag>位运算</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>退休金计划：投资日志20210727</title>
     <url>/2021/07/27/investment-plan-record-20210727/</url>
     <content><![CDATA[<p>昨天下午的时候，同事见面打招呼问的是你买鞋了吗？</p>
@@ -3730,14 +3730,14 @@
 <p>2046-2050年定投执行计划</p>
 <p>2051年（1月、2月）定投执行计划</p>
 <h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts6819" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts511" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts6814" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts4640" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts6819'));
-    var bar_chart = echarts.init(document.getElementById('echarts511'));
+    var myChart = echarts.init(document.getElementById('echarts6814'));
+    var bar_chart = echarts.init(document.getElementById('echarts4640'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3850,14 +3850,14 @@
     <url>/2021/07/17/investment-plan-progress/</url>
     <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
 <h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts3642" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts5195" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts5523" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts6242" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts3642'));
-    var bar_chart = echarts.init(document.getElementById('echarts5195'));
+    var myChart = echarts.init(document.getElementById('echarts5523'));
+    var bar_chart = echarts.init(document.getElementById('echarts6242'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3954,12 +3954,12 @@
 <p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
 </blockquote>
 <h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts4529" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <div id="echarts607" style="width: 100%;height: 200px;margin: 0 auto"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts4529'));
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts607'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -4081,25 +4081,31 @@
       </tags>
   </entry>
   <entry>
-    <title>小记：2021年8月</title>
-    <url>/2021/08/05/note-202108/</url>
-    <content><![CDATA[<h2 id="2021年8月2日"><a href="#2021年8月2日" class="headerlink" title="2021年8月2日"></a>2021年8月2日</h2><p><strong>1 梦</strong></p>
-<p>昨晚梦到皮蛋，可把我气醒了。梦里大概是这样子：</p>
-<p>皮蛋生了七只小猫咪，有黑色的，有白色的，有橘黄色的还有混色的。但我发现的时候，其中的三只被他吃了，另外四只被绳子绑在一起，浸泡在洗脸盆上，盆上还有水。皮蛋打算溺死他自己的猫咪仔。把我气死了，拿起棍子准备教训皮蛋。结果，他一下子就跑去躲了，打不到他，我像个泼妇骂街一样，边骂边教育他，告诉他这些是你的仔，怎么可以这么残忍对待它们。。</p>
-<p>骂着骂着，突然想到小猫咪还在水盆里泡着呢，就马上冲回去，把小猫咪捞出来，解了绳子，感觉这些小猫咪像是要快饿死了。皮蛋又抓不到，不然还可以让皮蛋给小猫咪喂奶。</p>
-<p>没办法，想到小猫咪可以喝牛奶，又去冰箱找。边翻边想，刚出生的小猫咪可以喝冰的牛奶吗？哎呀，不管那么多了，拉肚子总比被饿死好吧？于是继续翻啊、找啊，但就是没有找到牛奶，急死了。后面冷静点，才想起我已经不喝牛奶很久了，冰箱怎么可能会有牛奶？这一瞬间，我彻底崩溃了，一直在责怪和质问自己。为什么我现在不喝牛奶了？！以前不是每晚睡之前都要喝一瓶的吗？！怎么不能过几天再不想喝牛奶？！就算不喝牛奶，冰箱也要备着啊？！为什么？！</p>
-<p>实在压抑到有些难受，还好醒了，睁着眼睛躺在床上，回忆着这个梦的始末，怒火中烧。清醒一点后发现，皮蛋不是公猫吗？还是一只做了绝育手术的公猫，他怎么会生小猫咪呢？</p>
-<p>哦，原来是一场梦啊，真是奇奇怪怪的梦！看了下手机，现在快早上5点了，起来喝点水，倒头再睡会，今天还要上班。</p>
-<p><strong>2 活在当下</strong></p>
-<p>夏天的时候就盼望着冬天的到来，而冬天的时候又期待着夏天的到来，一点都没有活在当下啊。</p>
-<p><strong>3 专注呼吸</strong></p>
-<p>每当我开始专注于自己的呼吸时，脑袋里总有各种各样的想法蹦跶出来。而当我结束专注呼吸训练准备记录他们的时候，他们又一下子不见了踪影。真是奇怪的脑袋</p>
+    <title>Apache Kafka（一）：简介</title>
+    <url>/2020/03/17/apache-kafka-intro/</url>
+    <content><![CDATA[<h2 id="Kafka简介"><a href="#Kafka简介" class="headerlink" title="Kafka简介"></a>Kafka简介</h2><p>Kafka 最早是由 LinkedIn 公司开发的一套分布式的高性能消息引擎服务，于 2011 年初开源，并于 2012 年 10 月 23 日从 Apache 孵化器毕业，成为 Apache 的顶级项目。</p>
+<p>Kafka 最初的设计目的是用于处理海量的日志，后来历经多年发展和完善，如今的 Kafka 集消息系统、存储系统和流式处理平台于一身，在消息引擎领域是执牛耳者，在大数据工程领域、流计算领域也起着举足轻重的作用，具有非常广阔的应用场景。</p>
+<h2 id="为什么要掌握Kafka"><a href="#为什么要掌握Kafka" class="headerlink" title="为什么要掌握Kafka"></a>为什么要掌握Kafka</h2><p>因为掌握了 Kafka，手上就多了一份拿高薪的筹码。</p>
+<p>援引美国 2019 年 Dice 技术薪资报告中的数据，在十大薪资最高的技术技能中，掌握 Kafka 以平均每年 12.7554 万美元排名第二！虽然这是美国人才市场的数据，但从国内互联网公司的技术招聘需求中，我们也可以看出 Kafka 在国内的行情也是水涨船高。</p>
+<p>（查看完整报告：<a href="https://marketing.dice.com/pdf/Dice_TechSalaryReport2019.pdf">https://marketing.dice.com/pdf/Dice_TechSalaryReport2019.pdf</a>）</p>
+<h2 id="如何全面掌握Kafka"><a href="#如何全面掌握Kafka" class="headerlink" title="如何全面掌握Kafka"></a>如何全面掌握Kafka</h2><p>作为一名软件开发工程师，在学习开源项目时，最好是采取“自顶向下”的学习方法，即先初步掌握开源项目的基本使用、功能原理、关键设计等，然后再深入到源码，学习其关键技术是如何实现的，以及其代码写作方式等。</p>
+<p>对于学习 Kafka 也不例外。具体步骤如下：</p>
+<ul>
+<li>安装、运行 Kafka。</li>
+<li>选择合适的 Kafka 客户端，学习官网上的示例代码，并尝试修改示例代码，如修改输入值、或使用其他的 API 功能，观测修改后的运行结果。此时可编写一个简单的程序（如生产者、消费者程序）进行验证。</li>
+<li>通读 Kafka 的设计文档，了解消息队列设计的关键决策部分，并确保理解了那些可能影响可靠性、稳定性和性能的参数。</li>
+<li>学习 Kafka 的高级功能，如拦截器、幂等性生产者、事务、流处理应用开发等。</li>
+<li>研究原理，如生产者消息分区机制、副本机制、重平衡等。</li>
+<li>深入源码，学习关键原理背后的具体编码如何实现。但不建议通读源码（此种方法效率特别低，效果也不好），最好是带着明确目的去研究源码，做到有的放矢，才能事半功倍。</li>
+</ul>
+<p>在实际应用中，你可能还需要学会管理和监控 Kafka，并从 Kafka 在真实负载下的表现，找出系统可能存在的瓶颈，保障系统的稳定性和提升系统的性能。</p>
+<p>（END）</p>
 ]]></content>
       <categories>
-        <category>小记</category>
+        <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>所思所想所悟</tag>
+        <tag>Kafka</tag>
       </tags>
   </entry>
   <entry>
@@ -4158,34 +4164,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Apache Kafka（一）：简介</title>
-    <url>/2020/03/17/apache-kafka-intro/</url>
-    <content><![CDATA[<h2 id="Kafka简介"><a href="#Kafka简介" class="headerlink" title="Kafka简介"></a>Kafka简介</h2><p>Kafka 最早是由 LinkedIn 公司开发的一套分布式的高性能消息引擎服务，于 2011 年初开源，并于 2012 年 10 月 23 日从 Apache 孵化器毕业，成为 Apache 的顶级项目。</p>
-<p>Kafka 最初的设计目的是用于处理海量的日志，后来历经多年发展和完善，如今的 Kafka 集消息系统、存储系统和流式处理平台于一身，在消息引擎领域是执牛耳者，在大数据工程领域、流计算领域也起着举足轻重的作用，具有非常广阔的应用场景。</p>
-<h2 id="为什么要掌握Kafka"><a href="#为什么要掌握Kafka" class="headerlink" title="为什么要掌握Kafka"></a>为什么要掌握Kafka</h2><p>因为掌握了 Kafka，手上就多了一份拿高薪的筹码。</p>
-<p>援引美国 2019 年 Dice 技术薪资报告中的数据，在十大薪资最高的技术技能中，掌握 Kafka 以平均每年 12.7554 万美元排名第二！虽然这是美国人才市场的数据，但从国内互联网公司的技术招聘需求中，我们也可以看出 Kafka 在国内的行情也是水涨船高。</p>
-<p>（查看完整报告：<a href="https://marketing.dice.com/pdf/Dice_TechSalaryReport2019.pdf">https://marketing.dice.com/pdf/Dice_TechSalaryReport2019.pdf</a>）</p>
-<h2 id="如何全面掌握Kafka"><a href="#如何全面掌握Kafka" class="headerlink" title="如何全面掌握Kafka"></a>如何全面掌握Kafka</h2><p>作为一名软件开发工程师，在学习开源项目时，最好是采取“自顶向下”的学习方法，即先初步掌握开源项目的基本使用、功能原理、关键设计等，然后再深入到源码，学习其关键技术是如何实现的，以及其代码写作方式等。</p>
-<p>对于学习 Kafka 也不例外。具体步骤如下：</p>
-<ul>
-<li>安装、运行 Kafka。</li>
-<li>选择合适的 Kafka 客户端，学习官网上的示例代码，并尝试修改示例代码，如修改输入值、或使用其他的 API 功能，观测修改后的运行结果。此时可编写一个简单的程序（如生产者、消费者程序）进行验证。</li>
-<li>通读 Kafka 的设计文档，了解消息队列设计的关键决策部分，并确保理解了那些可能影响可靠性、稳定性和性能的参数。</li>
-<li>学习 Kafka 的高级功能，如拦截器、幂等性生产者、事务、流处理应用开发等。</li>
-<li>研究原理，如生产者消息分区机制、副本机制、重平衡等。</li>
-<li>深入源码，学习关键原理背后的具体编码如何实现。但不建议通读源码（此种方法效率特别低，效果也不好），最好是带着明确目的去研究源码，做到有的放矢，才能事半功倍。</li>
-</ul>
-<p>在实际应用中，你可能还需要学会管理和监控 Kafka，并从 Kafka 在真实负载下的表现，找出系统可能存在的瓶颈，保障系统的稳定性和提升系统的性能。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Kafka</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CentOS7 系统中，如何禁止Linux系统用户通过SSH登录服务器？</title>
     <url>/2020/03/20/how-to-limit-what-users-can-log-onto-system-via-ssh/</url>
     <content><![CDATA[<p>出于安全考虑，有时候我们会禁止系统上的某些用户使用 <code>ssh</code> 命令登录服务器。例如，用于启动 MongoDB 服务的用户 mongod，就不允许通过 <code>ssh</code> 命令进行登录。在 CentOS 7 系统中，可以通过修改配置文件 <em>/etc/ssh/sshd_config</em> 达到禁用的目的。</p>
@@ -4216,53 +4194,6 @@
       </categories>
       <tags>
         <tag>CentOS7</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Elasticsearch倒排索引简介</title>
-    <url>/2020/08/04/elasticsearch-inverted-index-intro/</url>
-    <content><![CDATA[<h2 id="什么是倒排索引"><a href="#什么是倒排索引" class="headerlink" title="什么是倒排索引"></a>什么是倒排索引</h2><p>倒排索引（Inverted index，亦称反向索引），是一种索引方法，用来存储在全文搜索下某个单词在某一个文档或某一组文档中的存储位置的映射。</p>
-<h2 id="倒排索引的数据结构"><a href="#倒排索引的数据结构" class="headerlink" title="倒排索引的数据结构"></a>倒排索引的数据结构</h2><p>倒排索引是文档检索系统中最常用的一种数据据构。它包含两部分——<strong>单词词典（Term Dictionary）和倒排列表（Posting List）</strong>。</p>
-<p>其中，单词词典是用来记录所有文档的单词，记录单词到倒排列表的关系，所以单词词典一般也会比较大，为满足快速地插入与查询，通常采用 B+ 树或者哈希链表法来实现。</p>
-<p>而倒排列表是用来记录单词对应的文档结合，由倒排索引项（Posting）组成。</p>
-<p>倒排索引项结构主要包括以下四项内容：</p>
-<ul>
-<li>文档ID；</li>
-<li>词频（TF）——该单词在文档中的出现次数，用于相关性评分；</li>
-<li>位置（Position）——单词在文档中分词的位置，用于语句搜索（Phrase Query）；</li>
-<li>偏移（Offset）——记录单词的开始、结束位置，用于高亮显示。</li>
-</ul>
-<p>倒排索引项结构示例：</p>
-<table>
-<thead>
-<tr>
-<th>Document ID</th>
-<th>TF</th>
-<th>Position</th>
-<th>Offset</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>10001</td>
-<td>2</td>
-<td>1</td>
-<td>&lt;20, 32&gt;</td>
-</tr>
-<tr>
-<td>10002</td>
-<td>10</td>
-<td>23</td>
-<td>&lt;7, 10&gt;</td>
-</tr>
-</tbody></table>
-<p>在 Elasticsearch 的 JSON 文档中的每个字段，默认情况下都有自己的倒排索引，我们可以根据需要对某些字段不做索引，优点是节省存储空间，缺点是该字段无法被搜索。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Elasticsearch</tag>
       </tags>
   </entry>
   <entry>
@@ -4426,6 +4357,116 @@
       </tags>
   </entry>
   <entry>
+    <title>小记：2021年8月</title>
+    <url>/2021/08/05/note-202108/</url>
+    <content><![CDATA[<h2 id="2021年8月2日"><a href="#2021年8月2日" class="headerlink" title="2021年8月2日"></a>2021年8月2日</h2><p><strong>1 梦</strong></p>
+<p>昨晚梦到皮蛋，可把我气醒了。梦里大概是这样子：</p>
+<p>皮蛋生了七只小猫咪，有黑色的，有白色的，有橘黄色的还有混色的。但我发现的时候，其中的三只被他吃了，另外四只被绳子绑在一起，浸泡在洗脸盆上，盆上还有水。皮蛋打算溺死他自己的猫咪仔。把我气死了，拿起棍子准备教训皮蛋。结果，他一下子就跑去躲了，打不到他，我像个泼妇骂街一样，边骂边教育他，告诉他这些是你的仔，怎么可以这么残忍对待它们。。</p>
+<p>骂着骂着，突然想到小猫咪还在水盆里泡着呢，就马上冲回去，把小猫咪捞出来，解了绳子，感觉这些小猫咪像是要快饿死了。皮蛋又抓不到，不然还可以让皮蛋给小猫咪喂奶。</p>
+<p>没办法，想到小猫咪可以喝牛奶，又去冰箱找。边翻边想，刚出生的小猫咪可以喝冰的牛奶吗？哎呀，不管那么多了，拉肚子总比被饿死好吧？于是继续翻啊、找啊，但就是没有找到牛奶，急死了。后面冷静点，才想起我已经不喝牛奶很久了，冰箱怎么可能会有牛奶？这一瞬间，我彻底崩溃了，一直在责怪和质问自己。为什么我现在不喝牛奶了？！以前不是每晚睡之前都要喝一瓶的吗？！怎么不能过几天再不想喝牛奶？！就算不喝牛奶，冰箱也要备着啊？！为什么？！</p>
+<p>实在压抑到有些难受，还好醒了，睁着眼睛躺在床上，回忆着这个梦的始末，怒火中烧。清醒一点后发现，皮蛋不是公猫吗？还是一只做了绝育手术的公猫，他怎么会生小猫咪呢？</p>
+<p>哦，原来是一场梦啊，真是奇奇怪怪的梦！看了下手机，现在快早上5点了，起来喝点水，倒头再睡会，今天还要上班。</p>
+<p><strong>2 活在当下</strong></p>
+<p>夏天的时候就盼望着冬天的到来，而冬天的时候又期待着夏天的到来，一点都没有活在当下啊。</p>
+<p><strong>3 专注呼吸</strong></p>
+<p>每当我开始专注于自己的呼吸时，脑袋里总有各种各样的想法蹦跶出来。而当我结束专注呼吸训练准备记录他们的时候，他们又一下子不见了踪影。真是奇怪的脑袋</p>
+]]></content>
+      <categories>
+        <category>小记</category>
+      </categories>
+      <tags>
+        <tag>所思所想所悟</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Elasticsearch倒排索引简介</title>
+    <url>/2020/08/04/elasticsearch-inverted-index-intro/</url>
+    <content><![CDATA[<h2 id="什么是倒排索引"><a href="#什么是倒排索引" class="headerlink" title="什么是倒排索引"></a>什么是倒排索引</h2><p>倒排索引（Inverted index，亦称反向索引），是一种索引方法，用来存储在全文搜索下某个单词在某一个文档或某一组文档中的存储位置的映射。</p>
+<h2 id="倒排索引的数据结构"><a href="#倒排索引的数据结构" class="headerlink" title="倒排索引的数据结构"></a>倒排索引的数据结构</h2><p>倒排索引是文档检索系统中最常用的一种数据据构。它包含两部分——<strong>单词词典（Term Dictionary）和倒排列表（Posting List）</strong>。</p>
+<p>其中，单词词典是用来记录所有文档的单词，记录单词到倒排列表的关系，所以单词词典一般也会比较大，为满足快速地插入与查询，通常采用 B+ 树或者哈希链表法来实现。</p>
+<p>而倒排列表是用来记录单词对应的文档结合，由倒排索引项（Posting）组成。</p>
+<p>倒排索引项结构主要包括以下四项内容：</p>
+<ul>
+<li>文档ID；</li>
+<li>词频（TF）——该单词在文档中的出现次数，用于相关性评分；</li>
+<li>位置（Position）——单词在文档中分词的位置，用于语句搜索（Phrase Query）；</li>
+<li>偏移（Offset）——记录单词的开始、结束位置，用于高亮显示。</li>
+</ul>
+<p>倒排索引项结构示例：</p>
+<table>
+<thead>
+<tr>
+<th>Document ID</th>
+<th>TF</th>
+<th>Position</th>
+<th>Offset</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10001</td>
+<td>2</td>
+<td>1</td>
+<td>&lt;20, 32&gt;</td>
+</tr>
+<tr>
+<td>10002</td>
+<td>10</td>
+<td>23</td>
+<td>&lt;7, 10&gt;</td>
+</tr>
+</tbody></table>
+<p>在 Elasticsearch 的 JSON 文档中的每个字段，默认情况下都有自己的倒排索引，我们可以根据需要对某些字段不做索引，优点是节省存储空间，缺点是该字段无法被搜索。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Elasticsearch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>袁隆平：我的两个梦</title>
+    <url>/2021/05/24/ylp-2/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>【侠客岛按】</strong></p>
+<p>今天中午，噩耗传来。“杂交水稻之父”、中国工程院院士、“共和国勋章”获得者袁隆平在湖南长沙逝世。</p>
+<p>2019年10月23日，袁老曾在《人民日报》刊发文章，自述他的两个梦想，感人至深。侠客岛予以推荐，藉此缅怀这位伟大的科学家。</p>
+<p>袁老，您走好。</p>
+</blockquote>
+<p>时光如白驹过隙，一转眼，90年过去，我成了正儿八经的“90后”。我大半辈子都在与水稻打交道，至今从事杂交水稻研究工作已有55个年头。我最关心的，就是与水稻和粮食相关的事。</p>
+<p>新中国成立之前，中华大地上到处灾荒战乱，人民生活颠沛流离，少年时我就被迫从一个城市辗转到另一个城市，虽然少不更事，但每当看到沿路举家逃难、面如菜色的同胞，看到荒芜的田野和满目疮痍的土地，我的内心总会泛起一阵阵痛楚。报考大学时，我就对父母说，我要学农。母亲听了，吓一跳，说，傻孩子，学农多苦啊，你以为好玩儿呢？<strong>但我是真正爱上了农业，死活要学，还摆出大道理：吃饭可是天下第一桩大事，没有饭吃，人类怎么生存？</strong>最后，父母尊重我的选择。</p>
+<p>毕业后，我被分配到湖南安江农校任教。安江农校地处偏远，临行前，学校的领导告诉我，那里很偏僻，“一盏孤灯照终身”，你可要做好思想准备。当时我想，能传播农业科学知识，也是为国家做贡献！没想到，去了不久，就碰上困难时期。我当时想，<strong>这么大一个国家，如果粮食安全得不到保障，其他一切都无从谈起，我要为让中国人吃饱饭而奋斗！</strong></p>
+<p>一天，我看到一些农民从高山上兑了种子，担回来种，就问他们，为什么跑到那么高的山上去换种呢？他们说，山上的种子质量好一些，产得多些。他们接着还说了一句话，叫做“施肥不如勤换种”。这对我有很大启发：农业上增产的途径有很多，但其中良种是非常重要的因素。</p>
+<p>从此以后，我开始自己的杂交水稻研究之路。一路走来，有汗水和辛酸，也有丰收和喜悦。<strong>科学探索无止境，在这条漫长而又艰辛的路上，我一直有两个梦，一个是禾下乘凉梦，一个是杂交水稻覆盖全球梦。</strong></p>
+<p><strong>禾下乘凉梦，我是真做过，我梦见水稻长得有高粱那么高，穗子像扫把那么长，颗粒像花生那么大，而我则和助手坐在稻穗下面乘凉。其实我这个梦想的实质，就是水稻高产梦，让人们吃上更多的米饭，永远都不用再饿肚子。</strong></p>
+<p>做梦容易，但要把梦变成现实，则需要付出大量艰苦的劳动和努力。我清楚地记得，<strong>那是1961年7月的一天，我到安江农校的试验田选种。突然，我发现了一株“鹤立鸡群”的稻株</strong>。穗大，颗粒饱满。我随手挑了一穗，竟有230粒之多！当时以为，选到了优良品种，岂不是可以增产无数粮食？</p>
+<p>第二年春天，我把种子播下，结果却令人大失所望，一眼望去，高的高，矮的矮，没有一株赶得上最初的那株水稻。我不甘心，开始反复琢磨其中的奥秘，研究那一片试验田的稻株比例，最终得出一个结论：水稻是有杂交优势的，那株鹤立鸡群的水稻，就是天然的杂交水稻。既然天然杂交稻具有这样强的优势，那么人工杂交稻，也一定有优势。当时，遗传学理论一直否定自花授粉作物有杂交优势。我对此理论提出质疑。随后，我又拜访专家，翻找资料，<strong>最终得出结论，既然自然界存在杂交稻，那么人工杂交水稻也一定可以利用</strong>。而要想利用这一优势，首先需要找到“天然的雄性不育水稻”。</p>
+<p>于是，我又走上曲折的寻找之旅。</p>
+<p>其中，<strong>最令人刻骨铭心的是，在海南岛找到天然雄性不育野生稻“野败”并加以利用的过程</strong>。那是1970年11月，我和助手李必湖、尹华奇驻守在海南岛崖县南红农场，在当地寻找野生稻。在那里，有一位农专毕业的冯克珊，是南红良种繁育场的技术员，经常跑来听我讲课。冯克珊联想到农场附近有一种名叫“假禾”的草，很可能就是我要找的野生稻。</p>
+<p>11月23日，他找到李必湖，来到南红农场铁路涵洞附近的水塘边，到那片正在开花的野生稻中察看。他们发现了三个雄花异常的野生稻穗，野生稻穗的花药细瘦，色浅呈水渍状，不开裂散粉。这三个稻穗生长于同一禾蔸，是从一粒种子长出、匍匐于水面的分蘖。他们立即把这蔸野生稻连泥挖起，放在铁桶里拉回去，然后移栽到试验田里，等待鉴定。</p>
+<p>当时，我正在北京开会，收到助手们从海南发来的电报，连夜赶火车奔回海南岛。<strong>经过仔细检验，我们最终确认这是一株十分难得的天然雄性不育株野生稻，我给它命名为“野败”。</strong></p>
+<p>这真是大海捞针啊！</p>
+<p>“野败”的发现对杂交水稻研究具有里程碑的意义，更是杂交水稻“三系”配套成功的突破口。<strong>1973年，我们协作组历尽千辛万苦才通过测交找到恢复系，攻克“三系”配套难关，才有了新中国第一代杂交水稻。</strong>第一代以细胞质雄性不育系为遗传工具的杂交水稻，优点是不育系不育性稳定，但也有缺点，即配组的时候受到恢保关系制约，因此选择优良组合的几率比较低，难度大。</p>
+<p>自上世纪80年代中后期起，我们开始研究两系杂交水稻。1995年，第二代以光温敏不育系为遗传工具的杂交水稻——两系法杂交稻研制成功，它的主要优点是配组自由选择，能选配到优良稻组合的几率比较高。但是，第二代杂交稻也不是完美的：不育系育性受气温和光照影响较大。我想，如果有一种杂交水稻，既兼具第一代和第二代的优点，又能克服二者的缺点，那该多好啊！</p>
+<p><strong>2011年，我们又启动第三代杂交水稻育种技术的研究与利用，这是以遗传工程雄性不育系为遗传工具的杂交水稻，已初步研究成功，该杂交水稻克服了前两代的缺点。现在，我们甚至开始了第四代、第五代杂交水稻的研制。</strong></p>
+<p><strong>袁隆平带各国朋友参观试验田（图源：新华社）</strong></p>
+<p>追求高产更高产，是我们永恒的目标。自上世纪90年代中后期起，我们开始超级杂交稻攻关，分别于2000年、2004年、2011年、2014年实现大面积示范亩产700公斤、800公斤、900公斤、1000公斤目标。近5年又突破每公顷16吨、17吨的目标。<strong>2017年，世界水稻平均每公顷产量仅4.61吨，而我国杂交水稻平均产量每公顷达7.5吨，在世界上遥遥领先。</strong></p>
+<p>不可否认，上个世纪我们的主要任务是解决人民群众的温饱问题，所以杂交水稻把产量摆在优先地位。现在生活水平提高了，人民不仅要吃饱，还要吃好。所以，我们也改变思路，提出既要高产，又要优质。但是必须说清楚，虽然要满足市场对优质大米的需求，但我们仍然坚持一条，即不能以牺牲产量来求优质。<strong>我始终觉得，粮食安全问题必须时刻警惕。历史也无数次告诫我们，把饭碗牢牢端在自己手中的最有效途径，就是提高水稻的产量。</strong></p>
+<p>科学探索永无止境，我的另一个梦，就是<strong>杂交水稻走向世界、覆盖全球梦</strong>。</p>
+<p>世界上超过一半人口以稻米为主食，一个令人担忧的事实却是，全球现有1.6亿公顷稻田中，杂交水稻种植面积还不到15%。发展杂交水稻不仅有广阔的舞台，更对保障世界粮食安全具有重要意义，倘若全球有一半稻田种上杂交稻，按每公顷比常规水稻增产2吨计算，则增产的粮食可以多养活4亿—5亿人口。杂交水稻覆盖全球不仅能提升全球水稻产量，造福人类，还能提升我国的国际地位。</p>
+<p>为了实现这个梦，我们一直在努力。从上世纪80年代至今，我们坚持开办杂交水稻技术国际培训班，为80多个发展中国家培训了14000多名杂交水稻技术人才，我还受邀担任联合国粮农组织首席顾问，帮助其他国家发展杂交水稻。<strong>目前，杂交水稻已在印度、越南、菲律宾、孟加拉国、巴基斯坦、印度尼西亚、美国、巴西等国实现大面积种植。</strong>今年6月，在长沙举行的中非经贸博览会上，来了不少非洲国家农业界的朋友，看到他们对杂交水稻充满感激和期待，更坚定了我们将杂交水稻推向世界的信心与决心。</p>
+<p>新中国杂交水稻事业能够取得丰硕成果，离不开党和国家的高度重视与大力支持，同时也是广大科技工作者集体智慧的结晶。<strong>我已经90岁了，但“老骥伏枥，志在千里”，我要力争让我们的团队早日完成每公顷18吨的高产攻关，做好第三代杂交水稻技术的生产应用。我希望最终能实现“禾下乘凉、覆盖全球”的两大心愿。</strong></p>
+<p><em>文/袁隆平</em><br><em>编辑/点苍</em><br><strong>（原文刊于《 人民日报 》2019年10月23日第20 版）</strong></p>
+<blockquote>
+<p>剪报来源<br>公众号： 侠客岛<br>链　接：<a href="https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw">https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw</a><br>日　期：2021-05-22</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>剪报</category>
+      </categories>
+  </entry>
+  <entry>
     <title>袁隆平：稻子熟了，妈妈，我来看您了</title>
     <url>/2021/05/24/ylp-1/</url>
     <content><![CDATA[<blockquote>
@@ -4476,93 +4517,54 @@
       </categories>
   </entry>
   <entry>
-    <title>袁隆平：我的两个梦</title>
-    <url>/2021/05/24/ylp-2/</url>
+    <title>极客时间-技术管理实战36讲学习笔记</title>
+    <url>/2021/08/10/technology-management-0/</url>
     <content><![CDATA[<blockquote>
-<p><strong>【侠客岛按】</strong></p>
-<p>今天中午，噩耗传来。“杂交水稻之父”、中国工程院院士、“共和国勋章”获得者袁隆平在湖南长沙逝世。</p>
-<p>2019年10月23日，袁老曾在《人民日报》刊发文章，自述他的两个梦想，感人至深。侠客岛予以推荐，藉此缅怀这位伟大的科学家。</p>
-<p>袁老，您走好。</p>
+<p>如果干得好，管理是最崇高的职业之一。没有哪一个职业能像管理一样为他人提供学习和成长的机会，让他们懂得承担责任并取得成绩，以及为团队的成功做出贡献。<br>——“颠覆式创新之父”克里斯坦森，《你要如何衡量你的人生》</p>
 </blockquote>
-<p>时光如白驹过隙，一转眼，90年过去，我成了正儿八经的“90后”。我大半辈子都在与水稻打交道，至今从事杂交水稻研究工作已有55个年头。我最关心的，就是与水稻和粮食相关的事。</p>
-<p>新中国成立之前，中华大地上到处灾荒战乱，人民生活颠沛流离，少年时我就被迫从一个城市辗转到另一个城市，虽然少不更事，但每当看到沿路举家逃难、面如菜色的同胞，看到荒芜的田野和满目疮痍的土地，我的内心总会泛起一阵阵痛楚。报考大学时，我就对父母说，我要学农。母亲听了，吓一跳，说，傻孩子，学农多苦啊，你以为好玩儿呢？<strong>但我是真正爱上了农业，死活要学，还摆出大道理：吃饭可是天下第一桩大事，没有饭吃，人类怎么生存？</strong>最后，父母尊重我的选择。</p>
-<p>毕业后，我被分配到湖南安江农校任教。安江农校地处偏远，临行前，学校的领导告诉我，那里很偏僻，“一盏孤灯照终身”，你可要做好思想准备。当时我想，能传播农业科学知识，也是为国家做贡献！没想到，去了不久，就碰上困难时期。我当时想，<strong>这么大一个国家，如果粮食安全得不到保障，其他一切都无从谈起，我要为让中国人吃饱饭而奋斗！</strong></p>
-<p>一天，我看到一些农民从高山上兑了种子，担回来种，就问他们，为什么跑到那么高的山上去换种呢？他们说，山上的种子质量好一些，产得多些。他们接着还说了一句话，叫做“施肥不如勤换种”。这对我有很大启发：农业上增产的途径有很多，但其中良种是非常重要的因素。</p>
-<p>从此以后，我开始自己的杂交水稻研究之路。一路走来，有汗水和辛酸，也有丰收和喜悦。<strong>科学探索无止境，在这条漫长而又艰辛的路上，我一直有两个梦，一个是禾下乘凉梦，一个是杂交水稻覆盖全球梦。</strong></p>
-<p><strong>禾下乘凉梦，我是真做过，我梦见水稻长得有高粱那么高，穗子像扫把那么长，颗粒像花生那么大，而我则和助手坐在稻穗下面乘凉。其实我这个梦想的实质，就是水稻高产梦，让人们吃上更多的米饭，永远都不用再饿肚子。</strong></p>
-<p>做梦容易，但要把梦变成现实，则需要付出大量艰苦的劳动和努力。我清楚地记得，<strong>那是1961年7月的一天，我到安江农校的试验田选种。突然，我发现了一株“鹤立鸡群”的稻株</strong>。穗大，颗粒饱满。我随手挑了一穗，竟有230粒之多！当时以为，选到了优良品种，岂不是可以增产无数粮食？</p>
-<p>第二年春天，我把种子播下，结果却令人大失所望，一眼望去，高的高，矮的矮，没有一株赶得上最初的那株水稻。我不甘心，开始反复琢磨其中的奥秘，研究那一片试验田的稻株比例，最终得出一个结论：水稻是有杂交优势的，那株鹤立鸡群的水稻，就是天然的杂交水稻。既然天然杂交稻具有这样强的优势，那么人工杂交稻，也一定有优势。当时，遗传学理论一直否定自花授粉作物有杂交优势。我对此理论提出质疑。随后，我又拜访专家，翻找资料，<strong>最终得出结论，既然自然界存在杂交稻，那么人工杂交水稻也一定可以利用</strong>。而要想利用这一优势，首先需要找到“天然的雄性不育水稻”。</p>
-<p>于是，我又走上曲折的寻找之旅。</p>
-<p>其中，<strong>最令人刻骨铭心的是，在海南岛找到天然雄性不育野生稻“野败”并加以利用的过程</strong>。那是1970年11月，我和助手李必湖、尹华奇驻守在海南岛崖县南红农场，在当地寻找野生稻。在那里，有一位农专毕业的冯克珊，是南红良种繁育场的技术员，经常跑来听我讲课。冯克珊联想到农场附近有一种名叫“假禾”的草，很可能就是我要找的野生稻。</p>
-<p>11月23日，他找到李必湖，来到南红农场铁路涵洞附近的水塘边，到那片正在开花的野生稻中察看。他们发现了三个雄花异常的野生稻穗，野生稻穗的花药细瘦，色浅呈水渍状，不开裂散粉。这三个稻穗生长于同一禾蔸，是从一粒种子长出、匍匐于水面的分蘖。他们立即把这蔸野生稻连泥挖起，放在铁桶里拉回去，然后移栽到试验田里，等待鉴定。</p>
-<p>当时，我正在北京开会，收到助手们从海南发来的电报，连夜赶火车奔回海南岛。<strong>经过仔细检验，我们最终确认这是一株十分难得的天然雄性不育株野生稻，我给它命名为“野败”。</strong></p>
-<p>这真是大海捞针啊！</p>
-<p>“野败”的发现对杂交水稻研究具有里程碑的意义，更是杂交水稻“三系”配套成功的突破口。<strong>1973年，我们协作组历尽千辛万苦才通过测交找到恢复系，攻克“三系”配套难关，才有了新中国第一代杂交水稻。</strong>第一代以细胞质雄性不育系为遗传工具的杂交水稻，优点是不育系不育性稳定，但也有缺点，即配组的时候受到恢保关系制约，因此选择优良组合的几率比较低，难度大。</p>
-<p>自上世纪80年代中后期起，我们开始研究两系杂交水稻。1995年，第二代以光温敏不育系为遗传工具的杂交水稻——两系法杂交稻研制成功，它的主要优点是配组自由选择，能选配到优良稻组合的几率比较高。但是，第二代杂交稻也不是完美的：不育系育性受气温和光照影响较大。我想，如果有一种杂交水稻，既兼具第一代和第二代的优点，又能克服二者的缺点，那该多好啊！</p>
-<p><strong>2011年，我们又启动第三代杂交水稻育种技术的研究与利用，这是以遗传工程雄性不育系为遗传工具的杂交水稻，已初步研究成功，该杂交水稻克服了前两代的缺点。现在，我们甚至开始了第四代、第五代杂交水稻的研制。</strong></p>
-<p><strong>袁隆平带各国朋友参观试验田（图源：新华社）</strong></p>
-<p>追求高产更高产，是我们永恒的目标。自上世纪90年代中后期起，我们开始超级杂交稻攻关，分别于2000年、2004年、2011年、2014年实现大面积示范亩产700公斤、800公斤、900公斤、1000公斤目标。近5年又突破每公顷16吨、17吨的目标。<strong>2017年，世界水稻平均每公顷产量仅4.61吨，而我国杂交水稻平均产量每公顷达7.5吨，在世界上遥遥领先。</strong></p>
-<p>不可否认，上个世纪我们的主要任务是解决人民群众的温饱问题，所以杂交水稻把产量摆在优先地位。现在生活水平提高了，人民不仅要吃饱，还要吃好。所以，我们也改变思路，提出既要高产，又要优质。但是必须说清楚，虽然要满足市场对优质大米的需求，但我们仍然坚持一条，即不能以牺牲产量来求优质。<strong>我始终觉得，粮食安全问题必须时刻警惕。历史也无数次告诫我们，把饭碗牢牢端在自己手中的最有效途径，就是提高水稻的产量。</strong></p>
-<p>科学探索永无止境，我的另一个梦，就是<strong>杂交水稻走向世界、覆盖全球梦</strong>。</p>
-<p>世界上超过一半人口以稻米为主食，一个令人担忧的事实却是，全球现有1.6亿公顷稻田中，杂交水稻种植面积还不到15%。发展杂交水稻不仅有广阔的舞台，更对保障世界粮食安全具有重要意义，倘若全球有一半稻田种上杂交稻，按每公顷比常规水稻增产2吨计算，则增产的粮食可以多养活4亿—5亿人口。杂交水稻覆盖全球不仅能提升全球水稻产量，造福人类，还能提升我国的国际地位。</p>
-<p>为了实现这个梦，我们一直在努力。从上世纪80年代至今，我们坚持开办杂交水稻技术国际培训班，为80多个发展中国家培训了14000多名杂交水稻技术人才，我还受邀担任联合国粮农组织首席顾问，帮助其他国家发展杂交水稻。<strong>目前，杂交水稻已在印度、越南、菲律宾、孟加拉国、巴基斯坦、印度尼西亚、美国、巴西等国实现大面积种植。</strong>今年6月，在长沙举行的中非经贸博览会上，来了不少非洲国家农业界的朋友，看到他们对杂交水稻充满感激和期待，更坚定了我们将杂交水稻推向世界的信心与决心。</p>
-<p>新中国杂交水稻事业能够取得丰硕成果，离不开党和国家的高度重视与大力支持，同时也是广大科技工作者集体智慧的结晶。<strong>我已经90岁了，但“老骥伏枥，志在千里”，我要力争让我们的团队早日完成每公顷18吨的高产攻关，做好第三代杂交水稻技术的生产应用。我希望最终能实现“禾下乘凉、覆盖全球”的两大心愿。</strong></p>
-<p><em>文/袁隆平</em><br><em>编辑/点苍</em><br><strong>（原文刊于《 人民日报 》2019年10月23日第20 版）</strong></p>
-<blockquote>
-<p>剪报来源<br>公众号： 侠客岛<br>链　接：<a href="https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw">https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw</a><br>日　期：2021-05-22</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>剪报</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>模块一：底层思维</title>
-    <url>/2021/09/30/high-efficiency-study-note-1/</url>
-    <content><![CDATA[<p><strong>01｜如何减少对学习的排斥和厌恶心理，使其变得相对愉悦？</strong></p>
-<ol>
-<li>在学习的过程中，可以穿插安排喜欢且擅长的环节，而不是一直死磕艰难的任务。</li>
-<li>在制定计划的时候，量力而行，不要制定完不成的计划；</li>
-<li>详细记录当天具体的时间使用情况，把自己的学习成果具像化，借以获得正反馈和成就感。</li>
-<li>在感到疲倦时，可以试试换个位置或者换个场所。</li>
-<li>每天别给自己安排太多类型的任务。</li>
-<li>学习的时候，不用某种标准框住自己，也别总对自己的表现评头论足，更不必急着追求某种结果，而是注重做事的过程，把努力当成一种习惯。</li>
+<h2 id="为什么需要学管理？"><a href="#为什么需要学管理？" class="headerlink" title="为什么需要学管理？"></a>为什么需要学管理？</h2><p>对于互联网技术人来说，“管理”作为一项综合能力不再是一个可选项，无论是否身在技术管理岗，未来的职业发展都会围绕着<strong>技术和管理</strong>这两条腿在走路，一条腿是走不远的。</p>
+<h2 id="重点内容"><a href="#重点内容" class="headerlink" title="重点内容"></a>重点内容</h2><ol>
+<li><strong>自我倾听。</strong>理顺内心的纠结与彷徨，心无旁骛地走上管理之路。</li>
+<li><strong>角色认知。</strong>提供一个管理工作的“全景图”，以方便按图索骥地<em><strong>了解管理工作所涵盖的方方面面。</strong></em></li>
+<li><strong>管理方法。</strong>“管理三部曲”——<em><strong>管理规划、团队建设和任务管理</strong></em>，探讨<em><strong>“看方向”“带人”和“做事”</strong></em>的这三个关键的管理内容。</li>
+<li><strong>管理沟通。</strong>探讨管理沟通的<em><strong>工具和技巧</strong></em>，并探讨<em><strong>向上、向下、横向</strong></em>等典型沟通场景下的沟通要点。</li>
+<li><strong>管理之路。</strong>主要探讨<em><strong>如何积累管理方法论</strong></em>，以及<em><strong>如何成为自己所期待的管理者。</strong></em></li>
 </ol>
-<p><strong>02｜学会这4点，你也可以告别伪勤奋</strong></p>
-<p>伪勤奋的做法：</p>
-<ol>
-<li>花大量时间做容易的环节；</li>
-<li>从来不去检测自己获得了什么；</li>
-<li>只是埋头苦学，从来不总结规律；</li>
-<li>道德许可效应让你原地徘徊，沉迷于已经努力的幻觉之中。</li>
-</ol>
-<p>相应解决思路：</p>
-<ol>
-<li>制定合理的目标计划，适当安排有挑战的任务（需要思考、需要克服困难的任务）；</li>
-<li>及时获得反馈，及时检测所学东西，是否记住，是否会做题；</li>
-<li>观察、分析、总结自己的学习方法，对方法进行针对性的调整和完善，并且有意识地指导自己接下来的努力方向；</li>
-<li>将想做的事情最简化，不搞形式主义，直接开始。</li>
-</ol>
-<p><strong>03｜掌握考试思维：成为一个特别会考试的人</strong></p>
-<ol>
-<li>备考时，要学会用考试的思维去学习（考什么学什么）；</li>
-<li>研究考试题（出题范围和出题思路），分析题目要求你怎样回忆知识点、怎样运用知识点。并据此决定备考时如何学以及学什么；</li>
-<li>最好能找到考试题的答案，知道高分的答案具有哪些元素，需要满足怎样的标准；</li>
-<li>学习时，做到即用即学和即学即用，能对知识点有透彻的理解和记忆，并且在考试中，做到更为高效准确地调取，以及运用。</li>
-<li>“检索式练习”，通过提问和主动回想的方式，去巩固知识点。</li>
-</ol>
-<p><strong>04｜用科学原理告诉你如何在考场上超常发挥</strong></p>
-<p>1、在解决问题的时候，有一个用于暂时存放信息和加工信息的记忆系统，叫做“工作记忆”，它的容量有限。工作记忆能够存储和处理的信息容量越多，意味着解决问题的能力就越强。</p>
-<p>2、考试中发挥失常，是因为过于担忧考试结果，纠结自己是不是做错了，以至于，相当一部分工作记忆的容量被焦虑占用。而真正用于答题的记忆容量，非常有限。</p>
-<p>3、要想超常发挥，重要的是，考试时不去预先给自己设置标准，不去评价和思考自己做得怎么样。做完这一题，再做下一题；做下一题时，忘记上一题。</p>
-<p>4、在平时的学习中，我们常常怀疑自己的方法是否正确，占用了很多的工作记忆，影响学习效率。有效的解决方法是：给自己一个小时的限定时间，先用眼下的方法，尽量专注学习。如果过程中对学习方法有更好的想法，就先记下来，一小时结束后，花两分钟对学习方法进行调整。</p>
-<p>（END）</p>
+<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><ul>
+<li><p>自我倾听</p>
+<ul>
+<li><a href="/2021/08/10/technology-management-1/">自我倾听（上）</a></li>
+<li><a href="http://1.0.0.1/">自我倾听（下）</a></li>
+</ul>
+</li>
+<li><p>角色认知</p>
+<ul>
+<li><a href="/2021/08/11/technology-management-3/">角色认知</a></li>
+</ul>
+</li>
+<li><h2 id="管理规划"><a href="#管理规划" class="headerlink" title="管理规划"></a>管理规划</h2></li>
+<li><p>团队建设</p>
+<ul>
+<li><a href="http://c.c/">团队建设六要素</a></li>
+<li>能力培养——提升员工个人能力</li>
+<li>员工激励——提升员工的工作意愿和积极性</li>
+<li><a href="http://baidu.cc/">团队分工——兼顾团队分工的稳定性和灵活性</a></li>
+<li><a href="http://b.c/">协作水平——有效提升团队凝聚力方法</a></li>
+<li><a href="http://1.0.0.1/">梯队建设——物色和培养核心人才</a></li>
+<li><a href="http://1.0.0.1/">团队文化——营造团队氛围</a></li>
+<li></li>
+</ul>
+</li>
+<li><h2 id="任务管理"><a href="#任务管理" class="headerlink" title="任务管理"></a>任务管理</h2></li>
+<li><h2 id="管理沟通"><a href="#管理沟通" class="headerlink" title="管理沟通"></a>管理沟通</h2></li>
+<li><h2 id="管理之路"><a href="#管理之路" class="headerlink" title="管理之路"></a>管理之路</h2></li>
+</ul>
 ]]></content>
       <categories>
         <category>读书学习笔记</category>
       </categories>
       <tags>
-        <tag>学习方法</tag>
+        <tag>技术管理</tag>
       </tags>
   </entry>
   <entry>
@@ -4661,82 +4663,6 @@
       </categories>
       <tags>
         <tag>技术管理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>极客时间-技术管理实战36讲学习笔记</title>
-    <url>/2021/08/10/technology-management-0/</url>
-    <content><![CDATA[<blockquote>
-<p>如果干得好，管理是最崇高的职业之一。没有哪一个职业能像管理一样为他人提供学习和成长的机会，让他们懂得承担责任并取得成绩，以及为团队的成功做出贡献。<br>——“颠覆式创新之父”克里斯坦森，《你要如何衡量你的人生》</p>
-</blockquote>
-<h2 id="为什么需要学管理？"><a href="#为什么需要学管理？" class="headerlink" title="为什么需要学管理？"></a>为什么需要学管理？</h2><p>对于互联网技术人来说，“管理”作为一项综合能力不再是一个可选项，无论是否身在技术管理岗，未来的职业发展都会围绕着<strong>技术和管理</strong>这两条腿在走路，一条腿是走不远的。</p>
-<h2 id="重点内容"><a href="#重点内容" class="headerlink" title="重点内容"></a>重点内容</h2><ol>
-<li><strong>自我倾听。</strong>理顺内心的纠结与彷徨，心无旁骛地走上管理之路。</li>
-<li><strong>角色认知。</strong>提供一个管理工作的“全景图”，以方便按图索骥地<em><strong>了解管理工作所涵盖的方方面面。</strong></em></li>
-<li><strong>管理方法。</strong>“管理三部曲”——<em><strong>管理规划、团队建设和任务管理</strong></em>，探讨<em><strong>“看方向”“带人”和“做事”</strong></em>的这三个关键的管理内容。</li>
-<li><strong>管理沟通。</strong>探讨管理沟通的<em><strong>工具和技巧</strong></em>，并探讨<em><strong>向上、向下、横向</strong></em>等典型沟通场景下的沟通要点。</li>
-<li><strong>管理之路。</strong>主要探讨<em><strong>如何积累管理方法论</strong></em>，以及<em><strong>如何成为自己所期待的管理者。</strong></em></li>
-</ol>
-<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><ul>
-<li><p>自我倾听</p>
-<ul>
-<li><a href="/2021/08/10/technology-management-1/">自我倾听（上）</a></li>
-<li><a href="http://1.0.0.1/">自我倾听（下）</a></li>
-</ul>
-</li>
-<li><p>角色认知</p>
-<ul>
-<li><a href="/2021/08/11/technology-management-3/">角色认知</a></li>
-</ul>
-</li>
-<li><h2 id="管理规划"><a href="#管理规划" class="headerlink" title="管理规划"></a>管理规划</h2></li>
-<li><p>团队建设</p>
-<ul>
-<li><a href="http://c.c/">团队建设六要素</a></li>
-<li>能力培养——提升员工个人能力</li>
-<li>员工激励——提升员工的工作意愿和积极性</li>
-<li><a href="http://baidu.cc/">团队分工——兼顾团队分工的稳定性和灵活性</a></li>
-<li><a href="http://b.c/">协作水平——有效提升团队凝聚力方法</a></li>
-<li><a href="http://1.0.0.1/">梯队建设——物色和培养核心人才</a></li>
-<li><a href="http://1.0.0.1/">团队文化——营造团队氛围</a></li>
-<li></li>
-</ul>
-</li>
-<li><h2 id="任务管理"><a href="#任务管理" class="headerlink" title="任务管理"></a>任务管理</h2></li>
-<li><h2 id="管理沟通"><a href="#管理沟通" class="headerlink" title="管理沟通"></a>管理沟通</h2></li>
-<li><h2 id="管理之路"><a href="#管理之路" class="headerlink" title="管理之路"></a>管理之路</h2></li>
-</ul>
-]]></content>
-      <categories>
-        <category>读书学习笔记</category>
-      </categories>
-      <tags>
-        <tag>技术管理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>极客时间-成为学习高手笔记</title>
-    <url>/2021/09/30/high-efficiency-study-note-0/</url>
-    <content><![CDATA[<p>获得：</p>
-<ul>
-<li>高手学习的 4 个底层思维</li>
-<li>切实可行的 7 个超强学习技巧</li>
-<li>让学习速度“开挂”的高效记忆法</li>
-<li>自律到骨子里的 9 大精力管理法则</li>
-</ul>
-<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><ul>
-<li><a href="/2021/09/30/high-efficiency-study-note-1/">模块一：底层思维</a></li>
-<li><a href="/2021/09/30/high-efficiency-study-note-2/">模块二：高效学习</a></li>
-<li><a href="/2021/09/30/high-efficiency-study-note-3/">模块三：高度自律</a></li>
-<li><a href="/2021/09/30/high-efficiency-study-note-4/">模块四：时间管理</a></li>
-<li><a href="/2021/09/30/high-efficiency-study-note-5/">模块五：学霸养成</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>读书学习笔记</category>
-      </categories>
-      <tags>
-        <tag>学习方法</tag>
       </tags>
   </entry>
   <entry>
@@ -4903,6 +4829,80 @@
       </categories>
       <tags>
         <tag>技术管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>模块一：底层思维</title>
+    <url>/2021/09/30/high-efficiency-study-note-1/</url>
+    <content><![CDATA[<p><strong>01｜如何减少对学习的排斥和厌恶心理，使其变得相对愉悦？</strong></p>
+<ol>
+<li>在学习的过程中，可以穿插安排喜欢且擅长的环节，而不是一直死磕艰难的任务。</li>
+<li>在制定计划的时候，量力而行，不要制定完不成的计划；</li>
+<li>详细记录当天具体的时间使用情况，把自己的学习成果具像化，借以获得正反馈和成就感。</li>
+<li>在感到疲倦时，可以试试换个位置或者换个场所。</li>
+<li>每天别给自己安排太多类型的任务。</li>
+<li>学习的时候，不用某种标准框住自己，也别总对自己的表现评头论足，更不必急着追求某种结果，而是注重做事的过程，把努力当成一种习惯。</li>
+</ol>
+<p><strong>02｜学会这4点，你也可以告别伪勤奋</strong></p>
+<p>伪勤奋的做法：</p>
+<ol>
+<li>花大量时间做容易的环节；</li>
+<li>从来不去检测自己获得了什么；</li>
+<li>只是埋头苦学，从来不总结规律；</li>
+<li>道德许可效应让你原地徘徊，沉迷于已经努力的幻觉之中。</li>
+</ol>
+<p>相应解决思路：</p>
+<ol>
+<li>制定合理的目标计划，适当安排有挑战的任务（需要思考、需要克服困难的任务）；</li>
+<li>及时获得反馈，及时检测所学东西，是否记住，是否会做题；</li>
+<li>观察、分析、总结自己的学习方法，对方法进行针对性的调整和完善，并且有意识地指导自己接下来的努力方向；</li>
+<li>将想做的事情最简化，不搞形式主义，直接开始。</li>
+</ol>
+<p><strong>03｜掌握考试思维：成为一个特别会考试的人</strong></p>
+<ol>
+<li>备考时，要学会用考试的思维去学习（考什么学什么）；</li>
+<li>研究考试题（出题范围和出题思路），分析题目要求你怎样回忆知识点、怎样运用知识点。并据此决定备考时如何学以及学什么；</li>
+<li>最好能找到考试题的答案，知道高分的答案具有哪些元素，需要满足怎样的标准；</li>
+<li>学习时，做到即用即学和即学即用，能对知识点有透彻的理解和记忆，并且在考试中，做到更为高效准确地调取，以及运用。</li>
+<li>“检索式练习”，通过提问和主动回想的方式，去巩固知识点。</li>
+</ol>
+<p><strong>04｜用科学原理告诉你如何在考场上超常发挥</strong></p>
+<p>1、在解决问题的时候，有一个用于暂时存放信息和加工信息的记忆系统，叫做“工作记忆”，它的容量有限。工作记忆能够存储和处理的信息容量越多，意味着解决问题的能力就越强。</p>
+<p>2、考试中发挥失常，是因为过于担忧考试结果，纠结自己是不是做错了，以至于，相当一部分工作记忆的容量被焦虑占用。而真正用于答题的记忆容量，非常有限。</p>
+<p>3、要想超常发挥，重要的是，考试时不去预先给自己设置标准，不去评价和思考自己做得怎么样。做完这一题，再做下一题；做下一题时，忘记上一题。</p>
+<p>4、在平时的学习中，我们常常怀疑自己的方法是否正确，占用了很多的工作记忆，影响学习效率。有效的解决方法是：给自己一个小时的限定时间，先用眼下的方法，尽量专注学习。如果过程中对学习方法有更好的想法，就先记下来，一小时结束后，花两分钟对学习方法进行调整。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>读书学习笔记</category>
+      </categories>
+      <tags>
+        <tag>学习方法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>极客时间-成为学习高手笔记</title>
+    <url>/2021/09/30/high-efficiency-study-note-0/</url>
+    <content><![CDATA[<p>获得：</p>
+<ul>
+<li>高手学习的 4 个底层思维</li>
+<li>切实可行的 7 个超强学习技巧</li>
+<li>让学习速度“开挂”的高效记忆法</li>
+<li>自律到骨子里的 9 大精力管理法则</li>
+</ul>
+<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><ul>
+<li><a href="/2021/09/30/high-efficiency-study-note-1/">模块一：底层思维</a></li>
+<li><a href="/2021/09/30/high-efficiency-study-note-2/">模块二：高效学习</a></li>
+<li><a href="/2021/09/30/high-efficiency-study-note-3/">模块三：高度自律</a></li>
+<li><a href="/2021/09/30/high-efficiency-study-note-4/">模块四：时间管理</a></li>
+<li><a href="/2021/09/30/high-efficiency-study-note-5/">模块五：学霸养成</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>读书学习笔记</category>
+      </categories>
+      <tags>
+        <tag>学习方法</tag>
       </tags>
   </entry>
   <entry>
