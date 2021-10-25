@@ -37,6 +37,12 @@
         font-family: 'FontAwesome';
     } */
     
+
+    #article-container {
+        font-size: 20px !important;
+       }
+    
+
 #article-container blockquote {
     color: #777;
 margin: 0 0 20px 0;
@@ -58,7 +64,8 @@ font-style: normal;
 font-family: 'FontAwesome';
 }
 
-#article-container h2{
-    border-left: 0.3rem solid #49b1f5;
+   #article-container h2 {
+    border-left: 0.3rem solid #49b1f5;
     padding-left: 15px;
-}
+    font-size: 22px;
+   }
