@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>MySQL多表更新（关联表更新）</title>
+    <url>/2019/08/18/mysql-update-multiple-tables-with-one-query/</url>
+    <content><![CDATA[<p>在开发过程中，有时会遇到需要将某张表的字段值根据条件动态地更新到另一张表字段的问题，即通过一张表的字段修改另一张关联表中的内容。比如，存在两张表A（表名：test_a）、B（表名：test_b），他们的表结构如下：</p>
+<span id="more"></span>
+
+<p><strong>表A（test_a）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>user_id</th>
+<th>dept_id</th>
+<th>update_time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>34242</td>
+<td>313</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>35322</td>
+<td>320</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>35639</td>
+<td>321</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>表B（test_b）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>user_id</th>
+<th>patient_id</th>
+<th>dept_id</th>
+<th>create_time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>34242</td>
+<td>342</td>
+<td>0</td>
+<td>2018-05-23 09:33:45</td>
+</tr>
+<tr>
+<td>2</td>
+<td>35322</td>
+<td>365</td>
+<td>0</td>
+<td>2018-05-24 00:13:05</td>
+</tr>
+<tr>
+<td>3</td>
+<td>35639</td>
+<td>398</td>
+<td>0</td>
+<td>2018-05-24 00:43:18</td>
+</tr>
+</tbody></table>
+<p>现在我们需要将表A的 <em>dept_id</em> 字段值根据 <em>user_id</em> 字段同步到表B的 <em>dept_id</em> 字段中，即用表A中的 <em>dept_id</em> 字段数据去更新表B中的 <em>dept_id</em> 字段，条件是表A的 <em>user_id</em> 字段值与表B的 <em>user_id</em> 字段值相等时进行更新。</p>
+<p>在MySQL中我们有几种方法可以做到：</p>
+<p>方法一：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id </span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br></pre></td></tr></table></figure>
+
+<p>方法二：（通过 INNER JOIN）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
+
+<p>方法三：（通过 LEFT JOIN）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
+
+<p>方法四：（通过子查询）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_b b </span><br><span class="line"><span class="keyword">SET</span> dept_id <span class="operator">=</span> ( <span class="keyword">SELECT</span> dept_id <span class="keyword">FROM</span> test_a <span class="keyword">WHERE</span> user_id <span class="operator">=</span> b.user_id );</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码片断都是在两张表之间做关联，但只更新其中一张表的数据。其实，除了更新其中一张表的数据外，方法一、方法二和方法三是可以同时更新两张表的数据，如：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 以下代码无实际意义，目的是方便记录</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法一</span></span><br><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法二：（通过 INNER JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法三：（通过 LEFT JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b</span><br><span class="line"><span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id</span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br></pre></td></tr></table></figure>
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CentOS7下安装JDK1.8</title>
     <url>/2019/08/30/how-to-install-jdk-1-8-on-centos-7/</url>
     <content><![CDATA[<h2 id="安装Java-幵发工具包（JDK）"><a href="#安装Java-幵发工具包（JDK）" class="headerlink" title="安装Java 幵发工具包（JDK）"></a>安装Java 幵发工具包（JDK）</h2><span id="more"></span>
@@ -121,89 +216,21 @@
       </tags>
   </entry>
   <entry>
-    <title>MySQL多表更新（关联表更新）</title>
-    <url>/2019/08/18/mysql-update-multiple-tables-with-one-query/</url>
-    <content><![CDATA[<p>在开发过程中，有时会遇到需要将某张表的字段值根据条件动态地更新到另一张表字段的问题，即通过一张表的字段修改另一张关联表中的内容。比如，存在两张表A（表名：test_a）、B（表名：test_b），他们的表结构如下：</p>
-<span id="more"></span>
+    <title>Redis根据通配符批量删除Key</title>
+    <url>/2019/09/03/redis-batch-delete/</url>
+    <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
+<blockquote>
+<p>Redis的 <code>del</code> 命令支持删除给定的一个或多个 key，并返回被删除 key 的数量。如命令 <code>del key1 key2 key3</code>。</p>
+</blockquote>
+<p>比如要删除所有以 WxMpSessionKey 开头的 Key，可以使用如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[redis@iztz9ploifbvce ~]# redis-cli -h 192.168.182.227 -p 1379 keys &quot;WxMpSessionKey*&quot; |xargs redis-cli -h 192.168.182.227 -p 1379 del</span><br><span class="line">(integer) 2674</span><br></pre></td></tr></table></figure>
 
-<p><strong>表A（test_a）：</strong></p>
-<table>
-<thead>
-<tr>
-<th>id</th>
-<th>user_id</th>
-<th>dept_id</th>
-<th>update_time</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>34242</td>
-<td>313</td>
-<td></td>
-</tr>
-<tr>
-<td>2</td>
-<td>35322</td>
-<td>320</td>
-<td></td>
-</tr>
-<tr>
-<td>3</td>
-<td>35639</td>
-<td>321</td>
-<td></td>
-</tr>
-</tbody></table>
-<p><strong>表B（test_b）：</strong></p>
-<table>
-<thead>
-<tr>
-<th>id</th>
-<th>user_id</th>
-<th>patient_id</th>
-<th>dept_id</th>
-<th>create_time</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>34242</td>
-<td>342</td>
-<td>0</td>
-<td>2018-05-23 09:33:45</td>
-</tr>
-<tr>
-<td>2</td>
-<td>35322</td>
-<td>365</td>
-<td>0</td>
-<td>2018-05-24 00:13:05</td>
-</tr>
-<tr>
-<td>3</td>
-<td>35639</td>
-<td>398</td>
-<td>0</td>
-<td>2018-05-24 00:43:18</td>
-</tr>
-</tbody></table>
-<p>现在我们需要将表A的 <em>dept_id</em> 字段值根据 <em>user_id</em> 字段同步到表B的 <em>dept_id</em> 字段中，即用表A中的 <em>dept_id</em> 字段数据去更新表B中的 <em>dept_id</em> 字段，条件是表A的 <em>user_id</em> 字段值与表B的 <em>user_id</em> 字段值相等时进行更新。</p>
-<p>在MySQL中我们有几种方法可以做到：</p>
-<p>方法一：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id </span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br></pre></td></tr></table></figure>
+<p>如果连接 Redis 的 HOST 为 127.0.0.1，端口号也为默认的 6379，则以上的命令可以简写为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli keys &quot;WxMpSessionKey*&quot; |xargs redis-cli del</span><br></pre></td></tr></table></figure>
 
-<p>方法二：（通过 INNER JOIN）</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
 
-<p>方法三：（通过 LEFT JOIN）</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id;</span><br></pre></td></tr></table></figure>
 
-<p>方法四：（通过子查询）</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">UPDATE test_b b </span><br><span class="line"><span class="keyword">SET</span> dept_id <span class="operator">=</span> ( <span class="keyword">SELECT</span> dept_id <span class="keyword">FROM</span> test_a <span class="keyword">WHERE</span> user_id <span class="operator">=</span> b.user_id );</span><br></pre></td></tr></table></figure>
 
-<p>上面的代码片断都是在两张表之间做关联，但只更新其中一张表的数据。其实，除了更新其中一张表的数据外，方法一、方法二和方法三是可以同时更新两张表的数据，如：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 以下代码无实际意义，目的是方便记录</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法一</span></span><br><span class="line">UPDATE test_a a, test_b b </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	b.user_id <span class="operator">=</span> a.user_id;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法二：（通过 INNER JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> test_b b <span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id </span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 方法三：（通过 LEFT JOIN）</span></span><br><span class="line">UPDATE test_a a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> test_b b</span><br><span class="line"><span class="keyword">ON</span> a.user_id <span class="operator">=</span> b.user_id</span><br><span class="line"><span class="keyword">SET</span> b.dept_id <span class="operator">=</span> a.dept_id, a.update_time <span class="operator">=</span> b.create_time;</span><br></pre></td></tr></table></figure>
 
 <p>（END）</p>
 ]]></content>
@@ -211,48 +238,7 @@
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>MySQL</tag>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring Boot 2.x 集成Jpa示例</title>
-    <url>/2019/12/25/spring-boot-2_x-jpa/</url>
-    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
-
-<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 redis 中的值如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
-<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Jpa</tag>
-        <tag>Spring Boot</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -291,8 +277,8 @@
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>Spring Boot</tag>
         <tag>Redis</tag>
+        <tag>Spring Boot</tag>
       </tags>
   </entry>
   <entry>
@@ -320,188 +306,43 @@
       </tags>
   </entry>
   <entry>
-    <title>Redis根据通配符批量删除Key</title>
-    <url>/2019/09/03/redis-batch-delete/</url>
-    <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
-<blockquote>
-<p>Redis的 <code>del</code> 命令支持删除给定的一个或多个 key，并返回被删除 key 的数量。如命令 <code>del key1 key2 key3</code>。</p>
-</blockquote>
-<p>比如要删除所有以 WxMpSessionKey 开头的 Key，可以使用如下命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[redis@iztz9ploifbvce ~]# redis-cli -h 192.168.182.227 -p 1379 keys &quot;WxMpSessionKey*&quot; |xargs redis-cli -h 192.168.182.227 -p 1379 del</span><br><span class="line">(integer) 2674</span><br></pre></td></tr></table></figure>
+    <title>Spring Boot 2.x 集成Jpa示例</title>
+    <url>/2019/12/25/spring-boot-2_x-jpa/</url>
+    <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
-<p>如果连接 Redis 的 HOST 为 127.0.0.1，端口号也为默认的 6379，则以上的命令可以简写为：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli keys &quot;WxMpSessionKey*&quot; |xargs redis-cli del</span><br></pre></td></tr></table></figure>
+<p>接着修改项目配置文件 application.properties，增加 redis 配置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> redis host</span></span><br><span class="line">spring.redis.host=172.24.58.226</span><br><span class="line"><span class="meta">#</span><span class="bash"> redis port</span></span><br><span class="line">spring.redis.port=6379</span><br></pre></td></tr></table></figure>
 
+<p>经过上面简单的两步，即可在项目中使用 <code>StringRedisTemplate</code> 和 <code>RedisTemplate&lt;Object,Object&gt;</code>，因为从 Spring Boot 2.0 开始，Spring 容器是自动生成了这两个实例，可以直接注入使用。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;Object, Object&gt; redisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 通过 StringRedisTemplate 保存</span></span><br><span class="line">stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, <span class="string">&quot;test&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 RedisTemplate&lt;Object, Object&gt; 保存</span></span><br><span class="line">tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, <span class="number">232</span>);</span><br></pre></td></tr></table></figure>
 
-
-
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【ZooKeeper启动失败】Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</title>
-    <url>/2019/12/12/zookeeper-problem-1/</url>
-    <content><![CDATA[<p>在 CentOS 7 系统中安装好 ZooKeeper 后，进入安装目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/bin/</code>，使用命令 <code>./zkServer.sh start</code> 启动，发现启动失败：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... FAILED TO START</span><br></pre></td></tr></table></figure>
-
-<p>进入目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/logs</code>，查看日志文件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ cd /usr/local/zookeeper/apache-zookeeper-3.5.6/logs</span><br><span class="line">[zookeeperu@202 bin]$ vim ./zookeeper-jump-server-202.out</span><br></pre></td></tr></table></figure>
-
-<p>可看到以下错误信息：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</span><br></pre></td></tr></table></figure>
-
-<p>出现 <code>Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</code> 错误，是因为我在安装时，选用了 <code>apache-zookeeper-&#123;version&#125;.tar.gz</code> 包而不是 <code>apache-zookeeper-&#123;version&#125;-bin.tar.gz</code> 包，后面使用 <code>apache-zookeeper-3.5.6-bin.tar.gz</code> （<strong>文件名包含bin</strong>）重新安装后，解决了问题：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6-bin/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... STARTED</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>CentOS7</tag>
-        <tag>ZooKeeper</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>罗马数字（上）——拼写规则</title>
-    <url>/2019/06/26/rules-of-reading-and-writing-roman-numerals/</url>
-    <content><![CDATA[<h3 id="罗马数字符号"><a href="#罗马数字符号" class="headerlink" title="罗马数字符号"></a>罗马数字符号</h3><p>罗马数字是总共由 7 个字母符号表示：<strong>I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和 M（1000）。</strong></p>
 <span id="more"></span>
 
-<p>表一：罗马数字对应的阿拉伯数字</p>
-<table>
-<thead>
-<tr>
-<th align="center">罗马数字</th>
-<th align="center">阿拉伯数字</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">I</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">V</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center">X</td>
-<td align="center">10</td>
-</tr>
-<tr>
-<td align="center">L</td>
-<td align="center">50</td>
-</tr>
-<tr>
-<td align="center">C</td>
-<td align="center">100</td>
-</tr>
-<tr>
-<td align="center">D</td>
-<td align="center">500</td>
-</tr>
-<tr>
-<td align="center">M</td>
-<td align="center">1000</td>
-</tr>
-</tbody></table>
-<p>他们按照以下 4 个规则可以组合成表示任意的正整数。</p>
-<h3 id="规则-1"><a href="#规则-1" class="headerlink" title="规则 1"></a>规则 1</h3><p><strong>一个罗马数字重复多少次，就表示这个数多少倍</strong>，比如罗马数字 I 表示的是数字 1，重复两次，即 II，表示的数字是 2，同理，III 表示数字 3，XX 表示数字 20，CC 表示数字 200 等；</p>
-<p>需要注意的是，<strong>同一个罗马数字最多只能连续重复 3 次</strong>，如数字 400 就不能表示为 CCCC（重复了 4 次），而是要用 CD 来表示，数字40不能表示为 XXXX（同样重复了 4 次），而要表示为 XL 等。</p>
-<p>但有一种特殊情况，因为古罗马人用 IV 作为古罗马神话主神朱庇特（IVPITER，古罗马字母里没有 J 和 U）名字的简写，他们不希望神的名字看上去像个数字，因此<strong>有时用 IIII 代替 IV</strong>。</p>
-<p>另外，<strong>符号 D、L 和 V 不可以连续重复出现</strong>，比如用 DD 表示 1000 的写法是错误的，正确的是要用 M，表示 1500 的罗马数字是 MD，而不是 DDD。</p>
-<h3 id="规则-2"><a href="#规则-2" class="headerlink" title="规则 2"></a>规则 2</h3><p><strong>如果在较大的罗马数字后面（右边）放置较小的罗马数字，表示的数字为这些数字相加得到的数</strong>，如较大的罗马数字 V 后面放置较小的罗马数字 I，即 VI，表示的数字则为 V 与 I 相加得到数 6。</p>
-<p>同理，<br>VII = 7 (5 + 2 = 7)<br>LXXX = 80 (50 + 10 + 10 + 10 = 80)<br>MC = 1100 (1000 + 100 = 1100)</p>
-<h3 id="规则-3"><a href="#规则-3" class="headerlink" title="规则 3"></a>规则 3</h3><p><strong>如果在较大的罗马数字前面（左边）放置在较小的罗马数字，表示的数是用较大的数减去较小的数所得到的值</strong>，如较大的罗马数字 V 前面或左边放置较小的罗马数字 I，即 IV，表示的数字则为 V 减去 I 得到的数 4。</p>
-<p>同理，<br>IX = 9 (10 – 1 = 9)<br>XC = 90 (100 – 10 = 90)</p>
-<p>用这种方式来表示罗马数字时，有以下几点需要注意：</p>
-<p><strong>i) 充当减数的只能是 I，C 或 X</strong>，不能是 L 或 V，即罗马数字对应的数是 10 的 n 次幂才能充当减数。另外，由于 M 在罗马字母中表示的数最大，也不能充当减数（罗马数字没有 0 或负整数）。</p>
-<blockquote>
-<p>被减数 - 减数 = 差，<br>如 32 - 10 = 22，<br>被减数是 32，减数是 10，差是 22。</p>
-</blockquote>
-<p>表二：被减数的只能是 I，C 或 X</p>
-<table>
-<thead>
-<tr>
-<th>罗马数字</th>
-<th>阿拉伯数字</th>
-<th>10 的 n 次幂</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>I</td>
-<td>1</td>
-<td>$10^0 = 1$</td>
-<td>10的0次幂</td>
-</tr>
-<tr>
-<td>X</td>
-<td>10</td>
-<td>$10^1 = 10$</td>
-<td>10的1次幂</td>
-</tr>
-<tr>
-<td>C</td>
-<td>100</td>
-<td>$10^2 = 100$</td>
-<td>10的2次幂</td>
-</tr>
-</tbody></table>
-<p>比如数字 45，<br>不能写成 VL（50 - 5），<br>而是要写成 XLV（XL + V，即 40 + 5）；</p>
-<p><strong>ii) 只能从一个罗马数字中减去另一个罗马数字，而不能减去两个或两个以上的罗马数字</strong>，比如说数字 8，<br>不能写成 IIX（X - I - I，即 10 - 1 - 1 = 8），<br>而是要写成 VIII（V + I + I + I，即 5 + 1 + 1 + 1 = 8）；</p>
-<p><strong>iii) 从一个罗马数字（设为 a）中减去另一个罗马数字（设为 b）所得的差（设为 c），不能超过减数（即 b）的 10 倍以上。</strong><br>例如，<br>你可以从数字 10 中减去 1，<br>因为 10 - 1 = 9，9 比 1 的 10 倍（10）小；<br>但是不能从数字 100 中减去 1，<br>因为 100 - 1 = 99，99 比 1 的 10 倍（10）大。<br>所以，<br>数字 9 可以用 IX 来表示，<br>但数字 100 不能用 IC 来表示，<br>而是要用 XCIX（XC + IX，即 90 + 9 = 99）来表示。</p>
-<p><em><strong>总结第 i) 点和第 iii) 点，可以得到以下规则：</strong></em><br><em><strong>符号 I 只能出现在符号 V 或 X 的前面（左边）；</strong></em><br><em><strong>符号 X 只能出现在符号 L 或 C 的前面（左边）；</strong></em><br><em><strong>符号 C 只能出现在符号 D 或 M 的前面（左边）。</strong></em></p>
-<h3 id="规则-4"><a href="#规则-4" class="headerlink" title="规则 4"></a>规则 4</h3><p><strong>如果在罗马数字上方加一条横线，表示将该数值乘以 1000，即原数的 1000 倍，如果上方有两条横线，表示的数字是原数的 1, 000, 000 倍。</strong></p>
-<p>如：</p>
-<p>$\overline{M}=1, 000, 000$</p>
-<p>$\overline{V}=5, 000$</p>
-<p>$\overline{\overline{X}} = 10, 000, 000 $</p>
-<hr>
-<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>尝试应用上述规则，写出以下阿拉伯数字对应的罗马数字<br>35，<br>65，<br>99</p>
-<p>求解过程如下：<br>35 = 10 + 10 + 10 + 5，即 X + X + X + V（XXXV），所以 35 = XXXV；<br>65 = 50 + 10 + 5，即 L + X + V（LXV），所以 65 = LXV；<br>99 = （100 - 10）+（10 - 1），即 XC + IX（XCIX）所以 99 = XCIX 。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-        <tag>罗马数字</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>罗马数字（中）——起源与用途</title>
-    <url>/2019/07/01/history-of-roman-numerals/</url>
-    <content><![CDATA[<h2 id="一、罗马数字的诞生与进化"><a href="#一、罗马数字的诞生与进化" class="headerlink" title="一、罗马数字的诞生与进化"></a>一、罗马数字的诞生与进化</h2><p>罗马数字起源于古罗马帝国，拥有一个漫长而复杂的历史，始于公元前 8 世纪至 9 世纪，与古罗马帝国在帕兰丁山（Palantine Hill）周围建立的时间大致相同。不过，罗马数字的盛行时间比帝国本身还要长，直到 14 世纪前仍被广泛使用。</p>
-<span id="more"></span>
+<h2 id="二、存储的-value-类型为字符串"><a href="#二、存储的-value-类型为字符串" class="headerlink" title="二、存储的 value 类型为字符串"></a>二、存储的 value 类型为字符串</h2><p>在实际使用中，若保存的 value 类型为字符串，可以直接通过注入 <code>StringRedisTemplate</code> 进行读写，如</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 通过 StringRedisTemplate 获取</span></span><br><span class="line">  String v = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.iuiuu(<span class="string">&quot;tag&quot;</span>, v);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>在设计上，罗马数字存在一些缺陷：</p>
-<ol>
-<li><p>没有表示零（0）的符号；</p>
-</li>
-<li><p>也没有用于计数超过几千数值的实际方法，只有通过在数字符号上方添加横线来表示它们的值的倍数来修正。</p>
-</li>
-</ol>
-<p>复杂的社会、经济管理，建造像斗兽场和君士坦丁大拱门这样的大型纪念碑，都离不开大量的数学技能。而罗马数字的这些缺陷并没有阻止古罗马的学者和建筑师们建立一个伟大的帝国。</p>
-<p>在公元 11 世纪时，阿拉伯数字传入欧洲。阿拉伯数字始创于印度，采用 0、1、2、3、4、5、6、7、8、9 共 10 个计数符号。采取位值法，高位在左，低位在右，从左往右书写。借助一些简单的数学符号（小数点、负号等），阿拉伯数字可以明确的表示所有的有理数。这是对罗马数字的一个很大的改进。</p>
-<p>于是，人们开始逐渐使用阿拉伯数字作为日常生活中的记数系统，而罗马数字的使用更是随着创造它的帝国的崩溃而减少。到公元 14 世纪时，罗马数字已被阿拉伯数字所取代，成为在欧洲被广泛使用的记数系统。现在阿拉伯数字已成为目前使用最广泛的记数系统，通行于全世界。</p>
-<h2 id="二、罗马数字的现代用途"><a href="#二、罗马数字的现代用途" class="headerlink" title="二、罗马数字的现代用途"></a>二、罗马数字的现代用途</h2><p>从某种角度上，可以说罗马数字经受住了时间的考验，并没有随着罗马帝国的消亡而结束。它的优雅感和复古风格确保了它不会在未来某个时候消失。今天，我们仍然使用罗马数字来表达某些东西，如：</p>
-<p>在天文学领域中，用于为卫星编号，如木卫一，木卫二，木卫三。<br>在化学领域中，用于表示元素周期表中的元素组：IA族，IIA族，IIIA族，IVA族，VA族，VIA族，VIIA族，IB族，IIB族，IIIB族，IVB族，VB族，VIB族，VIIB族，VIII族。<br>钟表表盘符号：Ⅰ、Ⅱ、Ⅲ、Ⅳ（IIII）、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ、Ⅹ、Ⅺ、Ⅻ。<br>有序列表（ordered list）的编号（多用小写字母），例如：<br>i) 第一项<br>ii) 第二项<br>iii) 第三项<br>书籍和章节标题<br>君王的名字，如 Louis XIV（路易十四）、Charles II（查理二世）。<br>教皇的名字，如 Alexander VIII（亚历山大八世）、John Paul II（约翰·保罗二世）。<br>其他命名，如 iPhone X，氨酚伪麻美芬片（Ⅱ）。</p>
-<p>（END）</p>
+<h2 id="三、存储的-value-是一个对象"><a href="#三、存储的-value-是一个对象" class="headerlink" title="三、存储的 value 是一个对象"></a>三、存储的 value 是一个对象</h2><p>这种情况，也可以通过 <code>StringRedisTemplate</code> 进行读写。不过，在写入之前先将对象序列化为 JSON 字符串，然后再写入 redis。读取的时候，从 redis 获取到的是是一个 JSON 字符串，需要反序列化相应的对象。如以下代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">  Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">    .setTagId(<span class="number">10001</span>)</span><br><span class="line">    .setTagName(name)</span><br><span class="line">    .setCount(<span class="number">20</span>)</span><br><span class="line">    .setStatus(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 序列化为 JSON 字符串</span></span><br><span class="line">  String str = JsonUtil.toJson(tag);</span><br><span class="line">  <span class="comment">// 写入 redis</span></span><br><span class="line">  stringRedisTemplate.opsForValue().set(<span class="string">&quot;iuiuu&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 从 redis 读取</span></span><br><span class="line">  String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;iuiuu&quot;</span>);</span><br><span class="line">  <span class="comment">// 反序列化为 Tag 对象</span></span><br><span class="line">  Tag t = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line">  </span><br><span class="line">  Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  map.put(<span class="string">&quot;tag&quot;</span>, t);</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面这种方式在读取或写入的时候，需要进行序列化与反序列化，会有点繁琐。我们还可以通过另一种简洁的方式——<code>RedisTemplate&lt;Object, Object&gt;</code>，不过在实际项目中，大多数情况下，我们不会直接使用 <code>RedisTemplate&lt;Object, Object&gt;</code>，而是会对 key，value 进行序列化，所以我们还需要新增一个配置类。以下示例新了配置类 <code>RedisConfig</code>：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Redis 配置类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:24 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, Tag&gt; <span class="title">tagRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span>&#123;</span><br><span class="line">        RedisTemplate&lt;String, Tag&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Tag&gt; serializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;&gt;(Tag.class);</span><br><span class="line">        template.setValueSerializer(serializer);</span><br><span class="line">        template.setHashValueSerializer(serializer);</span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setHashKeySerializer(<span class="keyword">new</span> StringRedisSerializer());</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 标签类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/12/18 11:08 PM</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tag</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tagId;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String tagName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签状态：1-正常 2-暂不显示</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 标签文章数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//省略 get、set</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略其它代码...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier(&quot;tagRedisTemplate&quot;)</span></span><br><span class="line"><span class="keyword">private</span> RedisTemplate&lt;String, Tag&gt; tagRedisTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/redis&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">set</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10001</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;tagRedisTemplate&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag newTag = tagRedisTemplate.opsForValue().get(<span class="string">&quot;tagRedisTemplate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;newTag&quot;</span>, newTag);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、StringRedisTemplate-RedisTemplate读写Redis示例"><a href="#四、StringRedisTemplate-RedisTemplate读写Redis示例" class="headerlink" title="四、StringRedisTemplate/RedisTemplate读写Redis示例"></a>四、StringRedisTemplate/RedisTemplate读写Redis示例</h2><p>示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/compared&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">compared</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 name</span></span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;strRedisTemplate&quot;</span>, name);</span><br><span class="line"></span><br><span class="line">    Tag tag = <span class="keyword">new</span> Tag()</span><br><span class="line">            .setTagId(<span class="number">10002</span>)</span><br><span class="line">            .setTagName(name)</span><br><span class="line">            .setCount(<span class="number">20</span>)</span><br><span class="line">            .setStatus(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 保存 Tag 实体类</span></span><br><span class="line">    tagRedisTemplate.opsForValue().set(<span class="string">&quot;key_tag&quot;</span>, tag);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 保存 Tag 实体，需先序列化为 JSON 字符串</span></span><br><span class="line">    String str = JsonUtil.toJson(tag);</span><br><span class="line">    stringRedisTemplate.opsForValue().set(<span class="string">&quot;key_str&quot;</span>, str);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 RedisTemplate&lt;String, Tag&gt; 获取 Tag 实体类</span></span><br><span class="line">    Tag t1 = tagRedisTemplate.opsForValue().get(<span class="string">&quot;key_tag&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 StringRedisTemplate 获取，需要反序列为对象</span></span><br><span class="line">    String json = stringRedisTemplate.opsForValue().get(<span class="string">&quot;key_str&quot;</span>);</span><br><span class="line">    Tag t2 = JsonUtil.fromJson(json, Tag.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;succeed&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 redis 中的值如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[iuiuu@226 ~]$ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; get key_tag</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt; get key_str</span><br><span class="line">&quot;&#123;\&quot;tagId\&quot;:10002,\&quot;tagName\&quot;:\&quot;History\&quot;,\&quot;status\&quot;:1,\&quot;count\&quot;:20&#125;&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以看到，这两种方式将对象写入到 redis 后，存储的值其实是一样的，都为 JSON 字符串。</p>
+<p>本文示例代码见 <a href="https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis">https://github.com/iuiuu/spring-boot-demos/tree/master/spring-boot-demos-redis</a></p>
 ]]></content>
       <categories>
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>数学</tag>
-        <tag>罗马数字</tag>
+        <tag>Spring Boot</tag>
+        <tag>Jpa</tag>
       </tags>
   </entry>
   <entry>
@@ -963,6 +804,165 @@
       </tags>
   </entry>
   <entry>
+    <title>【ZooKeeper启动失败】Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</title>
+    <url>/2019/12/12/zookeeper-problem-1/</url>
+    <content><![CDATA[<p>在 CentOS 7 系统中安装好 ZooKeeper 后，进入安装目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/bin/</code>，使用命令 <code>./zkServer.sh start</code> 启动，发现启动失败：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... FAILED TO START</span><br></pre></td></tr></table></figure>
+
+<p>进入目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/logs</code>，查看日志文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ cd /usr/local/zookeeper/apache-zookeeper-3.5.6/logs</span><br><span class="line">[zookeeperu@202 bin]$ vim ./zookeeper-jump-server-202.out</span><br></pre></td></tr></table></figure>
+
+<p>可看到以下错误信息：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</span><br></pre></td></tr></table></figure>
+
+<p>出现 <code>Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</code> 错误，是因为我在安装时，选用了 <code>apache-zookeeper-&#123;version&#125;.tar.gz</code> 包而不是 <code>apache-zookeeper-&#123;version&#125;-bin.tar.gz</code> 包，后面使用 <code>apache-zookeeper-3.5.6-bin.tar.gz</code> （<strong>文件名包含bin</strong>）重新安装后，解决了问题：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[zookeeperu@202 bin]$ ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/local/zookeeper/apache-zookeeper-3.5.6-bin/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... STARTED</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+        <tag>ZooKeeper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗马数字（上）——拼写规则</title>
+    <url>/2019/06/26/rules-of-reading-and-writing-roman-numerals/</url>
+    <content><![CDATA[<h3 id="罗马数字符号"><a href="#罗马数字符号" class="headerlink" title="罗马数字符号"></a>罗马数字符号</h3><p>罗马数字是总共由 7 个字母符号表示：<strong>I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和 M（1000）。</strong></p>
+<span id="more"></span>
+
+<p>表一：罗马数字对应的阿拉伯数字</p>
+<table>
+<thead>
+<tr>
+<th align="center">罗马数字</th>
+<th align="center">阿拉伯数字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">I</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">V</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">X</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">L</td>
+<td align="center">50</td>
+</tr>
+<tr>
+<td align="center">C</td>
+<td align="center">100</td>
+</tr>
+<tr>
+<td align="center">D</td>
+<td align="center">500</td>
+</tr>
+<tr>
+<td align="center">M</td>
+<td align="center">1000</td>
+</tr>
+</tbody></table>
+<p>他们按照以下 4 个规则可以组合成表示任意的正整数。</p>
+<h3 id="规则-1"><a href="#规则-1" class="headerlink" title="规则 1"></a>规则 1</h3><p><strong>一个罗马数字重复多少次，就表示这个数多少倍</strong>，比如罗马数字 I 表示的是数字 1，重复两次，即 II，表示的数字是 2，同理，III 表示数字 3，XX 表示数字 20，CC 表示数字 200 等；</p>
+<p>需要注意的是，<strong>同一个罗马数字最多只能连续重复 3 次</strong>，如数字 400 就不能表示为 CCCC（重复了 4 次），而是要用 CD 来表示，数字40不能表示为 XXXX（同样重复了 4 次），而要表示为 XL 等。</p>
+<p>但有一种特殊情况，因为古罗马人用 IV 作为古罗马神话主神朱庇特（IVPITER，古罗马字母里没有 J 和 U）名字的简写，他们不希望神的名字看上去像个数字，因此<strong>有时用 IIII 代替 IV</strong>。</p>
+<p>另外，<strong>符号 D、L 和 V 不可以连续重复出现</strong>，比如用 DD 表示 1000 的写法是错误的，正确的是要用 M，表示 1500 的罗马数字是 MD，而不是 DDD。</p>
+<h3 id="规则-2"><a href="#规则-2" class="headerlink" title="规则 2"></a>规则 2</h3><p><strong>如果在较大的罗马数字后面（右边）放置较小的罗马数字，表示的数字为这些数字相加得到的数</strong>，如较大的罗马数字 V 后面放置较小的罗马数字 I，即 VI，表示的数字则为 V 与 I 相加得到数 6。</p>
+<p>同理，<br>VII = 7 (5 + 2 = 7)<br>LXXX = 80 (50 + 10 + 10 + 10 = 80)<br>MC = 1100 (1000 + 100 = 1100)</p>
+<h3 id="规则-3"><a href="#规则-3" class="headerlink" title="规则 3"></a>规则 3</h3><p><strong>如果在较大的罗马数字前面（左边）放置在较小的罗马数字，表示的数是用较大的数减去较小的数所得到的值</strong>，如较大的罗马数字 V 前面或左边放置较小的罗马数字 I，即 IV，表示的数字则为 V 减去 I 得到的数 4。</p>
+<p>同理，<br>IX = 9 (10 – 1 = 9)<br>XC = 90 (100 – 10 = 90)</p>
+<p>用这种方式来表示罗马数字时，有以下几点需要注意：</p>
+<p><strong>i) 充当减数的只能是 I，C 或 X</strong>，不能是 L 或 V，即罗马数字对应的数是 10 的 n 次幂才能充当减数。另外，由于 M 在罗马字母中表示的数最大，也不能充当减数（罗马数字没有 0 或负整数）。</p>
+<blockquote>
+<p>被减数 - 减数 = 差，<br>如 32 - 10 = 22，<br>被减数是 32，减数是 10，差是 22。</p>
+</blockquote>
+<p>表二：被减数的只能是 I，C 或 X</p>
+<table>
+<thead>
+<tr>
+<th>罗马数字</th>
+<th>阿拉伯数字</th>
+<th>10 的 n 次幂</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>I</td>
+<td>1</td>
+<td>$10^0 = 1$</td>
+<td>10的0次幂</td>
+</tr>
+<tr>
+<td>X</td>
+<td>10</td>
+<td>$10^1 = 10$</td>
+<td>10的1次幂</td>
+</tr>
+<tr>
+<td>C</td>
+<td>100</td>
+<td>$10^2 = 100$</td>
+<td>10的2次幂</td>
+</tr>
+</tbody></table>
+<p>比如数字 45，<br>不能写成 VL（50 - 5），<br>而是要写成 XLV（XL + V，即 40 + 5）；</p>
+<p><strong>ii) 只能从一个罗马数字中减去另一个罗马数字，而不能减去两个或两个以上的罗马数字</strong>，比如说数字 8，<br>不能写成 IIX（X - I - I，即 10 - 1 - 1 = 8），<br>而是要写成 VIII（V + I + I + I，即 5 + 1 + 1 + 1 = 8）；</p>
+<p><strong>iii) 从一个罗马数字（设为 a）中减去另一个罗马数字（设为 b）所得的差（设为 c），不能超过减数（即 b）的 10 倍以上。</strong><br>例如，<br>你可以从数字 10 中减去 1，<br>因为 10 - 1 = 9，9 比 1 的 10 倍（10）小；<br>但是不能从数字 100 中减去 1，<br>因为 100 - 1 = 99，99 比 1 的 10 倍（10）大。<br>所以，<br>数字 9 可以用 IX 来表示，<br>但数字 100 不能用 IC 来表示，<br>而是要用 XCIX（XC + IX，即 90 + 9 = 99）来表示。</p>
+<p><em><strong>总结第 i) 点和第 iii) 点，可以得到以下规则：</strong></em><br><em><strong>符号 I 只能出现在符号 V 或 X 的前面（左边）；</strong></em><br><em><strong>符号 X 只能出现在符号 L 或 C 的前面（左边）；</strong></em><br><em><strong>符号 C 只能出现在符号 D 或 M 的前面（左边）。</strong></em></p>
+<h3 id="规则-4"><a href="#规则-4" class="headerlink" title="规则 4"></a>规则 4</h3><p><strong>如果在罗马数字上方加一条横线，表示将该数值乘以 1000，即原数的 1000 倍，如果上方有两条横线，表示的数字是原数的 1, 000, 000 倍。</strong></p>
+<p>如：</p>
+<p>$\overline{M}=1, 000, 000$</p>
+<p>$\overline{V}=5, 000$</p>
+<p>$\overline{\overline{X}} = 10, 000, 000 $</p>
+<hr>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>尝试应用上述规则，写出以下阿拉伯数字对应的罗马数字<br>35，<br>65，<br>99</p>
+<p>求解过程如下：<br>35 = 10 + 10 + 10 + 5，即 X + X + X + V（XXXV），所以 35 = XXXV；<br>65 = 50 + 10 + 5，即 L + X + V（LXV），所以 65 = LXV；<br>99 = （100 - 10）+（10 - 1），即 XC + IX（XCIX）所以 99 = XCIX 。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>罗马数字</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗马数字（中）——起源与用途</title>
+    <url>/2019/07/01/history-of-roman-numerals/</url>
+    <content><![CDATA[<h2 id="一、罗马数字的诞生与进化"><a href="#一、罗马数字的诞生与进化" class="headerlink" title="一、罗马数字的诞生与进化"></a>一、罗马数字的诞生与进化</h2><p>罗马数字起源于古罗马帝国，拥有一个漫长而复杂的历史，始于公元前 8 世纪至 9 世纪，与古罗马帝国在帕兰丁山（Palantine Hill）周围建立的时间大致相同。不过，罗马数字的盛行时间比帝国本身还要长，直到 14 世纪前仍被广泛使用。</p>
+<span id="more"></span>
+
+<p>在设计上，罗马数字存在一些缺陷：</p>
+<ol>
+<li><p>没有表示零（0）的符号；</p>
+</li>
+<li><p>也没有用于计数超过几千数值的实际方法，只有通过在数字符号上方添加横线来表示它们的值的倍数来修正。</p>
+</li>
+</ol>
+<p>复杂的社会、经济管理，建造像斗兽场和君士坦丁大拱门这样的大型纪念碑，都离不开大量的数学技能。而罗马数字的这些缺陷并没有阻止古罗马的学者和建筑师们建立一个伟大的帝国。</p>
+<p>在公元 11 世纪时，阿拉伯数字传入欧洲。阿拉伯数字始创于印度，采用 0、1、2、3、4、5、6、7、8、9 共 10 个计数符号。采取位值法，高位在左，低位在右，从左往右书写。借助一些简单的数学符号（小数点、负号等），阿拉伯数字可以明确的表示所有的有理数。这是对罗马数字的一个很大的改进。</p>
+<p>于是，人们开始逐渐使用阿拉伯数字作为日常生活中的记数系统，而罗马数字的使用更是随着创造它的帝国的崩溃而减少。到公元 14 世纪时，罗马数字已被阿拉伯数字所取代，成为在欧洲被广泛使用的记数系统。现在阿拉伯数字已成为目前使用最广泛的记数系统，通行于全世界。</p>
+<h2 id="二、罗马数字的现代用途"><a href="#二、罗马数字的现代用途" class="headerlink" title="二、罗马数字的现代用途"></a>二、罗马数字的现代用途</h2><p>从某种角度上，可以说罗马数字经受住了时间的考验，并没有随着罗马帝国的消亡而结束。它的优雅感和复古风格确保了它不会在未来某个时候消失。今天，我们仍然使用罗马数字来表达某些东西，如：</p>
+<p>在天文学领域中，用于为卫星编号，如木卫一，木卫二，木卫三。<br>在化学领域中，用于表示元素周期表中的元素组：IA族，IIA族，IIIA族，IVA族，VA族，VIA族，VIIA族，IB族，IIB族，IIIB族，IVB族，VB族，VIB族，VIIB族，VIII族。<br>钟表表盘符号：Ⅰ、Ⅱ、Ⅲ、Ⅳ（IIII）、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ、Ⅹ、Ⅺ、Ⅻ。<br>有序列表（ordered list）的编号（多用小写字母），例如：<br>i) 第一项<br>ii) 第二项<br>iii) 第三项<br>书籍和章节标题<br>君王的名字，如 Louis XIV（路易十四）、Charles II（查理二世）。<br>教皇的名字，如 Alexander VIII（亚历山大八世）、John Paul II（约翰·保罗二世）。<br>其他命名，如 iPhone X，氨酚伪麻美芬片（Ⅱ）。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>罗马数字</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>通过yum方式在CentOS7系统安装MySQL8</title>
     <url>/2019/12/28/how-to-install-mysql8-on-centos7/</url>
     <content><![CDATA[<h2 id="一、添加-MySQL-YUM-源"><a href="#一、添加-MySQL-YUM-源" class="headerlink" title="一、添加 MySQL YUM 源"></a>一、添加 MySQL YUM 源</h2><p>根据自己的操作系统版本选择合适的安装源（<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a>），这里选择的是 CentOS 7，MySQL 8。点击 Download 按钮，进入下载页。可以直接下载 rpm 文件，再上传到 CentOS 7 系统，也可以通过复制链接地址（地址为：<a href="https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm%EF%BC%89%EF%BC%8C%E8%BF%9B%E5%85%A5">https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm），进入</a> CentOS 7 系统，通过 <code>wget</code> 命令下载。</p>
@@ -1169,6 +1169,86 @@
       </tags>
   </entry>
   <entry>
+    <title>Elasticsearch倒排索引简介</title>
+    <url>/2020/08/04/elasticsearch-inverted-index-intro/</url>
+    <content><![CDATA[<h2 id="什么是倒排索引"><a href="#什么是倒排索引" class="headerlink" title="什么是倒排索引"></a>什么是倒排索引</h2><p>倒排索引（Inverted index，亦称反向索引），是一种索引方法，用来存储在全文搜索下某个单词在某一个文档或某一组文档中的存储位置的映射。</p>
+<h2 id="倒排索引的数据结构"><a href="#倒排索引的数据结构" class="headerlink" title="倒排索引的数据结构"></a>倒排索引的数据结构</h2><p>倒排索引是文档检索系统中最常用的一种数据据构。它包含两部分——<strong>单词词典（Term Dictionary）和倒排列表（Posting List）</strong>。</p>
+<p>其中，单词词典是用来记录所有文档的单词，记录单词到倒排列表的关系，所以单词词典一般也会比较大，为满足快速地插入与查询，通常采用 B+ 树或者哈希链表法来实现。</p>
+<p>而倒排列表是用来记录单词对应的文档结合，由倒排索引项（Posting）组成。</p>
+<p>倒排索引项结构主要包括以下四项内容：</p>
+<ul>
+<li>文档ID；</li>
+<li>词频（TF）——该单词在文档中的出现次数，用于相关性评分；</li>
+<li>位置（Position）——单词在文档中分词的位置，用于语句搜索（Phrase Query）；</li>
+<li>偏移（Offset）——记录单词的开始、结束位置，用于高亮显示。</li>
+</ul>
+<p>倒排索引项结构示例：</p>
+<table>
+<thead>
+<tr>
+<th>Document ID</th>
+<th>TF</th>
+<th>Position</th>
+<th>Offset</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10001</td>
+<td>2</td>
+<td>1</td>
+<td>&lt;20, 32&gt;</td>
+</tr>
+<tr>
+<td>10002</td>
+<td>10</td>
+<td>23</td>
+<td>&lt;7, 10&gt;</td>
+</tr>
+</tbody></table>
+<p>在 Elasticsearch 的 JSON 文档中的每个字段，默认情况下都有自己的倒排索引，我们可以根据需要对某些字段不做索引，优点是节省存储空间，缺点是该字段无法被搜索。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Elasticsearch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</title>
+    <url>/2020/06/29/java-list-string-join/</url>
+    <content><![CDATA[<p>在日常开发工作中，经常会遇到需要将 <code>List&lt;String&gt;</code> 转换为使用某个符号连接的字符串。如将 <code>List&lt;String&gt;</code> 转换为按英文逗号（<code>,</code>）分隔的字符串：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：</span></span><br><span class="line"><span class="comment">// Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>最容易想到的拼接方式，是通过 <code>for</code> 循环来实现。不过，如果你使用 Java 8 或以上的版本进行开发，实现该功能将变得非常简单，通常有以下两种方法。</p>
+<p><strong>方法一：使用 <code>String.join</code>，主要代码如下：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示 String.join 方法的使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line">        System.out.println(String.join(<span class="string">&quot;,&quot;</span>, weekList));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>方法二：采用流的方式（<code>stream()</code>）来写，就像下面这样，仍然能够得到同样的结果：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示流方式（stream）进行拼接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        String str = weekList.stream().collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>此外，如果你想在连接成字符串之前，先对元素进行其他的操作，如过滤元素、转成大写等，采用流的方式实现也很方便。以下代码展示如何将整个字符串在连接之前先转为大写：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示在连接之前先将元素转为大写</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">      String str = String str = weekList.stream()</span><br><span class="line">                .map(String::toUpperCase)</span><br><span class="line">                .collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">      </span><br><span class="line">      System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在macOS编译JDK14</title>
     <url>/2020/05/08/apache-kafka-intro/</url>
     <content><![CDATA[<h2 id="一、系统环境"><a href="#一、系统环境" class="headerlink" title="一、系统环境"></a>一、系统环境</h2><p>操作系统：macOS 10.15.4（Catalina）</p>
@@ -1258,117 +1338,6 @@
       </categories>
       <tags>
         <tag>JDK</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu20.04 LTS执行Shell脚本出现Bad substitution错误</title>
-    <url>/2022/01/15/ubuntu-shell-bad-substitution/</url>
-    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在 Windows 10 自带的 Ubuntu 20.04 子系统终端，执行 Shell 脚本时出现 Bad substitution 错误：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  ~ sh +x tt.sh</span><br><span class="line">tt.sh: 11: Bad substitution</span><br></pre></td></tr></table></figure>
-
-<p>Shell 脚本是从服务器上下载下来的，在服务器上是可以正确执行的，服务器系统为 CentOS 7。</p>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>第一感觉应该是该 Shell 脚本在 Ubuntu、CentOS 两个系统不兼容的关系。</p>
-<p>打开脚本文件，跟踪出错位置（第 11 行），定位到这行代码 <code>day=$&#123;dt:6&#125;</code>。</p>
-<p>查了 Ubuntu 官方文档，发现从 Ubuntu 6.10 开始，系统默认 Shell (/bin/sh) 由 bash shell 更改为 dash shell 了，原因是 dash shell 更轻量，运行更快。</p>
-<p>查看 /bin/sh 在 Ubuntu 系统的链接：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  ~ ll /usr/bin/</span><br><span class="line">lrwxrwxrwx 1 root   root       4 Feb 25  2020  sh -&gt; dash</span><br></pre></td></tr></table></figure>
-
-<p>而在服务器 CentOS 系统，链接的是 bash：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[hadoop@bigdata ~]$ ll /usr/bin/</span><br><span class="line">lrwxrwxrwx  1 root root         4 Mar  9  2020 sh -&gt; bash</span><br></pre></td></tr></table></figure>
-
-<p>为了在本地开发机器能够兼容在服务器上执行的脚本文件，这里需要将 Ubuntu 的 /bin/sh 的默认链接更换为 bash，文档给出的方案是在终端执行以下命令，然后选择 &lt; No &gt; 即可：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo dpkg-reconfigure dash</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>后面如果需要将 /bin/sh 的默认链接换回 dash，同样执行上面的命令，并选择 &lt; Yes &gt;。</p>
-</blockquote>
-<p>如果想了解更多，可以查看官方维基：<a href="https://wiki.ubuntu.com/DashAsBinSh">https://wiki.ubuntu.com/DashAsBinSh</a></p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</title>
-    <url>/2020/06/29/java-list-string-join/</url>
-    <content><![CDATA[<p>在日常开发工作中，经常会遇到需要将 <code>List&lt;String&gt;</code> 转换为使用某个符号连接的字符串。如将 <code>List&lt;String&gt;</code> 转换为按英文逗号（<code>,</code>）分隔的字符串：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：</span></span><br><span class="line"><span class="comment">// Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>最容易想到的拼接方式，是通过 <code>for</code> 循环来实现。不过，如果你使用 Java 8 或以上的版本进行开发，实现该功能将变得非常简单，通常有以下两种方法。</p>
-<p><strong>方法一：使用 <code>String.join</code>，主要代码如下：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示 String.join 方法的使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line">        System.out.println(String.join(<span class="string">&quot;,&quot;</span>, weekList));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>方法二：采用流的方式（<code>stream()</code>）来写，就像下面这样，仍然能够得到同样的结果：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示流方式（stream）进行拼接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        String str = weekList.stream().collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>此外，如果你想在连接成字符串之前，先对元素进行其他的操作，如过滤元素、转成大写等，采用流的方式实现也很方便。以下代码展示如何将整个字符串在连接之前先转为大写：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此代码示例演示在连接之前先将元素转为大写</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.jomoo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; weekList = Arrays.asList(</span><br><span class="line">                <span class="string">&quot;Monday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Tuesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Wednesday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Thursday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Friday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Saturday&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Sunday&quot;</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">      String str = String str = weekList.stream()</span><br><span class="line">                .map(String::toUpperCase)</span><br><span class="line">                .collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">      </span><br><span class="line">      System.out.println(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">此代码示例执行结果如下：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Elasticsearch倒排索引简介</title>
-    <url>/2020/08/04/elasticsearch-inverted-index-intro/</url>
-    <content><![CDATA[<h2 id="什么是倒排索引"><a href="#什么是倒排索引" class="headerlink" title="什么是倒排索引"></a>什么是倒排索引</h2><p>倒排索引（Inverted index，亦称反向索引），是一种索引方法，用来存储在全文搜索下某个单词在某一个文档或某一组文档中的存储位置的映射。</p>
-<h2 id="倒排索引的数据结构"><a href="#倒排索引的数据结构" class="headerlink" title="倒排索引的数据结构"></a>倒排索引的数据结构</h2><p>倒排索引是文档检索系统中最常用的一种数据据构。它包含两部分——<strong>单词词典（Term Dictionary）和倒排列表（Posting List）</strong>。</p>
-<p>其中，单词词典是用来记录所有文档的单词，记录单词到倒排列表的关系，所以单词词典一般也会比较大，为满足快速地插入与查询，通常采用 B+ 树或者哈希链表法来实现。</p>
-<p>而倒排列表是用来记录单词对应的文档结合，由倒排索引项（Posting）组成。</p>
-<p>倒排索引项结构主要包括以下四项内容：</p>
-<ul>
-<li>文档ID；</li>
-<li>词频（TF）——该单词在文档中的出现次数，用于相关性评分；</li>
-<li>位置（Position）——单词在文档中分词的位置，用于语句搜索（Phrase Query）；</li>
-<li>偏移（Offset）——记录单词的开始、结束位置，用于高亮显示。</li>
-</ul>
-<p>倒排索引项结构示例：</p>
-<table>
-<thead>
-<tr>
-<th>Document ID</th>
-<th>TF</th>
-<th>Position</th>
-<th>Offset</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>10001</td>
-<td>2</td>
-<td>1</td>
-<td>&lt;20, 32&gt;</td>
-</tr>
-<tr>
-<td>10002</td>
-<td>10</td>
-<td>23</td>
-<td>&lt;7, 10&gt;</td>
-</tr>
-</tbody></table>
-<p>在 Elasticsearch 的 JSON 文档中的每个字段，默认情况下都有自己的倒排索引，我们可以根据需要对某些字段不做索引，优点是节省存储空间，缺点是该字段无法被搜索。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Elasticsearch</tag>
       </tags>
   </entry>
   <entry>
@@ -1641,879 +1610,284 @@
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：2021-2025年定投执行计划</title>
-    <url>/2021/07/10/investment-plan-2021-2025/</url>
-    <content><![CDATA[<p>本计划是根据 <strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 而制定的第一个五年行动计划——2021-2025年定投计划。</p>
-<p>本计划目标：净投入达 120,000 元。</p>
-<p>计划具体内容为 2021 - 2025 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
-<h2 id="2021年定投计划"><a href="#2021年定投计划" class="headerlink" title="2021年定投计划"></a>2021年定投计划</h2><table>
+    <title>谈谈异或运算</title>
+    <url>/2021/08/02/bitwise-operation-xor-trick/</url>
+    <content><![CDATA[<p>本文翻译自 Florian 于 2020 年 3 月发表的一篇英文博客<a href="https://florian.github.io/xor-trick/">《That XOR Trick》</a>。</p>
+<hr>
+<p>有一大堆流行的面试问题可以通过以下两种方式之一解决：要么以合理的方式使用常见的数据结构和算法，要么以一种看似难以理解的方式使用异或运算 XOR 的某些特性。</p>
+<p>虽然在面试中指望异或运算 XOR 解决方案似乎并不合理，但弄清楚它们的工作原理还是很有趣的。实际上，它们都基于同一个基本窍门，我们将在本文中以自下而上的方式将其推导出来。之后我们再来看 XOR 窍门的一系列应用，例如解决以下这个流行的面试题：</p>
+<blockquote>
+<p>给定一个由 n - 1 个整数组成的数组，这些整数的范围在 1 到 n 之间。除了一个数字缺失之外，其余每个数字均只出现一次。找出这个缺失的数字。</p>
+</blockquote>
+<p>当然，有许多直截了当的方法可以解决这个问题，但还有一种可能令人意想不到的方法——使用 XOR。</p>
+<h2 id="XOR"><a href="#XOR" class="headerlink" title="XOR"></a>XOR</h2><p>XOR 是一种应用于位的逻辑运算符。我们用 <code>^</code> 表示它。如果它作为输入携带的两个位是相同的，那么它的结果就为 0，否则就为 1。这实现了一个异或运算，即只有一个参数必须是 1 才能使最终结果为 1。我们可以使用真值表来证明这一点：</p>
+<table>
 <thead>
 <tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
+<th><code>x</code></th>
+<th><code>y</code></th>
+<th><code>x ^ y</code></th>
 </tr>
 </thead>
 <tbody><tr>
-<td>2021/3/31</td>
-<td>1,000</td>
-<td>2021/3/31</td>
-<td>1,000</td>
-<td></td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr>
-<td>2021/4/10</td>
-<td>1,000</td>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td>补投</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
 </tr>
 <tr>
-<td>2021/4/24</td>
-<td>1,000</td>
-<td>2021/6/5</td>
-<td>1,000</td>
-<td>补投</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
 </tr>
 <tr>
-<td>2021/5/10</td>
-<td>1,000</td>
-<td>2021/5/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td>2021/5/24</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/6/10</td>
-<td>1,000</td>
-<td>2021/6/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/6/24</td>
-<td>1,000</td>
-<td>2021/6/24</td>
-<td>2,000</td>
-<td>每月2000，故3月补投一笔</td>
-</tr>
-<tr>
-<td>2021/7/10</td>
-<td>1,000</td>
-<td>2021/7/12</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/7/24</td>
-<td>1,000</td>
-<td>2021/7/23</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/8/10</td>
-<td>1,000</td>
-<td>2021/8/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/8/24</td>
-<td>1,000</td>
-<td>2021/8/24</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/9/10</td>
-<td>1,000</td>
-<td>2021/9/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/9/24</td>
-<td>1,000</td>
-<td>2021/9/24</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/10/10</td>
-<td>1,000</td>
-<td>2021/10/11</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/10/24</td>
-<td>1,000</td>
-<td>2021/10/25</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/11/10</td>
-<td>1,000</td>
-<td>2021/11/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/11/24</td>
-<td>1,000</td>
-<td>2021/11/24</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/12/10</td>
-<td>1,000</td>
-<td>2021/12/10</td>
-<td>1,000</td>
-<td></td>
-</tr>
-<tr>
-<td>2021/12/24</td>
-<td>1,000</td>
-<td>2021/12/24</td>
-<td>1,000</td>
-<td></td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
 </tr>
 </tbody></table>
-<h2 id="2022年定投计划"><a href="#2022年定投计划" class="headerlink" title="2022年定投计划"></a>2022年定投计划</h2><table>
+<p>大多数编程语言将 <code>^</code> 实现为按位运算符，这意味着 XOR 单独应用于位串（例如一个字节）中的每个位。</p>
+<p>例如： </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0011 ^ 0101 = 0110 </span><br></pre></td></tr></table></figure>
+
+<p>因为 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0 ^ 0 = 0 </span><br><span class="line"></span><br><span class="line">0 ^ 1 = 1 </span><br><span class="line"></span><br><span class="line">1 ^ 0 = 1 </span><br><span class="line"></span><br><span class="line">1 ^ 1 = 0 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>因此，我们可以将 XOR 应用于任何事物，而不仅仅是布尔值。</p>
+<h2 id="推导出一些有用的特性"><a href="#推导出一些有用的特性" class="headerlink" title="推导出一些有用的特性"></a>推导出一些有用的特性</h2><p>我们可以从之前的定义中推导出一堆特性。下面我们一一梳理一遍，然后组合起来解决前面提到的面试题。</p>
+<h3 id="恒等律：x-0-x"><a href="#恒等律：x-0-x" class="headerlink" title="恒等律：x ^ 0 = x"></a>恒等律：<code>x ^ 0 = x</code></h3><p>如果 XOR 的两个参数之一为 0，则剩余的那个参数就是结果。该结论可通过检查以下真值表中 <code>y = 0</code> 的行（即第一行和第三行）直接得出：</p>
+<table>
 <thead>
 <tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
+<th align="center"><code>x</code></th>
+<th align="center"><code>y</code></th>
+<th align="center"><code>x ^ y</code></th>
 </tr>
 </thead>
 <tbody><tr>
-<td>2022/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>0</strong></td>
 </tr>
 <tr>
-<td>2022/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td>2022/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>1</strong></td>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>1</strong></td>
 </tr>
 <tr>
-<td>2022/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2022/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
 </tr>
 </tbody></table>
-<h2 id="2023年定投计划"><a href="#2023年定投计划" class="headerlink" title="2023年定投计划"></a>2023年定投计划</h2><table>
+<h3 id="归零律：x-x-0"><a href="#归零律：x-x-0" class="headerlink" title="归零律：x ^ x = 0"></a>归零律：<code>x ^ x = 0</code></h3><p>如果两个参数相同，则结果始终为 0。同样，我们可以通过检查真值表得出该结论。这次我们检查 <code>x = y</code> 的行，即第一行和最后一行。</p>
+<table>
 <thead>
 <tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
+<th align="center"><code>x</code></th>
+<th align="center"><code>y</code></th>
+<th align="center"><code>x ^ y</code></th>
 </tr>
 </thead>
 <tbody><tr>
-<td>2023/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>0</strong></td>
+<td align="center"><strong>0</strong></td>
 </tr>
 <tr>
-<td>2023/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td>2023/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td>2023/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2023/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><strong>1</strong></td>
+<td align="center"><strong>1</strong></td>
+<td align="center"><strong>0</strong></td>
 </tr>
 </tbody></table>
-<h2 id="2024年定投计划"><a href="#2024年定投计划" class="headerlink" title="2024年定投计划"></a>2024年定投计划</h2><table>
+<p>直观地说，这意味着如果我们对相同的参数应用 XOR，它们会相互抵消。</p>
+<h3 id="交换律：x-y-y-x"><a href="#交换律：x-y-y-x" class="headerlink" title="交换律：x ^ y = y ^ x"></a>交换律：<code>x ^ y = y ^ x</code></h3><p>XOR 是可交换的，这意味着我们可以更改应用 XOR 的顺序。为了证明这一点，我们可以检查 <code>x ^ y</code> 和 <code>y ^ x</code> 的真值表：</p>
+<table>
 <thead>
 <tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
+<th align="center"><code>x</code></th>
+<th align="center"><code>y</code></th>
+<th align="center"><code>x ^ y</code></th>
+<th align="center"><code>y ^ x</code></th>
 </tr>
 </thead>
 <tbody><tr>
-<td>2024/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
 </tr>
 <tr>
-<td>2024/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td>2024/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td>2024/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2024/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">0</td>
 </tr>
 </tbody></table>
-<h2 id="2025年定投计划"><a href="#2025年定投计划" class="headerlink" title="2025年定投计划"></a>2025年定投计划</h2><table>
-<thead>
-<tr>
-<th>计划定投日期</th>
-<th>计划定投金额</th>
-<th>实际定投日期</th>
-<th>实际定投金额</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2025/1/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/1/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/2/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/2/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/3/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/3/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/4/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/4/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/5/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/5/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/6/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/6/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/7/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/7/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/8/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/8/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/9/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/9/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/10/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/10/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/11/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/11/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/12/10</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2025/12/24</td>
-<td>1,000</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
+<p>正如我们所看到的，<code>x ^ y</code> 和 <code>y ^ x</code> 总是以相同的值结束。</p>
+<h3 id="XOR-操作序列"><a href="#XOR-操作序列" class="headerlink" title="XOR 操作序列"></a>XOR 操作序列</h3><p>通过结合以上这些规律，我们可以推断出以下这个一切背后的核心启迪：</p>
+<blockquote>
+<p><strong>XOR 诀窍：</strong>如果存在一个 XOR 操作系列 <code>a ^ b ^ c ^ ...</code>，那么我们可以删除所有成对的重复值而不影响结果。</p>
+</blockquote>
+<p>交换律允许我们可以对 XOR 进行重新排序，以便使重复的元素彼此相邻。由于 <code>x ^ x = 0</code> 和 <code>a ^ 0 = a</code>，所以每一对重复值对结果没有影响。</p>
+<p>让我们来看一个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> a ^ b ^ c ^ a ^ b      # 应用交换率</span><br><span class="line">= a ^ a ^ b ^ b ^ c     # 应用 x ^ x = 0</span><br><span class="line">= 0 ^ 0 ^ c             # 应用 x ^ 0 = x (和交换率)</span><br><span class="line">= c</span><br></pre></td></tr></table></figure>
+
+<p>因为 <code>^</code> 是一个按位运算符，所以不管 <code>a</code>、<code>b</code> 和 <code>c</code> 是什么类型的值，这都会起作用。这个诀窍实际上是 XOR 在许多情况下看似神奇使用的核心。</p>
+<h2 id="应用一：就地交换"><a href="#应用一：就地交换" class="headerlink" title="应用一：就地交换"></a>应用一：就地交换</h2><p>在解决找出缺失数字的问题之前，我们先从这个更简单的问题开始：</p>
+<blockquote>
+<p>就地交换两个值 x 和 y，即不使用任何辅助变量。</p>
+</blockquote>
+<p>实际上使用以下三条 XOR 指令可以轻松解决该问题：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">x ^= y</span><br><span class="line">y ^= x</span><br><span class="line">x ^= y</span><br></pre></td></tr></table></figure>
+
+<p>看起来好像有点神秘。为什么执行这三条指令最终会交换 x, y 的值呢？</p>
+<p>为了弄清它的原理，我们一起把这些指令一步一步地过一遍。每条指令后的注释显示 (x, y) 的当前值：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">x ^= y # =&gt;                      (x ^ y, y)</span><br><span class="line">y ^= x # =&gt; (x ^ y, y ^ x ^ y) = (x ^ y, x)</span><br><span class="line">x ^= y # =&gt; (x ^ y ^ x, x)     = (y, x)</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到，这实际上只是使用了前文推导出来的特性而已。</p>
+<p><em>这里的基本原理就是将 <code>x ^ y</code> 放在一个变量中，将 <code>x</code> 放在另一个变量中，这样就可以让我们完美地重建 <code>y</code>。一旦 <code>x ^ y</code> 被存储（指令 1），我们就可以将 <code>x</code> 放入另一个变量（指令 2），然后再用它来将 <code>x ^ y</code> 更改为 <code>y</code>（指令 3）</em>。</p>
+<h2 id="应用二：寻找缺失的数字"><a href="#应用二：寻找缺失的数字" class="headerlink" title="应用二：寻找缺失的数字"></a>应用二：寻找缺失的数字</h2><p>现在，我们来解决本文开头提出的问题：</p>
+<blockquote>
+<p>给定一个由 n - 1 个整数组成的数组 A，这些整数的范围在 1 到 n 之间。除了一个数字缺失之外，其余每个数字均只出现一次。找出那个缺失的数字。</p>
+</blockquote>
+<p>当然，有很多直截了当的方法可以解决这个问题，不过这里我们准备使用 XOR 的方法来解决这个问题。</p>
+<p>从 XOR 技巧我们知道，对于一条 XOR 序列的语句，我们可以移除所有成对的重复元素。不过，如果我们只是对给定数组中的所有值进行异或，我们就不能用到该技巧，因为没有重复元素：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A[0] ^ A[1] ^ ... ^ A[n - 2]</span><br></pre></td></tr></table></figure>
+
+<p>注意 <code>A[n - 2]</code> 是 <code>n - 1</code> 个元素数组的最后一个索引。</p>
+<p>此外，我们还可以把 1 和 n 之间的所有值也加进来一并进行异或：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 ^ 2 ^ ... ^ n ^ A[0] ^ A[1] ^ ... ^ A[n - 2]</span><br></pre></td></tr></table></figure>
+
+<p>这样，我们得到的 XOR 操作序列，它们的元素出现如下：</p>
+<ul>
+<li>给定数组中的所有值现在会出现两次：<ul>
+<li>一次是 1 到 n 之间的所有值；</li>
+<li>一次是本来就存在于给定的原始数组中。</li>
+</ul>
+</li>
+<li>缺失数字只会出现一次：<ul>
+<li>一次是 1 到 n 之间的所有值。</li>
+</ul>
+</li>
+</ul>
+<p>如果对所有这些值进行异或，根据异或技巧，实质上就是移除了所有出现两次的数字。也就是说，留下来的数字恰好就是我们一开始要寻找的缺失数字。</p>
+<p>编码后，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_missing</span>(<span class="params">A, n</span>):</span></span><br><span class="line">  result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># XOR of all the values from 1 to n</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">    result ^= value</span><br><span class="line"></span><br><span class="line">  <span class="comment"># XOR of all values in the given array</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> A:</span><br><span class="line">    result ^= value</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+
+<p>单看代码的话，看起来像是一个难以理解的算法。然而，当知道了 XOR 技巧的原理时，就变得相当简单。我认为这也说明了为什么在面试中指望这个解决方案是不合理的：它要求了解一个非常特殊的技巧，但除此之外并不需要太多算法层面上的思考。</p>
+<p>在继续说明下一个应用之前，这里再多说两点。</p>
+<h3 id="推广到整数之外"><a href="#推广到整数之外" class="headerlink" title="推广到整数之外"></a>推广到整数之外</h3><p>尽管到目前为止我们一直讨论的都是 1 到 n 的整数，不过并不仅限于整数。实际上，前面的算法适用于<br> (1) 一些潜在元素集 和<br> (2) 一组实际出现的元素<br> 的任何情况。这些集合可能仅在缺失那个元素上有所不同。这对整数很有效，因为潜在元素的集合正好对应于从 1 到 n 的元素。</p>
+<p>可以想象元素不是 1 到 n 的整数情况的应用：</p>
+<ul>
+<li>潜在元素集是 <code>Person</code> 对象，我们要从值列表中找到缺失的 <code>Person</code></li>
+<li>潜在元素集是图中的所有节点，我们要找出缺失的节点</li>
+<li>潜在元素的集合是一般的整数（不一定是从 1 到 n），我们要找到缺失的那个整数</li>
+</ul>
+<h3 id="使用算术运算符而不是-XOR"><a href="#使用算术运算符而不是-XOR" class="headerlink" title="使用算术运算符而不是 XOR"></a>使用算术运算符而不是 XOR</h3><p>如果读到这里，该算法看起来仍有点神奇的话（我希望不是），那么考虑如何使用算术运算符获得相同的结果可能会有所帮助。这实际上相当简单：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_missing</span>(<span class="params">A, n</span>):</span></span><br><span class="line">  result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Add all the values from 1 to n</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">    result += value</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Subtract all values in the given array</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> A:</span><br><span class="line">    result -= value</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+
+<p>把所有潜在的整数相加，然后减去实际出现的整数。该解决方案不是很好，因为需要处理数值溢出情况和需要元素的某些属性类型支持 <code>+</code>、<code>-</code> 运算。不过元素相互抵消的逻辑是一样的，因为每个元素出现次数是确定的（一次为正，一次为负）。</p>
+<h2 id="应用三：找出重复的数字"><a href="#应用三：找出重复的数字" class="headerlink" title="应用三：找出重复的数字"></a>应用三：找出重复的数字</h2><p>有趣的是：我们可以把完全相同的解决方案应用到类似的面试题：</p>
+<blockquote>
+<p>给定一个由 n + 1 个整数组成的数组 A，这些整数的范围在 1 到 n 之间。除了一个数字重复之外，其余每个数字均只出现一次。找出这个重复的数字。</p>
+</blockquote>
+<p>思考一下，如果我们只运用与之前的解决方案完全相同的算法，会出现什么情况。我们会得到 XOR 序列语句，其中元素出现如下：</p>
+<ul>
+<li><p>给定列表中的重复的值出现了 3 次：</p>
+<ul>
+<li>一次是 1 到 n 之间的所有值；</li>
+<li>两次是本来就存在于给定的原始数组中（因为重复）。</li>
+</ul>
+</li>
+<li><p>给定列表中的所有其他值出现两次：</p>
+<ul>
+<li>一次从取 1 到 n 之间的所有值</li>
+<li>一次是本来就存在于给定的原始数组中。</li>
+</ul>
+</li>
+</ul>
+<p>如前所述，所有成对的重复元素会相互抵消。这意味着，剩下的恰好就是我们正要寻找的元素——在原始数组中重复的元素。此元素出现 3 次，结合 XOR，简化后正是此元素本身：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> x ^ x ^ x</span><br><span class="line">= x ^ 0</span><br><span class="line">= x</span><br></pre></td></tr></table></figure>
+
+<p>其他所有元素相互抵消，因为它们恰好出现两次。</p>
+<h2 id="应用四：找出两个缺失-重复的数字"><a href="#应用四：找出两个缺失-重复的数字" class="headerlink" title="应用四：找出两个缺失/重复的数字"></a>应用四：找出两个缺失/重复的数字</h2><p>实际上我们可以更进一步，考虑以下稍微有些难度的问题：</p>
+<blockquote>
+<p>给定一个由 n - 2 个整数组成的数组 A，这些整数的范围在 1 到 n 之间。除了两个数字缺失之外，其余每个数字均只出现一次。找出这两个缺失的数字。</p>
+</blockquote>
+<p>和之前一样，在找出两个重复的数字而不是两个缺失的数字时，问题是完全等价的。</p>
+<p>相信你已经猜到怎么做了，不过还是延用之前的讲述方法，以完全相同的方式开始：思考一下，如果我们使用之前的 XOR 算法，会出现什么情况。如果这样做，我们将再次得到 XOR 序列语句，除了我们正要寻找的那两个，其余所有元素相互抵消。</p>
+<p>我们用 <code>u</code> 和 <code>v</code> 来表示这两个缺失的元素，主要是因为我们之前没有用到这些字母。应用前面的算法后，我们就剩下 <code>u ^ v</code>。接下来该怎么做？我们需要以某种方式从这个值中提取 <code>u</code> 和 <code>v</code>，但现在还不清楚怎么做。</p>
+<h3 id="根据查看-u-v-的结果进行分区"><a href="#根据查看-u-v-的结果进行分区" class="headerlink" title="根据查看 u ^ v 的结果进行分区"></a>根据查看 <code>u ^ v</code> 的结果进行分区</h3><p>幸运的是，我们可以通过运用本文前面讲过的内容来弄清楚该怎么做。</p>
+<p>本文早些时候提到：</p>
+<blockquote>
+<p>如果 XOR 作为输入携带的两个位是一样的，则结果为 0，否则为 1。</p>
+</blockquote>
+<p>也就是说，对于 <code>u ^ v</code> 结果中的各个位的值，如果为 0 就表示 <code>u</code> 和 <code>v</code> 在该位具有相同的值。如果为 1 就表示 <code>u</code> 和 <code>v</code> 在该位具有不同的值。</p>
+<p>现在，我们先从 <code>u ^ v</code> 结果中找到第一个值为 1 的位（记为 <code>i</code>），根据上面的结论，<code>u</code> 和 <code>v</code> 在第 <code>i</code> 位的值一定是不同的。然后，根据元素在这个位的值（0 或 1），对数组 A 和从 1 到 n 的数字集中的元素进行分区。最终得到的两个分区，每个分区包含两个集合：</p>
+<ol>
+<li>分区 0（元素第 i 位为 0）<ol>
+<li>从 1 到 n 的数字集合，其中元素的第 i 位为 0</li>
+<li>数组 A，其中元素的第 i 位为 0</li>
+</ol>
+</li>
+<li>分区 1（元素第 i 位为 1）<ol>
+<li>从 1 到 n 的数字集合，其中元素的第 i 位为 1</li>
+<li>数组 A，其中元素的第 i 位为 1</li>
+</ol>
+</li>
+</ol>
+<p>因为 <code>u</code> 和 <code>v</code> 在位置 <code>i</code> 上不同，所以这两个元素肯定分布在不同的分区中。</p>
+<h3 id="简化问题"><a href="#简化问题" class="headerlink" title="简化问题"></a>简化问题</h3><p>接下来，我们运用本文早些时候提到的另一个见解：</p>
+<blockquote>
+<p>尽管到目前为止我们一直讨论的都是 1 到 n 的整数，不过并不仅限于整数。实际上，前面的算法适用于<br> (1) 一些潜在元素集 和<br> (2) 一组实际出现的元素<br> 的任何情况。这些集合可能仅在缺失（或重复）那个元素上有所不同。</p>
+</blockquote>
+<p>这两个集合（指潜在元素集和实际出现的元素集）与我们在每个分区中的集合完全对应。因此，我们可以通过将这个想法用于其中一个分区来搜索元素 <code>u</code>，从而找到缺失的元素。然后再将其用于另一个分区来找到 <code>v</code>。</p>
+<p>这实际上是一个很好的解决方法：我们有效地将这个新问题简化为我们先前解决的问题的一般形式。</p>
+<h2 id="达到极限"><a href="#达到极限" class="headerlink" title="达到极限"></a>达到极限</h2><p>你可能会想尝试更进一步，旨在解决两个以上缺失值的问题。我没有对此进行仔细的思考，但我认为这是我们停止使用 XOR 的地方。如果缺失（或重复）两个以上的元素，则无法分析 XOR 结果上各个位的值，因为无论是 0 还是 1 都可能有多种组合作为结果。</p>
+<p>问题似乎需要更复杂的解决方案，这些解决方案不再基于 XOR。</p>
+<h2 id="最后的想法"><a href="#最后的想法" class="headerlink" title="最后的想法"></a>最后的想法</h2><p>如前所述，基于此诀窍的面试题似乎不是一个好主意。他们需要知道一个稍微有点晦涩的诀窍，但是一旦知道了这个诀窍，就没有什么需要解决的了（除了应用四）。也几乎没有一种方法可以展示算法思维（除了简化），也没有很好的方法来利用数据结构。</p>
+<p>然而，我发现了解这个诀窍实际上是如何工作的非常酷。 XOR 似乎具有解决所有这些问题的正确特性。像 XOR 这样基本的东西可以用来构建这里描述的所有东西，这也很美妙。</p>
+<p>感谢 Eugen 的讨论促成了这篇文章。一起弄清楚所有这些是如何工作的很有趣。</p>
+<p>（END）</p>
 ]]></content>
       <categories>
-        <category>投资理财</category>
+        <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-        <tag>退休金计划</tag>
+        <tag>翻译</tag>
+        <tag>位运算</tag>
       </tags>
   </entry>
   <entry>
@@ -3421,6 +2795,882 @@
       </tags>
   </entry>
   <entry>
+    <title>退休金计划：2021-2025年定投执行计划</title>
+    <url>/2021/07/10/investment-plan-2021-2025/</url>
+    <content><![CDATA[<p>本计划是根据 <strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 而制定的第一个五年行动计划——2021-2025年定投计划。</p>
+<p>本计划目标：净投入达 120,000 元。</p>
+<p>计划具体内容为 2021 - 2025 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
+<h2 id="2021年定投计划"><a href="#2021年定投计划" class="headerlink" title="2021年定投计划"></a>2021年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2021/3/31</td>
+<td>1,000</td>
+<td>2021/3/31</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/4/10</td>
+<td>1,000</td>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td>补投</td>
+</tr>
+<tr>
+<td>2021/4/24</td>
+<td>1,000</td>
+<td>2021/6/5</td>
+<td>1,000</td>
+<td>补投</td>
+</tr>
+<tr>
+<td>2021/5/10</td>
+<td>1,000</td>
+<td>2021/5/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td>2021/5/24</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/6/10</td>
+<td>1,000</td>
+<td>2021/6/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/6/24</td>
+<td>1,000</td>
+<td>2021/6/24</td>
+<td>2,000</td>
+<td>每月2000，故3月补投一笔</td>
+</tr>
+<tr>
+<td>2021/7/10</td>
+<td>1,000</td>
+<td>2021/7/12</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/7/24</td>
+<td>1,000</td>
+<td>2021/7/23</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/8/10</td>
+<td>1,000</td>
+<td>2021/8/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/8/24</td>
+<td>1,000</td>
+<td>2021/8/24</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/9/10</td>
+<td>1,000</td>
+<td>2021/9/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/9/24</td>
+<td>1,000</td>
+<td>2021/9/24</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/10/10</td>
+<td>1,000</td>
+<td>2021/10/11</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/10/24</td>
+<td>1,000</td>
+<td>2021/10/25</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/11/10</td>
+<td>1,000</td>
+<td>2021/11/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/11/24</td>
+<td>1,000</td>
+<td>2021/11/24</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/12/10</td>
+<td>1,000</td>
+<td>2021/12/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2021/12/24</td>
+<td>1,000</td>
+<td>2021/12/24</td>
+<td>1,000</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2022年定投计划"><a href="#2022年定投计划" class="headerlink" title="2022年定投计划"></a>2022年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2022/1/10</td>
+<td>1,000</td>
+<td>2022/01/10</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>2022/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2022/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2023年定投计划"><a href="#2023年定投计划" class="headerlink" title="2023年定投计划"></a>2023年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2023/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2023/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2024年定投计划"><a href="#2024年定投计划" class="headerlink" title="2024年定投计划"></a>2024年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2024/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2024/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="2025年定投计划"><a href="#2025年定投计划" class="headerlink" title="2025年定投计划"></a>2025年定投计划</h2><table>
+<thead>
+<tr>
+<th>计划定投日期</th>
+<th>计划定投金额</th>
+<th>实际定投日期</th>
+<th>实际定投金额</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2025/1/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/1/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/2/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/2/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/3/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/3/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/4/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/4/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/5/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/5/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/6/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/6/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/7/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/7/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/8/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/8/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/9/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/9/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/10/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/10/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/11/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/11/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/12/10</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2025/12/24</td>
+<td>1,000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
+        <tag>退休金计划</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>退休金计划：2031-2035年定投执行计划</title>
     <url>/2021/07/10/investment-plan-2031-2035/</url>
     <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第三个五年行动计划——2031-2035年定投计划。</p>
@@ -3730,287 +3980,6 @@
       </tags>
   </entry>
   <entry>
-    <title>谈谈异或运算</title>
-    <url>/2021/08/02/bitwise-operation-xor-trick/</url>
-    <content><![CDATA[<p>本文翻译自 Florian 于 2020 年 3 月发表的一篇英文博客<a href="https://florian.github.io/xor-trick/">《That XOR Trick》</a>。</p>
-<hr>
-<p>有一大堆流行的面试问题可以通过以下两种方式之一解决：要么以合理的方式使用常见的数据结构和算法，要么以一种看似难以理解的方式使用异或运算 XOR 的某些特性。</p>
-<p>虽然在面试中指望异或运算 XOR 解决方案似乎并不合理，但弄清楚它们的工作原理还是很有趣的。实际上，它们都基于同一个基本窍门，我们将在本文中以自下而上的方式将其推导出来。之后我们再来看 XOR 窍门的一系列应用，例如解决以下这个流行的面试题：</p>
-<blockquote>
-<p>给定一个由 n - 1 个整数组成的数组，这些整数的范围在 1 到 n 之间。除了一个数字缺失之外，其余每个数字均只出现一次。找出这个缺失的数字。</p>
-</blockquote>
-<p>当然，有许多直截了当的方法可以解决这个问题，但还有一种可能令人意想不到的方法——使用 XOR。</p>
-<h2 id="XOR"><a href="#XOR" class="headerlink" title="XOR"></a>XOR</h2><p>XOR 是一种应用于位的逻辑运算符。我们用 <code>^</code> 表示它。如果它作为输入携带的两个位是相同的，那么它的结果就为 0，否则就为 1。这实现了一个异或运算，即只有一个参数必须是 1 才能使最终结果为 1。我们可以使用真值表来证明这一点：</p>
-<table>
-<thead>
-<tr>
-<th><code>x</code></th>
-<th><code>y</code></th>
-<th><code>x ^ y</code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-</tr>
-</tbody></table>
-<p>大多数编程语言将 <code>^</code> 实现为按位运算符，这意味着 XOR 单独应用于位串（例如一个字节）中的每个位。</p>
-<p>例如： </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0011 ^ 0101 = 0110 </span><br></pre></td></tr></table></figure>
-
-<p>因为 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0 ^ 0 = 0 </span><br><span class="line"></span><br><span class="line">0 ^ 1 = 1 </span><br><span class="line"></span><br><span class="line">1 ^ 0 = 1 </span><br><span class="line"></span><br><span class="line">1 ^ 1 = 0 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>因此，我们可以将 XOR 应用于任何事物，而不仅仅是布尔值。</p>
-<h2 id="推导出一些有用的特性"><a href="#推导出一些有用的特性" class="headerlink" title="推导出一些有用的特性"></a>推导出一些有用的特性</h2><p>我们可以从之前的定义中推导出一堆特性。下面我们一一梳理一遍，然后组合起来解决前面提到的面试题。</p>
-<h3 id="恒等律：x-0-x"><a href="#恒等律：x-0-x" class="headerlink" title="恒等律：x ^ 0 = x"></a>恒等律：<code>x ^ 0 = x</code></h3><p>如果 XOR 的两个参数之一为 0，则剩余的那个参数就是结果。该结论可通过检查以下真值表中 <code>y = 0</code> 的行（即第一行和第三行）直接得出：</p>
-<table>
-<thead>
-<tr>
-<th align="center"><code>x</code></th>
-<th align="center"><code>y</code></th>
-<th align="center"><code>x ^ y</code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><strong>0</strong></td>
-<td align="center"><strong>0</strong></td>
-<td align="center"><strong>0</strong></td>
-</tr>
-<tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center"><strong>1</strong></td>
-<td align="center"><strong>0</strong></td>
-<td align="center"><strong>1</strong></td>
-</tr>
-<tr>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-</tr>
-</tbody></table>
-<h3 id="归零律：x-x-0"><a href="#归零律：x-x-0" class="headerlink" title="归零律：x ^ x = 0"></a>归零律：<code>x ^ x = 0</code></h3><p>如果两个参数相同，则结果始终为 0。同样，我们可以通过检查真值表得出该结论。这次我们检查 <code>x = y</code> 的行，即第一行和最后一行。</p>
-<table>
-<thead>
-<tr>
-<th align="center"><code>x</code></th>
-<th align="center"><code>y</code></th>
-<th align="center"><code>x ^ y</code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><strong>0</strong></td>
-<td align="center"><strong>0</strong></td>
-<td align="center"><strong>0</strong></td>
-</tr>
-<tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center"><strong>1</strong></td>
-<td align="center"><strong>1</strong></td>
-<td align="center"><strong>0</strong></td>
-</tr>
-</tbody></table>
-<p>直观地说，这意味着如果我们对相同的参数应用 XOR，它们会相互抵消。</p>
-<h3 id="交换律：x-y-y-x"><a href="#交换律：x-y-y-x" class="headerlink" title="交换律：x ^ y = y ^ x"></a>交换律：<code>x ^ y = y ^ x</code></h3><p>XOR 是可交换的，这意味着我们可以更改应用 XOR 的顺序。为了证明这一点，我们可以检查 <code>x ^ y</code> 和 <code>y ^ x</code> 的真值表：</p>
-<table>
-<thead>
-<tr>
-<th align="center"><code>x</code></th>
-<th align="center"><code>y</code></th>
-<th align="center"><code>x ^ y</code></th>
-<th align="center"><code>y ^ x</code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-</tbody></table>
-<p>正如我们所看到的，<code>x ^ y</code> 和 <code>y ^ x</code> 总是以相同的值结束。</p>
-<h3 id="XOR-操作序列"><a href="#XOR-操作序列" class="headerlink" title="XOR 操作序列"></a>XOR 操作序列</h3><p>通过结合以上这些规律，我们可以推断出以下这个一切背后的核心启迪：</p>
-<blockquote>
-<p><strong>XOR 诀窍：</strong>如果存在一个 XOR 操作系列 <code>a ^ b ^ c ^ ...</code>，那么我们可以删除所有成对的重复值而不影响结果。</p>
-</blockquote>
-<p>交换律允许我们可以对 XOR 进行重新排序，以便使重复的元素彼此相邻。由于 <code>x ^ x = 0</code> 和 <code>a ^ 0 = a</code>，所以每一对重复值对结果没有影响。</p>
-<p>让我们来看一个例子：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> a ^ b ^ c ^ a ^ b      # 应用交换率</span><br><span class="line">= a ^ a ^ b ^ b ^ c     # 应用 x ^ x = 0</span><br><span class="line">= 0 ^ 0 ^ c             # 应用 x ^ 0 = x (和交换率)</span><br><span class="line">= c</span><br></pre></td></tr></table></figure>
-
-<p>因为 <code>^</code> 是一个按位运算符，所以不管 <code>a</code>、<code>b</code> 和 <code>c</code> 是什么类型的值，这都会起作用。这个诀窍实际上是 XOR 在许多情况下看似神奇使用的核心。</p>
-<h2 id="应用一：就地交换"><a href="#应用一：就地交换" class="headerlink" title="应用一：就地交换"></a>应用一：就地交换</h2><p>在解决找出缺失数字的问题之前，我们先从这个更简单的问题开始：</p>
-<blockquote>
-<p>就地交换两个值 x 和 y，即不使用任何辅助变量。</p>
-</blockquote>
-<p>实际上使用以下三条 XOR 指令可以轻松解决该问题：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">x ^= y</span><br><span class="line">y ^= x</span><br><span class="line">x ^= y</span><br></pre></td></tr></table></figure>
-
-<p>看起来好像有点神秘。为什么执行这三条指令最终会交换 x, y 的值呢？</p>
-<p>为了弄清它的原理，我们一起把这些指令一步一步地过一遍。每条指令后的注释显示 (x, y) 的当前值：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">x ^= y # =&gt;                      (x ^ y, y)</span><br><span class="line">y ^= x # =&gt; (x ^ y, y ^ x ^ y) = (x ^ y, x)</span><br><span class="line">x ^= y # =&gt; (x ^ y ^ x, x)     = (y, x)</span><br></pre></td></tr></table></figure>
-
-<p>我们可以看到，这实际上只是使用了前文推导出来的特性而已。</p>
-<p><em>这里的基本原理就是将 <code>x ^ y</code> 放在一个变量中，将 <code>x</code> 放在另一个变量中，这样就可以让我们完美地重建 <code>y</code>。一旦 <code>x ^ y</code> 被存储（指令 1），我们就可以将 <code>x</code> 放入另一个变量（指令 2），然后再用它来将 <code>x ^ y</code> 更改为 <code>y</code>（指令 3）</em>。</p>
-<h2 id="应用二：寻找缺失的数字"><a href="#应用二：寻找缺失的数字" class="headerlink" title="应用二：寻找缺失的数字"></a>应用二：寻找缺失的数字</h2><p>现在，我们来解决本文开头提出的问题：</p>
-<blockquote>
-<p>给定一个由 n - 1 个整数组成的数组 A，这些整数的范围在 1 到 n 之间。除了一个数字缺失之外，其余每个数字均只出现一次。找出那个缺失的数字。</p>
-</blockquote>
-<p>当然，有很多直截了当的方法可以解决这个问题，不过这里我们准备使用 XOR 的方法来解决这个问题。</p>
-<p>从 XOR 技巧我们知道，对于一条 XOR 序列的语句，我们可以移除所有成对的重复元素。不过，如果我们只是对给定数组中的所有值进行异或，我们就不能用到该技巧，因为没有重复元素：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A[0] ^ A[1] ^ ... ^ A[n - 2]</span><br></pre></td></tr></table></figure>
-
-<p>注意 <code>A[n - 2]</code> 是 <code>n - 1</code> 个元素数组的最后一个索引。</p>
-<p>此外，我们还可以把 1 和 n 之间的所有值也加进来一并进行异或：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 ^ 2 ^ ... ^ n ^ A[0] ^ A[1] ^ ... ^ A[n - 2]</span><br></pre></td></tr></table></figure>
-
-<p>这样，我们得到的 XOR 操作序列，它们的元素出现如下：</p>
-<ul>
-<li>给定数组中的所有值现在会出现两次：<ul>
-<li>一次是 1 到 n 之间的所有值；</li>
-<li>一次是本来就存在于给定的原始数组中。</li>
-</ul>
-</li>
-<li>缺失数字只会出现一次：<ul>
-<li>一次是 1 到 n 之间的所有值。</li>
-</ul>
-</li>
-</ul>
-<p>如果对所有这些值进行异或，根据异或技巧，实质上就是移除了所有出现两次的数字。也就是说，留下来的数字恰好就是我们一开始要寻找的缺失数字。</p>
-<p>编码后，如下所示：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_missing</span>(<span class="params">A, n</span>):</span></span><br><span class="line">  result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># XOR of all the values from 1 to n</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">    result ^= value</span><br><span class="line"></span><br><span class="line">  <span class="comment"># XOR of all values in the given array</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> A:</span><br><span class="line">    result ^= value</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
-
-<p>单看代码的话，看起来像是一个难以理解的算法。然而，当知道了 XOR 技巧的原理时，就变得相当简单。我认为这也说明了为什么在面试中指望这个解决方案是不合理的：它要求了解一个非常特殊的技巧，但除此之外并不需要太多算法层面上的思考。</p>
-<p>在继续说明下一个应用之前，这里再多说两点。</p>
-<h3 id="推广到整数之外"><a href="#推广到整数之外" class="headerlink" title="推广到整数之外"></a>推广到整数之外</h3><p>尽管到目前为止我们一直讨论的都是 1 到 n 的整数，不过并不仅限于整数。实际上，前面的算法适用于<br> (1) 一些潜在元素集 和<br> (2) 一组实际出现的元素<br> 的任何情况。这些集合可能仅在缺失那个元素上有所不同。这对整数很有效，因为潜在元素的集合正好对应于从 1 到 n 的元素。</p>
-<p>可以想象元素不是 1 到 n 的整数情况的应用：</p>
-<ul>
-<li>潜在元素集是 <code>Person</code> 对象，我们要从值列表中找到缺失的 <code>Person</code></li>
-<li>潜在元素集是图中的所有节点，我们要找出缺失的节点</li>
-<li>潜在元素的集合是一般的整数（不一定是从 1 到 n），我们要找到缺失的那个整数</li>
-</ul>
-<h3 id="使用算术运算符而不是-XOR"><a href="#使用算术运算符而不是-XOR" class="headerlink" title="使用算术运算符而不是 XOR"></a>使用算术运算符而不是 XOR</h3><p>如果读到这里，该算法看起来仍有点神奇的话（我希望不是），那么考虑如何使用算术运算符获得相同的结果可能会有所帮助。这实际上相当简单：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_missing</span>(<span class="params">A, n</span>):</span></span><br><span class="line">  result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Add all the values from 1 to n</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">    result += value</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Subtract all values in the given array</span></span><br><span class="line">  <span class="keyword">for</span> value <span class="keyword">in</span> A:</span><br><span class="line">    result -= value</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
-
-<p>把所有潜在的整数相加，然后减去实际出现的整数。该解决方案不是很好，因为需要处理数值溢出情况和需要元素的某些属性类型支持 <code>+</code>、<code>-</code> 运算。不过元素相互抵消的逻辑是一样的，因为每个元素出现次数是确定的（一次为正，一次为负）。</p>
-<h2 id="应用三：找出重复的数字"><a href="#应用三：找出重复的数字" class="headerlink" title="应用三：找出重复的数字"></a>应用三：找出重复的数字</h2><p>有趣的是：我们可以把完全相同的解决方案应用到类似的面试题：</p>
-<blockquote>
-<p>给定一个由 n + 1 个整数组成的数组 A，这些整数的范围在 1 到 n 之间。除了一个数字重复之外，其余每个数字均只出现一次。找出这个重复的数字。</p>
-</blockquote>
-<p>思考一下，如果我们只运用与之前的解决方案完全相同的算法，会出现什么情况。我们会得到 XOR 序列语句，其中元素出现如下：</p>
-<ul>
-<li><p>给定列表中的重复的值出现了 3 次：</p>
-<ul>
-<li>一次是 1 到 n 之间的所有值；</li>
-<li>两次是本来就存在于给定的原始数组中（因为重复）。</li>
-</ul>
-</li>
-<li><p>给定列表中的所有其他值出现两次：</p>
-<ul>
-<li>一次从取 1 到 n 之间的所有值</li>
-<li>一次是本来就存在于给定的原始数组中。</li>
-</ul>
-</li>
-</ul>
-<p>如前所述，所有成对的重复元素会相互抵消。这意味着，剩下的恰好就是我们正要寻找的元素——在原始数组中重复的元素。此元素出现 3 次，结合 XOR，简化后正是此元素本身：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> x ^ x ^ x</span><br><span class="line">= x ^ 0</span><br><span class="line">= x</span><br></pre></td></tr></table></figure>
-
-<p>其他所有元素相互抵消，因为它们恰好出现两次。</p>
-<h2 id="应用四：找出两个缺失-重复的数字"><a href="#应用四：找出两个缺失-重复的数字" class="headerlink" title="应用四：找出两个缺失/重复的数字"></a>应用四：找出两个缺失/重复的数字</h2><p>实际上我们可以更进一步，考虑以下稍微有些难度的问题：</p>
-<blockquote>
-<p>给定一个由 n - 2 个整数组成的数组 A，这些整数的范围在 1 到 n 之间。除了两个数字缺失之外，其余每个数字均只出现一次。找出这两个缺失的数字。</p>
-</blockquote>
-<p>和之前一样，在找出两个重复的数字而不是两个缺失的数字时，问题是完全等价的。</p>
-<p>相信你已经猜到怎么做了，不过还是延用之前的讲述方法，以完全相同的方式开始：思考一下，如果我们使用之前的 XOR 算法，会出现什么情况。如果这样做，我们将再次得到 XOR 序列语句，除了我们正要寻找的那两个，其余所有元素相互抵消。</p>
-<p>我们用 <code>u</code> 和 <code>v</code> 来表示这两个缺失的元素，主要是因为我们之前没有用到这些字母。应用前面的算法后，我们就剩下 <code>u ^ v</code>。接下来该怎么做？我们需要以某种方式从这个值中提取 <code>u</code> 和 <code>v</code>，但现在还不清楚怎么做。</p>
-<h3 id="根据查看-u-v-的结果进行分区"><a href="#根据查看-u-v-的结果进行分区" class="headerlink" title="根据查看 u ^ v 的结果进行分区"></a>根据查看 <code>u ^ v</code> 的结果进行分区</h3><p>幸运的是，我们可以通过运用本文前面讲过的内容来弄清楚该怎么做。</p>
-<p>本文早些时候提到：</p>
-<blockquote>
-<p>如果 XOR 作为输入携带的两个位是一样的，则结果为 0，否则为 1。</p>
-</blockquote>
-<p>也就是说，对于 <code>u ^ v</code> 结果中的各个位的值，如果为 0 就表示 <code>u</code> 和 <code>v</code> 在该位具有相同的值。如果为 1 就表示 <code>u</code> 和 <code>v</code> 在该位具有不同的值。</p>
-<p>现在，我们先从 <code>u ^ v</code> 结果中找到第一个值为 1 的位（记为 <code>i</code>），根据上面的结论，<code>u</code> 和 <code>v</code> 在第 <code>i</code> 位的值一定是不同的。然后，根据元素在这个位的值（0 或 1），对数组 A 和从 1 到 n 的数字集中的元素进行分区。最终得到的两个分区，每个分区包含两个集合：</p>
-<ol>
-<li>分区 0（元素第 i 位为 0）<ol>
-<li>从 1 到 n 的数字集合，其中元素的第 i 位为 0</li>
-<li>数组 A，其中元素的第 i 位为 0</li>
-</ol>
-</li>
-<li>分区 1（元素第 i 位为 1）<ol>
-<li>从 1 到 n 的数字集合，其中元素的第 i 位为 1</li>
-<li>数组 A，其中元素的第 i 位为 1</li>
-</ol>
-</li>
-</ol>
-<p>因为 <code>u</code> 和 <code>v</code> 在位置 <code>i</code> 上不同，所以这两个元素肯定分布在不同的分区中。</p>
-<h3 id="简化问题"><a href="#简化问题" class="headerlink" title="简化问题"></a>简化问题</h3><p>接下来，我们运用本文早些时候提到的另一个见解：</p>
-<blockquote>
-<p>尽管到目前为止我们一直讨论的都是 1 到 n 的整数，不过并不仅限于整数。实际上，前面的算法适用于<br> (1) 一些潜在元素集 和<br> (2) 一组实际出现的元素<br> 的任何情况。这些集合可能仅在缺失（或重复）那个元素上有所不同。</p>
-</blockquote>
-<p>这两个集合（指潜在元素集和实际出现的元素集）与我们在每个分区中的集合完全对应。因此，我们可以通过将这个想法用于其中一个分区来搜索元素 <code>u</code>，从而找到缺失的元素。然后再将其用于另一个分区来找到 <code>v</code>。</p>
-<p>这实际上是一个很好的解决方法：我们有效地将这个新问题简化为我们先前解决的问题的一般形式。</p>
-<h2 id="达到极限"><a href="#达到极限" class="headerlink" title="达到极限"></a>达到极限</h2><p>你可能会想尝试更进一步，旨在解决两个以上缺失值的问题。我没有对此进行仔细的思考，但我认为这是我们停止使用 XOR 的地方。如果缺失（或重复）两个以上的元素，则无法分析 XOR 结果上各个位的值，因为无论是 0 还是 1 都可能有多种组合作为结果。</p>
-<p>问题似乎需要更复杂的解决方案，这些解决方案不再基于 XOR。</p>
-<h2 id="最后的想法"><a href="#最后的想法" class="headerlink" title="最后的想法"></a>最后的想法</h2><p>如前所述，基于此诀窍的面试题似乎不是一个好主意。他们需要知道一个稍微有点晦涩的诀窍，但是一旦知道了这个诀窍，就没有什么需要解决的了（除了应用四）。也几乎没有一种方法可以展示算法思维（除了简化），也没有很好的方法来利用数据结构。</p>
-<p>然而，我发现了解这个诀窍实际上是如何工作的非常酷。 XOR 似乎具有解决所有这些问题的正确特性。像 XOR 这样基本的东西可以用来构建这里描述的所有东西，这也很美妙。</p>
-<p>感谢 Eugen 的讨论促成了这篇文章。一起弄清楚所有这些是如何工作的很有趣。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>翻译</tag>
-        <tag>位运算</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>退休金计划：投资日志20210727</title>
     <url>/2021/07/27/investment-plan-record-20210727/</url>
     <content><![CDATA[<p>昨天下午的时候，同事见面打招呼问的是你买鞋了吗？</p>
@@ -4084,14 +4053,14 @@
 <p>2046-2050年定投执行计划</p>
 <p>2051年（1月、2月）定投执行计划</p>
 <h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts3056" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts3854" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts8016" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts8725" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts3056'));
-    var bar_chart = echarts.init(document.getElementById('echarts3854'));
+    var myChart = echarts.init(document.getElementById('echarts8016'));
+    var bar_chart = echarts.init(document.getElementById('echarts8725'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -4204,14 +4173,14 @@
     <url>/2021/07/17/investment-plan-progress/</url>
     <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
 <h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts910" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts9043" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts6296" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts2657" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts910'));
-    var bar_chart = echarts.init(document.getElementById('echarts9043'));
+    var myChart = echarts.init(document.getElementById('echarts6296'));
+    var bar_chart = echarts.init(document.getElementById('echarts2657'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -4308,12 +4277,12 @@
 <p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
 </blockquote>
 <h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts4983" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <div id="echarts8644" style="width: 100%;height: 200px;margin: 0 auto"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts4983'));
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts8644'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -4435,6 +4404,56 @@
       </tags>
   </entry>
   <entry>
+    <title>Superset配置——连接Hive出现TTransportException异常</title>
+    <url>/2022/01/17/superset-hive-ttransport-exception/</url>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>安装好 superset，通过命令 <code>superset run -p 8088 -h 0.0.0.0</code> 启动，在界面配置 hive 数据库连接时出现错误。在服务器上看到日志信息如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Unexpected error TTransportException</span><br><span class="line">WARNING:superset.views.core:Unexpected error TTransportException</span><br><span class="line">INFO:werkzeug:10.10.17.34 - - [11/Jan/2022 12:07:37] &quot;POST /superset/testconn HTTP/1.1&quot; 400 -</span><br></pre></td></tr></table></figure>
+
+<p>看到 TTransportException，第一感觉是缺少依赖包（Python、系统），不过日志并没有记录具体的错误信息，没有办法直接定位到底是缺少哪个依赖包。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>看到 TTransportException，第一感觉是缺少依赖包（Python、系统），不过日志并没有记录具体的错误信息，没有办法直接定位到底是缺少哪个依赖包。</p>
+<p>从网上搜索的结果来看，可能是缺少以下些包导致的：</p>
+<ul>
+<li>sasl</li>
+<li>thrift</li>
+<li>thrift-sasl</li>
+<li>pythrifthiveapi</li>
+<li>pure-sasl</li>
+<li>……</li>
+</ul>
+<p>也有可能是 Hive 驱动版本不一致引起的，如 pyhive、pyhive[presto]、pyhive==0.6.0 等。</p>
+<p>或者也可能是相关 Hive 连接参数没有配置正确，如 kerberos 认证等。</p>
+<p>但最后是缺少哪一个依赖或是哪几个依赖、哪些参数没有配置正确，并没有明确。</p>
+<p>当然，我们可以选择把以上的依赖包或指定依赖包版本都一一安装测试一遍，就是比较费时和低效。</p>
+<p>我们可以通过另一种“曲线救国”方法。具体如下：</p>
+<p>因为 superset 是用 pyhive 连接数据库的，我们可以在服务器上写脚本测试用 pyhive 是否可以连接到 hive 数据库，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> pyhive <span class="keyword">import</span> hive</span><br><span class="line"></span><br><span class="line">conn = hive.connect(</span><br><span class="line">    host=<span class="string">&quot;10.10.17.61&quot;</span>, </span><br><span class="line">		port=<span class="number">10000</span>,  <span class="comment"># 服务器地址</span></span><br><span class="line">    <span class="comment"># auth=&quot;KERBEROS&quot;, </span></span><br><span class="line">		<span class="comment"># kerberos_service_name=&quot;sql_prc&quot;,  #验证方式</span></span><br><span class="line">    configuration=&#123;</span><br><span class="line">        <span class="string">&#x27;mapreduce.map.memory.mb&#x27;</span>:<span class="string">&#x27;4096&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;mapreduce.reduce.memory.mb&#x27;</span>:<span class="string">&#x27;4096&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;mapreduce.map.java.opts&#x27;</span>:<span class="string">&#x27;-Xmx3072m&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;mapreduce.reduce.java.opts&#x27;</span>:<span class="string">&#x27;-Xmx3072m&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;hive.input.format&#x27;</span>:<span class="string">&#x27;org.apache.hadoop.hive.ql.io.HiveInputFormat&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;hive.limit.optimize.enable&#x27;</span>:<span class="string">&#x27;false&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;mapreduce.job.queuename&#x27;</span>:<span class="string">&#x27;root.default&#x27;</span>  <span class="comment"># 队列</span></span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">#查询数据</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">sql = <span class="string">&quot;SHOW PARTITIONS dw.dm_user_info&quot;</span></span><br><span class="line">df = pd.read_sql(sql, conn)</span><br><span class="line"><span class="built_in">print</span>(df)</span><br></pre></td></tr></table></figure>
+
+<p>执行该 Python 文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 test.py</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;test.py&quot;</span>, line <span class="number">15</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    <span class="string">&#x27;mapreduce.job.queuename&#x27;</span>:<span class="string">&#x27;root.production.miot_group.test.data&#x27;</span>  <span class="comment"># 队列</span></span><br><span class="line">  File <span class="string">&quot;/home/hadoop/.local/lib/python3.6/site-packages/pyhive/hive.py&quot;</span>, line <span class="number">104</span>, <span class="keyword">in</span> connect</span><br><span class="line">    <span class="keyword">return</span> Connection(*args, **kwargs)</span><br><span class="line">  File <span class="string">&quot;/home/hadoop/.local/lib/python3.6/site-packages/pyhive/hive.py&quot;</span>, line <span class="number">243</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    self._transport.<span class="built_in">open</span>()</span><br><span class="line">  File <span class="string">&quot;/home/hadoop/.local/lib/python3.6/site-packages/thrift_sasl/__init__.py&quot;</span>, line <span class="number">85</span>, <span class="keyword">in</span> <span class="built_in">open</span></span><br><span class="line">    message=(<span class="string">&quot;Could not start SASL: %s&quot;</span> % self.sasl.getError()))</span><br><span class="line">thrift.transport.TTransport.TTransportException: Could <span class="keyword">not</span> start SASL: <span class="string">b&#x27;Error in sasl_client_start (-4) SASL(-4): no mechanism available: No worthy mechs found&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以清楚地看到，导致连接 Hive 失败的具体错误信息或原因（若提示缺少 Python 依赖包，则用 pip install 安装）：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">thrift.transport.TTransport.TTransportException: Could <span class="keyword">not</span> start SASL: <span class="string">b&#x27;Error in sasl_client_start (-4) SASL(-4): no mechanism available: No worthy mechs found&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>这是因为缺少 <code>cyrus-sasl-plain  cyrus-sasl-devel  cyrus-sasl-gssapi</code> 三个系统依赖包，使用 <code>yum install</code> 安装即可：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install cyrus-sasl-plain  cyrus-sasl-devel  cyrus-sasl-gssapi</span><br></pre></td></tr></table></figure>
+
+<p>再次执行 <code>python3 test.py</code> 可以看到以下输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">    partition</span><br><span class="line">0   dt=20211203</span><br><span class="line">1   dt=20211226</span><br><span class="line">2   dt=20211227</span><br><span class="line">3   dt=20211228</span><br><span class="line">4   dt=20211229</span><br><span class="line">5   dt=20211230</span><br><span class="line">6   dt=20211231</span><br><span class="line">7   dt=20220101</span><br></pre></td></tr></table></figure>
+
+<p>说明在服务器上使用 pyhive 可以正确连接 hive，最后在 superset 界面重新配置 Hive 数据库，点击 TEST CONNECTION 按钮，可以看到 Seems OK! 的提示，表明连接 Hive 成功。</p>
+<p>Hive 连接如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hive://hive@10.10.17.61:10000/mydw</span><br></pre></td></tr></table></figure>
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Superset</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>小记：2021年8月</title>
     <url>/2021/08/05/note-202108/</url>
     <content><![CDATA[<h2 id="2021年8月2日"><a href="#2021年8月2日" class="headerlink" title="2021年8月2日"></a>2021年8月2日</h2><p><strong>1 梦</strong></p>
@@ -4454,6 +4473,444 @@
       </categories>
       <tags>
         <tag>所思所想所悟</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu20.04 LTS执行Shell脚本出现Bad substitution错误</title>
+    <url>/2022/01/15/ubuntu-shell-bad-substitution/</url>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在 Windows 10 自带的 Ubuntu 20.04 子系统终端，执行 Shell 脚本时出现 Bad substitution 错误：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  ~ sh +x tt.sh</span><br><span class="line">tt.sh: 11: Bad substitution</span><br></pre></td></tr></table></figure>
+
+<p>Shell 脚本是从服务器上下载下来的，在服务器上是可以正确执行的，服务器系统为 CentOS 7。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>第一感觉应该是该 Shell 脚本在 Ubuntu、CentOS 两个系统不兼容的关系。</p>
+<p>打开脚本文件，跟踪出错位置（第 11 行），定位到这行代码 <code>day=$&#123;dt:6&#125;</code>。</p>
+<p>查了 Ubuntu 官方文档，发现从 Ubuntu 6.10 开始，系统默认 Shell (/bin/sh) 由 bash shell 更改为 dash shell 了，原因是 dash shell 更轻量，运行更快。</p>
+<p>查看 /bin/sh 在 Ubuntu 系统的链接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  ~ ll /usr/bin/</span><br><span class="line">lrwxrwxrwx 1 root   root       4 Feb 25  2020  sh -&gt; dash</span><br></pre></td></tr></table></figure>
+
+<p>而在服务器 CentOS 系统，链接的是 bash：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[hadoop@bigdata ~]$ ll /usr/bin/</span><br><span class="line">lrwxrwxrwx  1 root root         4 Mar  9  2020 sh -&gt; bash</span><br></pre></td></tr></table></figure>
+
+<p>为了在本地开发机器能够兼容在服务器上执行的脚本文件，这里需要将 Ubuntu 的 /bin/sh 的默认链接更换为 bash，文档给出的方案是在终端执行以下命令，然后选择 &lt; No &gt; 即可：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo dpkg-reconfigure dash</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>后面如果需要将 /bin/sh 的默认链接换回 dash，同样执行上面的命令，并选择 &lt; Yes &gt;。</p>
+</blockquote>
+<p>如果想了解更多，可以查看官方维基：<a href="https://wiki.ubuntu.com/DashAsBinSh">https://wiki.ubuntu.com/DashAsBinSh</a></p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>袁隆平：我的两个梦</title>
+    <url>/2021/05/24/ylp-2/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>【侠客岛按】</strong></p>
+<p>今天中午，噩耗传来。“杂交水稻之父”、中国工程院院士、“共和国勋章”获得者袁隆平在湖南长沙逝世。</p>
+<p>2019年10月23日，袁老曾在《人民日报》刊发文章，自述他的两个梦想，感人至深。侠客岛予以推荐，藉此缅怀这位伟大的科学家。</p>
+<p>袁老，您走好。</p>
+</blockquote>
+<p>时光如白驹过隙，一转眼，90年过去，我成了正儿八经的“90后”。我大半辈子都在与水稻打交道，至今从事杂交水稻研究工作已有55个年头。我最关心的，就是与水稻和粮食相关的事。</p>
+<p>新中国成立之前，中华大地上到处灾荒战乱，人民生活颠沛流离，少年时我就被迫从一个城市辗转到另一个城市，虽然少不更事，但每当看到沿路举家逃难、面如菜色的同胞，看到荒芜的田野和满目疮痍的土地，我的内心总会泛起一阵阵痛楚。报考大学时，我就对父母说，我要学农。母亲听了，吓一跳，说，傻孩子，学农多苦啊，你以为好玩儿呢？<strong>但我是真正爱上了农业，死活要学，还摆出大道理：吃饭可是天下第一桩大事，没有饭吃，人类怎么生存？</strong>最后，父母尊重我的选择。</p>
+<p>毕业后，我被分配到湖南安江农校任教。安江农校地处偏远，临行前，学校的领导告诉我，那里很偏僻，“一盏孤灯照终身”，你可要做好思想准备。当时我想，能传播农业科学知识，也是为国家做贡献！没想到，去了不久，就碰上困难时期。我当时想，<strong>这么大一个国家，如果粮食安全得不到保障，其他一切都无从谈起，我要为让中国人吃饱饭而奋斗！</strong></p>
+<p>一天，我看到一些农民从高山上兑了种子，担回来种，就问他们，为什么跑到那么高的山上去换种呢？他们说，山上的种子质量好一些，产得多些。他们接着还说了一句话，叫做“施肥不如勤换种”。这对我有很大启发：农业上增产的途径有很多，但其中良种是非常重要的因素。</p>
+<p>从此以后，我开始自己的杂交水稻研究之路。一路走来，有汗水和辛酸，也有丰收和喜悦。<strong>科学探索无止境，在这条漫长而又艰辛的路上，我一直有两个梦，一个是禾下乘凉梦，一个是杂交水稻覆盖全球梦。</strong></p>
+<p><strong>禾下乘凉梦，我是真做过，我梦见水稻长得有高粱那么高，穗子像扫把那么长，颗粒像花生那么大，而我则和助手坐在稻穗下面乘凉。其实我这个梦想的实质，就是水稻高产梦，让人们吃上更多的米饭，永远都不用再饿肚子。</strong></p>
+<p>做梦容易，但要把梦变成现实，则需要付出大量艰苦的劳动和努力。我清楚地记得，<strong>那是1961年7月的一天，我到安江农校的试验田选种。突然，我发现了一株“鹤立鸡群”的稻株</strong>。穗大，颗粒饱满。我随手挑了一穗，竟有230粒之多！当时以为，选到了优良品种，岂不是可以增产无数粮食？</p>
+<p>第二年春天，我把种子播下，结果却令人大失所望，一眼望去，高的高，矮的矮，没有一株赶得上最初的那株水稻。我不甘心，开始反复琢磨其中的奥秘，研究那一片试验田的稻株比例，最终得出一个结论：水稻是有杂交优势的，那株鹤立鸡群的水稻，就是天然的杂交水稻。既然天然杂交稻具有这样强的优势，那么人工杂交稻，也一定有优势。当时，遗传学理论一直否定自花授粉作物有杂交优势。我对此理论提出质疑。随后，我又拜访专家，翻找资料，<strong>最终得出结论，既然自然界存在杂交稻，那么人工杂交水稻也一定可以利用</strong>。而要想利用这一优势，首先需要找到“天然的雄性不育水稻”。</p>
+<p>于是，我又走上曲折的寻找之旅。</p>
+<p>其中，<strong>最令人刻骨铭心的是，在海南岛找到天然雄性不育野生稻“野败”并加以利用的过程</strong>。那是1970年11月，我和助手李必湖、尹华奇驻守在海南岛崖县南红农场，在当地寻找野生稻。在那里，有一位农专毕业的冯克珊，是南红良种繁育场的技术员，经常跑来听我讲课。冯克珊联想到农场附近有一种名叫“假禾”的草，很可能就是我要找的野生稻。</p>
+<p>11月23日，他找到李必湖，来到南红农场铁路涵洞附近的水塘边，到那片正在开花的野生稻中察看。他们发现了三个雄花异常的野生稻穗，野生稻穗的花药细瘦，色浅呈水渍状，不开裂散粉。这三个稻穗生长于同一禾蔸，是从一粒种子长出、匍匐于水面的分蘖。他们立即把这蔸野生稻连泥挖起，放在铁桶里拉回去，然后移栽到试验田里，等待鉴定。</p>
+<p>当时，我正在北京开会，收到助手们从海南发来的电报，连夜赶火车奔回海南岛。<strong>经过仔细检验，我们最终确认这是一株十分难得的天然雄性不育株野生稻，我给它命名为“野败”。</strong></p>
+<p>这真是大海捞针啊！</p>
+<p>“野败”的发现对杂交水稻研究具有里程碑的意义，更是杂交水稻“三系”配套成功的突破口。<strong>1973年，我们协作组历尽千辛万苦才通过测交找到恢复系，攻克“三系”配套难关，才有了新中国第一代杂交水稻。</strong>第一代以细胞质雄性不育系为遗传工具的杂交水稻，优点是不育系不育性稳定，但也有缺点，即配组的时候受到恢保关系制约，因此选择优良组合的几率比较低，难度大。</p>
+<p>自上世纪80年代中后期起，我们开始研究两系杂交水稻。1995年，第二代以光温敏不育系为遗传工具的杂交水稻——两系法杂交稻研制成功，它的主要优点是配组自由选择，能选配到优良稻组合的几率比较高。但是，第二代杂交稻也不是完美的：不育系育性受气温和光照影响较大。我想，如果有一种杂交水稻，既兼具第一代和第二代的优点，又能克服二者的缺点，那该多好啊！</p>
+<p><strong>2011年，我们又启动第三代杂交水稻育种技术的研究与利用，这是以遗传工程雄性不育系为遗传工具的杂交水稻，已初步研究成功，该杂交水稻克服了前两代的缺点。现在，我们甚至开始了第四代、第五代杂交水稻的研制。</strong></p>
+<p><strong>袁隆平带各国朋友参观试验田（图源：新华社）</strong></p>
+<p>追求高产更高产，是我们永恒的目标。自上世纪90年代中后期起，我们开始超级杂交稻攻关，分别于2000年、2004年、2011年、2014年实现大面积示范亩产700公斤、800公斤、900公斤、1000公斤目标。近5年又突破每公顷16吨、17吨的目标。<strong>2017年，世界水稻平均每公顷产量仅4.61吨，而我国杂交水稻平均产量每公顷达7.5吨，在世界上遥遥领先。</strong></p>
+<p>不可否认，上个世纪我们的主要任务是解决人民群众的温饱问题，所以杂交水稻把产量摆在优先地位。现在生活水平提高了，人民不仅要吃饱，还要吃好。所以，我们也改变思路，提出既要高产，又要优质。但是必须说清楚，虽然要满足市场对优质大米的需求，但我们仍然坚持一条，即不能以牺牲产量来求优质。<strong>我始终觉得，粮食安全问题必须时刻警惕。历史也无数次告诫我们，把饭碗牢牢端在自己手中的最有效途径，就是提高水稻的产量。</strong></p>
+<p>科学探索永无止境，我的另一个梦，就是<strong>杂交水稻走向世界、覆盖全球梦</strong>。</p>
+<p>世界上超过一半人口以稻米为主食，一个令人担忧的事实却是，全球现有1.6亿公顷稻田中，杂交水稻种植面积还不到15%。发展杂交水稻不仅有广阔的舞台，更对保障世界粮食安全具有重要意义，倘若全球有一半稻田种上杂交稻，按每公顷比常规水稻增产2吨计算，则增产的粮食可以多养活4亿—5亿人口。杂交水稻覆盖全球不仅能提升全球水稻产量，造福人类，还能提升我国的国际地位。</p>
+<p>为了实现这个梦，我们一直在努力。从上世纪80年代至今，我们坚持开办杂交水稻技术国际培训班，为80多个发展中国家培训了14000多名杂交水稻技术人才，我还受邀担任联合国粮农组织首席顾问，帮助其他国家发展杂交水稻。<strong>目前，杂交水稻已在印度、越南、菲律宾、孟加拉国、巴基斯坦、印度尼西亚、美国、巴西等国实现大面积种植。</strong>今年6月，在长沙举行的中非经贸博览会上，来了不少非洲国家农业界的朋友，看到他们对杂交水稻充满感激和期待，更坚定了我们将杂交水稻推向世界的信心与决心。</p>
+<p>新中国杂交水稻事业能够取得丰硕成果，离不开党和国家的高度重视与大力支持，同时也是广大科技工作者集体智慧的结晶。<strong>我已经90岁了，但“老骥伏枥，志在千里”，我要力争让我们的团队早日完成每公顷18吨的高产攻关，做好第三代杂交水稻技术的生产应用。我希望最终能实现“禾下乘凉、覆盖全球”的两大心愿。</strong></p>
+<p><em>文/袁隆平</em><br><em>编辑/点苍</em><br><strong>（原文刊于《 人民日报 》2019年10月23日第20 版）</strong></p>
+<blockquote>
+<p>剪报来源<br>公众号： 侠客岛<br>链　接：<a href="https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw">https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw</a><br>日　期：2021-05-22</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>剪报</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>袁隆平：稻子熟了，妈妈，我来看您了</title>
+    <url>/2021/05/24/ylp-1/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>“他们说，我用一粒种子改变了世界。我知道，这粒种子，是妈妈您在我幼年时种下的！”</strong><br> <br>2010年，在袁隆平院士80华诞，湖南卫视为他举办了“为了大地的丰收”专场文艺晚会，晚会上，袁院士写给母亲的信《妈妈，稻子熟了》感动了在场所有观众，字里行间，说不尽对母亲的思念与愧疚。</p>
+<p>袁隆平动情写到：“没能多陪伴母亲，是我永远的后悔与遗憾。”今天，袁隆平院士逝世，读完这封旧信的网友纷纷留言：“读到一半就已泪流满面，可爱的袁爷爷，要去和妈妈团聚了。”<br> <br>我们整理了信件原文，纪念袁隆平院士一路走好。<br> <br>以下为信件原文。</p>
+</blockquote>
+<p>本来想一个人静静地陪您说会话，安江的乡亲们实在是太热情了，天这么热，他们还一直陪着，谢谢他们了。</p>
+<p>妈妈，您在安江，我在长沙，隔得很远很远。我在梦里总是想着您，想着安江这个地方。</p>
+<p>人事难料啊，您这样一位习惯了繁华都市的大家闺秀，最后竟会永远留在这么一个偏远的小山村。还记得吗？1957年，我要从重庆的大学分配到这儿，是您陪着我，脸贴着地图，手指顺着密密麻麻的细线，找了很久，才找到地图上这么一个小点点。当时您叹了口气说：<strong>“孩子，你到那儿，是要吃苦的呀……”</strong></p>
+<p>我说：“我年轻，我还有一把小提琴。”</p>
+<p>没想到的是，为了我，为了帮我带小孩，把您也拖到了安江。最后，受累吃苦的，是妈妈您哪！您哪里走得惯乡间的田埂！我总记得，每次都要小孙孙牵着您的手，您才敢走过屋前屋后的田间小道。</p>
+<p>安江是我的一切，我却忘了，对一辈子都生活在大城市里的您来说，70岁了，一切还要重新来适应。我从来没有问过您有什么难处，我总以为会有时间的，会有时间的，等我闲一点一定好好地陪陪您……</p>
+<p>哪想到，直到您走的时候，我还在长沙忙着开会。那天正好是中秋节，全国的同行都来了，搞杂交水稻不容易啊，我又是召集人，怎么着也得陪大家过这个节啊，只是儿子永远亏欠妈妈您了……</p>
+<p>其实我知道，那个时候已经是您的最后时刻。我总盼望着妈妈您能多撑两天。谁知道，即便是天不亮就往安江赶，我还是没能见上妈妈您最后一面。</p>
+<p>太晚了，一切都太晚了，我真的好后悔。妈妈，当时您一定等了我很久，盼了我很长，您一定有很多话要对儿子说，有很多事要交代。可我怎么就那么糊涂呢！这么多年，为什么我就不能少下一次田，少做一次实验，少出一天差，坐下来静静地好好陪陪您。哪怕……哪怕就一次。</p>
+<p>妈妈，每当我的研究取得成果，每当我在国际讲坛上谈笑风生，每当我接过一座又一座奖杯，我总是对人说，这辈子对我影响最深的人就是妈妈您啊！</p>
+<p>无法想象，没有您的英语启蒙，在一片闭塞中，我怎么能够阅读世界上最先进的科学文献，用超越那个时代的视野，去寻访遗传学大师孟德尔和摩尔根？无法想象，在那段颠沛流离的岁月中，从北平到汉口，从桃源到重庆，没有您的执著和鼓励，我怎么能获得系统的现代教育，获得在大江大河中自由翱翔的胆识？无法想象，没有您在摇篮前跟我讲尼采，讲这位昂扬着生命力、意志力的伟大哲人，我怎么能够在千百次的失败中坚信，必然有一粒种子可以使万千民众告别饥饿？</p>
+<p>他们说，我用一粒种子改变了世界。<strong>我知道，这粒种子，是妈妈您在我幼年时种下的！</strong></p>
+<p>稻子熟了，妈妈，您能闻到吗？安江可好？那里的田埂是不是还留着熟悉的欢笑？隔着21年的时光，我依稀看见，小孙孙牵着您的手，走过稻浪的背影；我还要告诉您，一辈子没有耕种过的母亲，稻芒划过手掌，稻草在场上堆积成垛，谷子在阳光中毕剥作响，水田在西晒下泛出橙黄的味道。这都是儿子要跟您说的话，说不完的话啊……</p>
+<p><strong>妈妈，稻子熟了，我想您了！</strong></p>
+<blockquote>
+<p>剪报来源<br>公众号：中央政法委长安剑<br>链　接：<a href="https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A">https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A</a><br>日　期：2021-05-23</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>剪报</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>马龙：只要心怀热爱，永远都是当打之年！</title>
+    <url>/2021/08/09/ml-1/</url>
+    <content><![CDATA[<p>　　我的东京奥运会之旅圆满结束，无论单打冠军，还是团体金牌，都是我和我的队友、教练员，以及背后默默付出的陪练、队医、保障团队，团结一心共同奋斗出来的荣耀勋章。</p>
+<p><img src="https://i.loli.net/2021/08/09/XbfCZRY2TQtFM9o.jpg"></p>
+<p>　　当国歌响起，五星红旗缓缓升起，那一刻，我感慨万千。过去5年的甘苦画面历历在目。</p>
+<p>　　<strong>2018年下半年至2019年初，我因伤远离国际赛场8个月，其间有3个月没有碰球，那是我职业生涯最艰难的一段时期，但我从没有想过放弃，因为乒乓球已经成为我生命中无法替代的一部分。</strong>我告诉自己，只要还有机会，我就一定要坚持训练，重新回到赛场。</p>
+<p>　　终于，我来到了东京——第三次踏上了奥运会的赛场。强大的对手、紧张的气氛，让我感到熟悉又兴奋。最让我难忘的，还是与队友们并肩作战的经历。团体赛半决赛和决赛的两场双打，我和搭档许昕把赛前准备的战术打出来了，我真切地感受到了奥运会乒乓球比赛带给我的享受。</p>
+<p>　　连续两届奥运会获得单打和团体两项金牌，许多人认为这是个了不起的成就。对此，我心怀感激，乒乓球带给了我一段精彩的人生。<strong>同时我也要感谢祖国和广大人民的支持和信任，这正是中国乒乓球事业不断向前的力量源泉。</strong></p>
+<p>　　我已经32岁了，我觉得自己的身体状况还不错。<strong>事实上，不少比我年长的选手依然在赛场充满斗志，这对我也是一种激励。只要心怀热爱，永远都是当打之年！</strong></p>
+<hr>
+<p>来源：人民日报（2021年8月8日 第07版），原标题《心怀热爱，人生就会精彩（奥林匹克与我）》，作者：马龙，记者范佳元、孙龙飞采访整理</p>
+<p>本期编辑：胡程远、石磊</p>
+<blockquote>
+<p>剪报来源<br>公众号：人民日报<br>链　接：<a href="https://mp.weixin.qq.com/s/kgjVfCvWg1mein0v6w0u7Q">https://mp.weixin.qq.com/s/kgjVfCvWg1mein0v6w0u7Q</a><br>日　期：2021-08-08</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>剪报</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>极客时间-技术管理实战36讲学习笔记</title>
+    <url>/2021/08/10/technology-management-0/</url>
+    <content><![CDATA[<blockquote>
+<p>如果干得好，管理是最崇高的职业之一。没有哪一个职业能像管理一样为他人提供学习和成长的机会，让他们懂得承担责任并取得成绩，以及为团队的成功做出贡献。<br>——“颠覆式创新之父”克里斯坦森，《你要如何衡量你的人生》</p>
+</blockquote>
+<h2 id="为什么需要学管理？"><a href="#为什么需要学管理？" class="headerlink" title="为什么需要学管理？"></a>为什么需要学管理？</h2><p>对于互联网技术人来说，“管理”作为一项综合能力不再是一个可选项，无论是否身在技术管理岗，未来的职业发展都会围绕着<strong>技术和管理</strong>这两条腿在走路，一条腿是走不远的。</p>
+<h2 id="重点内容"><a href="#重点内容" class="headerlink" title="重点内容"></a>重点内容</h2><ol>
+<li><strong>自我倾听。</strong>理顺内心的纠结与彷徨，心无旁骛地走上管理之路。</li>
+<li><strong>角色认知。</strong>提供一个管理工作的“全景图”，以方便按图索骥地<em><strong>了解管理工作所涵盖的方方面面。</strong></em></li>
+<li><strong>管理方法。</strong>“管理三部曲”——<em><strong>管理规划、团队建设和任务管理</strong></em>，探讨<em><strong>“看方向”“带人”和“做事”</strong></em>的这三个关键的管理内容。</li>
+<li><strong>管理沟通。</strong>探讨管理沟通的<em><strong>工具和技巧</strong></em>，并探讨<em><strong>向上、向下、横向</strong></em>等典型沟通场景下的沟通要点。</li>
+<li><strong>管理之路。</strong>主要探讨<em><strong>如何积累管理方法论</strong></em>，以及<em><strong>如何成为自己所期待的管理者。</strong></em></li>
+</ol>
+<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><ul>
+<li><p>自我倾听</p>
+<ul>
+<li><a href="/2021/08/10/technology-management-1/">自我倾听（上）</a></li>
+<li><a href="http://1.0.0.1/">自我倾听（下）</a></li>
+</ul>
+</li>
+<li><p>角色认知</p>
+<ul>
+<li><a href="/2021/08/11/technology-management-3/">角色认知</a></li>
+</ul>
+</li>
+<li><h2 id="管理规划"><a href="#管理规划" class="headerlink" title="管理规划"></a>管理规划</h2></li>
+<li><p>团队建设</p>
+<ul>
+<li><a href="http://c.c/">团队建设六要素</a></li>
+<li>能力培养——提升员工个人能力</li>
+<li>员工激励——提升员工的工作意愿和积极性</li>
+<li><a href="http://baidu.cc/">团队分工——兼顾团队分工的稳定性和灵活性</a></li>
+<li><a href="http://b.c/">协作水平——有效提升团队凝聚力方法</a></li>
+<li><a href="http://1.0.0.1/">梯队建设——物色和培养核心人才</a></li>
+<li><a href="http://1.0.0.1/">团队文化——营造团队氛围</a></li>
+<li></li>
+</ul>
+</li>
+<li><h2 id="任务管理"><a href="#任务管理" class="headerlink" title="任务管理"></a>任务管理</h2></li>
+<li><h2 id="管理沟通"><a href="#管理沟通" class="headerlink" title="管理沟通"></a>管理沟通</h2></li>
+<li><h2 id="管理之路"><a href="#管理之路" class="headerlink" title="管理之路"></a>管理之路</h2></li>
+</ul>
+]]></content>
+      <categories>
+        <category>读书学习笔记</category>
+      </categories>
+      <tags>
+        <tag>技术管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自我倾听（上）</title>
+    <url>/2021/08/10/technology-management-1/</url>
+    <content><![CDATA[<h2 id="技术人常见的职业发展方向"><a href="#技术人常见的职业发展方向" class="headerlink" title="技术人常见的职业发展方向"></a>技术人常见的职业发展方向</h2><p><img src="/image/column/tech-mg/1629193567069-f3f58680-f2e6-4305-b8e7-4d3f09914adf.png"></p>
+<p>技术类、管理类、创业类和顾问类方向的技能清单：</p>
+<p><img src="/image/column/tech-mg/1628231014471-78f3c500-6793-4ad5-8bd7-d60d3e02404f.png" alt="技能清单"><br>无论走在哪条路上，有些能力是共通的，比如<strong>规划、带人、沟通、执行等管理能力</strong>。</p>
+<h2 id="要不要做管理？"><a href="#要不要做管理？" class="headerlink" title="要不要做管理？"></a>要不要做管理？</h2><p>要不要做管理问题应从<strong>初衷和意愿</strong>两方面考虑。</p>
+<h3 id="“做管理”是否更符合初衷？"><a href="#“做管理”是否更符合初衷？" class="headerlink" title="“做管理”是否更符合初衷？"></a>“做管理”是否更符合初衷？</h3><p>仔细思考自己做管理是因为外驱力还是内驱力？<strong>外驱让我们可以做好本职工作，而内驱才能让我们成就卓越。</strong></p>
+<p><strong>外驱力</strong><br>外部的推力和诱惑，如不得已的选择、别人眼里的成功、不辜负组织的期待、对做管理的主观遐想等。</p>
+<p>以下问题可供参考判断：</p>
+<ul>
+<li>“我对技术没有热情，也没有技术特长，所以只能做管理。”</li>
+<li>“做技术又不能做一辈子，很多前辈都转管理了，我也要转。”</li>
+<li>“没有办法，公司发展太快了，老板要求我带团队。”</li>
+<li>“如果能做到公司高管，别人都会认为我是一个优秀和成功的人。”</li>
+<li>“能够做管理带团队，这样在家人眼中会很风光。”</li>
+<li>“上级说我适合做管理，我不能辜负他对我的期望。”</li>
+<li>“公司需要我带团队，这是公司对我的信任，我一定得做好。”</li>
+<li>“不用凡事亲力亲为，安排下级去做就好了，应该会轻松些。”</li>
+<li>“做管理越晋升越轻松，你看高管都不坐班。”</li>
+</ul>
+<p><strong>内驱力</strong><br>建立在内心的渴望和意愿上（内在动力和真正诉求），如认同管理的价值观、对管理充满热情，并享受这些工作、看重在管理方面的成长等。</p>
+<p>价值观、核心诉求、擅长和热爱等底层的动力，正是面对挑战、走向卓越所需要的最重要的东西。</p>
+<p>以下表现可供参考判断：</p>
+<ul>
+<li>认为招聘面试、辅导员工、向上汇报、开会沟通、流程梳理、资源协调、进度推动、绩效评估等大部分管理工作，都是琐碎的“杂事”，很难从这些工作中获得价值感和成就感，甚至还对于这些工作挤占了写代码的时间而不满。</li>
+<li>认为经理是给高工和架构师打下手的，职责就是支持好架构师的工作，所以比较郁闷。</li>
+<li>认为管理的工作不如技术工作有价值，通过技术手段来解决问题才是最酷的事情。你是否也会这么认为呢？</li>
+<li>是否主动地向自己的上级了解过团队的工作目标呢？</li>
+<li>是否主动关心过新同事该怎么培养，以及如何更好地帮助他们成长呢？</li>
+<li>是否享受去负责一个大项目的协调和推进？它的成功发布是否会给你带来强烈的成就感呢？</li>
+<li>是否思考过什么样的流程和机制可以应对团队工作中的那些疏漏呢？</li>
+<li>更大的责任、更立体的视角、更灵活的思维方式。</li>
+</ul>
+<h3 id="“做管理”是否更能激发投入的意愿？"><a href="#“做管理”是否更能激发投入的意愿？" class="headerlink" title="“做管理”是否更能激发投入的意愿？"></a>“做管理”是否更能激发投入的意愿？</h3><p>“做管理”带来的成长与收获：</p>
+<ul>
+<li><strong>成长感</strong>——到了一个更大的平台上，能力和视野将得到大幅度提升；</li>
+<li><strong>成就感</strong>——能力变强，有了团队，能搞定更大、更复杂的事情，做出更大的成绩；</li>
+<li><strong>影响力</strong>——带着团队做出越来越多的成就，团队也越来越优秀，团队成员都得到了成长，甚至还会影响到合作团队；</li>
+<li><strong>获得感</strong>——能力、成绩、影响力全面提升，得到更多的精神和物质的回报。</li>
+</ul>
+<h2 id="哪些人容易走上管理岗位？"><a href="#哪些人容易走上管理岗位？" class="headerlink" title="哪些人容易走上管理岗位？"></a>哪些人容易走上管理岗位？</h2><p>做管理的“天时地利人和”：</p>
+<ul>
+<li><strong>机会、时机、大环境、时代背景；</strong></li>
+<li><strong>自己的优势、能力以及所负责的工作内容；</strong></li>
+<li><strong>得到他人的支持（资源提供者、伙伴/同行者、导师榜样、家人/朋友）。</strong></li>
+</ul>
+<p><img src="/image/column/tech-mg/1628238415051-6e3a052c-4604-4af9-9a5f-05251eb81817.png"></p>
+<blockquote>
+<p>TIPS：</p>
+<ol>
+<li>去能积累的公司做管理，会是更合理的选择；</li>
+<li>负责<strong>最全局的模块</strong>（“广”）、负责<strong>最核心的技术模块</strong>（“深”）的工程师更容易成为管理者；</li>
+<li>天使轮、A 轮这样的早期公司，大多处于生存期，还没有上规模，而没有规模的公司并不需要你去做管理，所以你很大概率会失望。</li>
+<li>如果你主动去了解技术和业务的全局，并主动争取做一些大型项目的负责人，你就具备了做管理的“地利”。</li>
+</ol>
+</blockquote>
+<p>“天时”“地利”“人和”这三类管理之路的外部因素都具备了（如下图），自然可以更顺利地走上管理岗位。</p>
+<p><img src="/image/column/tech-mg/1628244980896-3120e339-3202-421b-acc2-552c6b5b9345.png"></p>
+<p>但如果不具备这些外部因素，而你还想往管理方向走的话，那么以下这些之前可能并没做过的、公司也不会因此就给你多发薪水的工作，在编码之余依然要去关心：</p>
+<ul>
+<li>项目的流程该怎么改进；</li>
+<li>团队合作的机制该怎么建立；</li>
+<li>新员工入职该怎么培养；</li>
+<li>团队的氛围该怎么建设。</li>
+</ul>
+<p><strong>因为，想被提拔为一个管理者最好的方式，就是首先成为一个实际上的管理者，这种“既定事实”的晋升理念在互联网行业里被广泛认同。</strong></p>
+<h2 id="要不要转回去做技术？"><a href="#要不要转回去做技术？" class="headerlink" title="要不要转回去做技术？"></a>要不要转回去做技术？</h2><p>焦虑的感受：</p>
+<ul>
+<li>“管理的事儿太杂，都没时间写代码了，越来越心虚……”</li>
+<li>“做管理最大的挑战是，要舍弃技术，特别难。”</li>
+<li>“管理和技术到底该怎么平衡？”</li>
+<li>“突然不写代码了，感觉吃饭的家伙没了，哈哈。”</li>
+<li>“管理工作太琐碎，感觉离技术越来越远，现在特别担心个人发展。”</li>
+<li>“管理是一个有违人性的事情，自己的技术专业性越来越差，但是却要带领整个团队。”</li>
+<li>“反正想不明白，就多投入一些时间来兼顾技术和管理吧！”</li>
+</ul>
+<p>是否要转回去做技术，还是看自己的初衷（内驱/外驱），如果管理工作确实不是自己想要的，那么回去继续做工程师也完全没有问题。但内心如果是想往管理方向走，只是刚开始时感到焦虑等问题，可以通过<strong>提升对技术管理的认知</strong>来解决：</p>
+<ol>
+<li>做技术管理并没有放弃技术，而是换了一种方式去学习和运用技术，在一定程度上放弃了编码而已：<ol>
+<li>要把技术提到更高视角来看待：从目标和评估角度去看待技术、借助团队成员的技术来实现更大的目标；</li>
+<li>换一种学习方式来掌握技术：<strong>建立学习机制、请教专家、建立共创机制。</strong></li>
+</ol>
+</li>
+<li>在做技术管理过程中，只要愿意去学习，持续不断地实践和练习，一定会有丰富的收获，以后也能靠做技术管理“吃饭”；</li>
+<li>工作“升维”已不可避免，即便不做技术管理者，要做好一位技术带头人或架构师，或多或少也要懂管理（全局视野、规划能力、结果导向意识、项目管理方法、沟通协调能力等），那不如奋力向前；</li>
+<li>可以做技术型管理者，结合自己的兴趣和优势，打造出自己的独特管理风格；</li>
+<li>做技术管理并没有放弃技术，而且也不能放弃技术，放弃了技术是做不好技术管理的；</li>
+<li>技术转管理并不意味着不关心技术，只是更关心更大的目标和整体结果了。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>读书学习笔记</category>
+      </categories>
+      <tags>
+        <tag>技术管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>角色认知</title>
+    <url>/2021/08/11/technology-management-3/</url>
+    <content><![CDATA[<h2 id="管理到底都做哪些事儿？"><a href="#管理到底都做哪些事儿？" class="headerlink" title="管理到底都做哪些事儿？"></a>管理到底都做哪些事儿？</h2><p><strong>基于良好的角色认知和管理沟通，</strong>主要做好三件事：<strong>带人、做事、看方向。</strong></p>
+<p>五个管理要素：<strong>角色认知、管理规划、团队建设、任务管理和管理沟通</strong>。</p>
+<p>管理规划-看方向<br>团队建设-带人<br>任务管理-做事</p>
+<p><img src="/image/column/tech-mg/1629193895904-00c79e57-479a-48ad-bc89-5d3f67d6b54f.png"></p>
+<blockquote>
+<p>TIPS：如何提升团队工作效率？<br>工业时代的团队：<strong>主要靠加强外驱，</strong>讲究“胡萝卜加大棒”，<strong>追求严格管控。</strong><br>知识经济时代的团队：<strong>更多是靠激发内驱</strong>，弹性工作制也好，发挥员工优势也好，都是希望员工<strong>更主动、自主，从而有更多的创造力。</strong> </p>
+</blockquote>
+<h2 id="从工程师到管理者，角色都发生了哪些变化？"><a href="#从工程师到管理者，角色都发生了哪些变化？" class="headerlink" title="从工程师到管理者，角色都发生了哪些变化？"></a>从工程师到管理者，角色都发生了哪些变化？</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>工程师</th>
+<th>管理者</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>职责使命</td>
+<td>做好自己手头的工作</td>
+<td>带领整个团队往前走，上级只是帮你设定一个目标，剩下做什么、怎么做，都是要考虑的，所有对达成目标有帮助的工作都是份内的</td>
+</tr>
+<tr>
+<td>负责对象</td>
+<td>对自己和自己的工作负责，“管好自己就可以了”</td>
+<td>对公司(上级)和团队(下级)都负责，关心团队成员的发展和成长</td>
+</tr>
+<tr>
+<td>关注焦点</td>
+<td>过程导向，把工作执行到位</td>
+<td>目标和结果导向，关心目标和前进方向</td>
+</tr>
+<tr>
+<td>工作内容和能力要求</td>
+<td>内容单纯，主要靠专业能力</td>
+<td>多维立体，所需能力维度大幅增加，技术判断力、目标管理能力、团队规划能力、项目管理能力、沟通协调能力、团队建设能力</td>
+</tr>
+<tr>
+<td>任务来源</td>
+<td>上级安排，听上级指挥</td>
+<td>自己主动规划&amp;向上沟通，上级工作的拆解和安排，但更多是靠自己筹划，然后和上级去沟通确认，从被动“等活儿”变为主动规划。</td>
+</tr>
+<tr>
+<td>实施手段</td>
+<td>主要靠自己</td>
+<td>主要靠团队</td>
+</tr>
+<tr>
+<td>合作维度</td>
+<td>平级合作为主</td>
+<td>360度合作，维度立体，上级（规划目标）、下级（落地执行）、平级（联合项目）、平级的上、下级（协调资源和进度）</td>
+</tr>
+<tr>
+<td>合作关系</td>
+<td>和团队成员是平级竞合关系，以合作为主，也有“竞”的成分</td>
+<td>和团队成员是全面合作关系</td>
+</tr>
+<tr>
+<td>思维方式</td>
+<td>执行思维，习惯关注确定性风险，特点是关注过程和细节，更重要的是关注风险和成本，希望通过对风险的排除和成本的掌控，来保证工作交付的确定性。</td>
+<td>规划思维，习惯关注可能性收益</td>
+</tr>
+<tr>
+<td>技术视角</td>
+<td>技术实施视角</td>
+<td>技术评估视角（技术判断力）</td>
+</tr>
+</tbody></table>
+<h2 id="新经理六大常见的管理误区"><a href="#新经理六大常见的管理误区" class="headerlink" title="新经理六大常见的管理误区"></a>新经理六大常见的管理误区</h2><p>问题的共同点在哪里吗？你觉得这些问题背后的原因是什么？会带来哪些可能的后果呢？</p>
+<h3 id="第一类：过程导向、被动执行"><a href="#第一类：过程导向、被动执行" class="headerlink" title="第一类：过程导向、被动执行"></a>第一类：过程导向、被动执行</h3><p>常见的做法和说法如下：</p>
+<ul>
+<li>不主动找活儿干，总是等待上级派活儿，如果上级没有明确安排，就“放羊”。 </li>
+<li>即使上级有了安排，还总是指望上级替他做决定该怎么做，选哪个方案。 </li>
+<li>在和上、下级沟通中，他主要充当“传话筒”的角色，常用句式是“老板说……”“某员工说……”，并没有反思每次沟通要达到的目的和效果是什么。 </li>
+<li>过于关注苦劳和付出，常见说法是“某某还是不错的，没有功劳也有苦劳。”</li>
+</ul>
+<p>由于没有从“管理者”的视角出发，所以至少会带来如下三个后果：</p>
+<ul>
+<li><strong>团队方向感缺失</strong>。大家都只是着眼于手头工作，团队得不到愿景的凝聚和激励。 </li>
+<li><strong>团队做不出有效的业绩</strong>。因为团队没有方向感，所以结果就很难有效。</li>
+<li><strong>无法带领一个团队</strong>。由于视角局限，所以还不具备带领团队的能力。</li>
+</ul>
+<h3 id="第二类：大包大揽、唯我最强"><a href="#第二类：大包大揽、唯我最强" class="headerlink" title="第二类：大包大揽、唯我最强"></a>第二类：大包大揽、唯我最强</h3><p>常见的相关说法有：</p>
+<ul>
+<li>“某某做得太慢了，还是我来做吧，他半天的工作，我两个小时就搞定了。”（包工作）</li>
+<li>“团队离了我就不转了，里里外外都靠我操心，他们都担不起这个责任。” （包责任）</li>
+<li>“某某的工作主要靠我……”“在我的指导下，某某才……”“这件事主要是我做的……”（包功劳）</li>
+</ul>
+<p>可能会带来这样的后果：</p>
+<ul>
+<li><strong>梯队问题</strong>：大树底下寸草不生，梯队迟迟培养不起来。因为梯队的培养需要授权，需要让高潜人才有发挥空间并承担相应的责任。</li>
+<li><strong>激励问题</strong>：由于管理者冲得太靠前，团队成员积极性受挫，遇事往后缩。</li>
+<li><strong>个人发展问题</strong>：由于得不到团队成员的有效支持，自己又忙又累，做不了更大的业务。</li>
+</ul>
+<blockquote>
+<p>有些成熟公司如京东就有规定，_<strong>如果你没有培养出可以完全顶替你位置的人，你是不能晋升的。</strong>_</p>
+</blockquote>
+<h3 id="第三类：带头大哥、当家保姆"><a href="#第三类：带头大哥、当家保姆" class="headerlink" title="第三类：带头大哥、当家保姆"></a>第三类：带头大哥、当家保姆</h3><p>常见的相关说法有：</p>
+<ul>
+<li>“好好干，我不会亏待你的，我绝不会让跟着我的兄弟们吃亏！”</li>
+<li>“某某可能会不高兴，可能会离职，怎么办呢？”</li>
+<li>“某某技术比我强，我给他打好下手就行了。”</li>
+</ul>
+<p>这类问题带来的后果大体如下：</p>
+<ul>
+<li><strong>不职业的管理风格和文化</strong>，这会给公司带来很大的潜在风险。</li>
+<li><strong>团队没有方向</strong>，所以很难有正确的判断和决策。</li>
+</ul>
+<blockquote>
+<ol>
+<li>“带头大哥”式的管理者，讲究的是兄弟感情，在他们心目中，不但兄弟的工作是我的， 兄弟人也是我的。这类管理者可能在某些情况下特别有战斗力，但是一旦情况有变，对公司的破坏性也是非常大的，因为他忘记了他带的<strong>团队是公司的资源</strong>，而不是自己的，所以不可能成为一个职业的管理者。</li>
+<li>“当家保姆”式的管理者，由于团队里有资深的高级工程师，他在技术判断力方面不如这些高工，索性就给这些高工做起了“保姆”，而忘记了<strong>自己才是这个团队的舵手和船长，</strong>因此也不是一个职业的管理者。</li>
+</ol>
+</blockquote>
+<h3 id="第四类：单一视角、固化思维"><a href="#第四类：单一视角、固化思维" class="headerlink" title="第四类：单一视角、固化思维"></a>第四类：单一视角、固化思维</h3><p>常见的相关说法有：</p>
+<ul>
+<li>“人手不够，没人，这真做不了，要做就得招人。”</li>
+<li>“让团队加班的话，得给大家发加班费，不然没法提升积极性。”</li>
+<li>“像某某那样的人才适合做管理，我跟他太不一样了，所以不适合做管理。”</li>
+<li>“还有个 Bug 没修复，不能发布，我们一直都是这么规定的。”</li>
+</ul>
+<p>造成的后果是：</p>
+<ul>
+<li><strong>习惯性卡住</strong>。遇到问题和困难，很容易被卡住，到处都是绕不过去的鸿沟。</li>
+<li><strong>认知层次低</strong>。由于被单一惯性思维所支配，认知层次和考虑问题的维度无法提升。</li>
+<li><strong>难堪重任</strong>。由于创造性地解决问题的能力不足，难以承担具有挑战性的工作。</li>
+</ul>
+<h3 id="第五类：自扫门前雪、固守边界"><a href="#第五类：自扫门前雪、固守边界" class="headerlink" title="第五类：自扫门前雪、固守边界"></a>第五类：自扫门前雪、固守边界</h3><p>常见的相关说法有：</p>
+<ul>
+<li>“这个是测试的问题，这个是产品的问题，这个是别的部门的问题。”</li>
+<li>“产品经理一点逻辑都没有，没法沟通。”</li>
+<li>“这事不赖我们团队，是某某团队没有按时完成。”</li>
+<li>“我查过了，不是我们的问题，惩罚不到我们。”</li>
+</ul>
+<p>所以，这类问题明显的管理者，常常带来这样的后果：</p>
+<ul>
+<li><strong>项目推进不畅，从而影响全局的结果</strong>。</li>
+<li><strong>自我设限，因此个人成长受限</strong>。</li>
+<li><strong>个人影响力无法扩展</strong>。因为目光和手脚都局限在团队内，所以无法在更大的范围产生影响力，也就无法成为更高级的管理者。</li>
+</ul>
+<blockquote>
+<p>角色和责任的边界划分，是为了分工和合作，但由于很多大型项目有赖于多个团队一起协作完成，所以又需要有人主动站出来，去承担边界模糊的那部分职责。作为一个员工，边界分明无可厚非，但是作为一个管理者，就需要以全局的目标为己任，才能拿到公司要的业绩结果。<br>作为管理者，是要站高一层来看待问题的。</p>
+</blockquote>
+<h3 id="第六类：患得患失"><a href="#第六类：患得患失" class="headerlink" title="第六类：患得患失"></a>第六类：患得患失</h3><p>常见的说法有： </p>
+<ul>
+<li>“突然不写代码了，感觉吃饭的家伙没了，心里发虚。”</li>
+<li>“管理工作太琐碎，感觉离技术越来越远，现在特别担心个人发展。” </li>
+<li>“做管理最大的挑战是，要舍弃技术，特别难。” </li>
+<li>“管理是个矛盾的事情，自己技术专业性越来越差，却要带领整个团队。”</li>
+</ul>
+<p>核心原因<br>把管理摆在了和技术对立的位置，同时由于管理能力还没有强大到可以作为自己的核心竞争力，因此忧虑自己的技术会落后，从而失去生存能力。</p>
+<p>造成的后果：</p>
+<ul>
+<li>犹豫反复，无法全力以赴去做好管理，<strong>成长缓慢</strong>。</li>
+<li><strong>对技术的看法太狭隘，从而影响技术判断力的提升</strong>。</li>
+<li>由于<strong>误判</strong>，可能会错失一个好的发展平台。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>读书学习笔记</category>
+      </categories>
+      <tags>
+        <tag>技术管理</tag>
       </tags>
   </entry>
   <entry>
@@ -4792,412 +5249,6 @@
       <tags>
         <tag>学习方法</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>极客时间-技术管理实战36讲学习笔记</title>
-    <url>/2021/08/10/technology-management-0/</url>
-    <content><![CDATA[<blockquote>
-<p>如果干得好，管理是最崇高的职业之一。没有哪一个职业能像管理一样为他人提供学习和成长的机会，让他们懂得承担责任并取得成绩，以及为团队的成功做出贡献。<br>——“颠覆式创新之父”克里斯坦森，《你要如何衡量你的人生》</p>
-</blockquote>
-<h2 id="为什么需要学管理？"><a href="#为什么需要学管理？" class="headerlink" title="为什么需要学管理？"></a>为什么需要学管理？</h2><p>对于互联网技术人来说，“管理”作为一项综合能力不再是一个可选项，无论是否身在技术管理岗，未来的职业发展都会围绕着<strong>技术和管理</strong>这两条腿在走路，一条腿是走不远的。</p>
-<h2 id="重点内容"><a href="#重点内容" class="headerlink" title="重点内容"></a>重点内容</h2><ol>
-<li><strong>自我倾听。</strong>理顺内心的纠结与彷徨，心无旁骛地走上管理之路。</li>
-<li><strong>角色认知。</strong>提供一个管理工作的“全景图”，以方便按图索骥地<em><strong>了解管理工作所涵盖的方方面面。</strong></em></li>
-<li><strong>管理方法。</strong>“管理三部曲”——<em><strong>管理规划、团队建设和任务管理</strong></em>，探讨<em><strong>“看方向”“带人”和“做事”</strong></em>的这三个关键的管理内容。</li>
-<li><strong>管理沟通。</strong>探讨管理沟通的<em><strong>工具和技巧</strong></em>，并探讨<em><strong>向上、向下、横向</strong></em>等典型沟通场景下的沟通要点。</li>
-<li><strong>管理之路。</strong>主要探讨<em><strong>如何积累管理方法论</strong></em>，以及<em><strong>如何成为自己所期待的管理者。</strong></em></li>
-</ol>
-<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><ul>
-<li><p>自我倾听</p>
-<ul>
-<li><a href="/2021/08/10/technology-management-1/">自我倾听（上）</a></li>
-<li><a href="http://1.0.0.1/">自我倾听（下）</a></li>
-</ul>
-</li>
-<li><p>角色认知</p>
-<ul>
-<li><a href="/2021/08/11/technology-management-3/">角色认知</a></li>
-</ul>
-</li>
-<li><h2 id="管理规划"><a href="#管理规划" class="headerlink" title="管理规划"></a>管理规划</h2></li>
-<li><p>团队建设</p>
-<ul>
-<li><a href="http://c.c/">团队建设六要素</a></li>
-<li>能力培养——提升员工个人能力</li>
-<li>员工激励——提升员工的工作意愿和积极性</li>
-<li><a href="http://baidu.cc/">团队分工——兼顾团队分工的稳定性和灵活性</a></li>
-<li><a href="http://b.c/">协作水平——有效提升团队凝聚力方法</a></li>
-<li><a href="http://1.0.0.1/">梯队建设——物色和培养核心人才</a></li>
-<li><a href="http://1.0.0.1/">团队文化——营造团队氛围</a></li>
-<li></li>
-</ul>
-</li>
-<li><h2 id="任务管理"><a href="#任务管理" class="headerlink" title="任务管理"></a>任务管理</h2></li>
-<li><h2 id="管理沟通"><a href="#管理沟通" class="headerlink" title="管理沟通"></a>管理沟通</h2></li>
-<li><h2 id="管理之路"><a href="#管理之路" class="headerlink" title="管理之路"></a>管理之路</h2></li>
-</ul>
-]]></content>
-      <categories>
-        <category>读书学习笔记</category>
-      </categories>
-      <tags>
-        <tag>技术管理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自我倾听（上）</title>
-    <url>/2021/08/10/technology-management-1/</url>
-    <content><![CDATA[<h2 id="技术人常见的职业发展方向"><a href="#技术人常见的职业发展方向" class="headerlink" title="技术人常见的职业发展方向"></a>技术人常见的职业发展方向</h2><p><img src="/image/column/tech-mg/1629193567069-f3f58680-f2e6-4305-b8e7-4d3f09914adf.png"></p>
-<p>技术类、管理类、创业类和顾问类方向的技能清单：</p>
-<p><img src="/image/column/tech-mg/1628231014471-78f3c500-6793-4ad5-8bd7-d60d3e02404f.png" alt="技能清单"><br>无论走在哪条路上，有些能力是共通的，比如<strong>规划、带人、沟通、执行等管理能力</strong>。</p>
-<h2 id="要不要做管理？"><a href="#要不要做管理？" class="headerlink" title="要不要做管理？"></a>要不要做管理？</h2><p>要不要做管理问题应从<strong>初衷和意愿</strong>两方面考虑。</p>
-<h3 id="“做管理”是否更符合初衷？"><a href="#“做管理”是否更符合初衷？" class="headerlink" title="“做管理”是否更符合初衷？"></a>“做管理”是否更符合初衷？</h3><p>仔细思考自己做管理是因为外驱力还是内驱力？<strong>外驱让我们可以做好本职工作，而内驱才能让我们成就卓越。</strong></p>
-<p><strong>外驱力</strong><br>外部的推力和诱惑，如不得已的选择、别人眼里的成功、不辜负组织的期待、对做管理的主观遐想等。</p>
-<p>以下问题可供参考判断：</p>
-<ul>
-<li>“我对技术没有热情，也没有技术特长，所以只能做管理。”</li>
-<li>“做技术又不能做一辈子，很多前辈都转管理了，我也要转。”</li>
-<li>“没有办法，公司发展太快了，老板要求我带团队。”</li>
-<li>“如果能做到公司高管，别人都会认为我是一个优秀和成功的人。”</li>
-<li>“能够做管理带团队，这样在家人眼中会很风光。”</li>
-<li>“上级说我适合做管理，我不能辜负他对我的期望。”</li>
-<li>“公司需要我带团队，这是公司对我的信任，我一定得做好。”</li>
-<li>“不用凡事亲力亲为，安排下级去做就好了，应该会轻松些。”</li>
-<li>“做管理越晋升越轻松，你看高管都不坐班。”</li>
-</ul>
-<p><strong>内驱力</strong><br>建立在内心的渴望和意愿上（内在动力和真正诉求），如认同管理的价值观、对管理充满热情，并享受这些工作、看重在管理方面的成长等。</p>
-<p>价值观、核心诉求、擅长和热爱等底层的动力，正是面对挑战、走向卓越所需要的最重要的东西。</p>
-<p>以下表现可供参考判断：</p>
-<ul>
-<li>认为招聘面试、辅导员工、向上汇报、开会沟通、流程梳理、资源协调、进度推动、绩效评估等大部分管理工作，都是琐碎的“杂事”，很难从这些工作中获得价值感和成就感，甚至还对于这些工作挤占了写代码的时间而不满。</li>
-<li>认为经理是给高工和架构师打下手的，职责就是支持好架构师的工作，所以比较郁闷。</li>
-<li>认为管理的工作不如技术工作有价值，通过技术手段来解决问题才是最酷的事情。你是否也会这么认为呢？</li>
-<li>是否主动地向自己的上级了解过团队的工作目标呢？</li>
-<li>是否主动关心过新同事该怎么培养，以及如何更好地帮助他们成长呢？</li>
-<li>是否享受去负责一个大项目的协调和推进？它的成功发布是否会给你带来强烈的成就感呢？</li>
-<li>是否思考过什么样的流程和机制可以应对团队工作中的那些疏漏呢？</li>
-<li>更大的责任、更立体的视角、更灵活的思维方式。</li>
-</ul>
-<h3 id="“做管理”是否更能激发投入的意愿？"><a href="#“做管理”是否更能激发投入的意愿？" class="headerlink" title="“做管理”是否更能激发投入的意愿？"></a>“做管理”是否更能激发投入的意愿？</h3><p>“做管理”带来的成长与收获：</p>
-<ul>
-<li><strong>成长感</strong>——到了一个更大的平台上，能力和视野将得到大幅度提升；</li>
-<li><strong>成就感</strong>——能力变强，有了团队，能搞定更大、更复杂的事情，做出更大的成绩；</li>
-<li><strong>影响力</strong>——带着团队做出越来越多的成就，团队也越来越优秀，团队成员都得到了成长，甚至还会影响到合作团队；</li>
-<li><strong>获得感</strong>——能力、成绩、影响力全面提升，得到更多的精神和物质的回报。</li>
-</ul>
-<h2 id="哪些人容易走上管理岗位？"><a href="#哪些人容易走上管理岗位？" class="headerlink" title="哪些人容易走上管理岗位？"></a>哪些人容易走上管理岗位？</h2><p>做管理的“天时地利人和”：</p>
-<ul>
-<li><strong>机会、时机、大环境、时代背景；</strong></li>
-<li><strong>自己的优势、能力以及所负责的工作内容；</strong></li>
-<li><strong>得到他人的支持（资源提供者、伙伴/同行者、导师榜样、家人/朋友）。</strong></li>
-</ul>
-<p><img src="/image/column/tech-mg/1628238415051-6e3a052c-4604-4af9-9a5f-05251eb81817.png"></p>
-<blockquote>
-<p>TIPS：</p>
-<ol>
-<li>去能积累的公司做管理，会是更合理的选择；</li>
-<li>负责<strong>最全局的模块</strong>（“广”）、负责<strong>最核心的技术模块</strong>（“深”）的工程师更容易成为管理者；</li>
-<li>天使轮、A 轮这样的早期公司，大多处于生存期，还没有上规模，而没有规模的公司并不需要你去做管理，所以你很大概率会失望。</li>
-<li>如果你主动去了解技术和业务的全局，并主动争取做一些大型项目的负责人，你就具备了做管理的“地利”。</li>
-</ol>
-</blockquote>
-<p>“天时”“地利”“人和”这三类管理之路的外部因素都具备了（如下图），自然可以更顺利地走上管理岗位。</p>
-<p><img src="/image/column/tech-mg/1628244980896-3120e339-3202-421b-acc2-552c6b5b9345.png"></p>
-<p>但如果不具备这些外部因素，而你还想往管理方向走的话，那么以下这些之前可能并没做过的、公司也不会因此就给你多发薪水的工作，在编码之余依然要去关心：</p>
-<ul>
-<li>项目的流程该怎么改进；</li>
-<li>团队合作的机制该怎么建立；</li>
-<li>新员工入职该怎么培养；</li>
-<li>团队的氛围该怎么建设。</li>
-</ul>
-<p><strong>因为，想被提拔为一个管理者最好的方式，就是首先成为一个实际上的管理者，这种“既定事实”的晋升理念在互联网行业里被广泛认同。</strong></p>
-<h2 id="要不要转回去做技术？"><a href="#要不要转回去做技术？" class="headerlink" title="要不要转回去做技术？"></a>要不要转回去做技术？</h2><p>焦虑的感受：</p>
-<ul>
-<li>“管理的事儿太杂，都没时间写代码了，越来越心虚……”</li>
-<li>“做管理最大的挑战是，要舍弃技术，特别难。”</li>
-<li>“管理和技术到底该怎么平衡？”</li>
-<li>“突然不写代码了，感觉吃饭的家伙没了，哈哈。”</li>
-<li>“管理工作太琐碎，感觉离技术越来越远，现在特别担心个人发展。”</li>
-<li>“管理是一个有违人性的事情，自己的技术专业性越来越差，但是却要带领整个团队。”</li>
-<li>“反正想不明白，就多投入一些时间来兼顾技术和管理吧！”</li>
-</ul>
-<p>是否要转回去做技术，还是看自己的初衷（内驱/外驱），如果管理工作确实不是自己想要的，那么回去继续做工程师也完全没有问题。但内心如果是想往管理方向走，只是刚开始时感到焦虑等问题，可以通过<strong>提升对技术管理的认知</strong>来解决：</p>
-<ol>
-<li>做技术管理并没有放弃技术，而是换了一种方式去学习和运用技术，在一定程度上放弃了编码而已：<ol>
-<li>要把技术提到更高视角来看待：从目标和评估角度去看待技术、借助团队成员的技术来实现更大的目标；</li>
-<li>换一种学习方式来掌握技术：<strong>建立学习机制、请教专家、建立共创机制。</strong></li>
-</ol>
-</li>
-<li>在做技术管理过程中，只要愿意去学习，持续不断地实践和练习，一定会有丰富的收获，以后也能靠做技术管理“吃饭”；</li>
-<li>工作“升维”已不可避免，即便不做技术管理者，要做好一位技术带头人或架构师，或多或少也要懂管理（全局视野、规划能力、结果导向意识、项目管理方法、沟通协调能力等），那不如奋力向前；</li>
-<li>可以做技术型管理者，结合自己的兴趣和优势，打造出自己的独特管理风格；</li>
-<li>做技术管理并没有放弃技术，而且也不能放弃技术，放弃了技术是做不好技术管理的；</li>
-<li>技术转管理并不意味着不关心技术，只是更关心更大的目标和整体结果了。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>读书学习笔记</category>
-      </categories>
-      <tags>
-        <tag>技术管理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>角色认知</title>
-    <url>/2021/08/11/technology-management-3/</url>
-    <content><![CDATA[<h2 id="管理到底都做哪些事儿？"><a href="#管理到底都做哪些事儿？" class="headerlink" title="管理到底都做哪些事儿？"></a>管理到底都做哪些事儿？</h2><p><strong>基于良好的角色认知和管理沟通，</strong>主要做好三件事：<strong>带人、做事、看方向。</strong></p>
-<p>五个管理要素：<strong>角色认知、管理规划、团队建设、任务管理和管理沟通</strong>。</p>
-<p>管理规划-看方向<br>团队建设-带人<br>任务管理-做事</p>
-<p><img src="/image/column/tech-mg/1629193895904-00c79e57-479a-48ad-bc89-5d3f67d6b54f.png"></p>
-<blockquote>
-<p>TIPS：如何提升团队工作效率？<br>工业时代的团队：<strong>主要靠加强外驱，</strong>讲究“胡萝卜加大棒”，<strong>追求严格管控。</strong><br>知识经济时代的团队：<strong>更多是靠激发内驱</strong>，弹性工作制也好，发挥员工优势也好，都是希望员工<strong>更主动、自主，从而有更多的创造力。</strong> </p>
-</blockquote>
-<h2 id="从工程师到管理者，角色都发生了哪些变化？"><a href="#从工程师到管理者，角色都发生了哪些变化？" class="headerlink" title="从工程师到管理者，角色都发生了哪些变化？"></a>从工程师到管理者，角色都发生了哪些变化？</h2><table>
-<thead>
-<tr>
-<th>维度</th>
-<th>工程师</th>
-<th>管理者</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>职责使命</td>
-<td>做好自己手头的工作</td>
-<td>带领整个团队往前走，上级只是帮你设定一个目标，剩下做什么、怎么做，都是要考虑的，所有对达成目标有帮助的工作都是份内的</td>
-</tr>
-<tr>
-<td>负责对象</td>
-<td>对自己和自己的工作负责，“管好自己就可以了”</td>
-<td>对公司(上级)和团队(下级)都负责，关心团队成员的发展和成长</td>
-</tr>
-<tr>
-<td>关注焦点</td>
-<td>过程导向，把工作执行到位</td>
-<td>目标和结果导向，关心目标和前进方向</td>
-</tr>
-<tr>
-<td>工作内容和能力要求</td>
-<td>内容单纯，主要靠专业能力</td>
-<td>多维立体，所需能力维度大幅增加，技术判断力、目标管理能力、团队规划能力、项目管理能力、沟通协调能力、团队建设能力</td>
-</tr>
-<tr>
-<td>任务来源</td>
-<td>上级安排，听上级指挥</td>
-<td>自己主动规划&amp;向上沟通，上级工作的拆解和安排，但更多是靠自己筹划，然后和上级去沟通确认，从被动“等活儿”变为主动规划。</td>
-</tr>
-<tr>
-<td>实施手段</td>
-<td>主要靠自己</td>
-<td>主要靠团队</td>
-</tr>
-<tr>
-<td>合作维度</td>
-<td>平级合作为主</td>
-<td>360度合作，维度立体，上级（规划目标）、下级（落地执行）、平级（联合项目）、平级的上、下级（协调资源和进度）</td>
-</tr>
-<tr>
-<td>合作关系</td>
-<td>和团队成员是平级竞合关系，以合作为主，也有“竞”的成分</td>
-<td>和团队成员是全面合作关系</td>
-</tr>
-<tr>
-<td>思维方式</td>
-<td>执行思维，习惯关注确定性风险，特点是关注过程和细节，更重要的是关注风险和成本，希望通过对风险的排除和成本的掌控，来保证工作交付的确定性。</td>
-<td>规划思维，习惯关注可能性收益</td>
-</tr>
-<tr>
-<td>技术视角</td>
-<td>技术实施视角</td>
-<td>技术评估视角（技术判断力）</td>
-</tr>
-</tbody></table>
-<h2 id="新经理六大常见的管理误区"><a href="#新经理六大常见的管理误区" class="headerlink" title="新经理六大常见的管理误区"></a>新经理六大常见的管理误区</h2><p>问题的共同点在哪里吗？你觉得这些问题背后的原因是什么？会带来哪些可能的后果呢？</p>
-<h3 id="第一类：过程导向、被动执行"><a href="#第一类：过程导向、被动执行" class="headerlink" title="第一类：过程导向、被动执行"></a>第一类：过程导向、被动执行</h3><p>常见的做法和说法如下：</p>
-<ul>
-<li>不主动找活儿干，总是等待上级派活儿，如果上级没有明确安排，就“放羊”。 </li>
-<li>即使上级有了安排，还总是指望上级替他做决定该怎么做，选哪个方案。 </li>
-<li>在和上、下级沟通中，他主要充当“传话筒”的角色，常用句式是“老板说……”“某员工说……”，并没有反思每次沟通要达到的目的和效果是什么。 </li>
-<li>过于关注苦劳和付出，常见说法是“某某还是不错的，没有功劳也有苦劳。”</li>
-</ul>
-<p>由于没有从“管理者”的视角出发，所以至少会带来如下三个后果：</p>
-<ul>
-<li><strong>团队方向感缺失</strong>。大家都只是着眼于手头工作，团队得不到愿景的凝聚和激励。 </li>
-<li><strong>团队做不出有效的业绩</strong>。因为团队没有方向感，所以结果就很难有效。</li>
-<li><strong>无法带领一个团队</strong>。由于视角局限，所以还不具备带领团队的能力。</li>
-</ul>
-<h3 id="第二类：大包大揽、唯我最强"><a href="#第二类：大包大揽、唯我最强" class="headerlink" title="第二类：大包大揽、唯我最强"></a>第二类：大包大揽、唯我最强</h3><p>常见的相关说法有：</p>
-<ul>
-<li>“某某做得太慢了，还是我来做吧，他半天的工作，我两个小时就搞定了。”（包工作）</li>
-<li>“团队离了我就不转了，里里外外都靠我操心，他们都担不起这个责任。” （包责任）</li>
-<li>“某某的工作主要靠我……”“在我的指导下，某某才……”“这件事主要是我做的……”（包功劳）</li>
-</ul>
-<p>可能会带来这样的后果：</p>
-<ul>
-<li><strong>梯队问题</strong>：大树底下寸草不生，梯队迟迟培养不起来。因为梯队的培养需要授权，需要让高潜人才有发挥空间并承担相应的责任。</li>
-<li><strong>激励问题</strong>：由于管理者冲得太靠前，团队成员积极性受挫，遇事往后缩。</li>
-<li><strong>个人发展问题</strong>：由于得不到团队成员的有效支持，自己又忙又累，做不了更大的业务。</li>
-</ul>
-<blockquote>
-<p>有些成熟公司如京东就有规定，_<strong>如果你没有培养出可以完全顶替你位置的人，你是不能晋升的。</strong>_</p>
-</blockquote>
-<h3 id="第三类：带头大哥、当家保姆"><a href="#第三类：带头大哥、当家保姆" class="headerlink" title="第三类：带头大哥、当家保姆"></a>第三类：带头大哥、当家保姆</h3><p>常见的相关说法有：</p>
-<ul>
-<li>“好好干，我不会亏待你的，我绝不会让跟着我的兄弟们吃亏！”</li>
-<li>“某某可能会不高兴，可能会离职，怎么办呢？”</li>
-<li>“某某技术比我强，我给他打好下手就行了。”</li>
-</ul>
-<p>这类问题带来的后果大体如下：</p>
-<ul>
-<li><strong>不职业的管理风格和文化</strong>，这会给公司带来很大的潜在风险。</li>
-<li><strong>团队没有方向</strong>，所以很难有正确的判断和决策。</li>
-</ul>
-<blockquote>
-<ol>
-<li>“带头大哥”式的管理者，讲究的是兄弟感情，在他们心目中，不但兄弟的工作是我的， 兄弟人也是我的。这类管理者可能在某些情况下特别有战斗力，但是一旦情况有变，对公司的破坏性也是非常大的，因为他忘记了他带的<strong>团队是公司的资源</strong>，而不是自己的，所以不可能成为一个职业的管理者。</li>
-<li>“当家保姆”式的管理者，由于团队里有资深的高级工程师，他在技术判断力方面不如这些高工，索性就给这些高工做起了“保姆”，而忘记了<strong>自己才是这个团队的舵手和船长，</strong>因此也不是一个职业的管理者。</li>
-</ol>
-</blockquote>
-<h3 id="第四类：单一视角、固化思维"><a href="#第四类：单一视角、固化思维" class="headerlink" title="第四类：单一视角、固化思维"></a>第四类：单一视角、固化思维</h3><p>常见的相关说法有：</p>
-<ul>
-<li>“人手不够，没人，这真做不了，要做就得招人。”</li>
-<li>“让团队加班的话，得给大家发加班费，不然没法提升积极性。”</li>
-<li>“像某某那样的人才适合做管理，我跟他太不一样了，所以不适合做管理。”</li>
-<li>“还有个 Bug 没修复，不能发布，我们一直都是这么规定的。”</li>
-</ul>
-<p>造成的后果是：</p>
-<ul>
-<li><strong>习惯性卡住</strong>。遇到问题和困难，很容易被卡住，到处都是绕不过去的鸿沟。</li>
-<li><strong>认知层次低</strong>。由于被单一惯性思维所支配，认知层次和考虑问题的维度无法提升。</li>
-<li><strong>难堪重任</strong>。由于创造性地解决问题的能力不足，难以承担具有挑战性的工作。</li>
-</ul>
-<h3 id="第五类：自扫门前雪、固守边界"><a href="#第五类：自扫门前雪、固守边界" class="headerlink" title="第五类：自扫门前雪、固守边界"></a>第五类：自扫门前雪、固守边界</h3><p>常见的相关说法有：</p>
-<ul>
-<li>“这个是测试的问题，这个是产品的问题，这个是别的部门的问题。”</li>
-<li>“产品经理一点逻辑都没有，没法沟通。”</li>
-<li>“这事不赖我们团队，是某某团队没有按时完成。”</li>
-<li>“我查过了，不是我们的问题，惩罚不到我们。”</li>
-</ul>
-<p>所以，这类问题明显的管理者，常常带来这样的后果：</p>
-<ul>
-<li><strong>项目推进不畅，从而影响全局的结果</strong>。</li>
-<li><strong>自我设限，因此个人成长受限</strong>。</li>
-<li><strong>个人影响力无法扩展</strong>。因为目光和手脚都局限在团队内，所以无法在更大的范围产生影响力，也就无法成为更高级的管理者。</li>
-</ul>
-<blockquote>
-<p>角色和责任的边界划分，是为了分工和合作，但由于很多大型项目有赖于多个团队一起协作完成，所以又需要有人主动站出来，去承担边界模糊的那部分职责。作为一个员工，边界分明无可厚非，但是作为一个管理者，就需要以全局的目标为己任，才能拿到公司要的业绩结果。<br>作为管理者，是要站高一层来看待问题的。</p>
-</blockquote>
-<h3 id="第六类：患得患失"><a href="#第六类：患得患失" class="headerlink" title="第六类：患得患失"></a>第六类：患得患失</h3><p>常见的说法有： </p>
-<ul>
-<li>“突然不写代码了，感觉吃饭的家伙没了，心里发虚。”</li>
-<li>“管理工作太琐碎，感觉离技术越来越远，现在特别担心个人发展。” </li>
-<li>“做管理最大的挑战是，要舍弃技术，特别难。” </li>
-<li>“管理是个矛盾的事情，自己技术专业性越来越差，却要带领整个团队。”</li>
-</ul>
-<p>核心原因<br>把管理摆在了和技术对立的位置，同时由于管理能力还没有强大到可以作为自己的核心竞争力，因此忧虑自己的技术会落后，从而失去生存能力。</p>
-<p>造成的后果：</p>
-<ul>
-<li>犹豫反复，无法全力以赴去做好管理，<strong>成长缓慢</strong>。</li>
-<li><strong>对技术的看法太狭隘，从而影响技术判断力的提升</strong>。</li>
-<li>由于<strong>误判</strong>，可能会错失一个好的发展平台。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>读书学习笔记</category>
-      </categories>
-      <tags>
-        <tag>技术管理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>袁隆平：我的两个梦</title>
-    <url>/2021/05/24/ylp-2/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>【侠客岛按】</strong></p>
-<p>今天中午，噩耗传来。“杂交水稻之父”、中国工程院院士、“共和国勋章”获得者袁隆平在湖南长沙逝世。</p>
-<p>2019年10月23日，袁老曾在《人民日报》刊发文章，自述他的两个梦想，感人至深。侠客岛予以推荐，藉此缅怀这位伟大的科学家。</p>
-<p>袁老，您走好。</p>
-</blockquote>
-<p>时光如白驹过隙，一转眼，90年过去，我成了正儿八经的“90后”。我大半辈子都在与水稻打交道，至今从事杂交水稻研究工作已有55个年头。我最关心的，就是与水稻和粮食相关的事。</p>
-<p>新中国成立之前，中华大地上到处灾荒战乱，人民生活颠沛流离，少年时我就被迫从一个城市辗转到另一个城市，虽然少不更事，但每当看到沿路举家逃难、面如菜色的同胞，看到荒芜的田野和满目疮痍的土地，我的内心总会泛起一阵阵痛楚。报考大学时，我就对父母说，我要学农。母亲听了，吓一跳，说，傻孩子，学农多苦啊，你以为好玩儿呢？<strong>但我是真正爱上了农业，死活要学，还摆出大道理：吃饭可是天下第一桩大事，没有饭吃，人类怎么生存？</strong>最后，父母尊重我的选择。</p>
-<p>毕业后，我被分配到湖南安江农校任教。安江农校地处偏远，临行前，学校的领导告诉我，那里很偏僻，“一盏孤灯照终身”，你可要做好思想准备。当时我想，能传播农业科学知识，也是为国家做贡献！没想到，去了不久，就碰上困难时期。我当时想，<strong>这么大一个国家，如果粮食安全得不到保障，其他一切都无从谈起，我要为让中国人吃饱饭而奋斗！</strong></p>
-<p>一天，我看到一些农民从高山上兑了种子，担回来种，就问他们，为什么跑到那么高的山上去换种呢？他们说，山上的种子质量好一些，产得多些。他们接着还说了一句话，叫做“施肥不如勤换种”。这对我有很大启发：农业上增产的途径有很多，但其中良种是非常重要的因素。</p>
-<p>从此以后，我开始自己的杂交水稻研究之路。一路走来，有汗水和辛酸，也有丰收和喜悦。<strong>科学探索无止境，在这条漫长而又艰辛的路上，我一直有两个梦，一个是禾下乘凉梦，一个是杂交水稻覆盖全球梦。</strong></p>
-<p><strong>禾下乘凉梦，我是真做过，我梦见水稻长得有高粱那么高，穗子像扫把那么长，颗粒像花生那么大，而我则和助手坐在稻穗下面乘凉。其实我这个梦想的实质，就是水稻高产梦，让人们吃上更多的米饭，永远都不用再饿肚子。</strong></p>
-<p>做梦容易，但要把梦变成现实，则需要付出大量艰苦的劳动和努力。我清楚地记得，<strong>那是1961年7月的一天，我到安江农校的试验田选种。突然，我发现了一株“鹤立鸡群”的稻株</strong>。穗大，颗粒饱满。我随手挑了一穗，竟有230粒之多！当时以为，选到了优良品种，岂不是可以增产无数粮食？</p>
-<p>第二年春天，我把种子播下，结果却令人大失所望，一眼望去，高的高，矮的矮，没有一株赶得上最初的那株水稻。我不甘心，开始反复琢磨其中的奥秘，研究那一片试验田的稻株比例，最终得出一个结论：水稻是有杂交优势的，那株鹤立鸡群的水稻，就是天然的杂交水稻。既然天然杂交稻具有这样强的优势，那么人工杂交稻，也一定有优势。当时，遗传学理论一直否定自花授粉作物有杂交优势。我对此理论提出质疑。随后，我又拜访专家，翻找资料，<strong>最终得出结论，既然自然界存在杂交稻，那么人工杂交水稻也一定可以利用</strong>。而要想利用这一优势，首先需要找到“天然的雄性不育水稻”。</p>
-<p>于是，我又走上曲折的寻找之旅。</p>
-<p>其中，<strong>最令人刻骨铭心的是，在海南岛找到天然雄性不育野生稻“野败”并加以利用的过程</strong>。那是1970年11月，我和助手李必湖、尹华奇驻守在海南岛崖县南红农场，在当地寻找野生稻。在那里，有一位农专毕业的冯克珊，是南红良种繁育场的技术员，经常跑来听我讲课。冯克珊联想到农场附近有一种名叫“假禾”的草，很可能就是我要找的野生稻。</p>
-<p>11月23日，他找到李必湖，来到南红农场铁路涵洞附近的水塘边，到那片正在开花的野生稻中察看。他们发现了三个雄花异常的野生稻穗，野生稻穗的花药细瘦，色浅呈水渍状，不开裂散粉。这三个稻穗生长于同一禾蔸，是从一粒种子长出、匍匐于水面的分蘖。他们立即把这蔸野生稻连泥挖起，放在铁桶里拉回去，然后移栽到试验田里，等待鉴定。</p>
-<p>当时，我正在北京开会，收到助手们从海南发来的电报，连夜赶火车奔回海南岛。<strong>经过仔细检验，我们最终确认这是一株十分难得的天然雄性不育株野生稻，我给它命名为“野败”。</strong></p>
-<p>这真是大海捞针啊！</p>
-<p>“野败”的发现对杂交水稻研究具有里程碑的意义，更是杂交水稻“三系”配套成功的突破口。<strong>1973年，我们协作组历尽千辛万苦才通过测交找到恢复系，攻克“三系”配套难关，才有了新中国第一代杂交水稻。</strong>第一代以细胞质雄性不育系为遗传工具的杂交水稻，优点是不育系不育性稳定，但也有缺点，即配组的时候受到恢保关系制约，因此选择优良组合的几率比较低，难度大。</p>
-<p>自上世纪80年代中后期起，我们开始研究两系杂交水稻。1995年，第二代以光温敏不育系为遗传工具的杂交水稻——两系法杂交稻研制成功，它的主要优点是配组自由选择，能选配到优良稻组合的几率比较高。但是，第二代杂交稻也不是完美的：不育系育性受气温和光照影响较大。我想，如果有一种杂交水稻，既兼具第一代和第二代的优点，又能克服二者的缺点，那该多好啊！</p>
-<p><strong>2011年，我们又启动第三代杂交水稻育种技术的研究与利用，这是以遗传工程雄性不育系为遗传工具的杂交水稻，已初步研究成功，该杂交水稻克服了前两代的缺点。现在，我们甚至开始了第四代、第五代杂交水稻的研制。</strong></p>
-<p><strong>袁隆平带各国朋友参观试验田（图源：新华社）</strong></p>
-<p>追求高产更高产，是我们永恒的目标。自上世纪90年代中后期起，我们开始超级杂交稻攻关，分别于2000年、2004年、2011年、2014年实现大面积示范亩产700公斤、800公斤、900公斤、1000公斤目标。近5年又突破每公顷16吨、17吨的目标。<strong>2017年，世界水稻平均每公顷产量仅4.61吨，而我国杂交水稻平均产量每公顷达7.5吨，在世界上遥遥领先。</strong></p>
-<p>不可否认，上个世纪我们的主要任务是解决人民群众的温饱问题，所以杂交水稻把产量摆在优先地位。现在生活水平提高了，人民不仅要吃饱，还要吃好。所以，我们也改变思路，提出既要高产，又要优质。但是必须说清楚，虽然要满足市场对优质大米的需求，但我们仍然坚持一条，即不能以牺牲产量来求优质。<strong>我始终觉得，粮食安全问题必须时刻警惕。历史也无数次告诫我们，把饭碗牢牢端在自己手中的最有效途径，就是提高水稻的产量。</strong></p>
-<p>科学探索永无止境，我的另一个梦，就是<strong>杂交水稻走向世界、覆盖全球梦</strong>。</p>
-<p>世界上超过一半人口以稻米为主食，一个令人担忧的事实却是，全球现有1.6亿公顷稻田中，杂交水稻种植面积还不到15%。发展杂交水稻不仅有广阔的舞台，更对保障世界粮食安全具有重要意义，倘若全球有一半稻田种上杂交稻，按每公顷比常规水稻增产2吨计算，则增产的粮食可以多养活4亿—5亿人口。杂交水稻覆盖全球不仅能提升全球水稻产量，造福人类，还能提升我国的国际地位。</p>
-<p>为了实现这个梦，我们一直在努力。从上世纪80年代至今，我们坚持开办杂交水稻技术国际培训班，为80多个发展中国家培训了14000多名杂交水稻技术人才，我还受邀担任联合国粮农组织首席顾问，帮助其他国家发展杂交水稻。<strong>目前，杂交水稻已在印度、越南、菲律宾、孟加拉国、巴基斯坦、印度尼西亚、美国、巴西等国实现大面积种植。</strong>今年6月，在长沙举行的中非经贸博览会上，来了不少非洲国家农业界的朋友，看到他们对杂交水稻充满感激和期待，更坚定了我们将杂交水稻推向世界的信心与决心。</p>
-<p>新中国杂交水稻事业能够取得丰硕成果，离不开党和国家的高度重视与大力支持，同时也是广大科技工作者集体智慧的结晶。<strong>我已经90岁了，但“老骥伏枥，志在千里”，我要力争让我们的团队早日完成每公顷18吨的高产攻关，做好第三代杂交水稻技术的生产应用。我希望最终能实现“禾下乘凉、覆盖全球”的两大心愿。</strong></p>
-<p><em>文/袁隆平</em><br><em>编辑/点苍</em><br><strong>（原文刊于《 人民日报 》2019年10月23日第20 版）</strong></p>
-<blockquote>
-<p>剪报来源<br>公众号： 侠客岛<br>链　接：<a href="https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw">https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw</a><br>日　期：2021-05-22</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>剪报</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>袁隆平：稻子熟了，妈妈，我来看您了</title>
-    <url>/2021/05/24/ylp-1/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>“他们说，我用一粒种子改变了世界。我知道，这粒种子，是妈妈您在我幼年时种下的！”</strong><br> <br>2010年，在袁隆平院士80华诞，湖南卫视为他举办了“为了大地的丰收”专场文艺晚会，晚会上，袁院士写给母亲的信《妈妈，稻子熟了》感动了在场所有观众，字里行间，说不尽对母亲的思念与愧疚。</p>
-<p>袁隆平动情写到：“没能多陪伴母亲，是我永远的后悔与遗憾。”今天，袁隆平院士逝世，读完这封旧信的网友纷纷留言：“读到一半就已泪流满面，可爱的袁爷爷，要去和妈妈团聚了。”<br> <br>我们整理了信件原文，纪念袁隆平院士一路走好。<br> <br>以下为信件原文。</p>
-</blockquote>
-<p>本来想一个人静静地陪您说会话，安江的乡亲们实在是太热情了，天这么热，他们还一直陪着，谢谢他们了。</p>
-<p>妈妈，您在安江，我在长沙，隔得很远很远。我在梦里总是想着您，想着安江这个地方。</p>
-<p>人事难料啊，您这样一位习惯了繁华都市的大家闺秀，最后竟会永远留在这么一个偏远的小山村。还记得吗？1957年，我要从重庆的大学分配到这儿，是您陪着我，脸贴着地图，手指顺着密密麻麻的细线，找了很久，才找到地图上这么一个小点点。当时您叹了口气说：<strong>“孩子，你到那儿，是要吃苦的呀……”</strong></p>
-<p>我说：“我年轻，我还有一把小提琴。”</p>
-<p>没想到的是，为了我，为了帮我带小孩，把您也拖到了安江。最后，受累吃苦的，是妈妈您哪！您哪里走得惯乡间的田埂！我总记得，每次都要小孙孙牵着您的手，您才敢走过屋前屋后的田间小道。</p>
-<p>安江是我的一切，我却忘了，对一辈子都生活在大城市里的您来说，70岁了，一切还要重新来适应。我从来没有问过您有什么难处，我总以为会有时间的，会有时间的，等我闲一点一定好好地陪陪您……</p>
-<p>哪想到，直到您走的时候，我还在长沙忙着开会。那天正好是中秋节，全国的同行都来了，搞杂交水稻不容易啊，我又是召集人，怎么着也得陪大家过这个节啊，只是儿子永远亏欠妈妈您了……</p>
-<p>其实我知道，那个时候已经是您的最后时刻。我总盼望着妈妈您能多撑两天。谁知道，即便是天不亮就往安江赶，我还是没能见上妈妈您最后一面。</p>
-<p>太晚了，一切都太晚了，我真的好后悔。妈妈，当时您一定等了我很久，盼了我很长，您一定有很多话要对儿子说，有很多事要交代。可我怎么就那么糊涂呢！这么多年，为什么我就不能少下一次田，少做一次实验，少出一天差，坐下来静静地好好陪陪您。哪怕……哪怕就一次。</p>
-<p>妈妈，每当我的研究取得成果，每当我在国际讲坛上谈笑风生，每当我接过一座又一座奖杯，我总是对人说，这辈子对我影响最深的人就是妈妈您啊！</p>
-<p>无法想象，没有您的英语启蒙，在一片闭塞中，我怎么能够阅读世界上最先进的科学文献，用超越那个时代的视野，去寻访遗传学大师孟德尔和摩尔根？无法想象，在那段颠沛流离的岁月中，从北平到汉口，从桃源到重庆，没有您的执著和鼓励，我怎么能获得系统的现代教育，获得在大江大河中自由翱翔的胆识？无法想象，没有您在摇篮前跟我讲尼采，讲这位昂扬着生命力、意志力的伟大哲人，我怎么能够在千百次的失败中坚信，必然有一粒种子可以使万千民众告别饥饿？</p>
-<p>他们说，我用一粒种子改变了世界。<strong>我知道，这粒种子，是妈妈您在我幼年时种下的！</strong></p>
-<p>稻子熟了，妈妈，您能闻到吗？安江可好？那里的田埂是不是还留着熟悉的欢笑？隔着21年的时光，我依稀看见，小孙孙牵着您的手，走过稻浪的背影；我还要告诉您，一辈子没有耕种过的母亲，稻芒划过手掌，稻草在场上堆积成垛，谷子在阳光中毕剥作响，水田在西晒下泛出橙黄的味道。这都是儿子要跟您说的话，说不完的话啊……</p>
-<p><strong>妈妈，稻子熟了，我想您了！</strong></p>
-<blockquote>
-<p>剪报来源<br>公众号：中央政法委长安剑<br>链　接：<a href="https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A">https://mp.weixin.qq.com/s/42Y7nHEUkbXOFBGDcTeC4A</a><br>日　期：2021-05-23</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>剪报</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>马龙：只要心怀热爱，永远都是当打之年！</title>
-    <url>/2021/08/09/ml-1/</url>
-    <content><![CDATA[<p>　　我的东京奥运会之旅圆满结束，无论单打冠军，还是团体金牌，都是我和我的队友、教练员，以及背后默默付出的陪练、队医、保障团队，团结一心共同奋斗出来的荣耀勋章。</p>
-<p><img src="https://i.loli.net/2021/08/09/XbfCZRY2TQtFM9o.jpg"></p>
-<p>　　当国歌响起，五星红旗缓缓升起，那一刻，我感慨万千。过去5年的甘苦画面历历在目。</p>
-<p>　　<strong>2018年下半年至2019年初，我因伤远离国际赛场8个月，其间有3个月没有碰球，那是我职业生涯最艰难的一段时期，但我从没有想过放弃，因为乒乓球已经成为我生命中无法替代的一部分。</strong>我告诉自己，只要还有机会，我就一定要坚持训练，重新回到赛场。</p>
-<p>　　终于，我来到了东京——第三次踏上了奥运会的赛场。强大的对手、紧张的气氛，让我感到熟悉又兴奋。最让我难忘的，还是与队友们并肩作战的经历。团体赛半决赛和决赛的两场双打，我和搭档许昕把赛前准备的战术打出来了，我真切地感受到了奥运会乒乓球比赛带给我的享受。</p>
-<p>　　连续两届奥运会获得单打和团体两项金牌，许多人认为这是个了不起的成就。对此，我心怀感激，乒乓球带给了我一段精彩的人生。<strong>同时我也要感谢祖国和广大人民的支持和信任，这正是中国乒乓球事业不断向前的力量源泉。</strong></p>
-<p>　　我已经32岁了，我觉得自己的身体状况还不错。<strong>事实上，不少比我年长的选手依然在赛场充满斗志，这对我也是一种激励。只要心怀热爱，永远都是当打之年！</strong></p>
-<hr>
-<p>来源：人民日报（2021年8月8日 第07版），原标题《心怀热爱，人生就会精彩（奥林匹克与我）》，作者：马龙，记者范佳元、孙龙飞采访整理</p>
-<p>本期编辑：胡程远、石磊</p>
-<blockquote>
-<p>剪报来源<br>公众号：人民日报<br>链　接：<a href="https://mp.weixin.qq.com/s/kgjVfCvWg1mein0v6w0u7Q">https://mp.weixin.qq.com/s/kgjVfCvWg1mein0v6w0u7Q</a><br>日　期：2021-08-08</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>剪报</category>
-      </categories>
   </entry>
   <entry>
     <title>关于MySQL数据库自增主键，说几个容易被忽略的点</title>
