@@ -216,32 +216,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Redis根据通配符批量删除Key</title>
-    <url>/2019/09/03/redis-batch-delete/</url>
-    <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
-<blockquote>
-<p>Redis的 <code>del</code> 命令支持删除给定的一个或多个 key，并返回被删除 key 的数量。如命令 <code>del key1 key2 key3</code>。</p>
-</blockquote>
-<p>比如要删除所有以 WxMpSessionKey 开头的 Key，可以使用如下命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[redis@iztz9ploifbvce ~]# redis-cli -h 192.168.182.227 -p 1379 keys &quot;WxMpSessionKey*&quot; |xargs redis-cli -h 192.168.182.227 -p 1379 del</span><br><span class="line">(integer) 2674</span><br></pre></td></tr></table></figure>
-
-<p>如果连接 Redis 的 HOST 为 127.0.0.1，端口号也为默认的 6379，则以上的命令可以简写为：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli keys &quot;WxMpSessionKey*&quot; |xargs redis-cli del</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring Boot 2.x 集成Jpa示例</title>
     <url>/2019/12/25/spring-boot-2_x-jpa/</url>
     <content><![CDATA[<h2 id="一、如何集成"><a href="#一、如何集成" class="headerlink" title="一、如何集成"></a>一、如何集成</h2><p>首先，在 pom 文件新增 redis 依赖：</p>
@@ -317,8 +291,8 @@
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>Redis</tag>
         <tag>Spring Boot</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -346,6 +320,32 @@
       </tags>
   </entry>
   <entry>
+    <title>Redis根据通配符批量删除Key</title>
+    <url>/2019/09/03/redis-batch-delete/</url>
+    <content><![CDATA[<p>Redis 目前还不支持根据通配符批量删除 Key 的命令，但我们可以借助 Redis 的 <code>del</code> 命令、Linux 管道和 xargs 指令来完成。</p>
+<blockquote>
+<p>Redis的 <code>del</code> 命令支持删除给定的一个或多个 key，并返回被删除 key 的数量。如命令 <code>del key1 key2 key3</code>。</p>
+</blockquote>
+<p>比如要删除所有以 WxMpSessionKey 开头的 Key，可以使用如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[redis@iztz9ploifbvce ~]# redis-cli -h 192.168.182.227 -p 1379 keys &quot;WxMpSessionKey*&quot; |xargs redis-cli -h 192.168.182.227 -p 1379 del</span><br><span class="line">(integer) 2674</span><br></pre></td></tr></table></figure>
+
+<p>如果连接 Redis 的 HOST 为 127.0.0.1，端口号也为默认的 6379，则以上的命令可以简写为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">redis-cli keys &quot;WxMpSessionKey*&quot; |xargs redis-cli del</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【ZooKeeper启动失败】Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</title>
     <url>/2019/12/12/zookeeper-problem-1/</url>
     <content><![CDATA[<p>在 CentOS 7 系统中安装好 ZooKeeper 后，进入安装目录 <code>/usr/local/zookeeper/apache-zookeeper-3.5.6/bin/</code>，使用命令 <code>./zkServer.sh start</code> 启动，发现启动失败：</p>
@@ -366,6 +366,197 @@
       <tags>
         <tag>CentOS7</tag>
         <tag>ZooKeeper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗马数字（上）——拼写规则</title>
+    <url>/2019/06/26/rules-of-reading-and-writing-roman-numerals/</url>
+    <content><![CDATA[<h3 id="罗马数字符号"><a href="#罗马数字符号" class="headerlink" title="罗马数字符号"></a>罗马数字符号</h3><p>罗马数字是总共由 7 个字母符号表示：<strong>I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和 M（1000）。</strong></p>
+<span id="more"></span>
+
+<p>表一：罗马数字对应的阿拉伯数字</p>
+<table>
+<thead>
+<tr>
+<th align="center">罗马数字</th>
+<th align="center">阿拉伯数字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">I</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">V</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">X</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">L</td>
+<td align="center">50</td>
+</tr>
+<tr>
+<td align="center">C</td>
+<td align="center">100</td>
+</tr>
+<tr>
+<td align="center">D</td>
+<td align="center">500</td>
+</tr>
+<tr>
+<td align="center">M</td>
+<td align="center">1000</td>
+</tr>
+</tbody></table>
+<p>他们按照以下 4 个规则可以组合成表示任意的正整数。</p>
+<h3 id="规则-1"><a href="#规则-1" class="headerlink" title="规则 1"></a>规则 1</h3><p><strong>一个罗马数字重复多少次，就表示这个数多少倍</strong>，比如罗马数字 I 表示的是数字 1，重复两次，即 II，表示的数字是 2，同理，III 表示数字 3，XX 表示数字 20，CC 表示数字 200 等；</p>
+<p>需要注意的是，<strong>同一个罗马数字最多只能连续重复 3 次</strong>，如数字 400 就不能表示为 CCCC（重复了 4 次），而是要用 CD 来表示，数字40不能表示为 XXXX（同样重复了 4 次），而要表示为 XL 等。</p>
+<p>但有一种特殊情况，因为古罗马人用 IV 作为古罗马神话主神朱庇特（IVPITER，古罗马字母里没有 J 和 U）名字的简写，他们不希望神的名字看上去像个数字，因此<strong>有时用 IIII 代替 IV</strong>。</p>
+<p>另外，<strong>符号 D、L 和 V 不可以连续重复出现</strong>，比如用 DD 表示 1000 的写法是错误的，正确的是要用 M，表示 1500 的罗马数字是 MD，而不是 DDD。</p>
+<h3 id="规则-2"><a href="#规则-2" class="headerlink" title="规则 2"></a>规则 2</h3><p><strong>如果在较大的罗马数字后面（右边）放置较小的罗马数字，表示的数字为这些数字相加得到的数</strong>，如较大的罗马数字 V 后面放置较小的罗马数字 I，即 VI，表示的数字则为 V 与 I 相加得到数 6。</p>
+<p>同理，<br>VII = 7 (5 + 2 = 7)<br>LXXX = 80 (50 + 10 + 10 + 10 = 80)<br>MC = 1100 (1000 + 100 = 1100)</p>
+<h3 id="规则-3"><a href="#规则-3" class="headerlink" title="规则 3"></a>规则 3</h3><p><strong>如果在较大的罗马数字前面（左边）放置在较小的罗马数字，表示的数是用较大的数减去较小的数所得到的值</strong>，如较大的罗马数字 V 前面或左边放置较小的罗马数字 I，即 IV，表示的数字则为 V 减去 I 得到的数 4。</p>
+<p>同理，<br>IX = 9 (10 – 1 = 9)<br>XC = 90 (100 – 10 = 90)</p>
+<p>用这种方式来表示罗马数字时，有以下几点需要注意：</p>
+<p><strong>i) 充当减数的只能是 I，C 或 X</strong>，不能是 L 或 V，即罗马数字对应的数是 10 的 n 次幂才能充当减数。另外，由于 M 在罗马字母中表示的数最大，也不能充当减数（罗马数字没有 0 或负整数）。</p>
+<blockquote>
+<p>被减数 - 减数 = 差，<br>如 32 - 10 = 22，<br>被减数是 32，减数是 10，差是 22。</p>
+</blockquote>
+<p>表二：被减数的只能是 I，C 或 X</p>
+<table>
+<thead>
+<tr>
+<th>罗马数字</th>
+<th>阿拉伯数字</th>
+<th>10 的 n 次幂</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>I</td>
+<td>1</td>
+<td>$10^0 = 1$</td>
+<td>10的0次幂</td>
+</tr>
+<tr>
+<td>X</td>
+<td>10</td>
+<td>$10^1 = 10$</td>
+<td>10的1次幂</td>
+</tr>
+<tr>
+<td>C</td>
+<td>100</td>
+<td>$10^2 = 100$</td>
+<td>10的2次幂</td>
+</tr>
+</tbody></table>
+<p>比如数字 45，<br>不能写成 VL（50 - 5），<br>而是要写成 XLV（XL + V，即 40 + 5）；</p>
+<p><strong>ii) 只能从一个罗马数字中减去另一个罗马数字，而不能减去两个或两个以上的罗马数字</strong>，比如说数字 8，<br>不能写成 IIX（X - I - I，即 10 - 1 - 1 = 8），<br>而是要写成 VIII（V + I + I + I，即 5 + 1 + 1 + 1 = 8）；</p>
+<p><strong>iii) 从一个罗马数字（设为 a）中减去另一个罗马数字（设为 b）所得的差（设为 c），不能超过减数（即 b）的 10 倍以上。</strong><br>例如，<br>你可以从数字 10 中减去 1，<br>因为 10 - 1 = 9，9 比 1 的 10 倍（10）小；<br>但是不能从数字 100 中减去 1，<br>因为 100 - 1 = 99，99 比 1 的 10 倍（10）大。<br>所以，<br>数字 9 可以用 IX 来表示，<br>但数字 100 不能用 IC 来表示，<br>而是要用 XCIX（XC + IX，即 90 + 9 = 99）来表示。</p>
+<p><em><strong>总结第 i) 点和第 iii) 点，可以得到以下规则：</strong></em><br><em><strong>符号 I 只能出现在符号 V 或 X 的前面（左边）；</strong></em><br><em><strong>符号 X 只能出现在符号 L 或 C 的前面（左边）；</strong></em><br><em><strong>符号 C 只能出现在符号 D 或 M 的前面（左边）。</strong></em></p>
+<h3 id="规则-4"><a href="#规则-4" class="headerlink" title="规则 4"></a>规则 4</h3><p><strong>如果在罗马数字上方加一条横线，表示将该数值乘以 1000，即原数的 1000 倍，如果上方有两条横线，表示的数字是原数的 1, 000, 000 倍。</strong></p>
+<p>如：</p>
+<p>$\overline{M}=1, 000, 000$</p>
+<p>$\overline{V}=5, 000$</p>
+<p>$\overline{\overline{X}} = 10, 000, 000 $</p>
+<hr>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>尝试应用上述规则，写出以下阿拉伯数字对应的罗马数字<br>35，<br>65，<br>99</p>
+<p>求解过程如下：<br>35 = 10 + 10 + 10 + 5，即 X + X + X + V（XXXV），所以 35 = XXXV；<br>65 = 50 + 10 + 5，即 L + X + V（LXV），所以 65 = LXV；<br>99 = （100 - 10）+（10 - 1），即 XC + IX（XCIX）所以 99 = XCIX 。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>罗马数字</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通过yum方式在CentOS7系统安装MySQL8</title>
+    <url>/2019/12/28/how-to-install-mysql8-on-centos7/</url>
+    <content><![CDATA[<h2 id="一、添加-MySQL-YUM-源"><a href="#一、添加-MySQL-YUM-源" class="headerlink" title="一、添加 MySQL YUM 源"></a>一、添加 MySQL YUM 源</h2><p>根据自己的操作系统版本选择合适的安装源（<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a>），这里选择的是 CentOS 7，MySQL 8。点击 Download 按钮，进入下载页。可以直接下载 rpm 文件，再上传到 CentOS 7 系统，也可以通过复制链接地址（地址为：<a href="https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm%EF%BC%89%EF%BC%8C%E8%BF%9B%E5%85%A5">https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm），进入</a> CentOS 7 系统，通过 <code>wget</code> 命令下载。</p>
+<span id="more"></span>
+
+<p><img src="/image/20191228194455039.png" alt="CentOS 7 &amp; MySQL "></p>
+<p>这里以进入 CentOS 7 系统，通过 <code>wget</code> 命令下载为例，展示如何添加 MySQL yum 源，相关命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入存放 rpm 文件的目录</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /homw/software</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载 rpm 文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过 rpm -Uvh 安装</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm</span> </span><br></pre></td></tr></table></figure>
+
+<h2 id="二、安装MySQL"><a href="#二、安装MySQL" class="headerlink" title="二、安装MySQL"></a>二、安装MySQL</h2><p>安装好 yum 源后，直接通过以下命令即可安装 MySQL，非常简单，安装过程中会有两次让你确认下载或安装，直接输入 y 即可。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装 MySQL</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install mysql-community-server</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、启动MySQL"><a href="#三、启动MySQL" class="headerlink" title="三、启动MySQL"></a>三、启动MySQL</h2><p>启动 MySQL 命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl start mysqld</span></span><br></pre></td></tr></table></figure>
+
+<p>可通过如下命令查看 MySQL 运行状态：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl status mysqld</span></span><br></pre></td></tr></table></figure>
+
+<p>若输出以下的信息，则说明 MySQL 已经在运行中了。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo systemctl status mysqld</span><br><span class="line">● mysqld.service - MySQL Server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Fri 2019-12-27 15:48:33 CST; 11s ago</span><br><span class="line">     Docs: man:mysqld(8)</span><br><span class="line">           http://dev.mysql.com/doc/refman/en/using-systemd.html</span><br><span class="line">  Process: 22383 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 22459 (mysqld)</span><br><span class="line">   Status: &quot;Server is operational&quot;</span><br><span class="line">   CGroup: /system.slice/mysqld.service</span><br><span class="line">           └─22459 /usr/sbin/mysqld</span><br><span class="line"></span><br><span class="line">Dec 27 15:48:25 202 systemd[1]: Starting MySQL Server...</span><br><span class="line">Dec 27 15:48:33 202 systemd[1]: Started MySQL Server.</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、MySQL-8-root-用户默认登录密码问题"><a href="#四、MySQL-8-root-用户默认登录密码问题" class="headerlink" title="四、MySQL 8 root 用户默认登录密码问题"></a>四、MySQL 8 root 用户默认登录密码问题</h2><p>在 CentOS 7 系统中，通过 yum 方式安装 MySQL 8，需要使用以下命令查看 root 用户的默认密码：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo grep <span class="string">&quot;temporary password&quot;</span> /var/<span class="built_in">log</span>/mysqld.log</span></span><br></pre></td></tr></table></figure>
+
+<p>返回结果最后冒号后面的字符串就是root的默认密码。</p>
+<blockquote>
+<p>如果提示不存在 /var/log/mysqld.log 文件，请确保您已经通过步骤三，启动过一次 MySQL 服务。这里再提下 MySQL服务的启动命令是：<em><strong>systemctl start mysqld.service</strong></em></p>
+</blockquote>
+<p>如以下的输出，root 用户的登录密码为 <strong>Eea*eoqoI9:I</strong>。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo grep &quot;temporary password&quot; /var/log/mysqld.log</span><br><span class="line">[sudo] password for mysqlu: </span><br><span class="line">2019-12-27T07:48:29.009116Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: Eea*eoqoI9:I</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、登录MySQL，并修改默认密码"><a href="#五、登录MySQL，并修改默认密码" class="headerlink" title="五、登录MySQL，并修改默认密码"></a>五、登录MySQL，并修改默认密码</h2><p>知道 MySQL 的 root 用户密码后，即可登录 MySQL 了：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mysql -uroot -p</span> </span><br><span class="line">Enter password: # 这里输入密码</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 17</span><br><span class="line">Server version: 8.0.18</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
+
+<p>进入 MySQL 后，还不能做其他操作，会一直提示你修改默认密码，比如切换到 <code>mysql</code> 数据库：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash">  use mysql;</span></span><br><span class="line">ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</span><br></pre></td></tr></table></figure>
+
+<p>修改默认密码的命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ALTER user &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;新密码&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>其中 <strong>MySQL 8 以上的密码策略限制必须要包含大小写字母、数字和特殊符号。</strong>如：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> ALTER user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;2020Super_Star&#x27;</span>;</span></span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>至此，你再执行其他命令，而不会提示你需要修改密码了。</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>罗马数字（中）——起源与用途</title>
+    <url>/2019/07/01/history-of-roman-numerals/</url>
+    <content><![CDATA[<h2 id="一、罗马数字的诞生与进化"><a href="#一、罗马数字的诞生与进化" class="headerlink" title="一、罗马数字的诞生与进化"></a>一、罗马数字的诞生与进化</h2><p>罗马数字起源于古罗马帝国，拥有一个漫长而复杂的历史，始于公元前 8 世纪至 9 世纪，与古罗马帝国在帕兰丁山（Palantine Hill）周围建立的时间大致相同。不过，罗马数字的盛行时间比帝国本身还要长，直到 14 世纪前仍被广泛使用。</p>
+<span id="more"></span>
+
+<p>在设计上，罗马数字存在一些缺陷：</p>
+<ol>
+<li><p>没有表示零（0）的符号；</p>
+</li>
+<li><p>也没有用于计数超过几千数值的实际方法，只有通过在数字符号上方添加横线来表示它们的值的倍数来修正。</p>
+</li>
+</ol>
+<p>复杂的社会、经济管理，建造像斗兽场和君士坦丁大拱门这样的大型纪念碑，都离不开大量的数学技能。而罗马数字的这些缺陷并没有阻止古罗马的学者和建筑师们建立一个伟大的帝国。</p>
+<p>在公元 11 世纪时，阿拉伯数字传入欧洲。阿拉伯数字始创于印度，采用 0、1、2、3、4、5、6、7、8、9 共 10 个计数符号。采取位值法，高位在左，低位在右，从左往右书写。借助一些简单的数学符号（小数点、负号等），阿拉伯数字可以明确的表示所有的有理数。这是对罗马数字的一个很大的改进。</p>
+<p>于是，人们开始逐渐使用阿拉伯数字作为日常生活中的记数系统，而罗马数字的使用更是随着创造它的帝国的崩溃而减少。到公元 14 世纪时，罗马数字已被阿拉伯数字所取代，成为在欧洲被广泛使用的记数系统。现在阿拉伯数字已成为目前使用最广泛的记数系统，通行于全世界。</p>
+<h2 id="二、罗马数字的现代用途"><a href="#二、罗马数字的现代用途" class="headerlink" title="二、罗马数字的现代用途"></a>二、罗马数字的现代用途</h2><p>从某种角度上，可以说罗马数字经受住了时间的考验，并没有随着罗马帝国的消亡而结束。它的优雅感和复古风格确保了它不会在未来某个时候消失。今天，我们仍然使用罗马数字来表达某些东西，如：</p>
+<p>在天文学领域中，用于为卫星编号，如木卫一，木卫二，木卫三。<br>在化学领域中，用于表示元素周期表中的元素组：IA族，IIA族，IIIA族，IVA族，VA族，VIA族，VIIA族，IB族，IIB族，IIIB族，IVB族，VB族，VIB族，VIIB族，VIII族。<br>钟表表盘符号：Ⅰ、Ⅱ、Ⅲ、Ⅳ（IIII）、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ、Ⅹ、Ⅺ、Ⅻ。<br>有序列表（ordered list）的编号（多用小写字母），例如：<br>i) 第一项<br>ii) 第二项<br>iii) 第三项<br>书籍和章节标题<br>君王的名字，如 Louis XIV（路易十四）、Charles II（查理二世）。<br>教皇的名字，如 Alexander VIII（亚历山大八世）、John Paul II（约翰·保罗二世）。<br>其他命名，如 iPhone X，氨酚伪麻美芬片（Ⅱ）。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>罗马数字</tag>
       </tags>
   </entry>
   <entry>
@@ -827,179 +1018,6 @@
       </tags>
   </entry>
   <entry>
-    <title>罗马数字（上）——拼写规则</title>
-    <url>/2019/06/26/rules-of-reading-and-writing-roman-numerals/</url>
-    <content><![CDATA[<h3 id="罗马数字符号"><a href="#罗马数字符号" class="headerlink" title="罗马数字符号"></a>罗马数字符号</h3><p>罗马数字是总共由 7 个字母符号表示：<strong>I（1）、V（5）、X（10）、L（50）、C（100）、D（500）和 M（1000）。</strong></p>
-<span id="more"></span>
-
-<p>表一：罗马数字对应的阿拉伯数字</p>
-<table>
-<thead>
-<tr>
-<th align="center">罗马数字</th>
-<th align="center">阿拉伯数字</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">I</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">V</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center">X</td>
-<td align="center">10</td>
-</tr>
-<tr>
-<td align="center">L</td>
-<td align="center">50</td>
-</tr>
-<tr>
-<td align="center">C</td>
-<td align="center">100</td>
-</tr>
-<tr>
-<td align="center">D</td>
-<td align="center">500</td>
-</tr>
-<tr>
-<td align="center">M</td>
-<td align="center">1000</td>
-</tr>
-</tbody></table>
-<p>他们按照以下 4 个规则可以组合成表示任意的正整数。</p>
-<h3 id="规则-1"><a href="#规则-1" class="headerlink" title="规则 1"></a>规则 1</h3><p><strong>一个罗马数字重复多少次，就表示这个数多少倍</strong>，比如罗马数字 I 表示的是数字 1，重复两次，即 II，表示的数字是 2，同理，III 表示数字 3，XX 表示数字 20，CC 表示数字 200 等；</p>
-<p>需要注意的是，<strong>同一个罗马数字最多只能连续重复 3 次</strong>，如数字 400 就不能表示为 CCCC（重复了 4 次），而是要用 CD 来表示，数字40不能表示为 XXXX（同样重复了 4 次），而要表示为 XL 等。</p>
-<p>但有一种特殊情况，因为古罗马人用 IV 作为古罗马神话主神朱庇特（IVPITER，古罗马字母里没有 J 和 U）名字的简写，他们不希望神的名字看上去像个数字，因此<strong>有时用 IIII 代替 IV</strong>。</p>
-<p>另外，<strong>符号 D、L 和 V 不可以连续重复出现</strong>，比如用 DD 表示 1000 的写法是错误的，正确的是要用 M，表示 1500 的罗马数字是 MD，而不是 DDD。</p>
-<h3 id="规则-2"><a href="#规则-2" class="headerlink" title="规则 2"></a>规则 2</h3><p><strong>如果在较大的罗马数字后面（右边）放置较小的罗马数字，表示的数字为这些数字相加得到的数</strong>，如较大的罗马数字 V 后面放置较小的罗马数字 I，即 VI，表示的数字则为 V 与 I 相加得到数 6。</p>
-<p>同理，<br>VII = 7 (5 + 2 = 7)<br>LXXX = 80 (50 + 10 + 10 + 10 = 80)<br>MC = 1100 (1000 + 100 = 1100)</p>
-<h3 id="规则-3"><a href="#规则-3" class="headerlink" title="规则 3"></a>规则 3</h3><p><strong>如果在较大的罗马数字前面（左边）放置在较小的罗马数字，表示的数是用较大的数减去较小的数所得到的值</strong>，如较大的罗马数字 V 前面或左边放置较小的罗马数字 I，即 IV，表示的数字则为 V 减去 I 得到的数 4。</p>
-<p>同理，<br>IX = 9 (10 – 1 = 9)<br>XC = 90 (100 – 10 = 90)</p>
-<p>用这种方式来表示罗马数字时，有以下几点需要注意：</p>
-<p><strong>i) 充当减数的只能是 I，C 或 X</strong>，不能是 L 或 V，即罗马数字对应的数是 10 的 n 次幂才能充当减数。另外，由于 M 在罗马字母中表示的数最大，也不能充当减数（罗马数字没有 0 或负整数）。</p>
-<blockquote>
-<p>被减数 - 减数 = 差，<br>如 32 - 10 = 22，<br>被减数是 32，减数是 10，差是 22。</p>
-</blockquote>
-<p>表二：被减数的只能是 I，C 或 X</p>
-<table>
-<thead>
-<tr>
-<th>罗马数字</th>
-<th>阿拉伯数字</th>
-<th>10 的 n 次幂</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>I</td>
-<td>1</td>
-<td>$10^0 = 1$</td>
-<td>10的0次幂</td>
-</tr>
-<tr>
-<td>X</td>
-<td>10</td>
-<td>$10^1 = 10$</td>
-<td>10的1次幂</td>
-</tr>
-<tr>
-<td>C</td>
-<td>100</td>
-<td>$10^2 = 100$</td>
-<td>10的2次幂</td>
-</tr>
-</tbody></table>
-<p>比如数字 45，<br>不能写成 VL（50 - 5），<br>而是要写成 XLV（XL + V，即 40 + 5）；</p>
-<p><strong>ii) 只能从一个罗马数字中减去另一个罗马数字，而不能减去两个或两个以上的罗马数字</strong>，比如说数字 8，<br>不能写成 IIX（X - I - I，即 10 - 1 - 1 = 8），<br>而是要写成 VIII（V + I + I + I，即 5 + 1 + 1 + 1 = 8）；</p>
-<p><strong>iii) 从一个罗马数字（设为 a）中减去另一个罗马数字（设为 b）所得的差（设为 c），不能超过减数（即 b）的 10 倍以上。</strong><br>例如，<br>你可以从数字 10 中减去 1，<br>因为 10 - 1 = 9，9 比 1 的 10 倍（10）小；<br>但是不能从数字 100 中减去 1，<br>因为 100 - 1 = 99，99 比 1 的 10 倍（10）大。<br>所以，<br>数字 9 可以用 IX 来表示，<br>但数字 100 不能用 IC 来表示，<br>而是要用 XCIX（XC + IX，即 90 + 9 = 99）来表示。</p>
-<p><em><strong>总结第 i) 点和第 iii) 点，可以得到以下规则：</strong></em><br><em><strong>符号 I 只能出现在符号 V 或 X 的前面（左边）；</strong></em><br><em><strong>符号 X 只能出现在符号 L 或 C 的前面（左边）；</strong></em><br><em><strong>符号 C 只能出现在符号 D 或 M 的前面（左边）。</strong></em></p>
-<h3 id="规则-4"><a href="#规则-4" class="headerlink" title="规则 4"></a>规则 4</h3><p><strong>如果在罗马数字上方加一条横线，表示将该数值乘以 1000，即原数的 1000 倍，如果上方有两条横线，表示的数字是原数的 1, 000, 000 倍。</strong></p>
-<p>如：</p>
-<p>$\overline{M}=1, 000, 000$</p>
-<p>$\overline{V}=5, 000$</p>
-<p>$\overline{\overline{X}} = 10, 000, 000 $</p>
-<hr>
-<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>尝试应用上述规则，写出以下阿拉伯数字对应的罗马数字<br>35，<br>65，<br>99</p>
-<p>求解过程如下：<br>35 = 10 + 10 + 10 + 5，即 X + X + X + V（XXXV），所以 35 = XXXV；<br>65 = 50 + 10 + 5，即 L + X + V（LXV），所以 65 = LXV；<br>99 = （100 - 10）+（10 - 1），即 XC + IX（XCIX）所以 99 = XCIX 。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-        <tag>罗马数字</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>罗马数字（中）——起源与用途</title>
-    <url>/2019/07/01/history-of-roman-numerals/</url>
-    <content><![CDATA[<h2 id="一、罗马数字的诞生与进化"><a href="#一、罗马数字的诞生与进化" class="headerlink" title="一、罗马数字的诞生与进化"></a>一、罗马数字的诞生与进化</h2><p>罗马数字起源于古罗马帝国，拥有一个漫长而复杂的历史，始于公元前 8 世纪至 9 世纪，与古罗马帝国在帕兰丁山（Palantine Hill）周围建立的时间大致相同。不过，罗马数字的盛行时间比帝国本身还要长，直到 14 世纪前仍被广泛使用。</p>
-<span id="more"></span>
-
-<p>在设计上，罗马数字存在一些缺陷：</p>
-<ol>
-<li><p>没有表示零（0）的符号；</p>
-</li>
-<li><p>也没有用于计数超过几千数值的实际方法，只有通过在数字符号上方添加横线来表示它们的值的倍数来修正。</p>
-</li>
-</ol>
-<p>复杂的社会、经济管理，建造像斗兽场和君士坦丁大拱门这样的大型纪念碑，都离不开大量的数学技能。而罗马数字的这些缺陷并没有阻止古罗马的学者和建筑师们建立一个伟大的帝国。</p>
-<p>在公元 11 世纪时，阿拉伯数字传入欧洲。阿拉伯数字始创于印度，采用 0、1、2、3、4、5、6、7、8、9 共 10 个计数符号。采取位值法，高位在左，低位在右，从左往右书写。借助一些简单的数学符号（小数点、负号等），阿拉伯数字可以明确的表示所有的有理数。这是对罗马数字的一个很大的改进。</p>
-<p>于是，人们开始逐渐使用阿拉伯数字作为日常生活中的记数系统，而罗马数字的使用更是随着创造它的帝国的崩溃而减少。到公元 14 世纪时，罗马数字已被阿拉伯数字所取代，成为在欧洲被广泛使用的记数系统。现在阿拉伯数字已成为目前使用最广泛的记数系统，通行于全世界。</p>
-<h2 id="二、罗马数字的现代用途"><a href="#二、罗马数字的现代用途" class="headerlink" title="二、罗马数字的现代用途"></a>二、罗马数字的现代用途</h2><p>从某种角度上，可以说罗马数字经受住了时间的考验，并没有随着罗马帝国的消亡而结束。它的优雅感和复古风格确保了它不会在未来某个时候消失。今天，我们仍然使用罗马数字来表达某些东西，如：</p>
-<p>在天文学领域中，用于为卫星编号，如木卫一，木卫二，木卫三。<br>在化学领域中，用于表示元素周期表中的元素组：IA族，IIA族，IIIA族，IVA族，VA族，VIA族，VIIA族，IB族，IIB族，IIIB族，IVB族，VB族，VIB族，VIIB族，VIII族。<br>钟表表盘符号：Ⅰ、Ⅱ、Ⅲ、Ⅳ（IIII）、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ、Ⅹ、Ⅺ、Ⅻ。<br>有序列表（ordered list）的编号（多用小写字母），例如：<br>i) 第一项<br>ii) 第二项<br>iii) 第三项<br>书籍和章节标题<br>君王的名字，如 Louis XIV（路易十四）、Charles II（查理二世）。<br>教皇的名字，如 Alexander VIII（亚历山大八世）、John Paul II（约翰·保罗二世）。<br>其他命名，如 iPhone X，氨酚伪麻美芬片（Ⅱ）。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-        <tag>罗马数字</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HashMap核心功能源码解读（一）：概述</title>
-    <url>/2021/07/22/hashmap-core-code-analysis-1/</url>
-    <content><![CDATA[<p>在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。</p>
-<h2 id="HashMap特性"><a href="#HashMap特性" class="headerlink" title="HashMap特性"></a>HashMap特性</h2><p>HashMap 是 Map 接口的一个基于哈希表实现，主要用来存储键值对数据。作为一个使用频率较高的集合类，了解它的特性有助于我们在实践中正确使用它。</p>
-<p>首先，HashMap 允许键为 null 和值为 null。</p>
-<p>其次，HashMap 不保证 Map 的有序性，即不保证遍历 HashMap 输出元素的顺序与其插入的顺序相同（可能存在顺序相同情况）。另外，HashMap 也不保证其顺序在一段时间内保持不变。如果需要在项目中保证 Map 有序性的话，可以使用 LinkedHashMap 代替 HashMap。</p>
-<p>再次，HashMap 是不同步的，即 HashMap 不是线程安全的。如果多个线程同时访问同一个 HashMap 实例，并且其中至少有一个线程从结构上修改了 HashMap 实例时，会导致数据不一致的情况发生。这里的“从结构上修改”是指对 HashMap 实例进行添加或删除元素的操作，仅修改已包含的键对应的值话，就不是从结构上修改。</p>
-<p>在需要线程安全环境中，可以在创建 HashMap 实例时使用 <code>Collections.synchronizedMap</code> 方法对其进行“包装”，以防止对 HashMap 的意外非同步访问：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map m = Collection.synchronizedMap(<span class="keyword">new</span> HashMap (…));</span><br></pre></td></tr></table></figure>
-
-<p>另外，也可以用 ConcurrentHashMap 代替 HashMap。</p>
-<p>最后，HashMap 的所有“集合视图方法”返回的迭代器是快速失败（fail-fast）的。如果在创建迭代器之后，除了通过迭代器本身的 remove 方法之外，在任何时候以任何方式从结构上修改 HashMap 实例时，迭代器都会抛出 ConcurrentModificationException 异常。因此，在面对并发修改时，迭代器会快速、干净利落地失败，而不是在未来某个不确定的时间出现随意的、不确定的行为风险。</p>
-<p>注意，迭代器的快速失败行为是无法保证的，因为一般而言，在存在非同步并发修改的情况下，不可能做出任何硬保证。快速失败的迭代器会尽最大努力抛出 <code>ConcurrentModificationException</code> 异常。因此，编写依赖于此异常的正确性的程序是错误的：迭代器的快速失败行为应该只用于检测错误。</p>
-<h2 id="HashMap性能"><a href="#HashMap性能" class="headerlink" title="HashMap性能"></a>HashMap性能</h2><p>如果哈希函数可以把元素均匀打散到不同的哈希桶中，那么 HashMap 的基本操作（get 和 put）能达到常数级时间的性能。这意味着理想情况下，HashMap 的基本操作的时间复杂度为 O(1)，执行时间不随数据规模（键值对数量）的增大而增长。</p>
-<p>但是在真实的情况下，当你往 HashMap 中写入大量数据后，就可能发现操作有时候会变慢了。这其实是因为哈希冲突和扩容带来的性能影响。</p>
-<p>在 HashMap 中，有两个参数——<strong>初始容量（initial capacity）和装载因子（load factor）</strong>，与哈希冲突和扩容这两个性能因素有直接关系。</p>
-<p>初始容量，顾名思义就是哈希表创建时的容量，这里的容量是指哈希表的哈希桶数。装载因子是衡量哈希表在其容量自动扩容之前允许达到多满的指标。当哈希表中的条目数超过负载因子和当前容量的乘积时，即</p>
-<p>条目数 &gt;= 哈希表容量 × 装载因子</p>
-<p>将对哈希表进行重新哈希（即重新构建内部数据结构），使哈希表的桶数为原来的两倍。</p>
-<p>一般来说，默认的装载因子（为 0.75）可以在时间和空间的开销上做到很好的权衡。较大的值虽然可以减少空间开销，但会增加查找成本（反映在 HashMap 的大多数操作中，包括 get 和 put 操作）。</p>
-<p>在设置初始容量时，应考虑映射中的预期条目数及其装载因子，以尽量减少重新哈希操作的次数。如果初始容量大于最大条目数除以负载因子，则不会发生重新哈希操作。</p>
-<p>如果有大量的键值对数据要存储在 HashMap 实例中，那么在创建时就指定一个足够大的容量来存储这些数据，会比随着表增长的需要而自动执行重新哈希更加高效。</p>
-<p>注意，如果使用大量的具有相同哈希码（hashCode()）的键，无疑会降低哈希表的性能。为了改善影响，当键是可比较时，可以使用键之间的比较顺序来帮助打破联系。</p>
-<p>另外，遍历 HashMap 所需的时间与 HashMap 实例的“容量”（指哈希桶数量）加上其大小（指键值映射数量）成正比。所以，如果你看重遍历 HashMap 的性能，那么不要把它初始容量设置得太大或把装载因子设置得太小就非常重要了。</p>
-<h2 id="TreeMap-Hashtable-和-HashMap"><a href="#TreeMap-Hashtable-和-HashMap" class="headerlink" title="TreeMap, Hashtable 和 HashMap"></a>TreeMap, Hashtable 和 HashMap</h2><p>TreeMap 是基于红黑树的一种提供顺序访问的 Map，和 HashMap 不同，它的 get、put、remove 之类操作都是 O（log(n)）的时间复杂度，具体顺序可以由指定的 Comparator 来决定，或者根据键的自然顺序来判断。</p>
-<p>Hashtable 大致相当于 HashMap ，只是 HashMap 是非线程安全的并且允许空值。</p>
-<p>需要注意的是，Hashtable 是遗留类，不建议在项目中使用。在非线程安全环境中，可以直接用 HashMap 代替 Hashtable；在需要线程安全环境中，可以用 ConcurrentHashMap 代替 Hashtable，因为 ConcurrentHashMap 引入了分段锁，并发性更好。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文概述了 HashMap 允许键为 null 和值为 null、不保证有序性、非线程安全、迭代器快速失败（fail-over）等特性，影响 HashMap 性能的参数，以及在实践中应该注意的地方，同时在文末简单对比了 TreeMap, Hashtable 和 HashMap 有什么不同。下一篇文章开始将对 HashMap 核心功能源码进行解读。</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HashMap核心功能源码解读（二）：哈希函数</title>
     <url>/2021/07/27/hashmap-core-code-analysis-2/</url>
     <content><![CDATA[<blockquote>
@@ -1172,61 +1190,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通过yum方式在CentOS7系统安装MySQL8</title>
-    <url>/2019/12/28/how-to-install-mysql8-on-centos7/</url>
-    <content><![CDATA[<h2 id="一、添加-MySQL-YUM-源"><a href="#一、添加-MySQL-YUM-源" class="headerlink" title="一、添加 MySQL YUM 源"></a>一、添加 MySQL YUM 源</h2><p>根据自己的操作系统版本选择合适的安装源（<a href="https://dev.mysql.com/downloads/repo/yum/">https://dev.mysql.com/downloads/repo/yum/</a>），这里选择的是 CentOS 7，MySQL 8。点击 Download 按钮，进入下载页。可以直接下载 rpm 文件，再上传到 CentOS 7 系统，也可以通过复制链接地址（地址为：<a href="https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm%EF%BC%89%EF%BC%8C%E8%BF%9B%E5%85%A5">https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm），进入</a> CentOS 7 系统，通过 <code>wget</code> 命令下载。</p>
-<span id="more"></span>
-
-<p><img src="/image/20191228194455039.png" alt="CentOS 7 &amp; MySQL "></p>
-<p>这里以进入 CentOS 7 系统，通过 <code>wget</code> 命令下载为例，展示如何添加 MySQL yum 源，相关命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入存放 rpm 文件的目录</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /homw/software</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载 rpm 文件</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过 rpm -Uvh 安装</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm</span> </span><br></pre></td></tr></table></figure>
-
-<h2 id="二、安装MySQL"><a href="#二、安装MySQL" class="headerlink" title="二、安装MySQL"></a>二、安装MySQL</h2><p>安装好 yum 源后，直接通过以下命令即可安装 MySQL，非常简单，安装过程中会有两次让你确认下载或安装，直接输入 y 即可。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装 MySQL</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install mysql-community-server</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="三、启动MySQL"><a href="#三、启动MySQL" class="headerlink" title="三、启动MySQL"></a>三、启动MySQL</h2><p>启动 MySQL 命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl start mysqld</span></span><br></pre></td></tr></table></figure>
-
-<p>可通过如下命令查看 MySQL 运行状态：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl status mysqld</span></span><br></pre></td></tr></table></figure>
-
-<p>若输出以下的信息，则说明 MySQL 已经在运行中了。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo systemctl status mysqld</span><br><span class="line">● mysqld.service - MySQL Server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Fri 2019-12-27 15:48:33 CST; 11s ago</span><br><span class="line">     Docs: man:mysqld(8)</span><br><span class="line">           http://dev.mysql.com/doc/refman/en/using-systemd.html</span><br><span class="line">  Process: 22383 ExecStartPre=/usr/bin/mysqld_pre_systemd (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 22459 (mysqld)</span><br><span class="line">   Status: &quot;Server is operational&quot;</span><br><span class="line">   CGroup: /system.slice/mysqld.service</span><br><span class="line">           └─22459 /usr/sbin/mysqld</span><br><span class="line"></span><br><span class="line">Dec 27 15:48:25 202 systemd[1]: Starting MySQL Server...</span><br><span class="line">Dec 27 15:48:33 202 systemd[1]: Started MySQL Server.</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、MySQL-8-root-用户默认登录密码问题"><a href="#四、MySQL-8-root-用户默认登录密码问题" class="headerlink" title="四、MySQL 8 root 用户默认登录密码问题"></a>四、MySQL 8 root 用户默认登录密码问题</h2><p>在 CentOS 7 系统中，通过 yum 方式安装 MySQL 8，需要使用以下命令查看 root 用户的默认密码：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo grep <span class="string">&quot;temporary password&quot;</span> /var/<span class="built_in">log</span>/mysqld.log</span></span><br></pre></td></tr></table></figure>
-
-<p>返回结果最后冒号后面的字符串就是root的默认密码。</p>
-<blockquote>
-<p>如果提示不存在 /var/log/mysqld.log 文件，请确保您已经通过步骤三，启动过一次 MySQL 服务。这里再提下 MySQL服务的启动命令是：<em><strong>systemctl start mysqld.service</strong></em></p>
-</blockquote>
-<p>如以下的输出，root 用户的登录密码为 <strong>Eea*eoqoI9:I</strong>。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqlu@202 software]$ sudo grep &quot;temporary password&quot; /var/log/mysqld.log</span><br><span class="line">[sudo] password for mysqlu: </span><br><span class="line">2019-12-27T07:48:29.009116Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: Eea*eoqoI9:I</span><br></pre></td></tr></table></figure>
-
-<h2 id="五、登录MySQL，并修改默认密码"><a href="#五、登录MySQL，并修改默认密码" class="headerlink" title="五、登录MySQL，并修改默认密码"></a>五、登录MySQL，并修改默认密码</h2><p>知道 MySQL 的 root 用户密码后，即可登录 MySQL 了：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mysql -uroot -p</span> </span><br><span class="line">Enter password: # 这里输入密码</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 17</span><br><span class="line">Server version: 8.0.18</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> </span></span><br></pre></td></tr></table></figure>
-
-<p>进入 MySQL 后，还不能做其他操作，会一直提示你修改默认密码，比如切换到 <code>mysql</code> 数据库：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash">  use mysql;</span></span><br><span class="line">ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</span><br></pre></td></tr></table></figure>
-
-<p>修改默认密码的命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ALTER user &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;新密码&#x27;;</span><br></pre></td></tr></table></figure>
-
-<p>其中 <strong>MySQL 8 以上的密码策略限制必须要包含大小写字母、数字和特殊符号。</strong>如：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> ALTER user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;2020Super_Star&#x27;</span>;</span></span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>至此，你再执行其他命令，而不会提示你需要修改密码了。</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -1565,6 +1528,60 @@
       <tags>
         <tag>翻译</tag>
         <tag>位运算</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HashMap核心功能源码解读（一）：概述</title>
+    <url>/2021/07/22/hashmap-core-code-analysis-1/</url>
+    <content><![CDATA[<p>在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。</p>
+<h2 id="HashMap特性"><a href="#HashMap特性" class="headerlink" title="HashMap特性"></a>HashMap特性</h2><p>HashMap 是 Map 接口的一个基于哈希表实现，主要用来存储键值对数据。作为一个使用频率较高的集合类，了解它的特性有助于我们在实践中正确使用它。</p>
+<p>首先，HashMap 允许键为 null 和值为 null。</p>
+<p>其次，HashMap 不保证 Map 的有序性，即不保证遍历 HashMap 输出元素的顺序与其插入的顺序相同（可能存在顺序相同情况）。另外，HashMap 也不保证其顺序在一段时间内保持不变。如果需要在项目中保证 Map 有序性的话，可以使用 LinkedHashMap 代替 HashMap。</p>
+<p>再次，HashMap 是不同步的，即 HashMap 不是线程安全的。如果多个线程同时访问同一个 HashMap 实例，并且其中至少有一个线程从结构上修改了 HashMap 实例时，会导致数据不一致的情况发生。这里的“从结构上修改”是指对 HashMap 实例进行添加或删除元素的操作，仅修改已包含的键对应的值话，就不是从结构上修改。</p>
+<p>在需要线程安全环境中，可以在创建 HashMap 实例时使用 <code>Collections.synchronizedMap</code> 方法对其进行“包装”，以防止对 HashMap 的意外非同步访问：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map m = Collection.synchronizedMap(<span class="keyword">new</span> HashMap (…));</span><br></pre></td></tr></table></figure>
+
+<p>另外，也可以用 ConcurrentHashMap 代替 HashMap。</p>
+<p>最后，HashMap 的所有“集合视图方法”返回的迭代器是快速失败（fail-fast）的。如果在创建迭代器之后，除了通过迭代器本身的 remove 方法之外，在任何时候以任何方式从结构上修改 HashMap 实例时，迭代器都会抛出 ConcurrentModificationException 异常。因此，在面对并发修改时，迭代器会快速、干净利落地失败，而不是在未来某个不确定的时间出现随意的、不确定的行为风险。</p>
+<p>注意，迭代器的快速失败行为是无法保证的，因为一般而言，在存在非同步并发修改的情况下，不可能做出任何硬保证。快速失败的迭代器会尽最大努力抛出 <code>ConcurrentModificationException</code> 异常。因此，编写依赖于此异常的正确性的程序是错误的：迭代器的快速失败行为应该只用于检测错误。</p>
+<h2 id="HashMap性能"><a href="#HashMap性能" class="headerlink" title="HashMap性能"></a>HashMap性能</h2><p>如果哈希函数可以把元素均匀打散到不同的哈希桶中，那么 HashMap 的基本操作（get 和 put）能达到常数级时间的性能。这意味着理想情况下，HashMap 的基本操作的时间复杂度为 O(1)，执行时间不随数据规模（键值对数量）的增大而增长。</p>
+<p>但是在真实的情况下，当你往 HashMap 中写入大量数据后，就可能发现操作有时候会变慢了。这其实是因为哈希冲突和扩容带来的性能影响。</p>
+<p>在 HashMap 中，有两个参数——<strong>初始容量（initial capacity）和装载因子（load factor）</strong>，与哈希冲突和扩容这两个性能因素有直接关系。</p>
+<p>初始容量，顾名思义就是哈希表创建时的容量，这里的容量是指哈希表的哈希桶数。装载因子是衡量哈希表在其容量自动扩容之前允许达到多满的指标。当哈希表中的条目数超过负载因子和当前容量的乘积时，即</p>
+<p>条目数 &gt;= 哈希表容量 × 装载因子</p>
+<p>将对哈希表进行重新哈希（即重新构建内部数据结构），使哈希表的桶数为原来的两倍。</p>
+<p>一般来说，默认的装载因子（为 0.75）可以在时间和空间的开销上做到很好的权衡。较大的值虽然可以减少空间开销，但会增加查找成本（反映在 HashMap 的大多数操作中，包括 get 和 put 操作）。</p>
+<p>在设置初始容量时，应考虑映射中的预期条目数及其装载因子，以尽量减少重新哈希操作的次数。如果初始容量大于最大条目数除以负载因子，则不会发生重新哈希操作。</p>
+<p>如果有大量的键值对数据要存储在 HashMap 实例中，那么在创建时就指定一个足够大的容量来存储这些数据，会比随着表增长的需要而自动执行重新哈希更加高效。</p>
+<p>注意，如果使用大量的具有相同哈希码（hashCode()）的键，无疑会降低哈希表的性能。为了改善影响，当键是可比较时，可以使用键之间的比较顺序来帮助打破联系。</p>
+<p>另外，遍历 HashMap 所需的时间与 HashMap 实例的“容量”（指哈希桶数量）加上其大小（指键值映射数量）成正比。所以，如果你看重遍历 HashMap 的性能，那么不要把它初始容量设置得太大或把装载因子设置得太小就非常重要了。</p>
+<h2 id="TreeMap-Hashtable-和-HashMap"><a href="#TreeMap-Hashtable-和-HashMap" class="headerlink" title="TreeMap, Hashtable 和 HashMap"></a>TreeMap, Hashtable 和 HashMap</h2><p>TreeMap 是基于红黑树的一种提供顺序访问的 Map，和 HashMap 不同，它的 get、put、remove 之类操作都是 O（log(n)）的时间复杂度，具体顺序可以由指定的 Comparator 来决定，或者根据键的自然顺序来判断。</p>
+<p>Hashtable 大致相当于 HashMap ，只是 HashMap 是非线程安全的并且允许空值。</p>
+<p>需要注意的是，Hashtable 是遗留类，不建议在项目中使用。在非线程安全环境中，可以直接用 HashMap 代替 Hashtable；在需要线程安全环境中，可以用 ConcurrentHashMap 代替 Hashtable，因为 ConcurrentHashMap 引入了分段锁，并发性更好。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文概述了 HashMap 允许键为 null 和值为 null、不保证有序性、非线程安全、迭代器快速失败（fail-over）等特性，影响 HashMap 性能的参数，以及在实践中应该注意的地方，同时在文末简单对比了 TreeMap, Hashtable 和 HashMap 有什么不同。下一篇文章开始将对 HashMap 核心功能源码进行解读。</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>退休金计划：2031-2035年定投执行计划</title>
+    <url>/2021/07/10/investment-plan-2031-2035/</url>
+    <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第三个五年行动计划——2031-2035年定投计划。</p>
+<p>本计划目标：净投入达 120,000 元。</p>
+<p>计划具体内容为 2031 - 2035 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
+<p>（未制定）</p>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>定投</tag>
+        <tag>退休金计划</tag>
       </tags>
   </entry>
   <entry>
@@ -3640,23 +3657,6 @@
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：2031-2035年定投执行计划</title>
-    <url>/2021/07/10/investment-plan-2031-2035/</url>
-    <content><![CDATA[<p>本计划是根据**<a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a>**而制定的第三个五年行动计划——2031-2035年定投计划。</p>
-<p>本计划目标：净投入达 120,000 元。</p>
-<p>计划具体内容为 2031 - 2035 年的每期计划定投日期和计划定制金额，每次定投之后需更新实际定制日期、实际定投金额、备注等。</p>
-<p>（未制定）</p>
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>定投</tag>
-        <tag>退休金计划</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>退休金计划：投资日志20210727</title>
     <url>/2021/07/27/investment-plan-record-20210727/</url>
     <content><![CDATA[<p>昨天下午的时候，同事见面打招呼问的是你买鞋了吗？</p>
@@ -3670,6 +3670,172 @@
 <p>所以平常心对待就好。</p>
 <p>如果未来加大了每月定投金额，那肯定是因为未来每月的固定收入增长了，这点是毋庸置疑的。退休金计划不会根据市场行情的变化而调整定投的频率和金额，只需“无脑”地按既定计划执行即可。</p>
 <p>当然，遇到这种大跌行情，假若出现低估值蓝筹股或指数基金，“逢低买入”也未尝不可。只不过这个资金跟退休金计划的资金一定是分开管理，互不影响的。</p>
+]]></content>
+      <categories>
+        <category>投资理财</category>
+      </categories>
+      <tags>
+        <tag>理财</tag>
+        <tag>退休金计划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>退休金计划：每月定投基金2000元，30年后资产总额达到多少？</title>
+    <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
+    <content><![CDATA[<h2 id="突发奇想"><a href="#突发奇想" class="headerlink" title="突发奇想"></a>突发奇想</h2><p>前段时间突发奇想，如果每个月拿出2000元用于投资理财，如定投基金，那30年后资产总额会达到多少呢？</p>
+<p>根据网上查到的资料，如果年化收益率为 14.5%，每月末坚持定投 2000 元，那么 30 年后资产总额将高达 1000 万元！！！看到这个结果，顿时心动不已。毕竟这 30 年的净投入才 72 万（2000 × 12 × 30 = 720000），收益竟达到了 928 万之多。</p>
+<h2 id="回到现实"><a href="#回到现实" class="headerlink" title="回到现实"></a>回到现实</h2><p>但这真的有可能实现吗？</p>
+<p>其实我不是怀疑在这样的假设下得出这样的结果。随着年期的增长，复利效应引发的倍数增长会越来越显著，而 30 年的时长，是足以见识到复利的威力和魅力的。</p>
+<p>问题是预期年化收益率 14.5% 能达到吗？公认的投资大师沃伦・巴菲特，具有四十多年投资年限，他的平均年化收益率也只是 20.3%。作为一个普通人，30 年的年化收益率要达到 14.5%，可能性有多大？即使能达到，每月定投 2000 元并坚持 30 年，是否又能做到呢？尤其是在市场出现极端恐慌或极端火热的时候，还能心如止水，仍坚定不移地按月定投吗？</p>
+<h2 id="一次大胆的尝试"><a href="#一次大胆的尝试" class="headerlink" title="一次大胆的尝试"></a>一次大胆的尝试</h2><p>说实话，三十年的平均年化收益率要达到将近15%，我是一点把握都没有。而且也没有多少信心能够坚持下去。我得承认自己是一个普通人，没有过多的时间精力花费在研究投资上，本身也缺乏相关的专业能力。但这并不意味着我会放弃尝试的机会。相反，我倒是跃跃欲试，就当作是为自己储蓄退休金，因为三十年后也差不多快到了我该退休的年纪。</p>
+<p>既然决定要去尝试，那就必须面对现实，尽最大的努力去解决这些问题，即使问题的解决方案并不是最优的。</p>
+<p>首先，关于年化收益率问题，如果自己没有能力达到，那是不是通过选择优秀的基金进行定投的方式来解决呢？要找到跨越牛熊周期的（时间一般超过八年）、平均年化收益率达到14.5% 的基金，虽没有想象中那么简单，但也没有想象中的困难。很多明星基金经理，如张坤、谢治宇、朱少醒等，他们手上管理的基金大多都能达到这个年化收益率。</p>
+<p>比如，朱少醒的富国天惠成长混合A基金，成立十五年翻了 21 倍，平均年化收益率高达 23.94%。当然，过去的业绩不代表未来的业绩，未来也有可能会更换基金经理。平均年化收益率也不代表每年都是一层不变，而是有的年度可能是高于这个值，有的年度是低于这个值，甚至是负数。</p>
+<p>长期来看，优秀基金经理的投资业绩肯定会比自己好很多。</p>
+<p>其次，关于每月坚持定投问题。一项目标计划需要持续三十年之久，这中间存在很多“拦路虎”，将来可能会以各种各样的方式影响计划的顺利执行。甚至有时候出现一些“致命性”的因素，导致整个计划不得不终止。比如一个常见的问题是缺少每月可用于定投的资金；比如可能会碰到最大的问题是出现特殊情况需要卖出基金；比如定投过程中还可能遇到坚持不下来的问题，等等。</p>
+<p>那有没有方法让这长达三十年的定投计划的执行可以变得稍微顺利些呢？</p>
+<p>我现在能想到的，一个是保障每月收入稳定，并且每月定投的钱一定要用“闲钱”，同时还要不断提高收入，为计划的顺利执行挖出一条深深的护城河，避免出现需要终止计划的情况。</p>
+<p>另外一个是可以将三十年的长期目标计划分阶段拆解成中期目标计划（五年计划或十年计划）、短期目标计划，最后变成一步步切实可行的行动计划和容易量化的行动目标，并在执行的过程中不断地给予自己反馈（计划进度图表等）。</p>
+<p>就像打怪升级一样，当你努力完成一定量的阶段目标之后，每次看到自己的储蓄金额（净投入）在慢慢增长，总资产也在慢慢地接近下一阶段目标，甚至是接近总目标，那种每天都在一点一点的慢慢变富的成就感和满足感就不由自主地产生了。</p>
+<p>在漫长且枯燥的定投过程中，成就感和满足感是可以增添我们坚持的动力和信心。</p>
+<p>再次，关于无视市场情绪问题。</p>
+<p>人的弱点有很多，自私、妒嫉、虚荣、胆小、好逸恶劳、优柔寡断、刚愎自用，等等。在股市中，每个人或多或少都会展现自己人性的弱点，其中比较典型的是贪婪与恐惧。</p>
+<p>在股市火爆的时候，有多少人还能按既定计划坚持定投，而不是匆匆止盈或者加大杠杆买入？在市场暴跌的时候，即使是优秀的基金，也是有可能出现很大的回撤，如上文提到的基金——富国天惠成长混合A，过去最大回撤也达到了 58.9%。当 100 块跌去 58.9 块，还有多少人能不割肉离场并坚持拿住？</p>
+<p>无视市场情绪，其实就是克服人性弱点，过程非常难，需要很大的毅力。</p>
+<p>个人的想法是，既然选择了大家公认（或自己个人认为）的优秀基金经理管理的基金，就相当于把自己的资金交给基金经理，由他们进行管理和投资。我们要做的是相信他们的专业能力是能够根据市场行情变化做出较为理性的判断，而不是瞎操心。剩下要做的是这些在我看来更重要的事情：保持健康、认真过好自己的生活、多花时间陪伴家人孩子、专注于自己的事业、增加收入的来源等。</p>
+<p>最后，还有一个关于通货膨胀问题。</p>
+<p>受通货膨胀因素影响，未来是否会增加每月定投金额？</p>
+<p>目前没有明确的想法。不过随着收入的上涨，从上涨的这部分收入里拿出一小部分资金投入到退休金计划，享受时间复利带来的收益，确实是一个不错的选择。需要强调的是新增加的这一部分资金，最好还是长时间不会用到的“闲钱”。</p>
+<h2 id="制定计划"><a href="#制定计划" class="headerlink" title="制定计划"></a>制定计划</h2><p>以下是我根据自身的情况制定了一项长期计划——退休金计划。</p>
+<p>计划内容：</p>
+<ul>
+<li>计划目标：退休金额达到 10,000,000 元；</li>
+<li>定投基金：富国天惠成长混合A（161005）；</li>
+<li>定投金额：2000 元/月；</li>
+<li>定投日期：每月 10 号和 24 号，如遇节假日或休息日，则根据情况提前在最近一个交易日定投，或顺延至下一个交易日定投；</li>
+<li>定投年限：30年；</li>
+<li>预期平均年回报率：14.5%；</li>
+<li>计划停止执行条件：提前完成目标金额或 30 年时间已到（2051年2月）；</li>
+<li>定投当天更新净投入和总资产记录；</li>
+<li>其他补充：根据未来的实际情况，决定是否更换定投基金、增加每月定投金额等。</li>
+</ul>
+<p>计划本身比较简单，关键是要<strong>坚定不移地去执行</strong>。</p>
+<h2 id="分阶段执行计划"><a href="#分阶段执行计划" class="headerlink" title="分阶段执行计划"></a>分阶段执行计划</h2><p>长期目标如果不细化或拆解成可执行的计划，往往很难实现。越是宏大的目标，越要细化成中期或短期内可实现的小目标。否则就容易因为目标过于宏大而感到难以实现，最终选择放弃。</p>
+<p>结合本人实际情况，退休金计划大概细化为六个“五年计划”。同时为便于记录统计，“五年计划”的起止时间以自然年为基准时间。详细计划如下：</p>
+<p><a href="/2021/07/10/investment-plan-2021-2025/">2021-2025年定投执行计划</a></p>
+<p><a href="/2021/07/10/investment-plan-2026-2030/">2026-2030年定投执行计划</a></p>
+<p><a href="/2021/07/10/investment-plan-2031-2035/">2031-2035年定投执行计划</a></p>
+<p>2036-2040年定投执行计划</p>
+<p>2041-2045年定投执行计划</p>
+<p>2046-2050年定投执行计划</p>
+<p>2051年（1月、2月）定投执行计划</p>
+<h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
+    <div id="echarts9372" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts4283" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('echarts9372'));
+    var bar_chart = echarts.init(document.getElementById('echarts4283'));
+    
+    $.get('/data/invest_30yrs.json').done(function (data) {
+        console.log(JSON.stringify(data)); 
+
+        var dates = [];
+        var invest_data = [];
+        var total_data = [];
+        var records = data.data;
+        var options = data.options;
+        var len = records.length;
+        var newestData = records[len - 1];
+
+        for (var i = 0; i < len; i++){
+          dates.push(records[i][0]);
+          invest_data.push(records[i][2]);
+          total_data.push(records[i][3]);
+        }
+        options.xAxis.data = dates;
+        options.series[0].data = invest_data;
+        options.series[1].data = total_data;
+        myChart.setOption(options);
+
+        var labelRight = {
+          position: 'right'
+        };
+      
+        var bar_options = {
+          title: {
+              text: '账户资产明细',
+              subtext: '金额（元）',
+              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
+          },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              }
+          },
+          grid: {
+              top: 80,
+              bottom: 30
+          },
+          xAxis: {
+              type: 'value',
+              position: 'top',
+              splitLine: {
+                  lineStyle: {
+                      type: 'dashed'
+                  }
+              }
+          },
+          yAxis: {
+              type: 'category',
+              axisLine: {show: false},
+              axisLabel: {show: false},
+              axisTick: {show: false},
+              splitLine: {show: false},
+              data: ['收益', '净投入', '总资产']
+          },
+          series: [
+              {
+                  name: '人民币',
+                  type: 'bar',
+                  stack: '总量',
+                  label: {
+                      show: true,
+                      formatter: '{b}'
+                  },
+                  data: [
+                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
+                      {value: newestData[2], label: labelRight},
+                      {value: newestData[3], label: labelRight},
+                  ],
+                  itemStyle: {
+                    normal: {
+        　　　　　　　　//这里是重点
+                        color: function(params) {
+                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                            var colorList = ['#ff4040', '#fc8452', '#5470c6' ]
+                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
+                            return colorList[params.dataIndex]
+                        }
+                    }
+                }
+              }
+          ]
+      };
+        bar_chart.setOption(bar_options);
+    });
+    </script>
+    
+
+<blockquote>
+<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
+</blockquote>
+<p>第一个五年目标（2021年3月-2025年12月），目标净投入 <strong>116,000</strong> 元；</p>
+<p>详见 <a href="/2021/07/17/investment-plan-progress/">退休金计划：进度看板</a></p>
+<h2 id="年度计划参考"><a href="#年度计划参考" class="headerlink" title="年度计划参考"></a>年度计划参考</h2><p>详见 <a href="/2021/07/18/investment-plan-reference">退休金计划：三十年一千万参考</a></p>
 ]]></content>
       <categories>
         <category>投资理财</category>
@@ -3781,14 +3947,14 @@
     <url>/2021/07/17/investment-plan-progress/</url>
     <content><![CDATA[<p><strong><a href="/2021/07/07/investment-plan-2000-per-month-for-30yrs/">退休金计划</a></strong> 进度：</p>
 <h2 id="账户资产"><a href="#账户资产" class="headerlink" title="账户资产"></a>账户资产</h2>
-    <div id="echarts8862" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts6400" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
+    <div id="echarts6892" style="width: 100%;height: 400px;margin: 0 auto"></div>
+    <div id="echarts9293" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts8862'));
-    var bar_chart = echarts.init(document.getElementById('echarts6400'));
+    var myChart = echarts.init(document.getElementById('echarts6892'));
+    var bar_chart = echarts.init(document.getElementById('echarts9293'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -3885,12 +4051,12 @@
 <p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
 </blockquote>
 <h2 id="进度看板"><a href="#进度看板" class="headerlink" title="进度看板"></a>进度看板</h2>
-    <div id="echarts7717" style="width: 100%;height: 200px;margin: 0 auto"></div>
+    <div id="echarts2217" style="width: 100%;height: 200px;margin: 0 auto"></div>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts7717'));
+    var dashboard_chart_id_chart = echarts.init(document.getElementById('echarts2217'));
     
     $.get('/data/invest_30yrs.json').done(function (data) {
         console.log(JSON.stringify(data)); 
@@ -4012,300 +4178,6 @@
       </tags>
   </entry>
   <entry>
-    <title>退休金计划：每月定投基金2000元，30年后资产总额达到多少？</title>
-    <url>/2021/07/07/investment-plan-2000-per-month-for-30yrs/</url>
-    <content><![CDATA[<h2 id="突发奇想"><a href="#突发奇想" class="headerlink" title="突发奇想"></a>突发奇想</h2><p>前段时间突发奇想，如果每个月拿出2000元用于投资理财，如定投基金，那30年后资产总额会达到多少呢？</p>
-<p>根据网上查到的资料，如果年化收益率为 14.5%，每月末坚持定投 2000 元，那么 30 年后资产总额将高达 1000 万元！！！看到这个结果，顿时心动不已。毕竟这 30 年的净投入才 72 万（2000 × 12 × 30 = 720000），收益竟达到了 928 万之多。</p>
-<h2 id="回到现实"><a href="#回到现实" class="headerlink" title="回到现实"></a>回到现实</h2><p>但这真的有可能实现吗？</p>
-<p>其实我不是怀疑在这样的假设下得出这样的结果。随着年期的增长，复利效应引发的倍数增长会越来越显著，而 30 年的时长，是足以见识到复利的威力和魅力的。</p>
-<p>问题是预期年化收益率 14.5% 能达到吗？公认的投资大师沃伦・巴菲特，具有四十多年投资年限，他的平均年化收益率也只是 20.3%。作为一个普通人，30 年的年化收益率要达到 14.5%，可能性有多大？即使能达到，每月定投 2000 元并坚持 30 年，是否又能做到呢？尤其是在市场出现极端恐慌或极端火热的时候，还能心如止水，仍坚定不移地按月定投吗？</p>
-<h2 id="一次大胆的尝试"><a href="#一次大胆的尝试" class="headerlink" title="一次大胆的尝试"></a>一次大胆的尝试</h2><p>说实话，三十年的平均年化收益率要达到将近15%，我是一点把握都没有。而且也没有多少信心能够坚持下去。我得承认自己是一个普通人，没有过多的时间精力花费在研究投资上，本身也缺乏相关的专业能力。但这并不意味着我会放弃尝试的机会。相反，我倒是跃跃欲试，就当作是为自己储蓄退休金，因为三十年后也差不多快到了我该退休的年纪。</p>
-<p>既然决定要去尝试，那就必须面对现实，尽最大的努力去解决这些问题，即使问题的解决方案并不是最优的。</p>
-<p>首先，关于年化收益率问题，如果自己没有能力达到，那是不是通过选择优秀的基金进行定投的方式来解决呢？要找到跨越牛熊周期的（时间一般超过八年）、平均年化收益率达到14.5% 的基金，虽没有想象中那么简单，但也没有想象中的困难。很多明星基金经理，如张坤、谢治宇、朱少醒等，他们手上管理的基金大多都能达到这个年化收益率。</p>
-<p>比如，朱少醒的富国天惠成长混合A基金，成立十五年翻了 21 倍，平均年化收益率高达 23.94%。当然，过去的业绩不代表未来的业绩，未来也有可能会更换基金经理。平均年化收益率也不代表每年都是一层不变，而是有的年度可能是高于这个值，有的年度是低于这个值，甚至是负数。</p>
-<p>长期来看，优秀基金经理的投资业绩肯定会比自己好很多。</p>
-<p>其次，关于每月坚持定投问题。一项目标计划需要持续三十年之久，这中间存在很多“拦路虎”，将来可能会以各种各样的方式影响计划的顺利执行。甚至有时候出现一些“致命性”的因素，导致整个计划不得不终止。比如一个常见的问题是缺少每月可用于定投的资金；比如可能会碰到最大的问题是出现特殊情况需要卖出基金；比如定投过程中还可能遇到坚持不下来的问题，等等。</p>
-<p>那有没有方法让这长达三十年的定投计划的执行可以变得稍微顺利些呢？</p>
-<p>我现在能想到的，一个是保障每月收入稳定，并且每月定投的钱一定要用“闲钱”，同时还要不断提高收入，为计划的顺利执行挖出一条深深的护城河，避免出现需要终止计划的情况。</p>
-<p>另外一个是可以将三十年的长期目标计划分阶段拆解成中期目标计划（五年计划或十年计划）、短期目标计划，最后变成一步步切实可行的行动计划和容易量化的行动目标，并在执行的过程中不断地给予自己反馈（计划进度图表等）。</p>
-<p>就像打怪升级一样，当你努力完成一定量的阶段目标之后，每次看到自己的储蓄金额（净投入）在慢慢增长，总资产也在慢慢地接近下一阶段目标，甚至是接近总目标，那种每天都在一点一点的慢慢变富的成就感和满足感就不由自主地产生了。</p>
-<p>在漫长且枯燥的定投过程中，成就感和满足感是可以增添我们坚持的动力和信心。</p>
-<p>再次，关于无视市场情绪问题。</p>
-<p>人的弱点有很多，自私、妒嫉、虚荣、胆小、好逸恶劳、优柔寡断、刚愎自用，等等。在股市中，每个人或多或少都会展现自己人性的弱点，其中比较典型的是贪婪与恐惧。</p>
-<p>在股市火爆的时候，有多少人还能按既定计划坚持定投，而不是匆匆止盈或者加大杠杆买入？在市场暴跌的时候，即使是优秀的基金，也是有可能出现很大的回撤，如上文提到的基金——富国天惠成长混合A，过去最大回撤也达到了 58.9%。当 100 块跌去 58.9 块，还有多少人能不割肉离场并坚持拿住？</p>
-<p>无视市场情绪，其实就是克服人性弱点，过程非常难，需要很大的毅力。</p>
-<p>个人的想法是，既然选择了大家公认（或自己个人认为）的优秀基金经理管理的基金，就相当于把自己的资金交给基金经理，由他们进行管理和投资。我们要做的是相信他们的专业能力是能够根据市场行情变化做出较为理性的判断，而不是瞎操心。剩下要做的是这些在我看来更重要的事情：保持健康、认真过好自己的生活、多花时间陪伴家人孩子、专注于自己的事业、增加收入的来源等。</p>
-<p>最后，还有一个关于通货膨胀问题。</p>
-<p>受通货膨胀因素影响，未来是否会增加每月定投金额？</p>
-<p>目前没有明确的想法。不过随着收入的上涨，从上涨的这部分收入里拿出一小部分资金投入到退休金计划，享受时间复利带来的收益，确实是一个不错的选择。需要强调的是新增加的这一部分资金，最好还是长时间不会用到的“闲钱”。</p>
-<h2 id="制定计划"><a href="#制定计划" class="headerlink" title="制定计划"></a>制定计划</h2><p>以下是我根据自身的情况制定了一项长期计划——退休金计划。</p>
-<p>计划内容：</p>
-<ul>
-<li>计划目标：退休金额达到 10,000,000 元；</li>
-<li>定投基金：富国天惠成长混合A（161005）；</li>
-<li>定投金额：2000 元/月；</li>
-<li>定投日期：每月 10 号和 24 号，如遇节假日或休息日，则根据情况提前在最近一个交易日定投，或顺延至下一个交易日定投；</li>
-<li>定投年限：30年；</li>
-<li>预期平均年回报率：14.5%；</li>
-<li>计划停止执行条件：提前完成目标金额或 30 年时间已到（2051年2月）；</li>
-<li>定投当天更新净投入和总资产记录；</li>
-<li>其他补充：根据未来的实际情况，决定是否更换定投基金、增加每月定投金额等。</li>
-</ul>
-<p>计划本身比较简单，关键是要<strong>坚定不移地去执行</strong>。</p>
-<h2 id="分阶段执行计划"><a href="#分阶段执行计划" class="headerlink" title="分阶段执行计划"></a>分阶段执行计划</h2><p>长期目标如果不细化或拆解成可执行的计划，往往很难实现。越是宏大的目标，越要细化成中期或短期内可实现的小目标。否则就容易因为目标过于宏大而感到难以实现，最终选择放弃。</p>
-<p>结合本人实际情况，退休金计划大概细化为六个“五年计划”。同时为便于记录统计，“五年计划”的起止时间以自然年为基准时间。详细计划如下：</p>
-<p><a href="/2021/07/10/investment-plan-2021-2025/">2021-2025年定投执行计划</a></p>
-<p><a href="/2021/07/10/investment-plan-2026-2030/">2026-2030年定投执行计划</a></p>
-<p><a href="/2021/07/10/investment-plan-2031-2035/">2031-2035年定投执行计划</a></p>
-<p>2036-2040年定投执行计划</p>
-<p>2041-2045年定投执行计划</p>
-<p>2046-2050年定投执行计划</p>
-<p>2051年（1月、2月）定投执行计划</p>
-<h2 id="计划当前进度"><a href="#计划当前进度" class="headerlink" title="计划当前进度"></a>计划当前进度</h2>
-    <div id="echarts6491" style="width: 100%;height: 400px;margin: 0 auto"></div>
-    <div id="echarts9040" style="width: 100%;height: 400px;margin: 0 auto;margin-top: 20px;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.2/dist/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('echarts6491'));
-    var bar_chart = echarts.init(document.getElementById('echarts9040'));
-    
-    $.get('/data/invest_30yrs.json').done(function (data) {
-        console.log(JSON.stringify(data)); 
-
-        var dates = [];
-        var invest_data = [];
-        var total_data = [];
-        var records = data.data;
-        var options = data.options;
-        var len = records.length;
-        var newestData = records[len - 1];
-
-        for (var i = 0; i < len; i++){
-          dates.push(records[i][0]);
-          invest_data.push(records[i][2]);
-          total_data.push(records[i][3]);
-        }
-        options.xAxis.data = dates;
-        options.series[0].data = invest_data;
-        options.series[1].data = total_data;
-        myChart.setOption(options);
-
-        var labelRight = {
-          position: 'right'
-        };
-      
-        var bar_options = {
-          title: {
-              text: '账户资产明细',
-              subtext: '金额（元）',
-              // sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
-          },
-          tooltip: {
-              trigger: 'axis',
-              axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                  type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-              }
-          },
-          grid: {
-              top: 80,
-              bottom: 30
-          },
-          xAxis: {
-              type: 'value',
-              position: 'top',
-              splitLine: {
-                  lineStyle: {
-                      type: 'dashed'
-                  }
-              }
-          },
-          yAxis: {
-              type: 'category',
-              axisLine: {show: false},
-              axisLabel: {show: false},
-              axisTick: {show: false},
-              splitLine: {show: false},
-              data: ['收益', '净投入', '总资产']
-          },
-          series: [
-              {
-                  name: '人民币',
-                  type: 'bar',
-                  stack: '总量',
-                  label: {
-                      show: true,
-                      formatter: '{b}'
-                  },
-                  data: [
-                      {value: (newestData[3] - newestData[2]).toFixed(2), label: labelRight},
-                      {value: newestData[2], label: labelRight},
-                      {value: newestData[3], label: labelRight},
-                  ],
-                  itemStyle: {
-                    normal: {
-        　　　　　　　　//这里是重点
-                        color: function(params) {
-                          //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
-                            var colorList = ['#ff4040', '#fc8452', '#5470c6' ]
-                            // ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83', '#ca8622'];
-                            return colorList[params.dataIndex]
-                        }
-                    }
-                }
-              }
-          ]
-      };
-        bar_chart.setOption(bar_options);
-    });
-    </script>
-    
-
-<blockquote>
-<p>账户资产走势图说明：<br>该图表目的为展示计划进行的进度，时间轴为计划定投日期，而非实际定投日期；<br>为便于展示每期定投计划执行情况，每期的定投金额可能会有波动（补投情况），具体定投情况详见分阶段执行计划；<br>补充：开始定投日期为 2021 年 3 月 31 日，初始金额为 1000 元，2021 年 4 月因为特殊情况没有进行定投。考虑到从 2021 年 3 月开始定投到 2021 年 6 月，总共 4 个月，每月定投 2000 元，总共需投入 8000 元，故后续三次定投（分别为 2021 年 5 月 24 日， 2021 年 6 月 10 日，2021 年 6 月 24 日）的金额临时改为 2000 元。</p>
-</blockquote>
-<p>第一个五年目标（2021年3月-2025年12月），目标净投入 <strong>116,000</strong> 元；</p>
-<p>详见 <a href="/2021/07/17/investment-plan-progress/">退休金计划：进度看板</a></p>
-<h2 id="年度计划参考"><a href="#年度计划参考" class="headerlink" title="年度计划参考"></a>年度计划参考</h2><p>详见 <a href="/2021/07/18/investment-plan-reference">退休金计划：三十年一千万参考</a></p>
-]]></content>
-      <categories>
-        <category>投资理财</category>
-      </categories>
-      <tags>
-        <tag>理财</tag>
-        <tag>退休金计划</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CentOS安装MySQL 5.7失败：GPG Key验证不通过</title>
-    <url>/2022/04/13/centos-install-mysql-gpg-key-error/</url>
-    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在 CentOS 系统，通过 yum 命令安装 MySQL 5.7 时，出现如下错误：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Public key <span class="keyword">for</span> mysql-community-server-5.7.37-1.el7.x86_64.rpm is not installed</span><br><span class="line"></span><br><span class="line"> Failing package is: mysql-community-server-5.7.37-1.el7.x86_64</span><br><span class="line"> GPG Keys are configured as: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql</span><br></pre></td></tr></table></figure>
-
-<p>yum 命令如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install mysql-server</span><br></pre></td></tr></table></figure>
-
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>从错误信息可以确认这是由 GPG Key 验证没有通过引起的。解决方法如下：</p>
-<p>方法一：</p>
-<p>yum 安装命令加上参数 <code>--nogpgcheck</code>，即绕过 GPG Key 验证：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install mysql-server --nogpgcheck</span><br></pre></td></tr></table></figure>
-
-<p>方法二<em><strong>（推荐）</strong></em>：</p>
-<p>导入 GPG KEY：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022</span><br></pre></td></tr></table></figure>
-
-<p>导入成功后，再执行 yum 安装命令即可：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install mysql-server</span><br></pre></td></tr></table></figure>
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Centos7安装MySQL 5.7 步骤（yum安装）</title>
-    <url>/2022/04/05/how-to-install-mysql57-on-centos7/</url>
-    <content><![CDATA[<h2 id="一、添加-yum-源"><a href="#一、添加-yum-源" class="headerlink" title="一、添加 yum 源"></a>一、添加 yum 源</h2><p>下载 MySQL 5.7 rpm 包：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm</span><br></pre></td></tr></table></figure>
-
-<p>安装 rpm 包：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo rpm -ivh mysql57-community-release-el7-9.noarch.rpm</span><br></pre></td></tr></table></figure>
-
-<p>完成后会在 /etc/yum.repos.d/ 目录下生成两个repo文件：</p>
-<p>mysql-community.repo、</p>
-<p>mysql-community-source.repo</p>
-<h2 id="二、安装-MySQL"><a href="#二、安装-MySQL" class="headerlink" title="二、安装 MySQL"></a>二、安装 MySQL</h2><p>进入 /etc/yum.repos.d 目录：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/yum.repos.d/</span><br></pre></td></tr></table></figure>
-
-<p>执行 yum 安装命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install mysql-server</span><br></pre></td></tr></table></figure>
-
-<p>安装过程中，会有提示确认信息，一般一路输入 <code>y</code> 即可。</p>
-<p>如果显示以下输出，则表明安装已成功。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Installed:</span><br><span class="line">  mysql-community-server.x86_64 0:5.7.37-1.el7</span><br><span class="line"></span><br><span class="line">Dependency Installed:</span><br><span class="line">  mysql-community-client.x86_64 0:5.7.37-1.el7                          mysql-community-common.x86_64 0:5.7.37-1.el7                          mysql-community-libs.x86_64 0:5.7.37-1.el7</span><br><span class="line"></span><br><span class="line">Complete!</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、启动-MySQL"><a href="#三、启动-MySQL" class="headerlink" title="三、启动 MySQL"></a>三、启动 MySQL</h2><p>启动 MySQL：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl start mysqld</span><br></pre></td></tr></table></figure>
-
-<p>查看 MySQL 状态：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl status mysqld</span><br></pre></td></tr></table></figure>
-
-<p>重启 MySQL：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart mysqld</span><br></pre></td></tr></table></figure>
-
-<p>停止 MySQL：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl stop mysqld</span><br></pre></td></tr></table></figure>
-
-<p>设置开机启动：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> mysqld</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、登录-MySQL"><a href="#四、登录-MySQL" class="headerlink" title="四、登录 MySQL"></a>四、登录 MySQL</h2><p>获取 root 用户首次（临时）登录密码：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep <span class="string">&#x27;temporary password&#x27;</span> /var/<span class="built_in">log</span>/mysqld.log</span><br></pre></td></tr></table></figure>
-
-<p>该命令会显示以下输出，root 用户首次登录密码为 5XetjH9sk9*J ：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[Note] A temporary password is generated <span class="keyword">for</span> root@localhost: 5XetjH9sk9*J</span><br></pre></td></tr></table></figure>
-
-<p>登录 MySQL：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
-
-<p>进入 MySQL 后，需要修改用户临时密码，否则执行命令时会提示错误，如执行 <code>show databases</code>，会显示以下错误信息：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</span><br></pre></td></tr></table></figure>
-
-<p>修改用户密码：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ALTER USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;这里输入新密码，如2020Super_Star&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>查询 MySQL 密码策略：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SHOW VARIABLES LIKE <span class="string">&#x27;validate_password%&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>该命令会显示以下信息：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------------------------------+--------+</span><br><span class="line">| Variable_name                        | Value  |</span><br><span class="line">+--------------------------------------+--------+</span><br><span class="line">| validate_password_check_user_name    | OFF    |</span><br><span class="line">| validate_password_dictionary_file    |        |</span><br><span class="line">| validate_password_length             | 8      |</span><br><span class="line">| validate_password_mixed_case_count   | 1      |</span><br><span class="line">| validate_password_number_count       | 1      |</span><br><span class="line">| validate_password_policy             | MEDIUM |</span><br><span class="line">| validate_password_special_char_count | 1      |</span><br><span class="line">+--------------------------------------+--------+</span><br><span class="line">7 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
-
-<p>也就是说，密码要求长度要大于8位，包含大写字母、小写字母、数字、标点符号。如：<code>2020Super_Star</code> 。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux创建/删除软链接</title>
-    <url>/2022/05/07/how-to-create-or-delete-symbolic-link-on-linux-os/</url>
-    <content><![CDATA[<h2 id="创建软连接"><a href="#创建软连接" class="headerlink" title="创建软连接"></a>创建软连接</h2><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ln -s TARGET LINK_NAME</span><br></pre></td></tr></table></figure>
-
-<p>e.g.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建软连接前的目录</span></span><br><span class="line">➜  opt ll</span><br><span class="line">total 2.4M</span><br><span class="line">drwxrwxrwx 1 hadoop hadoop 4.0K May  7 13:58 redis-6.2.6</span><br><span class="line">-rwxrwxrwx 1 hadoop hadoop 2.4M May  7 10:43 redis-6.2.6.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建软连接：为文件夹 redis-6.2.6 创建软连接 redis</span></span><br><span class="line">➜  opt ln -s redis-6.2.6 ./redis</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看创建软连接后的目录</span></span><br><span class="line">➜  opt ll</span><br><span class="line">total 2.4M</span><br><span class="line">lrwxrwxrwx 1 hadoop hadoop   11 May  7 13:59 redis -&gt; redis-6.2.6</span><br><span class="line">drwxrwxrwx 1 hadoop hadoop 4.0K May  7 13:58 redis-6.2.6</span><br><span class="line">-rwxrwxrwx 1 hadoop hadoop 2.4M May  7 10:43 redis-6.2.6.tar.gz</span><br></pre></td></tr></table></figure>
-
-<h2 id="删除软连接"><a href="#删除软连接" class="headerlink" title="删除软连接"></a>删除软连接</h2><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rm -rf file_name</span><br></pre></td></tr></table></figure>
-
-<p>e.g.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 删除软连接前的目录</span></span><br><span class="line">➜  opt ll</span><br><span class="line">total 2.4M</span><br><span class="line">lrwxrwxrwx 1 hadoop hadoop   11 May  7 10:45 redis -&gt; redis-6.2.6</span><br><span class="line">drwxrwxrwx 1 hadoop hadoop 4.0K May  7 10:43 redis-6.2.6</span><br><span class="line">-rwxrwxrwx 1 hadoop hadoop 2.4M May  7 10:43 redis-6.2.6.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除软连接</span></span><br><span class="line">rm -rf redis</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看删除软连接后的目录</span></span><br><span class="line">➜  opt ll</span><br><span class="line">total 2.4M</span><br><span class="line">drwxrwxrwx 1 hadoop hadoop 4.0K May  7 10:43 redis-6.2.6</span><br><span class="line">-rwxrwxrwx 1 hadoop hadoop 2.4M May  7 10:43 redis-6.2.6.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p><strong>NOTE：</strong></p>
-<p>特别注意 <code>rm -rf redis</code> 与 <code>rm -rf redis/</code> 命令之间的区别：</p>
-<ul>
-<li><code>rm -rf redis</code> 是仅删除软连接；</li>
-<li>而 <code>rm -rf redis/</code> 是删除 <code>redis</code> 目录下所有文件，相当于删除目标文件夹 <code>redis-6.2.6</code> 下所有文件，谨慎操作。</li>
-</ul>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>CentOS7</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Apache Flink 1.14.5 发版公告</title>
     <url>/2022/06/23/apache-flink-release-1_14_5/</url>
     <content><![CDATA[<p>本文翻译自 Apache Flink 社区博文——<a href="https://flink.apache.org/news/2022/06/22/release-1.14.5.html">《Apache Flink 1.14.5 Release Announcement》</a><br>。</p>
@@ -4400,6 +4272,66 @@
       </tags>
   </entry>
   <entry>
+    <title>CentOS安装MySQL 5.7失败：GPG Key验证不通过</title>
+    <url>/2022/04/13/centos-install-mysql-gpg-key-error/</url>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在 CentOS 系统，通过 yum 命令安装 MySQL 5.7 时，出现如下错误：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Public key <span class="keyword">for</span> mysql-community-server-5.7.37-1.el7.x86_64.rpm is not installed</span><br><span class="line"></span><br><span class="line"> Failing package is: mysql-community-server-5.7.37-1.el7.x86_64</span><br><span class="line"> GPG Keys are configured as: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql</span><br></pre></td></tr></table></figure>
+
+<p>yum 命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install mysql-server</span><br></pre></td></tr></table></figure>
+
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>从错误信息可以确认这是由 GPG Key 验证没有通过引起的。解决方法如下：</p>
+<p>方法一：</p>
+<p>yum 安装命令加上参数 <code>--nogpgcheck</code>，即绕过 GPG Key 验证：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install mysql-server --nogpgcheck</span><br></pre></td></tr></table></figure>
+
+<p>方法二<em><strong>（推荐）</strong></em>：</p>
+<p>导入 GPG KEY：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022</span><br></pre></td></tr></table></figure>
+
+<p>导入成功后，再执行 yum 安装命令即可：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install mysql-server</span><br></pre></td></tr></table></figure>
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux创建/删除软链接</title>
+    <url>/2022/05/07/how-to-create-or-delete-symbolic-link-on-linux-os/</url>
+    <content><![CDATA[<h2 id="创建软连接"><a href="#创建软连接" class="headerlink" title="创建软连接"></a>创建软连接</h2><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ln -s TARGET LINK_NAME</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建软连接前的目录</span></span><br><span class="line">➜  opt ll</span><br><span class="line">total 2.4M</span><br><span class="line">drwxrwxrwx 1 hadoop hadoop 4.0K May  7 13:58 redis-6.2.6</span><br><span class="line">-rwxrwxrwx 1 hadoop hadoop 2.4M May  7 10:43 redis-6.2.6.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建软连接：为文件夹 redis-6.2.6 创建软连接 redis</span></span><br><span class="line">➜  opt ln -s redis-6.2.6 ./redis</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看创建软连接后的目录</span></span><br><span class="line">➜  opt ll</span><br><span class="line">total 2.4M</span><br><span class="line">lrwxrwxrwx 1 hadoop hadoop   11 May  7 13:59 redis -&gt; redis-6.2.6</span><br><span class="line">drwxrwxrwx 1 hadoop hadoop 4.0K May  7 13:58 redis-6.2.6</span><br><span class="line">-rwxrwxrwx 1 hadoop hadoop 2.4M May  7 10:43 redis-6.2.6.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除软连接"><a href="#删除软连接" class="headerlink" title="删除软连接"></a>删除软连接</h2><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rm -rf file_name</span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 删除软连接前的目录</span></span><br><span class="line">➜  opt ll</span><br><span class="line">total 2.4M</span><br><span class="line">lrwxrwxrwx 1 hadoop hadoop   11 May  7 10:45 redis -&gt; redis-6.2.6</span><br><span class="line">drwxrwxrwx 1 hadoop hadoop 4.0K May  7 10:43 redis-6.2.6</span><br><span class="line">-rwxrwxrwx 1 hadoop hadoop 2.4M May  7 10:43 redis-6.2.6.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除软连接</span></span><br><span class="line">rm -rf redis</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看删除软连接后的目录</span></span><br><span class="line">➜  opt ll</span><br><span class="line">total 2.4M</span><br><span class="line">drwxrwxrwx 1 hadoop hadoop 4.0K May  7 10:43 redis-6.2.6</span><br><span class="line">-rwxrwxrwx 1 hadoop hadoop 2.4M May  7 10:43 redis-6.2.6.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><strong>NOTE：</strong></p>
+<p>特别注意 <code>rm -rf redis</code> 与 <code>rm -rf redis/</code> 命令之间的区别：</p>
+<ul>
+<li><code>rm -rf redis</code> 是仅删除软连接；</li>
+<li>而 <code>rm -rf redis/</code> 是删除 <code>redis</code> 目录下所有文件，相当于删除目标文件夹 <code>redis-6.2.6</code> 下所有文件，谨慎操作。</li>
+</ul>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>CentOS7</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Superset配置——连接Hive出现TTransportException异常</title>
     <url>/2022/01/17/superset-hive-ttransport-exception/</url>
     <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>安装好 superset，通过命令 <code>superset run -p 8088 -h 0.0.0.0</code> 启动，在界面配置 hive 数据库连接时出现错误。在服务器上看到日志信息如下：</p>
@@ -4447,6 +4379,106 @@
       </categories>
       <tags>
         <tag>Superset</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu20.04 LTS执行Shell脚本出现Bad substitution错误</title>
+    <url>/2022/01/15/ubuntu-shell-bad-substitution/</url>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在 Windows 10 自带的 Ubuntu 20.04 子系统终端，执行 Shell 脚本时出现 Bad substitution 错误：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  ~ sh +x tt.sh</span><br><span class="line">tt.sh: 11: Bad substitution</span><br></pre></td></tr></table></figure>
+
+<p>Shell 脚本是从服务器上下载下来的，在服务器上是可以正确执行的，服务器系统为 CentOS 7。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>第一感觉应该是该 Shell 脚本在 Ubuntu、CentOS 两个系统不兼容的关系。</p>
+<p>打开脚本文件，跟踪出错位置（第 11 行），定位到这行代码 <code>day=$&#123;dt:6&#125;</code>。</p>
+<p>查了 Ubuntu 官方文档，发现从 Ubuntu 6.10 开始，系统默认 Shell (/bin/sh) 由 bash shell 更改为 dash shell 了，原因是 dash shell 更轻量，运行更快。</p>
+<p>查看 /bin/sh 在 Ubuntu 系统的链接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  ~ ll /usr/bin/</span><br><span class="line">lrwxrwxrwx 1 root   root       4 Feb 25  2020  sh -&gt; dash</span><br></pre></td></tr></table></figure>
+
+<p>而在服务器 CentOS 系统，链接的是 bash：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[hadoop@bigdata ~]$ ll /usr/bin/</span><br><span class="line">lrwxrwxrwx  1 root root         4 Mar  9  2020 sh -&gt; bash</span><br></pre></td></tr></table></figure>
+
+<p>为了在本地开发机器能够兼容在服务器上执行的脚本文件，这里需要将 Ubuntu 的 /bin/sh 的默认链接更换为 bash，文档给出的方案是在终端执行以下命令，然后选择 &lt; No &gt; 即可：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo dpkg-reconfigure dash</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>后面如果需要将 /bin/sh 的默认链接换回 dash，同样执行上面的命令，并选择 &lt; Yes &gt;。</p>
+</blockquote>
+<p>如果想了解更多，可以查看官方维基：<a href="https://wiki.ubuntu.com/DashAsBinSh">https://wiki.ubuntu.com/DashAsBinSh</a></p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Centos7安装MySQL 5.7 步骤（yum安装）</title>
+    <url>/2022/04/05/how-to-install-mysql57-on-centos7/</url>
+    <content><![CDATA[<h2 id="一、添加-yum-源"><a href="#一、添加-yum-源" class="headerlink" title="一、添加 yum 源"></a>一、添加 yum 源</h2><p>下载 MySQL 5.7 rpm 包：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<p>安装 rpm 包：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo rpm -ivh mysql57-community-release-el7-9.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<p>完成后会在 /etc/yum.repos.d/ 目录下生成两个repo文件：</p>
+<p>mysql-community.repo、</p>
+<p>mysql-community-source.repo</p>
+<h2 id="二、安装-MySQL"><a href="#二、安装-MySQL" class="headerlink" title="二、安装 MySQL"></a>二、安装 MySQL</h2><p>进入 /etc/yum.repos.d 目录：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/yum.repos.d/</span><br></pre></td></tr></table></figure>
+
+<p>执行 yum 安装命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install mysql-server</span><br></pre></td></tr></table></figure>
+
+<p>安装过程中，会有提示确认信息，一般一路输入 <code>y</code> 即可。</p>
+<p>如果显示以下输出，则表明安装已成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Installed:</span><br><span class="line">  mysql-community-server.x86_64 0:5.7.37-1.el7</span><br><span class="line"></span><br><span class="line">Dependency Installed:</span><br><span class="line">  mysql-community-client.x86_64 0:5.7.37-1.el7                          mysql-community-common.x86_64 0:5.7.37-1.el7                          mysql-community-libs.x86_64 0:5.7.37-1.el7</span><br><span class="line"></span><br><span class="line">Complete!</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、启动-MySQL"><a href="#三、启动-MySQL" class="headerlink" title="三、启动 MySQL"></a>三、启动 MySQL</h2><p>启动 MySQL：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl start mysqld</span><br></pre></td></tr></table></figure>
+
+<p>查看 MySQL 状态：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl status mysqld</span><br></pre></td></tr></table></figure>
+
+<p>重启 MySQL：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl restart mysqld</span><br></pre></td></tr></table></figure>
+
+<p>停止 MySQL：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl stop mysqld</span><br></pre></td></tr></table></figure>
+
+<p>设置开机启动：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> mysqld</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、登录-MySQL"><a href="#四、登录-MySQL" class="headerlink" title="四、登录 MySQL"></a>四、登录 MySQL</h2><p>获取 root 用户首次（临时）登录密码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep <span class="string">&#x27;temporary password&#x27;</span> /var/<span class="built_in">log</span>/mysqld.log</span><br></pre></td></tr></table></figure>
+
+<p>该命令会显示以下输出，root 用户首次登录密码为 5XetjH9sk9*J ：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[Note] A temporary password is generated <span class="keyword">for</span> root@localhost: 5XetjH9sk9*J</span><br></pre></td></tr></table></figure>
+
+<p>登录 MySQL：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
+
+<p>进入 MySQL 后，需要修改用户临时密码，否则执行命令时会提示错误，如执行 <code>show databases</code>，会显示以下错误信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.</span><br></pre></td></tr></table></figure>
+
+<p>修改用户密码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ALTER USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;这里输入新密码，如2020Super_Star&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>查询 MySQL 密码策略：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SHOW VARIABLES LIKE <span class="string">&#x27;validate_password%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>该命令会显示以下信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------------------------------+--------+</span><br><span class="line">| Variable_name                        | Value  |</span><br><span class="line">+--------------------------------------+--------+</span><br><span class="line">| validate_password_check_user_name    | OFF    |</span><br><span class="line">| validate_password_dictionary_file    |        |</span><br><span class="line">| validate_password_length             | 8      |</span><br><span class="line">| validate_password_mixed_case_count   | 1      |</span><br><span class="line">| validate_password_number_count       | 1      |</span><br><span class="line">| validate_password_policy             | MEDIUM |</span><br><span class="line">| validate_password_special_char_count | 1      |</span><br><span class="line">+--------------------------------------+--------+</span><br><span class="line">7 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，密码要求长度要大于8位，包含大写字母、小写字母、数字、标点符号。如：<code>2020Super_Star</code> 。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -4512,90 +4544,6 @@
       </categories>
       <tags>
         <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu20.04 LTS执行Shell脚本出现Bad substitution错误</title>
-    <url>/2022/01/15/ubuntu-shell-bad-substitution/</url>
-    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在 Windows 10 自带的 Ubuntu 20.04 子系统终端，执行 Shell 脚本时出现 Bad substitution 错误：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  ~ sh +x tt.sh</span><br><span class="line">tt.sh: 11: Bad substitution</span><br></pre></td></tr></table></figure>
-
-<p>Shell 脚本是从服务器上下载下来的，在服务器上是可以正确执行的，服务器系统为 CentOS 7。</p>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>第一感觉应该是该 Shell 脚本在 Ubuntu、CentOS 两个系统不兼容的关系。</p>
-<p>打开脚本文件，跟踪出错位置（第 11 行），定位到这行代码 <code>day=$&#123;dt:6&#125;</code>。</p>
-<p>查了 Ubuntu 官方文档，发现从 Ubuntu 6.10 开始，系统默认 Shell (/bin/sh) 由 bash shell 更改为 dash shell 了，原因是 dash shell 更轻量，运行更快。</p>
-<p>查看 /bin/sh 在 Ubuntu 系统的链接：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  ~ ll /usr/bin/</span><br><span class="line">lrwxrwxrwx 1 root   root       4 Feb 25  2020  sh -&gt; dash</span><br></pre></td></tr></table></figure>
-
-<p>而在服务器 CentOS 系统，链接的是 bash：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[hadoop@bigdata ~]$ ll /usr/bin/</span><br><span class="line">lrwxrwxrwx  1 root root         4 Mar  9  2020 sh -&gt; bash</span><br></pre></td></tr></table></figure>
-
-<p>为了在本地开发机器能够兼容在服务器上执行的脚本文件，这里需要将 Ubuntu 的 /bin/sh 的默认链接更换为 bash，文档给出的方案是在终端执行以下命令，然后选择 &lt; No &gt; 即可：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo dpkg-reconfigure dash</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>后面如果需要将 /bin/sh 的默认链接换回 dash，同样执行上面的命令，并选择 &lt; Yes &gt;。</p>
-</blockquote>
-<p>如果想了解更多，可以查看官方维基：<a href="https://wiki.ubuntu.com/DashAsBinSh">https://wiki.ubuntu.com/DashAsBinSh</a></p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【Git常用命令】删除本地/远程分支</title>
-    <url>/2022/05/23/how-to-delete-a-local-and-remote-git-branch/</url>
-    <content><![CDATA[<h2 id="删除本地分支"><a href="#删除本地分支" class="headerlink" title="删除本地分支"></a><strong>删除本地分支</strong></h2><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git branch -d 分支名称</span><br></pre></td></tr></table></figure>
-
-<p>注意：删除某个分支时，需先切换到另一个分支上。例如，删除分支 <code>ljx</code> 的操作如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 先切换至 master 分支</span></span><br><span class="line">git checkout master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除分支 ljx</span></span><br><span class="line">git branch -d ljx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看分支</span></span><br><span class="line">git branch -a</span><br><span class="line"></span><br><span class="line">* master</span><br><span class="line">  remotes/origin/HEAD -&gt; origin/master</span><br><span class="line">  remotes/origin/ljx</span><br><span class="line">  remotes/origin/master</span><br><span class="line">  remotes/origin/bugfix</span><br></pre></td></tr></table></figure>
-
-<h2 id="删除远程分支"><a href="#删除远程分支" class="headerlink" title="删除远程分支"></a>删除远程分支</h2><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push origin --delete 分支名称</span><br></pre></td></tr></table></figure>
-
-<p>如删除远程分支 <code>ljx</code>：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push origin --delete ljx</span><br></pre></td></tr></table></figure>
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【Git常用命令】解决在本地还能看到已删除的Git远程分支</title>
-    <url>/2022/05/24/how-to-clean-up-git-branches/</url>
-    <content><![CDATA[<p>在使用 Git 进行代码管理时，通常会遇到某个开发分支已经在代码仓库中删除了，但在本地环境中还能查看到该被删除分支的情况。</p>
-<p>为解决该问题，Git 提供了以下两个命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote prune origin</span><br></pre></td></tr></table></figure>
-
-<p>或：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git fetch origin --prune</span><br></pre></td></tr></table></figure>
-
-<p>例如，我们在 GitLab 代码仓库删除项目的开发分支 <code>ljx</code> ，但在本地环境中通过命令 <code>git branch -a</code> 还可以查看到该分支还存在的情况：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">* master</span><br><span class="line">  remotes/origin/HEAD -&gt; origin/master</span><br><span class="line">  remotes/origin/ljx</span><br><span class="line">  remotes/origin/master</span><br><span class="line">  remotes/origin/patch-2032</span><br></pre></td></tr></table></figure>
-
-<p>这时，我们可以通过命令 <code>git remote prune origin</code> 来解决：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  mydw-azkaban git:(master) git remote prune origin</span><br><span class="line">warning: redirecting to https://git.gzmiyuan.com/bigdatabase/mydw-azkaban.git/</span><br><span class="line">Pruning origin</span><br><span class="line">URL: https://git.gzmiyuan.com/bigdatabase/mydw-azkaban</span><br><span class="line"> * [pruned] origin/ljx</span><br></pre></td></tr></table></figure>
-
-<p>这时，再查看本地环境的分支，发现 <code>ljx</code> 分支已经不存在了：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">* master</span><br><span class="line">  remotes/origin/HEAD -&gt; origin/master</span><br><span class="line">  remotes/origin/master</span><br><span class="line">  remotes/origin/patch-2032</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -4703,37 +4651,70 @@
       </tags>
   </entry>
   <entry>
-    <title>卸载CentOS系统自带数据库MariaDB</title>
-    <url>/2022/04/13/centos-uninstall-mariadb/</url>
-    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在 CentOS 7 系统中，执行命令时：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo rpm -Uvh mysql-community-common-5.7.36-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
+    <title>【Git常用命令】删除本地/远程分支</title>
+    <url>/2022/05/23/how-to-delete-a-local-and-remote-git-branch/</url>
+    <content><![CDATA[<h2 id="删除本地分支"><a href="#删除本地分支" class="headerlink" title="删除本地分支"></a><strong>删除本地分支</strong></h2><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git branch -d 分支名称</span><br></pre></td></tr></table></figure>
 
-<p>出现 conflicts 错误（即文件冲突），类似错误信息如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">file /usr/share/mysql/czech/errmsg.sys from install of mysql-community-common-5.7.36-1.el7.x86_64 conflicts with file from package mariadb-libs-1:5.5.68-1.el7.x86_64</span><br><span class="line">file /usr/share/mysql/danish/errmsg.sys from install of mysql-community-common-5.7.36-1.el7.x86_64 conflicts with file from package mariadb-libs-1:5.5.68-1.el7.x86_64</span><br></pre></td></tr></table></figure>
+<p>注意：删除某个分支时，需先切换到另一个分支上。例如，删除分支 <code>ljx</code> 的操作如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 先切换至 master 分支</span></span><br><span class="line">git checkout master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除分支 ljx</span></span><br><span class="line">git branch -d ljx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看分支</span></span><br><span class="line">git branch -a</span><br><span class="line"></span><br><span class="line">* master</span><br><span class="line">  remotes/origin/HEAD -&gt; origin/master</span><br><span class="line">  remotes/origin/ljx</span><br><span class="line">  remotes/origin/master</span><br><span class="line">  remotes/origin/bugfix</span><br></pre></td></tr></table></figure>
 
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>从错误日志中可以看到 <em><strong>mariadb</strong></em> 相关信息，由此可确定问题是由于 mysql 和 mariadb 之间存在文件冲突引起的。</p>
-<p>解决方法可以直接缷载 mariadb，步骤如下：</p>
-<ol>
-<li>先查找 mariadb 安装版本：</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rpm -qa | grep mariadb</span><br></pre></td></tr></table></figure>
+<h2 id="删除远程分支"><a href="#删除远程分支" class="headerlink" title="删除远程分支"></a>删除远程分支</h2><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push origin --delete 分支名称</span><br></pre></td></tr></table></figure>
 
-<p>可以看到该命令显示以下输出：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rpm -qa|grep mariadb</span><br><span class="line">mariadb-libs-5.5.68-1.el7.x86_64</span><br></pre></td></tr></table></figure>
+<p>如删除远程分支 <code>ljx</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push origin --delete ljx</span><br></pre></td></tr></table></figure>
 
-<ol>
-<li>根据步骤 1 的结果，执行缷载命令，如下：</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo rpm -e --nodeps mariadb-libs-5.5.68-1.el7.x86_64</span><br></pre></td></tr></table></figure>
-
-<p>最后再重新执行安装 MySQL 命令即可。</p>
 <p>（END）</p>
 ]]></content>
       <categories>
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>MySQL</tag>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【Git常用命令】解决在本地还能看到已删除的Git远程分支</title>
+    <url>/2022/05/24/how-to-clean-up-git-branches/</url>
+    <content><![CDATA[<p>在使用 Git 进行代码管理时，通常会遇到某个开发分支已经在代码仓库中删除了，但在本地环境中还能查看到该被删除分支的情况。</p>
+<p>为解决该问题，Git 提供了以下两个命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote prune origin</span><br></pre></td></tr></table></figure>
+
+<p>或：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git fetch origin --prune</span><br></pre></td></tr></table></figure>
+
+<p>例如，我们在 GitLab 代码仓库删除项目的开发分支 <code>ljx</code> ，但在本地环境中通过命令 <code>git branch -a</code> 还可以查看到该分支还存在的情况：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">* master</span><br><span class="line">  remotes/origin/HEAD -&gt; origin/master</span><br><span class="line">  remotes/origin/ljx</span><br><span class="line">  remotes/origin/master</span><br><span class="line">  remotes/origin/patch-2032</span><br></pre></td></tr></table></figure>
+
+<p>这时，我们可以通过命令 <code>git remote prune origin</code> 来解决：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">➜  mydw-azkaban git:(master) git remote prune origin</span><br><span class="line">warning: redirecting to https://git.gzmiyuan.com/bigdatabase/mydw-azkaban.git/</span><br><span class="line">Pruning origin</span><br><span class="line">URL: https://git.gzmiyuan.com/bigdatabase/mydw-azkaban</span><br><span class="line"> * [pruned] origin/ljx</span><br></pre></td></tr></table></figure>
+
+<p>这时，再查看本地环境的分支，发现 <code>ljx</code> 分支已经不存在了：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">* master</span><br><span class="line">  remotes/origin/HEAD -&gt; origin/master</span><br><span class="line">  remotes/origin/master</span><br><span class="line">  remotes/origin/patch-2032</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何查看 Ambari 版本</title>
+    <url>/2022/08/02/how-to-find-ambari-version/</url>
+    <content><![CDATA[<p><strong>如何查看 Ambari 版本？</strong></p>
+<p>打开 Ambari web 界面（默认端口：8080，如 <a href="http://ambari:8080/#/login">http://ambari:8080/#/login</a> ），成功登录之后，点击右上角用户名，在下拉框中点击 About，即可查看当前 Ambari 的版本。</p>
+<p>具体如下图所示：<br><img src="/image/2022/20220802213426-01.png" alt="图 1"></p>
+<p><img src="/image/2022/20220802213426-2.png" alt="图 2"></p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Ambari</tag>
       </tags>
   </entry>
   <entry>
@@ -4781,6 +4762,95 @@
       </tags>
   </entry>
   <entry>
+    <title>卸载CentOS系统自带数据库MariaDB</title>
+    <url>/2022/04/13/centos-uninstall-mariadb/</url>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在 CentOS 7 系统中，执行命令时：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo rpm -Uvh mysql-community-common-5.7.36-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
+
+<p>出现 conflicts 错误（即文件冲突），类似错误信息如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">file /usr/share/mysql/czech/errmsg.sys from install of mysql-community-common-5.7.36-1.el7.x86_64 conflicts with file from package mariadb-libs-1:5.5.68-1.el7.x86_64</span><br><span class="line">file /usr/share/mysql/danish/errmsg.sys from install of mysql-community-common-5.7.36-1.el7.x86_64 conflicts with file from package mariadb-libs-1:5.5.68-1.el7.x86_64</span><br></pre></td></tr></table></figure>
+
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>从错误日志中可以看到 <em><strong>mariadb</strong></em> 相关信息，由此可确定问题是由于 mysql 和 mariadb 之间存在文件冲突引起的。</p>
+<p>解决方法可以直接缷载 mariadb，步骤如下：</p>
+<ol>
+<li>先查找 mariadb 安装版本：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rpm -qa | grep mariadb</span><br></pre></td></tr></table></figure>
+
+<p>可以看到该命令显示以下输出：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rpm -qa|grep mariadb</span><br><span class="line">mariadb-libs-5.5.68-1.el7.x86_64</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>根据步骤 1 的结果，执行缷载命令，如下：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo rpm -e --nodeps mariadb-libs-5.5.68-1.el7.x86_64</span><br></pre></td></tr></table></figure>
+
+<p>最后再重新执行安装 MySQL 命令即可。</p>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Apache Kafka（二）：CentOS 7下安装Apache Kafka</title>
+    <url>/2020/03/19/how-to-install-apache-kafka-on-centos7/</url>
+    <content><![CDATA[<h2 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h2><p>Kafka 服务端代码是用 Scala 开发语言编写的，Scala 是 JVM 系语言中的一种，这意味着用 Scala 编写的源代码编译之后也是 Java 字节码，并运行在 Java 虚拟机上。因此，在开始安装 Kafka 之前，我们需要先在系统上安装 JDK（Java SE Development Kit， Java SE开发套件），JDK 包含的 JRE（Java SE Runtime Environment，Java 运行时环境）是运行 Java 应用程序所必需的。</p>
+<p>多数情况下，推荐安装 JDK 8 及以上的版本，因为 Kafka 自 2.0.0 版本开始，就已经正式摒弃对 Java 7 的支持了。本文安装示例采用的是 JDK 8 版本。</p>
+<p>在 CentOS 7 安装 JDK 可参考这篇博文—— <a href="https://www.linjiangxiong.com/2019/08/30/how-to-install-jdk-1-8-on-centos-7/">CentOS7下安装JDK1.8</a></p>
+<p>另外，运行 Kafka 还需要安装 Apache ZooKeeper 服务，该服务是用来同步分布式进程。ZooKeeper 安装可参考这篇博文——<a href="https://www.linjiangxiong.com/2019/12/12/how-to-install-zookeeper-on-centos7/">在CentOS7系统安装和配置ZooKeeper</a>。</p>
+<h2 id="安装Kafka"><a href="#安装Kafka" class="headerlink" title="安装Kafka"></a>安装Kafka</h2><p>推荐将 Kafka 安装在 Unix 操作系统（如 Solaris）或 Linux 操作系统（如 CentOS）上。这是因为在 Windows 系统上可获得的支持有限。</p>
+<p>本安装示例选择的是 CentOS 7 系统。具体安装步骤如下：</p>
+<ol>
+<li><p>从 Kafka 官网下载页 <a href="https://kafka.apache.org/downloads">https://kafka.apache.org/downloads</a> 获取安装文件，当前最新的稳定版本是 2.4.1，于 2020 年 3 月 12 日发行。这里选择下载二进制文件  <em>kafka_2.12-2.4.1.tgz</em>。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://mirror.bit.edu.cn/apache/kafka/2.4.1/kafka_2.12-2.4.1.tgz</span><br></pre></td></tr></table></figure></li>
+<li><p>创建 Kafka 安装目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /usr/local/kafka</span><br></pre></td></tr></table></figure></li>
+<li><p>解压缩文件 <em>kafka_2.12-2.4.1.tgz</em> 至目录 <code>/usr/local/kafka</code>：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar xvzf kafka_2.12-2.4.1.tgz -C /usr/local/kafka --strip 1</span><br></pre></td></tr></table></figure></li>
+<li><p>进入目录 <code>/usr/local/kafka</code>，可以看到以下子目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@185 home]# cd /usr/local/kafka/</span><br><span class="line">[root@185 kafka]# ll</span><br><span class="line">总用量 56</span><br><span class="line">drwxr-xr-x 3 root root  4096 3月   3 08:34 bin</span><br><span class="line">drwxr-xr-x 2 root root  4096 3月   3 08:34 config</span><br><span class="line">drwxr-xr-x 2 root root  8192 3月  19 15:06 libs</span><br><span class="line">-rw-r--r-- 1 root root 32216 3月   3 08:32 LICENSE</span><br><span class="line">-rw-r--r-- 1 root root   337 3月   3 08:32 NOTICE</span><br><span class="line">drwxr-xr-x 2 root root    44 3月   3 08:34 site-docs</span><br></pre></td></tr></table></figure>
+
+<p>其中，</p>
+<ul>
+<li><p><code>/bin</code>目录下是操作 Kafka 的可执行脚本（.sh 文件），还包含在 windows 系统下的可执行脚本（.bat 文件），包括 Kafka 启动/停止脚本、消费者性能测试脚本、生产者性能测试脚本、分区重分配脚本等；</p>
+</li>
+<li><p><code>/config</code>目录是存放配置文件；</p>
+</li>
+<li><p><code>/libs</code>目录是存放依赖库文件；</p>
+</li>
+<li><p><code>/logs</code>目录存放的是 Kafka 的运行日志文件。</p>
+</li>
+</ul>
+</li>
+<li><p>打开配置文件<code>config/server.properties</code>，修改 listeners 配置和 zookeeper 地址，具体如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim ./config/server.properties</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 监听地址</span></span><br><span class="line">listeners=PLAINTEXT://172.16.1.182:9092</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> zookeeper 地址</span></span><br><span class="line">zookeeper.connect=172.16.1.188:2181</span><br></pre></td></tr></table></figure></li>
+<li><p>在启动 Kafka 服务之前，为保障系统安全，添加运行 Kafka 服务的账号，并以较低权限账号运行 Kafka 服务，且禁用该账号的 <code>ssh</code> 登录权限。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 添加 kafka 账号</span></span><br><span class="line">useradd kafka</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置 kafka 账号密码</span></span><br><span class="line">passwd kafka</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将目录的所有者和组设置为 kafka</span></span><br><span class="line">chown -R kafka:kafka /usr/local/kafka/</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>为保障系统安全，添加运行 Kafka 服务的账号，并以较低权限账号运行 Kafka 服务，且禁用该账号的登录权限。</p>
+<p>切换至 kafka 账号：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">su kafka</span><br></pre></td></tr></table></figure></li>
+<li><p>启动 Kafka 服务，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/kafka-server-start.sh ./config/server.properties</span><br></pre></td></tr></table></figure>
+
+<p>以守护进程（后台进程）的方式启动：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/kafka-server-start.sh ./config/server.properties &amp;</span><br></pre></td></tr></table></figure></li>
+<li><p>停止 Kafka 服务：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/kafka-server-stop.sh</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>Kafka</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Apache Kafka（一）：简介</title>
     <url>/2020/03/17/apache-kafka-intro/</url>
     <content><![CDATA[<h2 id="Kafka简介"><a href="#Kafka简介" class="headerlink" title="Kafka简介"></a>Kafka简介</h2><p>Kafka 最早是由 LinkedIn 公司开发的一套分布式的高性能消息引擎服务，于 2011 年初开源，并于 2012 年 10 月 23 日从 Apache 孵化器毕业，成为 Apache 的顶级项目。</p>
@@ -4806,21 +4876,6 @@
       </categories>
       <tags>
         <tag>Kafka</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何查看 Ambari 版本</title>
-    <url>/2022/08/02/how-identify-mysql-performance-issues-slow-queries/</url>
-    <content><![CDATA[<p><strong>如何查看 Ambari 版本？</strong></p>
-<p>打开 Ambari web 界面（默认端口：8080，如 <a href="http://ambari:8080/#/login">http://ambari:8080/#/login</a> ），成功登录之后，点击右上角用户名，在下拉框中点击 About，即可查看当前 Ambari 的版本。</p>
-<p>具体如下图所示：<br><img src="/image/2022/20220802213426-01.png" alt="图 1"></p>
-<p><img src="/image/2022/20220802213426-2.png" alt="图 2"></p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Ambari</tag>
       </tags>
   </entry>
   <entry>
@@ -4904,61 +4959,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Apache Kafka（二）：CentOS 7下安装Apache Kafka</title>
-    <url>/2020/03/19/how-to-install-apache-kafka-on-centos7/</url>
-    <content><![CDATA[<h2 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h2><p>Kafka 服务端代码是用 Scala 开发语言编写的，Scala 是 JVM 系语言中的一种，这意味着用 Scala 编写的源代码编译之后也是 Java 字节码，并运行在 Java 虚拟机上。因此，在开始安装 Kafka 之前，我们需要先在系统上安装 JDK（Java SE Development Kit， Java SE开发套件），JDK 包含的 JRE（Java SE Runtime Environment，Java 运行时环境）是运行 Java 应用程序所必需的。</p>
-<p>多数情况下，推荐安装 JDK 8 及以上的版本，因为 Kafka 自 2.0.0 版本开始，就已经正式摒弃对 Java 7 的支持了。本文安装示例采用的是 JDK 8 版本。</p>
-<p>在 CentOS 7 安装 JDK 可参考这篇博文—— <a href="https://www.linjiangxiong.com/2019/08/30/how-to-install-jdk-1-8-on-centos-7/">CentOS7下安装JDK1.8</a></p>
-<p>另外，运行 Kafka 还需要安装 Apache ZooKeeper 服务，该服务是用来同步分布式进程。ZooKeeper 安装可参考这篇博文——<a href="https://www.linjiangxiong.com/2019/12/12/how-to-install-zookeeper-on-centos7/">在CentOS7系统安装和配置ZooKeeper</a>。</p>
-<h2 id="安装Kafka"><a href="#安装Kafka" class="headerlink" title="安装Kafka"></a>安装Kafka</h2><p>推荐将 Kafka 安装在 Unix 操作系统（如 Solaris）或 Linux 操作系统（如 CentOS）上。这是因为在 Windows 系统上可获得的支持有限。</p>
-<p>本安装示例选择的是 CentOS 7 系统。具体安装步骤如下：</p>
-<ol>
-<li><p>从 Kafka 官网下载页 <a href="https://kafka.apache.org/downloads">https://kafka.apache.org/downloads</a> 获取安装文件，当前最新的稳定版本是 2.4.1，于 2020 年 3 月 12 日发行。这里选择下载二进制文件  <em>kafka_2.12-2.4.1.tgz</em>。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://mirror.bit.edu.cn/apache/kafka/2.4.1/kafka_2.12-2.4.1.tgz</span><br></pre></td></tr></table></figure></li>
-<li><p>创建 Kafka 安装目录：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /usr/local/kafka</span><br></pre></td></tr></table></figure></li>
-<li><p>解压缩文件 <em>kafka_2.12-2.4.1.tgz</em> 至目录 <code>/usr/local/kafka</code>：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar xvzf kafka_2.12-2.4.1.tgz -C /usr/local/kafka --strip 1</span><br></pre></td></tr></table></figure></li>
-<li><p>进入目录 <code>/usr/local/kafka</code>，可以看到以下子目录：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[root@185 home]# cd /usr/local/kafka/</span><br><span class="line">[root@185 kafka]# ll</span><br><span class="line">总用量 56</span><br><span class="line">drwxr-xr-x 3 root root  4096 3月   3 08:34 bin</span><br><span class="line">drwxr-xr-x 2 root root  4096 3月   3 08:34 config</span><br><span class="line">drwxr-xr-x 2 root root  8192 3月  19 15:06 libs</span><br><span class="line">-rw-r--r-- 1 root root 32216 3月   3 08:32 LICENSE</span><br><span class="line">-rw-r--r-- 1 root root   337 3月   3 08:32 NOTICE</span><br><span class="line">drwxr-xr-x 2 root root    44 3月   3 08:34 site-docs</span><br></pre></td></tr></table></figure>
-
-<p>其中，</p>
-<ul>
-<li><p><code>/bin</code>目录下是操作 Kafka 的可执行脚本（.sh 文件），还包含在 windows 系统下的可执行脚本（.bat 文件），包括 Kafka 启动/停止脚本、消费者性能测试脚本、生产者性能测试脚本、分区重分配脚本等；</p>
-</li>
-<li><p><code>/config</code>目录是存放配置文件；</p>
-</li>
-<li><p><code>/libs</code>目录是存放依赖库文件；</p>
-</li>
-<li><p><code>/logs</code>目录存放的是 Kafka 的运行日志文件。</p>
-</li>
-</ul>
-</li>
-<li><p>打开配置文件<code>config/server.properties</code>，修改 listeners 配置和 zookeeper 地址，具体如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim ./config/server.properties</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 监听地址</span></span><br><span class="line">listeners=PLAINTEXT://172.16.1.182:9092</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> zookeeper 地址</span></span><br><span class="line">zookeeper.connect=172.16.1.188:2181</span><br></pre></td></tr></table></figure></li>
-<li><p>在启动 Kafka 服务之前，为保障系统安全，添加运行 Kafka 服务的账号，并以较低权限账号运行 Kafka 服务，且禁用该账号的 <code>ssh</code> 登录权限。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 添加 kafka 账号</span></span><br><span class="line">useradd kafka</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置 kafka 账号密码</span></span><br><span class="line">passwd kafka</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将目录的所有者和组设置为 kafka</span></span><br><span class="line">chown -R kafka:kafka /usr/local/kafka/</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p>为保障系统安全，添加运行 Kafka 服务的账号，并以较低权限账号运行 Kafka 服务，且禁用该账号的登录权限。</p>
-<p>切换至 kafka 账号：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">su kafka</span><br></pre></td></tr></table></figure></li>
-<li><p>启动 Kafka 服务，</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/kafka-server-start.sh ./config/server.properties</span><br></pre></td></tr></table></figure>
-
-<p>以守护进程（后台进程）的方式启动：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/kafka-server-start.sh ./config/server.properties &amp;</span><br></pre></td></tr></table></figure></li>
-<li><p>停止 Kafka 服务：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./bin/kafka-server-stop.sh</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>编程文摘</category>
-      </categories>
-      <tags>
-        <tag>Kafka</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用Homebrew在macOS上安装Elasticsearch</title>
     <url>/2020/08/02/install-elasticsearch-on-macos-with-homebrew/</url>
     <content><![CDATA[<p>在 macOS 上通过 Homwbrew 安装 Elasticsearch 非常简单，首先通过 <code>brew tap</code> 命令关联 Elastic Homebrew 存储库：</p>
@@ -5024,6 +5024,28 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>小记：2021年8月</title>
+    <url>/2021/08/05/note-202108/</url>
+    <content><![CDATA[<h2 id="2021年8月2日"><a href="#2021年8月2日" class="headerlink" title="2021年8月2日"></a>2021年8月2日</h2><p><strong>1 梦</strong></p>
+<p>昨晚梦到皮蛋，可把我气醒了。梦里大概是这样子：</p>
+<p>皮蛋生了七只小猫咪，有黑色的，有白色的，有橘黄色的还有混色的。但我发现的时候，其中的三只被他吃了，另外四只被绳子绑在一起，浸泡在洗脸盆上，盆上还有水。皮蛋打算溺死他自己的猫咪仔。把我气死了，拿起棍子准备教训皮蛋。结果，他一下子就跑去躲了，打不到他，我像个泼妇骂街一样，边骂边教育他，告诉他这些是你的仔，怎么可以这么残忍对待它们。。</p>
+<p>骂着骂着，突然想到小猫咪还在水盆里泡着呢，就马上冲回去，把小猫咪捞出来，解了绳子，感觉这些小猫咪像是要快饿死了。皮蛋又抓不到，不然还可以让皮蛋给小猫咪喂奶。</p>
+<p>没办法，想到小猫咪可以喝牛奶，又去冰箱找。边翻边想，刚出生的小猫咪可以喝冰的牛奶吗？哎呀，不管那么多了，拉肚子总比被饿死好吧？于是继续翻啊、找啊，但就是没有找到牛奶，急死了。后面冷静点，才想起我已经不喝牛奶很久了，冰箱怎么可能会有牛奶？这一瞬间，我彻底崩溃了，一直在责怪和质问自己。为什么我现在不喝牛奶了？！以前不是每晚睡之前都要喝一瓶的吗？！怎么不能过几天再不想喝牛奶？！就算不喝牛奶，冰箱也要备着啊？！为什么？！</p>
+<p>实在压抑到有些难受，还好醒了，睁着眼睛躺在床上，回忆着这个梦的始末，怒火中烧。清醒一点后发现，皮蛋不是公猫吗？还是一只做了绝育手术的公猫，他怎么会生小猫咪呢？</p>
+<p>哦，原来是一场梦啊，真是奇奇怪怪的梦！看了下手机，现在快早上5点了，起来喝点水，倒头再睡会，今天还要上班。</p>
+<p><strong>2 活在当下</strong></p>
+<p>夏天的时候就盼望着冬天的到来，而冬天的时候又期待着夏天的到来，一点都没有活在当下啊。</p>
+<p><strong>3 专注呼吸</strong></p>
+<p>每当我开始专注于自己的呼吸时，脑袋里总有各种各样的想法蹦跶出来。而当我结束专注呼吸训练准备记录他们的时候，他们又一下子不见了踪影。真是奇怪的脑袋</p>
+]]></content>
+      <categories>
+        <category>小记</category>
+      </categories>
+      <tags>
+        <tag>所思所想所悟</tag>
       </tags>
   </entry>
   <entry>
@@ -5119,25 +5141,54 @@
       </tags>
   </entry>
   <entry>
-    <title>小记：2021年8月</title>
-    <url>/2021/08/05/note-202108/</url>
-    <content><![CDATA[<h2 id="2021年8月2日"><a href="#2021年8月2日" class="headerlink" title="2021年8月2日"></a>2021年8月2日</h2><p><strong>1 梦</strong></p>
-<p>昨晚梦到皮蛋，可把我气醒了。梦里大概是这样子：</p>
-<p>皮蛋生了七只小猫咪，有黑色的，有白色的，有橘黄色的还有混色的。但我发现的时候，其中的三只被他吃了，另外四只被绳子绑在一起，浸泡在洗脸盆上，盆上还有水。皮蛋打算溺死他自己的猫咪仔。把我气死了，拿起棍子准备教训皮蛋。结果，他一下子就跑去躲了，打不到他，我像个泼妇骂街一样，边骂边教育他，告诉他这些是你的仔，怎么可以这么残忍对待它们。。</p>
-<p>骂着骂着，突然想到小猫咪还在水盆里泡着呢，就马上冲回去，把小猫咪捞出来，解了绳子，感觉这些小猫咪像是要快饿死了。皮蛋又抓不到，不然还可以让皮蛋给小猫咪喂奶。</p>
-<p>没办法，想到小猫咪可以喝牛奶，又去冰箱找。边翻边想，刚出生的小猫咪可以喝冰的牛奶吗？哎呀，不管那么多了，拉肚子总比被饿死好吧？于是继续翻啊、找啊，但就是没有找到牛奶，急死了。后面冷静点，才想起我已经不喝牛奶很久了，冰箱怎么可能会有牛奶？这一瞬间，我彻底崩溃了，一直在责怪和质问自己。为什么我现在不喝牛奶了？！以前不是每晚睡之前都要喝一瓶的吗？！怎么不能过几天再不想喝牛奶？！就算不喝牛奶，冰箱也要备着啊？！为什么？！</p>
-<p>实在压抑到有些难受，还好醒了，睁着眼睛躺在床上，回忆着这个梦的始末，怒火中烧。清醒一点后发现，皮蛋不是公猫吗？还是一只做了绝育手术的公猫，他怎么会生小猫咪呢？</p>
-<p>哦，原来是一场梦啊，真是奇奇怪怪的梦！看了下手机，现在快早上5点了，起来喝点水，倒头再睡会，今天还要上班。</p>
-<p><strong>2 活在当下</strong></p>
-<p>夏天的时候就盼望着冬天的到来，而冬天的时候又期待着夏天的到来，一点都没有活在当下啊。</p>
-<p><strong>3 专注呼吸</strong></p>
-<p>每当我开始专注于自己的呼吸时，脑袋里总有各种各样的想法蹦跶出来。而当我结束专注呼吸训练准备记录他们的时候，他们又一下子不见了踪影。真是奇怪的脑袋</p>
+    <title>极客时间-技术管理实战36讲学习笔记</title>
+    <url>/2021/08/10/technology-management-0/</url>
+    <content><![CDATA[<blockquote>
+<p>如果干得好，管理是最崇高的职业之一。没有哪一个职业能像管理一样为他人提供学习和成长的机会，让他们懂得承担责任并取得成绩，以及为团队的成功做出贡献。<br>——“颠覆式创新之父”克里斯坦森，《你要如何衡量你的人生》</p>
+</blockquote>
+<h2 id="为什么需要学管理？"><a href="#为什么需要学管理？" class="headerlink" title="为什么需要学管理？"></a>为什么需要学管理？</h2><p>对于互联网技术人来说，“管理”作为一项综合能力不再是一个可选项，无论是否身在技术管理岗，未来的职业发展都会围绕着<strong>技术和管理</strong>这两条腿在走路，一条腿是走不远的。</p>
+<h2 id="重点内容"><a href="#重点内容" class="headerlink" title="重点内容"></a>重点内容</h2><ol>
+<li><strong>自我倾听。</strong>理顺内心的纠结与彷徨，心无旁骛地走上管理之路。</li>
+<li><strong>角色认知。</strong>提供一个管理工作的“全景图”，以方便按图索骥地<em><strong>了解管理工作所涵盖的方方面面。</strong></em></li>
+<li><strong>管理方法。</strong>“管理三部曲”——<em><strong>管理规划、团队建设和任务管理</strong></em>，探讨<em><strong>“看方向”“带人”和“做事”</strong></em>的这三个关键的管理内容。</li>
+<li><strong>管理沟通。</strong>探讨管理沟通的<em><strong>工具和技巧</strong></em>，并探讨<em><strong>向上、向下、横向</strong></em>等典型沟通场景下的沟通要点。</li>
+<li><strong>管理之路。</strong>主要探讨<em><strong>如何积累管理方法论</strong></em>，以及<em><strong>如何成为自己所期待的管理者。</strong></em></li>
+</ol>
+<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><ul>
+<li><p>自我倾听</p>
+<ul>
+<li><a href="/2021/08/10/technology-management-1/">自我倾听（上）</a></li>
+<li><a href="http://1.0.0.1/">自我倾听（下）</a></li>
+</ul>
+</li>
+<li><p>角色认知</p>
+<ul>
+<li><a href="/2021/08/11/technology-management-3/">角色认知</a></li>
+</ul>
+</li>
+<li><h2 id="管理规划"><a href="#管理规划" class="headerlink" title="管理规划"></a>管理规划</h2></li>
+<li><p>团队建设</p>
+<ul>
+<li><a href="http://c.c/">团队建设六要素</a></li>
+<li>能力培养——提升员工个人能力</li>
+<li>员工激励——提升员工的工作意愿和积极性</li>
+<li><a href="http://baidu.cc/">团队分工——兼顾团队分工的稳定性和灵活性</a></li>
+<li><a href="http://b.c/">协作水平——有效提升团队凝聚力方法</a></li>
+<li><a href="http://1.0.0.1/">梯队建设——物色和培养核心人才</a></li>
+<li><a href="http://1.0.0.1/">团队文化——营造团队氛围</a></li>
+<li></li>
+</ul>
+</li>
+<li><h2 id="任务管理"><a href="#任务管理" class="headerlink" title="任务管理"></a>任务管理</h2></li>
+<li><h2 id="管理沟通"><a href="#管理沟通" class="headerlink" title="管理沟通"></a>管理沟通</h2></li>
+<li><h2 id="管理之路"><a href="#管理之路" class="headerlink" title="管理之路"></a>管理之路</h2></li>
+</ul>
 ]]></content>
       <categories>
-        <category>小记</category>
+        <category>读书学习笔记</category>
       </categories>
       <tags>
-        <tag>所思所想所悟</tag>
+        <tag>技术管理</tag>
       </tags>
   </entry>
   <entry>
@@ -5405,55 +5456,45 @@
       </tags>
   </entry>
   <entry>
-    <title>极客时间-技术管理实战36讲学习笔记</title>
-    <url>/2021/08/10/technology-management-0/</url>
+    <title>袁隆平：我的两个梦</title>
+    <url>/2021/05/24/ylp-2/</url>
     <content><![CDATA[<blockquote>
-<p>如果干得好，管理是最崇高的职业之一。没有哪一个职业能像管理一样为他人提供学习和成长的机会，让他们懂得承担责任并取得成绩，以及为团队的成功做出贡献。<br>——“颠覆式创新之父”克里斯坦森，《你要如何衡量你的人生》</p>
+<p><strong>【侠客岛按】</strong></p>
+<p>今天中午，噩耗传来。“杂交水稻之父”、中国工程院院士、“共和国勋章”获得者袁隆平在湖南长沙逝世。</p>
+<p>2019年10月23日，袁老曾在《人民日报》刊发文章，自述他的两个梦想，感人至深。侠客岛予以推荐，藉此缅怀这位伟大的科学家。</p>
+<p>袁老，您走好。</p>
 </blockquote>
-<h2 id="为什么需要学管理？"><a href="#为什么需要学管理？" class="headerlink" title="为什么需要学管理？"></a>为什么需要学管理？</h2><p>对于互联网技术人来说，“管理”作为一项综合能力不再是一个可选项，无论是否身在技术管理岗，未来的职业发展都会围绕着<strong>技术和管理</strong>这两条腿在走路，一条腿是走不远的。</p>
-<h2 id="重点内容"><a href="#重点内容" class="headerlink" title="重点内容"></a>重点内容</h2><ol>
-<li><strong>自我倾听。</strong>理顺内心的纠结与彷徨，心无旁骛地走上管理之路。</li>
-<li><strong>角色认知。</strong>提供一个管理工作的“全景图”，以方便按图索骥地<em><strong>了解管理工作所涵盖的方方面面。</strong></em></li>
-<li><strong>管理方法。</strong>“管理三部曲”——<em><strong>管理规划、团队建设和任务管理</strong></em>，探讨<em><strong>“看方向”“带人”和“做事”</strong></em>的这三个关键的管理内容。</li>
-<li><strong>管理沟通。</strong>探讨管理沟通的<em><strong>工具和技巧</strong></em>，并探讨<em><strong>向上、向下、横向</strong></em>等典型沟通场景下的沟通要点。</li>
-<li><strong>管理之路。</strong>主要探讨<em><strong>如何积累管理方法论</strong></em>，以及<em><strong>如何成为自己所期待的管理者。</strong></em></li>
-</ol>
-<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><ul>
-<li><p>自我倾听</p>
-<ul>
-<li><a href="/2021/08/10/technology-management-1/">自我倾听（上）</a></li>
-<li><a href="http://1.0.0.1/">自我倾听（下）</a></li>
-</ul>
-</li>
-<li><p>角色认知</p>
-<ul>
-<li><a href="/2021/08/11/technology-management-3/">角色认知</a></li>
-</ul>
-</li>
-<li><h2 id="管理规划"><a href="#管理规划" class="headerlink" title="管理规划"></a>管理规划</h2></li>
-<li><p>团队建设</p>
-<ul>
-<li><a href="http://c.c/">团队建设六要素</a></li>
-<li>能力培养——提升员工个人能力</li>
-<li>员工激励——提升员工的工作意愿和积极性</li>
-<li><a href="http://baidu.cc/">团队分工——兼顾团队分工的稳定性和灵活性</a></li>
-<li><a href="http://b.c/">协作水平——有效提升团队凝聚力方法</a></li>
-<li><a href="http://1.0.0.1/">梯队建设——物色和培养核心人才</a></li>
-<li><a href="http://1.0.0.1/">团队文化——营造团队氛围</a></li>
-<li></li>
-</ul>
-</li>
-<li><h2 id="任务管理"><a href="#任务管理" class="headerlink" title="任务管理"></a>任务管理</h2></li>
-<li><h2 id="管理沟通"><a href="#管理沟通" class="headerlink" title="管理沟通"></a>管理沟通</h2></li>
-<li><h2 id="管理之路"><a href="#管理之路" class="headerlink" title="管理之路"></a>管理之路</h2></li>
-</ul>
+<p>时光如白驹过隙，一转眼，90年过去，我成了正儿八经的“90后”。我大半辈子都在与水稻打交道，至今从事杂交水稻研究工作已有55个年头。我最关心的，就是与水稻和粮食相关的事。</p>
+<p>新中国成立之前，中华大地上到处灾荒战乱，人民生活颠沛流离，少年时我就被迫从一个城市辗转到另一个城市，虽然少不更事，但每当看到沿路举家逃难、面如菜色的同胞，看到荒芜的田野和满目疮痍的土地，我的内心总会泛起一阵阵痛楚。报考大学时，我就对父母说，我要学农。母亲听了，吓一跳，说，傻孩子，学农多苦啊，你以为好玩儿呢？<strong>但我是真正爱上了农业，死活要学，还摆出大道理：吃饭可是天下第一桩大事，没有饭吃，人类怎么生存？</strong>最后，父母尊重我的选择。</p>
+<p>毕业后，我被分配到湖南安江农校任教。安江农校地处偏远，临行前，学校的领导告诉我，那里很偏僻，“一盏孤灯照终身”，你可要做好思想准备。当时我想，能传播农业科学知识，也是为国家做贡献！没想到，去了不久，就碰上困难时期。我当时想，<strong>这么大一个国家，如果粮食安全得不到保障，其他一切都无从谈起，我要为让中国人吃饱饭而奋斗！</strong></p>
+<p>一天，我看到一些农民从高山上兑了种子，担回来种，就问他们，为什么跑到那么高的山上去换种呢？他们说，山上的种子质量好一些，产得多些。他们接着还说了一句话，叫做“施肥不如勤换种”。这对我有很大启发：农业上增产的途径有很多，但其中良种是非常重要的因素。</p>
+<p>从此以后，我开始自己的杂交水稻研究之路。一路走来，有汗水和辛酸，也有丰收和喜悦。<strong>科学探索无止境，在这条漫长而又艰辛的路上，我一直有两个梦，一个是禾下乘凉梦，一个是杂交水稻覆盖全球梦。</strong></p>
+<p><strong>禾下乘凉梦，我是真做过，我梦见水稻长得有高粱那么高，穗子像扫把那么长，颗粒像花生那么大，而我则和助手坐在稻穗下面乘凉。其实我这个梦想的实质，就是水稻高产梦，让人们吃上更多的米饭，永远都不用再饿肚子。</strong></p>
+<p>做梦容易，但要把梦变成现实，则需要付出大量艰苦的劳动和努力。我清楚地记得，<strong>那是1961年7月的一天，我到安江农校的试验田选种。突然，我发现了一株“鹤立鸡群”的稻株</strong>。穗大，颗粒饱满。我随手挑了一穗，竟有230粒之多！当时以为，选到了优良品种，岂不是可以增产无数粮食？</p>
+<p>第二年春天，我把种子播下，结果却令人大失所望，一眼望去，高的高，矮的矮，没有一株赶得上最初的那株水稻。我不甘心，开始反复琢磨其中的奥秘，研究那一片试验田的稻株比例，最终得出一个结论：水稻是有杂交优势的，那株鹤立鸡群的水稻，就是天然的杂交水稻。既然天然杂交稻具有这样强的优势，那么人工杂交稻，也一定有优势。当时，遗传学理论一直否定自花授粉作物有杂交优势。我对此理论提出质疑。随后，我又拜访专家，翻找资料，<strong>最终得出结论，既然自然界存在杂交稻，那么人工杂交水稻也一定可以利用</strong>。而要想利用这一优势，首先需要找到“天然的雄性不育水稻”。</p>
+<p>于是，我又走上曲折的寻找之旅。</p>
+<p>其中，<strong>最令人刻骨铭心的是，在海南岛找到天然雄性不育野生稻“野败”并加以利用的过程</strong>。那是1970年11月，我和助手李必湖、尹华奇驻守在海南岛崖县南红农场，在当地寻找野生稻。在那里，有一位农专毕业的冯克珊，是南红良种繁育场的技术员，经常跑来听我讲课。冯克珊联想到农场附近有一种名叫“假禾”的草，很可能就是我要找的野生稻。</p>
+<p>11月23日，他找到李必湖，来到南红农场铁路涵洞附近的水塘边，到那片正在开花的野生稻中察看。他们发现了三个雄花异常的野生稻穗，野生稻穗的花药细瘦，色浅呈水渍状，不开裂散粉。这三个稻穗生长于同一禾蔸，是从一粒种子长出、匍匐于水面的分蘖。他们立即把这蔸野生稻连泥挖起，放在铁桶里拉回去，然后移栽到试验田里，等待鉴定。</p>
+<p>当时，我正在北京开会，收到助手们从海南发来的电报，连夜赶火车奔回海南岛。<strong>经过仔细检验，我们最终确认这是一株十分难得的天然雄性不育株野生稻，我给它命名为“野败”。</strong></p>
+<p>这真是大海捞针啊！</p>
+<p>“野败”的发现对杂交水稻研究具有里程碑的意义，更是杂交水稻“三系”配套成功的突破口。<strong>1973年，我们协作组历尽千辛万苦才通过测交找到恢复系，攻克“三系”配套难关，才有了新中国第一代杂交水稻。</strong>第一代以细胞质雄性不育系为遗传工具的杂交水稻，优点是不育系不育性稳定，但也有缺点，即配组的时候受到恢保关系制约，因此选择优良组合的几率比较低，难度大。</p>
+<p>自上世纪80年代中后期起，我们开始研究两系杂交水稻。1995年，第二代以光温敏不育系为遗传工具的杂交水稻——两系法杂交稻研制成功，它的主要优点是配组自由选择，能选配到优良稻组合的几率比较高。但是，第二代杂交稻也不是完美的：不育系育性受气温和光照影响较大。我想，如果有一种杂交水稻，既兼具第一代和第二代的优点，又能克服二者的缺点，那该多好啊！</p>
+<p><strong>2011年，我们又启动第三代杂交水稻育种技术的研究与利用，这是以遗传工程雄性不育系为遗传工具的杂交水稻，已初步研究成功，该杂交水稻克服了前两代的缺点。现在，我们甚至开始了第四代、第五代杂交水稻的研制。</strong></p>
+<p><strong>袁隆平带各国朋友参观试验田（图源：新华社）</strong></p>
+<p>追求高产更高产，是我们永恒的目标。自上世纪90年代中后期起，我们开始超级杂交稻攻关，分别于2000年、2004年、2011年、2014年实现大面积示范亩产700公斤、800公斤、900公斤、1000公斤目标。近5年又突破每公顷16吨、17吨的目标。<strong>2017年，世界水稻平均每公顷产量仅4.61吨，而我国杂交水稻平均产量每公顷达7.5吨，在世界上遥遥领先。</strong></p>
+<p>不可否认，上个世纪我们的主要任务是解决人民群众的温饱问题，所以杂交水稻把产量摆在优先地位。现在生活水平提高了，人民不仅要吃饱，还要吃好。所以，我们也改变思路，提出既要高产，又要优质。但是必须说清楚，虽然要满足市场对优质大米的需求，但我们仍然坚持一条，即不能以牺牲产量来求优质。<strong>我始终觉得，粮食安全问题必须时刻警惕。历史也无数次告诫我们，把饭碗牢牢端在自己手中的最有效途径，就是提高水稻的产量。</strong></p>
+<p>科学探索永无止境，我的另一个梦，就是<strong>杂交水稻走向世界、覆盖全球梦</strong>。</p>
+<p>世界上超过一半人口以稻米为主食，一个令人担忧的事实却是，全球现有1.6亿公顷稻田中，杂交水稻种植面积还不到15%。发展杂交水稻不仅有广阔的舞台，更对保障世界粮食安全具有重要意义，倘若全球有一半稻田种上杂交稻，按每公顷比常规水稻增产2吨计算，则增产的粮食可以多养活4亿—5亿人口。杂交水稻覆盖全球不仅能提升全球水稻产量，造福人类，还能提升我国的国际地位。</p>
+<p>为了实现这个梦，我们一直在努力。从上世纪80年代至今，我们坚持开办杂交水稻技术国际培训班，为80多个发展中国家培训了14000多名杂交水稻技术人才，我还受邀担任联合国粮农组织首席顾问，帮助其他国家发展杂交水稻。<strong>目前，杂交水稻已在印度、越南、菲律宾、孟加拉国、巴基斯坦、印度尼西亚、美国、巴西等国实现大面积种植。</strong>今年6月，在长沙举行的中非经贸博览会上，来了不少非洲国家农业界的朋友，看到他们对杂交水稻充满感激和期待，更坚定了我们将杂交水稻推向世界的信心与决心。</p>
+<p>新中国杂交水稻事业能够取得丰硕成果，离不开党和国家的高度重视与大力支持，同时也是广大科技工作者集体智慧的结晶。<strong>我已经90岁了，但“老骥伏枥，志在千里”，我要力争让我们的团队早日完成每公顷18吨的高产攻关，做好第三代杂交水稻技术的生产应用。我希望最终能实现“禾下乘凉、覆盖全球”的两大心愿。</strong></p>
+<p><em>文/袁隆平</em><br><em>编辑/点苍</em><br><strong>（原文刊于《 人民日报 》2019年10月23日第20 版）</strong></p>
+<blockquote>
+<p>剪报来源<br>公众号： 侠客岛<br>链　接：<a href="https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw">https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw</a><br>日　期：2021-05-22</p>
+</blockquote>
 ]]></content>
       <categories>
-        <category>读书学习笔记</category>
+        <category>剪报</category>
       </categories>
-      <tags>
-        <tag>技术管理</tag>
-      </tags>
   </entry>
   <entry>
     <title>袁隆平：稻子熟了，妈妈，我来看您了</title>
@@ -5506,6 +5547,31 @@
       </categories>
   </entry>
   <entry>
+    <title>极客时间-成为学习高手笔记</title>
+    <url>/2021/09/30/high-efficiency-study-note-0/</url>
+    <content><![CDATA[<p>获得：</p>
+<ul>
+<li>高手学习的 4 个底层思维</li>
+<li>切实可行的 7 个超强学习技巧</li>
+<li>让学习速度“开挂”的高效记忆法</li>
+<li>自律到骨子里的 9 大精力管理法则</li>
+</ul>
+<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><ul>
+<li><a href="/2021/09/30/high-efficiency-study-note-1/">模块一：底层思维</a></li>
+<li><a href="/2021/10/05/high-efficiency-study-note-2/">模块二：高效学习</a></li>
+<li><a href="/2021/10/07/high-efficiency-study-note-3/">模块三：高度自律</a></li>
+<li><a href="/2021/10/20/high-efficiency-study-note-4/">模块四：时间管理</a></li>
+<li><a href="/2021/10/30/high-efficiency-study-note-5/">模块五：学霸养成</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>读书学习笔记</category>
+      </categories>
+      <tags>
+        <tag>学习方法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>模块一：底层思维</title>
     <url>/2021/09/30/high-efficiency-study-note-1/</url>
     <content><![CDATA[<ul>
@@ -5552,89 +5618,6 @@
 <p>2、考试中发挥失常，是因为过于担忧考试结果，纠结自己是不是做错了，以至于，相当一部分工作记忆的容量被焦虑占用。而真正用于答题的记忆容量，非常有限。</p>
 <p>3、要想超常发挥，重要的是，考试时不去预先给自己设置标准，不去评价和思考自己做得怎么样。做完这一题，再做下一题；做下一题时，忘记上一题。</p>
 <p>4、在平时的学习中，我们常常怀疑自己的方法是否正确，占用了很多的工作记忆，影响学习效率。有效的解决方法是：给自己一个小时的限定时间，先用眼下的方法，尽量专注学习。如果过程中对学习方法有更好的想法，就先记下来，一小时结束后，花两分钟对学习方法进行调整。</p>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>读书学习笔记</category>
-      </categories>
-      <tags>
-        <tag>学习方法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>模块三：高度自律</title>
-    <url>/2021/10/07/high-efficiency-study-note-3/</url>
-    <content><![CDATA[<ul>
-<li><a href="/2021/09/30/high-efficiency-study-note-1/">模块一：底层思维</a></li>
-<li><a href="/2021/10/05/high-efficiency-study-note-2/">模块二：高效学习</a></li>
-<li><a href="/2021/10/07/high-efficiency-study-note-3/">模块三：高度自律</a></li>
-<li><a href="/2021/10/20/high-efficiency-study-note-4/">模块四：时间管理</a></li>
-<li><a href="/2021/10/30/high-efficiency-study-note-5/">模块五：学霸养成</a></li>
-</ul>
-<p>12｜每个人都能学会：5 分钟克服拖延症的方法</p>
-<p>5 分钟起步法，开始做一件事的时候，先给自己 5 分钟的起步时间，别计较效率。接受自己刚开始那 5 分钟的烦躁和抗拒，继续做该做的事情，之后就好了。</p>
-<p>稍微走在计划前面，给自己留下偷懒的资格和空间，当你相对拥有不做事的权利的时候，你才会更愿意追求主动做事。</p>
-<p>替代拖延法：如果有一个更难的任务需要完成，我们就非常极其愿意去做相对简单的任务了。</p>
-<p>13｜3 个思路，让你成为一个真正自律的人</p>
-<p>真正的自律，它是指从“不自律”的念头中，约束自己的能力。</p>
-<p>思路一：在两种痛苦之间做选择</p>
-<p>面对懒惰、拖延、放纵的诱惑时，我们不是在快乐与痛苦之间做选择，也不是在所谓“长远的快乐”与“眼下的快乐”之间做选择。其实，<em><strong>我们是在一种痛苦与另一种痛苦之间做选择。</strong></em></p>
-<p>在面对自律和放纵的抉择时，请告诉自己，你不是在快乐与痛苦之间选，你是要在两种痛苦之间选一种忍受，那么一般这个时候，你会选择那个有意义的痛苦。</p>
-<p>思路二：反向思维</p>
-<p>在某些固定的时间里放弃自律，反而会让你变得更自律。</p>
-<p>凡是需要自我约束的地方，都可以用到这个思路：<em>只在规定的时间里自我管理，过时不候；剩下的时间，绝对不允许自律，一定要玩儿，一定要大吃大喝。结果反而更容易达成自律的目的。</em></p>
-<p>思路三：</p>
-<p>14｜通过选择环境，来提高学习和工作效率</p>
-<p>图书馆、自习室</p>
-<p>表演型学习心理、社会助长</p>
-<p>“社会助长”，包括“共同活动效应”和“观众效应”，前者是指：在同他人共同活动时，我们的效率会提高；后者是指：当他人在场旁观时，我们的效率也会提高。</p>
-<p>15｜一个人在家如何做到高度自律？</p>
-<p>1、你早上起来后做的第一件事很重要。首先去做今天最需要完成的事情，它相对重要且紧急，有一定难度，只要做了这个，接下来一天都比较简单了。在清晨，你要给自己一个足 够大的力，推动你进入正确的轨道，那么接下来，不需要额外付出更多的力，你就可以维 持这种惯性。<br>2、第一步的难度应该是适中的、方便切入的。最好提前一天做好准备，保证第二天能够较 为顺畅地开始。<br>3、在开始后，你最好把需要完成的一切任务，在整块时间内，连续做完。中间可以休息和<br>吃饭，但不要做其它事情，比如看电影和打游戏。</p>
-<p>4、你需要设置一个可以看到的、能较为容易达到的终点，只要满足那个标准，你就解脱 了、自由了。这对于一个人在家进行自我管理，特别有帮助。我推荐给你的解决方案是： 做 6 小时整就停下来。<br>5、在 6 小时之外，可以安排较为轻松的、感兴趣的，但对个人提升也有帮助的事情，不用<br>设置什么标准，随心去做就好，比如看书，或者学英语等等。</p>
-<p>16｜一玩手机就停不下来？教你如何戒手机</p>
-<p>1、玩手机停不下来是我们的天性。奖励系统在发现获得奖励的机会时，会释放出多巴胺， 驱使我们去追逐可能存在的快乐。具体到手机和电脑上，就是驱使我们不停地点击、搜 索、点击。<br>2、看似人的问题，实则情境问题。与其控制自己，不如控制环境。要想不让自己沉迷于玩 手机，自制力、上进心等等，其实都不太管用，在物理上进行隔绝，让自己接触不到手 机，才足够有效。<br>3、如果必须用手机做正事，中途忍不住想玩，不要立刻去打开某个 App 或网站，而是想 一想自己想干什么，并且记下来。这会使你的状态从“无意识”，转变为“有意识”，你 会更容易停下来。而且，“记下来”会给你安全感，你知道自己在完成任务后，可以在固 定的时间，去做想做的事情。另外，还有一点会很有帮助，如果一定要玩手机的话，可以 准确记录这件事的开始时间和结束时间。<br>4、很多时候，越是有紧急的任务要完成，我们越去“紧张地玩手机”，这是因为，处在压 力之中、感到痛苦的大脑，想变得快乐一点，便会驱使我们去寻找那些最简单易得的，能 激活奖励系统的事情，比如玩手机、打游戏、吃东西。<br>在问题解决之前，可以借助运动、阅读、听音乐、社交等方式来缓解压力；在真的做了某 些“堕落”的事情时，越是自我批评，越是会恶性循环，你要学会“自我谅解”，才能真<br>正得到改变。</p>
-<p>要想不让自己沉迷于玩手机，自制力、意志力、上进心等等，其实都不太管 用，在物理上进行隔绝，让自己接触不到手机，才足够有效。</p>
-<blockquote>
-<p>美国心理学家协会的调查发现，最有效的解压方法包括：锻炼或者参加体育活动、阅 读、听音乐、与家人朋友相处、外出散步、冥想，以及培养有创意的爱好。最没效果的 缓解压力的方法包括：赌博、购物、抽烟、喝酒、暴饮暴食、玩游戏、上网、花两个小时以上看电影。转引自《自控力》</p>
-</blockquote>
-<p>（END）</p>
-]]></content>
-      <categories>
-        <category>读书学习笔记</category>
-      </categories>
-      <tags>
-        <tag>学习方法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>模块五：学霸养成</title>
-    <url>/2021/10/30/high-efficiency-study-note-5/</url>
-    <content><![CDATA[<ul>
-<li><a href="/2021/09/30/high-efficiency-study-note-1/">模块一：底层思维</a></li>
-<li><a href="/2021/10/05/high-efficiency-study-note-2/">模块二：高效学习</a></li>
-<li><a href="/2021/10/07/high-efficiency-study-note-3/">模块三：高度自律</a></li>
-<li><a href="/2021/10/20/high-efficiency-study-note-4/">模块四：时间管理</a></li>
-<li><a href="/2021/10/30/high-efficiency-study-note-5/">模块五：学霸养成</a></li>
-</ul>
-<p>21｜学霸为什么学什么都快？有哪些可以借鉴的方法论？</p>
-<p>知识储备、能力储备不同</p>
-<p>越早付出努力，你在之后的人生中，达成目的的速度越快、效率越高。</p>
-<p>22｜如何通过练习，让自己变得更聪明？</p>
-<p>刻意练习，才是真正能够提升能力、让你变聪明的方式。刻意练习有 4 个特点：</p>
-<ul>
-<li>目标要明确。</li>
-<li>做事时需要极其专注。</li>
-<li>需要及时看到反馈，并进行调整。</li>
-<li>走出舒适区。</li>
-</ul>
-<p>看一本书、学一个科目，你要知道自己的目的是什么，需要回答哪些问题，记住哪些东 西，最终达到怎样的效果。</p>
-<p>23｜教你利用“双加工理论”，有效提高学习能力</p>
-<p>路径依赖、“自动化加工”、“受意识控制的加工”</p>
-<p>24｜重要：别再去找更好的学习方法了</p>
-<p>关于拖延症，“5 分钟起步法”足以解决这个问题；</p>
-<p>关于焦虑，每天冥想 15 分钟 + 每周 跑步 3～4 次，可以在很大程度上使其得到缓解；</p>
-<p>关于记忆，精细加工后自己复述出来，可以把 80% 的东西记得很好。</p>
-<p>在学习和工作中，琐碎的、重复的、机械的工作，才占据更多的时间。只有把这些细枝 末节做好了，灵感或者说方法论，才能真正落实，并且让你取得更好的成绩。</p>
 <p>（END）</p>
 ]]></content>
       <categories>
@@ -5770,6 +5753,51 @@
       </tags>
   </entry>
   <entry>
+    <title>模块三：高度自律</title>
+    <url>/2021/10/07/high-efficiency-study-note-3/</url>
+    <content><![CDATA[<ul>
+<li><a href="/2021/09/30/high-efficiency-study-note-1/">模块一：底层思维</a></li>
+<li><a href="/2021/10/05/high-efficiency-study-note-2/">模块二：高效学习</a></li>
+<li><a href="/2021/10/07/high-efficiency-study-note-3/">模块三：高度自律</a></li>
+<li><a href="/2021/10/20/high-efficiency-study-note-4/">模块四：时间管理</a></li>
+<li><a href="/2021/10/30/high-efficiency-study-note-5/">模块五：学霸养成</a></li>
+</ul>
+<p>12｜每个人都能学会：5 分钟克服拖延症的方法</p>
+<p>5 分钟起步法，开始做一件事的时候，先给自己 5 分钟的起步时间，别计较效率。接受自己刚开始那 5 分钟的烦躁和抗拒，继续做该做的事情，之后就好了。</p>
+<p>稍微走在计划前面，给自己留下偷懒的资格和空间，当你相对拥有不做事的权利的时候，你才会更愿意追求主动做事。</p>
+<p>替代拖延法：如果有一个更难的任务需要完成，我们就非常极其愿意去做相对简单的任务了。</p>
+<p>13｜3 个思路，让你成为一个真正自律的人</p>
+<p>真正的自律，它是指从“不自律”的念头中，约束自己的能力。</p>
+<p>思路一：在两种痛苦之间做选择</p>
+<p>面对懒惰、拖延、放纵的诱惑时，我们不是在快乐与痛苦之间做选择，也不是在所谓“长远的快乐”与“眼下的快乐”之间做选择。其实，<em><strong>我们是在一种痛苦与另一种痛苦之间做选择。</strong></em></p>
+<p>在面对自律和放纵的抉择时，请告诉自己，你不是在快乐与痛苦之间选，你是要在两种痛苦之间选一种忍受，那么一般这个时候，你会选择那个有意义的痛苦。</p>
+<p>思路二：反向思维</p>
+<p>在某些固定的时间里放弃自律，反而会让你变得更自律。</p>
+<p>凡是需要自我约束的地方，都可以用到这个思路：<em>只在规定的时间里自我管理，过时不候；剩下的时间，绝对不允许自律，一定要玩儿，一定要大吃大喝。结果反而更容易达成自律的目的。</em></p>
+<p>思路三：</p>
+<p>14｜通过选择环境，来提高学习和工作效率</p>
+<p>图书馆、自习室</p>
+<p>表演型学习心理、社会助长</p>
+<p>“社会助长”，包括“共同活动效应”和“观众效应”，前者是指：在同他人共同活动时，我们的效率会提高；后者是指：当他人在场旁观时，我们的效率也会提高。</p>
+<p>15｜一个人在家如何做到高度自律？</p>
+<p>1、你早上起来后做的第一件事很重要。首先去做今天最需要完成的事情，它相对重要且紧急，有一定难度，只要做了这个，接下来一天都比较简单了。在清晨，你要给自己一个足 够大的力，推动你进入正确的轨道，那么接下来，不需要额外付出更多的力，你就可以维 持这种惯性。<br>2、第一步的难度应该是适中的、方便切入的。最好提前一天做好准备，保证第二天能够较 为顺畅地开始。<br>3、在开始后，你最好把需要完成的一切任务，在整块时间内，连续做完。中间可以休息和<br>吃饭，但不要做其它事情，比如看电影和打游戏。</p>
+<p>4、你需要设置一个可以看到的、能较为容易达到的终点，只要满足那个标准，你就解脱 了、自由了。这对于一个人在家进行自我管理，特别有帮助。我推荐给你的解决方案是： 做 6 小时整就停下来。<br>5、在 6 小时之外，可以安排较为轻松的、感兴趣的，但对个人提升也有帮助的事情，不用<br>设置什么标准，随心去做就好，比如看书，或者学英语等等。</p>
+<p>16｜一玩手机就停不下来？教你如何戒手机</p>
+<p>1、玩手机停不下来是我们的天性。奖励系统在发现获得奖励的机会时，会释放出多巴胺， 驱使我们去追逐可能存在的快乐。具体到手机和电脑上，就是驱使我们不停地点击、搜 索、点击。<br>2、看似人的问题，实则情境问题。与其控制自己，不如控制环境。要想不让自己沉迷于玩 手机，自制力、上进心等等，其实都不太管用，在物理上进行隔绝，让自己接触不到手 机，才足够有效。<br>3、如果必须用手机做正事，中途忍不住想玩，不要立刻去打开某个 App 或网站，而是想 一想自己想干什么，并且记下来。这会使你的状态从“无意识”，转变为“有意识”，你 会更容易停下来。而且，“记下来”会给你安全感，你知道自己在完成任务后，可以在固 定的时间，去做想做的事情。另外，还有一点会很有帮助，如果一定要玩手机的话，可以 准确记录这件事的开始时间和结束时间。<br>4、很多时候，越是有紧急的任务要完成，我们越去“紧张地玩手机”，这是因为，处在压 力之中、感到痛苦的大脑，想变得快乐一点，便会驱使我们去寻找那些最简单易得的，能 激活奖励系统的事情，比如玩手机、打游戏、吃东西。<br>在问题解决之前，可以借助运动、阅读、听音乐、社交等方式来缓解压力；在真的做了某 些“堕落”的事情时，越是自我批评，越是会恶性循环，你要学会“自我谅解”，才能真<br>正得到改变。</p>
+<p>要想不让自己沉迷于玩手机，自制力、意志力、上进心等等，其实都不太管 用，在物理上进行隔绝，让自己接触不到手机，才足够有效。</p>
+<blockquote>
+<p>美国心理学家协会的调查发现，最有效的解压方法包括：锻炼或者参加体育活动、阅 读、听音乐、与家人朋友相处、外出散步、冥想，以及培养有创意的爱好。最没效果的 缓解压力的方法包括：赌博、购物、抽烟、喝酒、暴饮暴食、玩游戏、上网、花两个小时以上看电影。转引自《自控力》</p>
+</blockquote>
+<p>（END）</p>
+]]></content>
+      <categories>
+        <category>读书学习笔记</category>
+      </categories>
+      <tags>
+        <tag>学习方法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>模块四：时间管理</title>
     <url>/2021/10/20/high-efficiency-study-note-4/</url>
     <content><![CDATA[<ul>
@@ -5818,22 +5846,35 @@
       </tags>
   </entry>
   <entry>
-    <title>极客时间-成为学习高手笔记</title>
-    <url>/2021/09/30/high-efficiency-study-note-0/</url>
-    <content><![CDATA[<p>获得：</p>
-<ul>
-<li>高手学习的 4 个底层思维</li>
-<li>切实可行的 7 个超强学习技巧</li>
-<li>让学习速度“开挂”的高效记忆法</li>
-<li>自律到骨子里的 9 大精力管理法则</li>
-</ul>
-<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><ul>
+    <title>模块五：学霸养成</title>
+    <url>/2021/10/30/high-efficiency-study-note-5/</url>
+    <content><![CDATA[<ul>
 <li><a href="/2021/09/30/high-efficiency-study-note-1/">模块一：底层思维</a></li>
 <li><a href="/2021/10/05/high-efficiency-study-note-2/">模块二：高效学习</a></li>
 <li><a href="/2021/10/07/high-efficiency-study-note-3/">模块三：高度自律</a></li>
 <li><a href="/2021/10/20/high-efficiency-study-note-4/">模块四：时间管理</a></li>
 <li><a href="/2021/10/30/high-efficiency-study-note-5/">模块五：学霸养成</a></li>
 </ul>
+<p>21｜学霸为什么学什么都快？有哪些可以借鉴的方法论？</p>
+<p>知识储备、能力储备不同</p>
+<p>越早付出努力，你在之后的人生中，达成目的的速度越快、效率越高。</p>
+<p>22｜如何通过练习，让自己变得更聪明？</p>
+<p>刻意练习，才是真正能够提升能力、让你变聪明的方式。刻意练习有 4 个特点：</p>
+<ul>
+<li>目标要明确。</li>
+<li>做事时需要极其专注。</li>
+<li>需要及时看到反馈，并进行调整。</li>
+<li>走出舒适区。</li>
+</ul>
+<p>看一本书、学一个科目，你要知道自己的目的是什么，需要回答哪些问题，记住哪些东 西，最终达到怎样的效果。</p>
+<p>23｜教你利用“双加工理论”，有效提高学习能力</p>
+<p>路径依赖、“自动化加工”、“受意识控制的加工”</p>
+<p>24｜重要：别再去找更好的学习方法了</p>
+<p>关于拖延症，“5 分钟起步法”足以解决这个问题；</p>
+<p>关于焦虑，每天冥想 15 分钟 + 每周 跑步 3～4 次，可以在很大程度上使其得到缓解；</p>
+<p>关于记忆，精细加工后自己复述出来，可以把 80% 的东西记得很好。</p>
+<p>在学习和工作中，琐碎的、重复的、机械的工作，才占据更多的时间。只有把这些细枝 末节做好了，灵感或者说方法论，才能真正落实，并且让你取得更好的成绩。</p>
+<p>（END）</p>
 ]]></content>
       <categories>
         <category>读书学习笔记</category>
@@ -5841,47 +5882,6 @@
       <tags>
         <tag>学习方法</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>袁隆平：我的两个梦</title>
-    <url>/2021/05/24/ylp-2/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>【侠客岛按】</strong></p>
-<p>今天中午，噩耗传来。“杂交水稻之父”、中国工程院院士、“共和国勋章”获得者袁隆平在湖南长沙逝世。</p>
-<p>2019年10月23日，袁老曾在《人民日报》刊发文章，自述他的两个梦想，感人至深。侠客岛予以推荐，藉此缅怀这位伟大的科学家。</p>
-<p>袁老，您走好。</p>
-</blockquote>
-<p>时光如白驹过隙，一转眼，90年过去，我成了正儿八经的“90后”。我大半辈子都在与水稻打交道，至今从事杂交水稻研究工作已有55个年头。我最关心的，就是与水稻和粮食相关的事。</p>
-<p>新中国成立之前，中华大地上到处灾荒战乱，人民生活颠沛流离，少年时我就被迫从一个城市辗转到另一个城市，虽然少不更事，但每当看到沿路举家逃难、面如菜色的同胞，看到荒芜的田野和满目疮痍的土地，我的内心总会泛起一阵阵痛楚。报考大学时，我就对父母说，我要学农。母亲听了，吓一跳，说，傻孩子，学农多苦啊，你以为好玩儿呢？<strong>但我是真正爱上了农业，死活要学，还摆出大道理：吃饭可是天下第一桩大事，没有饭吃，人类怎么生存？</strong>最后，父母尊重我的选择。</p>
-<p>毕业后，我被分配到湖南安江农校任教。安江农校地处偏远，临行前，学校的领导告诉我，那里很偏僻，“一盏孤灯照终身”，你可要做好思想准备。当时我想，能传播农业科学知识，也是为国家做贡献！没想到，去了不久，就碰上困难时期。我当时想，<strong>这么大一个国家，如果粮食安全得不到保障，其他一切都无从谈起，我要为让中国人吃饱饭而奋斗！</strong></p>
-<p>一天，我看到一些农民从高山上兑了种子，担回来种，就问他们，为什么跑到那么高的山上去换种呢？他们说，山上的种子质量好一些，产得多些。他们接着还说了一句话，叫做“施肥不如勤换种”。这对我有很大启发：农业上增产的途径有很多，但其中良种是非常重要的因素。</p>
-<p>从此以后，我开始自己的杂交水稻研究之路。一路走来，有汗水和辛酸，也有丰收和喜悦。<strong>科学探索无止境，在这条漫长而又艰辛的路上，我一直有两个梦，一个是禾下乘凉梦，一个是杂交水稻覆盖全球梦。</strong></p>
-<p><strong>禾下乘凉梦，我是真做过，我梦见水稻长得有高粱那么高，穗子像扫把那么长，颗粒像花生那么大，而我则和助手坐在稻穗下面乘凉。其实我这个梦想的实质，就是水稻高产梦，让人们吃上更多的米饭，永远都不用再饿肚子。</strong></p>
-<p>做梦容易，但要把梦变成现实，则需要付出大量艰苦的劳动和努力。我清楚地记得，<strong>那是1961年7月的一天，我到安江农校的试验田选种。突然，我发现了一株“鹤立鸡群”的稻株</strong>。穗大，颗粒饱满。我随手挑了一穗，竟有230粒之多！当时以为，选到了优良品种，岂不是可以增产无数粮食？</p>
-<p>第二年春天，我把种子播下，结果却令人大失所望，一眼望去，高的高，矮的矮，没有一株赶得上最初的那株水稻。我不甘心，开始反复琢磨其中的奥秘，研究那一片试验田的稻株比例，最终得出一个结论：水稻是有杂交优势的，那株鹤立鸡群的水稻，就是天然的杂交水稻。既然天然杂交稻具有这样强的优势，那么人工杂交稻，也一定有优势。当时，遗传学理论一直否定自花授粉作物有杂交优势。我对此理论提出质疑。随后，我又拜访专家，翻找资料，<strong>最终得出结论，既然自然界存在杂交稻，那么人工杂交水稻也一定可以利用</strong>。而要想利用这一优势，首先需要找到“天然的雄性不育水稻”。</p>
-<p>于是，我又走上曲折的寻找之旅。</p>
-<p>其中，<strong>最令人刻骨铭心的是，在海南岛找到天然雄性不育野生稻“野败”并加以利用的过程</strong>。那是1970年11月，我和助手李必湖、尹华奇驻守在海南岛崖县南红农场，在当地寻找野生稻。在那里，有一位农专毕业的冯克珊，是南红良种繁育场的技术员，经常跑来听我讲课。冯克珊联想到农场附近有一种名叫“假禾”的草，很可能就是我要找的野生稻。</p>
-<p>11月23日，他找到李必湖，来到南红农场铁路涵洞附近的水塘边，到那片正在开花的野生稻中察看。他们发现了三个雄花异常的野生稻穗，野生稻穗的花药细瘦，色浅呈水渍状，不开裂散粉。这三个稻穗生长于同一禾蔸，是从一粒种子长出、匍匐于水面的分蘖。他们立即把这蔸野生稻连泥挖起，放在铁桶里拉回去，然后移栽到试验田里，等待鉴定。</p>
-<p>当时，我正在北京开会，收到助手们从海南发来的电报，连夜赶火车奔回海南岛。<strong>经过仔细检验，我们最终确认这是一株十分难得的天然雄性不育株野生稻，我给它命名为“野败”。</strong></p>
-<p>这真是大海捞针啊！</p>
-<p>“野败”的发现对杂交水稻研究具有里程碑的意义，更是杂交水稻“三系”配套成功的突破口。<strong>1973年，我们协作组历尽千辛万苦才通过测交找到恢复系，攻克“三系”配套难关，才有了新中国第一代杂交水稻。</strong>第一代以细胞质雄性不育系为遗传工具的杂交水稻，优点是不育系不育性稳定，但也有缺点，即配组的时候受到恢保关系制约，因此选择优良组合的几率比较低，难度大。</p>
-<p>自上世纪80年代中后期起，我们开始研究两系杂交水稻。1995年，第二代以光温敏不育系为遗传工具的杂交水稻——两系法杂交稻研制成功，它的主要优点是配组自由选择，能选配到优良稻组合的几率比较高。但是，第二代杂交稻也不是完美的：不育系育性受气温和光照影响较大。我想，如果有一种杂交水稻，既兼具第一代和第二代的优点，又能克服二者的缺点，那该多好啊！</p>
-<p><strong>2011年，我们又启动第三代杂交水稻育种技术的研究与利用，这是以遗传工程雄性不育系为遗传工具的杂交水稻，已初步研究成功，该杂交水稻克服了前两代的缺点。现在，我们甚至开始了第四代、第五代杂交水稻的研制。</strong></p>
-<p><strong>袁隆平带各国朋友参观试验田（图源：新华社）</strong></p>
-<p>追求高产更高产，是我们永恒的目标。自上世纪90年代中后期起，我们开始超级杂交稻攻关，分别于2000年、2004年、2011年、2014年实现大面积示范亩产700公斤、800公斤、900公斤、1000公斤目标。近5年又突破每公顷16吨、17吨的目标。<strong>2017年，世界水稻平均每公顷产量仅4.61吨，而我国杂交水稻平均产量每公顷达7.5吨，在世界上遥遥领先。</strong></p>
-<p>不可否认，上个世纪我们的主要任务是解决人民群众的温饱问题，所以杂交水稻把产量摆在优先地位。现在生活水平提高了，人民不仅要吃饱，还要吃好。所以，我们也改变思路，提出既要高产，又要优质。但是必须说清楚，虽然要满足市场对优质大米的需求，但我们仍然坚持一条，即不能以牺牲产量来求优质。<strong>我始终觉得，粮食安全问题必须时刻警惕。历史也无数次告诫我们，把饭碗牢牢端在自己手中的最有效途径，就是提高水稻的产量。</strong></p>
-<p>科学探索永无止境，我的另一个梦，就是<strong>杂交水稻走向世界、覆盖全球梦</strong>。</p>
-<p>世界上超过一半人口以稻米为主食，一个令人担忧的事实却是，全球现有1.6亿公顷稻田中，杂交水稻种植面积还不到15%。发展杂交水稻不仅有广阔的舞台，更对保障世界粮食安全具有重要意义，倘若全球有一半稻田种上杂交稻，按每公顷比常规水稻增产2吨计算，则增产的粮食可以多养活4亿—5亿人口。杂交水稻覆盖全球不仅能提升全球水稻产量，造福人类，还能提升我国的国际地位。</p>
-<p>为了实现这个梦，我们一直在努力。从上世纪80年代至今，我们坚持开办杂交水稻技术国际培训班，为80多个发展中国家培训了14000多名杂交水稻技术人才，我还受邀担任联合国粮农组织首席顾问，帮助其他国家发展杂交水稻。<strong>目前，杂交水稻已在印度、越南、菲律宾、孟加拉国、巴基斯坦、印度尼西亚、美国、巴西等国实现大面积种植。</strong>今年6月，在长沙举行的中非经贸博览会上，来了不少非洲国家农业界的朋友，看到他们对杂交水稻充满感激和期待，更坚定了我们将杂交水稻推向世界的信心与决心。</p>
-<p>新中国杂交水稻事业能够取得丰硕成果，离不开党和国家的高度重视与大力支持，同时也是广大科技工作者集体智慧的结晶。<strong>我已经90岁了，但“老骥伏枥，志在千里”，我要力争让我们的团队早日完成每公顷18吨的高产攻关，做好第三代杂交水稻技术的生产应用。我希望最终能实现“禾下乘凉、覆盖全球”的两大心愿。</strong></p>
-<p><em>文/袁隆平</em><br><em>编辑/点苍</em><br><strong>（原文刊于《 人民日报 》2019年10月23日第20 版）</strong></p>
-<blockquote>
-<p>剪报来源<br>公众号： 侠客岛<br>链　接：<a href="https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw">https://mp.weixin.qq.com/s/ore4_iTqusGz-gq4Kmg0Vw</a><br>日　期：2021-05-22</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>剪报</category>
-      </categories>
   </entry>
   <entry>
     <title>关于MySQL数据库自增主键，说几个容易被忽略的点</title>
@@ -8688,24 +8688,100 @@
       </tags>
   </entry>
   <entry>
-    <title>毛泽东：体育之研究</title>
-    <url>/2021/07/15/mzd-1/</url>
-    <content><![CDATA[<h2 id="前-言"><a href="#前-言" class="headerlink" title="前   言"></a><strong>前   言</strong></h2><p>国力苶弱，武风不振，民族之体质，日趋轻细。此甚可忧之现象也。提倡之者，不得其本，久而无效。长是不改，弱且加甚。夫命中致远，外部之事，结果之事也。体力充实，内部之事，原因之事也。体不坚实，则见兵而畏之，何有于命中，何有于致远？坚实在于锻炼。锻炼在于自觉。今之提倡者，非不设种种之方法，然而无效者，外力不足以动其心，不知何为体育之真义。体育果有如何之价值，效果云何，著手何处，皆茫乎如在雾中，其无效亦宜。欲图体育之效，非动其主观，促其对体育之自觉不可。苟自觉矣，则体育之条目，可不言而自知，命中致远之效，亦当不求而自至矣。不佞深感体育之要，伤提倡者之不得其当，知海内同志，同此病而相怜者必多。不自惭赧，贡其愚见，以资商榷。所言并非皆己实行，尚多空言理想之处，不敢为欺。倘辱不遗，赐之教诲，所虚心百拜者也。</p>
-<h2 id="第一-释体育"><a href="#第一-释体育" class="headerlink" title="第一  释体育"></a><strong>第一  释体育</strong></h2><p>自有生民以来，智识有愚闇，无不知自卫其生者。是故西山之薇，饥极必食；井上之李，不容不咽；巢木以为居；皮兽以为衣；盖发乎天能，不知所以然也。然而未精也。有圣人者出，于是乎有礼，饮食起居，皆有节度。故”子之燕居，申申如也，夭夭如也”；”食饐而谒，鱼馁而肉败，不食”；”射于矍相之圃，盖观者如墙堵焉”。人体之组成，与群动无不同，而群动不能及人之寿，所以制其生者无节度也。人则以节度制其生，愈降于后而愈明，于是乎有体育。体育者，养生之道也。<br>东西之所明者不一：庄子效法于庖丁，仲尼取资于射御；现今文明诸国，德为最盛，其斗剑之风，播于全国；日本则有武士道，近且因吾国之绪余，造成柔术，觥觥乎可观已。而考其内容，皆先精究生理，详于官体之构造，脉络之运行，何方发达为早，何部较有偏缺，其体育即准此为程序，抑其过而救其所不及。故其结论，在使身体平均发达。由此言之，体育者，人类自其养生之道，使身体平均发达，而有规则次序之可言者也。</p>
-<h2 id="第二-体育在吾人之位置"><a href="#第二-体育在吾人之位置" class="headerlink" title="第二 体育在吾人之位置"></a><strong>第二 体育在吾人之位置</strong></h2><p>体育一道，配德育与智育，而德智皆寄于体。无体是无德智也。顾知之者或寡矣。或以为重在智识，或曰道德也。夫知识则诚可贵矣，人之所以异于动物者此耳。顾徒知识之何载乎？道德亦诚可贵矣，所以立群道平人己者此耳。顾徒道德之何寓乎？体者，为知识之载而为道德之寓者也。其载知识也如车，其寓道德也如舍。<br>体者，载知识之车而寓道德之舍也。儿童及年入小学，小学之时，宜专注重于身体之发育，而知识之增进道德之养成次之。宜以养护为主，而以教授训练为辅。今盖多不知之，故儿童缘读书而得疾病或至夭殇者有之矣。中学及中学以上，宜三育并重，今人则多偏于智。中学之年，身体之发育尚未完成，乃今培之者少而倾之者多，发育不将有中止之势乎？吾国学制，课程密如牛毛，虽成年之人，顽强之身，犹莫能举，况未成年者乎？况弱者乎？<br>观其意，教者若特设此繁重之课，以困学生，蹂躏其身而残贼其生，有不受者则罚之；智力过人者，则令加读某种某种之书，甘言以恬之，厚赏以诱之。嗟乎，此所谓贼夫人之子欤！学者亦若恶此生之永年，必欲摧折之，以身为殉而不悔。何其梦梦如是也！人独患无身耳，他复何患？求所以善其身者，他事亦随之矣。善其身无过于体育。体育于吾人实占第一之位置。体强壮而后学问道德之进修勇而收效远。于吾人研究之中，宜视为重要之部。”学有本末，事有终始，知所先后，则近道矣。”此之谓也。</p>
-<h2 id="第三-前此体育之弊及吾人自处之道"><a href="#第三-前此体育之弊及吾人自处之道" class="headerlink" title="第三 前此体育之弊及吾人自处之道"></a><strong>第三 前此体育之弊及吾人自处之道</strong></h2><p>三育并重，然昔之为学者，详德智而略于体。及其弊也。偻身俯首，纤纤素手，登山则气迫，涉水则足痉。故有颜子而短命，有贾生而早夭，王勃卢照邻或幼伤或坐废。此皆有甚高之德与智也，一旦身不存，德智则从之而隳矣。惟北方之强，任金革死而不厌。燕赵多悲歌慷慨之士。烈士武臣，多出凉州。清之初世，颜习斋李刚主文而兼武。习斋远跋千里之外，学击剑之术于塞北，与勇士角而胜焉。故其言曰：”文武缺一岂道乎？”顾炎武南人也，好居于北，不喜乘船而喜乘马。此数古人者，皆可师者也。<br>学校既起，采各国之成法，风习稍稍改矣。然办学之人，犹未脱陈旧一流，囿于所习，不能骤变，或少注意及之，亦惟是外面铺张，不揣其本而齐其末。故愚观现今之体育，率多有形式而无实质。非不有体操课程也，非不有体操教员也，然而受体操之益者少。非徒无益，又有害焉。教者发令，学者强应，身顺而心违，精神受无量之痛苦，精神苦而身亦苦矣。盖一体操之终，未有不貌瘁神伤者也。饮食不求洁，无机之物、微生之菌，入于体中，化为疾病；室内光线不足，则目力受害不小；桌椅长短不合，削趾适履，则躯干受亏；其余类此者尚多，不能尽也。<br>然则为吾侪学者之计如之何？学校之设备，教师之教训，乃外的客观的也。吾人盖尚有内的主观的。夫内断于心，百体从令。祸福无不自己求之者，我欲仁斯仁至，况于体育乎。苟自之不振，虽使外的客观的尽善尽美，亦犹之乎不能受意也。故讲体育必自自动始。</p>
-<h2 id="第四-体育之效"><a href="#第四-体育之效" class="headerlink" title="第四 体育之效"></a><strong>第四 体育之效</strong></h2><p>人者动物也，则动尚矣。人者有理性的动物也，则动必有道。然何贵乎此动邪？何贵乎此有道之动邪？动以营生也，此浅言之也；动以卫国也，此大言之也。皆非本义。动也者，盖养乎吾生乐乎吾心而已。朱子主敬，陆子主静。静，静也；敬，非动也，亦静而已。老子曰无动为大。释氏务求寂静。静坐之法，为朱陆之徒者咸尊之。近有因是子者，言静坐法，自诩其法之神，而鄙运动者之自损其体。是或一道，然予未敢效之也。愚拙之见，天地盖惟有动而已。<br>动之属于人类而有规则之可言者曰体育。前既言之，体育之效，则强筋骨也。愚昔尝闻，人之官骸肌络，及时而定，不复再可改易，大抵二十五岁以后，即一成无变。今乃知其不然。人之身盖日日变易者：新陈代谢之作用不绝行于各部组织之间，目不明可以明，耳不聪可以聪，虽六七十之人犹有改易官骸之效，事盖有必至者。又闻弱者难以转而为强，今亦知其非是。盖生而强者，滥用其强，不戒于种种嗜欲，以渐戕贼其身，自谓天生好身手，得此已足，尚待锻炼？故至强者或终转为至弱。至于弱者，则恒自悯其身之下全，而惧其生之不永，兢业自持。<br>于消极方面，则深戒嗜欲，不敢使有损失。于积极方面，则勤自锻炼，增益其所不能。久之遂变而为强矣。故生而强者不必自喜也，生而弱者不必自悲也。吾生而弱乎，或者夭之诱我以至于强，未可知也。东西著称之体育家，若美之罗斯福、德之孙棠、日本之嘉纳，皆以至弱之身，而得至强之效。又尝闻之，精神身体，不能并完。用思想之人，每歉于体；而体魄蛮健者，多缺于思。其说亦谬。<br>此盖指薄志弱行之人，非所以概乎君子也。孔子七十二而死，未闻其身体不健；释迹往来传道，死年亦高；邪苏不幸以冤死；至于摩诃末，左持经典，右执利剑，征压一世。此皆古之所谓圣人，而最大之思想家也。今之伍秩庸先生，七十有余岁矣，自谓可至百余岁，彼亦用思想之人也；王湘绮死年七十余，而康健矍铄。为是说者，其何以解邪？总之，勤体育则强筋骨，强筋骨则体质可变，弱可转强，身心可以并完。此盖非天命而全乎人力也。<br>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄。苟野蛮其体魄矣，则文明之精神随之。夫知识之事，认识世间之事物而判断其理也。于此有须于体者焉。直观则赖乎耳目，思索则赖乎脑筋，耳目脑筋之谓体，体全而知识之事以全。故可谓间接从体育以得知识。今世百科之学，无论学校独修，总须力能胜任。力能胜任者，体之强者也。不能胜任者，其弱者也。强弱分，而所任之区域以殊矣。<br>非第增知识也，又足以调感情。感情之于人，其力极大。古人以理性制之，故曰”主人翁常惺惺否”，又曰”以理制心”。然理性出于心，心存乎体。常观罢弱之人，往往为感情所役，而无力以自拔；五官不全及肢体有缺者，多困于一偏之情，而理性不足以救之。故身体健全，感情斯正，可谓不易之理。以例言之：吾人遇某种不快之事，受其刺激，心神震荡，难于制止，苟加以严急之运动，立可汰去陈旧之观念，而复使脑筋清明，效盖可立而待也。<br>非第调感情也，又足以强意志。体育之大效，盖尤在此矣。夫体育之主旨，武勇也。武勇之目，若猛烈，若不畏，若敢为，若耐久，皆意志之事。取例明之，如冷水浴足以练习猛烈与不畏，又足以练习敢为。凡各种之运动，持续不改，皆有练习耐久之益。若长距离之赛跑，于耐久之练习尤著。夫力拔山气盖世，猛烈而已；不斩楼兰誓不还，不畏而已；化家为国，敢为而已；八年于外，三过其门而不入，耐久而已。要皆可于日常体育之小基之。意志也者，固人生事业之先躯也。<br>肢体纤小者举止轻浮，肤理缓弛者心意柔钝，身体之影响于心理也如是。体育之效，至于强筋骨，因而增知识，因而调感情，因而强意志。筋骨者，吾人之身；知识、感情、意志者，吾人之心。身心皆适，是谓俱泰。故夫体育非他，养乎吾生、乐乎吾心而已。</p>
-<h2 id="第五-不好运动之原因"><a href="#第五-不好运动之原因" class="headerlink" title="第五 不好运动之原因"></a><strong>第五 不好运动之原因</strong></h2><p>运动力体育之最要者。今之学者多不好运动，其原因盖有四焉：一则无自觉心也。一事之见于行为也，必先动其喜为此事之情，尤必先有对于此事明白周详知其所以然之智。明白周详知所以然者，即自觉心也。人多不知运动对于自己有如何之关系，或知其大略，亦未至于亲切严密之度。无以发其智，因无以动其情。夫能研究各种科学孜孜不倦者，以其关系于己者切也。今日不为，他日将无以谋生。而运动则无此自觉，此其咎由于自己不能深省者半，而教师不知所以开之亦占其半也。一则积习难返也。我国历来重文，羞齿短后，动有好汉不当兵之语。<br>虽知运动当行之理，与各国运动致强之效，然旧观念之力尚强，其于新观念之运动，盖犹在迎拒参半之列。故不好运动，亦无怪其然。一则提倡不力也。此又有两种：其一，今之所称教育家，多不诺体育。自己不知体育，徒耳其名，亦从而体育之，所以出之也不诚，所以行之也无术，遂减学者研究之心。夫荡子而言自立，沉湎而言节饮，固无人信之矣。其次，教体操者多无学识，语言鄙俚，闻者塞耳。所知惟此一技，又未必精，日日相见者，惟此机械之动作而已。<br>夫徒有形式而无精意以贯注之者，其事不可一日存，而今之体操实如是。一则学者以运动力可羞也。以愚所考察，此实为不运动之大原因矣。夫衣裳檐檐（注：将木字旁换成衣字旁）、行止于于、瞻视舒徐而夷犹者，美好之态，而社会之所尚也。忽尔张臂露足，伸肢屈体，此何为者邪？宁非大可怪者邪？故有深知身体不可不运动，且甚思实行，竟不能实行者；有群行群止能运动，单独行动则不能者；有燕居私室能运动，稠人广众则不能者。一言蔽之，害羞之一念为之耳。四者皆不好运动之原因。第一与第四属于主观，改之在己；第二与第三属于客观，改之在人，君子求己，在人者听之可矣。</p>
-<h2 id="第六-运动之方法贵少"><a href="#第六-运动之方法贵少" class="headerlink" title="第六 运动之方法贵少"></a><strong>第六 运动之方法贵少</strong></h2><p>愚自伤体弱，因欲研究卫生之术。顾古人言者亦不少矣。近今学校有体操、坊间有书册，冥心务泛，终难得益。盖此事不重言谈，重在实行，苟能实行，得一道半法已足，曾文正行临睡洗脚、食后千步之法，得益不少。有老者年八十犹康健，问之，曰：”吾惟不饱食耳。”今之体操，诸法樊陈，更仆尽之，宁止数十百种？巢林止于一枝，饮河止于满腹。吾人惟此身耳，惟此官骸藏络耳，虽百其法，不外欲使血脉流通。夫法之致其效者一，一法之效然，百法之效亦然，则余之九十九法可废也。目不两视而明，耳不两听而聪，筋骨之锻炼而百其方法，是扰之也。<br>欲其有效，未见其能有效矣。夫应诸方之用，与锻一己之身者，不同。浪桥所以适于航海，持竿所以适于逾高，游戏宜乎小学，兵式宜乎中学以上，此应诸方之用者也。运动筋骸使血脉流通，此锻一己之身者也。应诸方之用者其法宜多，锻一己之身者其法宜少。近之学者，多误此意，故其失有二：一则好运动者，以多为善，几欲一人之身，百般俱备，甚至无一益身者；一则不好运动者，见人之技艺多，吾所知者少，则绝弃之而不为，其宜多者不必善，务广而荒，又何贵乎？少者不必不善，虽一手一足之屈伸，苟以为常，亦有益焉。明乎此，而后体育始有进步可言矣。</p>
-<h2 id="第七-运动应注意事项"><a href="#第七-运动应注意事项" class="headerlink" title="第七 运动应注意事项"></a><strong>第七 运动应注意事项</strong></h2><p>凡事皆宜有恒，运动亦然。有两人于此，其于运动也，一人时作时辍，一人到底不懈，则效不效必有分矣。运动而有恒，第一能生兴味。凡静者不能自动，必有所以动之者。动之无过于兴味。凡科学皆宜引起多方之兴味，而于运动尤然。人静处则甚逸，发动则甚劳，人恒好逸而恶劳，使无物焉以促之，则不足以移其势而变其好恶之心。<br>而此兴味之起，由于日日运动不辍。最好于才起临睡行两次运动，裸体最善，次则薄衣，多衣甚碍事。日以为常，使此运动之观念，相连而不绝，今日之运动，承乎昨日之运动，而又引起明日之运动。每次不必久，三十分钟已足。如此自生一种之兴味焉。第二能生快乐。运动既久，成效大著，发生自己价值之念。以之为学则胜任愉快，以之修德则日起有功，心中无限快乐，亦缘有恒而得也。快乐与兴味有辨。兴味者运动之始，快乐者运动之终。兴味生于进行，快乐生于结果。二者自异。<br>有恒矣，而不用心，亦难有效。走马观花，虽日日观，犹无观也。心在鸿鹄，虽与俱学，勿若之矣。故运动有注全力之道焉。运动之时，心在运动，闲思杂虑，一切屏去，运心于血脉如何流通，筋肉如何张弛，关节如何反复，呼吸如何出入。而运作按节，屈伸进退，皆一一踏实。朱子论主一无适，谓吃饭则想着吃饭，穿衣则想着穿衣。注全力于运动之时者，亦若是则已耳。<br>文明柔顺，君子之容。虽然，非所以语于运动也。运动宜蛮拙。骑突枪鸣十荡十决，暗噁颓山岳、叱咤变风云，力拔项王之山，勇贯由基之札，其道盖存乎蛮拙，而无与于纤巧之事。运动之进取宜蛮，蛮则气力雄，筋骨劲。运动之方法宜拙，拙则资守实，练习易。二者在初行运动之人为尤要。运动所宜注意者三：有恒一也，注全力二也，蛮拙三也。他所当注意者尚多。举其要者如此。</p>
-<h2 id="第八-运动一得之商榷"><a href="#第八-运动一得之商榷" class="headerlink" title="第八 运动一得之商榷"></a><strong>第八 运动一得之商榷</strong></h2><p>愚既粗涉各种运动，以其皆系外铄而无当于一己之心得。乃提挚各种运动之长，自成一种运动，得此运动之益，颇为不少。凡分六段：手部也，足部也，躯干部也，头部也，打击运动也，调和运动也。段之中有节，凡二十有七节。以其为六段，因名之曰六段运动。兹述于后，世之君子，幸教正焉。<br><strong>一、手部运动，坐势</strong><br>1．握拳向前屈伸。左右参，三次（左右参者，左动右息，右动左息，相参互也）。<br>2．握拳屈时前侧后半圆形运动。左右参，三次。<br>3．握拳向前面下方屈伸。左右并，三次（左右并者，并动不相参互）。<br>4．手仰向外拿。左右参，三次。<br>5．手复向外拿。左右参，三次。<br>6．伸指屈时前刺。左右参，三次。<br><strong>二、足部运动，坐势</strong><br>1．手握拳左右垂。足就原位一前屈，一后斜伸。左右参，三次。2．手握拳前平。足一侧伸，一前屈。伸者可易位，屈者惟趾立。臀跟相接。左右参，三次。3．手握拳左右垂。足一支一揭。左右参，三次。4．手握拳左右垂。足一支一前踢。左右参，三次。5．手握拳左右垂。足一前屈，一后伸。屈者在原位，伸者易位，两足略在直线上。左右参，三次。6．手释拳。全身一起一蹲，蹲时臀跟略接，三次。<br><strong>三、躯干部运动，立势</strong><br>1．身向前后屈。三次（手握拳，下同）。<br>2．手一上伸，一下垂。绷张左右胸肋，左右各一次。<br>3．手一侧垂，一前斜垂。绷张左右背肋，左右各一次。<br>4．足丁字势。手左右横荡。扭捩腰胁。左右各一次。<br><strong>四、头部运动，坐势</strong><br>1．头前后屈。三次。<br>2．头左右转。三次。<br>3．用手按摩额部、颊部、鼻部、唇部、喉部、耳部、后颈部。<br>4．自由运动。头大体位置不动，用意使皮肤及下颚运动。五次。<br><strong>五、打击运动，不定势</strong><br>(打击运动者，以拳遍击身体各处，使血液奔注，筋肉坚实，为此运动之主）<br>1．手部，右手击左手，左手击右手<br>(1) 前膊，上面、下面、左面、右面<br>(2) 后膊，上面、下面、左面、右面<br>2．肩部<br>3．胸部<br>4．胁部<br>5．背部<br>6．腹部<br>7．臀部<br>8．腿部，上腿、下腿<br><strong>六、调和运动，不定势</strong><br>1．跳舞，十余次<br>2．深呼吸，三次</p>
-<blockquote>
-<p>剪报来源<br>公众号： 考研体育人<br>链　接：<a href="https://mp.weixin.qq.com/s/P3CjCEXDsekDTcWw2vLMFg">https://mp.weixin.qq.com/s/P3CjCEXDsekDTcWw2vLMFg</a><br>日　期：2020-07-13</p>
-</blockquote>
+    <title>生产环境MySQL慢查询问题定位</title>
+    <url>/2022/07/31/how-identify-mysql-performance-issues-slow-queries/</url>
+    <content><![CDATA[<p>本文根据实际项目经验，详细描述 MySQL 慢查询问题的发现及排查解决过程。在不影响读者阅读理解的前提下，对部分原始数据进行脱敏处理。</p>
+<hr>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>生产环境 MySQL 硬件配置：32C/64G/2T ESSD </p>
+<p>MySQL 版本：5.7.28</p>
+<p>存储数据主要来源：主要是 Flink 实时计算的指标，少部分 Presto 准实时计算的指标，同时还有部分离线数仓模型也会每天同步一份至该 MySQL，用于加速客户端查询和提升并发查询能力。</p>
+<h2 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h2><p>之前收到运维的反馈，生产环境上用于存放 Flink 实时计算指标的 MySQL 有告警——每分钟慢查询数超过告警阈值，需及时跟进。当时通过 MySQL 监控面板查看到部分关键指标如下：</p>
+<p>慢查询数</p>
+<p><img src="/image/2022/20220731222821-01.png" alt="Untitled"></p>
+<p>QPS</p>
+<p><img src="/image/2022/20220731222821-02.png" alt="Untitled"></p>
+<p><img src="/image/2022/20220731222821-03.png" alt="Untitled"></p>
+<p>TPS</p>
+<p><img src="/image/2022/20220731222821-04.png" alt="Untitled"></p>
+<p>网络流量（流入、流出）</p>
+<p><img src="/image/2022/20220731222821-05.png" alt="Untitled"></p>
+<p>表锁</p>
+<p><img src="/image/2022/20220731222821-06.png" alt="Untitled"></p>
+<p>慢日志明细部分 SQL（当时只拉取一小部分的慢 SQL，以下这些语句是 Flink SQL 写入 MySQL 的）</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># <span class="type">Time</span>: <span class="number">2022</span><span class="number">-07</span><span class="number">-28</span>T01:<span class="number">16</span>:<span class="number">52.760142</span>Z</span><br><span class="line"># <span class="keyword">User</span><span class="variable">@Host</span>: bigdata[bigdata] @  [<span class="number">10.10</span><span class="number">.18</span><span class="number">.251</span>]  Id: <span class="number">356218187</span></span><br><span class="line"># Query_time: <span class="number">16.126934</span>  Lock_time: <span class="number">0.000123</span> Rows_sent: <span class="number">0</span>  Rows_examined: <span class="number">0</span></span><br><span class="line">use db_name;</span><br><span class="line"><span class="keyword">SET</span> <span class="type">timestamp</span><span class="operator">=</span><span class="number">1658971012</span>;</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `tb_1`(`col1`, `col2`, `col3`, `col4`, `col5`) <span class="keyword">VALUES</span> (xxx, <span class="string">&#x27;2022-07-28&#x27;</span>, <span class="string">&#x27;xxxxx&#x27;</span>, xx, xx) <span class="keyword">ON</span> DUPLICATE KEY UPDATE `col1`<span class="operator">=</span><span class="keyword">VALUES</span>(`col1`), `col2`<span class="operator">=</span><span class="keyword">VALUES</span>(`col2`), `col3`<span class="operator">=</span><span class="keyword">VALUES</span>(`col3`), `col4`<span class="operator">=</span><span class="keyword">VALUES</span>(`col4`), `col5`<span class="operator">=</span><span class="keyword">VALUES</span>(`col5`);</span><br><span class="line"># <span class="type">Time</span>: <span class="number">2022</span><span class="number">-07</span><span class="number">-28</span>T01:<span class="number">16</span>:<span class="number">52.760581</span>Z</span><br><span class="line"># <span class="keyword">User</span><span class="variable">@Host</span>: bigdata[bigdata] @  [<span class="number">10.10</span><span class="number">.18</span><span class="number">.252</span>]  Id: <span class="number">375588733</span></span><br><span class="line"># Query_time: <span class="number">1.086578</span>  Lock_time: <span class="number">0.000123</span> Rows_sent: <span class="number">0</span>  Rows_examined: <span class="number">0</span></span><br><span class="line"><span class="keyword">SET</span> <span class="type">timestamp</span><span class="operator">=</span><span class="number">1658971012</span>;</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `tb_2`(`col1`, `col2`, `col3`) <span class="keyword">VALUES</span> (<span class="string">&#x27;2022-07-28&#x27;</span>, <span class="string">&#x27;665902615870&#x27;</span>, <span class="string">&#x27;xxxx&#x27;</span>) <span class="keyword">ON</span> DUPLICATE KEY UPDATE `col1`<span class="operator">=</span><span class="keyword">VALUES</span>(`col1`), `col2`<span class="operator">=</span><span class="keyword">VALUES</span>(`col2`), `col3`<span class="operator">=</span><span class="keyword">VALUES</span>(`col3`);</span><br><span class="line"># <span class="type">Time</span>: <span class="number">2022</span><span class="number">-07</span><span class="number">-28</span>T01:<span class="number">16</span>:<span class="number">52.761442</span>Z</span><br><span class="line"># <span class="keyword">User</span><span class="variable">@Host</span>: bigdata[bigdata] @  [<span class="number">10.10</span><span class="number">.18</span><span class="number">.249</span>]  Id: <span class="number">356218191</span></span><br><span class="line"># Query_time: <span class="number">16.525038</span>  Lock_time: <span class="number">0.000159</span> Rows_sent: <span class="number">0</span>  Rows_examined: <span class="number">0</span></span><br><span class="line"><span class="keyword">SET</span> <span class="type">timestamp</span><span class="operator">=</span><span class="number">1658971012</span>;</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `tb_1`(`col1`, `col2`, `col3`, `col4`, `col5`) <span class="keyword">VALUES</span> (xxx, <span class="string">&#x27;2022-07-28&#x27;</span>, <span class="string">&#x27;xxxxx&#x27;</span>, xx, xx) <span class="keyword">ON</span> DUPLICATE KEY UPDATE `col1`<span class="operator">=</span><span class="keyword">VALUES</span>(`col1`), `col2`<span class="operator">=</span><span class="keyword">VALUES</span>(`col2`), `col3`<span class="operator">=</span><span class="keyword">VALUES</span>(`col3`), `col4`<span class="operator">=</span><span class="keyword">VALUES</span>(`col4`), `col5`<span class="operator">=</span><span class="keyword">VALUES</span>(`col5`);</span><br></pre></td></tr></table></figure>
+
+<h2 id="排查问题"><a href="#排查问题" class="headerlink" title="排查问题"></a>排查问题</h2><p>从 MySQL 监控面板看到，慢查询的情况每天都在发生，而且呈现一定的规律：</p>
+<ul>
+<li>一个是每天固定时段（凌晨 4 点半到 6 点之间，上午 9 点 15 到 20 分之间）会出现一次；</li>
+<li>另一个是有周期性，大概每 20 分钟、每一小时都会出现一次。<ul>
+<li>每 20 分钟出现一次的情况：从每小时 06 分开始，每隔 20 分钟触发一次，如 08:06，08:26，08:46，09:06 等；</li>
+<li>每一小时出现一次的情况：从每小时 15 分触发一次，如 08:15，09:15，10:15 等。</li>
+</ul>
+</li>
+</ul>
+<p>初步判断，慢查询问题应该是由离线数仓模型数据同步至 MySQL 和准实时系统 Presto 定时写数据到 MySQL 引起的。因为每天出现慢查询的固定时段与离线数仓计算的时段一致，而且也只有 Presto 是定时触发计算并写数据至 MySQL 的。</p>
+<p>但为进一步排除是否由 Flink SQL 实时写 MySQL 导致的，这里也对部分慢 SQL 进行抽样验证——执行这些 SQL 是否真的很慢。如前文贴出的慢 SQL，涉及到两张表 tb_1 与 tb_2，查了表记录数，tb_1 为 7 万多，tb_2 不到 158 万。数据量都不算大，按理说这些 <code>insert … on duplicate key update</code> 不应该会出现慢查询情况。然后在非上述出现慢查询时段，手动执行一次该 SQL 进行验证，发现执行很快就完成，不存在执行时长十几秒的情况。</p>
+<p>另外，如果慢查询是由 Flink 写 MySQL 导致的，那么 MySQL 的监控面板的慢查询数的趋势情况应该如下图所示，而不会出现某些时段慢查询数为 0 的情况。因为 Flink 写到 MySQL 的表，都是热点表，具有高频的写操作，高峰的时候可能会出现一秒内需要更新某一张表的某一行某一列多达 100 多次，最低峰的时候也会在十秒内更新一次。</p>
+<p><img src="/image/2022/20220731222821-07.png" alt="Untitled"></p>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>经过初步分析，基本上可以排除 Flink 实时写入导致慢查询，接下来开始重点关注离线数仓部分模型同步和 Presto 准实时写入的情况。</p>
+<h3 id="两种定位慢SQL方式"><a href="#两种定位慢SQL方式" class="headerlink" title="两种定位慢SQL方式"></a>两种定位慢SQL方式</h3><p>最简单粗暴的方式，是审查（Review）离线数仓数据清洗代码和 Presto 准实时调度代码，逐一排查与当前 MySQL 实例有关的代码，找出有问题的 SQL 并修复。这种方式虽然看起来直接简单，但没有针对性，效率并不高，一个是代码量较大，查找较费时，另一个是就算找到与当前 MySQL 实例有关的代码，这个代码也不一定是有问题的代码。</p>
+<p>另一种方式，是拉取 MySQL 的 binlog 日志和慢查询日志进行定位。针对慢查询出现时段，定位该时段前、时段中，MySQL 在做什么操作。这种方式比较有针对性，效率也会高一些。本次定位慢 SQL 就采用该方式。</p>
+<p>首先，从 MySQL 实例所在服务器下载慢日志文件（mysql1-slow.log）和慢查询出现时段的 binlog 日志文件（mysql-bin.012209）。</p>
+<p>其次，在本地使用 <code>mysqlbinlog</code> 命令解析 binlog 日志文件，比如解析慢 SQL 出现时段的 binlog 日志（2022-07-28 08:10 ~ 08:30）至文本文件 binlog.txt 上：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mysqlbinlog -v --base64-output=decode-rows  --start-datetime=<span class="string">&quot;2022-07-28T08:10:00&quot;</span> --stop-datetime=<span class="string">&quot;2022-07-28T08:30:00&quot;</span> mysql-bin.012209 &gt; binlog.txt</span><br></pre></td></tr></table></figure>
+
+<p>使用 VS Code 打开 binlog.txt 文件，即可查看这个时段 MySQL 做了哪些操作。需要注意的是 binlog 日志并不记录查询（select 语句）相关的操作。</p>
+<p>再次，使用 VS Code 打开慢日志文件（mysql1-slow.log），直接通过搜索日期的方式（如搜索 2022-07-28T00:10）定位到慢 SQL 出现时段都有哪些慢 SQL。如果慢日志文件太大的话，还可以使用 <code>tail</code> 命令，根据需要输出一万行，或十万行，或一百万行，或两百万行至另一个日志文件，再打开。如从慢日志文件输出十万行至 slow_072800.log 文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tail -n 100000 mysql1-slow.log &gt; slow_072800.log</span><br></pre></td></tr></table></figure>
+
+<p>最后，结合这两个日志文件（优先是使用慢日志文件），找出慢 SQL 语句，并根据需要进行 SQL 优化等。</p>
+<h3 id="定位慢SQL示例-1"><a href="#定位慢SQL示例-1" class="headerlink" title="定位慢SQL示例 1"></a>定位慢SQL示例 1</h3><p>以本次慢查询为例，注意到 08:00 ~ 08:10 这个时段有大量的慢查询，我们可以先在慢日志文件中查找该时段都有哪些慢 SQL，主要关注两个重要指标：</p>
+<ul>
+<li><strong>Rows_sent：慢查询返回记录；</strong></li>
+<li><strong>Rows_examined：慢查询扫描过的行数。</strong></li>
+</ul>
+<p>在该时段的慢 SQL 中，我们发现在 2022-07-28T00:06:32（此为UTC时间，北京时间需加 8 小时），有一条 SQL 的 Rows_examined 指标值为 6621900，即执行该 SQL 需要扫描 660 多万行数据：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Time: 2022-07-28T00:06:32.782972Z</span></span><br><span class="line"><span class="comment"># User@Host: bigdata[bigdata] @  [10.10.18.246]  Id: 392436436</span></span><br><span class="line"><span class="comment"># Query_time: 6.668395  Lock_time: 0.000710 Rows_sent: 0  Rows_examined: 6621900</span></span><br><span class="line">SET timestamp=1658966792;</span><br><span class="line">insert into db.tb_3(col1,col2,...,col_n)</span><br><span class="line">select a.col1,a.col2,h.xxx,h.xxx,sum(xxx) as gmv,sum(xxxx), ..., col3 as gmv_target_acc  from ......;</span><br></pre></td></tr></table></figure>
+
+<p>该 IP 地址 10.10.18.246，是 Presto 集群其中一个节点地址，可以断定这里的慢 SQL 来源于准实时调度。我们再以该 SQL 语句前面非参数部分内容（如 <code>insert into db.tb_3</code>）进行搜索，结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Time: 2022-07-28T00:26:30.317576Z</span></span><br><span class="line"><span class="comment"># User@Host: bigdata[bigdata] @  [10.10.18.246]  Id: 392439306</span></span><br><span class="line"><span class="comment"># Query_time: 6.652504  Lock_time: 0.000511 Rows_sent: 0  Rows_examined: 6622063</span></span><br><span class="line">SET timestamp=1658967990;</span><br><span class="line">insert into db.tb_3(col1,col2,...,col_n)</span><br><span class="line">select a.col1,a.col2,h.xxx,h.xxx,sum(xxx) as gmv,sum(xxxx), ..., col3 as gmv_target_acc  from ......;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Time: 2022-07-28T00:46:28.910383Z</span></span><br><span class="line"><span class="comment"># User@Host: bigdata[bigdata] @  [10.10.18.246]  Id: 392442555</span></span><br><span class="line"><span class="comment"># Query_time: 6.624683  Lock_time: 0.000689 Rows_sent: 0  Rows_examined: 6622124</span></span><br><span class="line">SET timestamp=1658969188;</span><br><span class="line">insert into db.tb_3(col1,col2,...,col_n)</span><br><span class="line">select a.col1,a.col2,h.xxx,h.xxx,sum(xxx) as gmv,sum(xxxx), ..., col3 as gmv_target_acc  from ......;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Time: 2022-07-28T01:06:03.600122Z</span></span><br><span class="line"><span class="comment"># User@Host: bigdata[bigdata] @  [10.10.18.246]  Id: 392445518</span></span><br><span class="line"><span class="comment"># Query_time: 6.610967  Lock_time: 0.000662 Rows_sent: 0  Rows_examined: 6622390</span></span><br><span class="line">SET timestamp=1658970363;</span><br><span class="line">insert into db.tb_3(col1,col2,...,col_n)</span><br><span class="line">select a.col1,a.col2,h.xxx,h.xxx,sum(xxx) as gmv,sum(xxxx), ..., col3 as gmv_target_acc  from ......;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，该 <code>insert into … select</code> 语句每 20 分钟执行一次，每次执行都扫描 600 多万行数据，每次执行该 SQL 都会阻塞其他 SQL 正常执行，导致大量的慢查询。</p>
+<h3 id="定位慢SQL示例-2"><a href="#定位慢SQL示例-2" class="headerlink" title="定位慢SQL示例 2"></a>定位慢SQL示例 2</h3><p>接下来排查 08:10 ~ 08:20 时段的慢查询问题。该时段对应的网络流量指标面板，可以看到流出的流量有明显的上升，服务器若无其他特殊操作，一般可以断定此时段是由于返回大量数据导致了流出流量上升。这时就没有必要去 binlog 日志文件查找 08:10 ~ 08:20 这个时段的 MySQL 操作，而是要去慢日志文件查找 08:10 ~ 08:20 时段的 select 语句。</p>
+<p>通过慢日志，我们发现是以下这段查询 SQL 语句导到了慢查询：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Time: 2022-07-28T00:17:23.830780Z</span></span><br><span class="line"><span class="comment"># User@Host: bigdata[bigdata] @  [10.10.18.205]  Id: 392438045</span></span><br><span class="line"><span class="comment"># Query_time: 71.781578  Lock_time: 0.000164 Rows_sent: 4012608  Rows_examined: 4012608</span></span><br><span class="line">SET timestamp=1658967443;</span><br><span class="line">SELECT `col1`, `col2`, `col3`, `col4`, `col5` FROM `db`.`tb_1213`;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，执行该 SQL 语句需要扫描行数 400 多万，返回记录数 400 多万。一次查询就返回 400 多万数据，这是非常不合理的，也是流出流量异常上升的原因。</p>
+<p>接着，再以该 SQL 语句前面非参数部分内容（如 <code>SELECT </code>col1<code>, </code>col2<code>, </code>col3<code>, </code>col4<code>, </code>col5<code>FROM</code>db<code>.</code>tb_1213``）进行搜索，结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Time: 2022-07-28T01:16:52.759317Z</span></span><br><span class="line"><span class="comment"># User@Host: bigdata[bigdata] @  [10.10.18.9]  Id: 392447299</span></span><br><span class="line"><span class="comment"># Query_time: 20.966529  Lock_time: 0.000057 Rows_sent: 4012739  Rows_examined: 4012739</span></span><br><span class="line">SET timestamp=1658971012;</span><br><span class="line">SELECT `col1`, `col2`, `col3`, `col4`, `col5` FROM `db`.`tb_1213`;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Time: 2022-07-28T02:19:00.598622Z</span></span><br><span class="line"><span class="comment"># User@Host: bigdata[bigdata] @  [10.10.18.15]  Id: 392457198</span></span><br><span class="line"><span class="comment"># Query_time: 20.029628  Lock_time: 0.000049 Rows_sent: 4012988  Rows_examined: 4012988</span></span><br><span class="line">SET timestamp=1658974740;</span><br><span class="line">SELECT `col1`, `col2`, `col3`, `col4`, `col5` FROM `db`.`tb_1213`;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Time: 2022-07-28T03:19:37.546786Z</span></span><br><span class="line"><span class="comment"># User@Host: bigdata[bigdata] @  [10.10.18.9]  Id: 392466949</span></span><br><span class="line"><span class="comment"># Query_time: 34.584755  Lock_time: 0.000090 Rows_sent: 4013249  Rows_examined: 4013249</span></span><br><span class="line">SET timestamp=1658978377;</span><br><span class="line">SELECT `col1`, `col2`, `col3`, `col4`, `col5` FROM `db`.`tb_1213`;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，在每小时的 10 ~ 20 分这个时段的慢查询，是执行该 SQL 导致的，这期间服务器流出流量都会明显上升，而且 QPS/TPS 也出现明显的下降。</p>
+<h3 id="定位慢SQL示例-3"><a href="#定位慢SQL示例-3" class="headerlink" title="定位慢SQL示例 3"></a>定位慢SQL示例 3</h3><p>如果细心查看服务器的流量指标，会发现在 09:10 ~ 09:20 这个时段，服务器的流入流量有明显的上升（绿色的线）。如果此期间没有上传文件到服务器等特殊操作的话，说明此时段有大量的写操作。而且通过表锁指标看板，可以看到此时候的表锁次数也是明显的上升。基本上可以从这两个指标判断，此时段极有可能在执行类似 <code>insert into … select</code> 的 SQL 语句，插入大量数据，导致该操作从行锁升级成了表锁。</p>
+<p>不过，在慢查询日志文件查找该时段的慢查询 SQL 时，并没有找到记录。但查找该时段的 binlog 日志，发现一个批量写入：以 BEGIN 开头，接着是 100 条 INSERT INTO 语句，然后才以 COMMIT 结尾。而且在 9 时 17 分 23~24 这两秒内，总共记录了 985 个批次。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># at 934275431</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934275511 CRC32 0xca3d2f40 	Query	thread_id=392447433	exec_time=0	error_code=0</span></span><br><span class="line">SET TIMESTAMP=1658971043/*!*/;</span><br><span class="line">BEGIN</span><br><span class="line">/*!*/;</span><br><span class="line"><span class="comment"># at 934275511</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934275880 CRC32 0x6488b977 	Table_map: `db`.`xxxx_tmp` mapped to number 5186539</span></span><br><span class="line"><span class="comment"># at 934275880</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934283461 CRC32 0x1017377a 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934283461</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934291002 CRC32 0x47d0d2d8 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934291002</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934298475 CRC32 0x30e8b18c 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934298475</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934306225 CRC32 0xf2904319 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934306225</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934313839 CRC32 0x9f6c134b 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934313839</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934321038 CRC32 0x90fe2e6c 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934321038</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934328898 CRC32 0xc8edc33c 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934328898</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934337005 CRC32 0xe92df56b 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934337005</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934344475 CRC32 0x4bf97a67 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934344475</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934352308 CRC32 0x5c4719a9 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934352308</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934359765 CRC32 0x3e789e0e 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934359765</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934367519 CRC32 0xbee8cc37 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934367519</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934375162 CRC32 0x6b911b20 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934375162</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934382613 CRC32 0xfc1645f3 	Write_rows: table id 5186539</span></span><br><span class="line"><span class="comment"># at 934382613</span></span><br><span class="line"><span class="comment">#220728  9:17:23 server id 1  end_log_pos 934383790 CRC32 0x587f985a 	Write_rows: table id 5186539 flags: STMT_END_F</span></span><br><span class="line"><span class="comment">### INSERT INTO `db`.`xxxx_tmp`</span></span><br><span class="line"><span class="comment">### SET</span></span><br><span class="line"><span class="comment">###   @1=1227520</span></span><br><span class="line"><span class="comment">###   @2=&#x27;156xxxxxxxx&#x27;</span></span><br><span class="line"><span class="comment">###   @3=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @4=&#x27;http://xxxxxxx/132&#x27;</span></span><br><span class="line"><span class="comment">###   @5=&#x27;xxx斌&#x27;</span></span><br><span class="line"><span class="comment">###   @6=128245</span></span><br><span class="line"><span class="comment">###   @7=&#x27;&#x27;</span></span><br><span class="line"><span class="comment">###   @8=1</span></span><br><span class="line"><span class="comment">###   @9=&#x27;xxxx&#x27;</span></span><br><span class="line"><span class="comment">###   @10=0</span></span><br><span class="line"><span class="comment">###   @11=0</span></span><br><span class="line"><span class="comment">###   @12=0</span></span><br><span class="line"><span class="comment">###   @13=2</span></span><br><span class="line"><span class="comment">###   @14=0</span></span><br><span class="line"><span class="comment">###   @15=&#x27;156xxxxxxxx&#x27;</span></span><br><span class="line"><span class="comment">###   @16=&#x27;&#x27;</span></span><br><span class="line"><span class="comment">###   @17=&#x27;&#x27;</span></span><br><span class="line"><span class="comment">###   @18=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @19=1</span></span><br><span class="line"><span class="comment">###   @20=1</span></span><br><span class="line"><span class="comment">###   @21=9</span></span><br><span class="line"><span class="comment">###   @22=&#x27;&#x27;</span></span><br><span class="line"><span class="comment">###   @23=&#x27;&#x27;</span></span><br><span class="line"><span class="comment">###   @24=&#x27;&#x27;</span></span><br><span class="line"><span class="comment">###   @25=1</span></span><br><span class="line"><span class="comment">###   @26=&#x27;xxx&#x27;</span></span><br><span class="line"><span class="comment">###   @27=206485299</span></span><br><span class="line"><span class="comment">###   @28=206485297</span></span><br><span class="line"><span class="comment">###   @29=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @30=&#x27;***&#x27;</span></span><br><span class="line"><span class="comment">###   @31=&#x27;2017-08-10 16:53:16&#x27;</span></span><br><span class="line"><span class="comment">###   @32=0</span></span><br><span class="line"><span class="comment">###   @33=2</span></span><br><span class="line"><span class="comment">###   @34=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @35=NULL</span></span><br><span class="line"><span class="comment">###   @36=NULL</span></span><br><span class="line"><span class="comment">###   @37=0</span></span><br><span class="line"><span class="comment">###   @38=970</span></span><br><span class="line"><span class="comment">###   @39=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @40=NULL</span></span><br><span class="line"><span class="comment">###   @41=NULL</span></span><br><span class="line"><span class="comment">###   @42=61</span></span><br><span class="line"><span class="comment">###   @43=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @44=&#x27;123456X&#x27;</span></span><br><span class="line"><span class="comment">###   @45=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @46=*******</span></span><br><span class="line"><span class="comment">###   @47=&#x27;123456X&#x27;</span></span><br><span class="line"><span class="comment">###   @48=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @49=NULL</span></span><br><span class="line"><span class="comment">###   @50=NULL</span></span><br><span class="line"><span class="comment">###   @51=NULL</span></span><br><span class="line"><span class="comment">###   @52=NULL</span></span><br><span class="line"><span class="comment">###   @53=NULL</span></span><br><span class="line"><span class="comment">###   @54=227520</span></span><br><span class="line"><span class="comment">###   @55=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @56=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @57=97</span></span><br><span class="line"><span class="comment">###   @58=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @59=NULL</span></span><br><span class="line"><span class="comment">###   @60=NULL</span></span><br><span class="line"><span class="comment">###   @61=NULL</span></span><br><span class="line"><span class="comment">###   @62=NULL</span></span><br><span class="line"><span class="comment">###   @63=NULL</span></span><br><span class="line"><span class="comment">###   @64=NULL</span></span><br><span class="line"><span class="comment">###   @65=NULL</span></span><br><span class="line"><span class="comment">###   @66=NULL</span></span><br><span class="line"><span class="comment">###   @67=NULL</span></span><br><span class="line"><span class="comment">###   @68=NULL</span></span><br><span class="line"><span class="comment">###   @69=*******</span></span><br><span class="line"><span class="comment">###   @70=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @71=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @72=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @73=96</span></span><br><span class="line"><span class="comment">###   @74=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @75=97</span></span><br><span class="line"><span class="comment">###   @76=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @77=NULL</span></span><br><span class="line"><span class="comment">###   @78=NULL</span></span><br><span class="line"><span class="comment">###   @79=61</span></span><br><span class="line"><span class="comment">###   @80=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @81=97</span></span><br><span class="line"><span class="comment">###   @82=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @83=NULL</span></span><br><span class="line"><span class="comment">###   @84=NULL</span></span><br><span class="line"><span class="comment">###   @85=61</span></span><br><span class="line"><span class="comment">###   @86=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @87=&#x27;2022-06-17 02:11:07&#x27;</span></span><br><span class="line"><span class="comment">###   @88=&#x27;2022-07-27 18:40:14&#x27;</span></span><br><span class="line"><span class="comment">###   @89=NULL</span></span><br><span class="line"><span class="comment">###   @90=NULL</span></span><br><span class="line"><span class="comment">###   @91=&#x27;2022-07-13 00:17:12&#x27;</span></span><br><span class="line"><span class="comment">###   @92=&#x27;2022-07-27 18:41:30&#x27;</span></span><br><span class="line"><span class="comment">###   @93=&#x27;2018-09-20 02:13:12&#x27;</span></span><br><span class="line"><span class="comment">###   @94=&#x27;2022-07-27 15:35:08&#x27;</span></span><br><span class="line"><span class="comment">###   @95=&#x27;2018-09-20 02:13:12&#x27;</span></span><br><span class="line"><span class="comment">###   @96=&#x27;2022-07-26 01:13:35&#x27;</span></span><br><span class="line"><span class="comment">###   @97=&#x27;2018-09-30 09:03:03&#x27;</span></span><br><span class="line"><span class="comment">###   @98=&#x27;2022-07-27 13:37:14&#x27;</span></span><br><span class="line"><span class="comment">###   @99=&#x27;2018-09-30 19:40:30&#x27;</span></span><br><span class="line"><span class="comment">###   @100=&#x27;2019-04-20 21:31:47&#x27;</span></span><br><span class="line"><span class="comment">###   @101=&#x27;2018-05-02 18:08:04&#x27;</span></span><br><span class="line"><span class="comment">###   @102=NULL</span></span><br><span class="line"><span class="comment">###   @103=NULL</span></span><br><span class="line"><span class="comment">###   @104=&#x27;2018-05-02 18:08:04&#x27;</span></span><br><span class="line"><span class="comment">###   @105=440100</span></span><br><span class="line"><span class="comment">###   @106=&#x27;中国&#x27;</span></span><br><span class="line"><span class="comment">###   @107=&#x27;广东&#x27;</span></span><br><span class="line"><span class="comment">###   @108=&#x27;广州&#x27;</span></span><br><span class="line"><span class="comment">###   @109=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @110=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @111=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @112=&#x27;*******&#x27;</span></span><br><span class="line"><span class="comment">###   @113=*******</span></span><br><span class="line"><span class="comment">###   @114=*******</span></span><br><span class="line"><span class="comment">###   @115=*******</span></span><br><span class="line"><span class="comment">###   @116=*******</span></span><br><span class="line"><span class="comment">###   @117=&#x27;*******&#x27;</span></span><br><span class="line"></span><br><span class="line">...... （这里省略其他 99 条 INSERT INTO 语句）</span><br><span class="line"><span class="comment"># at 1051816055</span></span><br><span class="line"><span class="comment">#220728  9:17:42 server id 1  end_log_pos 1051816136 CRC32 0xc2a23324 	Query	thread_id=392447433	exec_time=0	error_code=0</span></span><br><span class="line">SET TIMESTAMP=1658971062/*!*/;</span><br><span class="line">COMMIT</span><br><span class="line">/*!*/;</span><br></pre></td></tr></table></figure>
+
+<p>根据此 SQL 的表名（<code>db`.`xxxx_tmp</code>），查了离线数仓和准实时的代码，发现在离线数仓中，有一个 shell 脚本调用 <code>sqoop</code> 命令将一个离线模型的数据（该模型记录数为 98467）导出到 MySQL。</p>
+<p><code>sqoop</code> 命令是以批的方式将 hive 的数据导出到 MySQL 的，所以这里只看到服务器的流入流量明显上升，但并没有产生慢 SQL。此时段的慢查询其实是示例 2 的 SQL 产生的，在 <code>sqoop</code> 执行批量写入的同时，准实时也恰好在该时段执行慢查询的 select 语句。</p>
+<h3 id="优化后"><a href="#优化后" class="headerlink" title="优化后"></a>优化后</h3><p>如下图所示，经过上述方式，找出慢 SQL 并优化后，后续没有再出现慢查询的情况。</p>
+<p><img src="/image/2022/20220731222821-08.png" alt="Untitled"></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文根据实际项目经验，主要记录了生产环境 MySQL 慢查询的排查过程。关于如何优化已发现的问题 SQL，本文没有涉及到。常见的优化手段一般是通过 <code>explain</code> 命令来查看 SQL 执行计划，并以此调整 SQL 的写法。</p>
+<p>多数据情况下，定位慢 SQL 都是通过慢查询日志进行定位的。借助服务器的部分关键指标，可以有效提高排查效率。</p>
+<p>例如，我们知道导致慢 SQL 最常见的原因是大事务。而大事务通常是没有限定好 SQL 扫描表的行数，导致每次执行，都要扫描几十万行，甚至几百万行数据。如 SQL 语句是往目标表写入几百万行数据，或者是从目标表查询返回几十万行数据等。执行这样的 SQL 语句，有一个特征是 MySQL 实例所在服务器的网络流量会有明显的变化：</p>
+<ul>
+<li>写入大量数据，服务器的流入流量会明显上升；</li>
+<li>查询返回大量数据，服务器的流出流量也会有明显的上升。</li>
+</ul>
+<p>我们可以根据该特征来判断某个时段的慢查询是由于写入还是查询导致的。并根据出现慢查询的时段，快速定位慢查询日志文件中的慢 SQL。</p>
+<p>需要注意的是，慢查询日志文件中记录的慢 SQL，不一定都是有问题的 SQL，因为有可能是某条正在执行慢 SQL 语句，阻塞了其他 SQL 语句正常执行。这种情况一般可以通过慢查询日志中的 Rows_sent（慢查询返回记录）和 Rows_examined（慢查询扫描过的行数）两个指标快速排查。</p>
+<p>（END）</p>
 ]]></content>
       <categories>
-        <category>剪报</category>
+        <category>编程文摘</category>
       </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>备忘录</tag>
+      </tags>
   </entry>
   <entry>
     <title>李大钊：青春</title>
@@ -8725,6 +8801,26 @@
 <p><img src="https://i.loli.net/2021/07/20/Ixv8WzT9nJS6Gth.png" alt="本文刊登于《新青年》杂志第二卷第一号，1916年9月1日"><br>本文刊登于《新青年》杂志第二卷第一号，1916年9月1日</p>
 <blockquote>
 <p>剪报来源<br>公众号： 北京大学人文社会科学研究院<br>链　接：<a href="https://mp.weixin.qq.com/s/0Rg-uyGIjNULo7D74a6Dtw">https://mp.weixin.qq.com/s/0Rg-uyGIjNULo7D74a6Dtw</a><br>日　期：2021-04-28</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>剪报</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>毛泽东：体育之研究</title>
+    <url>/2021/07/15/mzd-1/</url>
+    <content><![CDATA[<h2 id="前-言"><a href="#前-言" class="headerlink" title="前   言"></a><strong>前   言</strong></h2><p>国力苶弱，武风不振，民族之体质，日趋轻细。此甚可忧之现象也。提倡之者，不得其本，久而无效。长是不改，弱且加甚。夫命中致远，外部之事，结果之事也。体力充实，内部之事，原因之事也。体不坚实，则见兵而畏之，何有于命中，何有于致远？坚实在于锻炼。锻炼在于自觉。今之提倡者，非不设种种之方法，然而无效者，外力不足以动其心，不知何为体育之真义。体育果有如何之价值，效果云何，著手何处，皆茫乎如在雾中，其无效亦宜。欲图体育之效，非动其主观，促其对体育之自觉不可。苟自觉矣，则体育之条目，可不言而自知，命中致远之效，亦当不求而自至矣。不佞深感体育之要，伤提倡者之不得其当，知海内同志，同此病而相怜者必多。不自惭赧，贡其愚见，以资商榷。所言并非皆己实行，尚多空言理想之处，不敢为欺。倘辱不遗，赐之教诲，所虚心百拜者也。</p>
+<h2 id="第一-释体育"><a href="#第一-释体育" class="headerlink" title="第一  释体育"></a><strong>第一  释体育</strong></h2><p>自有生民以来，智识有愚闇，无不知自卫其生者。是故西山之薇，饥极必食；井上之李，不容不咽；巢木以为居；皮兽以为衣；盖发乎天能，不知所以然也。然而未精也。有圣人者出，于是乎有礼，饮食起居，皆有节度。故”子之燕居，申申如也，夭夭如也”；”食饐而谒，鱼馁而肉败，不食”；”射于矍相之圃，盖观者如墙堵焉”。人体之组成，与群动无不同，而群动不能及人之寿，所以制其生者无节度也。人则以节度制其生，愈降于后而愈明，于是乎有体育。体育者，养生之道也。<br>东西之所明者不一：庄子效法于庖丁，仲尼取资于射御；现今文明诸国，德为最盛，其斗剑之风，播于全国；日本则有武士道，近且因吾国之绪余，造成柔术，觥觥乎可观已。而考其内容，皆先精究生理，详于官体之构造，脉络之运行，何方发达为早，何部较有偏缺，其体育即准此为程序，抑其过而救其所不及。故其结论，在使身体平均发达。由此言之，体育者，人类自其养生之道，使身体平均发达，而有规则次序之可言者也。</p>
+<h2 id="第二-体育在吾人之位置"><a href="#第二-体育在吾人之位置" class="headerlink" title="第二 体育在吾人之位置"></a><strong>第二 体育在吾人之位置</strong></h2><p>体育一道，配德育与智育，而德智皆寄于体。无体是无德智也。顾知之者或寡矣。或以为重在智识，或曰道德也。夫知识则诚可贵矣，人之所以异于动物者此耳。顾徒知识之何载乎？道德亦诚可贵矣，所以立群道平人己者此耳。顾徒道德之何寓乎？体者，为知识之载而为道德之寓者也。其载知识也如车，其寓道德也如舍。<br>体者，载知识之车而寓道德之舍也。儿童及年入小学，小学之时，宜专注重于身体之发育，而知识之增进道德之养成次之。宜以养护为主，而以教授训练为辅。今盖多不知之，故儿童缘读书而得疾病或至夭殇者有之矣。中学及中学以上，宜三育并重，今人则多偏于智。中学之年，身体之发育尚未完成，乃今培之者少而倾之者多，发育不将有中止之势乎？吾国学制，课程密如牛毛，虽成年之人，顽强之身，犹莫能举，况未成年者乎？况弱者乎？<br>观其意，教者若特设此繁重之课，以困学生，蹂躏其身而残贼其生，有不受者则罚之；智力过人者，则令加读某种某种之书，甘言以恬之，厚赏以诱之。嗟乎，此所谓贼夫人之子欤！学者亦若恶此生之永年，必欲摧折之，以身为殉而不悔。何其梦梦如是也！人独患无身耳，他复何患？求所以善其身者，他事亦随之矣。善其身无过于体育。体育于吾人实占第一之位置。体强壮而后学问道德之进修勇而收效远。于吾人研究之中，宜视为重要之部。”学有本末，事有终始，知所先后，则近道矣。”此之谓也。</p>
+<h2 id="第三-前此体育之弊及吾人自处之道"><a href="#第三-前此体育之弊及吾人自处之道" class="headerlink" title="第三 前此体育之弊及吾人自处之道"></a><strong>第三 前此体育之弊及吾人自处之道</strong></h2><p>三育并重，然昔之为学者，详德智而略于体。及其弊也。偻身俯首，纤纤素手，登山则气迫，涉水则足痉。故有颜子而短命，有贾生而早夭，王勃卢照邻或幼伤或坐废。此皆有甚高之德与智也，一旦身不存，德智则从之而隳矣。惟北方之强，任金革死而不厌。燕赵多悲歌慷慨之士。烈士武臣，多出凉州。清之初世，颜习斋李刚主文而兼武。习斋远跋千里之外，学击剑之术于塞北，与勇士角而胜焉。故其言曰：”文武缺一岂道乎？”顾炎武南人也，好居于北，不喜乘船而喜乘马。此数古人者，皆可师者也。<br>学校既起，采各国之成法，风习稍稍改矣。然办学之人，犹未脱陈旧一流，囿于所习，不能骤变，或少注意及之，亦惟是外面铺张，不揣其本而齐其末。故愚观现今之体育，率多有形式而无实质。非不有体操课程也，非不有体操教员也，然而受体操之益者少。非徒无益，又有害焉。教者发令，学者强应，身顺而心违，精神受无量之痛苦，精神苦而身亦苦矣。盖一体操之终，未有不貌瘁神伤者也。饮食不求洁，无机之物、微生之菌，入于体中，化为疾病；室内光线不足，则目力受害不小；桌椅长短不合，削趾适履，则躯干受亏；其余类此者尚多，不能尽也。<br>然则为吾侪学者之计如之何？学校之设备，教师之教训，乃外的客观的也。吾人盖尚有内的主观的。夫内断于心，百体从令。祸福无不自己求之者，我欲仁斯仁至，况于体育乎。苟自之不振，虽使外的客观的尽善尽美，亦犹之乎不能受意也。故讲体育必自自动始。</p>
+<h2 id="第四-体育之效"><a href="#第四-体育之效" class="headerlink" title="第四 体育之效"></a><strong>第四 体育之效</strong></h2><p>人者动物也，则动尚矣。人者有理性的动物也，则动必有道。然何贵乎此动邪？何贵乎此有道之动邪？动以营生也，此浅言之也；动以卫国也，此大言之也。皆非本义。动也者，盖养乎吾生乐乎吾心而已。朱子主敬，陆子主静。静，静也；敬，非动也，亦静而已。老子曰无动为大。释氏务求寂静。静坐之法，为朱陆之徒者咸尊之。近有因是子者，言静坐法，自诩其法之神，而鄙运动者之自损其体。是或一道，然予未敢效之也。愚拙之见，天地盖惟有动而已。<br>动之属于人类而有规则之可言者曰体育。前既言之，体育之效，则强筋骨也。愚昔尝闻，人之官骸肌络，及时而定，不复再可改易，大抵二十五岁以后，即一成无变。今乃知其不然。人之身盖日日变易者：新陈代谢之作用不绝行于各部组织之间，目不明可以明，耳不聪可以聪，虽六七十之人犹有改易官骸之效，事盖有必至者。又闻弱者难以转而为强，今亦知其非是。盖生而强者，滥用其强，不戒于种种嗜欲，以渐戕贼其身，自谓天生好身手，得此已足，尚待锻炼？故至强者或终转为至弱。至于弱者，则恒自悯其身之下全，而惧其生之不永，兢业自持。<br>于消极方面，则深戒嗜欲，不敢使有损失。于积极方面，则勤自锻炼，增益其所不能。久之遂变而为强矣。故生而强者不必自喜也，生而弱者不必自悲也。吾生而弱乎，或者夭之诱我以至于强，未可知也。东西著称之体育家，若美之罗斯福、德之孙棠、日本之嘉纳，皆以至弱之身，而得至强之效。又尝闻之，精神身体，不能并完。用思想之人，每歉于体；而体魄蛮健者，多缺于思。其说亦谬。<br>此盖指薄志弱行之人，非所以概乎君子也。孔子七十二而死，未闻其身体不健；释迹往来传道，死年亦高；邪苏不幸以冤死；至于摩诃末，左持经典，右执利剑，征压一世。此皆古之所谓圣人，而最大之思想家也。今之伍秩庸先生，七十有余岁矣，自谓可至百余岁，彼亦用思想之人也；王湘绮死年七十余，而康健矍铄。为是说者，其何以解邪？总之，勤体育则强筋骨，强筋骨则体质可变，弱可转强，身心可以并完。此盖非天命而全乎人力也。<br>非第强筋骨也，又足以增知识。近人有言曰：文明其精神，野蛮其体魄。此言是也。欲文明其精神，先自野蛮其体魄。苟野蛮其体魄矣，则文明之精神随之。夫知识之事，认识世间之事物而判断其理也。于此有须于体者焉。直观则赖乎耳目，思索则赖乎脑筋，耳目脑筋之谓体，体全而知识之事以全。故可谓间接从体育以得知识。今世百科之学，无论学校独修，总须力能胜任。力能胜任者，体之强者也。不能胜任者，其弱者也。强弱分，而所任之区域以殊矣。<br>非第增知识也，又足以调感情。感情之于人，其力极大。古人以理性制之，故曰”主人翁常惺惺否”，又曰”以理制心”。然理性出于心，心存乎体。常观罢弱之人，往往为感情所役，而无力以自拔；五官不全及肢体有缺者，多困于一偏之情，而理性不足以救之。故身体健全，感情斯正，可谓不易之理。以例言之：吾人遇某种不快之事，受其刺激，心神震荡，难于制止，苟加以严急之运动，立可汰去陈旧之观念，而复使脑筋清明，效盖可立而待也。<br>非第调感情也，又足以强意志。体育之大效，盖尤在此矣。夫体育之主旨，武勇也。武勇之目，若猛烈，若不畏，若敢为，若耐久，皆意志之事。取例明之，如冷水浴足以练习猛烈与不畏，又足以练习敢为。凡各种之运动，持续不改，皆有练习耐久之益。若长距离之赛跑，于耐久之练习尤著。夫力拔山气盖世，猛烈而已；不斩楼兰誓不还，不畏而已；化家为国，敢为而已；八年于外，三过其门而不入，耐久而已。要皆可于日常体育之小基之。意志也者，固人生事业之先躯也。<br>肢体纤小者举止轻浮，肤理缓弛者心意柔钝，身体之影响于心理也如是。体育之效，至于强筋骨，因而增知识，因而调感情，因而强意志。筋骨者，吾人之身；知识、感情、意志者，吾人之心。身心皆适，是谓俱泰。故夫体育非他，养乎吾生、乐乎吾心而已。</p>
+<h2 id="第五-不好运动之原因"><a href="#第五-不好运动之原因" class="headerlink" title="第五 不好运动之原因"></a><strong>第五 不好运动之原因</strong></h2><p>运动力体育之最要者。今之学者多不好运动，其原因盖有四焉：一则无自觉心也。一事之见于行为也，必先动其喜为此事之情，尤必先有对于此事明白周详知其所以然之智。明白周详知所以然者，即自觉心也。人多不知运动对于自己有如何之关系，或知其大略，亦未至于亲切严密之度。无以发其智，因无以动其情。夫能研究各种科学孜孜不倦者，以其关系于己者切也。今日不为，他日将无以谋生。而运动则无此自觉，此其咎由于自己不能深省者半，而教师不知所以开之亦占其半也。一则积习难返也。我国历来重文，羞齿短后，动有好汉不当兵之语。<br>虽知运动当行之理，与各国运动致强之效，然旧观念之力尚强，其于新观念之运动，盖犹在迎拒参半之列。故不好运动，亦无怪其然。一则提倡不力也。此又有两种：其一，今之所称教育家，多不诺体育。自己不知体育，徒耳其名，亦从而体育之，所以出之也不诚，所以行之也无术，遂减学者研究之心。夫荡子而言自立，沉湎而言节饮，固无人信之矣。其次，教体操者多无学识，语言鄙俚，闻者塞耳。所知惟此一技，又未必精，日日相见者，惟此机械之动作而已。<br>夫徒有形式而无精意以贯注之者，其事不可一日存，而今之体操实如是。一则学者以运动力可羞也。以愚所考察，此实为不运动之大原因矣。夫衣裳檐檐（注：将木字旁换成衣字旁）、行止于于、瞻视舒徐而夷犹者，美好之态，而社会之所尚也。忽尔张臂露足，伸肢屈体，此何为者邪？宁非大可怪者邪？故有深知身体不可不运动，且甚思实行，竟不能实行者；有群行群止能运动，单独行动则不能者；有燕居私室能运动，稠人广众则不能者。一言蔽之，害羞之一念为之耳。四者皆不好运动之原因。第一与第四属于主观，改之在己；第二与第三属于客观，改之在人，君子求己，在人者听之可矣。</p>
+<h2 id="第六-运动之方法贵少"><a href="#第六-运动之方法贵少" class="headerlink" title="第六 运动之方法贵少"></a><strong>第六 运动之方法贵少</strong></h2><p>愚自伤体弱，因欲研究卫生之术。顾古人言者亦不少矣。近今学校有体操、坊间有书册，冥心务泛，终难得益。盖此事不重言谈，重在实行，苟能实行，得一道半法已足，曾文正行临睡洗脚、食后千步之法，得益不少。有老者年八十犹康健，问之，曰：”吾惟不饱食耳。”今之体操，诸法樊陈，更仆尽之，宁止数十百种？巢林止于一枝，饮河止于满腹。吾人惟此身耳，惟此官骸藏络耳，虽百其法，不外欲使血脉流通。夫法之致其效者一，一法之效然，百法之效亦然，则余之九十九法可废也。目不两视而明，耳不两听而聪，筋骨之锻炼而百其方法，是扰之也。<br>欲其有效，未见其能有效矣。夫应诸方之用，与锻一己之身者，不同。浪桥所以适于航海，持竿所以适于逾高，游戏宜乎小学，兵式宜乎中学以上，此应诸方之用者也。运动筋骸使血脉流通，此锻一己之身者也。应诸方之用者其法宜多，锻一己之身者其法宜少。近之学者，多误此意，故其失有二：一则好运动者，以多为善，几欲一人之身，百般俱备，甚至无一益身者；一则不好运动者，见人之技艺多，吾所知者少，则绝弃之而不为，其宜多者不必善，务广而荒，又何贵乎？少者不必不善，虽一手一足之屈伸，苟以为常，亦有益焉。明乎此，而后体育始有进步可言矣。</p>
+<h2 id="第七-运动应注意事项"><a href="#第七-运动应注意事项" class="headerlink" title="第七 运动应注意事项"></a><strong>第七 运动应注意事项</strong></h2><p>凡事皆宜有恒，运动亦然。有两人于此，其于运动也，一人时作时辍，一人到底不懈，则效不效必有分矣。运动而有恒，第一能生兴味。凡静者不能自动，必有所以动之者。动之无过于兴味。凡科学皆宜引起多方之兴味，而于运动尤然。人静处则甚逸，发动则甚劳，人恒好逸而恶劳，使无物焉以促之，则不足以移其势而变其好恶之心。<br>而此兴味之起，由于日日运动不辍。最好于才起临睡行两次运动，裸体最善，次则薄衣，多衣甚碍事。日以为常，使此运动之观念，相连而不绝，今日之运动，承乎昨日之运动，而又引起明日之运动。每次不必久，三十分钟已足。如此自生一种之兴味焉。第二能生快乐。运动既久，成效大著，发生自己价值之念。以之为学则胜任愉快，以之修德则日起有功，心中无限快乐，亦缘有恒而得也。快乐与兴味有辨。兴味者运动之始，快乐者运动之终。兴味生于进行，快乐生于结果。二者自异。<br>有恒矣，而不用心，亦难有效。走马观花，虽日日观，犹无观也。心在鸿鹄，虽与俱学，勿若之矣。故运动有注全力之道焉。运动之时，心在运动，闲思杂虑，一切屏去，运心于血脉如何流通，筋肉如何张弛，关节如何反复，呼吸如何出入。而运作按节，屈伸进退，皆一一踏实。朱子论主一无适，谓吃饭则想着吃饭，穿衣则想着穿衣。注全力于运动之时者，亦若是则已耳。<br>文明柔顺，君子之容。虽然，非所以语于运动也。运动宜蛮拙。骑突枪鸣十荡十决，暗噁颓山岳、叱咤变风云，力拔项王之山，勇贯由基之札，其道盖存乎蛮拙，而无与于纤巧之事。运动之进取宜蛮，蛮则气力雄，筋骨劲。运动之方法宜拙，拙则资守实，练习易。二者在初行运动之人为尤要。运动所宜注意者三：有恒一也，注全力二也，蛮拙三也。他所当注意者尚多。举其要者如此。</p>
+<h2 id="第八-运动一得之商榷"><a href="#第八-运动一得之商榷" class="headerlink" title="第八 运动一得之商榷"></a><strong>第八 运动一得之商榷</strong></h2><p>愚既粗涉各种运动，以其皆系外铄而无当于一己之心得。乃提挚各种运动之长，自成一种运动，得此运动之益，颇为不少。凡分六段：手部也，足部也，躯干部也，头部也，打击运动也，调和运动也。段之中有节，凡二十有七节。以其为六段，因名之曰六段运动。兹述于后，世之君子，幸教正焉。<br><strong>一、手部运动，坐势</strong><br>1．握拳向前屈伸。左右参，三次（左右参者，左动右息，右动左息，相参互也）。<br>2．握拳屈时前侧后半圆形运动。左右参，三次。<br>3．握拳向前面下方屈伸。左右并，三次（左右并者，并动不相参互）。<br>4．手仰向外拿。左右参，三次。<br>5．手复向外拿。左右参，三次。<br>6．伸指屈时前刺。左右参，三次。<br><strong>二、足部运动，坐势</strong><br>1．手握拳左右垂。足就原位一前屈，一后斜伸。左右参，三次。2．手握拳前平。足一侧伸，一前屈。伸者可易位，屈者惟趾立。臀跟相接。左右参，三次。3．手握拳左右垂。足一支一揭。左右参，三次。4．手握拳左右垂。足一支一前踢。左右参，三次。5．手握拳左右垂。足一前屈，一后伸。屈者在原位，伸者易位，两足略在直线上。左右参，三次。6．手释拳。全身一起一蹲，蹲时臀跟略接，三次。<br><strong>三、躯干部运动，立势</strong><br>1．身向前后屈。三次（手握拳，下同）。<br>2．手一上伸，一下垂。绷张左右胸肋，左右各一次。<br>3．手一侧垂，一前斜垂。绷张左右背肋，左右各一次。<br>4．足丁字势。手左右横荡。扭捩腰胁。左右各一次。<br><strong>四、头部运动，坐势</strong><br>1．头前后屈。三次。<br>2．头左右转。三次。<br>3．用手按摩额部、颊部、鼻部、唇部、喉部、耳部、后颈部。<br>4．自由运动。头大体位置不动，用意使皮肤及下颚运动。五次。<br><strong>五、打击运动，不定势</strong><br>(打击运动者，以拳遍击身体各处，使血液奔注，筋肉坚实，为此运动之主）<br>1．手部，右手击左手，左手击右手<br>(1) 前膊，上面、下面、左面、右面<br>(2) 后膊，上面、下面、左面、右面<br>2．肩部<br>3．胸部<br>4．胁部<br>5．背部<br>6．腹部<br>7．臀部<br>8．腿部，上腿、下腿<br><strong>六、调和运动，不定势</strong><br>1．跳舞，十余次<br>2．深呼吸，三次</p>
+<blockquote>
+<p>剪报来源<br>公众号： 考研体育人<br>链　接：<a href="https://mp.weixin.qq.com/s/P3CjCEXDsekDTcWw2vLMFg">https://mp.weixin.qq.com/s/P3CjCEXDsekDTcWw2vLMFg</a><br>日　期：2020-07-13</p>
 </blockquote>
 ]]></content>
       <categories>
