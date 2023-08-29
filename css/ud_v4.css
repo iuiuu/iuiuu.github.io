@@ -12,3 +12,7 @@
     font-weight: 400;
     text-align: justify;
 }
+
+.post-bg {
+    object-fit: fill !important;
+}
