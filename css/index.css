@@ -1374,7 +1374,7 @@ body {
   background: var(--global-bg);
   color: var(--font-color);
   font-size: var(--global-font-size);
-  font-family: Raleway,sans-serif;
+  font-family: "source sans pro",sans-serif;
   line-height: 2;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
@@ -1649,7 +1649,7 @@ figure.highlight pre .javascript .function {
 #article-container pre,
 #article-container code {
   font-size: 14px;
-  font-family: consolas, Menlo, 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
+  font-family: "Source Code Pro","Liberation Mono","Courier New",Courier,monospace !important;
 }
 #article-container code {
   padding: 2px 4px;
