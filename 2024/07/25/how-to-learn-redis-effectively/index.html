@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>How to learn Redis effectively? | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Redis, an open-source, high-performance in-memory data structure store, is renowned for its speed, versatility, and simplicity. It has gained immense popularity and is widely utilized for caching, dis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to learn Redis effectively?">
+<meta property="og:url" content="http://linjiangxiong.com/2024/07/25/how-to-learn-redis-effectively/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="Redis, an open-source, high-performance in-memory data structure store, is renowned for its speed, versatility, and simplicity. It has gained immense popularity and is widely utilized for caching, dis">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2024-07-25T14:40:05.000Z">
+<meta property="article:modified_time" content="2024-07-25T14:46:21.923Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2024/07/25/how-to-learn-redis-effectively/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/pluginsSrc/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: '/pluginsSrc/flickr-justified-gallery/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'How to learn Redis effectively?',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-07-25 22:46:21'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><noscript><style>#nav{opacity:1}.justified-gallery img{opacity:1}#post-meta time,#recent-posts time{display:inline!important}</style></noscript> <link rel="stylesheet" href="https://ppoffice.github.io/hexo-theme-hueman/libs/font-awesome/css/font-awesome.min.css"/> <link rel="stylesheet" href="/css/ud_v4.css" /><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">212</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">43</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 极简教程</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Johnson Lin"><span class="site-name">Johnson Lin</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 极简教程</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">How to learn Redis effectively?</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-07-25T14:40:05.000Z" title="发表于 2024-07-25 22:40:05">2024-07-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-07-25T14:46:21.923Z" title="更新于 2024-07-25 22:46:21">2024-07-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Development/">Development</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="How to learn Redis effectively?"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Redis, an open-source, high-performance in-memory data structure store, is renowned for its speed, versatility, and simplicity. It has gained immense popularity and is widely utilized for caching, distributed locks, session management, real-time analytics, and more. Whether you’re a developer looking to expand your skills or an IT professional aiming to optimize data handling, mastering Redis can significantly enhance your proficiency. Here’s a comprehensive guide on how to learn Redis effectively: <em>grasp the fundamentals, hands-on practice, explore advanced features, use case scenarios, build projects and stay updated.</em></p>
+<h2 id="You-Need-To-Know"><a href="#You-Need-To-Know" class="headerlink" title="You Need To Know"></a>You Need To Know</h2><p>Redis should not be seen as a database(such as MySQL, MongoDB, Oracle, PostgreSQL, SQL Server, DB2, etc) replacement. A typical use case involves leveraging it as a data cache. By loading frequently accessed datasets into Redis, you can reduce the number of reads to your primary database, thereby enhancing application performance. This performance enhancement becomes notably apparent under significant loads—rather than in applications with just a hundred users. To observe the impact, simulate high request volumes (e.g., 3,000+ per second) using tools like JMeter or Gatling.</p>
+<h2 id="Grasp-the-Fundamentals"><a href="#Grasp-the-Fundamentals" class="headerlink" title="Grasp the Fundamentals"></a>Grasp the Fundamentals</h2><p>Start with the fundamentals. Redis operates as an in-memory data store, meaning it stores data in RAM for lightning-fast access. It supports various data structures such as strings, lists, sets, sorted sets, hashes, and more. Each data structure has specific commands and functionalities tailored to different use cases such as caching, real-time analytics, and session management. Familiarize yourself with these data structures and their operations, as they form the core of Redis functionality. </p>
+<h2 id="Hands-On-Practice"><a href="#Hands-On-Practice" class="headerlink" title="Hands-On Practice"></a>Hands-On Practice</h2><p>Theory is crucial, but hands-on practice is indispensable. Set up a Redis instance on your local machine or use a cloud-based Redis service to gain hands-on experience. Experiment with commands interactively using the Redis CLI (<code>redis-cli</code>) or explore Redis through a programming language client such as Python’s <code>redis-py</code>. Create and manipulate data structures, set and retrieve values, and observe how Redis handles various operations in real-time. Experiment with different data structures to understand their strengths and limitations.</p>
+<h2 id="Explore-Advanced-Features"><a href="#Explore-Advanced-Features" class="headerlink" title="Explore Advanced Features"></a>Explore Advanced Features</h2><p>Once you’re comfortable with the basics, delve into Redis’s advanced features. These may include:</p>
+<ul>
+<li><strong>Pub/Sub Messaging:</strong> Redis supports Publish/Subscribe messaging, allowing different parts of your application to communicate asynchronously.</li>
+<li><strong>Transactions:</strong> Learn how to group commands into atomic transactions in Redis to ensure data integrity and consistency.</li>
+<li><strong>Persistence Options:</strong> Understand Redis persistence mechanisms such as snapshotting and append-only files (AOF) to ensure data durability.</li>
+<li><strong>Lua Scripting:</strong> Redis allows you to execute Lua scripts atomically on the server, enabling complex operations that cannot be achieved with standard commands alone.</li>
+</ul>
+<h2 id="Use-Case-Scenarios"><a href="#Use-Case-Scenarios" class="headerlink" title="Use Case Scenarios"></a>Use Case Scenarios</h2><p>Redis is versatile and finds application in various domains such as e-commerce, gaming, and real-time analytics. Explore different use cases to understand how Redis can solve specific problems efficiently. Implementing Redis in practical scenarios reinforces your learning and demonstrates its capabilities first-hand. </p>
+<p>To deepen your understanding, explore common use cases where Redis excels:</p>
+<ul>
+<li><strong>Caching:</strong> Implement caching strategies using Redis to speed up data retrieval and improve application performance.</li>
+<li><strong>Real-time Analytics:</strong> Utilize Redis’s data structures like sorted sets for real-time leaderboard updates or counting unique items.</li>
+<li><strong>Session Management:</strong> Store and manage user sessions securely and efficiently using Redis.</li>
+<li><strong>Queues:</strong> Implement task queues using Redis lists to facilitate background job processing.</li>
+</ul>
+<h2 id="Build-Projects"><a href="#Build-Projects" class="headerlink" title="Build Projects"></a>Build Projects</h2><p>Apply your knowledge by building projects that leverage Redis. Whether it’s a simple caching layer for a web application or a complex real-time analytics system, hands-on projects will solidify your understanding and showcase your skills.</p>
+<h2 id="Stay-Updated"><a href="#Stay-Updated" class="headerlink" title="Stay Updated"></a>Stay Updated</h2><p>Redis continuously evolves with each new release, introducing enhancements and new features. Stay updated on the latest developments and best practices by following Redis blogs, attending webinars, and participating in online conferences. Continuous learning ensures proficiency and adaptability in leveraging Redis effectively. </p>
+<h2 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h2><p>**Read the Documentation: **</p>
+<p>Redis’s official documentation is comprehensive and regularly updated. Dive deep into the official Redis documentation to explore commands, advanced features, configuration options, and best practices. The documentation provides clear examples and explanations that can enhance your understanding significantly. Additionally, there are numerous online resources, tutorials, and blogs dedicated to Redis that can provide insights, tips, and real-world examples.</p>
+<p>**Join the Community: **</p>
+<p>Join the Redis community to expand your knowledge and stay updated with the latest trends. Engage with the Redis community through forums, discussion groups, and social media channels. Participate in discussions, ask questions, and share your knowledge. Communities like Redis’ official mailing list or forums like Stack Overflow can provide valuable support and guidance.</p>
+<p>**Read Books and Articles: **</p>
+<p>Supplement your learning with books and articles written by Redis experts. These resources provide in-depth insights, advanced tips, and real-world case studies that can deepen your understanding. Stay updated with industry trends and emerging practices through reputable publications.</p>
+<p>**Enroll in Online Courses: **</p>
+<p>Structured learning through online courses can accelerate your Redis proficiency. Platforms like Coursera, Udemy, and Pluralsight offer courses tailored for beginners to advanced users. These courses cover topics ranging from basic operations to advanced clustering and optimization techniques.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Learning Redis effectively involves a combination of understanding its core concepts, hands-on practice, exploration of advanced features, and practical application in projects. By following these strategies and maintaining a curious and explorative mindset, you’ll build a strong foundation in Redis and harness its power to enhance your applications effectively. </p>
+<p>Whether you are a developer, IT professional, or data enthusiast, learning Redis will undoubtedly enhance your skill set and empower you to tackle complex data challenges with confidence. </p>
+<p>Happy Redis learning!</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2024/07/25/how-to-learn-redis-effectively/">http://linjiangxiong.com/2024/07/25/how-to-learn-redis-effectively/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://linjiangxiong.com" target="_blank">Johnson Lin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Redis/">Redis</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/pluginsSrc/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="/pluginsSrc/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/07/23/how-to-count-lines-of-code-in-intellij-idea/" title="How to count lines of code in IntelliJ IDEA?"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">How to count lines of code in IntelliJ IDEA?</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/09/03/redis-batch-delete/" title="Redis根据通配符批量删除Key"><img class="cover" src="https://i.loli.net/2021/07/19/4eRMmKi3gvOHFlf.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-09-03</div><div class="title">Redis根据通配符批量删除Key</div></div></a></div><div><a href="/2019/12/19/spring-boot-2_x-redis/" title="Spring Boot 2.x 集成Redis示例"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-19</div><div class="title">Spring Boot 2.x 集成Redis示例</div></div></a></div><div><a href="/2022/08/25/flush-all-cache-data-in-redis/" title="【Redis】flushall命令——清空所有缓存数据"><img class="cover" src="/image/brand/redis.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-25</div><div class="title">【Redis】flushall命令——清空所有缓存数据</div></div></a></div><div><a href="/2023/05/31/redis-cmd-strings-append/" title="Redis APPEND 命令"><img class="cover" src="/image/brand/redis.svg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-31</div><div class="title">Redis APPEND 命令</div></div></a></div><div><a href="/2023/06/01/redis-cmd-strings-decr/" title="Redis DECR 命令"><img class="cover" src="/image/brand/redis.svg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-01</div><div class="title">Redis DECR 命令</div></div></a></div><div><a href="/2023/06/02/redis-cmd-strings-decrby/" title="Redis DECRBY 命令"><img class="cover" src="/image/brand/redis.svg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-02</div><div class="title">Redis DECRBY 命令</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Lin</div><div class="author-info__description">兴趣是互联网技术和数学，偶尔会加点历史和金融。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">212</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">43</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#You-Need-To-Know"><span class="toc-number">1.</span> <span class="toc-text">You Need To Know</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Grasp-the-Fundamentals"><span class="toc-number">2.</span> <span class="toc-text">Grasp the Fundamentals</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hands-On-Practice"><span class="toc-number">3.</span> <span class="toc-text">Hands-On Practice</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Explore-Advanced-Features"><span class="toc-number">4.</span> <span class="toc-text">Explore Advanced Features</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Use-Case-Scenarios"><span class="toc-number">5.</span> <span class="toc-text">Use Case Scenarios</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build-Projects"><span class="toc-number">6.</span> <span class="toc-text">Build Projects</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stay-Updated"><span class="toc-number">7.</span> <span class="toc-text">Stay Updated</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resources"><span class="toc-number">8.</span> <span class="toc-text">Resources</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">9.</span> <span class="toc-text">Conclusion</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to learn Redis effectively?"/></a><div class="content"><a class="title" href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?">How to learn Redis effectively?</a><time datetime="2024-07-25T14:40:05.000Z" title="发表于 2024-07-25 22:40:05">2024-07-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/23/how-to-count-lines-of-code-in-intellij-idea/" title="How to count lines of code in IntelliJ IDEA?"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to count lines of code in IntelliJ IDEA?"/></a><div class="content"><a class="title" href="/2024/07/23/how-to-count-lines-of-code-in-intellij-idea/" title="How to count lines of code in IntelliJ IDEA?">How to count lines of code in IntelliJ IDEA?</a><time datetime="2024-07-23T03:53:15.000Z" title="发表于 2024-07-23 11:53:15">2024-07-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/16/user-profile-intro/" title="用户画像：从数据到人群特征"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="用户画像：从数据到人群特征"/></a><div class="content"><a class="title" href="/2023/10/16/user-profile-intro/" title="用户画像：从数据到人群特征">用户画像：从数据到人群特征</a><time datetime="2023-10-16T13:13:17.000Z" title="发表于 2023-10-16 21:13:17">2023-10-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/13/elasticsearch-doc-id-limit-512-bytes/" title="Elasticsearch文档ID的长度限制"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Elasticsearch文档ID的长度限制"/></a><div class="content"><a class="title" href="/2023/10/13/elasticsearch-doc-id-limit-512-bytes/" title="Elasticsearch文档ID的长度限制">Elasticsearch文档ID的长度限制</a><time datetime="2023-10-13T15:16:35.000Z" title="发表于 2023-10-13 23:16:35">2023-10-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/10/kafka_a_distributed_messaging_system_for_log_processing/" title="Kafka: a Distributed Messaging System for Log Processing"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kafka: a Distributed Messaging System for Log Processing"/></a><div class="content"><a class="title" href="/2023/10/10/kafka_a_distributed_messaging_system_for_log_processing/" title="Kafka: a Distributed Messaging System for Log Processing">Kafka: a Distributed Messaging System for Log Processing</a><time datetime="2023-10-10T14:11:43.000Z" title="发表于 2023-10-10 22:11:43">2023-10-10</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="/pluginsSrc/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
