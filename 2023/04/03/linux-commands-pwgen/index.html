@@ -1,0 +1,280 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Linux 常用命令 | pwgen 详解 | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="pwgen 是一个生成密码的小工具，可以通过参数生成满足各种条件的密码，如生成的密码至少要包含一个特殊字符，或生成的密码不要包含数字，或生成长度为 16 的密码等。 安装在 Ubuntu 操作系统，可以直接通过 apt-get 方式安装： 1apt-get install pwgen  在 CentOS 操作系统，需要先安装 epel-release 软件包后才能使用 yum 方式安装 pwgen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 常用命令 | pwgen 详解">
+<meta property="og:url" content="http://linjiangxiong.com/2023/04/03/linux-commands-pwgen/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="pwgen 是一个生成密码的小工具，可以通过参数生成满足各种条件的密码，如生成的密码至少要包含一个特殊字符，或生成的密码不要包含数字，或生成长度为 16 的密码等。 安装在 Ubuntu 操作系统，可以直接通过 apt-get 方式安装： 1apt-get install pwgen  在 CentOS 操作系统，需要先安装 epel-release 软件包后才能使用 yum 方式安装 pwgen">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2023-04-03T15:15:36.000Z">
+<meta property="article:modified_time" content="2023-04-04T00:10:58.301Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2023/04/03/linux-commands-pwgen/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux 常用命令 | pwgen 详解',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-04 08:10:58'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet"> <link rel="stylesheet" href="/css/ud_v5.css" /><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">212</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">43</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 极简教程</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Johnson Lin"><span class="site-name">Johnson Lin</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 极简教程</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux 常用命令 | pwgen 详解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-04-03T15:15:36.000Z" title="Created 2023-04-03 23:15:36">2023-04-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-04-04T00:10:58.301Z" title="Updated 2023-04-04 08:10:58">2023-04-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">Linux常用命令</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Linux 常用命令 | pwgen 详解"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><code>pwgen</code> 是一个生成密码的小工具，可以通过参数生成满足各种条件的密码，如生成的密码至少要包含一个特殊字符，或生成的密码不要包含数字，或生成长度为 16 的密码等。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>在 Ubuntu 操作系统，可以直接通过 apt-get 方式安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install pwgen</span><br></pre></td></tr></table></figure>
+
+<p>在 CentOS 操作系统，需要先安装 epel-release 软件包后才能使用 yum 方式安装 pwgen。</p>
+<p>安装 epel-release：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y epel-release</span><br></pre></td></tr></table></figure>
+
+<p>安装 pwgen：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y pwgen</span><br></pre></td></tr></table></figure>
+
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pwgen [ 选项 ] [ 密码长度 ] [ 密码数量 ]</span><br></pre></td></tr></table></figure>
+
+<p>例如，生成 4 个长度为 8 的密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pwgen 8 4</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pwgen 8 4</span><br><span class="line">Hah8eeth ies6Yuxu iemoo1Ko aeB7shu4</span><br></pre></td></tr></table></figure>
+
+<h2 id="pwgen-支持的选项"><a href="#pwgen-支持的选项" class="headerlink" title="pwgen 支持的选项"></a>pwgen 支持的选项</h2><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c 或 –capitalize</td>
+<td>在密码中至少包含一个大写字母</td>
+</tr>
+<tr>
+<td>-A 或 –no-capitalize</td>
+<td>不在密码中包含大写字母</td>
+</tr>
+<tr>
+<td>-n 或 –numerals</td>
+<td>在密码中至少包含一个数字</td>
+</tr>
+<tr>
+<td>-0 或 –no-numerals</td>
+<td>不在密码中包含数字</td>
+</tr>
+<tr>
+<td>-y 或 –symbols</td>
+<td>在密码中至少包括一个特殊符号</td>
+</tr>
+<tr>
+<td>-r <chars> 或 –remove-chars=<chars></td>
+<td>生成的密码不要包含字符集中任何字符</td>
+</tr>
+<tr>
+<td>-s 或 –secure</td>
+<td>生成完全随机的密码</td>
+</tr>
+<tr>
+<td>-B 或 –ambiguous</td>
+<td>不要在密码中包含模棱两可的字符</td>
+</tr>
+<tr>
+<td>-h 或 –help</td>
+<td>打印帮助信息</td>
+</tr>
+<tr>
+<td>-H 或 –sha1=path/to/file[#seed]</td>
+<td>使用指定文件的 sha1 哈希值作为（不那么）随机生成器</td>
+</tr>
+<tr>
+<td>-C</td>
+<td>以列的形式打印生成的密码</td>
+</tr>
+<tr>
+<td>-1</td>
+<td>不以列的形式打印生成的密码</td>
+</tr>
+<tr>
+<td>-v 或 –no-vowels</td>
+<td>不要使用任何元音字母，以避免出现偶然的不友好的单词。</td>
+</tr>
+</tbody></table>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>1、生成 8 个长度为 16 并且不要包含大写字母的密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pwgen -A 16 8</span><br><span class="line">misive3ij3eebahz aiboo7ahhadu7kei soh6iez4tho4mai4 ruuthei6zoshie3u</span><br><span class="line">oop3shau4oor0ohc oomaid8aephaehai sahvamahyuibaa2c fai0ainaik1waeph</span><br></pre></td></tr></table></figure>
+
+<p>2、生成 8 个长度为 16 并且不要包含大写字母和数字的密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pwgen -A0 16 8</span><br><span class="line">eequahcaejiizooc thexeecaceizeeve heuxengeequiexai uquahsongoozohah</span><br><span class="line">uogumoochaelocoo oechiengiemaephi teesohceezaishoh wierohchoochehoo</span><br></pre></td></tr></table></figure>
+
+<p>3、生成 10 个长度为 16 并且不要包含 y, a, b, c 这四个字符的密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ pwgen -r yabc 16 10</span><br><span class="line">eiuiVf10GInYqfqu tDLIoPgOdCZSGI4G KdTVlINs7vSfSlZE r10kMlEe4AOA7n0G</span><br><span class="line">CUiQZpLPWn6GpQrl 2QKjdCt71zidk2v8 Rl62WFT4Q0XioZml CDGLVuIN4Dq0VLvi</span><br><span class="line">hjfPLKiV6hGdT079 hx3Al0ZBkupKVMH9</span><br></pre></td></tr></table></figure>
+
+<p>4、生成 10 个长度为 16 并且不要包含 y, a, b, c 这四个字符和大写字母的密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ pwgen -Ar yabc 16 10</span><br><span class="line">h9dfmhe9gum1sl76 50nggeu83f4h3qxv f7u7l9ssqqj4utvr 87nuqze1unlnler9</span><br><span class="line">n959l8eo1407uswz 2uffqtzor8iohxjs e45fzpsr0sedu7n4 564ld4nh0rttqmn0</span><br><span class="line">x4xvqekswq6mv5l8 s8f4q23qmhue3pvf</span><br></pre></td></tr></table></figure>
+
+<p>注意，字符集需要紧跟在参数 <code>-r</code> 后面，如以下命令会出错：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pwgen -rA yabc 16 10</span><br><span class="line">Invalid password length: yabc</span><br></pre></td></tr></table></figure>
+
+<p>5、以文件 <em>/opt/tt230330.log</em> 的 sha1 哈希值作为随机数生成器，生成 2 个长度为 8 的密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pwgen -H /opt/tt230330.<span class="built_in">log</span> 8 2</span><br><span class="line">ahT0wuka aaV3sohv</span><br></pre></td></tr></table></figure>
+
+<p>6、生成两个长度为 32 并且不包含大写字母和数字、但必须至少包含一个特殊符号的密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pwgen -Ay0 32 2</span><br><span class="line">ealaechohheiwei*g.u-xooquopeenee me]ozeicoo<span class="string">&quot;chee,hohkieweeth%ahmu</span></span><br></pre></td></tr></table></figure>
+
+<p>7、生成两个长度为 32 并且不包含大写字母和数字、但必须至少包含一个特殊符号的密码，不分列的形式打印（即以一列的形式输出）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pwgen -Ay01 32 2</span><br><span class="line">aiguipiefaivaeyu(vei`roox:isah*c</span><br><span class="line">vaibohbee&#123;sh&gt;eiruquiefueseigeigi</span><br></pre></td></tr></table></figure>
+
+<p>（END）</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2023/04/03/linux-commands-pwgen/">http://linjiangxiong.com/2023/04/03/linux-commands-pwgen/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/04/10/git-tag-checkout/" title="Git 标签管理——代码切换到指定的 Tag 上"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Git 标签管理——代码切换到指定的 Tag 上</div></div></a></div><div class="next-post pull-right"><a href="/2023/04/02/iphone-model-name-identifier-size-display/" title="【持续更新】iPhone 设备型号对应型号名称、手机型号对应屏幕尺寸及分辨率列表"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">【持续更新】iPhone 设备型号对应型号名称、手机型号对应屏幕尺寸及分辨率列表</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/03/22/linux-commands-head/" title="Linux 常用命令 | head 详解"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-22</div><div class="title">Linux 常用命令 | head 详解</div></div></a></div><div><a href="/2023/04/27/how-to-install-python-3-7-on-ubuntu-linux/" title="Ubuntu 20.04 安装 Python3.7"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-27</div><div class="title">Ubuntu 20.04 安装 Python3.7</div></div></a></div><div><a href="/2023/04/24/ubuntu-20-04-pip37-module-not-found-error-no-module-named-distutils-cmd/" title="Ubuntu 20.04 上安装 pip3.7 错误：ModuleNotFoundError: No module named &#39;distutils.cmd&#39;"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-24</div><div class="title">Ubuntu 20.04 上安装 pip3.7 错误：ModuleNotFoundError: No module named &#39;distutils.cmd&#39;</div></div></a></div><div><a href="/2023/04/25/ubuntu-sudo-add-apt-repository-command-not-found/" title="Ubuntu 上运行 sudo add-apt-repository 命令时出现 command not found 错误"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-25</div><div class="title">Ubuntu 上运行 sudo add-apt-repository 命令时出现 command not found 错误</div></div></a></div><div><a href="/2023/04/21/ubuntu-20-04-systemctl-system-has-not-been-booted-with-systemd-as-init-system/" title="Ubuntu 20.04 systemctl 错误：System has not been booted with systemd as init system (PID 1). Can&#39;t operate."><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-21</div><div class="title">Ubuntu 20.04 systemctl 错误：System has not been booted with systemd as init system (PID 1). Can&#39;t operate.</div></div></a></div><div><a href="/2023/03/22/how-to-copy-top-n-lines-from-one-file-to-another/" title="【Linux常用命令】head——把一个文件的前n行拷贝到另一个文件上"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-22</div><div class="title">【Linux常用命令】head——把一个文件的前n行拷贝到另一个文件上</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Lin</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">212</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">43</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwgen-%E6%94%AF%E6%8C%81%E7%9A%84%E9%80%89%E9%A1%B9"><span class="toc-number">3.</span> <span class="toc-text">pwgen 支持的选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.</span> <span class="toc-text">示例</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to learn Redis effectively?"/></a><div class="content"><a class="title" href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?">How to learn Redis effectively?</a><time datetime="2024-07-25T14:40:05.000Z" title="Created 2024-07-25 22:40:05">2024-07-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/23/how-to-count-lines-of-code-in-intellij-idea/" title="How to count lines of code in IntelliJ IDEA?"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to count lines of code in IntelliJ IDEA?"/></a><div class="content"><a class="title" href="/2024/07/23/how-to-count-lines-of-code-in-intellij-idea/" title="How to count lines of code in IntelliJ IDEA?">How to count lines of code in IntelliJ IDEA?</a><time datetime="2024-07-23T03:53:15.000Z" title="Created 2024-07-23 11:53:15">2024-07-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/16/user-profile-intro/" title="用户画像：从数据到人群特征"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="用户画像：从数据到人群特征"/></a><div class="content"><a class="title" href="/2023/10/16/user-profile-intro/" title="用户画像：从数据到人群特征">用户画像：从数据到人群特征</a><time datetime="2023-10-16T13:13:17.000Z" title="Created 2023-10-16 21:13:17">2023-10-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/13/elasticsearch-doc-id-limit-512-bytes/" title="Elasticsearch文档ID的长度限制"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Elasticsearch文档ID的长度限制"/></a><div class="content"><a class="title" href="/2023/10/13/elasticsearch-doc-id-limit-512-bytes/" title="Elasticsearch文档ID的长度限制">Elasticsearch文档ID的长度限制</a><time datetime="2023-10-13T15:16:35.000Z" title="Created 2023-10-13 23:16:35">2023-10-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/10/kafka_a_distributed_messaging_system_for_log_processing/" title="Kafka: a Distributed Messaging System for Log Processing"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kafka: a Distributed Messaging System for Log Processing"/></a><div class="content"><a class="title" href="/2023/10/10/kafka_a_distributed_messaging_system_for_log_processing/" title="Kafka: a Distributed Messaging System for Log Processing">Kafka: a Distributed Messaging System for Log Processing</a><time datetime="2023-10-10T14:11:43.000Z" title="Created 2023-10-10 22:11:43">2023-10-10</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
