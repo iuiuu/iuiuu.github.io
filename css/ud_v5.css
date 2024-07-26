@@ -3,7 +3,7 @@
 }
 
 #aside-content #card-toc .toc-content ol {
-    /* font-size: 18px !important; */
+    font-size: 18px !important;
     /* font-weight: 400; */
 }
     
@@ -15,8 +15,14 @@
     line-height: 1.334;
     color: #000; */
     /* text-align: justify; */
+    letter-spacing: 0.015rem;
+    line-height: 1.6;
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    color: #273239;
+    text-align: left !important;
 }
 
 .post-bg {
-    /* object-fit: fill !important; */
+    object-fit: fill !important;
 }
