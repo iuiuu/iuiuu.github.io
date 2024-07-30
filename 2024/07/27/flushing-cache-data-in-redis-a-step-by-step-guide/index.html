@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Flushing Cache Data in Redis: A Step-by-Step Guide | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Caching mechanisms are vital for optimizing application performance by storing frequently accessed data in-memory. Redis, as a robust key-value store, offers powerful caching capabilities. Occasionall">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flushing Cache Data in Redis: A Step-by-Step Guide">
+<meta property="og:url" content="http://linjiangxiong.com/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="Caching mechanisms are vital for optimizing application performance by storing frequently accessed data in-memory. Redis, as a robust key-value store, offers powerful caching capabilities. Occasionall">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2024-07-27T15:17:22.000Z">
+<meta property="article:modified_time" content="2024-07-30T15:04:12.999Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Flushing Cache Data in Redis: A Step-by-Step Guide',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-07-30 23:04:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet"> <link rel="stylesheet" href="/css/ud_v5.css" /><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">215</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">43</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 极简教程</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Johnson Lin"><span class="site-name">Johnson Lin</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 极简教程</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Flushing Cache Data in Redis: A Step-by-Step Guide</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-07-27T15:17:22.000Z" title="Created 2024-07-27 23:17:22">2024-07-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-07-30T15:04:12.999Z" title="Updated 2024-07-30 23:04:12">2024-07-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Development/">Development</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Flushing Cache Data in Redis: A Step-by-Step Guide"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Caching mechanisms are vital for optimizing application performance by storing frequently accessed data in-memory. Redis, as a robust key-value store, offers powerful caching capabilities. Occasionally, you might need to clear or flush all cached data from Redis to ensure consistency or during maintenance tasks. Here’s how you can do it effectively: </p>
+<h2 id="Understanding-Redis-Flushing"><a href="#Understanding-Redis-Flushing" class="headerlink" title="Understanding Redis Flushing"></a>Understanding Redis Flushing</h2><p>Flushing in Redis refers to the action of removing all data stored in the current database. This operation is irreversible and affects all keys in the database, not just cached data. It’s essential to exercise caution when performing this action as it will delete all data.</p>
+<h2 id="Method-1-Using-Redis-CLI"><a href="#Method-1-Using-Redis-CLI" class="headerlink" title="Method 1: Using Redis CLI"></a>Method 1: Using Redis CLI</h2><ol>
+<li><strong>Connect to Redis</strong>: Start by connecting to your Redis server using the Redis CLI:</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>Select Database (Optional)</strong>: If you are working with multiple databases, select the appropriate one (default is 0):</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT &lt;db_number&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><strong>Flush All Data</strong>: Execute the <code>FLUSHDB</code> command to flush the current database:</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FLUSHDB</span><br></pre></td></tr></table></figure>
+
+<p>This command removes all keys from the currently selected Redis database.</p>
+<ol start="4">
+<li><strong>Verify</strong>: Optionally, you can confirm that all keys have been removed by checking the number of keys:</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INFO keyspace</span><br></pre></td></tr></table></figure>
+
+<p>The <code>INFO keyspace</code> command will show you the number of keys in each database. If there is no records returned, the database is empty.<br>For example, execute the <code>INFO keyspace</code> command before executing the <code>FLUSHDB</code> command. Afterward, execute the <code>FLUSHDB</code> command and then the <code>INFO keyspace</code> command. The results are as follows. It shows that db0 is an empty database</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; INFO keyspace</span><br><span class="line"># Keyspace</span><br><span class="line">db0:keys=2,expires=0,avg_ttl=0</span><br><span class="line">db2:keys=1,expires=0,avg_ttl=0</span><br><span class="line">127.0.0.1:6379&gt;</span><br><span class="line">127.0.0.1:6379&gt; FLUSHDB</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; INFO keyspace</span><br><span class="line"># Keyspace</span><br><span class="line">db2:keys=1,expires=0,avg_ttl=0</span><br></pre></td></tr></table></figure>
+
+<h2 id="Method-2-Using-Redis-GUI-Tools"><a href="#Method-2-Using-Redis-GUI-Tools" class="headerlink" title="Method 2: Using Redis GUI Tools"></a>Method 2: Using Redis GUI Tools</h2><p>If you prefer a graphical interface or are uncomfortable with command-line operations, many Redis GUI tools offer a straightforward way to flush data. Tools like RESP(Formerly Redis Desktop Manager), RedisInsight, or web-based interfaces provide intuitive buttons or commands to flush databases.<br>For example, let’s use RESP.app to flush the data. </p>
+<p>After installing RESP.app, the first step is to establish a connection to your Redis server. Simply click ‘Connect to Redis Server’ on the main window. In the first tab (Connection Settings), provide general information for the connection:</p>
+<ul>
+<li><strong>Name</strong>: A name for the new connection (e.g., local_redis).</li>
+<li><strong>Host</strong>: The Redis server’s host address (e.g., localhost).</li>
+<li><strong>Port</strong>: The Redis server’s port number (e.g., 6379).</li>
+<li><strong>Password</strong>: Authentication password for the Redis server (if required). More information available at Redis AUTH command.</li>
+<li><strong>Username</strong>: Only required for Redis servers version 6.0 or newer with configured ACL; leave empty for older Redis servers.</li>
+</ul>
+<p><img src="/image/2024/07/2024072701.png" alt="01 Connection Settings" title="01 Connection Settings"></p>
+<p>After connecting to your Redis Server, click on the connection and expand keys. Next, select the target database (e.g., db0) and sequentially click buttons ‘Bulk Operations’ and ‘Flush Database’. A confirmation window labeled ‘Do you really want to remove all keys from this database?’ will appear; click ‘Yes’ to proceed with data cleanup.</p>
+<blockquote>
+<p>Be careful! Do not use it on Production servers.</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/22047870/1722335243552-c0fe8272-1ae8-4c2c-80c5-b9d0a5575435.png#averageHue=%23fbfaf9&clientId=u3dd33e52-6ec7-4&from=paste&height=542&id=u9866a20b&originHeight=678&originWidth=819&originalType=binary&ratio=1.25&rotation=0&showTitle=true&size=40378&status=done&style=none&taskId=u3345c130-c847-4c7e-bcac-abdc1ca4150&title=Bulk%20Operations&width=655.2" alt="Bulk Operations" title="Bulk Operations"><br><img src="https://cdn.nlark.com/yuque/0/2024/png/22047870/1722335286225-ca1bd384-b7c8-4cd5-a141-28d7042ca7c5.png#averageHue=%23fbfaf9&clientId=u3dd33e52-6ec7-4&from=paste&height=543&id=ud7207444&originHeight=679&originWidth=734&originalType=binary&ratio=1.25&rotation=0&showTitle=true&size=38448&status=done&style=none&taskId=uf95cb2f1-540e-4cfb-9145-3683d7b7c50&title=Flush%20Database&width=587.2" alt="Flush Database" title="Flush Database"><br><img src="https://cdn.nlark.com/yuque/0/2024/png/22047870/1722335308992-f73b45df-861a-4c0f-b74b-b4815f31b4c0.png#averageHue=%23f7f5f5&clientId=u3dd33e52-6ec7-4&from=paste&height=280&id=u446cb96e&originHeight=350&originWidth=845&originalType=binary&ratio=1.25&rotation=0&showTitle=true&size=18982&status=done&style=none&taskId=u9db8de93-60a7-464f-9528-6fdbbfa9f00&title=Confirmation%20window&width=676" alt="Confirmation window" title="Confirmation window"><br><img src="https://cdn.nlark.com/yuque/0/2024/png/22047870/1722335339549-2f08f7e4-a6c0-46c6-becf-9c4332c8306c.png#averageHue=%23fbf9f9&clientId=u3dd33e52-6ec7-4&from=paste&height=498&id=u748c3b1e&originHeight=622&originWidth=732&originalType=binary&ratio=1.25&rotation=0&showTitle=true&size=35691&status=done&style=none&taskId=ud2e74b9f-3289-49a0-8e9c-a3035da960a&title=Cleanup%20Data&width=585.6" alt="Cleanup Data" title="Cleanup Data"></p>
+<h2 id="Important-Considerations"><a href="#Important-Considerations" class="headerlink" title="Important Considerations"></a>Important Considerations</h2><ul>
+<li><strong>Data Loss</strong>: Flushing Redis data is irreversible. Ensure that you have backups or are certain about the action before proceeding.</li>
+<li><strong>Performance Impact</strong>: Depending on the amount of data, flushing can temporarily impact Redis server performance. Plan during low-traffic periods if possible.</li>
+</ul>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Flushing cache data in Redis is a straightforward process but requires careful consideration due to its irreversible nature. Whether using the Redis CLI or GUI tools, understanding how to flush data ensures you can maintain Redis databases efficiently.<br>Remember, always back up critical data before performing any operations that could result in data loss.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/">http://linjiangxiong.com/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Redis/">Redis</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/" title="A set of best practices and guidelines for using Redis effectively"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">A set of best practices and guidelines for using Redis effectively</div></div></a></div><div class="next-post pull-right"><a href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">How to learn Redis effectively?</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2019/09/03/redis-batch-delete/" title="Redis根据通配符批量删除Key"><img class="cover" src="https://i.loli.net/2021/07/19/4eRMmKi3gvOHFlf.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-09-03</div><div class="title">Redis根据通配符批量删除Key</div></div></a></div><div><a href="/2019/12/19/spring-boot-2_x-redis/" title="Spring Boot 2.x 集成Redis示例"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-19</div><div class="title">Spring Boot 2.x 集成Redis示例</div></div></a></div><div><a href="/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/" title="A set of best practices and guidelines for using Redis effectively"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-29</div><div class="title">A set of best practices and guidelines for using Redis effectively</div></div></a></div><div><a href="/2024/07/30/effective-ways-to-delete-fuzzy-matching-keys-in-redis/" title="Effective Ways to Delete Fuzzy Matching Keys in Redis"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-30</div><div class="title">Effective Ways to Delete Fuzzy Matching Keys in Redis</div></div></a></div><div><a href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-25</div><div class="title">How to learn Redis effectively?</div></div></a></div><div><a href="/2022/08/25/flush-all-cache-data-in-redis/" title="【Redis】flushall命令——清空所有缓存数据"><img class="cover" src="/image/brand/redis.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-25</div><div class="title">【Redis】flushall命令——清空所有缓存数据</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Lin</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">215</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">43</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Understanding-Redis-Flushing"><span class="toc-number">1.</span> <span class="toc-text">Understanding Redis Flushing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method-1-Using-Redis-CLI"><span class="toc-number">2.</span> <span class="toc-text">Method 1: Using Redis CLI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method-2-Using-Redis-GUI-Tools"><span class="toc-number">3.</span> <span class="toc-text">Method 2: Using Redis GUI Tools</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Important-Considerations"><span class="toc-number">4.</span> <span class="toc-text">Important Considerations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">5.</span> <span class="toc-text">Conclusion</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/07/30/effective-ways-to-delete-fuzzy-matching-keys-in-redis/" title="Effective Ways to Delete Fuzzy Matching Keys in Redis"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Effective Ways to Delete Fuzzy Matching Keys in Redis"/></a><div class="content"><a class="title" href="/2024/07/30/effective-ways-to-delete-fuzzy-matching-keys-in-redis/" title="Effective Ways to Delete Fuzzy Matching Keys in Redis">Effective Ways to Delete Fuzzy Matching Keys in Redis</a><time datetime="2024-07-30T14:57:42.000Z" title="Created 2024-07-30 22:57:42">2024-07-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/" title="A set of best practices and guidelines for using Redis effectively"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="A set of best practices and guidelines for using Redis effectively"/></a><div class="content"><a class="title" href="/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/" title="A set of best practices and guidelines for using Redis effectively">A set of best practices and guidelines for using Redis effectively</a><time datetime="2024-07-29T14:53:30.000Z" title="Created 2024-07-29 22:53:30">2024-07-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/" title="Flushing Cache Data in Redis: A Step-by-Step Guide"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Flushing Cache Data in Redis: A Step-by-Step Guide"/></a><div class="content"><a class="title" href="/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/" title="Flushing Cache Data in Redis: A Step-by-Step Guide">Flushing Cache Data in Redis: A Step-by-Step Guide</a><time datetime="2024-07-27T15:17:22.000Z" title="Created 2024-07-27 23:17:22">2024-07-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to learn Redis effectively?"/></a><div class="content"><a class="title" href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?">How to learn Redis effectively?</a><time datetime="2024-07-25T14:40:05.000Z" title="Created 2024-07-25 22:40:05">2024-07-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/23/how-to-count-lines-of-code-in-intellij-idea/" title="How to count lines of code in IntelliJ IDEA?"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to count lines of code in IntelliJ IDEA?"/></a><div class="content"><a class="title" href="/2024/07/23/how-to-count-lines-of-code-in-intellij-idea/" title="How to count lines of code in IntelliJ IDEA?">How to count lines of code in IntelliJ IDEA?</a><time datetime="2024-07-23T03:53:15.000Z" title="Created 2024-07-23 11:53:15">2024-07-23</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
