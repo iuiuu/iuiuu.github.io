@@ -302,13 +302,5 @@ const btf = {
     const scrollPercentRounded = Math.round(scrollPercent * 100)
     const percentage = (scrollPercentRounded > 100) ? 100 : (scrollPercentRounded <= 0) ? 0 : scrollPercentRounded
     return percentage
-  },
-
-  addModeChange: (name, fn) => {
-    if (window.themeChange && window.themeChange[name]) return
-    window.themeChange = {
-      ...window.themeChange,
-      [name]: fn
-    }
   }
 }
