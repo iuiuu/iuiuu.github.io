@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Apache Flink 1.13.6 发版公告 | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文翻译自 Apache Flink 社区博文——《Apache Flink 1.13.6 Release Announcement》。  Apache Flink 社区很荣幸地宣布 Flink 1.13 的另一个错误修复版本正式发布。 此版本包括 99 个错误和漏洞修复以及 Flink 1.13 的小改进，包括升级 Apache Log4j 版本至 2.17.1。您可在下面查看所有错误修复和改进">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apache Flink 1.13.6 发版公告">
+<meta property="og:url" content="http://linjiangxiong.com/2022/02/20/apache-flink-release-1_13_6/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="本文翻译自 Apache Flink 社区博文——《Apache Flink 1.13.6 Release Announcement》。  Apache Flink 社区很荣幸地宣布 Flink 1.13 的另一个错误修复版本正式发布。 此版本包括 99 个错误和漏洞修复以及 Flink 1.13 的小改进，包括升级 Apache Log4j 版本至 2.17.1。您可在下面查看所有错误修复和改进">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2022-02-19T16:35:01.000Z">
+<meta property="article:modified_time" content="2022-07-04T15:05:20.774Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="Flink">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2022/02/20/apache-flink-release-1_13_6/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Apache Flink 1.13.6 发版公告',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-07-04 23:05:20'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet"> <link rel="stylesheet" href="/css/ud_v5.css" /><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">216</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">43</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 极简教程</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Johnson Lin"><span class="site-name">Johnson Lin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 极简教程</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Apache Flink 1.13.6 发版公告</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-02-19T16:35:01.000Z" title="Created 2022-02-20 00:35:01">2022-02-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-07-04T15:05:20.774Z" title="Updated 2022-07-04 23:05:20">2022-07-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Flink/">Flink</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Apache Flink 1.13.6 发版公告"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>本文翻译自 Apache Flink 社区博文——<a target="_blank" rel="noopener" href="https://flink.apache.org/news/2022/02/18/release-1.13.6.html">《Apache Flink 1.13.6 Release Announcement》</a><br>。</p>
+<hr>
+<p>Apache Flink 社区很荣幸地宣布 Flink 1.13 的另一个错误修复版本正式发布。</p>
+<p>此版本包括 99 个错误和漏洞修复以及 Flink 1.13 的小改进，包括升级 Apache Log4j 版本至 2.17.1。您可在下面查看所有错误修复和改进的列表（不包括对构建基础架构和构建稳定性的改进）。有关所有更改的完整列表，请参阅：<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/secure/ReleaseNote.jspa?projectId=12315522&version=12351074">JIRA 列表</a>。</p>
+<p>我们强烈建议所有用户升级到 Flink 1.13.6 版本。</p>
+<h1 id="发行工件（Release-Artifacts）"><a href="#发行工件（Release-Artifacts）" class="headerlink" title="发行工件（Release Artifacts）"></a>发行工件（<strong>Release Artifacts）</strong></h1><h2 id="Maven-依赖（Maven-Dependencies）"><a href="#Maven-依赖（Maven-Dependencies）" class="headerlink" title="Maven 依赖（Maven Dependencies）"></a><strong>Maven 依赖（Maven Dependencies）</strong></h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.13.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-streaming-java_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.13.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-clients_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.13.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二进制文件（Binaries）"><a href="#二进制文件（Binaries）" class="headerlink" title="二进制文件（Binaries）"></a>二进制文件（<strong>Binaries）</strong></h2><p>您可以在更新过的<a target="_blank" rel="noopener" href="https://flink.apache.org/downloads.html">下载页面</a>上找到这些二进制文件。</p>
+<h2 id="Docker-镜像（Docker-Images）"><a href="#Docker-镜像（Docker-Images）" class="headerlink" title="Docker 镜像（Docker Images）"></a><strong>Docker 镜像（Docker Images）</strong></h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/flink?tab=tags&page=1&name=1.13.6">library/flink</a> (官方镜像，official images)</li>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/r/apache/flink/tags?page=1&name=1.13.6">apache/flink</a> (ASF 仓库，ASF repository)</li>
+</ul>
+<h2 id="PyPi"><a href="#PyPi" class="headerlink" title="PyPi"></a><strong>PyPi</strong></h2><ul>
+<li><a target="_blank" rel="noopener" href="https://pypi.org/project/apache-flink/1.13.6/">apache-flink==1.13.6</a></li>
+</ul>
+<h1 id="发行说明（Release-Notes）"><a href="#发行说明（Release-Notes）" class="headerlink" title="发行说明（Release Notes）"></a>发行说明（<strong>Release Notes）</strong></h1><h2 id="Bug-修复"><a href="#Bug-修复" class="headerlink" title="Bug 修复"></a><strong>Bug 修复</strong></h2><ul>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-15987">FLINK-15987</a>] - SELECT 1.0e0 / 0.0e0 抛出 NumberFormatException 异常</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-17914">FLINK-17914</a>] - HistoryServer deletes cached archives if archive listing fails</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-20195">FLINK-20195</a>] - Jobs endpoint returns duplicated jobs</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-20370">FLINK-20370</a>] - Result is wrong when sink primary key is not the same with query</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-21289">FLINK-21289</a>] - Application mode ignores the pipeline.classpaths configuration</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-23919">FLINK-23919</a>] - PullUpWindowTableFunctionIntoWindowAggregateRule generates invalid Calc for Window TVF</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24232">FLINK-24232</a>] - Archiving of suspended jobs prevents breaks subsequent archive attempts</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24255">FLINK-24255</a>] - Test Environment / Mini Cluster do not forward configuration.</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24310">FLINK-24310</a>] - A bug in the BufferingSink example in the doc</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24318">FLINK-24318</a>] - Casting a number to boolean has different results between ‘select’ fields and ‘where’ condition</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24334">FLINK-24334</a>] - Configuration kubernetes.flink.log.dir not working</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24366">FLINK-24366</a>] - Unnecessary/misleading error message about failing restores when tasks are already canceled.</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24401">FLINK-24401</a>] - Metaspace 发生 OOM 后，TM 无法退出</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24465">FLINK-24465</a>] - Wrong javadoc and documentation for buffer timeout</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24492">FLINK-24492</a>] - incorrect implicit type conversion between numeric and (var)char</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24506">FLINK-24506</a>] - checkpoint directory is not configurable through the Flink configuration passed into the StreamExecutionEnvironment</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24509">FLINK-24509</a>] - FlinkKafkaProducer example is not compiling due to incorrect constructer signature used</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24540">FLINK-24540</a>] - Fix Resource leak due to Files.list</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24543">FLINK-24543</a>] - Zookeeper connection issue causes inconsistent state in Flink</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24563">FLINK-24563</a>] - Comparing timstamp_ltz with random string throws NullPointerException</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24597">FLINK-24597</a>] - RocksdbStateBackend getKeysAndNamespaces would return duplicate data when using MapState</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24621">FLINK-24621</a>] - JobManager fails to recover 1.13.1 checkpoint due to InflightDataRescalingDescriptor</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24662">FLINK-24662</a>] - PyFlink sphinx check failed with “node class ‘meta’ is already registered, its visitors will be overridden”</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24667">FLINK-24667</a>] - Channel state writer would fail the task directly if meeting exception previously</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24676">FLINK-24676</a>] - Schema does not match if explain insert statement with partial column</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24678">FLINK-24678</a>] - Correct the metric name of map state contains latency</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24708">FLINK-24708</a>] - <code>ConvertToNotInOrInRule</code> has a bug which leads to wrong result</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24728">FLINK-24728</a>] - Batch SQL file sink forgets to close the output stream</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24761">FLINK-24761</a>] - Fix PartitionPruner code gen compile fail</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24846">FLINK-24846</a>] - AsyncWaitOperator fails during stop-with-savepoint</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24860">FLINK-24860</a>] - Fix the wrong position mappings in the Python UDTF</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24885">FLINK-24885</a>] - ProcessElement Interface parameter Collector : java.lang.NullPointerException</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24922">FLINK-24922</a>] - Fix spelling errors in the word “parallism”</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25022">FLINK-25022</a>] - ClassLoader leak with ThreadLocals on the JM when submitting a job through the REST API</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25067">FLINK-25067</a>] - Correct the description of RocksDB’s background threads</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25084">FLINK-25084</a>] - Field names must be unique. Found duplicates</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25091">FLINK-25091</a>] - Official website document FileSink orc compression attribute reference error</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25096">FLINK-25096</a>] - Issue in exceptions API(/jobs/:jobid/exceptions) in flink 1.13.2</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25199">FLINK-25199</a>] - StreamEdges are not unique in self-union, which blocks propagation of watermarks</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25362">FLINK-25362</a>] - Incorrect dependencies in Table Confluent/Avro docs</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25468">FLINK-25468</a>] - Local recovery fails if local state storage and RocksDB working directory are not on the same volume</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25486">FLINK-25486</a>] - Perjob can not recover from checkpoint when zookeeper leader changes</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25494">FLINK-25494</a>] - Duplicate element serializer during DefaultOperatorStateBackendSnapshotStrategy#syncPrepareResources</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25513">FLINK-25513</a>] - CoFlatMapFunction requires both two flat_maps to yield something</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25559">FLINK-25559</a>] - SQL JOIN causes data loss</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25683">FLINK-25683</a>] - wrong result if table transfrom to DataStream then window process in batch mode</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25728">FLINK-25728</a>] - Potential memory leaks in StreamMultipleInputProcessor</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25732">FLINK-25732</a>] - Dispatcher#requestMultipleJobDetails returns non-serialiable collection</li>
+</ul>
+<h2 id="优化（Improvement）"><a href="#优化（Improvement）" class="headerlink" title="优化（Improvement）"></a>优化（<strong>Improvement）</strong></h2><ul>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-21407">FLINK-21407</a>] - 明确哪些源和 API 支持哪些格式</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-20443">FLINK-20443</a>] - ContinuousProcessingTimeTrigger 在窗口结束时不会触发</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-21467">FLINK-21467</a>] - Document possible recommended usage of Bounded{One/Multi}Input.endInput and emphasize that they could be called multiple times</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-23842">FLINK-23842</a>] - Add log messages for reader registrations and split requests.</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24631">FLINK-24631</a>] - Avoiding directly use the labels as selector for deployment and service</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24739">FLINK-24739</a>] - State requirements for Flink’s application mode in the documentation</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24987">FLINK-24987</a>] - Enhance ExternalizedCheckpointCleanup enum</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25160">FLINK-25160</a>] - Make doc clear: tolerable-failed-checkpoints counts consecutive failures</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25415">FLINK-25415</a>] - implement retrial on connections to Cassandra container</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25611">FLINK-25611</a>] - Remove CoordinatorExecutorThreadFactory thread creation guards</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25818">FLINK-25818</a>] - Add explanation how Kafka Source deals with idleness when parallelism is higher then the number of partitions</li>
+</ul>
+<h2 id="技术债（Technical-Debt）"><a href="#技术债（Technical-Debt）" class="headerlink" title="技术债（Technical Debt）"></a>技术债（<strong>Technical Debt）</strong></h2><ul>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24740">FLINK-24740</a>] - 更新 testcontainers 依赖至 v1.16.2</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-24796">FLINK-24796</a>] - 从 CI 编译工件中排除 javadocs / node[_modules] 目录</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25472">FLINK-25472</a>] - 更新 Log4j 至 2.17.1 版本</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25375">FLINK-25375</a>] - 更新 Log4j 至 2.17.0 版本</li>
+<li>[<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-25576">FLINK-25576</a>] - 更新 com.h2database:h2 至 2.0.206 版本</li>
+</ul>
+<p>（END）</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2022/02/20/apache-flink-release-1_13_6/">http://linjiangxiong.com/2022/02/20/apache-flink-release-1_13_6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Flink/">Flink</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/03/27/java17-new-features-sealed-class/" title="Java17新特性：密封类(Sealed Classes)"><img class="cover" src="/image/brand/java.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Java17新特性：密封类(Sealed Classes)</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/17/superset-hive-ttransport-exception/" title="Superset配置——连接Hive出现TTransportException异常"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Superset配置——连接Hive出现TTransportException异常</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/06/23/apache-flink-release-1_14_5/" title="Apache Flink 1.14.5 发版公告"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-23</div><div class="title">Apache Flink 1.14.5 发版公告</div></div></a></div><div><a href="/2022/09/15/apache-flink-table-store-intro/" title="Apache Flink Table Store——流批一体存储"><img class="cover" src="/image/2022/20220915234511-flink-table-store-architecture.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-15</div><div class="title">Apache Flink Table Store——流批一体存储</div></div></a></div><div><a href="/2022/09/16/apache-flink-table-store-quick-start/" title="Apache Flink Table Store 快速入门"><img class="cover" src="/image/2022/20220915234511-flink-table-store-architecture.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-16</div><div class="title">Apache Flink Table Store 快速入门</div></div></a></div><div><a href="/2022/08/24/physical-memory-exceeded-causing-being-killed-by-yarn/" title="【Flink作业运行出错】beyond the &#39;PHYSICAL&#39; memory limit. Killing container"><img class="cover" src="/image/brand/flink-header-logo.svg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-24</div><div class="title">【Flink作业运行出错】beyond the &#39;PHYSICAL&#39; memory limit. Killing container</div></div></a></div><div><a href="/2022/10/08/the-first-apache-flink-job/" title="运行第一个Flink应用"><img class="cover" src="/image/brand/flink-header-logo.svg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-08</div><div class="title">运行第一个Flink应用</div></div></a></div><div><a href="/2022/10/18/lightweight-asynchronous-snapshots-for-distributed-dataflows/" title="Lightweight Asynchronous Snapshots for Distributed Dataflows"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-18</div><div class="title">Lightweight Asynchronous Snapshots for Distributed Dataflows</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Lin</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">216</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">43</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%91%E8%A1%8C%E5%B7%A5%E4%BB%B6%EF%BC%88Release-Artifacts%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">发行工件（Release Artifacts）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Maven-%E4%BE%9D%E8%B5%96%EF%BC%88Maven-Dependencies%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">Maven 依赖（Maven Dependencies）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%EF%BC%88Binaries%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">二进制文件（Binaries）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-%E9%95%9C%E5%83%8F%EF%BC%88Docker-Images%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">Docker 镜像（Docker Images）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyPi"><span class="toc-number">1.4.</span> <span class="toc-text">PyPi</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%91%E8%A1%8C%E8%AF%B4%E6%98%8E%EF%BC%88Release-Notes%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">发行说明（Release Notes）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Bug-%E4%BF%AE%E5%A4%8D"><span class="toc-number">2.1.</span> <span class="toc-text">Bug 修复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%EF%BC%88Improvement%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">优化（Improvement）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E5%80%BA%EF%BC%88Technical-Debt%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">技术债（Technical Debt）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/07/31/how-to-view-mysql-version-a-quick-guide/" title="How to View MySQL Version: A Quick Guide"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to View MySQL Version: A Quick Guide"/></a><div class="content"><a class="title" href="/2024/07/31/how-to-view-mysql-version-a-quick-guide/" title="How to View MySQL Version: A Quick Guide">How to View MySQL Version: A Quick Guide</a><time datetime="2024-07-31T14:23:25.000Z" title="Created 2024-07-31 22:23:25">2024-07-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/30/effective-ways-to-delete-fuzzy-matching-keys-in-redis/" title="Effective Ways to Delete Fuzzy Matching Keys in Redis"><img src="/image/2024/07/fuzzy-matching.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Effective Ways to Delete Fuzzy Matching Keys in Redis"/></a><div class="content"><a class="title" href="/2024/07/30/effective-ways-to-delete-fuzzy-matching-keys-in-redis/" title="Effective Ways to Delete Fuzzy Matching Keys in Redis">Effective Ways to Delete Fuzzy Matching Keys in Redis</a><time datetime="2024-07-30T14:57:42.000Z" title="Created 2024-07-30 22:57:42">2024-07-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/" title="A set of best practices and guidelines for using Redis effectively"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="A set of best practices and guidelines for using Redis effectively"/></a><div class="content"><a class="title" href="/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/" title="A set of best practices and guidelines for using Redis effectively">A set of best practices and guidelines for using Redis effectively</a><time datetime="2024-07-29T14:53:30.000Z" title="Created 2024-07-29 22:53:30">2024-07-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/" title="Flushing Cache Data in Redis: A Step-by-Step Guide"><img src="/image/2024/07/2024072701.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Flushing Cache Data in Redis: A Step-by-Step Guide"/></a><div class="content"><a class="title" href="/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/" title="Flushing Cache Data in Redis: A Step-by-Step Guide">Flushing Cache Data in Redis: A Step-by-Step Guide</a><time datetime="2024-07-27T15:17:22.000Z" title="Created 2024-07-27 23:17:22">2024-07-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to learn Redis effectively?"/></a><div class="content"><a class="title" href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?">How to learn Redis effectively?</a><time datetime="2024-07-25T14:40:05.000Z" title="Created 2024-07-25 22:40:05">2024-07-25</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/search/local-search.min.js"></script></div></div></body></html>
