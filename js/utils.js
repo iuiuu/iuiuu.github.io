@@ -186,9 +186,10 @@ const btf = {
   },
 
   unwrap: el => {
-    const parent = el.parentNode
-    if (parent && parent !== document.body) {
-      parent.replaceChild(el, parent)
+    const elParentNode = el.parentNode
+    if (elParentNode !== document.body) {
+      elParentNode.parentNode.insertBefore(el, elParentNode)
+      elParentNode.parentNode.removeChild(elParentNode)
     }
   },
 
@@ -210,7 +211,13 @@ const btf = {
     const service = GLOBAL_CONFIG.lightbox
 
     if (service === 'mediumZoom') {
-      mediumZoom(ele, { background: 'var(--zoom-bg)' })
+      const zoom = mediumZoom(ele)
+      zoom.on('open', e => {
+        const photoBg = document.documentElement.getAttribute('data-theme') === 'dark' ? '#121212' : '#fff'
+        zoom.update({
+          background: photoBg
+        })
+      })
     }
 
     if (service === 'fancybox') {
