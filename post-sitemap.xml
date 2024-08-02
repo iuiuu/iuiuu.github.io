@@ -9,6 +9,14 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2024/07/23/how-to-count-lines-of-code-in-intellij-idea/</loc>
+        <lastmod>2024-08-02T17:09:21.390Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2024/06/05/finding-the-hostname-in-linux-a-guide-to-common-methods/</loc>
         <lastmod>2024-08-02T17:06:01.712Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -83,14 +91,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/07/25/how-to-learn-redis-effectively/</loc>
         <lastmod>2024-07-25T15:46:13.277Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/07/23/how-to-count-lines-of-code-in-intellij-idea/</loc>
-        <lastmod>2024-07-23T16:02:10.654Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
