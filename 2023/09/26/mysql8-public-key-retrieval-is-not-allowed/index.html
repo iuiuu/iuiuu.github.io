@@ -11,7 +11,7 @@
 <meta property="article:author" content="Johnson Lin">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://linjiangxiong.com/image/brand/mysql.png"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2023/09/26/mysql8-public-key-retrieval-is-not-allowed/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+<meta name="twitter:image" content="http://linjiangxiong.com/image/brand/mysql.png"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2023/09/26/mysql8-public-key-retrieval-is-not-allowed/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap"><link rel="stylesheet" href="/css/ud_v5.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
@@ -25,14 +25,14 @@ gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
 </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  localSearch: undefined,
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
   copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
   },
   relativeDate: {
     homepage: false,
@@ -40,7 +40,7 @@ gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
   },
   runtime: '',
   dateSuffix: {
-    just: 'Just',
+    just: 'Just now',
     min: 'minutes ago',
     hour: 'hours ago',
     day: 'days ago',
@@ -49,11 +49,9 @@ gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
   copyright: undefined,
   lightbox: 'fancybox',
   Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
   },
   isPhotoFigcaption: false,
   islazyload: false,
@@ -70,84 +68,77 @@ gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
   isHighlightShrink: false,
   isToc: true,
   postUpdate: '2023-09-27 00:12:23'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
         }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
         }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
 
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
         }
-        return item.value
-      }
-    }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = url
-      if (id) link.id = id
-      link.onerror = reject
-      link.onload = link.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        link.onload = link.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(link)
-    })
-  
-      win.activateDarkMode = function () {
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
         document.documentElement.setAttribute('data-theme', 'dark')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
           document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
         }
       }
-      win.activateLightMode = function () {
+      win.activateLightMode = () => {
         document.documentElement.setAttribute('data-theme', 'light')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
           document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
@@ -155,9 +146,9 @@ gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
       }
       const t = saveToLocal.get('theme')
     
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
-        
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
       const asideStatus = saveToLocal.get('aside-status')
       if (asideStatus !== undefined) {
         if (asideStatus === 'hide') {
@@ -167,13 +158,13 @@ gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
         }
       }
     
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
       }
-    }
-    detectApple()
-    })(window)</script><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet"> <link rel="stylesheet" href="/css/ud_v5.css" /><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">216</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">43</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 极简教程</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/brand/mysql.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Johnson Lin"><span class="site-name">Johnson Lin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 极简教程</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">解决MySQL 8中“Public Key Retrieval is not allowed”问题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-09-26T15:16:39.000Z" title="Created 2023-09-26 23:16:39">2023-09-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-26T16:12:23.255Z" title="Updated 2023-09-27 00:12:23">2023-09-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="解决MySQL 8中“Public Key Retrieval is not allowed”问题"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从 MySQL 8 开始，身份验证插件更改为“<strong>caching_sha2_password</strong>”。因此，使用 JDBC 或其他客户端工具连接 MySQL 时，可能会遇到“<strong>Public Key Retrieval is not allowed</strong>”的问题。</p>
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">216</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">43</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 极简教程</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/brand/mysql.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Johnson Lin"><span class="site-name">Johnson Lin</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 极简教程</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">解决MySQL 8中“Public Key Retrieval is not allowed”问题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-09-26T15:16:39.000Z" title="Created 2023-09-26 23:16:39">2023-09-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-26T16:12:23.255Z" title="Updated 2023-09-27 00:12:23">2023-09-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="解决MySQL 8中“Public Key Retrieval is not allowed”问题"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>从 MySQL 8 开始，身份验证插件更改为“<strong>caching_sha2_password</strong>”。因此，使用 JDBC 或其他客户端工具连接 MySQL 时，可能会遇到“<strong>Public Key Retrieval is not allowed</strong>”的问题。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Public Key Retrieval is not allowed</span><br></pre></td></tr></table></figure>
 
 <h2 id="解决方案一"><a href="#解决方案一" class="headerlink" title="解决方案一"></a>解决方案一</h2><p>在连接 MySQL 时，设置以下参数，允许客户端自动向服务器请求公钥。</p>
@@ -206,4 +197,4 @@ gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
 <p>希望本文对解决 MySQL 8 中的身份验证插件问题有所帮助！</p>
 <p>参考资料<br>Caching SHA-2 Pluggable Authentication：<br><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html">https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html</a></p>
 <p>（END）</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2023/09/26/mysql8-public-key-retrieval-is-not-allowed/">http://linjiangxiong.com/2023/09/26/mysql8-public-key-retrieval-is-not-allowed/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a></div><div class="post_share"><div class="social-share" data-image="/image/brand/mysql.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/09/27/what-does-int5-and-int11-means-in-mysql/" title="MySQL整数类型INT(5)和INT(11)的区别"><img class="cover" src="/image/brand/mysql.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">MySQL整数类型INT(5)和INT(11)的区别</div></div></a></div><div class="next-post pull-right"><a href="/2023/09/26/how-to-retrieve-the-password-in-dbeaver/" title="如何找回DBeaver连接中保存的数据库密码？"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">如何找回DBeaver连接中保存的数据库密码？</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2019/08/18/mysql-update-multiple-tables-with-one-query/" title="MySQL多表更新（关联表更新）"><img class="cover" src="https://i.loli.net/2021/07/19/4sSVkePlvuc91mn.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-08-18</div><div class="title">MySQL多表更新（关联表更新）</div></div></a></div><div><a href="/2019/10/12/mysql-auto-increment-id/" title="关于MySQL数据库自增主键，说几个容易被忽略的点"><img class="cover" src="https://i.loli.net/2021/07/09/YOI91KfHgbBpQwU.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-10-12</div><div class="title">关于MySQL数据库自增主键，说几个容易被忽略的点</div></div></a></div><div><a href="/2019/12/28/how-to-install-mysql8-on-centos7/" title="通过yum方式在CentOS7系统安装MySQL8"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-28</div><div class="title">通过yum方式在CentOS7系统安装MySQL8</div></div></a></div><div><a href="/2022/04/13/centos-install-mysql-gpg-key-error/" title="CentOS安装MySQL 5.7失败：GPG Key验证不通过"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-13</div><div class="title">CentOS安装MySQL 5.7失败：GPG Key验证不通过</div></div></a></div><div><a href="/2022/04/05/how-to-install-mysql57-on-centos7/" title="Centos7安装MySQL 5.7 步骤（yum安装）"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-05</div><div class="title">Centos7安装MySQL 5.7 步骤（yum安装）</div></div></a></div><div><a href="/2022/06/10/how-to-install-mysql57-on-ubuntu_20_04/" title="Ubuntu 20.04 安装 MySQL 5.7"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-10</div><div class="title">Ubuntu 20.04 安装 MySQL 5.7</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Lin</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">216</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">43</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E4%B8%80"><span class="toc-number">2.</span> <span class="toc-text">解决方案一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E4%BA%8C"><span class="toc-number">3.</span> <span class="toc-text">解决方案二</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/07/31/how-to-view-mysql-version-a-quick-guide/" title="How to View MySQL Version: A Quick Guide"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to View MySQL Version: A Quick Guide"/></a><div class="content"><a class="title" href="/2024/07/31/how-to-view-mysql-version-a-quick-guide/" title="How to View MySQL Version: A Quick Guide">How to View MySQL Version: A Quick Guide</a><time datetime="2024-07-31T14:23:25.000Z" title="Created 2024-07-31 22:23:25">2024-07-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/30/effective-ways-to-delete-fuzzy-matching-keys-in-redis/" title="Effective Ways to Delete Fuzzy Matching Keys in Redis"><img src="/image/2024/07/fuzzy-matching.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Effective Ways to Delete Fuzzy Matching Keys in Redis"/></a><div class="content"><a class="title" href="/2024/07/30/effective-ways-to-delete-fuzzy-matching-keys-in-redis/" title="Effective Ways to Delete Fuzzy Matching Keys in Redis">Effective Ways to Delete Fuzzy Matching Keys in Redis</a><time datetime="2024-07-30T14:57:42.000Z" title="Created 2024-07-30 22:57:42">2024-07-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/" title="A set of best practices and guidelines for using Redis effectively"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="A set of best practices and guidelines for using Redis effectively"/></a><div class="content"><a class="title" href="/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/" title="A set of best practices and guidelines for using Redis effectively">A set of best practices and guidelines for using Redis effectively</a><time datetime="2024-07-29T14:53:30.000Z" title="Created 2024-07-29 22:53:30">2024-07-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/" title="Flushing Cache Data in Redis: A Step-by-Step Guide"><img src="/image/2024/07/2024072701.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Flushing Cache Data in Redis: A Step-by-Step Guide"/></a><div class="content"><a class="title" href="/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/" title="Flushing Cache Data in Redis: A Step-by-Step Guide">Flushing Cache Data in Redis: A Step-by-Step Guide</a><time datetime="2024-07-27T15:17:22.000Z" title="Created 2024-07-27 23:17:22">2024-07-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to learn Redis effectively?"/></a><div class="content"><a class="title" href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?">How to learn Redis effectively?</a><time datetime="2024-07-25T14:40:05.000Z" title="Created 2024-07-25 22:40:05">2024-07-25</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/image/brand/mysql.png')"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/search/local-search.min.js"></script></div></div></body></html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2023/09/26/mysql8-public-key-retrieval-is-not-allowed/">http://linjiangxiong.com/2023/09/26/mysql8-public-key-retrieval-is-not-allowed/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a></div><div class="post_share"><div class="social-share" data-image="/image/brand/mysql.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/09/27/what-does-int5-and-int11-means-in-mysql/" title="MySQL整数类型INT(5)和INT(11)的区别"><img class="cover" src="/image/brand/mysql.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">MySQL整数类型INT(5)和INT(11)的区别</div></div></a></div><div class="next-post pull-right"><a href="/2023/09/26/how-to-retrieve-the-password-in-dbeaver/" title="如何找回DBeaver连接中保存的数据库密码？"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next</div><div class="next_info">如何找回DBeaver连接中保存的数据库密码？</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2019/08/18/mysql-update-multiple-tables-with-one-query/" title="MySQL多表更新（关联表更新）"><img class="cover" src="https://i.loli.net/2021/07/19/4sSVkePlvuc91mn.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-08-18</div><div class="title">MySQL多表更新（关联表更新）</div></div></a></div><div><a href="/2019/10/12/mysql-auto-increment-id/" title="关于MySQL数据库自增主键，说几个容易被忽略的点"><img class="cover" src="https://i.loli.net/2021/07/09/YOI91KfHgbBpQwU.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-10-12</div><div class="title">关于MySQL数据库自增主键，说几个容易被忽略的点</div></div></a></div><div><a href="/2019/12/28/how-to-install-mysql8-on-centos7/" title="通过yum方式在CentOS7系统安装MySQL8"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-28</div><div class="title">通过yum方式在CentOS7系统安装MySQL8</div></div></a></div><div><a href="/2022/04/13/centos-install-mysql-gpg-key-error/" title="CentOS安装MySQL 5.7失败：GPG Key验证不通过"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-13</div><div class="title">CentOS安装MySQL 5.7失败：GPG Key验证不通过</div></div></a></div><div><a href="/2022/04/05/how-to-install-mysql57-on-centos7/" title="Centos7安装MySQL 5.7 步骤（yum安装）"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-05</div><div class="title">Centos7安装MySQL 5.7 步骤（yum安装）</div></div></a></div><div><a href="/2022/06/10/how-to-install-mysql57-on-ubuntu_20_04/" title="Ubuntu 20.04 安装 MySQL 5.7"><img class="cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-10</div><div class="title">Ubuntu 20.04 安装 MySQL 5.7</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Lin</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">216</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">43</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E4%B8%80"><span class="toc-number">2.</span> <span class="toc-text">解决方案一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E4%BA%8C"><span class="toc-number">3.</span> <span class="toc-text">解决方案二</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/07/31/how-to-view-mysql-version-a-quick-guide/" title="How to View MySQL Version: A Quick Guide"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to View MySQL Version: A Quick Guide"/></a><div class="content"><a class="title" href="/2024/07/31/how-to-view-mysql-version-a-quick-guide/" title="How to View MySQL Version: A Quick Guide">How to View MySQL Version: A Quick Guide</a><time datetime="2024-07-31T14:23:25.000Z" title="Created 2024-07-31 22:23:25">2024-07-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/30/effective-ways-to-delete-fuzzy-matching-keys-in-redis/" title="Effective Ways to Delete Fuzzy Matching Keys in Redis"><img src="/image/2024/07/fuzzy-matching.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Effective Ways to Delete Fuzzy Matching Keys in Redis"/></a><div class="content"><a class="title" href="/2024/07/30/effective-ways-to-delete-fuzzy-matching-keys-in-redis/" title="Effective Ways to Delete Fuzzy Matching Keys in Redis">Effective Ways to Delete Fuzzy Matching Keys in Redis</a><time datetime="2024-07-30T14:57:42.000Z" title="Created 2024-07-30 22:57:42">2024-07-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/" title="A set of best practices and guidelines for using Redis effectively"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="A set of best practices and guidelines for using Redis effectively"/></a><div class="content"><a class="title" href="/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/" title="A set of best practices and guidelines for using Redis effectively">A set of best practices and guidelines for using Redis effectively</a><time datetime="2024-07-29T14:53:30.000Z" title="Created 2024-07-29 22:53:30">2024-07-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/" title="Flushing Cache Data in Redis: A Step-by-Step Guide"><img src="/image/2024/07/2024072701.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Flushing Cache Data in Redis: A Step-by-Step Guide"/></a><div class="content"><a class="title" href="/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/" title="Flushing Cache Data in Redis: A Step-by-Step Guide">Flushing Cache Data in Redis: A Step-by-Step Guide</a><time datetime="2024-07-27T15:17:22.000Z" title="Created 2024-07-27 23:17:22">2024-07-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to learn Redis effectively?"/></a><div class="content"><a class="title" href="/2024/07/25/how-to-learn-redis-effectively/" title="How to learn Redis effectively?">How to learn Redis effectively?</a><time datetime="2024-07-25T14:40:05.000Z" title="Created 2024-07-25 22:40:05">2024-07-25</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/image/brand/mysql.png')"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
