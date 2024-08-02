@@ -4,7 +4,7 @@
 
     <url>
         <loc>http://linjiangxiong.com/tags/Linux/</loc>
-        <lastmod>2024-08-02T17:03:27.353Z</lastmod>
+        <lastmod>2024-08-02T17:06:01.712Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -45,14 +45,14 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%BA%E6%96%87/</loc>
+        <loc>http://linjiangxiong.com/tags/Kafka/</loc>
         <lastmod>2023-10-25T14:28:20.080Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/tags/Kafka/</loc>
+        <loc>http://linjiangxiong.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%BA%E6%96%87/</loc>
         <lastmod>2023-10-25T14:28:20.080Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
