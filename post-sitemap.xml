@@ -9,8 +9,32 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2022/06/23/apache-flink-release-1_14_5/</loc>
+        <lastmod>2024-08-22T16:33:05.218Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/02/20/apache-flink-release-1_13_6/</loc>
+        <lastmod>2024-08-22T16:32:04.581Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2024/07/14/quotes-and-basic-escape-characters-in-bash/</loc>
-        <lastmod>2024-08-22T16:12:05.978Z</lastmod>
+        <lastmod>2024-08-22T16:26:46.268Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/07/10/introduction-to-bash/</loc>
+        <lastmod>2024-08-22T16:24:16.494Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -35,14 +59,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/07/11/your-first-bash-script/</loc>
         <lastmod>2024-08-22T16:11:32.887Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/07/10/introduction-to-bash/</loc>
-        <lastmod>2024-08-22T16:11:22.972Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -1419,22 +1435,6 @@
     <url>
         <loc>http://linjiangxiong.com/2022/07/28/maven-package-skip-tests/</loc>
         <lastmod>2022-07-28T14:16:08.342Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/02/20/apache-flink-release-1_13_6/</loc>
-        <lastmod>2022-07-04T15:05:20.774Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/06/23/apache-flink-release-1_14_5/</loc>
-        <lastmod>2022-07-04T15:05:17.005Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
