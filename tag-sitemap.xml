@@ -3,6 +3,41 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/tags/VMware/</loc>
+        <lastmod>2024-08-22T16:36:53.850Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/Linux/</loc>
+        <lastmod>2024-08-22T16:36:43.661Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/DevOps/</loc>
+        <lastmod>2024-08-22T16:36:07.202Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/Ubuntu/</loc>
+        <lastmod>2024-08-22T16:36:07.202Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/Docker/</loc>
+        <lastmod>2024-08-22T16:36:07.202Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/tags/Flink/</loc>
         <lastmod>2024-08-22T16:33:05.218Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -26,13 +61,6 @@
     <url>
         <loc>http://linjiangxiong.com/tags/IntelliJ-IDEA/</loc>
         <lastmod>2024-08-02T17:09:21.390Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/Linux/</loc>
-        <lastmod>2024-08-02T17:06:01.712Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -290,14 +318,14 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/tags/Spring-Boot/</loc>
+        <loc>http://linjiangxiong.com/tags/Jpa/</loc>
         <lastmod>2019-12-24T21:23:17.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/tags/Jpa/</loc>
+        <loc>http://linjiangxiong.com/tags/Spring-Boot/</loc>
         <lastmod>2019-12-24T21:23:17.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
