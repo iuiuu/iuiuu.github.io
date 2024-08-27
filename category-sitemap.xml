@@ -9,6 +9,20 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/categories/Math/</loc>
+        <lastmod>2024-08-27T15:37:42.587Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/categories/Programming-Digest/</loc>
+        <lastmod>2024-08-27T15:37:26.979Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/categories/JSON-Tutorial/</loc>
         <lastmod>2024-08-27T15:27:51.765Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -23,13 +37,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/categories/Programming-Digest/</loc>
-        <lastmod>2024-08-27T15:08:50.368Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/categories/Flink/</loc>
         <lastmod>2024-08-22T16:33:05.218Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -37,22 +44,8 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/categories/Development/</loc>
-        <lastmod>2024-08-05T16:05:14.811Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/categories/Data-Structures-and-Algorithms/</loc>
         <lastmod>2024-08-05T15:43:09.162Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/Math/</loc>
-        <lastmod>2024-08-02T17:01:16.858Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
