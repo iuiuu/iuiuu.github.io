@@ -9,6 +9,14 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2024/06/07/json-syntax/</loc>
+        <lastmod>2024-08-27T15:27:51.765Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2024/08/01/direct-and-indirect-script-invocation/</loc>
         <lastmod>2024-08-27T15:20:26.214Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -19,14 +27,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/06/06/json-intro/</loc>
         <lastmod>2024-08-27T15:18:38.921Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/06/07/json-syntax/</loc>
-        <lastmod>2024-08-27T15:18:29.580Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
