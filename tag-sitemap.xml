@@ -3,6 +3,34 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/tags/HowTo/</loc>
+        <lastmod>2024-08-28T16:13:11.261Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/Python/</loc>
+        <lastmod>2024-08-28T16:13:11.261Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/HTML/</loc>
+        <lastmod>2024-08-28T16:12:59.822Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/JSON/</loc>
+        <lastmod>2024-08-28T16:12:05.011Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/tags/Roman-Numerals/</loc>
         <lastmod>2024-08-27T15:37:42.587Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -47,13 +75,6 @@
     <url>
         <loc>http://linjiangxiong.com/tags/MySQL/</loc>
         <lastmod>2024-08-27T15:34:08.008Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/JSON/</loc>
-        <lastmod>2024-08-27T15:27:51.765Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -201,13 +222,6 @@
     <url>
         <loc>http://linjiangxiong.com/tags/leetcode/</loc>
         <lastmod>2023-08-04T16:02:41.952Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/Python/</loc>
-        <lastmod>2023-06-12T15:10:37.014Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
