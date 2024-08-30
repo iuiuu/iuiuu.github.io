@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>HTML Element Attributes | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="IntroductionHTML element attributes customize the behavior of elements. Different attributes lead to different behaviors. Attributes are written as “key-value pairs” inside HTML tags.For example: 1&amp;lt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML Element Attributes">
+<meta property="og:url" content="http://linjiangxiong.com/2024/06/15/html-element-attributes/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="IntroductionHTML element attributes customize the behavior of elements. Different attributes lead to different behaviors. Attributes are written as “key-value pairs” inside HTML tags.For example: 1&amp;lt">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://linjiangxiong.com/image/IMG_3665.JPG">
+<meta property="article:published_time" content="2024-06-14T16:12:45.000Z">
+<meta property="article:modified_time" content="2024-08-30T16:36:49.113Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="HTML">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/IMG_3665.JPG"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2024/06/15/html-element-attributes/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap"><link rel="stylesheet" href="/css/ud_v5.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HTML Element Attributes',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-08-31 00:36:49'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">260</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">20</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Johnson Lin"><span class="site-name">Johnson Lin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">HTML Element Attributes</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-06-14T16:12:45.000Z" title="Created 2024-06-15 00:12:45">2024-06-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-08-30T16:36:49.113Z" title="Updated 2024-08-31 00:36:49">2024-08-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTML-Tutorial/">HTML Tutorial</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HTML Element Attributes"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>HTML element attributes customize the behavior of elements. Different attributes lead to different behaviors. Attributes are written as “key-value pairs” inside HTML tags.<br>For example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>In this code, <code>lang=&quot;en&quot;</code> within the <code>&lt;html&gt;</code> tag is an attribute of the <code>html </code>element. The attribute name is <code>lang</code>, and its value is <code>en</code>.</p>
+<p>Attribute names, like tag names, are case-insensitive. <code>lang</code> and <code>LANG</code> refer to the same attribute.</p>
+<p>Attribute names and values are connected by an equals sign (<code>=</code>). Values can be enclosed in single or double quotes, but double quotes are recommended. Some attribute values can be used without quotes, but this practice is discouraged.</p>
+<p>Some attributes are boolean, meaning they only have two states: “on” or “off”. For these, you can simply include the attribute name to turn it on, without specifying a value.</p>
+<p>For example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">required</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Here, required is a boolean attribute of the <code>&lt;input&gt;</code> tag. Its presence indicates it’s turned on, while its absence means it’s off.</p>
+<h2 id="Global-Attributes"><a href="#Global-Attributes" class="headerlink" title="Global Attributes"></a>Global Attributes</h2><p>Global attributes can be used with any HTML element. While you can add these attributes to any element, they may not have a meaningful effect on all elements.</p>
+<p>Here are some common global attributes:</p>
+<h3 id="id"><a href="#id" class="headerlink" title="id"></a>id</h3><p>The <code>id</code> attribute provides a unique identifier for an element within a webpage. For instance:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;p1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;p2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;p3&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Each <code>&lt;p&gt;</code> tag has a different <code>id</code>, allowing them to be distinguished. <code>id</code> values must be unique within a page and cannot contain spaces.</p>
+<p>You can also use an <code>id</code> as an anchor in a URL by prefixing it with <code>#</code>. For example, <code>https://foo.com/index.html#bar</code> will automatically scroll the page to the element with <code>id=&quot;bar&quot;</code>.</p>
+<h3 id="class"><a href="#class" class="headerlink" title="class"></a>class</h3><p>The <code>class</code> attribute categorizes elements. Elements with the same <code>class</code> value are considered to be of the same type:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;para&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;para&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Here, the first and third <code>&lt;p&gt;</code> elements are of the same class.</p>
+<p>An element can have multiple classes, separated by spaces:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;p1 p2 p3&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>This <code>&lt;p&gt;</code> element has three classes: <code>p1</code>, <code>p2</code>, and <code>p3</code>.</p>
+<h3 id="title"><a href="#title" class="headerlink" title="title"></a>title</h3><p>The <code>title</code> attribute adds supplementary information to an element. In most browsers, this appears as a tooltip when the mouse hovers over the element:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">title</span>=<span class="string">&quot;Copyright notice&quot;</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>This site&#x27;s content is under a Creative Commons license and free to use.<span class="tag">&lt;/<span class="name">p</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>In the code above, the <code>title</code> attribute explains the purpose of this section of content. When the mouse hovers over it, the browser displays a tooltip. Once the mouse moves away, the tooltip disappears.</p>
+<h3 id="tabindex"><a href="#tabindex" class="headerlink" title="tabindex"></a>tabindex</h3><blockquote>
+<p>Web pages are typically operated with a mouse, but in some cases, users may prefer or only have the option to use a keyboard. Therefore, browsers allow navigation through web page elements using the <strong>Tab</strong> key. This means that by continuously pressing the Tab key, the focus of the web page shifts from one element to another. Once an element is focused, users can proceed with actions such as pressing Enter to follow a link or directly entering text into an input field.<br>However, a question arises: how does the browser determine the order when Tab is pressed? HTML addresses this with the <code>tabindex</code> attribute, which resolves this issue. Its name signifies the order (index) in which Tab should navigate.<br>The <code>tabindex</code> attribute takes an integer value that determines the sequence in which focus shifts when users press the Tab key. Different values of this attribute have different meanings.</p>
+</blockquote>
+<p>The <code>tabindex</code> attribute determines the order in which elements are focused when using the Tab key to navigate a webpage. It’s particularly useful for keyboard accessibility. Its values have different meanings:</p>
+<ul>
+<li>Negative integer (usually -1): The element can receive focus (e.g., via JavaScript’s <code>focus()</code> method) but doesn’t participate in sequential keyboard navigation.</li>
+<li>0: The element participates in sequential keyboard navigation, in an order determined by the browser (usually based on the element’s position in the document).</li>
+<li>Positive integer: The element participates in sequential keyboard navigation, with its order defined by the tabindex value (lowest to highest).</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">tabindex</span>=<span class="string">&quot;0&quot;</span>&gt;</span>This text can receive focus.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>In the code above, the <code>&lt;p&gt;</code> tag has a <code>tabindex</code> of <code>0</code>, which means this element can receive focus and can also be navigated using the Tab key, with the order determined by its position in the source code.</p>
+<p>Generally, it’s best to set the <code>tabindex</code> attribute to 0 for most cases, allowing natural sequential navigation that aligns with user expectations, unless the webpage has a specific layout requirement. If no elements on the webpage have a <code>tabindex</code> set, only those default navigable elements (like links and input fields) can be navigated using the Tab key, with the order determined by their position in the source code. Therefore, in practice, setting the <code>tabindex</code> attribute is only necessary for elements that cannot naturally receive focus, such as <code>&lt;span&gt;</code> or <code>&lt;div&gt;</code>.</p>
+<h3 id="accesskey"><a href="#accesskey" class="headerlink" title="accesskey"></a>accesskey</h3><p>The <code>accesskey</code> attribute specifies a keyboard shortcut to focus on an element. Its value must be a single printable character:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">accesskey</span>=<span class="string">&quot;s&quot;</span>&gt;</span>Submit<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>In the code above, the <code>&lt;button&gt;</code> element has a shortcut key of ‘s’, allowing it to receive focus when the shortcut key is pressed.</p>
+<p>The <code>accesskey</code> attribute’s character key must be pressed together with a modifier key to take effect. This means the shortcut key is a combination of “modifier key + character key”. Different browsers and operating systems use different modifier keys. For instance, in Chrome on Windows and Linux systems, the shortcut key is <code>Alt + character key</code>, while on Mac systems, it is <code>Ctrl + Alt + character key</code>.</p>
+<p>It’s important to note that if <code>accesskey</code> conflicts with system-level or browser-level shortcuts, it will not function.</p>
+<h3 id="style"><a href="#style" class="headerlink" title="style"></a>style</h3><p>The <code>style</code> attribute allows inline CSS styling:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">&quot;color: red;&quot;</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>The above code specifies that the text color is red.</p>
+<h3 id="hidden"><a href="#hidden" class="headerlink" title="hidden"></a>hidden</h3><p>The <code>hidden</code> attribute is a boolean attribute that indicates an element is not currently relevant and should not be rendered:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">hidden</span>&gt;</span>This sentence won&#x27;t appear on the page.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In the code above, this <code>&lt;p&gt;</code> element will not appear on the webpage. </p>
+<p>Note that CSS visibility settings take precedence over the <code>hidden</code> attribute. If CSS makes the element visible, the <code>hidden</code> attribute will be ignored.</p>
+<h3 id="lang-and-dir"><a href="#lang-and-dir" class="headerlink" title="lang and dir"></a>lang and dir</h3><p>The <code>lang</code> attribute specifies the language of an element’s content:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">p</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">lang</span>=<span class="string">&quot;zh&quot;</span>&gt;</span>你好<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>In the code above, the <code>lang</code> attribute of the first <code>&lt;p&gt;</code> element indicates that the text is in English, while the <code>lang</code> attribute of the second <code>&lt;p&gt;</code> element indicates that the text is in Chinese.</p>
+<p>The value of the <code>lang</code> attribute must comply with the BCP47 standard. Here are some common language codes:</p>
+<ul>
+<li>zh: Chinese</li>
+<li>zh-Hans: Simplified Chinese</li>
+<li>zh-Hant: Traditional Chinese</li>
+<li>en: English</li>
+<li>en-US: American English</li>
+<li>en-GB: British English</li>
+<li>es: Spanish</li>
+<li>fr: French</li>
+</ul>
+<p>The <code>dir</code> attribute indicates the text direction:</p>
+<ol>
+<li><code>ltr</code>: left-to-right (e.g., English)</li>
+<li><code>rtl</code>: right-to-left (e.g., Arabic, Persian, Hebrew)</li>
+<li><code>auto</code>: browser decides based on content</li>
+</ol>
+<h3 id="translate"><a href="#translate" class="headerlink" title="translate"></a>translate</h3><p>The <code>translate</code> attribute indicates whether the element’s content should be translated:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">translate</span>=<span class="string">&quot;no&quot;</span>&gt;</span>Wien<span class="tag">&lt;/<span class="name">span</span>&gt;</span> </span><br><span class="line">  named world&#x27;s most liveable city (again)! </span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>In the example above, <code>translate=&quot;no&quot;</code> is used to instruct the translation software not to translate the text within the <code>&lt;span&gt;</code> element.</p>
+<p>If <code>translate</code> is set to “yes,” it tells the translation software to translate the text.</p>
+<h3 id="contenteditable"><a href="#contenteditable" class="headerlink" title="contenteditable"></a>contenteditable</h3><p>By default, HTML web content is not editable by users. The <code>contenteditable</code> attribute allows users to modify the content and can have two possible values:</p>
+<ul>
+<li><code>true</code> or an empty string: The content is editable.</li>
+<li><code>false</code>: The content is not editable.</li>
+</ul>
+<p>In the code snippet below, clicking on the sentence will enter edit mode, allowing users to change the text. However, unless the changes are submitted to the server, refreshing the page will revert to the original content.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">contenteditable</span>=<span class="string">&quot;true&quot;</span>&gt;</span> Click this sentence to edit its content. <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>The <code>contenteditable</code> attribute is an enumerated attribute, not a boolean one, so it’s best to include the attribute value explicitly.</p>
+<h3 id="spellcheck"><a href="#spellcheck" class="headerlink" title="spellcheck"></a>spellcheck</h3><p>Browsers typically include a built-in spell check feature, which underlines misspelled words with a red, wavy line. The <code>spellcheck</code> attribute determines whether spell check is enabled.<br>It has two possible values:</p>
+<ul>
+<li><code>true</code>: Enables spell check.</li>
+<li><code>false</code>: Disables spell check.</li>
+</ul>
+<p>In the example below, the word “seperate” will be underlined to indicate it’s misspelled:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">contenteditable</span>=<span class="string">&quot;true&quot;</span> <span class="attr">spellcheck</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">The English word &quot;separate&quot; is often mistakenly written as &quot;seperate&quot;.</span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Note that the <code>spellcheck</code> attribute only takes effect when the content is editable, which is why the <code>contenteditable</code> attribute is included. Clicking on the text will allow you to edit it and see the spell check suggestions. Spell check will not be active if the content is not editable. For non-editable elements, the <code>spellcheck</code> attribute has no effect.</p>
+<p>Although the <code>spellcheck</code> attribute appears to be boolean, it is actually an enumerated attribute, so it’s best to always specify its value. If the attribute is not set, the browser will decide whether to enable spell check on its own.</p>
+<h3 id="data-attributes"><a href="#data-attributes" class="headerlink" title="data- attributes"></a><code>data-</code> attributes</h3><p>The <code>data-</code> attribute is used to store custom data. If there is no other suitable attribute or element to hold the data, you can use <code>data-</code>.<br>For example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;tooltip&quot;</span> <span class="attr">data-tip</span>=<span class="string">&quot;this is the tip!&quot;</span>&gt;</span>Link<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>In this code, <code>data-tip</code> holds the tooltip text for the link.</p>
+<p>Since <code>data-</code> attributes are only accessible through CSS or JavaScript, they won’t be covered in detail here. Below are examples of how to use them with CSS:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* HTML code:</span></span><br><span class="line"><span class="comment">&lt;div data-role=&quot;mobile&quot;&gt;</span></span><br><span class="line"><span class="comment">Mobile only content</span></span><br><span class="line"><span class="comment">&lt;/div&gt;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-attr">[data-role=<span class="string">&quot;mobile&quot;</span>]</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>:none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* HTML code:</span></span><br><span class="line"><span class="comment">&lt;div class=&quot;test&quot; data-content=&quot;This is the div content&quot;&gt;test&lt;/div&gt;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="selector-class">.test</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.test</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="built_in">attr</span>(data-content);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Event-Handler-Attributes"><a href="#Event-Handler-Attributes" class="headerlink" title="Event Handler Attributes"></a>Event Handler Attributes</h3><p>Global attributes also include event handler attributes that respond to user actions. These attributes take JavaScript code as their value. For a complete list and usage details, please refer to a JavaScript tutorial.</p>
+<blockquote>
+<p>onabort, onautocomplete, onautocompleteerror, onblur, oncancel, oncanplay, oncanplaythrough, onchange, onclick, onclose, oncontextmenu, oncuechange, ondblclick, ondrag, ondragend, ondragenter, ondragexit, ondragleave, ondragover, ondragstart, ondrop, ondurationchange, onemptied, onended, onerror, onfocus, oninput, oninvalid, onkeydown, onkeypress, onkeyup, onload, onloadeddata, onloadedmetadata, onloadstart, onmousedown, onmouseenter, onmouseleave, onmousemove, onmouseout, onmouseover, onmouseup, onmousewheel, onpause, onplay, onplaying, onprogress, onratechange, onreset, onresize, onscroll, onseeked, onseeking, onselect, onshow, onsort, onstalled, onsubmit, onsuspend, ontimeupdate, ontoggle, onvolumechange, onwaiting</p>
+</blockquote>
+<p>Link to original article:<br><a target="_blank" rel="noopener" href="https://wangdoc.com/html/attribute">https://wangdoc.com/html/attribute</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2024/06/15/html-element-attributes/">http://linjiangxiong.com/2024/06/15/html-element-attributes/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HTML/">HTML</a></div><div class="post_share"><div class="social-share" data-image="/image/IMG_3665.JPG" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/06/16/html-encode/" title="Understanding Text Encoding and Character Representation in HTML"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">Understanding Text Encoding and Character Representation in HTML</div></div></a></div><div class="next-post pull-right"><a href="/2024/06/14/html-url-introduction/" title="Introduction to HTML URL"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">Introduction to HTML URL</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/06/13/html-introduction/" title="Introduction to HTML"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-13</div><div class="title">Introduction to HTML</div></div></a></div><div><a href="/2024/06/14/html-url-introduction/" title="Introduction to HTML URL"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-14</div><div class="title">Introduction to HTML URL</div></div></a></div><div><a href="/2024/06/16/html-encode/" title="Understanding Text Encoding and Character Representation in HTML"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-16</div><div class="title">Understanding Text Encoding and Character Representation in HTML</div></div></a></div><div><a href="/2024/06/19/html-lists/" title="HTML Lists"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-19</div><div class="title">HTML Lists</div></div></a></div><div><a href="/2024/06/17/html-semantic-tags/" title="HTML Semantic Tags"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-17</div><div class="title">HTML Semantic Tags</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Lin</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">260</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Global-Attributes"><span class="toc-number">2.</span> <span class="toc-text">Global Attributes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#id"><span class="toc-number">2.1.</span> <span class="toc-text">id</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#class"><span class="toc-number">2.2.</span> <span class="toc-text">class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#title"><span class="toc-number">2.3.</span> <span class="toc-text">title</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tabindex"><span class="toc-number">2.4.</span> <span class="toc-text">tabindex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#accesskey"><span class="toc-number">2.5.</span> <span class="toc-text">accesskey</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#style"><span class="toc-number">2.6.</span> <span class="toc-text">style</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hidden"><span class="toc-number">2.7.</span> <span class="toc-text">hidden</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lang-and-dir"><span class="toc-number">2.8.</span> <span class="toc-text">lang and dir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#translate"><span class="toc-number">2.9.</span> <span class="toc-text">translate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#contenteditable"><span class="toc-number">2.10.</span> <span class="toc-text">contenteditable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spellcheck"><span class="toc-number">2.11.</span> <span class="toc-text">spellcheck</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#data-attributes"><span class="toc-number">2.12.</span> <span class="toc-text">data- attributes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Event-Handler-Attributes"><span class="toc-number">2.13.</span> <span class="toc-text">Event Handler Attributes</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/30/differences-between-the-return-and-exit-commands-in-bash/" title="Differences Between the return and exit Commands in Bash">Differences Between the return and exit Commands in Bash</a><time datetime="2024-08-29T17:38:05.000Z" title="Created 2024-08-30 01:38:05">2024-08-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/29/5-ways-to-concatenate-strings-in-python3/" title="5 Ways to Concatenate Strings in Python 3">5 Ways to Concatenate Strings in Python 3</a><time datetime="2024-08-28T17:34:59.000Z" title="Created 2024-08-29 01:34:59">2024-08-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/28/sitory/" title="How to Fix the &quot;Shadows name from outer scope&quot; Warning in PyCharm">How to Fix the &quot;Shadows name from outer scope&quot; Warning in PyCharm</a><time datetime="2024-08-27T18:34:59.000Z" title="Created 2024-08-28 02:34:59">2024-08-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/27/yaml-tutorial/" title="Getting Started with YAML"><img src="/image/2024/08/2024082701.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Getting Started with YAML"/></a><div class="content"><a class="title" href="/2024/08/27/yaml-tutorial/" title="Getting Started with YAML">Getting Started with YAML</a><time datetime="2024-08-26T18:30:52.000Z" title="Created 2024-08-27 02:30:52">2024-08-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/20/copying-andpasting-content-and-dragging-files-between-vmware-virtual-machines-and-the-host-system/" title="Copying and Pasting Content and Dragging Files Between VMware Virtual Machines and the Host System"><img src="/image/2024/08/2024082009.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Copying and Pasting Content and Dragging Files Between VMware Virtual Machines and the Host System"/></a><div class="content"><a class="title" href="/2024/08/20/copying-andpasting-content-and-dragging-files-between-vmware-virtual-machines-and-the-host-system/" title="Copying and Pasting Content and Dragging Files Between VMware Virtual Machines and the Host System">Copying and Pasting Content and Dragging Files Between VMware Virtual Machines and the Host System</a><time datetime="2024-08-19T18:01:38.000Z" title="Created 2024-08-20 02:01:38">2024-08-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/search/local-search.min.js"></script></div></div></body></html>
