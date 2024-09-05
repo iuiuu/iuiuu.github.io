@@ -3,6 +3,13 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/tags/HTML/</loc>
+        <lastmod>2024-09-05T15:00:59.590Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/tags/HowTo/</loc>
         <lastmod>2024-09-05T14:57:52.039Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -17,13 +24,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/tags/Docker/</loc>
-        <lastmod>2024-09-05T14:57:40.148Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/tags/Ubuntu/</loc>
         <lastmod>2024-09-05T14:57:40.148Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -31,8 +31,8 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/tags/HTML/</loc>
-        <lastmod>2024-09-02T23:42:46.369Z</lastmod>
+        <loc>http://linjiangxiong.com/tags/Docker/</loc>
+        <lastmod>2024-09-05T14:57:40.148Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -346,14 +346,14 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/tags/Jpa/</loc>
+        <loc>http://linjiangxiong.com/tags/Spring-Boot/</loc>
         <lastmod>2019-12-24T21:23:17.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/tags/Spring-Boot/</loc>
+        <loc>http://linjiangxiong.com/tags/Jpa/</loc>
         <lastmod>2019-12-24T21:23:17.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>

@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>HTML &lt;a&gt; Tag | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="IntroductionLinks (hyperlinks) are fundamental to the internet. They enable users to navigate from one webpage to another, connecting all resources online. The &lt;a&gt; tag represents a hyperlink. It">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML &lt;a&gt; Tag">
+<meta property="og:url" content="http://linjiangxiong.com/2024/06/21/html-a-tag/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="IntroductionLinks (hyperlinks) are fundamental to the internet. They enable users to navigate from one webpage to another, connecting all resources online. The &lt;a&gt; tag represents a hyperlink. It">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://linjiangxiong.com/image/IMG_3665.JPG">
+<meta property="article:published_time" content="2024-06-20T16:13:16.000Z">
+<meta property="article:modified_time" content="2024-09-05T14:59:30.170Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="HTML">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/IMG_3665.JPG"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2024/06/21/html-a-tag/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap"><link rel="stylesheet" href="/css/ud_v5.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HTML <a> Tag',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-05 22:59:30'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">276</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">20</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Johnson Lin"><span class="site-name">Johnson Lin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">HTML &lt;a&gt; Tag</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-06-20T16:13:16.000Z" title="Created 2024-06-21 00:13:16">2024-06-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-09-05T14:59:30.170Z" title="Updated 2024-09-05 22:59:30">2024-09-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTML-Tutorial/">HTML Tutorial</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HTML &lt;a&gt; Tag"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Links (hyperlinks) are fundamental to the internet. They enable users to navigate from one webpage to another, connecting all resources online.</p>
+<p>The <code>&lt;a&gt;</code> tag represents a hyperlink. It allows users to link to other pages, text, images, files, or even specific sections within the same page. In essence, any resource on the web can be accessed via an <code>&lt;a&gt;</code> tag.</p>
+<p>Here’s an example of a typical link:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://wikipedia.org/&quot;</span>&gt;</span>Wikipedia<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In the code above, we define a hyperlink. The browser displays the text “Wikipedia” with an underline by default, indicating it’s a clickable link. When users click on it, the browser navigates to the URL specified in the <code>href</code> attribute.</p>
+<p>The <code>&lt;a&gt;</code> tag can contain not only text but also other elements such as paragraphs, images, or multi-media.</p>
+<p>For example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.example.com/&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://www.example.com/foo.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Example Image&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this code, the <code>&lt;a&gt;</code> tag contains an image. Clicking on the image will navigate the user to the specified URL.</p>
+<h2 id="Attributes"><a href="#Attributes" class="headerlink" title="Attributes"></a>Attributes</h2><p>The <code>&lt;a&gt;</code> tag has the following attributes:</p>
+<h3 id="href"><a href="#href" class="headerlink" title="href"></a>href</h3><p>The <code>href</code> attribute specifies the URL or anchor point that the link points to. It can be a full URL or an anchor. For example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#demo&quot;</span>&gt;</span>Example<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this code, the <code>href</code> value is <code>#</code> followed by the anchor name. Clicking the link will scroll the browser to the <code>demo</code> anchor on the current page.</p>
+<h3 id="hreflang"><a href="#hreflang" class="headerlink" title="hreflang"></a>hreflang</h3><p>The <code>hreflang</code> attribute indicates the language of the linked page. It is a hint for search engines and has no functional impact on the link itself.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.example.com&quot;</span> <span class="attr">hreflang</span>=<span class="string">&quot;en&quot;</span>&gt;</span>Example Website<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, the <code>hreflang</code> attribute suggests that the linked page is in English. If a resource has versions in multiple languages, <code>hreflang</code> can be set to <code>x-default</code> to indicate the default version.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://example.com&quot;</span> <span class="attr">hreflang</span>=<span class="string">&quot;x-default&quot;</span>&gt;</span>English<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://example.com/de&quot;</span> <span class="attr">hreflang</span>=<span class="string">&quot;de&quot;</span>&gt;</span>German<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Here, <code>hreflang=&quot;x-default&quot;</code> denotes that this link is the default version. The language codes used in <code>hreflang</code> are similar to those in the <code>lang</code> attribute, which can be referenced in the “Attributes” chapter of the documentation.</p>
+<h3 id="title"><a href="#title" class="headerlink" title="title"></a>title</h3><p>The <code>title</code> attribute provides additional information about a link. When a user hovers their mouse over the link, the browser displays the value of this attribute as a tooltip.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.example.com/&quot;</span> <span class="attr">title</span>=<span class="string">&quot;hello&quot;</span>&gt;</span>Example<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In the example above, hovering over the link will show a tooltip with the text “hello.”</p>
+<h3 id="target"><a href="#target" class="headerlink" title="target"></a>target</h3><p>The <code>target</code> attribute specifies how the linked document should be displayed. It determines whether the link opens in the same window, a new window, or within an <code>&lt;iframe&gt;</code>.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://foo.com&quot;</span> <span class="attr">target</span>=<span class="string">&quot;test&quot;</span>&gt;</span>foo<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://bar.com&quot;</span> <span class="attr">target</span>=<span class="string">&quot;test&quot;</span>&gt;</span>bar<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In the example above, both links open in a window named “test.” If the “test” window does not exist, the browser will create it and load the link. For instance, clicking the “foo” link opens <code>foo.com</code> in the “test” window. Clicking the “bar” link will then open <code>bar.com</code> in the same window, replacing the content of <code>foo.com</code>.</p>
+<p>The <code>target</code> attribute can also use one of the following keywords:</p>
+<ul>
+<li><code>_self</code>: Opens in the same window (default).</li>
+<li><code>_blank</code>: Opens in a new window.</li>
+<li><code>_parent</code>: Opens in the parent frame. If there is no parent frame, it behaves like <code>_self</code>.</li>
+<li><code>_top</code>: Opens in the topmost window. If the current window is already the topmost window, it behaves like <code>_self</code>.</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.example.com&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>Example Link<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, clicking the link will open <code>example.com</code> in a new window, which will have no specific name.</p>
+<p><strong>Note:</strong> When using the <code>target</code> attribute, it is advisable to use it in conjunction with <code>rel=&quot;noreferrer&quot;</code> to mitigate security risks.</p>
+<h3 id="rel"><a href="#rel" class="headerlink" title="rel"></a>rel</h3><p>The <code>rel</code> attribute describes the relationship between the linked resource and the current document.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;help.html&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;help&quot;</span>&gt;</span>Help<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In the example above, the <code>rel</code> attribute indicates that the link is to a help document for the current page.</p>
+<p>Common values for the <code>rel</code> attribute include:</p>
+<ul>
+<li><code>alternate</code>: An alternative version of the current document, such as a translation.</li>
+<li><code>author</code>: A link to the author of the document.</li>
+<li><code>bookmark</code>: A permanent address used as a bookmark.</li>
+<li><code>external</code>: A reference to an external document.</li>
+<li><code>help</code>: A link to help information.</li>
+<li><code>license</code>: A link to the license for the document.</li>
+<li><code>next</code>: The next document in a series.</li>
+<li><code>nofollow</code>: Instructs search engines to ignore the link, often used to prevent search engine manipulation.</li>
+<li><code>noreferrer</code>: Prevents the browser from sending the current URL as the <code>Referer</code> header when the link is clicked, thus hiding the source of the click.</li>
+<li><code>noopener</code>: Prevents the linked document from accessing the original window via JavaScript’s <code>window.opener</code> property, enhancing security.</li>
+<li><code>prev</code>: The previous document in a series.</li>
+<li><code>search</code>: A search link for the document.</li>
+<li><code>tag</code>: A link to tags related to the document.</li>
+</ul>
+<h3 id="referrerpolicy"><a href="#referrerpolicy" class="headerlink" title="referrerpolicy"></a>referrerpolicy</h3><p>The <code>referrerpolicy</code> attribute controls how the <code>Referer</code> header is handled when a link is clicked. It accepts the following values:</p>
+<ul>
+<li><code>no-referrer</code>: Never send the <code>Referer</code> header.</li>
+<li><code>no-referrer-when-downgrade</code>: Send the <code>Referer</code> header only if the destination is secure (HTTPS).</li>
+<li><code>origin</code>: Send only the origin (protocol + domain) as the <code>Referer</code>.</li>
+<li><code>origin-when-cross-origin</code>: Send the origin as the <code>Referer</code> for cross-origin requests.</li>
+<li><code>unsafe-url</code>: Always send the full URL as the <code>Referer</code>.</li>
+<li><code>same-origin</code>: Send the <code>Referer</code> header only for same-origin requests.</li>
+<li><code>strict-origin</code>: Send only the origin as the <code>Referer</code> for secure requests.</li>
+<li><code>strict-origin-when-cross-origin</code>: Send the origin as the <code>Referer</code> for secure cross-origin requests.</li>
+</ul>
+<p>For detailed explanations of these values, refer to HTTP documentation.</p>
+<h3 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h3><p>The <code>ping</code> attribute specifies a URL that will receive a POST request when the user clicks on the link. This is commonly used for tracking user behavior.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://localhost:3000/other&quot;</span> <span class="attr">ping</span>=<span class="string">&quot;http://localhost:3000/log&quot;</span>&gt;</span></span><br><span class="line">  Go to Other Page</span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, clicking the link will not only navigate to <code>http://localhost:3000/other</code> but also send a POST request to <code>http://localhost:3000/log</code>. The server will then know that the link was clicked. </p>
+<p>The request headers include <code>ping-from</code> (the page where the click occurred) and <code>ping-to</code> (the page pointed to by the <code>href</code> attribute):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">headers: &#123;</span><br><span class="line">  &#x27;ping-from&#x27;: &#x27;http://localhost:3000/&#x27;,</span><br><span class="line">  &#x27;ping-to&#x27;: &#x27;http://localhost:3000/other&#x27;,</span><br><span class="line">  &#x27;content-type&#x27;: &#x27;text/ping&#x27;</span><br><span class="line">  // ...other headers</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Note that the <code>ping</code> attribute only works with links and is ineffective for other interactions like button clicks or form submissions. Additionally, Firefox does not support this attribute, and it cannot send custom data.</p>
+<h3 id="type"><a href="#type" class="headerlink" title="type"></a>type</h3><p>The <code>type</code> attribute specifies the MIME type of the linked URL, such as whether it’s a webpage, image, or file. This attribute is purely informational and does not affect functionality.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;smile.jpg&quot;</span> <span class="attr">type</span>=<span class="string">&quot;image/jpeg&quot;</span>&gt;</span>Example Image<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this code, the <code>type</code> attribute indicates that the link points to an image file.</p>
+<h3 id="download"><a href="#download" class="headerlink" title="download"></a>download</h3><p>The <code>download</code> attribute specifies that a link is intended for downloading a file rather than navigating to another URL.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;demo.txt&quot;</span> <span class="attr">download</span>&gt;</span>Download<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>When you click the above link, a download dialog will appear.</p>
+<p>Note that the <code>download</code> attribute only works if the link is to a resource on the same origin as the website. This means the link must be from the same domain as the page.</p>
+<p>If a value is specified for the <code>download</code> attribute, that value will be used as the name of the downloaded file.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;foo.exe&quot;</span> <span class="attr">download</span>=<span class="string">&quot;bar.exe&quot;</span>&gt;</span>Click to download<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In the above code, the original file is named <code>foo.exe</code>. When clicked, the download dialog will prompt with the file name <code>bar.exe</code>.</p>
+<p>Keep in mind that if the server’s HTTP response headers include a <code>Content-Disposition</code> field with a file name different from the <code>download</code> attribute, the <code>Content-Disposition</code> field will take precedence, and the download will use that file name.</p>
+<p>Additionally, the <code>download</code> attribute can be used with data URLs (e.g., those starting with <code>data:</code>). In this case, the <code>download</code> attribute specifies the name of the file for download.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;data:,Hello%2C%20World!&quot;</span>&gt;</span>Click<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>The link above opens a virtual page displaying “Hello, World!”.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;data:,Hello%2C%20World!&quot;</span> <span class="attr">download</span>=<span class="string">&quot;hello.txt&quot;</span>&gt;</span>Click<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>When this link is clicked, it will download a file named <code>hello.txt</code> with the content “Hello, World!”.</p>
+<h2 id="Email-Links"><a href="#Email-Links" class="headerlink" title="Email Links"></a>Email Links</h2><p>Links can also point to an email address using the <code>mailto</code> protocol. When users click on such a link, their default email client will open, allowing them to send an email to the specified address.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;mailto:contact@example.com&quot;</span>&gt;</span>Contact Us<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, the link directs to an email address. Clicking on it will open your email client with a new message addressed to <code>contact@example.com</code>.</p>
+<p>The <code>mailto</code> protocol also supports additional email fields:</p>
+<ul>
+<li><code>subject</code>: Email subject</li>
+<li><code>cc</code>: Cc (carbon copy) recipients</li>
+<li><code>bcc</code>: Bcc (blind carbon copy) recipients</li>
+<li><code>body</code>: Email content</li>
+</ul>
+<p>You can include these fields as query parameters appended to the email address:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;mailto:foo@bar.com?cc=test@test.com&amp;subject=The%20subject&amp;body=The%20body&quot;</span>&gt;</span>Send Email<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this code, the email link includes not only the recipient’s address but also <code>cc</code>, <code>subject</code>, and <code>body</code> fields. Note that values must be URL-encoded (e.g., spaces become <code>%20</code>).</p>
+<p>It’s also possible to create an email link without specifying an address, allowing users to enter the recipient’s email address manually. This is often used for sharing a webpage via email:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;mailto:&quot;</span>&gt;</span>Tell a Friend<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Phone-Links"><a href="#Phone-Links" class="headerlink" title="Phone Links"></a>Phone Links</h2><p>For mobile users, you can use the <code>tel</code> protocol to create phone links. Clicking on such a link will prompt the phone to dial the specified number.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;tel:13312345678&quot;</span>&gt;</span>13312345678<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, clicking the link on a mobile device will open the dialer with the number pre-filled, ready to make a call.</p>
+<p>Link to original article:</p>
+<p><a target="_blank" rel="noopener" href="https://wangdoc.com/html/a">https://wangdoc.com/html/a</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2024/06/21/html-a-tag/">http://linjiangxiong.com/2024/06/21/html-a-tag/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HTML/">HTML</a></div><div class="post_share"><div class="social-share" data-image="/image/IMG_3665.JPG" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/06/22/html-link-tag/" title="HTML &lt;link&gt; Tag"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">HTML &lt;link&gt; Tag</div></div></a></div><div class="next-post pull-right"><a href="/2024/06/20/html-image/" title="HTML Image"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">HTML Image</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/06/13/html-introduction/" title="Introduction to HTML"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-13</div><div class="title">Introduction to HTML</div></div></a></div><div><a href="/2024/06/15/html-element-attributes/" title="HTML Element Attributes"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-15</div><div class="title">HTML Element Attributes</div></div></a></div><div><a href="/2024/06/17/html-semantic-tags/" title="HTML Semantic Tags"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-17</div><div class="title">HTML Semantic Tags</div></div></a></div><div><a href="/2024/06/14/html-url-introduction/" title="Introduction to HTML URL"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-14</div><div class="title">Introduction to HTML URL</div></div></a></div><div><a href="/2024/06/16/html-encode/" title="Understanding Text Encoding and Character Representation in HTML"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-16</div><div class="title">Understanding Text Encoding and Character Representation in HTML</div></div></a></div><div><a href="/2024/06/20/html-image/" title="HTML Image"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-20</div><div class="title">HTML Image</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Lin</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">276</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Attributes"><span class="toc-number">2.</span> <span class="toc-text">Attributes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#href"><span class="toc-number">2.1.</span> <span class="toc-text">href</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hreflang"><span class="toc-number">2.2.</span> <span class="toc-text">hreflang</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#title"><span class="toc-number">2.3.</span> <span class="toc-text">title</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#target"><span class="toc-number">2.4.</span> <span class="toc-text">target</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rel"><span class="toc-number">2.5.</span> <span class="toc-text">rel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#referrerpolicy"><span class="toc-number">2.6.</span> <span class="toc-text">referrerpolicy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ping"><span class="toc-number">2.7.</span> <span class="toc-text">ping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#type"><span class="toc-number">2.8.</span> <span class="toc-text">type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#download"><span class="toc-number">2.9.</span> <span class="toc-text">download</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Email-Links"><span class="toc-number">3.</span> <span class="toc-text">Email Links</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Phone-Links"><span class="toc-number">4.</span> <span class="toc-text">Phone Links</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/05/how-to-delete-data-in-elasticsearch-single-multiple-clear-and-all/" title="How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All">How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All</a><time datetime="2024-09-04T16:02:38.000Z" title="Created 2024-09-05 00:02:38">2024-09-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/04/how-to-fix-docker-gpg-key-installation-errors-on-ubuntu/" title="How to Fix Docker GPG Key Installation Errors on Ubuntu">How to Fix Docker GPG Key Installation Errors on Ubuntu</a><time datetime="2024-09-03T21:20:07.000Z" title="Created 2024-09-04 05:20:07">2024-09-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/30/differences-between-the-return-and-exit-commands-in-bash/" title="Differences Between the return and exit Commands in Bash">Differences Between the return and exit Commands in Bash</a><time datetime="2024-08-29T17:38:05.000Z" title="Created 2024-08-30 01:38:05">2024-08-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/29/5-ways-to-concatenate-strings-in-python3/" title="5 Ways to Concatenate Strings in Python 3">5 Ways to Concatenate Strings in Python 3</a><time datetime="2024-08-28T17:34:59.000Z" title="Created 2024-08-29 01:34:59">2024-08-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/28/how-to-fix-shadows-name-from-outer-scope-warning-in-pycharm/" title="How to Fix the &quot;Shadows name from outer scope&quot; Warning in PyCharm">How to Fix the &quot;Shadows name from outer scope&quot; Warning in PyCharm</a><time datetime="2024-08-27T18:34:59.000Z" title="Created 2024-08-28 02:34:59">2024-08-28</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/search/local-search.min.js"></script></div></div></body></html>
