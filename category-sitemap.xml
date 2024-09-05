@@ -9,6 +9,13 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/categories/Programming-Digest/</loc>
+        <lastmod>2024-09-05T14:57:52.039Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/categories/HTML-Tutorial/</loc>
         <lastmod>2024-09-02T23:42:46.369Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -18,13 +25,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/Data-Structures-and-Algorithms/</loc>
         <lastmod>2024-09-01T14:28:05.744Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/Programming-Digest/</loc>
-        <lastmod>2024-08-30T16:58:55.011Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
