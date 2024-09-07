@@ -9,6 +9,14 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2024/09/06/why-does-redis-use-the-sds-structure-for-strings-instead-of-char/</loc>
+        <lastmod>2024-09-07T08:15:42.929Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2024/06/29/html-instant-tutorial/</loc>
         <lastmod>2024-09-05T15:26:13.772Z</lastmod>
         <changefreq>weekly</changefreq>
