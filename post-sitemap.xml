@@ -9,6 +9,78 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2024/05/21/c-language-cli/</loc>
+        <lastmod>2024-09-18T16:20:01.307Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/15/c-language-enum/</loc>
+        <lastmod>2024-09-18T16:19:51.613Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/14/c-language-union/</loc>
+        <lastmod>2024-09-18T16:19:41.133Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/11/c-language-typedef/</loc>
+        <lastmod>2024-09-18T16:19:30.264Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/10/c-language-string/</loc>
+        <lastmod>2024-09-18T16:19:19.464Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/09/c-language-array/</loc>
+        <lastmod>2024-09-18T16:19:08.961Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/08/c-language-function/</loc>
+        <lastmod>2024-09-18T16:18:56.748Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/07/c-language-pointer/</loc>
+        <lastmod>2024-09-18T16:18:46.303Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/06/c-language-types/</loc>
+        <lastmod>2024-09-18T16:18:35.121Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2024/09/18/bulk-deleting-keys-in-redis-using-wildcards/</loc>
         <lastmod>2024-09-18T15:42:51.912Z</lastmod>
         <changefreq>weekly</changefreq>
