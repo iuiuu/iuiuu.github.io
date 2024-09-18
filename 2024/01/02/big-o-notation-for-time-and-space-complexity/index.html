@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Big O Notation for Time and Space Complexity | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="We all know that data structures and algorithms address the concepts of speed and efficiency—how to make code run faster and use storage space more efficiently. Therefore, the execution efficiency of">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Big O Notation for Time and Space Complexity">
+<meta property="og:url" content="http://linjiangxiong.com/2024/01/02/big-o-notation-for-time-and-space-complexity/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="We all know that data structures and algorithms address the concepts of speed and efficiency—how to make code run faster and use storage space more efficiently. Therefore, the execution efficiency of">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://linjiangxiong.com/image/2024/08/20240805.png">
+<meta property="article:published_time" content="2024-01-02T13:15:20.000Z">
+<meta property="article:modified_time" content="2024-09-01T14:26:36.059Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="Data Structures and Algorithms">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/2024/08/20240805.png"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2024/01/02/big-o-notation-for-time-and-space-complexity/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap"><link rel="stylesheet" href="/css/ud_v5.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Big O Notation for Time and Space Complexity',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-01 22:26:36'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">294</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Johnson Lin"><span class="site-name">Johnson Lin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Big O Notation for Time and Space Complexity</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-01-02T13:15:20.000Z" title="Created 2024-01-02 21:15:20">2024-01-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-09-01T14:26:36.059Z" title="Updated 2024-09-01 22:26:36">2024-09-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Data-Structures-and-Algorithms/">Data Structures and Algorithms</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Big O Notation for Time and Space Complexity"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>We all know that data structures and algorithms address the concepts of speed and efficiency—how to make code run faster and use storage space more efficiently. Therefore, the execution efficiency of algorithms is a crucial consideration. How do we measure the efficiency of the algorithmic code we write? This brings us to today’s topic: analyzing time and space complexity.</p>
+<h2 id="Why-is-complexity-analysis-needed"><a href="#Why-is-complexity-analysis-needed" class="headerlink" title="Why is complexity analysis needed?"></a>Why is complexity analysis needed?</h2><p>You might be wondering why I need to analyze time and space complexity when I can simply run the code once and gather statistics and monitoring data on algorithm execution time and memory usage. Can’t this real-time data provide a more accurate assessment? While evaluating algorithm efficiency through actual runs is valid, this approach is often referred to in data structure and algorithm books as post hoc analysis. However, it does come with significant limitations.</p>
+<ol>
+<li><strong>The test results heavily rely on the testing environment.</strong></li>
+</ol>
+<p>Test results can vary significantly depending on the test environment, particularly due to differences in hardware. For instance, running the same piece of code on an Intel Core i9 processor versus an Intel Core i3 processor will naturally result in faster execution on the i9. Similarly, if code ‘A’ runs faster than code ‘B’ on this machine initially, switching to another machine could yield completely opposite results.</p>
+<ol start="2">
+<li><strong>The test results are greatly influenced by the size of the data.</strong></li>
+</ol>
+<p>Consider a sorting algorithm as an example: the order of the data significantly affects the execution time of the sorting process. In cases where the data is already sorted, the algorithm requires minimal operations, resulting in very short execution times. Furthermore, when the test data size is too small, the algorithm’s performance may not accurately reflect its capabilities. For instance, with small datasets, insertion sort could potentially outperform quicksort.</p>
+<p>Therefore, we need a method to roughly estimate the execution efficiency of an algorithm without relying on specific test data. Complexity analysis is fundamental to efficient algorithm design and implementation in software development. It plays a crucial role in evaluating and predicting the performance characteristics of algorithms and data structures. By thoroughly understanding complexity, developers can make informed decisions to optimize both time and space efficiency in their code.</p>
+<p>In the domain of algorithms:</p>
+<ul>
+<li><strong>Time Complexity</strong>: This metric assesses how an algorithm’s execution time scales with the size of its input. Algorithms with lower time complexity generally perform better on larger datasets, crucial for applications requiring fast processing speeds or handling extensive computations.</li>
+<li><strong>Space Complexity</strong>: This dimension measures the amount of memory an algorithm requires relative to its input size. Algorithms with lower space complexity are advantageous in memory-constrained environments, such as mobile devices or embedded systems.</li>
+</ul>
+<h2 id="Big-O-notation"><a href="#Big-O-notation" class="headerlink" title="Big O notation"></a>Big O notation</h2><p>The execution efficiency of an algorithm can be understood as the time it takes for the algorithm’s code to run. However, how can one estimate the execution time of a piece of code without actually running it? </p>
+<p>Let’s consider a straightforward example: a simple piece of code that calculates the sum of integers from <code>1</code> to <code>n</code>. I will guide you through the process of estimating the execution time of this code.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">sum</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">    <span class="type">int</span> s = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (; i &lt;= n; ++i) &#123;</span><br><span class="line">        s = s + i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>From the perspective of the CPU, each line of this code performs a similar sequence of operations: reading data, performing arithmetic, and writing data. While the number of CPU executions and the time taken for each line vary, for the sake of estimation, we assume each line takes the same amount of time, referred to as <em>unit_time</em>. Based on this assumption, what is the total execution time of this code? </p>
+<p>The 2nd and 3rd lines each require 1 <em>unit_time</em> of execution time, while the 4th and 5th lines iterate$n$times, requiring $( 2n \cdot \text{unit_time} )$ of execution time. Therefore, the total execution time of this code is $( (2n+2) \cdot \text{unit_time} )$. It can be seen that the execution time$T(n)$of all code is directly proportional to the number of executions per line. </p>
+<p>Continuing with this analytical approach, let’s now reconsider another piece of code.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">sum</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">    <span class="type">int</span> s = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (; i &lt;= n; ++i) &#123;</span><br><span class="line">        j = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (; j &lt;= n; ++j) &#123;</span><br><span class="line">            s = s +  i * j;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>We still assume each statement takes <em>unit_time</em> to execute. Now, what is the total execution time$\ T(n) $for this code?</p>
+<p>The 2nd, 3rd, and 4th lines each require 1 <em>unit_time</em>. The 5th and 6th lines iterate$n$times, requiring $( 2n \cdot \text{unit_time} )$. The 7th and 8th lines iterate$n^2$times, thus requiring $( 2n^2 \cdot \text{unit_time} )$. Therefore, the total execution time$T(n)$for the entire code segment is $( (2n^2 + 2n + 3) \cdot \text{unit_time} )$.</p>
+<p>While the exact value of <em>unit_time</em> remains unknown, analyzing the execution times of these code segments reveals a crucial rule: the total execution time$T(n)$correlates directly with the number of executions$f(n)$of each line of code.</p>
+<p>This observation can be encapsulated into a formula, setting the stage for the introduction of Big O notation!</p>
+<p>$T(n)=O(f(n))$</p>
+<p>Here,$T(n)$represents the time complexity of code execution, where$n$denotes the size of the input data, and$f(n)$signifies the total number of times each line of code is executed. In Big O notation, denoted by O,$T(n)$is proportional to$f(n)$. </p>
+<p>For instance,$T(n) = O(2n+2)$in the first example, and$T(n) = O(2n^2+2n+3)$in the second. Big O notation expresses the growth rate of execution time as data size increases, known as asymptotic time complexity. </p>
+<p>In practical terms, this notation doesn’t precisely indicate actual execution time but rather how it scales with input size, such as when$n$is large, say 1,000,000 or 10,000,000. In the formula, lower-order terms, constants, and coefficients do not affect the growth trend and can be ignored, focusing only on the dominant term. </p>
+<p>Therefore, for the two code segments mentioned earlier, their time complexity in Big O notation would be:$T(n) = O(n)$and$T(n) = O(n^2)$.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>In conclusion, complexity analysis is not merely an academic exercise but a fundamental practice that underpins effective software engineering. By leveraging insights into time and space complexities, developers empower themselves to craft solutions that meet performance expectations, enhance user experience, and optimize resource consumption. Embracing complexity analysis is essential for anyone striving to build reliable, efficient software systems in today’s dynamic technological landscape.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2024/01/02/big-o-notation-for-time-and-space-complexity/">http://linjiangxiong.com/2024/01/02/big-o-notation-for-time-and-space-complexity/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Data-Structures-and-Algorithms/">Data Structures and Algorithms</a></div><div class="post_share"><div class="social-share" data-image="/image/2024/08/20240805.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/01/03/analyzing-time-complexity-of-algorithms-using-big-o-notation/" title="Analyzing Time Complexity of Algorithms Using Big O Notation"><img class="cover" src="/image/2024/01/2024010301.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">Analyzing Time Complexity of Algorithms Using Big O Notation</div></div></a></div><div class="next-post pull-right"><a href="/2024/01/01/why-you-should-learn-data-structures-and-algorithms/" title="Why You Should Learn Data Structures and Algorithms"><img class="cover" src="/image/2024/01/2024010101.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next</div><div class="next_info">Why You Should Learn Data Structures and Algorithms</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/06/01/why-learning-data-structures-and-algorithms-is-crucial-for-success-in-tech/" title="Why Learning Data Structures and Algorithms is Crucial for Success in Tech"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-01</div><div class="title">Why Learning Data Structures and Algorithms is Crucial for Success in Tech</div></div></a></div><div><a href="/2024/01/01/why-you-should-learn-data-structures-and-algorithms/" title="Why You Should Learn Data Structures and Algorithms"><img class="cover" src="/image/2024/01/2024010101.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-01</div><div class="title">Why You Should Learn Data Structures and Algorithms</div></div></a></div><div><a href="/2024/01/03/analyzing-time-complexity-of-algorithms-using-big-o-notation/" title="Analyzing Time Complexity of Algorithms Using Big O Notation"><img class="cover" src="/image/2024/01/2024010301.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-03</div><div class="title">Analyzing Time Complexity of Algorithms Using Big O Notation</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Lin</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">294</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-is-complexity-analysis-needed"><span class="toc-number">1.</span> <span class="toc-text">Why is complexity analysis needed?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Big-O-notation"><span class="toc-number">2.</span> <span class="toc-text">Big O notation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">3.</span> <span class="toc-text">Conclusion</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/18/bulk-deleting-keys-in-redis-using-wildcards/" title="Bulk Deleting Keys in Redis Using Wildcards">Bulk Deleting Keys in Redis Using Wildcards</a><time datetime="2024-09-18T15:42:56.000Z" title="Created 2024-09-18 23:42:56">2024-09-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/11/analyzing-redis-source-code-hash/" title="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing"><img src="/image/redis-src/2024091101.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing"/></a><div class="content"><a class="title" href="/2024/09/11/analyzing-redis-source-code-hash/" title="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing">Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing</a><time datetime="2024-09-10T22:28:03.000Z" title="Created 2024-09-11 06:28:03">2024-09-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/10/analyzing-redis-source-code-sds/" title="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation"><img src="/image/redis-src/24091002.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation"/></a><div class="content"><a class="title" href="/2024/09/10/analyzing-redis-source-code-sds/" title="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation">Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation</a><time datetime="2024-09-09T17:13:55.000Z" title="Created 2024-09-10 01:13:55">2024-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/06/why-does-redis-use-the-sds-structure-for-strings-instead-of-char/" title="Why Does Redis Use the SDS Structure for Strings Instead of char*?">Why Does Redis Use the SDS Structure for Strings Instead of char*?</a><time datetime="2024-09-05T16:01:26.000Z" title="Created 2024-09-06 00:01:26">2024-09-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/05/how-to-delete-data-in-elasticsearch-single-multiple-clear-and-all/" title="How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All">How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All</a><time datetime="2024-09-04T16:02:38.000Z" title="Created 2024-09-05 00:02:38">2024-09-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/search/local-search.min.js"></script></div></div></body></html>

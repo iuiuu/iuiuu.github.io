@@ -1,0 +1,657 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>HTML Form | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="A form is a way for users to input information and interact with a webpage. In most cases, the information submitted by users is sent to the server. For example, a website’s search bar is a type of fo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML Form">
+<meta property="og:url" content="http://linjiangxiong.com/2024/06/27/html-form/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="A form is a way for users to input information and interact with a webpage. In most cases, the information submitted by users is sent to the server. For example, a website’s search bar is a type of fo">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://linjiangxiong.com/image/IMG_3665.JPG">
+<meta property="article:published_time" content="2024-06-26T16:01:29.000Z">
+<meta property="article:modified_time" content="2024-09-05T15:00:30.264Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="HTML">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/IMG_3665.JPG"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2024/06/27/html-form/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap"><link rel="stylesheet" href="/css/ud_v5.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HTML Form',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-05 23:00:30'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">294</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Johnson Lin"><span class="site-name">Johnson Lin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">HTML Form</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-06-26T16:01:29.000Z" title="Created 2024-06-27 00:01:29">2024-06-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-09-05T15:00:30.264Z" title="Updated 2024-09-05 23:00:30">2024-09-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTML-Tutorial/">HTML Tutorial</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HTML Form"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>A form is a way for users to input information and interact with a webpage. In most cases, the information submitted by users is sent to the server. For example, a website’s search bar is a type of form.</p>
+<p>A form consists of one or more elements, such as text fields, buttons, radio buttons, or checkboxes. These elements are known as controls.</p>
+<h2 id="lt-form-gt"><a href="#lt-form-gt" class="headerlink" title="&lt;form&gt;"></a><code>&lt;form&gt;</code></h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>The <code>&lt;form&gt;</code> tag is used to define a form, which acts as a container for all the form elements.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Various form controls --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>The code above represents the basic structure of a form.</p>
+<p>Here’s a common example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;https://example.com/api&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;POST-name&quot;</span>&gt;</span>Username:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;POST-name&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;user&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, the form includes three controls: a <code>&lt;label&gt;</code> tag, a text input field, and a submit button. The text input field has a <code>name</code> attribute set to “user,” which means the browser will send a key-value pair to the server with the key “user” and the value being what the user entered.</p>
+<p>When the user types a username, such as “foobar,” into the text field and clicks the submit button, the browser will send a POST request to <code>https://example.com/api</code> with the data <code>user=foobar</code>.</p>
+<p>The <code>&lt;form&gt;</code> element has the following attributes:</p>
+<ul>
+<li><code>accept-charset</code>: Specifies the character encodings accepted by the server, separated by spaces. By default, it matches the encoding of the webpage.</li>
+<li><code>action</code>: The URL where the form data will be sent.</li>
+<li><code>autocomplete</code>: Determines if the browser can automatically fill in missing values for a control. Possible values are <code>off</code> (do not autofill) and <code>on</code> (autofill).</li>
+<li><code>method</code>: The HTTP method used to submit the data. Possible values are <code>post</code> (send form data as the HTTP request body), <code>get</code> (send form data as part of the URL query string), and <code>dialog</code> (used within a <code>&lt;dialog&gt;</code> element).</li>
+<li><code>enctype</code>: Specifies the MIME type for the data being sent when the <code>method</code> attribute is <code>post</code>. Possible values include <code>application/x-www-form-urlencoded</code> (default), <code>multipart/form-data</code> (for file uploads), and <code>text/plain</code>.</li>
+<li><code>name</code>: The name of the form, which should be unique within the page. Note that if a control does not have a <code>name</code> attribute, its value will not be sent as a key-value pair to the server.</li>
+<li><code>novalidate</code>: A boolean attribute that indicates whether the form should bypass validation when submitted.</li>
+<li><code>target</code>: Specifies where to display the response from the server. Possible values include <code>_self</code> (current window), <code>_blank</code> (new window), <code>_parent</code> (parent frame), <code>_top</code> (topmost frame), or the <code>name</code> attribute of an <code>&lt;iframe&gt;</code> (display the response in that <code>&lt;iframe&gt;</code>).</li>
+</ul>
+<h3 id="enctype-Attribute"><a href="#enctype-Attribute" class="headerlink" title="enctype Attribute"></a><code>enctype</code> Attribute</h3><p>The <code>enctype</code> attribute of the <code>&lt;form&gt;</code> tag specifies the MIME type of the data sent to the server when using the POST method. This attribute can have the following values:</p>
+<ol>
+<li><code>application/x-www-form-urlencoded</code>This is the default encoding type. It encodes form data as key-value pairs where both the key (control name) and value are URL-encoded. Spaces are replaced with <code>+</code>, non-alphanumeric characters are replaced with <code>%HH</code> (where <code>HH</code> is the hexadecimal value), and newlines are represented as CR LF. Key-value pairs are separated by <code>=</code> and each pair is separated by <code>&amp;</code>.</li>
+<li><code>multipart/form-data</code>This encoding type is mainly used for file uploads. When uploading large files, the data is split into multiple parts. Each part has its own HTTP headers, including <code>Content-Disposition</code> with a value of <code>form-data</code> and a <code>name</code> attribute representing the control name.</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Disposition: form-data; name=&quot;mycontrol&quot;</span><br></pre></td></tr></table></figure>
+
+<p>Here is an example of a file upload form:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;https://example.com/api&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">  Username: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;submit-name&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">  File: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;files&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Upload&quot;</span>&gt;</span> <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;reset&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Clear&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, if the user enters “Larry” as the username and selects a file named <code>file1.txt</code>, the browser sends the data as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: multipart/form-data; boundary=--AaB03x</span><br><span class="line"></span><br><span class="line">--AaB03x</span><br><span class="line">Content-Disposition: form-data; name=&quot;submit-name&quot;</span><br><span class="line"></span><br><span class="line">Larry</span><br><span class="line">--AaB03x</span><br><span class="line">Content-Disposition: form-data; name=&quot;files&quot;; filename=&quot;file1.txt&quot;</span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">... contents of file1.txt ...</span><br><span class="line">--AaB03x--</span><br></pre></td></tr></table></figure>
+
+<p>The browser splits the form data into multiple parts. The <code>Content-Type</code> header specifies the <code>multipart/form-data</code> format and the boundary <code>--AaB03x</code> which separates the data chunks. Each chunk starts with a <code>Content-Disposition</code> header indicating the control name (<code>submit-name</code> or <code>files</code>) and, for file uploads, includes the filename and content type. The data following these headers is the actual value of the control, with file data included as well.</p>
+<h2 id="lt-fieldset-gt-lt-legend-gt"><a href="#lt-fieldset-gt-lt-legend-gt" class="headerlink" title="&lt;fieldset&gt;, &lt;legend&gt;"></a><code>&lt;fieldset&gt;</code>, <code>&lt;legend&gt;</code></h2><p>The <code>&lt;fieldset&gt;</code> element is a block-level container used to group related form controls together.</p>
+<p>Example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">fieldset</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Age: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;age&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Gender: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">fieldset</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In the above code, the two input fields are grouped within a box.</p>
+<p>Attributes of <code>&lt;fieldset&gt;</code> include:</p>
+<ul>
+<li><code>disabled</code>: A boolean attribute that, when set, makes all controls within the <code>&lt;fieldset&gt;</code> disabled and appear grayed out.</li>
+<li><code>form</code>: Associates the <code>&lt;fieldset&gt;</code> with a <code>&lt;form&gt;</code> element by specifying the <code>&lt;form&gt;</code>‘s <code>id</code>.</li>
+<li><code>name</code>: Sets the name of the control group.</li>
+</ul>
+<p>The <code>&lt;legend&gt;</code> element is used to provide a title for the <code>&lt;fieldset&gt;</code>. It is usually the first element inside the <code>&lt;fieldset&gt;</code> and appears as a label at the top of the box.</p>
+<p>Example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">fieldset</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">legend</span>&gt;</span>Student Information<span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>Age: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;age&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>Gender: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">fieldset</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, the title “Student Information” is displayed at the top of the <code>&lt;fieldset&gt;</code> box.</p>
+<h2 id="lt-label-gt"><a href="#lt-label-gt" class="headerlink" title="&lt;label&gt;"></a><code>&lt;label&gt;</code></h2><p>The <code>&lt;label&gt;</code> element is an inline element that provides a description for form controls, helping users understand their purpose.</p>
+<p>Example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;user&quot;</span>&gt;</span>Username:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;user&quot;</span> <span class="attr">id</span>=<span class="string">&quot;user&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Here, the text “Username:” is associated with the input field. </p>
+<p>The <code>&lt;label&gt;</code> element enhances accessibility, especially for small controls like checkboxes and radio buttons, by allowing users to click the label to select the associated control. The <code>for</code> attribute links the label to the corresponding control by its <code>id</code>. </p>
+<p>You can also nest controls within a <code>&lt;label&gt;</code>, eliminating the need for the <code>for</code> attribute.</p>
+<p>Example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">label</span>&gt;</span>Username:</span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;user&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Attributes of <code>&lt;label&gt;</code>:</p>
+<ul>
+<li><code>for</code>: Specifies the <code>id</code> of the associated control.</li>
+<li><code>form</code>: Associates the label with a form element by specifying the form’s <code>id</code>. If this attribute is not set, the label must be inside a <code>&lt;form&gt;</code> element.</li>
+</ul>
+<p>A single control can have multiple associated <code>&lt;label&gt;</code> elements:</p>
+<p>Example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;username&quot;</span>&gt;</span>Username:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;username&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;username&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">abbr</span> <span class="attr">title</span>=<span class="string">&quot;required&quot;</span>&gt;</span>*<span class="tag">&lt;/<span class="name">abbr</span>&gt;</span><span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this case, the input field has two labels associated with it.</p>
+<h2 id="lt-input-gt"><a href="#lt-input-gt" class="headerlink" title="&lt;input&gt;"></a><code>&lt;input&gt;</code></h2><h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>The <code>&lt;input&gt;</code> tag is an inline element used to receive user input. It is a self-closing tag and does not require a closing tag.</p>
+<p>It comes in various types, depending on the value of the <code>type</code> attribute. The default type is <code>text</code>, which creates a single-line input field.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- Equivalent to --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>The code above generates a single-line text input field where users can enter text.</p>
+<p>The <code>&lt;input&gt;</code> tag has many attributes, some of which are specific to certain types and will be discussed in the “Types” section. Here are some common attributes applicable to all types:</p>
+<ul>
+<li><strong>autofocus</strong>: A boolean attribute that, when set, makes the input field automatically receive focus when the page loads.</li>
+<li><strong>disabled</strong>: A boolean attribute that disables the control. When enabled, the control appears grayed out and is viewable but not interactive.</li>
+<li><strong>form</strong>: Associates the input with a form by specifying the form’s <code>id</code>. When this attribute is set, the control can be placed anywhere on the page; otherwise, it must be inside a <code>&lt;form&gt;</code>.</li>
+<li><strong>list</strong>: Associates the input with a <code>&lt;datalist&gt;</code> by specifying the <code>id</code> of the datalist. This provides a predefined list of options for the input.</li>
+<li><strong>name</strong>: The name of the control, used as the key in key-value pairs when submitting data to the server. Only controls with a <code>name</code> attribute are submitted.</li>
+<li><strong>readonly</strong>: A boolean attribute that makes the input field read-only. Users can see but not modify the content.</li>
+<li><strong>required</strong>: A boolean attribute that makes the input field mandatory.</li>
+<li><strong>type</strong>: Defines the type of the input control. Detailed types are covered in the “Types” section.</li>
+<li><strong>value</strong>: Specifies the initial value of the input field.</li>
+</ul>
+<h3 id="Types"><a href="#Types" class="headerlink" title="Types"></a>Types</h3><p>The <code>type</code> attribute determines the form of the <code>&lt;input&gt;</code> element. It can take various values, including:</p>
+<p><strong>1) text</strong></p>
+<p><code>type=&quot;text&quot;</code> creates a standard text input field for single-line text. Line breaks are automatically removed if entered by the user.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;name&quot;</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">required</span></span></span><br><span class="line"><span class="tag">       <span class="attr">minlength</span>=<span class="string">&quot;4&quot;</span> <span class="attr">maxlength</span>=<span class="string">&quot;8&quot;</span> <span class="attr">size</span>=<span class="string">&quot;10&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>This text input field has several additional attributes:</p>
+<ul>
+<li><strong>maxlength</strong>: The maximum number of characters allowed. It should be a non-negative integer.</li>
+<li><strong>minlength</strong>: The minimum number of characters required. It must be a non-negative integer and less than <code>maxlength</code>.</li>
+<li><strong>pattern</strong>: A regular expression that the input must match. For example, to require 4 to 8 English letters, use <code>pattern=&quot;[a-z]&#123;4,8&#125;&quot;</code>. If the input does not match, the browser will display a warning and prevent form submission.</li>
+<li><strong>placeholder</strong>: A sample value displayed in the input field when it is empty. It disappears once the user starts typing.</li>
+<li><strong>readonly</strong>: A boolean attribute that makes the input field read-only, allowing only viewing but not editing.</li>
+<li><strong>size</strong>: Specifies the visible width of the input field in characters. It is a positive integer, defaulting to 20. Characters beyond this width require horizontal scrolling to view.</li>
+<li><strong>spellcheck</strong>: Determines whether spell checking is enabled for the input field. Possible values are <code>true</code> or <code>false</code>.</li>
+</ul>
+<p><strong>2) Search</strong></p>
+<p>The <code>type=&quot;search&quot;</code> creates a text input field specifically for search queries, similar to <code>type=&quot;text&quot;</code>. Some browsers display a clear button inside the input field that allows users to quickly erase all input.</p>
+<p>Example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;search&quot;</span> <span class="attr">id</span>=<span class="string">&quot;mySearch&quot;</span> <span class="attr">name</span>=<span class="string">&quot;q&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;Enter search term...&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Search&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>3) Button</strong></p>
+<p>The <code>type=&quot;button&quot;</code> creates a button with no default behavior. It typically requires JavaScript to define the action for the button click.</p>
+<p>Example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Click&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>It’s generally recommended to use the <code>&lt;button&gt;</code> element instead, as it is semantically clearer and supports more complex content, such as images.</p>
+<hr>
+<p><strong>4) Submit</strong></p>
+<p>The <code>type=&quot;submit&quot;</code> creates a button that submits the form to the server.</p>
+<p>Example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Submit&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>If the <code>value</code> attribute is not specified, the default text “Submit” is displayed.</p>
+<p>This type supports the following attributes to override form settings:</p>
+<ul>
+<li><code>formaction</code>: URL to submit the form data.</li>
+<li><code>formenctype</code>: Encoding type of the form data.</li>
+<li><code>formmethod</code>: HTTP method for submission (GET or POST).</li>
+<li><code>formnovalidate</code>: Boolean value to skip form validation.</li>
+<li><code>formtarget</code>: Specifies where to display the response from the server.</li>
+</ul>
+<hr>
+<p><strong>5) Image</strong></p>
+<p>The <code>type=&quot;image&quot;</code> uses an image as a submit button, behaving like <code>type=&quot;submit&quot;</code>.</p>
+<p>Example:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;image&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Login&quot;</span> <span class="attr">src</span>=<span class="string">&quot;login-button.png&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>The image acts as a clickable button to submit the form.</p>
+<p>Attributes include:</p>
+<ul>
+<li><code>alt</code>: Alternative text if the image fails to load.</li>
+<li><code>src</code>: URL of the image.</li>
+<li><code>height</code>: Image display height in pixels.</li>
+<li><code>width</code>: Image display width in pixels.</li>
+<li><code>formaction</code>: URL to submit the form data.</li>
+<li><code>formenctype</code>: Encoding type of the form data.</li>
+<li><code>formmethod</code>: HTTP method for submission (GET or POST).</li>
+<li><code>formnovalidate</code>: Boolean value to skip form validation.</li>
+<li><code>formtarget</code>: Specifies where to display the response from the server.</li>
+</ul>
+<p>Clicking the image button submits additional parameters <code>x</code> and <code>y</code>, indicating the mouse click position relative to the image. If the image button has a <code>name</code> attribute, the coordinates are prefixed with this name (e.g., <code>position.x=52&amp;position.y=55</code>). This feature is often used for map interactions.</p>
+<p><strong>6) Reset</strong></p>
+<p><code>type=&quot;reset&quot;</code> creates a reset button. When clicked, it resets all form controls to their initial values.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;reset&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Reset&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>If the <code>value</code> attribute is not set, the browser displays a default label, typically “Reset.”</p>
+<p>This control is rarely used as it resets all entered values, which might not be desirable. It’s often better to avoid it.</p>
+<p><strong>7) Checkbox</strong></p>
+<p><code>type=&quot;checkbox&quot;</code> creates a checkbox that allows users to select or deselect an option.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;agreement&quot;</span> <span class="attr">name</span>=<span class="string">&quot;agreement&quot;</span> <span class="attr">checked</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;agreement&quot;</span>&gt;</span>Agree<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>The above code displays a clickable checkbox before the text. Clicking it selects or deselects the option. The <code>checked</code> attribute makes the checkbox selected by default.</p>
+<p>By default, the <code>value</code> attribute is “on.” For the example above, selecting the checkbox submits <code>agreement=on</code>, while deselection results in no submission for that item.</p>
+<p>Checkboxes related to each other can be grouped within a <code>&lt;fieldset&gt;</code>.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">fieldset</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">legend</span>&gt;</span>Your Interests<span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;coding&quot;</span> <span class="attr">name</span>=<span class="string">&quot;interest&quot;</span> <span class="attr">value</span>=<span class="string">&quot;coding&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;coding&quot;</span>&gt;</span>Coding<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;music&quot;</span> <span class="attr">name</span>=<span class="string">&quot;interest&quot;</span> <span class="attr">value</span>=<span class="string">&quot;music&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;music&quot;</span>&gt;</span>Music<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">fieldset</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>If both checkboxes are selected, the submission includes <code>interest=coding&amp;interest=music</code>.</p>
+<p><strong>8) Radio</strong></p>
+<p><code>type=&quot;radio&quot;</code> creates a radio button, where only one option in a group can be selected at a time.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">fieldset</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">legend</span>&gt;</span>Gender<span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">id</span>=<span class="string">&quot;male&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">value</span>=<span class="string">&quot;male&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;male&quot;</span>&gt;</span>Male<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">id</span>=<span class="string">&quot;female&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">value</span>=<span class="string">&quot;female&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;female&quot;</span>&gt;</span>Female<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">fieldset</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, only one gender can be selected. Ensure all radio buttons in a group share the same <code>name</code> attribute. The selected value is submitted to the server.</p>
+<p>Relevant attributes:</p>
+<ul>
+<li><code>checked</code>: Boolean attribute indicating if the option is selected by default.</li>
+<li><code>value</code>: The value sent to the server when selected, defaulting to “on.”</li>
+</ul>
+<p><strong>9) Email</strong></p>
+<p><code>type=&quot;email&quot;</code> creates an input field that only accepts valid email addresses. The browser automatically validates the format before submission.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;email&quot;</span> <span class="attr">pattern</span>=<span class="string">&quot;.+@foobar.com&quot;</span> <span class="attr">size</span>=<span class="string">&quot;30&quot;</span> <span class="attr">required</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>This code generates a required field that only accepts emails ending in <code>foobar.com</code>.</p>
+<p>The <code>multiple</code> Boolean attribute allows multiple comma-separated email addresses.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;emailAddress&quot;</span> <span class="attr">type</span>=<span class="string">&quot;email&quot;</span> <span class="attr">multiple</span> <span class="attr">required</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>When both <code>multiple</code> and <code>required</code> are set, zero emails are allowed, making the field optional.</p>
+<p>Relevant attributes:</p>
+<ul>
+<li><code>maxlength</code>: Maximum number of characters allowed.</li>
+<li><code>minlength</code>: Minimum number of characters required.</li>
+<li><code>multiple</code>: Allows multiple comma-separated emails.</li>
+<li><code>pattern</code>: Regex pattern that input must match.</li>
+<li><code>placeholder</code>: Placeholder text when the input is empty.</li>
+<li><code>readonly</code>: Boolean attribute indicating if the field is read-only.</li>
+<li><code>size</code>: Display length of the input field in characters.</li>
+<li><code>spellcheck</code>: Enables spellcheck, with possible values <code>true</code> or <code>false</code>.</li>
+</ul>
+<p>The <code>type=&quot;email&quot;</code> field can also use the <code>&lt;datalist&gt;</code> tag to offer suggestions.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;email&quot;</span> <span class="attr">size</span>=<span class="string">&quot;40&quot;</span> <span class="attr">list</span>=<span class="string">&quot;defaultEmails&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">datalist</span> <span class="attr">id</span>=<span class="string">&quot;defaultEmails&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;jbond007@mi6.defence.gov.uk&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;jbourne@unknown.net&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;nfury@shield.org&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;tony@starkindustries.com&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;hulk@grrrrrrrr.arg&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">datalist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>When the input field is focused, a dropdown list with five suggestions appears for user reference.</p>
+<p><strong>10) Password</strong></p>
+<p>The <code>type=&quot;password&quot;</code> creates a password input field where the user’s input is obscured, typically displayed as asterisks (<code>*</code>) or dots (<code>·</code>). </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">id</span>=<span class="string">&quot;pass&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">minlength</span>=<span class="string">&quot;8&quot;</span> <span class="attr">required</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Browsers may handle this input type differently, often showing the entered characters for a brief moment before obscuring them. Any newline (<code>U+000A</code>) or carriage return (<code>U+000D</code>) characters entered are automatically removed by the browser.</p>
+<p>Attributes for this type include:</p>
+<ul>
+<li><code>maxlength</code>: Maximum number of characters allowed.</li>
+<li><code>minlength</code>: Minimum number of characters required.</li>
+<li><code>pattern</code>: Regular expression the input must match.</li>
+<li><code>placeholder</code>: Text displayed when the input is empty.</li>
+<li><code>readonly</code>: Boolean attribute indicating if the field is read-only.</li>
+<li><code>size</code>: Non-negative integer representing the display length in characters.</li>
+<li><code>autocomplete</code>: Determines if autocomplete is allowed (<code>on</code>, <code>off</code>, <code>current-password</code>, <code>new-password</code>).</li>
+<li><code>inputmode</code>: Specifies the type of data allowed: <code>none</code>(no system input method), <code>text</code>(standard text input), <code>decimal</code>(numbers including decimals), <code>numeric</code>(digits 0-9).</li>
+</ul>
+<p><strong>11) File</strong></p>
+<p>The <code>type=&quot;file&quot;</code> creates a file input field that allows users to select one or more files, commonly used for file uploads.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">id</span>=<span class="string">&quot;avatar&quot;</span> <span class="attr">name</span>=<span class="string">&quot;avatar&quot;</span> <span class="attr">accept</span>=<span class="string">&quot;image/png, image/jpeg&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Attributes for this type include:</p>
+<ul>
+<li><code>accept</code>: Specifies the file types allowed, using MIME types or file extensions.</li>
+<li><code>capture</code>: Determines the source for capturing image or video data (<code>user</code> or <code>environment</code>).</li>
+<li><code>multiple</code>: Boolean attribute indicating if multiple files can be selected.</li>
+</ul>
+<p><strong>12) Hidden</strong></p>
+<p>The <code>type=&quot;hidden&quot;</code> creates a control not visible on the page, used to pass hidden information to the server. For example, to prevent CSRF attacks, unique hidden identifiers can be generated for each form.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;prodId&quot;</span> <span class="attr">name</span>=<span class="string">&quot;prodId&quot;</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">value</span>=<span class="string">&quot;xm234jq&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>This control is invisible to users but submits its value with the form.</p>
+<p><strong>13) Number</strong></p>
+<p>The <code>type=&quot;number&quot;</code> creates a numeric input field, allowing only numbers. A spinner with up and down arrows is typically provided for incrementing or decrementing the value.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;number&quot;</span> <span class="attr">id</span>=<span class="string">&quot;tentacles&quot;</span> <span class="attr">name</span>=<span class="string">&quot;tentacles&quot;</span> <span class="attr">min</span>=<span class="string">&quot;10&quot;</span> <span class="attr">max</span>=<span class="string">&quot;100&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>This type supports both integers and decimal values, with optional step increments.</p>
+<p>Attributes include:</p>
+<ul>
+<li><code>max</code>: Maximum value allowed.</li>
+<li><code>min</code>: Minimum value allowed.</li>
+<li><code>placeholder</code>: Example value shown when the input is empty.</li>
+<li><code>readonly</code>: Boolean attribute indicating if the field is read-only.</li>
+<li><code>step</code>: Increment step for the value; defaults to 1.</li>
+</ul>
+<p><strong>14) Range</strong></p>
+<p>The <code>type=&quot;range&quot;</code> creates a slider for selecting a value within a specified range. This is often used for volume controls or similar settings.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;range&quot;</span> <span class="attr">id</span>=<span class="string">&quot;start&quot;</span> <span class="attr">name</span>=<span class="string">&quot;volume&quot;</span> <span class="attr">min</span>=<span class="string">&quot;0&quot;</span> <span class="attr">max</span>=<span class="string">&quot;11&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Attributes include:</p>
+<ul>
+<li><code>max</code>: Maximum value allowed, default is 100.</li>
+<li><code>min</code>: Minimum value allowed, default is 0.</li>
+<li><code>step</code>: Increment step, default is 1.</li>
+<li><code>value</code>: Initial value of the slider.</li>
+</ul>
+<p>With the <code>&lt;datalist&gt;</code> tag, you can add labels or ticks to the range slider.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;range&quot;</span> <span class="attr">list</span>=<span class="string">&quot;tickmarks&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">datalist</span> <span class="attr">id</span>=<span class="string">&quot;tickmarks&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;0&quot;</span> <span class="attr">label</span>=<span class="string">&quot;0%&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;10&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;20&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;30&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;40&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;50&quot;</span> <span class="attr">label</span>=<span class="string">&quot;50%&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;60&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;70&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;80&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;90&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;100&quot;</span> <span class="attr">label</span>=<span class="string">&quot;100%&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">datalist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>This setup creates a slider with tick marks and labels at specified intervals. Note that horizontal sliders are the default; vertical sliders require CSS adjustments.</p>
+<p><strong>14) Url</strong></p>
+<p>The <code>type=&quot;url&quot;</code> input field only accepts URLs. Before form submission, the browser automatically checks if the URL format is correct; otherwise, it won’t be submitted.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;url&quot;</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">id</span>=<span class="string">&quot;url&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">placeholder</span>=<span class="string">&quot;https://example.com&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">pattern</span>=<span class="string">&quot;https://.*&quot;</span> <span class="attr">size</span>=<span class="string">&quot;30&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">required</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, the <code>pattern</code> attribute specifies that the URL must use the HTTPS protocol.</p>
+<p>Note that URLs without a protocol are invalid. For instance, <code>foo.com</code> is invalid, while <code>http://foo.com</code> is valid.</p>
+<p>The type also supports the following attributes:</p>
+<ul>
+<li><code>maxlength</code>: Maximum number of characters allowed.</li>
+<li><code>minlength</code>: Minimum number of characters required.</li>
+<li><code>pattern</code>: Regular expression that the input must match.</li>
+<li><code>placeholder</code>: Example text displayed when the input is empty.</li>
+<li><code>readonly</code>: Boolean attribute indicating if the field is read-only.</li>
+<li><code>size</code>: Number of characters that the input field should display.</li>
+<li><code>spellcheck</code>: Indicates if spell check is enabled (<code>true</code> or <code>false</code>).</li>
+</ul>
+<p>The <code>type=&quot;url&quot;</code> can be used with the <code>&lt;datalist&gt;</code> element to create a dropdown list for users to choose from. As users type, the list will narrow to show matching options.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;myURL&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myURL&quot;</span> <span class="attr">type</span>=<span class="string">&quot;url&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">list</span>=<span class="string">&quot;defaultURLs&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">datalist</span> <span class="attr">id</span>=<span class="string">&quot;defaultURLs&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;https://developer.mozilla.org/&quot;</span> <span class="attr">label</span>=<span class="string">&quot;MDN Web Docs&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;http://www.google.com/&quot;</span> <span class="attr">label</span>=<span class="string">&quot;Google&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;http://www.microsoft.com/&quot;</span> <span class="attr">label</span>=<span class="string">&quot;Microsoft&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;https://www.mozilla.org/&quot;</span> <span class="attr">label</span>=<span class="string">&quot;Mozilla&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;http://w3.org/&quot;</span> <span class="attr">label</span>=<span class="string">&quot;W3C&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">datalist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In the code above, the <code>label</code> attribute of <code>&lt;option&gt;</code> specifies the text shown next to the URL in the dropdown list.</p>
+<p><strong>16) tel</strong></p>
+<p>The <code>type=&quot;tel&quot;</code> input field is used for entering phone numbers. Since phone number formats vary globally, browsers don’t apply default validation, so custom validation is often needed.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;tel&quot;</span> <span class="attr">id</span>=<span class="string">&quot;phone&quot;</span> <span class="attr">name</span>=<span class="string">&quot;phone&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">pattern</span>=<span class="string">&quot;[0-9]&#123;3&#125;-[0-9]&#123;3&#125;-[0-9]&#123;4&#125;&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">required</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">small</span>&gt;</span>Format: 123-456-7890<span class="tag">&lt;/<span class="name">small</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>The code above defines an input field for a 10-digit phone number.</p>
+<p>Attributes for this type include:</p>
+<ul>
+<li><code>maxlength</code>: Maximum number of characters allowed.</li>
+<li><code>minlength</code>: Minimum number of characters required.</li>
+<li><code>pattern</code>: A regular expression that the input must match.</li>
+<li><code>placeholder</code>: Example text displayed when the input is empty.</li>
+<li><code>readonly</code>: A boolean attribute indicating if the field is read-only.</li>
+<li><code>size</code>: Number of characters the input field should display.</li>
+</ul>
+<p><strong>17) color</strong></p>
+<p>The <code>type=&quot;color&quot;</code> input allows users to select a color, with values in the <code>#rrggbb</code> format.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;color&quot;</span> <span class="attr">id</span>=<span class="string">&quot;background&quot;</span> <span class="attr">name</span>=<span class="string">&quot;background&quot;</span></span></span><br><span class="line"><span class="tag">           <span class="attr">value</span>=<span class="string">&quot;#e66465&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In Chrome, this code displays a color box with the color #e66465. Clicking the box opens a color picker for selecting a different color.</p>
+<p>If no <code>value</code> attribute is specified, the default color is #000000 (black).</p>
+<p><strong>18) Date</strong></p>
+<p>The <code>type=&quot;date&quot;</code> input allows users to select a date in the format <code>YYYY-MM-DD</code>, but does not include time (hours, minutes, or seconds). </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;date&quot;</span> <span class="attr">id</span>=<span class="string">&quot;start&quot;</span> <span class="attr">name</span>=<span class="string">&quot;start&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">value</span>=<span class="string">&quot;2018-07-22&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">min</span>=<span class="string">&quot;2018-01-01&quot;</span> <span class="attr">max</span>=<span class="string">&quot;2018-12-31&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>This code displays a date input box with a default date of July 22, 2018. Clicking the input box will open a date picker for selecting a different date.</p>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>max</code>: The latest allowed date in the format <code>YYYY-MM-DD</code>.</li>
+<li><code>min</code>: The earliest allowed date in the format <code>YYYY-MM-DD</code>.</li>
+<li><code>step</code>: The interval for selectable dates, in days.</li>
+</ul>
+<p><strong>19) Time</strong></p>
+<p>The <code>type=&quot;time&quot;</code> input allows users to input a time in the 24-hour format. The format is <code>hh:mm</code>, and if seconds are included, it’s <code>hh:mm:ss</code>.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;time&quot;</span> <span class="attr">id</span>=<span class="string">&quot;appt&quot;</span> <span class="attr">name</span>=<span class="string">&quot;appt&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">min</span>=<span class="string">&quot;09:00&quot;</span> <span class="attr">max</span>=<span class="string">&quot;18:00&quot;</span> <span class="attr">required</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">small</span>&gt;</span>Business hours: 9 AM to 6 PM<span class="tag">&lt;/<span class="name">small</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>This code creates a time input box where users can select a time between 9:00 and 18:00. </p>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>max</code>: The latest allowed time.</li>
+<li><code>min</code>: The earliest allowed time.</li>
+<li><code>readonly</code>: A boolean attribute that prevents users from editing the time.</li>
+<li><code>step</code>: The interval for selectable times, in seconds.</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;appt&quot;</span> <span class="attr">type</span>=<span class="string">&quot;time&quot;</span> <span class="attr">name</span>=<span class="string">&quot;appt&quot;</span> <span class="attr">step</span>=<span class="string">&quot;2&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, the time picker increments by 2 seconds.</p>
+<p><strong>20) Month</strong></p>
+<p>The <code>type=&quot;month&quot;</code> input allows users to select a year and month in the format <code>YYYY-MM</code>.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;month&quot;</span> <span class="attr">id</span>=<span class="string">&quot;start&quot;</span> <span class="attr">name</span>=<span class="string">&quot;start&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">min</span>=<span class="string">&quot;2018-03&quot;</span> <span class="attr">value</span>=<span class="string">&quot;2018-05&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>This code creates an input box for selecting a month and year, with the default value set to May 2018.</p>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>max</code>: The latest allowed month in the format <code>YYYY-MM</code>.</li>
+<li><code>min</code>: The earliest allowed month in the format <code>YYYY-MM</code>.</li>
+<li><code>readonly</code>: A boolean attribute that prevents users from editing the month.</li>
+<li><code>step</code>: The interval for selectable months.</li>
+</ul>
+<p><strong>21) Week</strong></p>
+<p>The <code>type=&quot;week&quot;</code> input allows users to select a week of the year in the format <code>YYYY-Www</code>. For example, <code>2018-W18</code> represents the 18th week of 2018.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;week&quot;</span> <span class="attr">name</span>=<span class="string">&quot;week&quot;</span> <span class="attr">id</span>=<span class="string">&quot;camp-week&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">min</span>=<span class="string">&quot;2018-W18&quot;</span> <span class="attr">max</span>=<span class="string">&quot;2018-W26&quot;</span> <span class="attr">required</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>This code creates an input box for selecting a week within the specified range.</p>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>max</code>: The latest allowed week in the format <code>YYYY-Www</code>.</li>
+<li><code>min</code>: The earliest allowed week in the format <code>YYYY-Www</code>.</li>
+<li><code>readonly</code>: A boolean attribute that prevents users from editing the week.</li>
+<li><code>step</code>: The interval for selectable weeks.</li>
+</ul>
+<p><strong>22) datetime-local</strong></p>
+<p>The <code>type=&quot;datetime-local&quot;</code> input allows users to enter both date and time in the format <code>YYYY-MM-DDThh:mm</code>. Note that seconds are not supported.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;datetime-local&quot;</span> <span class="attr">id</span>=<span class="string">&quot;meeting-time&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">name</span>=<span class="string">&quot;meeting-time&quot;</span> <span class="attr">value</span>=<span class="string">&quot;2018-06-12T19:30&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">min</span>=<span class="string">&quot;2018-06-07T00:00&quot;</span> <span class="attr">max</span>=<span class="string">&quot;2018-06-14T00:00&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>This code creates an input box for selecting both a date and a time, with the default set to June 12, 2018, 19:30.</p>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>max</code>: The latest allowed date and time in the format YYYY-MM-DDThh:mm.</li>
+<li><code>min</code>: The earliest allowed date and time in the format YYYY-MM-DDThh:mm.</li>
+<li><code>step</code>: The interval for selectable times, in seconds. The default is 60 seconds.</li>
+</ul>
+<h2 id="lt-button-gt"><a href="#lt-button-gt" class="headerlink" title="&lt;button&gt;"></a><code>&lt;button&gt;</code></h2><p>The <code>&lt;button&gt;</code> element creates a clickable button with no default behavior. Its function is typically defined using the <code>type</code> attribute or scripts.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>Click<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>The code above produces a button with the text “Click.”</p>
+<p>The <code>&lt;button&gt;</code> element can contain both text and images, forming an image button.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">name</span>=<span class="string">&quot;search&quot;</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;search.gif&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Search&quot;</span>&gt;</span>Search</span><br><span class="line"><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>Here are the attributes for <code>&lt;button&gt;</code>:</p>
+<ul>
+<li><code>autofocus</code>: Boolean attribute that sets focus to the button when the page loads. Only one element can have this attribute per page.</li>
+<li><code>disabled</code>: Boolean attribute that disables the button, making it gray and unclickable.</li>
+<li><code>name</code>: The button’s name, used with the <code>value</code> attribute to submit data in the format <code>name=value</code> with the form.</li>
+<li><code>value</code>: The button’s value, used with the <code>name</code> attribute to submit data in the format <code>name=value</code> with the form.</li>
+<li><code>type</code>: The button’s type. Possible values are <code>submit</code> (sends form data to the server), <code>reset</code> (resets all form controls to their initial values), and <code>button</code> (no default behavior; action specified by script).</li>
+<li><code>form</code>: Associates the button with a <code>&lt;form&gt;</code> element by its <code>id</code>. If omitted, the button is linked to the nearest parent form.</li>
+<li><code>formaction</code>: URL where the form data is submitted, overriding the <code>action</code> attribute of the <code>&lt;form&gt;</code> element.</li>
+<li><code>formenctype</code>: Encoding type for form data submission, overriding the <code>enctype</code> attribute of the <code>&lt;form&gt;</code> element. Possible values: <code>application/x-www-form-urlencoded</code> (default), <code>multipart/form-data</code> (for file uploads), <code>text/plain</code>.</li>
+<li><code>formmethod</code>: HTTP method for form data submission, overriding the <code>method</code> attribute of the <code>&lt;form&gt;</code> element. Possible values: <code>post</code> or <code>get</code>.</li>
+<li><code>formnovalidate</code>: Boolean attribute that disables local validation when submitting the form, overriding the <code>novalidate</code> attribute of the <code>&lt;form&gt;</code> element.</li>
+<li><code>formtarget</code>: Specifies where to display the response from the server, overriding the <code>target</code> attribute of the <code>&lt;form&gt;</code> element. Possible values: <code>_self</code> (current window), <code>_blank</code> (new window), <code>_parent</code> (parent window), <code>_top</code> (topmost window).</li>
+</ul>
+<h2 id="lt-select-gt"><a href="#lt-select-gt" class="headerlink" title="&lt;select&gt;"></a><code>&lt;select&gt;</code></h2><p>The <code>&lt;select&gt;</code> tag is used to create a dropdown menu.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;pet-select&quot;</span>&gt;</span>Pet:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;pet-select&quot;</span> <span class="attr">name</span>=<span class="string">&quot;pet-select&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span>&gt;</span>--Please select an option--<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;dog&quot;</span>&gt;</span>Dog<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;cat&quot;</span>&gt;</span>Cat<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;others&quot;</span>&gt;</span>Others<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In the above code, the <code>&lt;select&gt;</code> tag creates a dropdown menu with the placeholder text “–Please select an option–” and a dropdown arrow on the right. Clicking the arrow reveals three options for the user to choose from.</p>
+<p>Each option is represented by the <code>&lt;option&gt;</code> tag, and the <code>value</code> attribute of the selected option is sent to the server. The <code>selected</code> attribute can be used to set a default option.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">&quot;choice&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;first&quot;</span>&gt;</span>First Value<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;second&quot;</span> <span class="attr">selected</span>&gt;</span>Second Value<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;third&quot;</span>&gt;</span>Third Value<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this code, “Second Value” is the default selected option when the page loads.</p>
+<p>The <code>&lt;select&gt;</code> element has the following attributes:</p>
+<ul>
+<li><code>autofocus</code>: Boolean attribute indicating whether the control should automatically receive focus when the page loads.</li>
+<li><code>disabled</code>: Boolean attribute indicating whether the control is disabled.</li>
+<li><code>form</code>: Associates the select element with a form using its <code>id</code>.</li>
+<li><code>multiple</code>: Boolean attribute indicating if multiple options can be selected. If enabled, most browsers display a scrollable list box, and users can select multiple options by holding down the Shift or Ctrl key.</li>
+<li><code>name</code>: Name of the control.</li>
+<li><code>required</code>: Boolean attribute indicating whether the control is required.</li>
+<li><code>size</code>: Specifies the number of visible options when <code>multiple</code> is set. Additional options will require scrolling.</li>
+</ul>
+<h2 id="lt-option-gt-lt-optgroup-gt"><a href="#lt-option-gt-lt-optgroup-gt" class="headerlink" title="&lt;option&gt;, &lt;optgroup&gt;"></a><code>&lt;option&gt;</code>, <code>&lt;optgroup&gt;</code></h2><p>The <code>&lt;option&gt;</code> tag, used within <code>&lt;select&gt;</code>, <code>&lt;optgroup&gt;</code>, and <code>&lt;datalist&gt;</code>, represents an individual menu item.</p>
+<p>Attributes of <code>&lt;option&gt;</code> include:</p>
+<ul>
+<li><code>disabled</code>: Boolean attribute indicating whether the option is disabled.</li>
+<li><code>label</code>: Provides a label for the option. If omitted, it defaults to the option’s text content.</li>
+<li><code>selected</code>: Boolean attribute indicating whether the option is selected by default.</li>
+<li><code>value</code>: The value submitted to the server when the option is selected. If omitted, it defaults to the option’s text content.</li>
+</ul>
+<p>The <code>&lt;optgroup&gt;</code> tag is used to group related options within a <code>&lt;select&gt;</code> element:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">label</span>&gt;</span>Pets:</span><br><span class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">&quot;pets&quot;</span> <span class="attr">multiple</span> <span class="attr">size</span>=<span class="string">&quot;4&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optgroup</span> <span class="attr">label</span>=<span class="string">&quot;Four-legged pets&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;dog&quot;</span>&gt;</span>Dog<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;cat&quot;</span>&gt;</span>Cat<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">optgroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optgroup</span> <span class="attr">label</span>=<span class="string">&quot;Birds&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;parrot&quot;</span>&gt;</span>Parrot<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;thrush&quot;</span>&gt;</span>Thrush<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">optgroup</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, the <code>&lt;select&gt;</code> dropdown uses <code>&lt;optgroup&gt;</code> to organize options into two categories, each with its own label. </p>
+<p>Its attribute are as follows:</p>
+<ul>
+<li><code>disabled</code>: A boolean setting that determines whether the group is disabled. When enabled, all menu items in the group are unselectable.</li>
+<li><code>label</code>: The title for the menu item group.</li>
+</ul>
+<h2 id="lt-datalist-gt"><a href="#lt-datalist-gt" class="headerlink" title="&lt;datalist&gt;"></a><code>&lt;datalist&gt;</code></h2><p>The <code>&lt;datalist&gt;</code> element is a container used to provide a list of options for an associated input element, typically for generating input suggestions. It uses <code>&lt;option&gt;</code> elements to define each menu item.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;ice-cream-choice&quot;</span>&gt;</span>Ice Cream:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">list</span>=<span class="string">&quot;ice-cream-flavors&quot;</span> <span class="attr">id</span>=<span class="string">&quot;ice-cream-choice&quot;</span> <span class="attr">name</span>=<span class="string">&quot;ice-cream-choice&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">datalist</span> <span class="attr">id</span>=<span class="string">&quot;ice-cream-flavors&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;Chocolate&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;Coconut&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;Mint&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;Strawberry&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;Vanilla&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">datalist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In the code above, the <code>&lt;input&gt;</code> element creates a text input box where users can enter text. The <code>list</code> attribute of <code>&lt;input&gt;</code> specifies the <code>id</code> of the associated <code>&lt;datalist&gt;</code>. The <code>&lt;datalist&gt;</code> provides suggestions as a dropdown menu when the user interacts with the input box. It also auto-filters the options based on the user’s input; for example, typing “Van” will display only “Vanilla.”</p>
+<p>Note that <code>&lt;option&gt;</code> elements do not require closing tags in this context.</p>
+<p>The <code>&lt;option&gt;</code> tag can also include a <code>label</code> attribute for additional description. In Chrome, this label appears below the value in smaller text.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">datalist</span> <span class="attr">id</span>=<span class="string">&quot;ide&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;Brackets&quot;</span> <span class="attr">label</span>=<span class="string">&quot;by Adobe&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;Coda&quot;</span> <span class="attr">label</span>=<span class="string">&quot;by Panic&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">datalist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, Chrome displays “Brackets” with “by Adobe” in smaller text below it in the dropdown list.</p>
+<h2 id="lt-textarea-gt"><a href="#lt-textarea-gt" class="headerlink" title="&lt;textarea&gt;"></a><code>&lt;textarea&gt;</code></h2><p>The <code>&lt;textarea&gt;</code> element is a block-level element used to create a multi-line text input area.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">textarea</span> <span class="attr">id</span>=<span class="string">&quot;story&quot;</span> <span class="attr">name</span>=<span class="string">&quot;story&quot;</span> <span class="attr">rows</span>=<span class="string">&quot;5&quot;</span> <span class="attr">cols</span>=<span class="string">&quot;33&quot;</span>&gt;</span></span><br><span class="line">This is a long story.</span><br><span class="line"><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>This code creates a text area that is 5 rows high and 33 columns wide.</p>
+<p>Attributes for <code>&lt;textarea&gt;</code> include:</p>
+<ul>
+<li><code>autofocus</code>: Boolean attribute that determines if the element should automatically gain focus.</li>
+<li><code>cols</code>: Width of the text area in characters (default is 20).</li>
+<li><code>dir</code>: Text direction, can be “ltr” (left-to-right), “rtl” (right-to-left), or “auto” (determined by browser).</li>
+<li><code>disabled</code>: Boolean attribute that disables the element.</li>
+<li><code>form</code>: Associates the text area with a specific form by <code>id</code>.</li>
+<li><code>maxlength</code>: Maximum number of characters allowed (unlimited if not specified).</li>
+<li><code>minlength</code>: Minimum number of characters required.</li>
+<li><code>name</code>: Name of the text area.</li>
+<li><code>placeholder</code>: Placeholder text shown when the text area is empty.</li>
+<li><code>readonly</code>: Boolean attribute that makes the text area read-only.</li>
+<li><code>required</code>: Boolean attribute that makes the text area required.</li>
+<li><code>rows</code>: Height of the text area in rows.</li>
+<li><code>spellcheck</code>: Enables or disables browser spell checking (true, default, or false).</li>
+<li><code>wrap</code>: Determines text wrapping behavior—<code>hard</code> (insert line breaks), <code>soft</code> (wraps but no line breaks), or <code>off</code> (no wrapping).</li>
+</ul>
+<h2 id="lt-output-gt"><a href="#lt-output-gt" class="headerlink" title="&lt;output&gt;"></a><code>&lt;output&gt;</code></h2><p>The <code>&lt;output&gt;</code> tag is an inline element used to display the result of a user action.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;number&quot;</span> <span class="attr">name</span>=<span class="string">&quot;a&quot;</span> <span class="attr">value</span>=<span class="string">&quot;10&quot;</span>&gt;</span> +</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;number&quot;</span> <span class="attr">name</span>=<span class="string">&quot;b&quot;</span> <span class="attr">value</span>=<span class="string">&quot;10&quot;</span>&gt;</span> =</span><br><span class="line"><span class="tag">&lt;<span class="name">output</span> <span class="attr">name</span>=<span class="string">&quot;result&quot;</span>&gt;</span>20<span class="tag">&lt;/<span class="name">output</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Attributes:</p>
+<ul>
+<li><code>for</code>: Associates with the id of the control, representing the result of that control’s operation.</li>
+<li><code>form</code>: Associates with the id of a form.</li>
+<li><code>name</code>: Name of the control.</li>
+</ul>
+<h2 id="lt-progress-gt"><a href="#lt-progress-gt" class="headerlink" title="&lt;progress&gt;"></a><code>&lt;progress&gt;</code></h2><p>The <code>&lt;progress&gt;</code> tag is an inline element that represents the completion progress of a task, typically displayed as a progress bar.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">progress</span> <span class="attr">id</span>=<span class="string">&quot;file&quot;</span> <span class="attr">max</span>=<span class="string">&quot;100&quot;</span> <span class="attr">value</span>=<span class="string">&quot;70&quot;</span>&gt;</span> 70% <span class="tag">&lt;/<span class="name">progress</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Attributes:</p>
+<ul>
+<li><code>max</code>: The maximum value of the progress bar, must be a positive number. Default is 1.</li>
+<li><code>value</code>: The current value of the progress bar. Must be between 0 and the <code>max</code> value. If <code>max</code> is omitted, this value should be between 0 and 1. If omitted, the progress bar will appear as indeterminate.</li>
+</ul>
+<h2 id="lt-meter-gt"><a href="#lt-meter-gt" class="headerlink" title="&lt;meter&gt;"></a><code>&lt;meter&gt;</code></h2><p>The <code>&lt;meter&gt;</code> tag is an inline element used to display a value within a known range, suitable for showing progress, disk usage, battery level, etc. It is generally displayed as a non-scrolling gauge.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>The oven&#x27;s current temperature is <span class="tag">&lt;<span class="name">meter</span> <span class="attr">min</span>=<span class="string">&quot;200&quot;</span> <span class="attr">max</span>=<span class="string">&quot;500&quot;</span> <span class="attr">value</span>=<span class="string">&quot;350&quot;</span>&gt;</span> 350 degrees<span class="tag">&lt;/<span class="name">meter</span>&gt;</span>.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>The code above displays a gauge where the left end represents 200, the right end represents 500, and the current position is at 350.</p>
+<p>Note that the child elements of the <code>&lt;meter&gt;</code> tag are typically not displayed. They only appear if the browser does not support the <code>&lt;meter&gt;</code> element.</p>
+<p>Attributes:</p>
+<ul>
+<li><code>min</code>: The lower bound of the range, must be less than <code>max</code>. Defaults to 0 if omitted.</li>
+<li><code>max</code>: The upper bound of the range, must be greater than <code>min</code>. Defaults to 1 if omitted.</li>
+<li><code>value</code>: The current value, must be between <code>min</code> and <code>max</code>. Defaults to 0 if omitted.</li>
+<li><code>low</code>: The threshold for the “low” range, must be greater than <code>min</code> and less than <code>high</code> and <code>max</code>. Defaults to <code>min</code> if omitted.</li>
+<li><code>high</code>: The threshold for the “high” range, must be less than <code>max</code> and greater than <code>low</code> and <code>min</code>. Defaults to <code>max</code> if omitted.</li>
+<li><code>optimum</code>: The optimal value, must be between <code>min</code> and <code>max</code>. It indicates the best range when used with <code>low</code> and <code>high</code>. Defaults to the midpoint between <code>min</code> and <code>max</code> if omitted.</li>
+<li><code>form</code>: Associates with the id of a form.</li>
+</ul>
+<p>In Chrome, the meter bar is color-coded: green for good, yellow for average, and red for poor conditions.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meter</span> <span class="attr">id</span>=<span class="string">&quot;fuel&quot;</span> <span class="attr">name</span>=<span class="string">&quot;fuel&quot;</span> <span class="attr">min</span>=<span class="string">&quot;0&quot;</span> <span class="attr">max</span>=<span class="string">&quot;100&quot;</span> <span class="attr">low</span>=<span class="string">&quot;33&quot;</span> <span class="attr">high</span>=<span class="string">&quot;66&quot;</span> <span class="attr">optimum</span>=<span class="string">&quot;80&quot;</span> <span class="attr">value</span>=<span class="string">&quot;50&quot;</span>&gt;</span></span><br><span class="line">    at 50/100</span><br><span class="line"><span class="tag">&lt;/<span class="name">meter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, the meter is divided into three segments: 0–32, 33–65, and 66–100. Since <code>optimum</code> is 80, the ranges are color-coded as follows: less than 33 is red, between 33 and 65 is yellow, and greater than 65 is green.</p>
+<h2 id="Reference-Links"><a href="#Reference-Links" class="headerlink" title="Reference Links"></a>Reference Links</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://webkit.org/blog/7099/html-interactive-form-validation/"><font style="color:rgb(73, 73, 73);">HTML Interactive Form Validation</font></a><font style="color:rgb(73, 73, 73);">, by Chris Dumez</font></li>
+</ul>
+<p>Link to original article:</p>
+<p><a target="_blank" rel="noopener" href="https://wangdoc.com/html/form">https://wangdoc.com/html/form</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2024/06/27/html-form/">http://linjiangxiong.com/2024/06/27/html-form/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HTML/">HTML</a></div><div class="post_share"><div class="social-share" data-image="/image/IMG_3665.JPG" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/06/28/html-elements/" title="HTML Elements"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">HTML Elements</div></div></a></div><div class="next-post pull-right"><a href="/2024/06/26/html-table/" title="HTML Table"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">HTML Table</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/06/13/html-introduction/" title="Introduction to HTML"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-13</div><div class="title">Introduction to HTML</div></div></a></div><div><a href="/2024/06/17/html-semantic-tags/" title="HTML Semantic Tags"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-17</div><div class="title">HTML Semantic Tags</div></div></a></div><div><a href="/2024/06/16/html-encode/" title="Understanding Text Encoding and Character Representation in HTML"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-16</div><div class="title">Understanding Text Encoding and Character Representation in HTML</div></div></a></div><div><a href="/2024/06/15/html-element-attributes/" title="HTML Element Attributes"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-15</div><div class="title">HTML Element Attributes</div></div></a></div><div><a href="/2024/06/19/html-lists/" title="HTML Lists"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-19</div><div class="title">HTML Lists</div></div></a></div><div><a href="/2024/06/23/html-script-and-noscript/" title="The &lt;script&gt; and &lt;noscript&gt; Tags"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-23</div><div class="title">The &lt;script&gt; and &lt;noscript&gt; Tags</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Lin</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">294</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-form-gt"><span class="toc-number">1.</span> <span class="toc-text">&lt;form&gt;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction"><span class="toc-number">1.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#enctype-Attribute"><span class="toc-number">1.2.</span> <span class="toc-text">enctype Attribute</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-fieldset-gt-lt-legend-gt"><span class="toc-number">2.</span> <span class="toc-text">&lt;fieldset&gt;, &lt;legend&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-label-gt"><span class="toc-number">3.</span> <span class="toc-text">&lt;label&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-input-gt"><span class="toc-number">4.</span> <span class="toc-text">&lt;input&gt;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Overview"><span class="toc-number">4.1.</span> <span class="toc-text">Overview</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Types"><span class="toc-number">4.2.</span> <span class="toc-text">Types</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-button-gt"><span class="toc-number">5.</span> <span class="toc-text">&lt;button&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-select-gt"><span class="toc-number">6.</span> <span class="toc-text">&lt;select&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-option-gt-lt-optgroup-gt"><span class="toc-number">7.</span> <span class="toc-text">&lt;option&gt;, &lt;optgroup&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-datalist-gt"><span class="toc-number">8.</span> <span class="toc-text">&lt;datalist&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-textarea-gt"><span class="toc-number">9.</span> <span class="toc-text">&lt;textarea&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-output-gt"><span class="toc-number">10.</span> <span class="toc-text">&lt;output&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-progress-gt"><span class="toc-number">11.</span> <span class="toc-text">&lt;progress&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lt-meter-gt"><span class="toc-number">12.</span> <span class="toc-text">&lt;meter&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference-Links"><span class="toc-number">13.</span> <span class="toc-text">Reference Links</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/18/bulk-deleting-keys-in-redis-using-wildcards/" title="Bulk Deleting Keys in Redis Using Wildcards">Bulk Deleting Keys in Redis Using Wildcards</a><time datetime="2024-09-18T15:42:56.000Z" title="Created 2024-09-18 23:42:56">2024-09-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/11/analyzing-redis-source-code-hash/" title="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing"><img src="/image/redis-src/2024091101.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing"/></a><div class="content"><a class="title" href="/2024/09/11/analyzing-redis-source-code-hash/" title="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing">Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing</a><time datetime="2024-09-10T22:28:03.000Z" title="Created 2024-09-11 06:28:03">2024-09-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/10/analyzing-redis-source-code-sds/" title="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation"><img src="/image/redis-src/24091002.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation"/></a><div class="content"><a class="title" href="/2024/09/10/analyzing-redis-source-code-sds/" title="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation">Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation</a><time datetime="2024-09-09T17:13:55.000Z" title="Created 2024-09-10 01:13:55">2024-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/06/why-does-redis-use-the-sds-structure-for-strings-instead-of-char/" title="Why Does Redis Use the SDS Structure for Strings Instead of char*?">Why Does Redis Use the SDS Structure for Strings Instead of char*?</a><time datetime="2024-09-05T16:01:26.000Z" title="Created 2024-09-06 00:01:26">2024-09-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/05/how-to-delete-data-in-elasticsearch-single-multiple-clear-and-all/" title="How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All">How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All</a><time datetime="2024-09-04T16:02:38.000Z" title="Created 2024-09-05 00:02:38">2024-09-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/search/local-search.min.js"></script></div></div></body></html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Basic C Language Syntax | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="StatementsC code is composed of statements. A statement is a command that the program executes. In C, each statement must end with a semicolon, unless specified otherwise. 1int x &#x3D; 1;  The above is a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Basic C Language Syntax">
+<meta property="og:url" content="http://linjiangxiong.com/2024/05/02/basic-c-language-syntax/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="StatementsC code is composed of statements. A statement is a command that the program executes. In C, each statement must end with a semicolon, unless specified otherwise. 1int x &#x3D; 1;  The above is a">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://linjiangxiong.com/image/IMG_3665.JPG">
+<meta property="article:published_time" content="2024-05-02T03:27:52.000Z">
+<meta property="article:modified_time" content="2024-09-13T14:41:34.189Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="C Programming Language">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/IMG_3665.JPG"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2024/05/02/basic-c-language-syntax/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap"><link rel="stylesheet" href="/css/ud_v5.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Basic C Language Syntax',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-13 22:41:34'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">294</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Johnson Lin"><span class="site-name">Johnson Lin</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Basic C Language Syntax</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-05-02T03:27:52.000Z" title="Created 2024-05-02 11:27:52">2024-05-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-09-13T14:41:34.189Z" title="Updated 2024-09-13 22:41:34">2024-09-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-Tutorial/">C Tutorial</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Basic C Language Syntax"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h2 id="Statements"><a href="#Statements" class="headerlink" title="Statements"></a>Statements</h2><p>C code is composed of statements. A statement is a command that the program executes. In C, each statement must end with a semicolon, unless specified otherwise.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>The above is a variable declaration statement, where the integer variable <code>x</code> is declared and assigned a value of <code>1</code>.</p>
+<p>Multiple statements can be written on a single line:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> x; x = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Here, two statements are written on one line. Line breaks between statements aren’t required but are often used for readability.</p>
+<p>A single statement can also be split across multiple lines, with semicolons indicating the end of the statement:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> x;</span><br><span class="line">x</span><br><span class="line">=</span><br><span class="line"><span class="number">1</span></span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<p>In this example, the statement <code>x = 1;</code> is broken into four lines. The compiler ignores line breaks within a statement.</p>
+<p>Even a single semicolon is a valid statement, called an “empty statement,” though it has no effect:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Expressions"><a href="#Expressions" class="headerlink" title="Expressions"></a>Expressions</h2><p>In C, most calculations are performed through expressions. An expression represents a computation that produces a value.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> + <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>The above is an expression that calculates the result of <code>1 + 2</code>.</p>
+<p>An expression followed by a semicolon can also become a statement, though it may not serve a practical purpose:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8</span>;</span><br><span class="line"><span class="number">3</span> + <span class="number">4</span>;</span><br></pre></td></tr></table></figure>
+
+<p>The above are two expressions, which become statements when followed by a semicolon.</p>
+<p>The key differences between expressions and statements are:</p>
+<ul>
+<li>A statement can contain an expression, but an expression alone is not a statement.</li>
+<li>Expressions always return a value, while statements may or may not. For example, a variable declaration statement like <code>int x = 1;</code> does not return a value.</li>
+</ul>
+<h2 id="Statement-Blocks"><a href="#Statement-Blocks" class="headerlink" title="Statement Blocks"></a>Statement Blocks</h2><p>In C, multiple statements can be grouped together using curly braces <code>&#123;&#125;</code> to form a block, also known as a compound statement. A block of statements is treated as a single compound statement.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> x;</span><br><span class="line">  x = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>In this example, the curly braces create a block of statements. There is no need to add a semicolon after the closing brace.</p>
+<h2 id="Whitespace"><a href="#Whitespace" class="headerlink" title="Whitespace"></a>Whitespace</h2><p>Whitespace in C mainly serves to help the compiler distinguish between different syntax elements. Where spaces aren’t required for the compiler to differentiate syntax, they are optional and mainly used to enhance readability.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// Equivalent to:</span></span><br><span class="line"><span class="type">int</span> x=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>In the above example, spaces around the assignment operator <code>=</code> are optional since the compiler can interpret the code without them.</p>
+<p>Multiple spaces between syntax elements are treated as a single space:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>    x =     <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Here, the extra spaces have no effect on the code.</p>
+<p>Whitespace is also used for indentation. While indentation doesn’t affect the program’s functionality, it enhances code readability, especially for distinguishing code blocks. Most C coding styles suggest indenting nested code by four spaces. However, for brevity, this text uses two spaces.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Four-space indentation</span></span><br><span class="line"><span class="keyword">if</span> (x &gt; <span class="number">0</span>)</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;positive\n&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Two-space indentation</span></span><br><span class="line"><span class="keyword">if</span> (x &gt; <span class="number">0</span>)</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;positive\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>A line containing only spaces is considered a blank line, which the compiler completely ignores.</p>
+<h2 id="Comments"><a href="#Comments" class="headerlink" title="Comments"></a>Comments</h2><p>Comments are annotations in the code that the compiler ignores, meaning they don’t affect the program. C supports two types of comments.</p>
+<ol>
+<li>Block comments, enclosed by <code>/*...*/</code>, can span multiple lines:</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Comment */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">  This is a multi-line comment.</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>Block comments can also be placed inline:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">open</span><span class="params">(<span class="type">char</span>* s <span class="comment">/* file name */</span>, <span class="type">int</span> mode)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>In this example, <code>/* file name */</code> explains the function’s parameter without interfering with the code.</p>
+<p>It’s important to close block comments with <code>*/</code>, or they may unintentionally span beyond their intended scope.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;a &quot;</span>); <span class="comment">/* Comment 1</span></span><br><span class="line"><span class="comment">printf(&quot;b &quot;);</span></span><br><span class="line"><span class="comment">printf(&quot;c &quot;); /* Comment 2 */</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;d &quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>In the example above, forgetting to close <code>Comment 1</code> causes the second comment to include unintended lines of code.</p>
+<ol start="2">
+<li>Line comments, introduced in C99, start with <code>//</code> and extend to the end of the line:</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This is a comment</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> x = <span class="number">1</span>; <span class="comment">// This is also a comment</span></span><br></pre></td></tr></table></figure>
+
+<p>Comments cannot be placed within double quotes as they will be treated as part of the string.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;// hello /* world */ &quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Here, the characters <code>//</code> and <code>/* ... */</code> are treated as part of the string and have no effect as comments.</p>
+<p><del>When compiling, comments are replaced with spaces. So ~~`</del>min/* space */Value<del>`</del> becomes <del>`</del>min Value<del>`</del> instead of <del>`</del>minValue<del>`</del>.~~</p>
+<h2 id="printf"><a href="#printf" class="headerlink" title="printf()"></a><code>printf()</code></h2><h3 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h3><p>This guide often uses the <code>printf()</code> function, which outputs text to the screen. The <code>f</code> in <code>printf</code> stands for “formatted,” meaning you can customize the output.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Hello World&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>The above command prints the text “Hello World” to the screen.</p>
+<p>By default, <code>printf()</code> doesn’t automatically add a newline. To move the cursor to the next line, include the newline character <code>\n</code> at the end of the string:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Hello World\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>To print a string across multiple lines, insert newline characters where needed:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Hello\nWorld\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>The above example can also be written as two separate <code>printf()</code> calls, producing the same output.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Hello\n&quot;</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;World\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Before using <code>printf()</code>, you must include the standard library header <code>stdio.h</code> at the beginning of your code:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Hello World\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Placeholders"><a href="#Placeholders" class="headerlink" title="Placeholders"></a>Placeholders</h3><p>In <code>printf()</code>, you can specify placeholders in the output text. A “placeholder” is a symbol that will later be replaced with a specific value.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Output: There are 3 apples</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;There are %i apples\n&quot;</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<p>In this example, <code>&quot;There are %i apples\n&quot;</code> is the output string, and <code>%i</code> is the placeholder, indicating where a value should be inserted. Placeholders start with the percent sign <code>%</code>, and the second character specifies the data type, such as <code>%i</code>, which expects an integer.</p>
+<p>The second argument of <code>printf()</code> provides the value to replace the placeholder. In this case, the integer <code>3</code> replaces <code>%i</code>. The resulting output will be: <code>There are 3 apples</code>.</p>
+<p>Common placeholders include <code>%i</code> for integers and <code>%s</code> for strings:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s will come tonight\n&quot;</span>, <span class="string">&quot;Jane&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Here, <code>%s</code> is a string placeholder, so the second argument of <code>printf()</code> must be a string. In this example, <code>&quot;Jane&quot;</code> is substituted, and the output will be: <code>Jane will come tonight</code>.</p>
+<p>You can use multiple placeholders in one <code>printf()</code> call:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s says it is %i o&#x27;clock\n&quot;</span>, <span class="string">&quot;Ben&quot;</span>, <span class="number">21</span>);</span><br></pre></td></tr></table></figure>
+
+<p>This string contains two placeholders: <code>%s</code> for a string and <code>%i</code> for an integer. They correspond to <code>&quot;Ben&quot;</code> and <code>21</code>, producing the output: <code>Ben says it is 21 o&#39;clock</code>.</p>
+<p>The number of placeholders in the format string must match the number of arguments passed to <code>printf()</code>. For instance, if there are <code>n</code> placeholders, <code>printf()</code> needs <code>n + 1</code> arguments. Failing to provide the correct number of arguments can lead to unpredictable behavior, like displaying random memory values.</p>
+<p><code>printf()</code> supports a wide range of placeholders, each corresponding to a different data type in C. Here’s a list of common placeholders:</p>
+<ul>
+<li><code>%a</code>: Hexadecimal floating point, lowercase.</li>
+<li><code>%A</code>: Hexadecimal floating point, uppercase.</li>
+<li><code>%c</code>: Single character.</li>
+<li><code>%d</code>: Decimal integer.</li>
+<li><code>%e</code>: Scientific notation, lowercase ‘e’.</li>
+<li><code>%E</code>: Scientific notation, uppercase ‘E’.</li>
+<li><code>%i</code>: Integer, similar to <code>%d</code>.</li>
+<li><code>%f</code>: Floating point (both <code>float</code> and <code>double</code> types).</li>
+<li><code>%g</code>: Floating point with up to 6 significant digits. The integer part is automatically converted to scientific notation once it exceeds 6 digits, and the ‘e’ in the exponent part is lowercase.</li>
+<li><code>%G</code>: Same as <code>%g</code>, but with an uppercase ‘E’ in scientific notation.</li>
+<li><code>%hd</code>: Decimal <code>short int</code>.</li>
+<li><code>%ho</code>: Octal <code>short int</code>.</li>
+<li><code>%hx</code>: Hexadecimal <code>short int</code>.</li>
+<li><code>%hu</code>: Unsigned <code>short int</code>.</li>
+<li><code>%ld</code>: Decimal <code>long int</code>.</li>
+<li><code>%lo</code>: Octal <code>long int</code>.</li>
+<li><code>%lx</code>: Hexadecimal <code>long int</code>.</li>
+<li><code>%lu</code>: Unsigned <code>long int</code>.</li>
+<li><code>%lld</code>: Decimal <code>long long int</code>.</li>
+<li><code>%llo</code>: Octal <code>long long int</code>.</li>
+<li><code>%llx</code>: Hexadecimal <code>long long int</code>.</li>
+<li><code>%llu</code>: Unsigned <code>long long int</code>.</li>
+<li><code>%Le</code>: Scientific notation for <code>long double</code>.</li>
+<li><code>%Lf</code>: <code>long double</code>.</li>
+<li><code>%n</code>: Outputs the number of characters printed so far. This placeholder does not output anything but stores the count in a variable.</li>
+<li><code>%o</code>: Octal integer.</li>
+<li><code>%p</code>: Pointer address.</li>
+<li><code>%s</code>: String.</li>
+<li><code>%u</code>: Unsigned integer.</li>
+<li><code>%x</code>: Hexadecimal integer.</li>
+<li><code>%zd</code>: <code>size_t</code> type.</li>
+<li><code>%%</code>: Outputs a literal percent sign.</li>
+</ul>
+<h3 id="Formatting-Output"><a href="#Formatting-Output" class="headerlink" title="Formatting Output"></a>Formatting Output</h3><p><code>printf()</code> also allows customization of placeholder output.</p>
+<ol>
+<li><strong>Specifying Width</strong><br>You can define a minimum width for placeholders.</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%5d\n&quot;</span>, <span class="number">123</span>); <span class="comment">// Output: &quot;  123&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this example, <code>%5d</code> specifies that the output will occupy at least 5 spaces. Since <code>123</code> is only three digits long, two spaces are added before it to meet the width requirement.</p>
+<p>By default, values are right-aligned, meaning spaces are added in front. To left-align the value, insert a <code>-</code> after <code>%</code>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-5d\n&quot;</span>, <span class="number">123</span>); <span class="comment">// Output: &quot;123  &quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>For floating-point numbers, this width refers to the entire number, including decimal places:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Output: &quot;  123.450000&quot;</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%12f\n&quot;</span>, <span class="number">123.45</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Here, <code>%12f</code> ensures that the output will take up at least 12 characters, including padding and decimal digits.</p>
+<ol start="2">
+<li><strong>Always Showing Sign</strong><br>By default, <code>printf()</code> only displays the minus sign for negative numbers. To force it to show a plus sign for positive numbers, add a <code>+</code> after <code>%</code>:</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%+d\n&quot;</span>, <span class="number">12</span>);  <span class="comment">// Output: +12</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%+d\n&quot;</span>, <span class="number">-12</span>); <span class="comment">// Output: -12</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li><strong>Limiting Decimal Places</strong><br>To limit the number of decimal places, you can specify the desired precision with <code>%.2f</code>:</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Output: Number is 0.50</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Number is %.2f\n&quot;</span>, <span class="number">0.5</span>);</span><br></pre></td></tr></table></figure>
+
+<p>This ensures that only two decimal places are shown. You can also combine this with width specification:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Output: &quot;  0.50&quot;</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%6.2f\n&quot;</span>, <span class="number">0.5</span>);</span><br></pre></td></tr></table></figure>
+
+<p>This format reserves 6 spaces for the entire number, with 2 reserved for decimal places.</p>
+<p>You can dynamically specify both the width and precision using arguments:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%*.*f\n&quot;</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">0.5</span>); <span class="comment">// Equivalent to printf(&quot;%6.2f\n&quot;, 0.5);</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="4">
+<li><strong>Partial String Output</strong><br>By default, <code>%s</code> outputs the entire string. If you only want to display a portion, use <code>%.[m]s</code> to specify the length, where <code>[m]</code> is the number of characters to display:</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Output: hello</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%.5s\n&quot;</span>, <span class="string">&quot;hello world&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Here, <code>%.5s</code> tells <code>printf()</code> to output only the first 5 characters, resulting in <code>hello</code>.</p>
+<h2 id="Standard-Libraries-and-Header-Files"><a href="#Standard-Libraries-and-Header-Files" class="headerlink" title="Standard Libraries and Header Files"></a>Standard Libraries and Header Files</h2><p>In C, many functionalities, like <code>printf()</code>, are built into the language. You don’t need to write them from scratch. These built-in functions are part of the <strong>standard library</strong>. Since these functions are standardized, their behavior is consistent across different systems, ensuring code portability.</p>
+<p>Functions are organized into <strong>header files</strong>, such as <code>stdio.h</code> for <code>printf()</code>. To use a function, you need to include its corresponding header file at the beginning of your program with the <code>#include</code> directive:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>This tells the compiler to load the required functions. Note that <code>#include</code> does not require a semicolon.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2024/05/02/basic-c-language-syntax/">http://linjiangxiong.com/2024/05/02/basic-c-language-syntax/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C-Programming-Language/">C Programming Language</a></div><div class="post_share"><div class="social-share" data-image="/image/IMG_3665.JPG" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/05/03/c-language-variables/" title="Understanding Variables in C Programming"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">Understanding Variables in C Programming</div></div></a></div><div class="next-post pull-right"><a href="/2024/05/01/introduction-to-the-c-language/" title="Introduction to the C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">Introduction to the C Language</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/05/01/introduction-to-the-c-language/" title="Introduction to the C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-01</div><div class="title">Introduction to the C Language</div></div></a></div><div><a href="/2024/05/04/c-language-operator/" title="Operators in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-04</div><div class="title">Operators in C Language</div></div></a></div><div><a href="/2024/05/03/c-language-variables/" title="Understanding Variables in C Programming"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-03</div><div class="title">Understanding Variables in C Programming</div></div></a></div><div><a href="/2024/05/08/c-language-function/" title="Functions in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-08</div><div class="title">Functions in C Language</div></div></a></div><div><a href="/2024/05/05/c-language-flow-control/" title="Flow Control in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-05</div><div class="title">Flow Control in C Language</div></div></a></div><div><a href="/2024/05/07/c-language-pointer/" title="Pointer in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-07</div><div class="title">Pointer in C Language</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Lin</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">294</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Statements"><span class="toc-number">1.</span> <span class="toc-text">Statements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Expressions"><span class="toc-number">2.</span> <span class="toc-text">Expressions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Statement-Blocks"><span class="toc-number">3.</span> <span class="toc-text">Statement Blocks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Whitespace"><span class="toc-number">4.</span> <span class="toc-text">Whitespace</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Comments"><span class="toc-number">5.</span> <span class="toc-text">Comments</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#printf"><span class="toc-number">6.</span> <span class="toc-text">printf()</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basics"><span class="toc-number">6.1.</span> <span class="toc-text">Basics</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Placeholders"><span class="toc-number">6.2.</span> <span class="toc-text">Placeholders</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Formatting-Output"><span class="toc-number">6.3.</span> <span class="toc-text">Formatting Output</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Standard-Libraries-and-Header-Files"><span class="toc-number">7.</span> <span class="toc-text">Standard Libraries and Header Files</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/18/bulk-deleting-keys-in-redis-using-wildcards/" title="Bulk Deleting Keys in Redis Using Wildcards">Bulk Deleting Keys in Redis Using Wildcards</a><time datetime="2024-09-18T15:42:56.000Z" title="Created 2024-09-18 23:42:56">2024-09-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/11/analyzing-redis-source-code-hash/" title="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing"><img src="/image/redis-src/2024091101.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing"/></a><div class="content"><a class="title" href="/2024/09/11/analyzing-redis-source-code-hash/" title="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing">Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing</a><time datetime="2024-09-10T22:28:03.000Z" title="Created 2024-09-11 06:28:03">2024-09-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/10/analyzing-redis-source-code-sds/" title="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation"><img src="/image/redis-src/24091002.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation"/></a><div class="content"><a class="title" href="/2024/09/10/analyzing-redis-source-code-sds/" title="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation">Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation</a><time datetime="2024-09-09T17:13:55.000Z" title="Created 2024-09-10 01:13:55">2024-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/06/why-does-redis-use-the-sds-structure-for-strings-instead-of-char/" title="Why Does Redis Use the SDS Structure for Strings Instead of char*?">Why Does Redis Use the SDS Structure for Strings Instead of char*?</a><time datetime="2024-09-05T16:01:26.000Z" title="Created 2024-09-06 00:01:26">2024-09-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/05/how-to-delete-data-in-elasticsearch-single-multiple-clear-and-all/" title="How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All">How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All</a><time datetime="2024-09-04T16:02:38.000Z" title="Created 2024-09-05 00:02:38">2024-09-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/search/local-search.min.js"></script></div></div></body></html>
