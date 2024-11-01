@@ -7,27 +7,124 @@
 <meta property="article:author" content="Johnson Lin">
 <meta property="article:tag" content="Java,JVM,Spring,Spring Boot,Flink,Hadoop,Yarn,MySQL,Elasticsearch,Python,Kafka,Maven,Hbase,Kibana,Logstash">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://linjiangxiong.com/image/IMG_3665.JPG"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/page/14/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap"><link rel="stylesheet" href="/css/ud_v5.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+<meta name="twitter:image" content="http://linjiangxiong.com/image/IMG_3665.JPG"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/page/14/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap"><link rel="stylesheet" href="/css/ud_v5.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc', {'page_path': window.location.pathname})
+}, 'google_analytics')
 </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
   localSearch: undefined,
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
   copy: {
     success: 'Copy Successful',
-    error: 'Copy Error',
+    error: 'Copy Failed',
     noSupport: 'Browser Not Supported'
   },
   relativeDate: {
@@ -43,7 +140,7 @@ gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
     month: 'months ago'
   },
   copyright: undefined,
-  lightbox: 'fancybox',
+  lightbox: 'null',
   Snackbar: undefined,
   infinitegrid: {
     js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
@@ -63,316 +160,320 @@ gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc');
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2024-10-28 06:31:16'
-}</script><script>(win=>{
-      win.saveToLocal = {
-        set: (key, value, ttl) => {
-          if (ttl === 0) return
-          const now = Date.now()
-          const expiry = now + ttl * 86400000
-          const item = {
-            value,
-            expiry
-          }
-          localStorage.setItem(key, JSON.stringify(item))
-        },
-      
-        get: key => {
-          const itemStr = localStorage.getItem(key)
-      
-          if (!itemStr) {
-            return undefined
-          }
-          const item = JSON.parse(itemStr)
-          const now = Date.now()
-      
-          if (now > item.expiry) {
-            localStorage.removeItem(key)
-            return undefined
-          }
-          return item.value
-        }
-      }
-    
-      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        script.onerror = reject
-        script.onload = script.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          script.onload = script.onreadystatechange = null
-          resolve()
-        }
-
-        Object.keys(attr).forEach(key => {
-          script.setAttribute(key, attr[key])
-        })
-
-        document.head.appendChild(script)
-      })
-    
-      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onerror = reject
-        link.onload = link.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          link.onload = link.onreadystatechange = null
-          resolve()
-        }
-        document.head.appendChild(link)
-      })
-    
-      win.activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-        if (t === 'dark') activateDarkMode()
-        else if (t === 'light') activateLightMode()
-      
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
-    
-      const detectApple = () => {
-        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-          document.documentElement.classList.add('apple')
-        }
-      }
-      detectApple()
-    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">294</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Johnson Lin"><span class="site-name">Johnson Lin</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/2021/08/11/technology-management-3/" title="角色认知"><img class="post-bg" src="/image/column/tech-mg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="角色认知"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/08/11/technology-management-3/" title="角色认知">角色认知</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-10T21:46:09.000Z" title="Created 2021-08-11 05:46:09">2021-08-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AF%BB%E4%B9%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">读书学习笔记</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86/">技术管理</a></span></div><div class="content">管理到底都做哪些事儿？基于良好的角色认知和管理沟通，主要做好三件事：带人、做事、看方向。
-五个管理要素：角色认知、管理规划、团队建设、任务管理和管理沟通。
-管理规划-看方向团队建设-带人任务管理-做事
-
-
-TIPS：如何提升团队工作效率？工业时代的团队：主要靠加强外驱，讲究“胡萝卜加大棒”，追求严格管控。知识经济时代的团队：更多是靠激发内驱，弹性工作制也好，发挥员工优势也好，都是希望员工更主动、自主，从而有更多的创造力。 
-
-从工程师到管理者，角色都发生了哪些变化？
-
-
-维度
-工程师
-管理者
-
-
-
-职责使命
-做好自己手头的工作
-带领整个团队往前走，上级只是帮你设定一个目标，剩下做什么、怎么做，都是要考虑的，所有对达成目标有帮助的工作都是份内的
-
-
-负责对象
-对自己和自己的工作负责，“管好自己就可以了”
-对公司(上级)和团队(下级)都负责，关心团队成员的发展和成长
-
-
-关注焦点
-过程导向，把工作执行到位
-目标和结果导向，关心目标和前进方向
-
-
-工作内容和能力要求
-内容单纯，主要靠专业能力
-多维立体，所需能力维度大幅增加，技术判断力、目标管理能力、团队规划能力、项目管理能力、沟通协调能力、 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/08/10/technology-management-1/" title="自我倾听（上）"><img class="post-bg" src="/image/column/tech-mg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自我倾听（上）"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/08/10/technology-management-1/" title="自我倾听（上）">自我倾听（上）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-09T17:18:12.000Z" title="Created 2021-08-10 01:18:12">2021-08-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AF%BB%E4%B9%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">读书学习笔记</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86/">技术管理</a></span></div><div class="content">技术人常见的职业发展方向
-技术类、管理类、创业类和顾问类方向的技能清单：
-无论走在哪条路上，有些能力是共通的，比如规划、带人、沟通、执行等管理能力。
-要不要做管理？要不要做管理问题应从初衷和意愿两方面考虑。
-“做管理”是否更符合初衷？仔细思考自己做管理是因为外驱力还是内驱力？外驱让我们可以做好本职工作，而内驱才能让我们成就卓越。
-外驱力外部的推力和诱惑，如不得已的选择、别人眼里的成功、不辜负组织的期待、对做管理的主观遐想等。
-以下问题可供参考判断：
-
-“我对技术没有热情，也没有技术特长，所以只能做管理。”
-“做技术又不能做一辈子，很多前辈都转管理了，我也要转。”
-“没有办法，公司发展太快了，老板要求我带团队。”
-“如果能做到公司高管，别人都会认为我是一个优秀和成功的人。”
-“能够做管理带团队，这样在家人眼中会很风光。”
-“上级说我适合做管理，我不能辜负他对我的期望。”
-“公司需要我带团队，这是公司对我的信任，我一定得做好。”
-“不用凡事亲力亲为，安排下级去做就好了，应该会轻松些。”
-“做管理越晋升越轻松，你看高管都不坐班。”
-
-内驱力建立在内心的渴望和意愿上（内在动力和真正诉求），如认 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2021/08/10/technology-management-0/" title="极客时间-技术管理实战36讲学习笔记"><img class="post-bg" src="/image/column/tech-mg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="极客时间-技术管理实战36讲学习笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/08/10/technology-management-0/" title="极客时间-技术管理实战36讲学习笔记">极客时间-技术管理实战36讲学习笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-09T16:02:43.000Z" title="Created 2021-08-10 00:02:43">2021-08-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AF%BB%E4%B9%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">读书学习笔记</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86/">技术管理</a></span></div><div class="content">
-如果干得好，管理是最崇高的职业之一。没有哪一个职业能像管理一样为他人提供学习和成长的机会，让他们懂得承担责任并取得成绩，以及为团队的成功做出贡献。——“颠覆式创新之父”克里斯坦森，《你要如何衡量你的人生》
-
-为什么需要学管理？对于互联网技术人来说，“管理”作为一项综合能力不再是一个可选项，无论是否身在技术管理岗，未来的职业发展都会围绕着技术和管理这两条腿在走路，一条腿是走不远的。
-重点内容
-自我倾听。理顺内心的纠结与彷徨，心无旁骛地走上管理之路。
-角色认知。提供一个管理工作的“全景图”，以方便按图索骥地了解管理工作所涵盖的方方面面。
-管理方法。“管理三部曲”——管理规划、团队建设和任务管理，探讨“看方向”“带人”和“做事”的这三个关键的管理内容。
-管理沟通。探讨管理沟通的工具和技巧，并探讨向上、向下、横向等典型沟通场景下的沟通要点。
-管理之路。主要探讨如何积累管理方法论，以及如何成为自己所期待的管理者。
-
-学习笔记
-自我倾听
-
-自我倾听（上）
-自我倾听（下）
-
-
-角色认知
-
-角色认知
-
-
-管理规划
-团队建设
-
-团队建设六要素
-能力培养——提升员工个人能力
-员工激励——提升员工的工作意 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/08/09/ml-1/" title="马龙：只要心怀热爱，永远都是当打之年！"><img class="post-bg" src="https://i.loli.net/2021/08/09/XbfCZRY2TQtFM9o.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="马龙：只要心怀热爱，永远都是当打之年！"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/08/09/ml-1/" title="马龙：只要心怀热爱，永远都是当打之年！">马龙：只要心怀热爱，永远都是当打之年！</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-09T15:37:40.000Z" title="Created 2021-08-09 23:37:40">2021-08-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%89%AA%E6%8A%A5/">剪报</a></span></div><div class="content">　　我的东京奥运会之旅圆满结束，无论单打冠军，还是团体金牌，都是我和我的队友、教练员，以及背后默默付出的陪练、队医、保障团队，团结一心共同奋斗出来的荣耀勋章。
-
-　　当国歌响起，五星红旗缓缓升起，那一刻，我感慨万千。过去5年的甘苦画面历历在目。
-　　2018年下半年至2019年初，我因伤远离国际赛场8个月，其间有3个月没有碰球，那是我职业生涯最艰难的一段时期，但我从没有想过放弃，因为乒乓球已经成为我生命中无法替代的一部分。我告诉自己，只要还有机会，我就一定要坚持训练，重新回到赛场。
-　　终于，我来到了东京——第三次踏上了奥运会的赛场。强大的对手、紧张的气氛，让我感到熟悉又兴奋。最让我难忘的，还是与队友们并肩作战的经历。团体赛半决赛和决赛的两场双打，我和搭档许昕把赛前准备的战术打出来了，我真切地感受到了奥运会乒乓球比赛带给我的享受。
-　　连续两届奥运会获得单打和团体两项金牌，许多人认为这是个了不起的成就。对此，我心怀感激，乒乓球带给了我一段精彩的人生。同时我也要感谢祖国和广大人民的支持和信任，这正是中国乒乓球事业不断向前的力量源泉。
-　　我已经32岁了，我觉得自己的身体状况还不错。事实上 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/08/05/note-202108/" title="小记：2021年8月">小记：2021年8月</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-05T03:44:22.000Z" title="Created 2021-08-05 11:44:22">2021-08-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E8%AE%B0/">小记</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%89%80%E6%80%9D%E6%89%80%E6%83%B3%E6%89%80%E6%82%9F/">所思所想所悟</a></span></div><div class="content">2021年8月2日1 梦
-昨晚梦到皮蛋，可把我气醒了。梦里大概是这样子：
-皮蛋生了七只小猫咪，有黑色的，有白色的，有橘黄色的还有混色的。但我发现的时候，其中的三只被他吃了，另外四只被绳子绑在一起，浸泡在洗脸盆上，盆上还有水。皮蛋打算溺死他自己的猫咪仔。把我气死了，拿起棍子准备教训皮蛋。结果，他一下子就跑去躲了，打不到他，我像个泼妇骂街一样，边骂边教育他，告诉他这些是你的仔，怎么可以这么残忍对待它们。。
-骂着骂着，突然想到小猫咪还在水盆里泡着呢，就马上冲回去，把小猫咪捞出来，解了绳子，感觉这些小猫咪像是要快饿死了。皮蛋又抓不到，不然还可以让皮蛋给小猫咪喂奶。
-没办法，想到小猫咪可以喝牛奶，又去冰箱找。边翻边想，刚出生的小猫咪可以喝冰的牛奶吗？哎呀，不管那么多了，拉肚子总比被饿死好吧？于是继续翻啊、找啊，但就是没有找到牛奶，急死了。后面冷静点，才想起我已经不喝牛奶很久了，冰箱怎么可能会有牛奶？这一瞬间，我彻底崩溃了，一直在责怪和质问自己。为什么我现在不喝牛奶了？！以前不是每晚睡之前都要喝一瓶的吗？！怎么不能过几天再不想喝牛奶？！就算不喝牛奶，冰箱也要备着啊？！为什么？！
-实在压抑到有些难受 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/08/02/bitwise-operation-xor-trick/" title="谈谈异或运算"><img class="post-bg" src="https://i.loli.net/2021/08/02/lcoR4QnyYJKPMBg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="谈谈异或运算"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/08/02/bitwise-operation-xor-trick/" title="谈谈异或运算">谈谈异或运算</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-01T22:30:31.000Z" title="Created 2021-08-02 06:30:31">2021-08-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">位运算</a></span></div><div class="content">本文翻译自 Florian 于 2020 年 3 月发表的一篇英文博客《That XOR Trick》。
-
-有一大堆流行的面试问题可以通过以下两种方式之一解决：要么以合理的方式使用常见的数据结构和算法，要么以一种看似难以理解的方式使用异或运算 XOR 的某些特性。
-虽然在面试中指望异或运算 XOR 解决方案似乎并不合理，但弄清楚它们的工作原理还是很有趣的。实际上，它们都基于同一个基本窍门，我们将在本文中以自下而上的方式将其推导出来。之后我们再来看 XOR 窍门的一系列应用，例如解决以下这个流行的面试题：
-
-给定一个由 n - 1 个整数组成的数组，这些整数的范围在 1 到 n 之间。除了一个数字缺失之外，其余每个数字均只出现一次。找出这个缺失的数字。
-
-当然，有许多直截了当的方法可以解决这个问题，但还有一种可能令人意想不到的方法——使用 XOR。
-XORXOR 是一种应用于位的逻辑运算符。我们用 ^ 表示它。如果它作为输入携带的两个位是相同的，那么它的结果就为 0，否则就为 1。这实现了一个异或运算，即只有一个参数必须是 1 才能使最终结果为 1。我们可以使用真值表来证明这一点：
-
-
- ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2021/07/27/hashmap-core-code-analysis-2/" title="HashMap核心功能源码解读（二）：哈希函数"><img class="post-bg" src="https://i.loli.net/2021/07/23/KYjLohqnFcp5ewz.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HashMap核心功能源码解读（二）：哈希函数"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/07/27/hashmap-core-code-analysis-2/" title="HashMap核心功能源码解读（二）：哈希函数">HashMap核心功能源码解读（二）：哈希函数</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-07-26T21:00:32.000Z" title="Created 2021-07-27 05:00:32">2021-07-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Java/">Java</a></span></div><div class="content">
-如无特别说明，本文源码基于 JDK 1.8 进行解读。
-
-从 HashMap 的源码中的 get(Object key) 和 put(K key, V value) 两个基本操作方法中，我们可以发现，要从一个 HashMap 中获取某个 key 对应的哈希桶位置，需要先通过 hash(Object key) 方法计算出 hash 值，再通过位运算 (n - 1) &amp; hash 得出哈希桶位置。
-相关源码如下（这里以 get(Object key) 方法为入口）：
-123456789101112131415161718192021222324252627282930313233// 获取 key 的哈希值static final int hash(Object key) &#123;    int h;    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);&#125;// 获取 key 对应的值public V get(Object key) &#123;    Node&lt;K,V ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/07/22/hashmap-core-code-analysis-1/" title="HashMap核心功能源码解读（一）：概述"><img class="post-bg" src="https://i.loli.net/2021/07/19/fzMo5a14AYthxyv.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HashMap核心功能源码解读（一）：概述"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/07/22/hashmap-core-code-analysis-1/" title="HashMap核心功能源码解读（一）：概述">HashMap核心功能源码解读（一）：概述</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-07-22T15:39:47.000Z" title="Created 2021-07-22 23:39:47">2021-07-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Java/">Java</a></span></div><div class="content">在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。
-HashMap特性HashMap 是 Map 接口的一个基于哈希表实现，主要用来存储键值对数据。作为一个使用频率较高的集合类，了解它的特性有助于我们在实践中正确使用它。
-首先，HashMap 允许键为 null 和值为 null。
-其次，HashMap 不保证 Map 的有序性，即不保证遍历 HashMap 输出元素的顺序与其插入的顺序相同（可能存在顺序相同情况）。另外，HashMap 也不保证其顺序在一段时间内保持不变。如果需要在项目中保证 Map 有序性的话，可以使用 LinkedHashMap 代替 HashMap。
-再次，HashMap 是不同步的，即 HashMap 不是线程安全的。如果多个线程同时访问同一个 HashMap 实例，并且其中至少有一个线程从结构上修改了 HashMap 实例时，会导致数据不一致的情况发生。这里的“从结构上修改”是指对 HashMap 实例进行添加或删除元素的操作，仅修改已包含的键对应的值话，就 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/07/15/mzd-1/" title="毛泽东：体育之研究">毛泽东：体育之研究</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-07-15T15:35:55.000Z" title="Created 2021-07-15 23:35:55">2021-07-15</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%89%AA%E6%8A%A5/">剪报</a></span></div><div class="content">前   言国力苶弱，武风不振，民族之体质，日趋轻细。此甚可忧之现象也。提倡之者，不得其本，久而无效。长是不改，弱且加甚。夫命中致远，外部之事，结果之事也。体力充实，内部之事，原因之事也。体不坚实，则见兵而畏之，何有于命中，何有于致远？坚实在于锻炼。锻炼在于自觉。今之提倡者，非不设种种之方法，然而无效者，外力不足以动其心，不知何为体育之真义。体育果有如何之价值，效果云何，著手何处，皆茫乎如在雾中，其无效亦宜。欲图体育之效，非动其主观，促其对体育之自觉不可。苟自觉矣，则体育之条目，可不言而自知，命中致远之效，亦当不求而自至矣。不佞深感体育之要，伤提倡者之不得其当，知海内同志，同此病而相怜者必多。不自惭赧，贡其愚见，以资商榷。所言并非皆己实行，尚多空言理想之处，不敢为欺。倘辱不遗，赐之教诲，所虚心百拜者也。
-第一  释体育自有生民以来，智识有愚闇，无不知自卫其生者。是故西山之薇，饥极必食；井上之李，不容不咽；巢木以为居；皮兽以为衣；盖发乎天能，不知所以然也。然而未精也。有圣人者出，于是乎有礼，饮食起居，皆有节度。故”子之燕居，申申如也，夭夭如也”；”食饐而谒，鱼馁而肉败，不食”；”射于矍相之 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/07/05/the-product-minded-software-engineer/" title="具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？"><img class="post-bg" src="https://i.loli.net/2021/07/19/CPHKzaqeGvli3N9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/07/05/the-product-minded-software-engineer/" title="具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？">具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-07-04T21:30:25.000Z" title="Created 2021-07-05 05:30:25">2021-07-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></span></div><div class="content">近日在网上读到一篇标题为《The Product-Minded Software Engineer》的文章，该文讲述了具有产品思维的软件工程师都具备哪些特点，在文末也给出了如何成为具有产品思维的软件工程师的秘诀。读完很有感触，身处现如今的互联网环境，工程师如果还只专注于技术，未免有些狭隘。毕竟工程师的价值并不只体现在技术层面上，还应体现在产品、商业等层面上。
-文章很好，于是就把它翻译了出来，以期大家一起学习探讨，共同提高。
-
-具有产品思维的工程师是指那些对产品本身非常感兴趣的开发人员。他们会想去了解每个产品决策背后的原因，以及用户如何使用他们的产品，同时他们也乐于参与产品决策。如果他们决定放弃工程的乐趣（即放弃从事工程师工作），他们很可能会成为一名优秀的产品经理。我曾经与许多具有产品思维的优秀工程师一起工作，并认为自己也是这样的开发人员。在开发世界级产品的公司中，具有产品思维的工程师能把团队的影响力提升到一个新的水平。
-Atlassian 公司的产品经理 Sherif Mansour 写了一篇关于产品工程师以及产品经理如何识别这些产品工程师并与他们良好合作的优秀文章。他的观点很相似：
- ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2021/05/24/ylp-2/" title="袁隆平：我的两个梦"><img class="post-bg" src="https://i.loli.net/2021/07/20/tenjMcyLqQlN1rY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="袁隆平：我的两个梦"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/24/ylp-2/" title="袁隆平：我的两个梦">袁隆平：我的两个梦</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-05-23T16:20:55.000Z" title="Created 2021-05-24 00:20:55">2021-05-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%89%AA%E6%8A%A5/">剪报</a></span></div><div class="content">
-【侠客岛按】
-今天中午，噩耗传来。“杂交水稻之父”、中国工程院院士、“共和国勋章”获得者袁隆平在湖南长沙逝世。
-2019年10月23日，袁老曾在《人民日报》刊发文章，自述他的两个梦想，感人至深。侠客岛予以推荐，藉此缅怀这位伟大的科学家。
-袁老，您走好。
-
-时光如白驹过隙，一转眼，90年过去，我成了正儿八经的“90后”。我大半辈子都在与水稻打交道，至今从事杂交水稻研究工作已有55个年头。我最关心的，就是与水稻和粮食相关的事。
-新中国成立之前，中华大地上到处灾荒战乱，人民生活颠沛流离，少年时我就被迫从一个城市辗转到另一个城市，虽然少不更事，但每当看到沿路举家逃难、面如菜色的同胞，看到荒芜的田野和满目疮痍的土地，我的内心总会泛起一阵阵痛楚。报考大学时，我就对父母说，我要学农。母亲听了，吓一跳，说，傻孩子，学农多苦啊，你以为好玩儿呢？但我是真正爱上了农业，死活要学，还摆出大道理：吃饭可是天下第一桩大事，没有饭吃，人类怎么生存？最后，父母尊重我的选择。
-毕业后，我被分配到湖南安江农校任教。安江农校地处偏远，临行前，学校的领导告诉我，那里很偏僻，“一盏孤灯照终身”，你可要做好思想准备。当时我想， ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/05/24/ylp-1/" title="袁隆平：稻子熟了，妈妈，我来看您了"><img class="post-bg" src="https://i.loli.net/2021/07/20/k7HJpFDcEhmaWoS.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="袁隆平：稻子熟了，妈妈，我来看您了"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/24/ylp-1/" title="袁隆平：稻子熟了，妈妈，我来看您了">袁隆平：稻子熟了，妈妈，我来看您了</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-05-23T16:00:22.000Z" title="Created 2021-05-24 00:00:22">2021-05-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%89%AA%E6%8A%A5/">剪报</a></span></div><div class="content">
-“他们说，我用一粒种子改变了世界。我知道，这粒种子，是妈妈您在我幼年时种下的！” 2010年，在袁隆平院士80华诞，湖南卫视为他举办了“为了大地的丰收”专场文艺晚会，晚会上，袁院士写给母亲的信《妈妈，稻子熟了》感动了在场所有观众，字里行间，说不尽对母亲的思念与愧疚。
-袁隆平动情写到：“没能多陪伴母亲，是我永远的后悔与遗憾。”今天，袁隆平院士逝世，读完这封旧信的网友纷纷留言：“读到一半就已泪流满面，可爱的袁爷爷，要去和妈妈团聚了。” 我们整理了信件原文，纪念袁隆平院士一路走好。 以下为信件原文。
-
-本来想一个人静静地陪您说会话，安江的乡亲们实在是太热情了，天这么热，他们还一直陪着，谢谢他们了。
-妈妈，您在安江，我在长沙，隔得很远很远。我在梦里总是想着您，想着安江这个地方。
-人事难料啊，您这样一位习惯了繁华都市的大家闺秀，最后竟会永远留在这么一个偏远的小山村。还记得吗？1957年，我要从重庆的大学分配到这儿，是您陪着我，脸贴着地图，手指顺着密密麻麻的细线，找了很久，才找到地图上这么一个小点点。当时您叹了口气说：“孩子，你到那儿，是要吃苦的呀……”
-我说：“我年轻，我还有一把小提琴。”
-没 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2021/05/01/ldz-1/" title="李大钊：青春"><img class="post-bg" src="https://i.loli.net/2021/07/20/Ixv8WzT9nJS6Gth.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="李大钊：青春"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/01/ldz-1/" title="李大钊：青春">李大钊：青春</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-05-01T15:35:55.000Z" title="Created 2021-05-01 23:35:55">2021-05-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%89%AA%E6%8A%A5/">剪报</a></span></div><div class="content">
-《青春》一文，是反袁护国运动兴起以后，李大钊于1916年3至4月在日本所写的一篇理论文章，发表于同年9月出版的《新青年》第2卷第1号。这是他在《新青年》发表的第一篇论文。在《青春》中，李大钊系统地阐述了他对宇宙、对人生、对国家和民族前途的看法，歌颂了积极进取、乐观向上的革命精神，提出了“青春”的宇宙观和人生观。概括而言，主要有以下四点：一，宇宙无尽，青春无尽，天地老而青春永在。二，国家与民族是青春还是白首，取决于青年是否自觉，主张青年自觉方有青春。在此基础上，提出了“青春”的人生观，即积极进取的人生观。三， 提出“青春中华之创造”的历史使命。文章指出：正当“白发之中华垂亡，青春之中华未孕”之际，“吾族青年所当信誓旦旦，以昭示于世者，不在辩证白首中国之不死，乃在汲汲孕育青春中国之再生。吾族今后之能否立足于世界，不在白首中国之苟延残喘，而在青春中国之投胎复活。”四，主张青年不断地以“青春”的精神来改造自我。文章号召青年永远“进前而勿顾后，背黑暗而向光明”，“以青春之我，创建青春之家庭，青春之国家，青春之民族，青春之人类，青春之地球，青春之宇宙”，以“乘风破浪”的气魄，“为世界进文明，为人 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/08/04/elasticsearch-inverted-index-intro/" title="Elasticsearch倒排索引简介">Elasticsearch倒排索引简介</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-08-03T16:00:00.000Z" title="Created 2020-08-04 00:00:00">2020-08-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Elasticsearch/">Elasticsearch</a></span></div><div class="content">什么是倒排索引倒排索引（Inverted index，亦称反向索引），是一种索引方法，用来存储在全文搜索下某个单词在某一个文档或某一组文档中的存储位置的映射。
-倒排索引的数据结构倒排索引是文档检索系统中最常用的一种数据据构。它包含两部分——单词词典（Term Dictionary）和倒排列表（Posting List）。
-其中，单词词典是用来记录所有文档的单词，记录单词到倒排列表的关系，所以单词词典一般也会比较大，为满足快速地插入与查询，通常采用 B+ 树或者哈希链表法来实现。
-而倒排列表是用来记录单词对应的文档结合，由倒排索引项（Posting）组成。
-倒排索引项结构主要包括以下四项内容：
-
-文档ID；
-词频（TF）——该单词在文档中的出现次数，用于相关性评分；
-位置（Position）——单词在文档中分词的位置，用于语句搜索（Phrase Query）；
-偏移（Offset）——记录单词的开始、结束位置，用于高亮显示。
-
-倒排索引项结构示例：
-
-
-
-Document ID
-TF
-Position
-Offset
-
-
-
-10001
-2
-1
-&lt;20, 32&gt;
-
-
-10002
- ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/08/02/install-elasticsearch-on-macos-with-homebrew/" title="使用Homebrew在macOS上安装Elasticsearch">使用Homebrew在macOS上安装Elasticsearch</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-08-02T15:39:17.000Z" title="Created 2020-08-02 23:39:17">2020-08-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Elasticsearch/">Elasticsearch</a></span></div><div class="content">在 macOS 上通过 Homwbrew 安装 Elasticsearch 非常简单，首先通过 brew tap 命令关联 Elastic Homebrew 存储库：
-1brew tap elastic/tap
-
-接下来就可以使用 brew install 命令安装最新发布的 Elasticsearch 的默认发行版：
-1brew install elastic/tap/elasticsearch-full
-
-如果你看到类似以下的输出内容，就表示安装成功：
-1Pruned 0 symbolic links and 3 directories from /usr/local
-
-
-
-通过 brew 安装的 Elasticsearch，其配置文件，日志和数据目录存储在以下位置：
-HOME（主目录），位于 /usr/local/Cellar/elasticsearch-full/7.8.1/；
-bin （可执行文件所在目录）位于 ll /usr/local/Cellar/elasticsearch-full/7.8.1/bin；
-config（配置文件）位于 /usr/local/etc/el ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2020/06/29/java-list-string-join/" title="使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串"><img class="post-bg" src="/image/java-logo.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/06/29/java-list-string-join/" title="使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串">使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-06-28T21:43:18.000Z" title="Created 2020-06-29 05:43:18">2020-06-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Java/">Java</a></span></div><div class="content">在日常开发工作中，经常会遇到需要将 List&lt;String&gt; 转换为使用某个符号连接的字符串。如将 List&lt;String&gt; 转换为按英文逗号（,）分隔的字符串：
-123456789101112List&lt;String&gt; weekList = Arrays.asList(                &quot;Monday&quot;,                &quot;Tuesday&quot;,                &quot;Wednesday&quot;,                &quot;Thursday&quot;,                &quot;Friday&quot;,                &quot;Saturday&quot;,                &quot;Sunday&quot;        );// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：// Monday,Tuesday,Wednesday,Thursday,Friday,Saturda ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2020/05/08/apache-kafka-intro/" title="在macOS编译JDK14"><img class="post-bg" src="/image/image-20200511232123290.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="在macOS编译JDK14"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/05/08/apache-kafka-intro/" title="在macOS编译JDK14">在macOS编译JDK14</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-05-08T15:12:47.000Z" title="Created 2020-05-08 23:12:47">2020-05-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/JDK/">JDK</a></span></div><div class="content">一、系统环境操作系统：macOS 10.15.4（Catalina）
-处理器：2.6 GHz 双核Intel Core i5
-内存：8G
-硬盘：512G
-
-NOTE:  在 macOS 平台编译 OpenJDK 14，操作系统版本官方建议至少使用 Mac OS X 10.13（High Sierra），可用磁盘空间建议至少 6 GB。
-
-二、准备工作2.1 Boot JDK矛盾的是，为了编译 OpenJDK，我们需要预先安装一个版本的 JDK，官方称这个 JDK 为 Boot JDK，即引导 JDK。
-何为 Boot JDK我们知道，OpenJDK 源码由多个部分组成，包括 HotSpot、JDK 类库、JAXP 等。其中一部分的代码是使用 C/C++ 编写的，如 HotSpot；而更多的代码其实是使用 Java 实现的，如我们熟知的 JDK 类库。编译这些 Java 代码就需要用到另一个已经编译的 JDK，官方称这个 JDK 为 Bootstrap JDK，即引导 JDK，作用是编译 OpenJDK 源码中 Java 代码。
-如何选择 Boot JDK 的版本Bootstrap JD ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/03/20/how-to-limit-what-users-can-log-onto-system-via-ssh/" title="CentOS7 系统中，如何禁止Linux系统用户通过SSH登录服务器？">CentOS7 系统中，如何禁止Linux系统用户通过SSH登录服务器？</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-03-20T00:19:17.000Z" title="Created 2020-03-20 08:19:17">2020-03-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/CentOS7/">CentOS7</a></span></div><div class="content">出于安全考虑，有时候我们会禁止系统上的某些用户使用 ssh 命令登录服务器。例如，用于启动 MongoDB 服务的用户 mongod，就不允许通过 ssh 命令进行登录。在 CentOS 7 系统中，可以通过修改配置文件 /etc/ssh/sshd_config 达到禁用的目的。
-一、单个用户这里以禁用 mongod 用户为例，具体步骤如下：
-
-打开配置文件 /etc/ssh/sshd_config，
-1vim /etc/ssh/sshd_config
-在文件末尾加入以下内容，只允许后面的用户使用 ssh 命令登陆，
-1DenyUsers    mongod
-保存文件修改，并退出，重启 ssh 服务，即可禁用 mongod 用户通过 ssh 命令登陆。
-1service sshd restart
-
-二、多个用户若需要禁用多个系统帐户使用 ssh 命令登陆服务器，只需把系统账户名追加在 DenyUsers 行尾，并以空格隔开即可，如禁用 mongod、kafka、robbot 三个用户：
-1DenyUsers    mongod kafka robbot
-
-三、用户组我们也可以通过增加以 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/03/19/how-to-install-apache-kafka-on-centos7/" title="Apache Kafka（二）：CentOS 7下安装Apache Kafka">Apache Kafka（二）：CentOS 7下安装Apache Kafka</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-03-19T12:31:25.000Z" title="Created 2020-03-19 20:31:25">2020-03-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Kafka/">Kafka</a></span></div><div class="content">系统要求Kafka 服务端代码是用 Scala 开发语言编写的，Scala 是 JVM 系语言中的一种，这意味着用 Scala 编写的源代码编译之后也是 Java 字节码，并运行在 Java 虚拟机上。因此，在开始安装 Kafka 之前，我们需要先在系统上安装 JDK（Java SE Development Kit， Java SE开发套件），JDK 包含的 JRE（Java SE Runtime Environment，Java 运行时环境）是运行 Java 应用程序所必需的。
-多数情况下，推荐安装 JDK 8 及以上的版本，因为 Kafka 自 2.0.0 版本开始，就已经正式摒弃对 Java 7 的支持了。本文安装示例采用的是 JDK 8 版本。
-在 CentOS 7 安装 JDK 可参考这篇博文—— CentOS7下安装JDK1.8
-另外，运行 Kafka 还需要安装 Apache ZooKeeper 服务，该服务是用来同步分布式进程。ZooKeeper 安装可参考这篇博文——在CentOS7系统安装和配置ZooKeeper。
-安装Kafka推荐将 Kafka 安装在 Unix ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/03/17/apache-kafka-intro/" title="Apache Kafka（一）：简介">Apache Kafka（一）：简介</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-03-17T13:11:47.000Z" title="Created 2020-03-17 21:11:47">2020-03-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Kafka/">Kafka</a></span></div><div class="content">Kafka简介Kafka 最早是由 LinkedIn 公司开发的一套分布式的高性能消息引擎服务，于 2011 年初开源，并于 2012 年 10 月 23 日从 Apache 孵化器毕业，成为 Apache 的顶级项目。
-Kafka 最初的设计目的是用于处理海量的日志，后来历经多年发展和完善，如今的 Kafka 集消息系统、存储系统和流式处理平台于一身，在消息引擎领域是执牛耳者，在大数据工程领域、流计算领域也起着举足轻重的作用，具有非常广阔的应用场景。
-为什么要掌握Kafka因为掌握了 Kafka，手上就多了一份拿高薪的筹码。
-援引美国 2019 年 Dice 技术薪资报告中的数据，在十大薪资最高的技术技能中，掌握 Kafka 以平均每年 12.7554 万美元排名第二！虽然这是美国人才市场的数据，但从国内互联网公司的技术招聘需求中，我们也可以看出 Kafka 在国内的行情也是水涨船高。
-（查看完整报告：https://marketing.dice.com/pdf/Dice_TechSalaryReport2019.pdf）
-如何全面掌握Kafka作为一名软件开发工程师，在学习开源项目 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/13/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/#content-inner">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/#content-inner">15</a><a class="extend next" rel="next" href="/page/15/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Lin</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">294</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/18/bulk-deleting-keys-in-redis-using-wildcards/" title="Bulk Deleting Keys in Redis Using Wildcards">Bulk Deleting Keys in Redis Using Wildcards</a><time datetime="2024-09-18T15:42:56.000Z" title="Created 2024-09-18 23:42:56">2024-09-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/11/analyzing-redis-source-code-hash/" title="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing"><img src="/image/redis-src/2024091101.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing"/></a><div class="content"><a class="title" href="/2024/09/11/analyzing-redis-source-code-hash/" title="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing">Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing</a><time datetime="2024-09-10T22:28:03.000Z" title="Created 2024-09-11 06:28:03">2024-09-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/10/analyzing-redis-source-code-sds/" title="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation"><img src="/image/redis-src/24091002.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation"/></a><div class="content"><a class="title" href="/2024/09/10/analyzing-redis-source-code-sds/" title="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation">Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation</a><time datetime="2024-09-09T17:13:55.000Z" title="Created 2024-09-10 01:13:55">2024-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/06/why-does-redis-use-the-sds-structure-for-strings-instead-of-char/" title="Why Does Redis Use the SDS Structure for Strings Instead of char*?">Why Does Redis Use the SDS Structure for Strings Instead of char*?</a><time datetime="2024-09-05T16:01:26.000Z" title="Created 2024-09-06 00:01:26">2024-09-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/05/how-to-delete-data-in-elasticsearch-single-multiple-clear-and-all/" title="How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All">How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All</a><time datetime="2024-09-04T16:02:38.000Z" title="Created 2024-09-05 00:02:38">2024-09-05</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+  postUpdate: '2024-11-02 03:15:12'
+}</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">294</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Johnson Lin</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">Johnson Lin</h1></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/2021/08/11/technology-management-3/" title="角色认知"><img class="post-bg" src="/image/column/tech-mg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="角色认知"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/08/11/technology-management-3/" title="角色认知">角色认知</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-10T21:46:09.000Z" title="Created 2021-08-11 05:46:09">2021-08-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AF%BB%E4%B9%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">读书学习笔记</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86/">技术管理</a></span></div><div class="content">管理到底都做哪些事儿？基于良好的角色认知和管理沟通，主要做好三件事：带人、做事、看方向。 五个管理要素：角色认知、管理规划、团队建设、任务管理和管理沟通。 管理规划-看方向团队建设-带人任务管理-做事   TIPS：如何提升团队工作效率？工业时代的团队：主要靠加强外驱，讲究“胡萝卜加大棒”，追求严格管控。知识经济时代的团队：更多是靠激发内驱，弹性工作制也好，发挥员工优势也好，都是希望员工更主动、自主，从而有更多的创造力。...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/08/10/technology-management-1/" title="自我倾听（上）"><img class="post-bg" src="/image/column/tech-mg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="自我倾听（上）"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/08/10/technology-management-1/" title="自我倾听（上）">自我倾听（上）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-09T17:18:12.000Z" title="Created 2021-08-10 01:18:12">2021-08-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AF%BB%E4%B9%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">读书学习笔记</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86/">技术管理</a></span></div><div class="content">...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2021/08/10/technology-management-0/" title="极客时间-技术管理实战36讲学习笔记"><img class="post-bg" src="/image/column/tech-mg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="极客时间-技术管理实战36讲学习笔记"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/08/10/technology-management-0/" title="极客时间-技术管理实战36讲学习笔记">极客时间-技术管理实战36讲学习笔记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-09T16:02:43.000Z" title="Created 2021-08-10 00:02:43">2021-08-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E8%AF%BB%E4%B9%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">读书学习笔记</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86/">技术管理</a></span></div><div class="content">...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/08/09/ml-1/" title="马龙：只要心怀热爱，永远都是当打之年！"><img class="post-bg" src="https://i.loli.net/2021/08/09/XbfCZRY2TQtFM9o.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="马龙：只要心怀热爱，永远都是当打之年！"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/08/09/ml-1/" title="马龙：只要心怀热爱，永远都是当打之年！">马龙：只要心怀热爱，永远都是当打之年！</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-09T15:37:40.000Z" title="Created 2021-08-09 23:37:40">2021-08-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%89%AA%E6%8A%A5/">剪报</a></span></div><div class="content">...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/08/05/note-202108/" title="小记：2021年8月">小记：2021年8月</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-05T03:44:22.000Z" title="Created 2021-08-05 11:44:22">2021-08-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%B0%8F%E8%AE%B0/">小记</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%89%80%E6%80%9D%E6%89%80%E6%83%B3%E6%89%80%E6%82%9F/">所思所想所悟</a></span></div><div class="content">2021年8月2日1...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/08/02/bitwise-operation-xor-trick/" title="谈谈异或运算"><img class="post-bg" src="https://i.loli.net/2021/08/02/lcoR4QnyYJKPMBg.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="谈谈异或运算"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/08/02/bitwise-operation-xor-trick/" title="谈谈异或运算">谈谈异或运算</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-08-01T22:30:31.000Z" title="Created 2021-08-02 06:30:31">2021-08-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">位运算</a></span></div><div class="content">本文翻译自 Florian 于 2020 年 3 月发表的一篇英文博客《That XOR Trick》。  有一大堆流行的面试问题可以通过以下两种方式之一解决：要么以合理的方式使用常见的数据结构和算法，要么以一种看似难以理解的方式使用异或运算 XOR 的某些特性。 虽然在面试中指望异或运算 XOR 解决方案似乎并不合理，但弄清楚它们的工作原理还是很有趣的。实际上，它们都基于同一个基本窍门，我们将在本文中以自下而上的方式将其推导出来。之后我们再来看 XOR 窍门的一系列应用，例如解决以下这个流行的面试题：  给定一个由 n - 1 个整数组成的数组，这些整数的范围在 1 到 n 之间。除了一个数字缺失之外，其余每个数字均只出现一次。找出这个缺失的数字。  当然，有许多直截了当的方法可以解决这个问题，但还有一种可能令人意想不到的方法——使用 XOR。 XORXOR 是一种应用于位的逻辑运算符。我们用 ^ 表示它。如果它作为输入携带的两个位是相同的，那么它的结果就为 0，否则就为 1。这实现了一个异或运算，即只有一个参数必须是 1 才能使最终结果为...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2021/07/27/hashmap-core-code-analysis-2/" title="HashMap核心功能源码解读（二）：哈希函数"><img class="post-bg" src="https://i.loli.net/2021/07/23/KYjLohqnFcp5ewz.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HashMap核心功能源码解读（二）：哈希函数"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/07/27/hashmap-core-code-analysis-2/" title="HashMap核心功能源码解读（二）：哈希函数">HashMap核心功能源码解读（二）：哈希函数</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-07-26T21:00:32.000Z" title="Created 2021-07-27 05:00:32">2021-07-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Java/">Java</a></span></div><div class="content"> 如无特别说明，本文源码基于 JDK 1.8 进行解读。  从 HashMap 的源码中的 get(Object key) 和 put(K key, V value) 两个基本操作方法中，我们可以发现，要从一个 HashMap 中获取某个 key 对应的哈希桶位置，需要先通过 hash(Object key) 方法计算出 hash 值，再通过位运算 (n - 1) &amp; hash 得出哈希桶位置。 相关源码如下（这里以 get(Object key) 方法为入口）： 123456789101112131415161718192021222324252627282930313233// 获取 key 的哈希值static final int hash(Object key) &#123;    int h;    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);&#125;// 获取 key 对应的值public V get(Object key) &#123;   ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/07/22/hashmap-core-code-analysis-1/" title="HashMap核心功能源码解读（一）：概述"><img class="post-bg" src="https://i.loli.net/2021/07/19/fzMo5a14AYthxyv.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HashMap核心功能源码解读（一）：概述"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/07/22/hashmap-core-code-analysis-1/" title="HashMap核心功能源码解读（一）：概述">HashMap核心功能源码解读（一）：概述</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-07-22T15:39:47.000Z" title="Created 2021-07-22 23:39:47">2021-07-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Java/">Java</a></span></div><div class="content">在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。 HashMap特性HashMap 是 Map 接口的一个基于哈希表实现，主要用来存储键值对数据。作为一个使用频率较高的集合类，了解它的特性有助于我们在实践中正确使用它。 首先，HashMap 允许键为 null 和值为 null。 其次，HashMap 不保证 Map 的有序性，即不保证遍历 HashMap 输出元素的顺序与其插入的顺序相同（可能存在顺序相同情况）。另外，HashMap 也不保证其顺序在一段时间内保持不变。如果需要在项目中保证 Map 有序性的话，可以使用 LinkedHashMap 代替 HashMap。 再次，HashMap 是不同步的，即 HashMap 不是线程安全的。如果多个线程同时访问同一个 HashMap 实例，并且其中至少有一个线程从结构上修改了 HashMap 实例时，会导致数据不一致的情况发生。这里的“从结构上修改”是指对 HashMap...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/07/15/mzd-1/" title="毛泽东：体育之研究">毛泽东：体育之研究</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-07-15T15:35:55.000Z" title="Created 2021-07-15 23:35:55">2021-07-15</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%89%AA%E6%8A%A5/">剪报</a></span></div><div class="content">前   言国力苶弱，武风不振，民族之体质，日趋轻细。此甚可忧之现象也。提倡之者，不得其本，久而无效。长是不改，弱且加甚。夫命中致远，外部之事，结果之事也。体力充实，内部之事，原因之事也。体不坚实，则见兵而畏之，何有于命中，何有于致远？坚实在于锻炼。锻炼在于自觉。今之提倡者，非不设种种之方法，然而无效者，外力不足以动其心，不知何为体育之真义。体育果有如何之价值，效果云何，著手何处，皆茫乎如在雾中，其无效亦宜。欲图体育之效，非动其主观，促其对体育之自觉不可。苟自觉矣，则体育之条目，可不言而自知，命中致远之效，亦当不求而自至矣。不佞深感体育之要，伤提倡者之不得其当，知海内同志，同此病而相怜者必多。不自惭赧，贡其愚见，以资商榷。所言并非皆己实行，尚多空言理想之处，不敢为欺。倘辱不遗，赐之教诲，所虚心百拜者也。 第一 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/07/05/the-product-minded-software-engineer/" title="具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？"><img class="post-bg" src="https://i.loli.net/2021/07/19/CPHKzaqeGvli3N9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/07/05/the-product-minded-software-engineer/" title="具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？">具有产品思维的工程师具备什么特点，如何才能变得更加具有产品思维？</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-07-04T21:30:25.000Z" title="Created 2021-07-05 05:30:25">2021-07-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></span></div><div class="content">近日在网上读到一篇标题为《The Product-Minded Software Engineer》的文章，该文讲述了具有产品思维的软件工程师都具备哪些特点，在文末也给出了如何成为具有产品思维的软件工程师的秘诀。读完很有感触，身处现如今的互联网环境，工程师如果还只专注于技术，未免有些狭隘。毕竟工程师的价值并不只体现在技术层面上，还应体现在产品、商业等层面上。 文章很好，于是就把它翻译了出来，以期大家一起学习探讨，共同提高。  具有产品思维的工程师是指那些对产品本身非常感兴趣的开发人员。他们会想去了解每个产品决策背后的原因，以及用户如何使用他们的产品，同时他们也乐于参与产品决策。如果他们决定放弃工程的乐趣（即放弃从事工程师工作），他们很可能会成为一名优秀的产品经理。我曾经与许多具有产品思维的优秀工程师一起工作，并认为自己也是这样的开发人员。在开发世界级产品的公司中，具有产品思维的工程师能把团队的影响力提升到一个新的水平。 Atlassian 公司的产品经理 Sherif Mansour...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2021/05/24/ylp-2/" title="袁隆平：我的两个梦"><img class="post-bg" src="https://i.loli.net/2021/07/20/tenjMcyLqQlN1rY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="袁隆平：我的两个梦"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/24/ylp-2/" title="袁隆平：我的两个梦">袁隆平：我的两个梦</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-05-23T16:20:55.000Z" title="Created 2021-05-24 00:20:55">2021-05-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%89%AA%E6%8A%A5/">剪报</a></span></div><div class="content">...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2021/05/24/ylp-1/" title="袁隆平：稻子熟了，妈妈，我来看您了"><img class="post-bg" src="https://i.loli.net/2021/07/20/k7HJpFDcEhmaWoS.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="袁隆平：稻子熟了，妈妈，我来看您了"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/24/ylp-1/" title="袁隆平：稻子熟了，妈妈，我来看您了">袁隆平：稻子熟了，妈妈，我来看您了</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-05-23T16:00:22.000Z" title="Created 2021-05-24 00:00:22">2021-05-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%89%AA%E6%8A%A5/">剪报</a></span></div><div class="content">...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2021/05/01/ldz-1/" title="李大钊：青春"><img class="post-bg" src="https://i.loli.net/2021/07/20/Ixv8WzT9nJS6Gth.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="李大钊：青春"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/01/ldz-1/" title="李大钊：青春">李大钊：青春</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-05-01T15:35:55.000Z" title="Created 2021-05-01 23:35:55">2021-05-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%89%AA%E6%8A%A5/">剪报</a></span></div><div class="content"> 《青春》一文，是反袁护国运动兴起以后，李大钊于1916年3至4月在日本所写的一篇理论文章，发表于同年9月出版的《新青年》第2卷第1号。这是他在《新青年》发表的第一篇论文。在《青春》中，李大钊系统地阐述了他对宇宙、对人生、对国家和民族前途的看法，歌颂了积极进取、乐观向上的革命精神，提出了“青春”的宇宙观和人生观。概括而言，主要有以下四点：一，宇宙无尽，青春无尽，天地老而青春永在。二，国家与民族是青春还是白首，取决于青年是否自觉，主张青年自觉方有青春。在此基础上，提出了“青春”的人生观，即积极进取的人生观。三，...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/08/04/elasticsearch-inverted-index-intro/" title="Elasticsearch倒排索引简介">Elasticsearch倒排索引简介</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-08-03T16:00:00.000Z" title="Created 2020-08-04 00:00:00">2020-08-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Elasticsearch/">Elasticsearch</a></span></div><div class="content">什么是倒排索引倒排索引（Inverted index，亦称反向索引），是一种索引方法，用来存储在全文搜索下某个单词在某一个文档或某一组文档中的存储位置的映射。 倒排索引的数据结构倒排索引是文档检索系统中最常用的一种数据据构。它包含两部分——单词词典（Term Dictionary）和倒排列表（Posting List）。 其中，单词词典是用来记录所有文档的单词，记录单词到倒排列表的关系，所以单词词典一般也会比较大，为满足快速地插入与查询，通常采用 B+ 树或者哈希链表法来实现。 而倒排列表是用来记录单词对应的文档结合，由倒排索引项（Posting）组成。 倒排索引项结构主要包括以下四项内容：  文档ID； 词频（TF）——该单词在文档中的出现次数，用于相关性评分； 位置（Position）——单词在文档中分词的位置，用于语句搜索（Phrase Query）； 偏移（Offset）——记录单词的开始、结束位置，用于高亮显示。  倒排索引项结构示例：    Document ID TF Position Offset    10001 2 1 &lt;20,...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/08/02/install-elasticsearch-on-macos-with-homebrew/" title="使用Homebrew在macOS上安装Elasticsearch">使用Homebrew在macOS上安装Elasticsearch</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-08-02T15:39:17.000Z" title="Created 2020-08-02 23:39:17">2020-08-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Elasticsearch/">Elasticsearch</a></span></div><div class="content">在 macOS 上通过 Homwbrew 安装 Elasticsearch 非常简单，首先通过 brew tap 命令关联 Elastic Homebrew 存储库： 1brew tap elastic/tap  接下来就可以使用 brew install 命令安装最新发布的 Elasticsearch 的默认发行版： 1brew install elastic/tap/elasticsearch-full  如果你看到类似以下的输出内容，就表示安装成功： 1Pruned 0 symbolic links and 3 directories from /usr/local    通过 brew 安装的 Elasticsearch，其配置文件，日志和数据目录存储在以下位置： HOME（主目录），位于 /usr/local/Cellar/elasticsearch-full/7.8.1/； bin （可执行文件所在目录）位于 ll /usr/local/Cellar/elasticsearch-full/7.8.1/bin； config（配置文件）位于...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2020/06/29/java-list-string-join/" title="使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串"><img class="post-bg" src="/image/java-logo.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/06/29/java-list-string-join/" title="使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串">使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-06-28T21:43:18.000Z" title="Created 2020-06-29 05:43:18">2020-06-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Java/">Java</a></span></div><div class="content">在日常开发工作中，经常会遇到需要将 List&lt;String&gt; 转换为使用某个符号连接的字符串。如将 List&lt;String&gt; 转换为按英文逗号（,）分隔的字符串： 123456789101112List&lt;String&gt; weekList = Arrays.asList(                &quot;Monday&quot;,                &quot;Tuesday&quot;,                &quot;Wednesday&quot;,                &quot;Thursday&quot;,                &quot;Friday&quot;,                &quot;Saturday&quot;,                &quot;Sunday&quot;        );// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：//...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2020/05/08/apache-kafka-intro/" title="在macOS编译JDK14"><img class="post-bg" src="/image/image-20200511232123290.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="在macOS编译JDK14"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/05/08/apache-kafka-intro/" title="在macOS编译JDK14">在macOS编译JDK14</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-05-08T15:12:47.000Z" title="Created 2020-05-08 23:12:47">2020-05-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/JDK/">JDK</a></span></div><div class="content">一、系统环境操作系统：macOS 10.15.4（Catalina） 处理器：2.6 GHz 双核Intel Core i5 内存：8G 硬盘：512G  NOTE:  在 macOS 平台编译 OpenJDK 14，操作系统版本官方建议至少使用 Mac OS X 10.13（High Sierra），可用磁盘空间建议至少 6 GB。  二、准备工作2.1 Boot JDK矛盾的是，为了编译 OpenJDK，我们需要预先安装一个版本的 JDK，官方称这个 JDK 为 Boot JDK，即引导 JDK。 何为 Boot JDK我们知道，OpenJDK 源码由多个部分组成，包括 HotSpot、JDK 类库、JAXP 等。其中一部分的代码是使用 C/C++ 编写的，如 HotSpot；而更多的代码其实是使用 Java 实现的，如我们熟知的 JDK 类库。编译这些 Java 代码就需要用到另一个已经编译的 JDK，官方称这个 JDK 为 Bootstrap JDK，即引导 JDK，作用是编译 OpenJDK 源码中 Java 代码。 如何选择 Boot JDK...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/03/20/how-to-limit-what-users-can-log-onto-system-via-ssh/" title="CentOS7 系统中，如何禁止Linux系统用户通过SSH登录服务器？">CentOS7 系统中，如何禁止Linux系统用户通过SSH登录服务器？</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-03-20T00:19:17.000Z" title="Created 2020-03-20 08:19:17">2020-03-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/CentOS7/">CentOS7</a></span></div><div class="content">出于安全考虑，有时候我们会禁止系统上的某些用户使用 ssh 命令登录服务器。例如，用于启动 MongoDB 服务的用户 mongod，就不允许通过 ssh 命令进行登录。在 CentOS 7 系统中，可以通过修改配置文件 /etc/ssh/sshd_config 达到禁用的目的。 一、单个用户这里以禁用 mongod 用户为例，具体步骤如下：  打开配置文件 /etc/ssh/sshd_config， 1vim /etc/ssh/sshd_config 在文件末尾加入以下内容，只允许后面的用户使用 ssh 命令登陆， 1DenyUsers    mongod 保存文件修改，并退出，重启 ssh 服务，即可禁用 mongod 用户通过 ssh 命令登陆。 1service sshd restart  二、多个用户若需要禁用多个系统帐户使用 ssh 命令登陆服务器，只需把系统账户名追加在 DenyUsers 行尾，并以空格隔开即可，如禁用 mongod、kafka、robbot 三个用户： 1DenyUsers    mongod kafka...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/03/19/how-to-install-apache-kafka-on-centos7/" title="Apache Kafka（二）：CentOS 7下安装Apache Kafka">Apache Kafka（二）：CentOS 7下安装Apache Kafka</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-03-19T12:31:25.000Z" title="Created 2020-03-19 20:31:25">2020-03-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Kafka/">Kafka</a></span></div><div class="content">系统要求Kafka 服务端代码是用 Scala 开发语言编写的，Scala 是 JVM 系语言中的一种，这意味着用 Scala 编写的源代码编译之后也是 Java 字节码，并运行在 Java 虚拟机上。因此，在开始安装 Kafka 之前，我们需要先在系统上安装 JDK（Java SE Development Kit， Java SE开发套件），JDK 包含的 JRE（Java SE Runtime Environment，Java 运行时环境）是运行 Java 应用程序所必需的。 多数情况下，推荐安装 JDK 8 及以上的版本，因为 Kafka 自 2.0.0 版本开始，就已经正式摒弃对 Java 7 的支持了。本文安装示例采用的是 JDK 8 版本。 在 CentOS 7 安装 JDK 可参考这篇博文—— CentOS7下安装JDK1.8 另外，运行 Kafka 还需要安装 Apache ZooKeeper 服务，该服务是用来同步分布式进程。ZooKeeper 安装可参考这篇博文——在CentOS7系统安装和配置ZooKeeper。 安装Kafka推荐将 Kafka 安装在...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2020/03/17/apache-kafka-intro/" title="Apache Kafka（一）：简介">Apache Kafka（一）：简介</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-03-17T13:11:47.000Z" title="Created 2020-03-17 21:11:47">2020-03-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Kafka/">Kafka</a></span></div><div class="content">Kafka简介Kafka 最早是由 LinkedIn 公司开发的一套分布式的高性能消息引擎服务，于 2011 年初开源，并于 2012 年 10 月 23 日从 Apache 孵化器毕业，成为 Apache 的顶级项目。 Kafka 最初的设计目的是用于处理海量的日志，后来历经多年发展和完善，如今的 Kafka 集消息系统、存储系统和流式处理平台于一身，在消息引擎领域是执牛耳者，在大数据工程领域、流计算领域也起着举足轻重的作用，具有非常广阔的应用场景。 为什么要掌握Kafka因为掌握了 Kafka，手上就多了一份拿高薪的筹码。 援引美国 2019 年 Dice 技术薪资报告中的数据，在十大薪资最高的技术技能中，掌握 Kafka 以平均每年 12.7554 万美元排名第二！虽然这是美国人才市场的数据，但从国内互联网公司的技术招聘需求中，我们也可以看出 Kafka...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/13/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/#content-inner">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/#content-inner">15</a><a class="extend next" rel="next" href="/page/15/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Johnson Lin</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">294</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/18/bulk-deleting-keys-in-redis-using-wildcards/" title="Bulk Deleting Keys in Redis Using Wildcards">Bulk Deleting Keys in Redis Using Wildcards</a><time datetime="2024-09-18T15:42:56.000Z" title="Created 2024-09-18 23:42:56">2024-09-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/11/analyzing-redis-source-code-hash/" title="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing"><img src="/image/redis-src/2024091101.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing"/></a><div class="content"><a class="title" href="/2024/09/11/analyzing-redis-source-code-hash/" title="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing">Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing</a><time datetime="2024-09-10T22:28:03.000Z" title="Created 2024-09-11 06:28:03">2024-09-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/10/analyzing-redis-source-code-sds/" title="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation"><img src="/image/redis-src/24091002.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation"/></a><div class="content"><a class="title" href="/2024/09/10/analyzing-redis-source-code-sds/" title="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation">Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation</a><time datetime="2024-09-09T17:13:55.000Z" title="Created 2024-09-10 01:13:55">2024-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/06/why-does-redis-use-the-sds-structure-for-strings-instead-of-char/" title="Why Does Redis Use the SDS Structure for Strings Instead of char*?">Why Does Redis Use the SDS Structure for Strings Instead of char*?</a><time datetime="2024-09-05T16:01:26.000Z" title="Created 2024-09-06 00:01:26">2024-09-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/05/how-to-delete-data-in-elasticsearch-single-multiple-clear-and-all/" title="How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All">How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All</a><time datetime="2024-09-04T16:02:38.000Z" title="Created 2024-09-05 00:02:38">2024-09-05</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>Categories</span>
             
-            </div>
-            <ul class="card-category-list" id="aside-cat-list">
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Apache-Paimon/"><span class="card-category-list-name">Apache Paimon</span><span class="card-category-list-count">11</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Bash-Tutorial/"><span class="card-category-list-name">Bash Tutorial</span><span class="card-category-list-count">15</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/C-Tutorial/"><span class="card-category-list-name">C Tutorial</span><span class="card-category-list-count">14</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Data-Structures-and-Algorithms/"><span class="card-category-list-name">Data Structures and Algorithms</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Flink/"><span class="card-category-list-name">Flink</span><span class="card-category-list-count">12</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/HTML-Tutorial/"><span class="card-category-list-name">HTML Tutorial</span><span class="card-category-list-count">18</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/JSON/"><span class="card-category-list-name">JSON</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/JSON-Tutorial/"><span class="card-category-list-name">JSON Tutorial</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/LeetCode%E9%A2%98%E8%A7%A3/"><span class="card-category-list-name">LeetCode题解</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><span class="card-category-list-name">Linux常用命令</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Math/"><span class="card-category-list-name">Math</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Programming-Digest/"><span class="card-category-list-name">Programming Digest</span><span class="card-category-list-count">24</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Redis-Source-Code-Analysis/"><span class="card-category-list-name">Redis Source Code Analysis</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Redis%E6%95%99%E7%A8%8B/"><span class="card-category-list-name">Redis教程</span><span class="card-category-list-count">30</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%89%AA%E6%8A%A5/"><span class="card-category-list-name">剪报</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B0%8F%E8%AE%B0/"><span class="card-category-list-name">小记</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%95%B0%E5%AD%A6/"><span class="card-category-list-name">数学</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%9E%81%E7%AE%80%E6%95%99%E7%A8%8B/"><span class="card-category-list-name">极简教程</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%94%A8%E6%88%B7%E7%94%BB%E5%83%8F/"><span class="card-category-list-name">用户画像</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%BC%96%E7%A8%8B-Q-A/"><span class="card-category-list-name">编程 Q&A</span><span class="card-category-list-count">8</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/"><span class="card-category-list-name">编程文摘</span><span class="card-category-list-count">115</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><span class="card-category-list-name">读书学习笔记</span><span class="card-category-list-count">9</span></a></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/Hive/" style="font-size: 1.23em; color: #999ea5">Hive</a> <a href="/tags/ELK/" style="font-size: 1.18em; color: #999ca0">ELK</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 1.1em; color: #999">数据库</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%BA%E6%96%87/" style="font-size: 1.13em; color: #999a9b">大数据论文</a> <a href="/tags/HowTo/" style="font-size: 1.15em; color: #999b9e">HowTo</a> <a href="/tags/%E6%89%80%E6%80%9D%E6%89%80%E6%83%B3%E6%89%80%E6%82%9F/" style="font-size: 1.1em; color: #999">所思所想所悟</a> <a href="/tags/Filebeat/" style="font-size: 1.2em; color: #999da3">Filebeat</a> <a href="/tags/Jpa/" style="font-size: 1.1em; color: #999">Jpa</a> <a href="/tags/%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86/" style="font-size: 1.15em; color: #999b9e">技术管理</a> <a href="/tags/Presto/" style="font-size: 1.45em; color: #99a7ba">Presto</a> <a href="/tags/leetcode/" style="font-size: 1.13em; color: #999a9b">leetcode</a> <a href="/tags/Docker/" style="font-size: 1.13em; color: #999a9b">Docker</a> <a href="/tags/Git/" style="font-size: 1.18em; color: #999ca0">Git</a> <a href="/tags/Markdown/" style="font-size: 1.1em; color: #999">Markdown</a> <a href="/tags/Flink-Table-Store/" style="font-size: 1.15em; color: #999b9e">Flink Table Store</a> <a href="/tags/JDK/" style="font-size: 1.1em; color: #999">JDK</a> <a href="/tags/C-Programming-Language/" style="font-size: 1.35em; color: #99a3b1">C Programming Language</a> <a href="/tags/git/" style="font-size: 1.1em; color: #999">git</a> <a href="/tags/Bash/" style="font-size: 1.4em; color: #99a5b6">Bash</a> <a href="/tags/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97/" style="font-size: 1.15em; color: #999b9e">罗马数字</a> <a href="/tags/ZooKeeper/" style="font-size: 1.13em; color: #999a9b">ZooKeeper</a> <a href="/tags/VMware/" style="font-size: 1.1em; color: #999">VMware</a> <a href="/tags/Ambari/" style="font-size: 1.1em; color: #999">Ambari</a> <a href="/tags/maven/" style="font-size: 1.1em; color: #999">maven</a> <a href="/tags/%E6%95%B0%E5%AD%A6/" style="font-size: 1.2em; color: #999da3">数学</a> <a href="/tags/Spring-Boot/" style="font-size: 1.13em; color: #999a9b">Spring Boot</a> <a href="/tags/%E5%A4%87%E5%BF%98%E5%BD%95/" style="font-size: 1.13em; color: #999a9b">备忘录</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" style="font-size: 1.2em; color: #999da3">学习方法</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/" style="font-size: 1.1em; color: #999">接口文档</a> <a href="/tags/YAML/" style="font-size: 1.1em; color: #999">YAML</a> <a href="/tags/%E7%94%A8%E6%88%B7%E7%94%BB%E5%83%8F/" style="font-size: 1.13em; color: #999a9b">用户画像</a> <a href="/tags/Flink/" style="font-size: 1.35em; color: #99a3b1">Flink</a> <a href="/tags/CentOS7/" style="font-size: 1.2em; color: #999da3">CentOS7</a> <a href="/tags/Java/" style="font-size: 1.48em; color: #99a8bd">Java</a> <a href="/tags/%E7%BF%BB%E8%AF%91/" style="font-size: 1.23em; color: #999ea5">翻译</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 1.1em; color: #999">数据分析</a> <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/" style="font-size: 1.1em; color: #999">位运算</a> <a href="/tags/Data-Structures-and-Algorithms/" style="font-size: 1.18em; color: #999ca0">Data Structures and Algorithms</a> <a href="/tags/JSON/" style="font-size: 1.23em; color: #999ea5">JSON</a> <a href="/tags/Python/" style="font-size: 1.28em; color: #99a0aa">Python</a> <a href="/tags/Gson/" style="font-size: 1.32em; color: #99a2ae">Gson</a> <a href="/tags/Shell/" style="font-size: 1.1em; color: #999">Shell</a> <a href="/tags/MySQL/" style="font-size: 1.38em; color: #99a4b3">MySQL</a> <a href="/tags/Redis/" style="font-size: 1.5em; color: #99a9bf">Redis</a> <a href="/tags/Linux/" style="font-size: 1.35em; color: #99a3b1">Linux</a> <a href="/tags/Ubuntu/" style="font-size: 1.13em; color: #999a9b">Ubuntu</a> <a href="/tags/Roman-Numerals/" style="font-size: 1.1em; color: #999">Roman Numerals</a> <a href="/tags/IntelliJ-IDEA/" style="font-size: 1.1em; color: #999">IntelliJ IDEA</a> <a href="/tags/Superset/" style="font-size: 1.13em; color: #999a9b">Superset</a> <a href="/tags/HTML/" style="font-size: 1.43em; color: #99a6b8">HTML</a> <a href="/tags/Paimon/" style="font-size: 1.3em; color: #99a1ac">Paimon</a> <a href="/tags/Kafka/" style="font-size: 1.18em; color: #999ca0">Kafka</a> <a href="/tags/Elasticsearch/" style="font-size: 1.25em; color: #999fa7">Elasticsearch</a> <a href="/tags/DevOps/" style="font-size: 1.1em; color: #999">DevOps</a> <a href="/tags/Logstash/" style="font-size: 1.15em; color: #999b9e">Logstash</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">September 2024</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">August 2024</span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">July 2024</span><span class="card-archive-list-count">20</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/06/"><span class="card-archive-list-date">June 2024</span><span class="card-archive-list-count">30</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">May 2024</span><span class="card-archive-list-count">14</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">January 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">October 2023</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/09/"><span class="card-archive-list-date">September 2023</span><span class="card-archive-list-count">20</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">August 2023</span><span class="card-archive-list-count">8</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/07/"><span class="card-archive-list-date">July 2023</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/06/"><span class="card-archive-list-date">June 2023</span><span class="card-archive-list-count">40</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/05/"><span class="card-archive-list-date">May 2023</span><span class="card-archive-list-count">20</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/04/"><span class="card-archive-list-date">April 2023</span><span class="card-archive-list-count">16</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/03/"><span class="card-archive-list-date">March 2023</span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/02/"><span class="card-archive-list-date">February 2023</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/01/"><span class="card-archive-list-date">January 2023</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/12/"><span class="card-archive-list-date">December 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/11/"><span class="card-archive-list-date">November 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/10/"><span class="card-archive-list-date">October 2022</span><span class="card-archive-list-count">7</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/09/"><span class="card-archive-list-date">September 2022</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/08/"><span class="card-archive-list-date">August 2022</span><span class="card-archive-list-count">15</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/07/"><span class="card-archive-list-date">July 2022</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/06/"><span class="card-archive-list-date">June 2022</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/05/"><span class="card-archive-list-date">May 2022</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/04/"><span class="card-archive-list-date">April 2022</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/03/"><span class="card-archive-list-date">March 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/02/"><span class="card-archive-list-date">February 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">January 2022</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/10/"><span class="card-archive-list-date">October 2021</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/09/"><span class="card-archive-list-date">September 2021</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/08/"><span class="card-archive-list-date">August 2021</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/07/"><span class="card-archive-list-date">July 2021</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/05/"><span class="card-archive-list-date">May 2021</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/08/"><span class="card-archive-list-date">August 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/06/"><span class="card-archive-list-date">June 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/05/"><span class="card-archive-list-date">May 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/03/"><span class="card-archive-list-date">March 2020</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/12/"><span class="card-archive-list-date">December 2019</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/10/"><span class="card-archive-list-date">October 2019</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/09/"><span class="card-archive-list-date">September 2019</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/08/"><span class="card-archive-list-date">August 2019</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/07/"><span class="card-archive-list-date">July 2019</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/06/"><span class="card-archive-list-date">June 2019</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article :</div><div class="item-count">294</div></div><div class="webinfo-item"><div class="item-name">UV :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">PV :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-10-27T22:31:16.135Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/HTML/" style="font-size: 1.43em; color: #99a6b8">HTML</a> <a href="/tags/DevOps/" style="font-size: 1.1em; color: #999">DevOps</a> <a href="/tags/%E5%A4%87%E5%BF%98%E5%BD%95/" style="font-size: 1.13em; color: #999a9b">备忘录</a> <a href="/tags/git/" style="font-size: 1.1em; color: #999">git</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" style="font-size: 1.2em; color: #999da3">学习方法</a> <a href="/tags/HowTo/" style="font-size: 1.15em; color: #999b9e">HowTo</a> <a href="/tags/Flink/" style="font-size: 1.35em; color: #99a3b1">Flink</a> <a href="/tags/Roman-Numerals/" style="font-size: 1.1em; color: #999">Roman Numerals</a> <a href="/tags/JDK/" style="font-size: 1.1em; color: #999">JDK</a> <a href="/tags/JSON/" style="font-size: 1.23em; color: #999ea5">JSON</a> <a href="/tags/Linux/" style="font-size: 1.35em; color: #99a3b1">Linux</a> <a href="/tags/Paimon/" style="font-size: 1.3em; color: #99a1ac">Paimon</a> <a href="/tags/Gson/" style="font-size: 1.32em; color: #99a2ae">Gson</a> <a href="/tags/Elasticsearch/" style="font-size: 1.25em; color: #999fa7">Elasticsearch</a> <a href="/tags/Python/" style="font-size: 1.28em; color: #99a0aa">Python</a> <a href="/tags/ZooKeeper/" style="font-size: 1.13em; color: #999a9b">ZooKeeper</a> <a href="/tags/Markdown/" style="font-size: 1.1em; color: #999">Markdown</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%BA%E6%96%87/" style="font-size: 1.13em; color: #999a9b">大数据论文</a> <a href="/tags/%E7%94%A8%E6%88%B7%E7%94%BB%E5%83%8F/" style="font-size: 1.13em; color: #999a9b">用户画像</a> <a href="/tags/Flink-Table-Store/" style="font-size: 1.15em; color: #999b9e">Flink Table Store</a> <a href="/tags/Presto/" style="font-size: 1.45em; color: #99a7ba">Presto</a> <a href="/tags/Docker/" style="font-size: 1.13em; color: #999a9b">Docker</a> <a href="/tags/Kafka/" style="font-size: 1.18em; color: #999ca0">Kafka</a> <a href="/tags/Java/" style="font-size: 1.48em; color: #99a8bd">Java</a> <a href="/tags/Hive/" style="font-size: 1.23em; color: #999ea5">Hive</a> <a href="/tags/Logstash/" style="font-size: 1.15em; color: #999b9e">Logstash</a> <a href="/tags/Filebeat/" style="font-size: 1.2em; color: #999da3">Filebeat</a> <a href="/tags/maven/" style="font-size: 1.1em; color: #999">maven</a> <a href="/tags/C-Programming-Language/" style="font-size: 1.35em; color: #99a3b1">C Programming Language</a> <a href="/tags/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97/" style="font-size: 1.15em; color: #999b9e">罗马数字</a> <a href="/tags/Superset/" style="font-size: 1.13em; color: #999a9b">Superset</a> <a href="/tags/Spring-Boot/" style="font-size: 1.13em; color: #999a9b">Spring Boot</a> <a href="/tags/VMware/" style="font-size: 1.1em; color: #999">VMware</a> <a href="/tags/Redis/" style="font-size: 1.5em; color: #99a9bf">Redis</a> <a href="/tags/Data-Structures-and-Algorithms/" style="font-size: 1.18em; color: #999ca0">Data Structures and Algorithms</a> <a href="/tags/CentOS7/" style="font-size: 1.2em; color: #999da3">CentOS7</a> <a href="/tags/%E7%BF%BB%E8%AF%91/" style="font-size: 1.23em; color: #999ea5">翻译</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 1.1em; color: #999">数据分析</a> <a href="/tags/Shell/" style="font-size: 1.1em; color: #999">Shell</a> <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/" style="font-size: 1.1em; color: #999">位运算</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/" style="font-size: 1.1em; color: #999">接口文档</a> <a href="/tags/Bash/" style="font-size: 1.4em; color: #99a5b6">Bash</a> <a href="/tags/Jpa/" style="font-size: 1.1em; color: #999">Jpa</a> <a href="/tags/%E6%95%B0%E5%AD%A6/" style="font-size: 1.2em; color: #999da3">数学</a> <a href="/tags/leetcode/" style="font-size: 1.13em; color: #999a9b">leetcode</a> <a href="/tags/%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86/" style="font-size: 1.15em; color: #999b9e">技术管理</a> <a href="/tags/Git/" style="font-size: 1.18em; color: #999ca0">Git</a> <a href="/tags/ELK/" style="font-size: 1.18em; color: #999ca0">ELK</a> <a href="/tags/MySQL/" style="font-size: 1.38em; color: #99a4b3">MySQL</a> <a href="/tags/IntelliJ-IDEA/" style="font-size: 1.1em; color: #999">IntelliJ IDEA</a> <a href="/tags/Ambari/" style="font-size: 1.1em; color: #999">Ambari</a> <a href="/tags/Ubuntu/" style="font-size: 1.13em; color: #999a9b">Ubuntu</a> <a href="/tags/%E6%89%80%E6%80%9D%E6%89%80%E6%83%B3%E6%89%80%E6%82%9F/" style="font-size: 1.1em; color: #999">所思所想所悟</a> <a href="/tags/YAML/" style="font-size: 1.1em; color: #999">YAML</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 1.1em; color: #999">数据库</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>Archives</span>
+      
+    </div>
+    <ul class="card-archive-list">
+  
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/09/">
+          <span class="card-archive-list-date">September 2024</span>
+          <span class="card-archive-list-count">6</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/08/">
+          <span class="card-archive-list-date">August 2024</span>
+          <span class="card-archive-list-count">11</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/07/">
+          <span class="card-archive-list-date">July 2024</span>
+          <span class="card-archive-list-count">20</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/06/">
+          <span class="card-archive-list-date">June 2024</span>
+          <span class="card-archive-list-count">30</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/05/">
+          <span class="card-archive-list-date">May 2024</span>
+          <span class="card-archive-list-count">14</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2024/01/">
+          <span class="card-archive-list-date">January 2024</span>
+          <span class="card-archive-list-count">3</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/10/">
+          <span class="card-archive-list-date">October 2023</span>
+          <span class="card-archive-list-count">4</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/09/">
+          <span class="card-archive-list-date">September 2023</span>
+          <span class="card-archive-list-count">20</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/08/">
+          <span class="card-archive-list-date">August 2023</span>
+          <span class="card-archive-list-count">8</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/07/">
+          <span class="card-archive-list-date">July 2023</span>
+          <span class="card-archive-list-count">4</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/06/">
+          <span class="card-archive-list-date">June 2023</span>
+          <span class="card-archive-list-count">40</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/05/">
+          <span class="card-archive-list-date">May 2023</span>
+          <span class="card-archive-list-count">20</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/04/">
+          <span class="card-archive-list-date">April 2023</span>
+          <span class="card-archive-list-count">16</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/03/">
+          <span class="card-archive-list-date">March 2023</span>
+          <span class="card-archive-list-count">9</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/02/">
+          <span class="card-archive-list-date">February 2023</span>
+          <span class="card-archive-list-count">3</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2023/01/">
+          <span class="card-archive-list-date">January 2023</span>
+          <span class="card-archive-list-count">3</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2022/12/">
+          <span class="card-archive-list-date">December 2022</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2022/11/">
+          <span class="card-archive-list-date">November 2022</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2022/10/">
+          <span class="card-archive-list-date">October 2022</span>
+          <span class="card-archive-list-count">7</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2022/09/">
+          <span class="card-archive-list-date">September 2022</span>
+          <span class="card-archive-list-count">3</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2022/08/">
+          <span class="card-archive-list-date">August 2022</span>
+          <span class="card-archive-list-count">15</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2022/07/">
+          <span class="card-archive-list-date">July 2022</span>
+          <span class="card-archive-list-count">2</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2022/06/">
+          <span class="card-archive-list-date">June 2022</span>
+          <span class="card-archive-list-count">3</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2022/05/">
+          <span class="card-archive-list-date">May 2022</span>
+          <span class="card-archive-list-count">4</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2022/04/">
+          <span class="card-archive-list-date">April 2022</span>
+          <span class="card-archive-list-count">3</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2022/03/">
+          <span class="card-archive-list-date">March 2022</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2022/02/">
+          <span class="card-archive-list-date">February 2022</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2022/01/">
+          <span class="card-archive-list-date">January 2022</span>
+          <span class="card-archive-list-count">2</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2021/10/">
+          <span class="card-archive-list-date">October 2021</span>
+          <span class="card-archive-list-count">4</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2021/09/">
+          <span class="card-archive-list-date">September 2021</span>
+          <span class="card-archive-list-count">2</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2021/08/">
+          <span class="card-archive-list-date">August 2021</span>
+          <span class="card-archive-list-count">6</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2021/07/">
+          <span class="card-archive-list-date">July 2021</span>
+          <span class="card-archive-list-count">4</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2021/05/">
+          <span class="card-archive-list-date">May 2021</span>
+          <span class="card-archive-list-count">3</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2020/08/">
+          <span class="card-archive-list-date">August 2020</span>
+          <span class="card-archive-list-count">2</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2020/06/">
+          <span class="card-archive-list-date">June 2020</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2020/05/">
+          <span class="card-archive-list-date">May 2020</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2020/03/">
+          <span class="card-archive-list-date">March 2020</span>
+          <span class="card-archive-list-count">3</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2019/12/">
+          <span class="card-archive-list-date">December 2019</span>
+          <span class="card-archive-list-count">5</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2019/10/">
+          <span class="card-archive-list-date">October 2019</span>
+          <span class="card-archive-list-count">2</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2019/09/">
+          <span class="card-archive-list-date">September 2019</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2019/08/">
+          <span class="card-archive-list-date">August 2019</span>
+          <span class="card-archive-list-count">2</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2019/07/">
+          <span class="card-archive-list-date">July 2019</span>
+          <span class="card-archive-list-count">3</span>
+        </a>
+      </li>
+    
+      <li class="card-archive-list-item">
+        <a class="card-archive-list-link" href="/archives/2019/06/">
+          <span class="card-archive-list-date">June 2019</span>
+          <span class="card-archive-list-count">1</span>
+        </a>
+      </li>
+    </ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Website Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article Count :</div><div class="item-count">294</div></div><div class="webinfo-item"><div class="item-name">Unique Visitors :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Page Views :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-11-01T19:15:12.261Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
