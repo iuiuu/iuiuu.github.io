@@ -9,6 +9,94 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2024/05/31/c-language-lib-math-h/</loc>
+        <lastmod>2024-11-03T14:02:54.797Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/30/c-language-lib-locale-h/</loc>
+        <lastmod>2024-11-03T14:02:54.781Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/29/c-language-lib-limits-h/</loc>
+        <lastmod>2024-11-03T14:02:54.770Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/28/c-language-lib-iso646-h/</loc>
+        <lastmod>2024-11-03T14:02:54.764Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/27/c-language-lib-inttypes-h/</loc>
+        <lastmod>2024-11-03T14:02:54.755Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/26/c-language-lib-float-h/</loc>
+        <lastmod>2024-11-03T14:02:54.749Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/25/c-language-lib-errno-h/</loc>
+        <lastmod>2024-11-03T14:02:54.744Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/24/c-language-lib-ctype-h/</loc>
+        <lastmod>2024-11-03T14:01:03.205Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/23/c-language-lib-assert-h/</loc>
+        <lastmod>2024-11-03T14:01:03.194Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/05/22/c-language-multibyte-character/</loc>
+        <lastmod>2024-11-03T14:01:03.168Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/09/18/bulk-deleting-keys-in-redis-using-wildcards/</loc>
+        <lastmod>2024-11-01T19:20:32.831Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2024/09/11/analyzing-redis-source-code-hash/</loc>
         <lastmod>2024-10-27T22:30:09.103Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -83,14 +171,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/05/06/c-language-types/</loc>
         <lastmod>2024-09-18T16:18:35.121Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/09/18/bulk-deleting-keys-in-redis-using-wildcards/</loc>
-        <lastmod>2024-09-18T15:42:51.912Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

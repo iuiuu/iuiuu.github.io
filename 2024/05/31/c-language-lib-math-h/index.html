@@ -1,0 +1,477 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>math.h in C Language | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="keywords" content="Java,JVM,Spring,Spring Boot,Flink,Hadoop,Yarn,MySQL,Elasticsearch,Python,Kafka,Maven,Hbase,Kibana,Logstash,Tutorial,Technical Blogs,Data Structures,Algorithms,C,SQL,Data Science,Web Development,System Design,Interview Experience,Interview Preparation,Programming,Competitive Programming,Coding Contests,HTML,CSS,Computer Science,Programming Examples,Mathematics"><meta name="description" content="Type and Macros in math.hThe math.h header defines two type aliases:  float_t: The type that provides the most efficient execution of float operations on the current system, with a width that is at le">
+<meta property="og:type" content="article">
+<meta property="og:title" content="math.h in C Language">
+<meta property="og:url" content="http://linjiangxiong.com/2024/05/31/c-language-lib-math-h/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="Type and Macros in math.hThe math.h header defines two type aliases:  float_t: The type that provides the most efficient execution of float operations on the current system, with a width that is at le">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://linjiangxiong.com/image/IMG_3665.JPG">
+<meta property="article:published_time" content="2024-05-31T15:43:54.000Z">
+<meta property="article:modified_time" content="2024-11-03T14:02:54.797Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="C Programming Language">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/IMG_3665.JPG"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2024/05/31/c-language-lib-math-h/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap"><link rel="stylesheet" href="/css/ud_v5.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'math.h in C Language',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-03 22:02:54'
+}</script><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">304</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Johnson Lin</span></a><a class="nav-page-title" href="/"><span class="site-name">math.h in C Language</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">math.h in C Language</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-05-31T15:43:54.000Z" title="Created 2024-05-31 23:43:54">2024-05-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-11-03T14:02:54.797Z" title="Updated 2024-11-03 22:02:54">2024-11-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-Tutorial/">C Tutorial</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><h2 id="Type-and-Macros-in-math-h"><a href="#Type-and-Macros-in-math-h" class="headerlink" title="Type and Macros in math.h"></a>Type and Macros in math.h</h2><p>The <code>math.h</code> header defines two type aliases:</p>
+<ul>
+<li><strong>float_t</strong>: The type that provides the most efficient execution of <code>float</code> operations on the current system, with a width that is at least equal to that of a <code>float</code>.</li>
+<li><strong>double_t</strong>: The type that provides the most efficient execution of <code>double</code> operations on the current system, with a width that is at least equal to that of a <code>double</code>.</li>
+</ul>
+<p>You can determine their specific types using the <code>FLT_EVAL_METHOD</code> macro.</p>
+<hr>
+<p><strong>Mapping of FLT_EVAL_METHOD Values</strong></p>
+<table>
+<thead>
+<tr>
+<th>FLT_EVAL_METHOD Value</th>
+<th>Type for float_t</th>
+<th>Type for double_t</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>float</td>
+<td>double</td>
+</tr>
+<tr>
+<td>1</td>
+<td>double</td>
+<td>double</td>
+</tr>
+<tr>
+<td>2</td>
+<td>long double</td>
+<td>long double</td>
+</tr>
+<tr>
+<td>Other</td>
+<td>Implementation Defined</td>
+<td>Implementation Defined</td>
+</tr>
+</tbody></table>
+<p>Additionally, <code>math.h</code> defines several macros:</p>
+<ul>
+<li><strong>INFINITY</strong>: Represents positive infinity and returns a <code>float</code> type value.</li>
+<li><strong>NAN</strong>: Represents Not-A-Number (NaN) and returns a <code>float</code> type value.</li>
+</ul>
+<h2 id="Error-Types-in-Mathematical-Functions"><a href="#Error-Types-in-Mathematical-Functions" class="headerlink" title="Error Types in Mathematical Functions"></a>Error Types in Mathematical Functions</h2><p>Mathematical functions can produce the following types of errors:</p>
+<ul>
+<li><strong>Range Errors</strong>: The result cannot be represented by the function’s return type.</li>
+<li><strong>Domain Errors</strong>: Function parameters are invalid for the given function.</li>
+<li><strong>Pole Errors</strong>: Parameters cause the function’s limit to become infinite.</li>
+<li><strong>Overflow Errors</strong>: The result is too large, leading to overflow.</li>
+<li><strong>Underflow Errors</strong>: The result is too small, leading to underflow.</li>
+</ul>
+<p>The variable <code>math_errhandling</code> indicates how the current system handles mathematical errors.</p>
+<hr>
+<p><strong>Values of math_errhandling</strong></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MATH_ERRNO</td>
+<td>The system uses <code>errno</code> to indicate mathematical errors.</td>
+</tr>
+<tr>
+<td>MATH_ERREXCEPT</td>
+<td>The system uses exceptions to indicate mathematical errors.</td>
+</tr>
+<tr>
+<td>MATH_ERRNO</td>
+<td>MATH_ERREXCEPT</td>
+</tr>
+</tbody></table>
+<h2 id="Value-Type"><a href="#Value-Type" class="headerlink" title="Value Type"></a>Value Type</h2><p>The parameters of a mathematical function can be categorized into the following types: normal values, infinite values, finite values, and non-numeric values.</p>
+<p>The following functions are used to determine the type of a given value:</p>
+<ul>
+<li><strong>fpclassify()</strong>: Classifies the given floating-point number.</li>
+<li><strong>isfinite()</strong>: Returns true if the parameter is neither infinite nor NaN.</li>
+<li><strong>isinf()</strong>: Returns true if the parameter is infinite.</li>
+<li><strong>isnan()</strong>: Returns true if the parameter is not a number.</li>
+<li><strong>isnormal()</strong>: Returns true if the parameter is a normal number.</li>
+</ul>
+<p>Here’s an example:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">isfinite(<span class="number">1.23</span>)    <span class="comment">// 1</span></span><br><span class="line">isinf(<span class="number">1</span>/<span class="built_in">tan</span>(<span class="number">0</span>))   <span class="comment">// 1</span></span><br><span class="line">isnan(<span class="built_in">sqrt</span>(<span class="number">-1</span>))   <span class="comment">// 1</span></span><br><span class="line">isnormal(<span class="number">1e-310</span>)) <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="signbit"><a href="#signbit" class="headerlink" title="signbit()"></a>signbit()</h2><p>Checks whether the parameter has a sign. It returns 1 if the parameter is negative and 0 otherwise.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">signbit(<span class="number">3490.0</span>) <span class="comment">// 0</span></span><br><span class="line">signbit(<span class="number">-37.0</span>)  <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Trigonometric-Functions"><a href="#Trigonometric-Functions" class="headerlink" title="Trigonometric Functions"></a>Trigonometric Functions</h2><p>The following are trigonometric functions that take radians as parameters:</p>
+<ul>
+<li><strong>acos()</strong>: Arccosine</li>
+<li><strong>asin()</strong>: Arcsine</li>
+<li><strong>atan()</strong>: Arctangent</li>
+<li><strong>atan2()</strong>: Arctangent of two variables</li>
+<li><strong>cos()</strong>: Cosine</li>
+<li><strong>sin()</strong>: Sine</li>
+<li><strong>tan()</strong>: Tangent</li>
+</ul>
+<p>Remember, all of these functions have a float version (with an “f” suffix) and a long double version (with an “l” suffix).</p>
+<p>Here’s an example:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cos</span>(PI/<span class="number">4</span>) <span class="comment">// 0.707107</span></span><br></pre></td></tr></table></figure>
+
+<p>Here’s a more natural English expression for your content:</p>
+<h2 id="Hyperbolic-Functions"><a href="#Hyperbolic-Functions" class="headerlink" title="Hyperbolic Functions"></a>Hyperbolic Functions</h2><p>The following are hyperbolic functions that take floating-point parameters:</p>
+<ul>
+<li><strong>acosh()</strong>: Inverse hyperbolic cosine.</li>
+<li><strong>asinh()</strong>: Inverse hyperbolic sine.</li>
+<li><strong>atanh()</strong>: Inverse hyperbolic tangent.</li>
+<li><strong>cosh()</strong>: Hyperbolic cosine.</li>
+<li><strong>sinh()</strong>: Hyperbolic sine.</li>
+<li><strong>tanh()</strong>: Hyperbolic tangent.</li>
+</ul>
+<h2 id="Exponential-and-Logarithmic-Functions"><a href="#Exponential-and-Logarithmic-Functions" class="headerlink" title="Exponential and Logarithmic Functions"></a>Exponential and Logarithmic Functions</h2><p>The following are exponential and logarithmic functions, all returning a value of type <code>double</code>:</p>
+<ul>
+<li><strong>exp()</strong>: Computes Euler’s number ( e ) raised to the power of ( x ) (i.e., ( <img src="https://cdn.nlark.com/yuque/__latex/49cc400b77e6d24de7cc156670e4371c.svg" alt="image"> )).</li>
+<li><strong>exp2()</strong>: Computes ( 2 ) raised to the power of ( x ) (i.e., ( <img src="https://cdn.nlark.com/yuque/__latex/ed3e5be54e5e248fa2b49ea0fbbccc25.svg" alt="image"> )).</li>
+<li><strong>expm1()</strong>: Computes ( <img src="https://cdn.nlark.com/yuque/__latex/26b79bc0144c52f8751c0ad51a3507af.svg" alt="image"> ).</li>
+<li><strong>log()</strong>: Computes the natural logarithm, the inverse of <code>exp()</code>.</li>
+<li><strong>log2()</strong>: Computes the logarithm base ( 2 ).</li>
+<li><strong>log10()</strong>: Computes the logarithm base ( 10 ).</li>
+<li><strong>log1p()</strong>: Computes the natural logarithm of ( x + 1 ) (i.e., ( <img src="https://cdn.nlark.com/yuque/__latex/2e1d9a3a64b58451e2470220bb80df43.svg" alt="image"> )).</li>
+<li><strong>logb()</strong>: Computes the logarithm with base defined by the macro <code>FLT_RADIX</code> (typically ( 2 )), returning only the integer part.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exp</span>(<span class="number">3.0</span>);     <span class="comment">// 20.085500</span></span><br><span class="line"><span class="built_in">log</span>(<span class="number">20.0855</span>); <span class="comment">// 3.000000</span></span><br><span class="line"><span class="built_in">log10</span>(<span class="number">10000</span>); <span class="comment">// 4.000000</span></span><br></pre></td></tr></table></figure>
+
+<p>If the result exceeds the maximum value representable in C, the function returns <code>HUGE_VAL</code>, which is defined in <code>math.h</code> as a <code>double</code> type value.</p>
+<p>If the result is too small to be represented as a <code>double</code>, the function returns <code>0</code>. Both cases are considered errors.</p>
+<h2 id="frexp"><a href="#frexp" class="headerlink" title="frexp()"></a>frexp()</h2><p>The <code>frexp()</code> function decomposes a floating-point number into its fractional and exponent parts, using 2 as the base. For example, the number 1234.56 can be expressed as ( <img src="https://cdn.nlark.com/yuque/__latex/405a59d312903791ef6f2920d3371d37.svg" alt="image"> ). This function returns the fractional part and provides the exponent.</p>
+<p><strong>Function Signature:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">frexp</span><span class="params">(<span class="type">double</span> value, <span class="type">int</span>* <span class="built_in">exp</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Parameters:</strong><ul>
+<li><code>value</code>: The floating-point number to decompose.</li>
+<li><code>exp</code>: A pointer to an integer where the exponent will be stored.</li>
+</ul>
+</li>
+</ul>
+<p>The function returns the fractional part and assigns the exponent to the variable pointed to by <code>exp</code>. If the input is 0, both the fractional part and the exponent will be 0.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> frac;</span><br><span class="line"><span class="type">int</span> expt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// expt will be 11</span></span><br><span class="line">frac = <span class="built_in">frexp</span>(<span class="number">1234.56</span>, &amp;expt);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Output: 1234.56 = 0.6028125 x 2^11</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;1234.56 = %.7f x 2^%d\n&quot;</span>, frac, expt);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="ilogb"><a href="#ilogb" class="headerlink" title="ilogb()"></a>ilogb()</h2><p>The <code>ilogb()</code> function returns the exponent of a floating-point number, with the base defined by the macro <code>FLT_RADIX</code> (usually 2).</p>
+<p><strong>Function Signature:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">ilogb</span><span class="params">(<span class="type">double</span> x)</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Parameter:</strong><ul>
+<li><code>x</code>: The floating-point number whose exponent is to be determined.</li>
+</ul>
+</li>
+</ul>
+<p>The return value is ( <img src="https://cdn.nlark.com/yuque/__latex/d8a07763ee86f56080afa238be5e5b25.svg" alt="image"> ), where ( r ) is the macro <code>FLT_RADIX</code>.</p>
+<p><strong>Usage Examples:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ilogb(<span class="number">257</span>); <span class="comment">// Returns 8</span></span><br><span class="line">ilogb(<span class="number">256</span>); <span class="comment">// Returns 8</span></span><br><span class="line">ilogb(<span class="number">255</span>); <span class="comment">// Returns 7</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="ldexp"><a href="#ldexp" class="headerlink" title="ldexp()"></a>ldexp()</h2><p>The <code>ldexp()</code> function multiplies a number by 2 raised to a specified power. It can be seen as the inverse of <code>frexp()</code>, combining a fractional part and an exponent into the form ( <img src="https://cdn.nlark.com/yuque/__latex/cee035c9d7be8739e71c3a4fa7f33fb6.svg" alt="image"> ).</p>
+<p><strong>Function Signature:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">ldexp</span><span class="params">(<span class="type">double</span> x, <span class="type">int</span> <span class="built_in">exp</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Parameters:</strong><ul>
+<li><code>x</code>: The multiplicand.</li>
+<li><code>exp</code>: The exponent of 2.</li>
+</ul>
+</li>
+</ul>
+<p>The function returns ( <img src="https://cdn.nlark.com/yuque/__latex/bfffc2a1f617f52e1cb7e7b0951e8b12.svg" alt="image"> ).</p>
+<p><strong>Usage Examples:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ldexp</span>(<span class="number">1</span>, <span class="number">10</span>); <span class="comment">// Returns 1024.000000</span></span><br><span class="line"><span class="built_in">ldexp</span>(<span class="number">3</span>, <span class="number">2</span>);  <span class="comment">// Returns 12.000000</span></span><br><span class="line"><span class="built_in">ldexp</span>(<span class="number">0.75</span>, <span class="number">4</span>); <span class="comment">// Returns 12.000000</span></span><br><span class="line"><span class="built_in">ldexp</span>(<span class="number">0.5</span>, <span class="number">-1</span>); <span class="comment">// Returns 0.250000</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="modf"><a href="#modf" class="headerlink" title="modf()"></a>modf()</h2><p>The <code>modf()</code> function separates a number into its integer and fractional parts.</p>
+<p><strong>Function Signature:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">modf</span><span class="params">(<span class="type">double</span> value, <span class="type">double</span>* iptr)</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Parameters:</strong><ul>
+<li><code>value</code>: The number to be separated.</li>
+<li><code>iptr</code>: A pointer to a double variable where the integer part will be stored.</li>
+</ul>
+</li>
+</ul>
+<p>The function returns the fractional part, while the integer part is stored in the variable pointed to by <code>iptr</code>.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> int_part;</span><br><span class="line"><span class="built_in">modf</span>(<span class="number">3.14159</span>, &amp;int_part); <span class="comment">// Returns 0.14159, int_part will be 3.0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>Here’s an optimized version of your text, tailored to sound more natural in English:</p>
+<hr>
+<h2 id="scalbn"><a href="#scalbn" class="headerlink" title="scalbn()"></a>scalbn()</h2><p>The <code>scalbn()</code> function computes the value of ( <img src="https://cdn.nlark.com/yuque/__latex/de73dde2b68251d420d1da14f6797ac7.svg" alt="image"> ), where ( r ) is defined by the macro <code>FLT_RADIX</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">scalbn</span><span class="params">(<span class="type">double</span> x, <span class="type">int</span> n)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>It takes two parameters: the first parameter ( x ) is the base, and the second parameter ( n ) is the exponent. It returns the result of ( <img src="https://cdn.nlark.com/yuque/__latex/de73dde2b68251d420d1da14f6797ac7.svg" alt="image"> ).</p>
+<p><strong>Examples:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scalbn(<span class="number">2</span>, <span class="number">8</span>); <span class="comment">// returns 512.000000</span></span><br></pre></td></tr></table></figure>
+
+<p>There are several versions of this function:</p>
+<ul>
+<li><code>scalbn()</code>: uses an <code>int</code> for the exponent ( n ).</li>
+<li><code>scalbnf()</code>: the <code>float</code> version of <code>scalbn()</code>.</li>
+<li><code>scalbnl()</code>: the <code>long double</code> version of <code>scalbn()</code>.</li>
+<li><code>scalbln()</code>: uses a <code>long int</code> for the exponent ( n ).</li>
+<li><code>scalblnf()</code>: the <code>float</code> version of <code>scalbln()</code>.</li>
+<li><code>scalblnl()</code>: the <code>long double</code> version of <code>scalbln()</code>.</li>
+</ul>
+<h2 id="round"><a href="#round" class="headerlink" title="round()"></a>round()</h2><p>The <code>round()</code> function rounds a number to the nearest integer, using standard rounding rules (e.g., 1.5 rounds to 2, -1.5 rounds to -2).</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">round</span><span class="params">(<span class="type">double</span> x)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>It returns a floating-point number.</p>
+<p><strong>Examples:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">round(<span class="number">3.14</span>);  <span class="comment">// returns 3.000000</span></span><br><span class="line">round(<span class="number">3.5</span>);   <span class="comment">// returns 4.000000</span></span><br><span class="line">round(<span class="number">-1.5</span>);  <span class="comment">// returns -2.000000</span></span><br><span class="line">round(<span class="number">-1.14</span>); <span class="comment">// returns -1.000000</span></span><br></pre></td></tr></table></figure>
+
+<p>Other versions include:</p>
+<ul>
+<li><code>lround()</code>: returns a <code>long int</code>.</li>
+<li><code>llround()</code>: returns a <code>long long int</code>.</li>
+</ul>
+<h2 id="trunc"><a href="#trunc" class="headerlink" title="trunc()"></a>trunc()</h2><p>The <code>trunc()</code> function truncates the decimal part of a floating-point number and returns the integer part as a floating-point value.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">trunc</span><span class="params">(<span class="type">double</span> x)</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Examples:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">trunc(<span class="number">3.14</span>);  <span class="comment">// returns 3.000000</span></span><br><span class="line">trunc(<span class="number">3.8</span>);   <span class="comment">// returns 3.000000</span></span><br><span class="line">trunc(<span class="number">-1.5</span>);  <span class="comment">// returns -1.000000</span></span><br><span class="line">trunc(<span class="number">-1.14</span>); <span class="comment">// returns -1.000000</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="ceil"><a href="#ceil" class="headerlink" title="ceil()"></a>ceil()</h2><p>The <code>ceil()</code> function returns the smallest integer value that is greater than or equal to its argument (rounded up).</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">ceil</span><span class="params">(<span class="type">double</span> x)</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Examples:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ceil</span>(<span class="number">7.1</span>);   <span class="comment">// returns 8.0</span></span><br><span class="line"><span class="built_in">ceil</span>(<span class="number">7.9</span>);   <span class="comment">// returns 8.0</span></span><br><span class="line"><span class="built_in">ceil</span>(<span class="number">-7.1</span>);  <span class="comment">// returns -7.0</span></span><br><span class="line"><span class="built_in">ceil</span>(<span class="number">-7.9</span>);  <span class="comment">// returns -7.0</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="floor"><a href="#floor" class="headerlink" title="floor()"></a>floor()</h2><p>The <code>floor()</code> function returns the largest integer value that is less than or equal to its argument (rounded down).</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">floor</span><span class="params">(<span class="type">double</span> x)</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Examples:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">floor</span>(<span class="number">7.1</span>);   <span class="comment">// returns 7.0</span></span><br><span class="line"><span class="built_in">floor</span>(<span class="number">7.9</span>);   <span class="comment">// returns 7.0</span></span><br><span class="line"><span class="built_in">floor</span>(<span class="number">-7.1</span>);  <span class="comment">// returns -8.0</span></span><br><span class="line"><span class="built_in">floor</span>(<span class="number">-7.9</span>);  <span class="comment">// returns -8.0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Custom Rounding Function</strong></p>
+<p>The following function implements rounding to the nearest integer:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">round_nearest</span><span class="params">(<span class="type">double</span> x)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> x &lt; <span class="number">0.0</span> ? <span class="built_in">ceil</span>(x - <span class="number">0.5</span>) : <span class="built_in">floor</span>(x + <span class="number">0.5</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="fmod"><a href="#fmod" class="headerlink" title="fmod()"></a>fmod()</h2><p>The <code>fmod()</code> function computes the remainder of the division of the first parameter by the second. It serves as the floating-point equivalent of the modulus operator <code>%</code>, which is limited to integers.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="title function_">fmod</span><span class="params">(<span class="type">double</span> x, <span class="type">double</span> y)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>It effectively calculates ( <img src="https://cdn.nlark.com/yuque/__latex/bd10c6d94a5ad5894b490dd31d7d6f3d.svg" alt="image"> ), ensuring that the sign of the result matches that of ( x ).</p>
+<p><strong>Examples:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">fmod</span>(<span class="number">5.5</span>, <span class="number">2.2</span>);  <span class="comment">// returns 1.100000</span></span><br><span class="line"><span class="built_in">fmod</span>(<span class="number">-9.2</span>, <span class="number">5.1</span>); <span class="comment">// returns -4.100000</span></span><br><span class="line"><span class="built_in">fmod</span>(<span class="number">9.2</span>, <span class="number">5.1</span>);  <span class="comment">// returns 4.100000</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>Sure! Here’s an optimized version of your text for clarity and fluency in English:</p>
+<hr>
+<h2 id="Floating-Point-Comparison-Functions"><a href="#Floating-Point-Comparison-Functions" class="headerlink" title="Floating-Point Comparison Functions"></a>Floating-Point Comparison Functions</h2><p>The following functions are used to compare two floating-point numbers and return an integer result:</p>
+<ul>
+<li><strong>isgreater(x, y)</strong>: Returns 1 if ( x &gt; y ), otherwise returns 0.</li>
+<li><strong>isgreaterequal(x, y)</strong>: Returns 1 if ( <img src="https://cdn.nlark.com/yuque/__latex/3ea537ae4a152bf5c25fac3bcea9d2cc.svg" alt="image"> ), otherwise returns 0.</li>
+<li><strong>isless(x, y)</strong>: Returns 1 if ( x &lt; y ), otherwise returns 0.</li>
+<li><strong>islessequal(x, y)</strong>: Returns 1 if ( <img src="https://cdn.nlark.com/yuque/__latex/802d224350cd6098b5218bb73a014f36.svg" alt="image"> ), otherwise returns 0.</li>
+<li><strong>islessgreater(x, y)</strong>: Returns 1 if ( x &lt; y ) or ( x &gt; y ) (i.e., not equal), otherwise returns 0.</li>
+</ul>
+<hr>
+<p><strong>Examples:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">isgreater(<span class="number">10.0</span>, <span class="number">3.0</span>)         <span class="comment">// 1</span></span><br><span class="line">isgreaterequal(<span class="number">10.0</span>, <span class="number">10.0</span>)   <span class="comment">// 1</span></span><br><span class="line">isless(<span class="number">10.0</span>, <span class="number">3.0</span>)            <span class="comment">// 0</span></span><br><span class="line">islessequal(<span class="number">10.0</span>, <span class="number">3.0</span>)       <span class="comment">// 0</span></span><br><span class="line">islessgreater(<span class="number">10.0</span>, <span class="number">3.0</span>)     <span class="comment">// 1</span></span><br><span class="line">islessgreater(<span class="number">10.0</span>, <span class="number">30.0</span>)    <span class="comment">// 1</span></span><br><span class="line">islessgreater(<span class="number">10.0</span>, <span class="number">10.0</span>)     <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="isunordered"><a href="#isunordered" class="headerlink" title="isunordered()"></a>isunordered()</h2><ul>
+<li><strong>isunordered(x, y)</strong>: Returns 1 if either argument is NaN (Not a Number), otherwise returns 0.</li>
+</ul>
+<hr>
+<p><strong>Example:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">isunordered(1.0, 2.0)         // 0</span><br><span class="line">isunordered(1.0, sqrt(-1))    // 1</span><br><span class="line">isunordered(NAN, 30.0)        // 1</span><br><span class="line">isunordered(NAN, NAN)         // 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="Other-Functions-in-lt-math-h-gt"><a href="#Other-Functions-in-lt-math-h-gt" class="headerlink" title="Other Functions in &lt;math.h&gt;"></a>Other Functions in <code>&lt;math.h&gt;</code></h2><p>The <code>&lt;math.h&gt;</code> library includes several other useful functions:</p>
+<ul>
+<li><strong>pow(x, y)</strong>: Computes ( x ) raised to the power of ( y ).</li>
+<li><strong>sqrt(x)</strong>: Computes the square root of ( x ).</li>
+<li><strong>cbrt(x)</strong>: Computes the cube root of ( x ).</li>
+<li><strong>fabs(x)</strong>: Computes the absolute value of ( x ).</li>
+<li><strong>hypot(x, y)</strong>: Computes the length of the hypotenuse given the lengths of the two perpendicular sides ( x ) and ( y ).</li>
+<li><strong>fmax(x, y)</strong>: Returns the larger of ( x ) and ( y ).</li>
+<li><strong>fmin(x, y)</strong>: Returns the smaller of ( x ) and ( y ).</li>
+<li><strong>remainder(x, y)</strong>: Computes the remainder according to the IEC 60559 standard.</li>
+<li><strong>remquo(x, y)</strong>: Computes the remainder and quotient at the same time.</li>
+<li><strong>copysign(x, y)</strong>: Returns a value with the magnitude of ( x ) and the sign of ( y ).</li>
+<li><strong>nan()</strong>: Returns a NaN value.</li>
+<li><strong>nextafter(x, y)</strong>: Computes the next representable floating-point value after ( x ) in the direction of ( y ).</li>
+<li><strong>fdim(x, y)</strong>: Returns ( x - y ) if positive, otherwise returns 0.</li>
+<li><strong>fma(x, y, z)</strong>: Computes ( <img src="https://cdn.nlark.com/yuque/__latex/95b248b2e6da0f6ab2dbe64faf8eb576.svg" alt="image"> ) in a single operation.</li>
+<li><strong>nearbyint(x)</strong>: Rounds ( x ) to the nearest integer using the current rounding mode.</li>
+<li><strong>rint(x)</strong>: Rounds ( x ) to the nearest integer and may raise the INEXACT exception.</li>
+<li><strong>lrint(x)</strong>: Rounds ( x ) to the nearest integer and returns it as a long integer.</li>
+<li><strong>erf(x)</strong>: Computes the error function of ( x ).</li>
+<li><strong>erfc(x)</strong>: Computes the complementary error function of ( x ).</li>
+<li><strong>tgamma(x)</strong>: Computes the Gamma function of ( x ).</li>
+<li><strong>lgamma(x)</strong>: Computes the natural logarithm of the absolute value of the Gamma function.</li>
+</ul>
+<hr>
+<p><strong>Examples:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pow(3, 4)               // 81.000000</span><br><span class="line">sqrt(3.0)               // 1.73205</span><br><span class="line">cbrt(1729.03)           // 12.002384</span><br><span class="line">fabs(-3490.0)           // 3490.000000</span><br><span class="line">hypot(3, 4)             // 5.000000</span><br><span class="line">fmax(3.0, 10.0)         // 10.000000</span><br><span class="line">fmin(10.0, 3.0)         // 3.000000</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2024/05/31/c-language-lib-math-h/">http://linjiangxiong.com/2024/05/31/c-language-lib-math-h/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C-Programming-Language/">C Programming Language</a></div><div class="post-share"><div class="social-share" data-image="/image/IMG_3665.JPG" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/06/01/why-learning-data-structures-and-algorithms-is-crucial-for-success-in-tech/" title="Why Learning Data Structures and Algorithms is Crucial for Success in Tech"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">Why Learning Data Structures and Algorithms is Crucial for Success in Tech</div></div><div class="info-2"><div class="info-item-1">In the ever-evolving world of technology, understanding the fundamentals of data structures and algorithms is not just an option but a necessity. These concepts form the backbone of efficient problem-solving and lie at the heart of many computer science disciplines, from software development to data analytics. Here’s why every aspiring tech professional should prioritize learning data structures and algorithms.  Efficiency and Optimization:Data structures and algorithms determine how...</div></div></div></a><a class="pagination-related" href="/2024/05/30/c-language-lib-locale-h/" title="locale.h in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">locale.h in C Language</div></div><div class="info-2"><div class="info-item-1">OverviewThe locale.h header file manages localization settings in programs, affecting the following behaviors:  Number formatting Currency formatting Character classification Date and time formatting  It defines several macros:  LC_COLLATE: Influences string comparison functions strcoll() and strxfrm(). LC_CTYPE: Affects character processing functions. LC_MONETARY: Impacts currency formatting. LC_NUMERIC: Modifies number formatting for printf(). LC_TIME: Affects date and time formatting...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/05/01/introduction-to-the-c-language/" title="Introduction to the C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-01</div><div class="info-item-2">Introduction to the C Language</div></div><div class="info-2"><div class="info-item-1">HistoryThe C programming language was originally invented as a tool for developing the Unix operating system. In 1969, Ken Thompson and Dennis Ritchie at Bell Labs in the United States developed the Unix operating system. Unix was initially written in assembly language, making it difficult to port to other computers. To address this, they decided to rewrite it in a high-level language. However, existing high-level languages at the time did not meet their needs, so Thompson developed the B...</div></div></div></a><a class="pagination-related" href="/2024/05/02/basic-c-language-syntax/" title="Basic C Language Syntax"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-02</div><div class="info-item-2">Basic C Language Syntax</div></div><div class="info-2"><div class="info-item-1">StatementsC code is composed of statements. A statement is a command that the program executes. In C, each statement must end with a semicolon, unless specified otherwise. 1int x = 1;  The above is a variable declaration statement, where the integer variable x is declared and assigned a value of 1. Multiple statements can be written on a single line: 1int x; x = 1;  Here, two statements are written on one line. Line breaks between statements aren’t required but are often used for...</div></div></div></a><a class="pagination-related" href="/2024/05/03/c-language-variables/" title="Understanding Variables in C Programming"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-03</div><div class="info-item-2">Understanding Variables in C Programming</div></div><div class="info-2"><div class="info-item-1">A variable can be understood as the name of a memory location. By using the variable name, you can reference this memory and access the stored value. The value might change, which is why it’s called a variable. If the value remains constant, it’s referred to as a constant. Variable NamesIn C, variable names are considered identifiers, and there are strict rules for naming them:  They can only contain letters (both uppercase and lowercase), digits, and underscores (_). They cannot begin with...</div></div></div></a><a class="pagination-related" href="/2024/05/05/c-language-flow-control/" title="Flow Control in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-05</div><div class="info-item-2">Flow Control in C Language</div></div><div class="info-2"><div class="info-item-1">In C programming, execution is sequential, meaning statements are executed one after the other. To control the flow of execution, developers use flow control structures, primarily conditional and loop statements. if StatementThe if statement is used for conditional execution; it executes a specified statement if the condition is true. Syntax: 1if (expression) statement  Here, expression must be true (non-zero) for statement to execute. The condition inside the parentheses must be enclosed in...</div></div></div></a><a class="pagination-related" href="/2024/05/04/c-language-operator/" title="Operators in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-04</div><div class="info-item-2">Operators in C Language</div></div><div class="info-2"><div class="info-item-1">C language includes a wide variety of operators, more than 50 in total, which can be categorized into several types. Arithmetic OperatorsArithmetic operators are used for mathematical operations. The main ones are as follows:  +: Unary plus (positive sign)   -: Unary minus (negative sign)   +: Addition (binary operator)   -: Subtraction (binary operator)   *: Multiplication   /: Division   %: Modulus (remainder of division)   Unary + and -:The + and - can act as unary operators, requiring...</div></div></div></a><a class="pagination-related" href="/2024/05/07/c-language-pointer/" title="Pointer in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-07</div><div class="info-item-2">Pointer in C Language</div></div><div class="info-2"><div class="info-item-1">Pointers are one of the most important and challenging concepts in the C programming language. OverviewWhat is a pointer? In essence, it’s a value representing a memory address, acting as a signpost to a specific location in memory. The asterisk * represents a pointer and is usually placed after the type keyword to indicate what type of value the pointer is referencing. For example, char* is a pointer to a character, and float* is a pointer to a float. 1int* intPtr;  The above example...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Johnson Lin</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">304</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">55</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">22</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Type-and-Macros-in-math-h"><span class="toc-number">1.</span> <span class="toc-text">Type and Macros in math.h</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Error-Types-in-Mathematical-Functions"><span class="toc-number">2.</span> <span class="toc-text">Error Types in Mathematical Functions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Value-Type"><span class="toc-number">3.</span> <span class="toc-text">Value Type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#signbit"><span class="toc-number">4.</span> <span class="toc-text">signbit()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trigonometric-Functions"><span class="toc-number">5.</span> <span class="toc-text">Trigonometric Functions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hyperbolic-Functions"><span class="toc-number">6.</span> <span class="toc-text">Hyperbolic Functions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exponential-and-Logarithmic-Functions"><span class="toc-number">7.</span> <span class="toc-text">Exponential and Logarithmic Functions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#frexp"><span class="toc-number">8.</span> <span class="toc-text">frexp()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ilogb"><span class="toc-number">9.</span> <span class="toc-text">ilogb()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ldexp"><span class="toc-number">10.</span> <span class="toc-text">ldexp()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#modf"><span class="toc-number">11.</span> <span class="toc-text">modf()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#scalbn"><span class="toc-number">12.</span> <span class="toc-text">scalbn()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#round"><span class="toc-number">13.</span> <span class="toc-text">round()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#trunc"><span class="toc-number">14.</span> <span class="toc-text">trunc()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ceil"><span class="toc-number">15.</span> <span class="toc-text">ceil()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#floor"><span class="toc-number">16.</span> <span class="toc-text">floor()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fmod"><span class="toc-number">17.</span> <span class="toc-text">fmod()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Floating-Point-Comparison-Functions"><span class="toc-number">18.</span> <span class="toc-text">Floating-Point Comparison Functions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#isunordered"><span class="toc-number">19.</span> <span class="toc-text">isunordered()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Other-Functions-in-lt-math-h-gt"><span class="toc-number">20.</span> <span class="toc-text">Other Functions in &lt;math.h&gt;</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/18/bulk-deleting-keys-in-redis-using-wildcards/" title="Bulk Deleting Keys in Redis Using Wildcards">Bulk Deleting Keys in Redis Using Wildcards</a><time datetime="2024-09-18T15:42:56.000Z" title="Created 2024-09-18 23:42:56">2024-09-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/11/analyzing-redis-source-code-hash/" title="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing"><img src="/image/redis-src/2024091101.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing"/></a><div class="content"><a class="title" href="/2024/09/11/analyzing-redis-source-code-hash/" title="Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing">Analyzing Redis Source Code: The Structure and Design of Hash Tables, Chained Hashing, and Incremental Rehashing</a><time datetime="2024-09-10T22:28:03.000Z" title="Created 2024-09-11 06:28:03">2024-09-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/10/analyzing-redis-source-code-sds/" title="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation"><img src="/image/redis-src/24091002.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation"/></a><div class="content"><a class="title" href="/2024/09/10/analyzing-redis-source-code-sds/" title="Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation">Analyzing Redis Source Code: Simple Dynamic Strings (SDS) – An Efficient and Flexible String Implementation</a><time datetime="2024-09-09T17:13:55.000Z" title="Created 2024-09-10 01:13:55">2024-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/06/why-does-redis-use-the-sds-structure-for-strings-instead-of-char/" title="Why Does Redis Use the SDS Structure for Strings Instead of char*?">Why Does Redis Use the SDS Structure for Strings Instead of char*?</a><time datetime="2024-09-05T16:01:26.000Z" title="Created 2024-09-06 00:01:26">2024-09-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/05/how-to-delete-data-in-elasticsearch-single-multiple-clear-and-all/" title="How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All">How to Delete Data in Elasticsearch: Single, Multiple, Clear, and All</a><time datetime="2024-09-04T16:02:38.000Z" title="Created 2024-09-05 00:02:38">2024-09-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
