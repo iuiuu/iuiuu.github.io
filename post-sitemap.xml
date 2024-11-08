@@ -9,6 +9,54 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2024/11/09/redis-hyperloglog-pfselftest-command/</loc>
+        <lastmod>2024-11-08T17:55:32.665Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/09/redis-hyperloglog-pfdebug-command/</loc>
+        <lastmod>2024-11-08T17:55:32.659Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/08/redis-hyperloglog-pfmerge-command/</loc>
+        <lastmod>2024-11-08T17:55:32.646Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/06/redis-hyperloglog-pfcount-command/</loc>
+        <lastmod>2024-11-08T17:55:32.631Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/04/redis-hyperloglog-pfadd-command/</loc>
+        <lastmod>2024-11-08T17:55:32.623Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/03/redis-hyperloglog/</loc>
+        <lastmod>2024-11-08T17:55:32.600Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2024/11/05/how-to-fix-java-lang-nosuchmethoderror-commandline-hasoption-in-flink/</loc>
         <lastmod>2024-11-05T17:05:17.772Z</lastmod>
         <changefreq>weekly</changefreq>
