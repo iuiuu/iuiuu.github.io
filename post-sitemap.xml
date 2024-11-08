@@ -9,6 +9,22 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2024/11/07/how-to-install-redis-on-ubuntu-using-the-apt-command/</loc>
+        <lastmod>2024-11-08T18:01:29.389Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/02/ubuntu-could-not-get-lock-var-lib-apt-lists-lock/</loc>
+        <lastmod>2024-11-08T18:01:15.742Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2024/11/09/redis-hyperloglog-pfselftest-command/</loc>
         <lastmod>2024-11-08T17:55:32.665Z</lastmod>
         <changefreq>weekly</changefreq>
