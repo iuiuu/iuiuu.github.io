@@ -9,6 +9,30 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2024/11/03/redis-hyperloglog/</loc>
+        <lastmod>2024-11-08T18:05:38.113Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/04/redis-hyperloglog-pfadd-command/</loc>
+        <lastmod>2024-11-08T18:05:27.055Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/06/redis-hyperloglog-pfcount-command/</loc>
+        <lastmod>2024-11-08T18:05:03.547Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2024/11/07/how-to-install-redis-on-ubuntu-using-the-apt-command/</loc>
         <lastmod>2024-11-08T18:01:29.389Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -43,30 +67,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/11/08/redis-hyperloglog-pfmerge-command/</loc>
         <lastmod>2024-11-08T17:55:32.646Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/06/redis-hyperloglog-pfcount-command/</loc>
-        <lastmod>2024-11-08T17:55:32.631Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/04/redis-hyperloglog-pfadd-command/</loc>
-        <lastmod>2024-11-08T17:55:32.623Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/03/redis-hyperloglog/</loc>
-        <lastmod>2024-11-08T17:55:32.600Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
