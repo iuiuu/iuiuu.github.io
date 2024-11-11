@@ -3,6 +3,13 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/tags/redis/</loc>
+        <lastmod>2024-11-11T00:46:14.530Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/tags/how-to/</loc>
         <lastmod>2024-11-09T16:59:49.893Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -19,13 +26,6 @@
     <url>
         <loc>http://linjiangxiong.com/tags/ubuntu/</loc>
         <lastmod>2024-11-09T16:59:49.893Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/redis/</loc>
-        <lastmod>2024-11-08T18:05:38.113Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
