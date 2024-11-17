@@ -23738,4 +23738,48 @@ Enter your administrator password when prompted, and the installation will proce
         <tag>Redis</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Introduction to Redis Bitmaps</title>
+    <url>/2024/11/15/redis-bitmaps-intro/</url>
+    <content><![CDATA[<p>Bitmaps are not an actual data type, but a set of bit-oriented operations defined on the String type which is treated like a bit vector. Since strings are binary safe blobs and their maximum length is 512 MB, they are suitable to set up to 2^32 different bits.</p>
+<p>You can perform bitwise operations on one or more strings. Some examples of bitmap use cases include:</p>
+<ul>
+<li>Efficient set representations for cases where the members of a set correspond to the integers 0-N.</li>
+<li>Object permissions, where each bit represents a particular permission, similar to the way that file systems store permissions.</li>
+</ul>
+<h2 id="Basic-Commands"><a href="#Basic-Commands" class="headerlink" title="Basic Commands"></a>Basic Commands</h2><ul>
+<li><code>SETBIT</code> sets a bit at the provided offset to 0 or 1.</li>
+<li><code>GETBIT</code> returns the value of a bit at a given offset.</li>
+</ul>
+<p>See the <a href="https://redis.io/docs/latest/commands/?group=bitmap">complete list of bitmap commands</a>.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>Suppose you have 1000 cyclists racing through the country-side, with sensors on their bikes labeled 0-999. You want to quickly determine whether a given sensor has pinged a tracking server within the hour to check in on a rider.</p>
+<p>You can represent this scenario using a bitmap whose key references the current hour.</p>
+<ul>
+<li>Rider 123 pings the server on January 1, 2024 within the 00:00 hour. You can then confirm that rider 123 pinged the server. You can also check to see if rider 456 has pinged the server for that same hour.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt; SETBIT pings:2024-01-01-00:00 123 1</span><br><span class="line">(integer) 0</span><br><span class="line">&gt; GETBIT pings:2024-01-01-00:00 123</span><br><span class="line">1</span><br><span class="line">&gt; GETBIT pings:2024-01-01-00:00 456</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+<h2 id="Bit-Operations"><a href="#Bit-Operations" class="headerlink" title="Bit Operations"></a>Bit Operations</h2><p>Bit operations are divided into two groups: constant-time single bit operations, like setting a bit to 1 or 0, or getting its value, and operations on groups of bits, for example counting the number of set bits in a given range of bits (e.g., population counting).</p>
+<p>One of the biggest advantages of bitmaps is that they often provide extreme space savings when storing information. For example in a system where different users are represented by incremental user IDs, it is possible to remember a single bit information (for example, knowing whether a user wants to receive a newsletter) of 4 billion users using just 512 MB of memory.</p>
+<p>The <code>SETBIT</code> command takes as its first argument the bit number, and as its second argument the value to set the bit to, which is 1 or 0. The command automatically enlarges the string if the addressed bit is outside the current string length.</p>
+<p><code>GETBIT</code> just returns the value of the bit at the specified index. Out of range bits (addressing a bit that is outside the length of the string stored into the target key) are always considered to be zero.</p>
+<p>There are three commands operating on group of bits:</p>
+<ol>
+<li><code>BITOP</code> performs bit-wise operations between different strings. The provided operations are AND, OR, XOR and NOT.</li>
+<li><code>BITCOUNT</code> performs population counting, reporting the number of bits set to 1.</li>
+<li><code>BITPOS</code> finds the first bit having the specified value of 0 or 1.</li>
+</ol>
+<p>Both <code>BITPOS</code> and <code>BITCOUNT</code> are able to operate with byte ranges of the string, instead of running for the whole length of the string. We can trivially see the number of bits that have been set in a bitmap.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt; BITCOUNT pings:2024-01-01-00:00</span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
+<p>For example imagine you want to know the longest streak of daily visits of your web site users. You start counting days starting from zero, that is the day you made your web site public, and set a bit with <code>SETBIT</code> every time the user visits the web site. As a bit index you simply take the current unix time, subtract the initial offset, and divide by the number of seconds in a day (normally, 3600*24).</p>
+<p>This way for each user you have a small string containing the visit information for each day. With <code>BITCOUNT</code> it is possible to easily get the number of days a given user visited the web site, while with a few <code>BITPOS</code> calls, or simply fetching and analyzing the bitmap client-side, it is possible to easily compute the longest streak.</p>
+<p>Bitmaps are trivial to split into multiple keys, for example for the sake of sharding the data set and because in general it is better to avoid working with huge keys. To split a bitmap across different keys instead of setting all the bits into a key, a trivial strategy is just to store M bits per key and obtain the key name with bit-number/M and the Nth bit to address inside the key with bit-number MOD M.</p>
+<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p><code>SETBIT</code> and <code>GETBIT</code> are O(1). <code>BITOP</code> is O(n), where n is the length of the longest string in the comparison.</p>
+]]></content>
+      <categories>
+        <category>Programming Digest</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
 </search>
