@@ -9,22 +9,22 @@
 
 
     <url>
-        <loc>http://linjiangxiong.com/categories/Programming-Digest/</loc>
-        <lastmod>2024-11-21T16:33:33.000Z</lastmod>
+        <loc>http://linjiangxiong.com/categories/HTML-Tutorial/</loc>
+        <lastmod>2024-11-26T15:37:27.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://linjiangxiong.com/categories/Redis-Tutorial/</loc>
-        <lastmod>2024-11-11T00:53:01.307Z</lastmod>
+        <lastmod>2024-11-26T15:24:44.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/categories/Redis-Tutoria/</loc>
-        <lastmod>2024-11-08T18:05:27.055Z</lastmod>
+        <loc>http://linjiangxiong.com/categories/Programming-Digest/</loc>
+        <lastmod>2024-11-21T16:33:33.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -39,13 +39,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/Redis-Source-Code-Analysis/</loc>
         <lastmod>2024-10-27T22:30:09.103Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/HTML-Tutorial/</loc>
-        <lastmod>2024-09-05T15:26:13.772Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

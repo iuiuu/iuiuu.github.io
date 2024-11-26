@@ -3,6 +3,20 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/tags/HTML/</loc>
+        <lastmod>2024-11-26T15:37:27.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/redis/</loc>
+        <lastmod>2024-11-26T15:24:44.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/tags/java/</loc>
         <lastmod>2024-11-21T16:33:33.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -12,13 +26,6 @@
     <url>
         <loc>http://linjiangxiong.com/tags/howto/</loc>
         <lastmod>2024-11-21T16:33:33.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/redis/</loc>
-        <lastmod>2024-11-17T17:19:44.752Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -82,13 +89,6 @@
     <url>
         <loc>http://linjiangxiong.com/tags/Redis/</loc>
         <lastmod>2024-11-01T19:20:32.831Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/HTML/</loc>
-        <lastmod>2024-09-05T15:26:13.772Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

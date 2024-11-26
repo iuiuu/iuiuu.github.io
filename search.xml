@@ -19266,7 +19266,7 @@ Enter your administrator password when prompted, and the installation will proce
 <li><code>nonce</code>: A cryptographic nonce used in Content Security Policy.</li>
 <li><code>referrerpolicy</code>: Specifies how to handle the <code>Referer</code> HTTP header.</li>
 </ul>
-<h2 id="Using"><a href="#Using" class="headerlink" title="Using "></a>Using <noscript></h2><p>The <code>&lt;noscript&gt;</code> tag is used to provide alternative content when JavaScript is not available or disabled:</p>
+<h2 id="Using-lt-noscript-gt"><a href="#Using-lt-noscript-gt" class="headerlink" title="Using &lt;noscript&gt;"></a>Using <code>&lt;noscript&gt;</code></h2><p>The <code>&lt;noscript&gt;</code> tag is used to provide alternative content when JavaScript is not available or disabled:</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">noscript</span>&gt;</span></span><br><span class="line">  Your browser cannot execute JavaScript. The page may not display correctly.</span><br><span class="line"><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>This content will only be shown if the browser can’t execute JavaScript. Users might disable JavaScript to save bandwidth, extend battery life on mobile devices, or protect their privacy by preventing tracking.</p>
 <p>Link to original article:</p>
@@ -22663,7 +22663,7 @@ Enter your administrator password when prompted, and the installation will proce
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; PFCOUNT hll_key</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; PFADD hll_key</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; PFADD hll_key_2</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>Redis Tutoria</category>
+        <category>Redis Tutorial</category>
       </categories>
       <tags>
         <tag>redis</tag>
