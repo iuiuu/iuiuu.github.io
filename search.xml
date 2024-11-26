@@ -23816,4 +23816,535 @@ Enter your administrator password when prompted, and the installation will proce
         <tag>java</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Redis Set SDIFFSTORE Command</title>
+    <url>/2024/10/05/redis-set-sdiffstore-command/</url>
+    <content><![CDATA[<p>The Redis <code>SDIFFSTORE</code> command stores the difference between the specified sets in a given destination set. If the destination set already exists, it will be overwritten.</p>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SDIFFSTORE</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SDIFFSTORE destination key [key ...]</span><br></pre></td></tr></table></figure>
+<p>This command is equal to <code>SDIFF</code>, but instead of returning the resulting set, it is stored in destination.</p>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 1.0.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(N) where N is the total number of elements in all given sets.</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@write</code><font style="color:rgb(9, 26, 35);">, </font><code>@set</code><font style="color:rgb(9, 26, 35);">, </font><code>@slow</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns the number of elements in the resulting set.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD key1 a b c d</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SADD key2 c</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SADD key3 a c e</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; SDIFFSTORE dest_set key1 key2 key3</span><br><span class="line">(integer) 2</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS dest_set</span><br><span class="line">1) &quot;b&quot;</span><br><span class="line">2) &quot;d&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SDIFF Command</title>
+    <url>/2024/10/04/redis-set-sdiff-command/</url>
+    <content><![CDATA[<p>The Redis <code>SDIFF</code> command returns the difference between the first set and the other sets, which can be thought of as the elements unique to the first set. If any of the set keys do not exist, they are treated as empty sets.</p>
+<p>For example, assume we have three sets: the first set contains the elements <code>a</code>, <code>b</code>, <code>c</code>, and <code>d</code>; the second set contains only <code>c</code>; and the third set contains <code>a</code>, <code>c</code>, and <code>e</code>. The result of the <code>SDIFF key1 key2 key3</code> command is <code>&#123;b, d&#125;</code>, which consists of the elements from <code>key1</code> that are not present in either <code>key2</code> or <code>key3</code>.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">key1 = &#123;a, b, c, d&#125;</span><br><span class="line">key2 = &#123;c&#125;</span><br><span class="line">key3 = &#123;a, c, e&#125;</span><br><span class="line">SDIFF key1 key2 key3 = &#123;b, d&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SDIFF</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SDIFF key [key ...]</span><br></pre></td></tr></table></figure>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 1.0.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(N) where N is the total number of elements in all given sets.</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@read</code><font style="color:rgb(9, 26, 35);">, </font><code>@set</code><font style="color:rgb(9, 26, 35);">, </font><code>@slow</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns a set with the members of the resulting set.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>The <code>SDIFF</code> command returns the elements that are present in the <code>first set</code> (<code>key1</code>) but not in any of the other sets (<code>key2</code>, <code>key3</code>). Specifically, it checks: Which elements in <code>key1</code> do not appear in <code>key2</code> or <code>key3</code>.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD key1 a b c d</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SADD key2 c</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SADD key3 a c e</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; SDIFF key1 key2 key3</span><br><span class="line">1) &quot;b&quot;</span><br><span class="line">2) &quot;d&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+<p>Step-by-step breakdown:</p>
+<ul>
+<li>The first set is <code>key1 = &#123;a, b, c, d&#125;</code>.</li>
+<li>The second set is <code>key2 = &#123;c&#125;</code> and the third set is <code>key3 = &#123;a, c, e&#125;</code>.</li>
+<li>Now, we check which elements in <code>key1</code> are not in <code>key2</code> or <code>key3</code>:<ul>
+<li><code>a</code>: Found in <code>key3</code>, so it’s <strong>excluded</strong>.</li>
+<li><code>b</code>: Not found in <code>key2</code> or <code>key3</code>, so it <strong>remains</strong>.</li>
+<li><code>c</code>: Found in both <code>key2</code> and <code>key3</code>, so it’s <strong>excluded</strong>.</li>
+<li><code>d</code>: Not found in <code>key2</code> or <code>key3</code>, so it <strong>remains</strong>.</li>
+</ul>
+</li>
+<li>The difference between <code>key1</code> and the other two sets is <code>&#123;b, d&#125;</code>.</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set</title>
+    <url>/2024/10/01/redis-set/</url>
+    <content><![CDATA[<p>In Redis, a <strong>Set</strong> is an unordered collection of unique <strong>String</strong> elements. This means that duplicate values are not allowed within a Set.</p>
+<p>The Set’s underlying data structure can either be an <strong>intset</strong> or a <strong>hashtable</strong>.</p>
+<p>Since Redis Sets are implemented using hash tables, the time complexity for adding, removing, or checking for members is <strong>O(1)</strong>.</p>
+<p>A Set can have a maximum of <strong>2^32 - 1</strong> (4,294,967,295) members, which means each Set can store over 4 billion elements.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD s_db redis</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; SADD s_db hbase</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; SADD s_db mysql</span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line">127.0.0.1:6379&gt; SADD s_db mysql</span><br><span class="line">(<span class="built_in">integer</span>) 0</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS s_db</span><br><span class="line">1) <span class="string">&quot;mysql&quot;</span></span><br><span class="line">2) <span class="string">&quot;hbase&quot;</span></span><br><span class="line">3) <span class="string">&quot;redis&quot;</span></span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+<p>In the above example, we used the <code>SADD</code> command to add three elements to the set named <code>s_db</code>. When attempting to add <code>&quot;mysql&quot;</code> a second time, Redis returns <code>0</code> since it already exists in the Set.</p>
+<h2 id="Common-Redis-Set-Commands"><a href="#Common-Redis-Set-Commands" class="headerlink" title="Common Redis Set Commands"></a>Common Redis Set Commands</h2><p>Here’s a list of basic Redis Set commands:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>No.</th>
+<th>Command &amp; Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>SADD key member1 [member2]</code><br/>Add the specified members to the set stored at key.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>SCARD key</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>SDIFF key1 [key2]</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>SDIFFSTORE destination key1 [key2]</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>SINTER key1 [key2]</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>SINTERSTORE destination key1 [key2]</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>SISMEMBER key member</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>SMEMBERS key</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>SMOVE source destination member</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>SPOP key</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>SRANDMEMBER key [count]</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>SREM key member1 [member2]</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>SUNION key1 [key2]</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>SUNIONSTORE destination key1 [key2]</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>SSCAN key cursor [MATCH pattern] [COUNT count]</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SCARD Command</title>
+    <url>/2024/10/03/redis-set-scard-command/</url>
+    <content><![CDATA[<p>The Redis <code>SCARD</code> command returns the set cardinality (number of elements) of the set stored at key.</p>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SCARD</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SCARD key</span><br></pre></td></tr></table></figure>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 1.0.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(1)</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@read</code><font style="color:rgb(9, 26, 35);">, </font><code>@set</code><font style="color:rgb(9, 26, 35);">, </font><code>@fast</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns <font style="color:rgb(9, 26, 35);">the cardinality (number of elements) of the set, or </font><code>0</code><font style="color:rgb(9, 26, 35);"> if the key does not exist.</font></p>
+<h2 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1"></a>Example 1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD s_db redis</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SADD s_db hbase</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SADD s_db mysql</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SCARD s_db</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+<h2 id="Example-2"><a href="#Example-2" class="headerlink" title="Example 2"></a>Example 2</h2><p>If the key does not exist, it returns 0.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; EXISTS ss</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; SCARD ss</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+<p>In the example above, we first check if the key(<code>ss</code>) exists. If it doesn’t, the <code>EXISTS</code> command returns 0. Next, we execute the <code>SCARD</code> command, which also returns 0.</p>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SINTER Command</title>
+    <url>/2024/10/06/redis-set-sadd-command/</url>
+    <content><![CDATA[<p>The Redis <code>SINTER</code> command returns the members of the set resulting from the intersection of all the given sets. Keys that do not exist are considered to be empty sets. With one of the keys being an empty set, the resulting set is also empty (since set intersection with an empty set always results in an empty set).</p>
+<p>For example:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">key1 = &#123;a,b,c,d&#125;</span><br><span class="line">key2 = &#123;c&#125;</span><br><span class="line">key3 = &#123;a,c,e&#125;</span><br><span class="line">SINTER key1 key2 key3 = &#123;c&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SINTER</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SINTER key [key ...]</span><br></pre></td></tr></table></figure>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 1.0.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(N*M) worst case where N is the cardinality of the smallest set and M is the number of sets.</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@read</code>, <code>@set</code>, <code>@slow</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns a set with the members of the resulting set.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD key1 a b c d</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SADD key2 c</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SADD key3 a c e</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; SINTER key1 key2 key3</span><br><span class="line">1) &quot;c&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SINTERCARD Command</title>
+    <url>/2024/10/08/redis-set-sintercard-command/</url>
+    <content><![CDATA[<p>The Redis <code>SINTERCARD</code> command returns the cardinality of the set which would result from the intersection of all the given sets. Keys that do not exist are considered to be empty sets. With one of the keys being an empty set, the resulting set is also empty (since set intersection with an empty set always results in an empty set).</p>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SINTERCARD</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SINTERCARD numkeys key [key ...] [LIMIT limit]</span><br></pre></td></tr></table></figure>
+<p>This command is similar to <code>SINTER</code>, but instead of returning the result set, it returns just the cardinality of the result. </p>
+<p>By default, the command calculates the cardinality of the intersection of all given sets. When provided with the optional LIMIT argument (which defaults to 0 and means unlimited), if the intersection cardinality reaches limit partway through the computation, the algorithm will exit and yield limit as the cardinality. Such implementation ensures a significant speedup for queries where the limit is lower than the actual intersection cardinality.</p>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version <strong>&gt;= 7.0.0</strong></p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(N*M) worst case where N is the cardinality of the smallest set and M is the number of sets.</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@read</code>, <code>@set</code>, <code>@slow</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns the number of elements in the resulting intersection.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD key1 a b c d</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SADD key2 a c</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SADD key3 a c e</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; SINTERCARD key1 key2 key3</span><br><span class="line">(integer) 2</span><br><span class="line">127.0.0.1:6379&gt; SINTERCARD key1 key2 key3 LIMIT 1</span><br><span class="line">(integer) 1</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SMEMBERS Command</title>
+    <url>/2024/10/10/redis-set-smembers-command/</url>
+    <content><![CDATA[<p>The Redis <code>SMEMBERS</code> command returns all the members of a set. If the set does not exist, it is treated as an empty set.</p>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SMEMBERS</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SMEMBERS key</span><br></pre></td></tr></table></figure>
+<p>This command returns all the members of the set value stored at key. It has the same effect as running SINTER with one argument key.</p>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 1.0.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(N) where N is the set cardinality.</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@read</code>, <code>@set</code>, <code>@slow</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns a set with all the members of the set.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD key1 a b c d</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS key1</span><br><span class="line">1) &quot;c&quot;</span><br><span class="line">2) &quot;b&quot;</span><br><span class="line">3) &quot;a&quot;</span><br><span class="line">4) &quot;d&quot;</span><br><span class="line">127.0.0.1:6379&gt; SINTER key1</span><br><span class="line">1) &quot;c&quot;</span><br><span class="line">2) &quot;b&quot;</span><br><span class="line">3) &quot;a&quot;</span><br><span class="line">4) &quot;d&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SINTERSTORE Command</title>
+    <url>/2024/10/07/redis-set-sinterstore-command/</url>
+    <content><![CDATA[<p>The Redis <code>SINTERSTORE</code> command stores the intersection of the specified sets in a given destination set. If the destination set already exists, it will be overwritten.</p>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SINTERSTORE</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SINTERSTORE destination key [key ...]</span><br></pre></td></tr></table></figure>
+<p>This command is equal to <code>SINTER</code>, but instead of returning the resulting set, it is stored in destination.</p>
+<p>If destination already exists, it is overwritten.</p>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 1.0.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(N*M) worst case where N is the cardinality of the smallest set and M is the number of sets.</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@write</code>, <code>@set</code>, <code>@slow</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns the number of elements in the set that stores the intersection.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD key1 a b c d</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SADD key2 c</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SADD key3 a c e</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; SINTERSTORE dest_key key1 key2 key3</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS dest_key</span><br><span class="line">1) &quot;c&quot;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SMOVE Command</title>
+    <url>/2024/10/12/redis-set-sadd-command/</url>
+    <content><![CDATA[<p>The Redis <code>SMOVE</code> command moves the specified member element from the source set to the destination set.</p>
+<p><code>SMOVE</code> operation is an atomic.</p>
+<p>If the source set does not exist or does not contain the specified member, the command does nothing and returns 0. Otherwise, the member is removed from the source set and added to the destination set.</p>
+<p>If the destination set already contains the member, the <code>SMOVE</code> command simply removes the member from the source set without adding it to the destination set again.</p>
+<p>If either the source or the destination is not a set, an error is returned.</p>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SMOVE</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SMOVE source destination member</span><br></pre></td></tr></table></figure>
+<p>Move member from the set at source to the set at destination.</p>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 1.0.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(1)</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@write</code>, <code>@set</code>, <code>@fast</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><ul>
+<li><code>1</code> if the element is moved.</li>
+<li><code>0</code> if the element is not a member of source and no operation was performed.</li>
+</ul>
+<h2 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1"></a>Example 1</h2><p>Moves the specified member element from the source set to the destination set:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD myset a b c d</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SADD anotherset e</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SMOVE myset anotherset b</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS myset</span><br><span class="line">1) &quot;c&quot;</span><br><span class="line">2) &quot;a&quot;</span><br><span class="line">3) &quot;d&quot;</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS anotherset</span><br><span class="line">1) &quot;e&quot;</span><br><span class="line">2) &quot;b&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+<h2 id="Example-2"><a href="#Example-2" class="headerlink" title="Example 2"></a>Example 2</h2><p>If the source set does not exist, no operation is performed and 0 is returned.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; EXISTS myset2</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; SMOVE myset2 anotherset a</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+<h2 id="Example-3"><a href="#Example-3" class="headerlink" title="Example 3"></a>Example 3</h2><p>If the source set does not contain the specified element, no operation is performed and 0 is returned.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD myset a b c d</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SADD anotherset e</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SMOVE myset anotherset p</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS anotherset</span><br><span class="line">1) &quot;e&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Example-4"><a href="#Example-4" class="headerlink" title="Example 4"></a>Example 4</h2><p>When the specified element already exists in the destination set, it is only removed from the source set.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD myset a b c d</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SADD anotherset a e</span><br><span class="line">(integer) 2</span><br><span class="line">127.0.0.1:6379&gt; SMOVE myset anotherset a</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS myset</span><br><span class="line">1) &quot;c&quot;</span><br><span class="line">2) &quot;b&quot;</span><br><span class="line">3) &quot;d&quot;</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS anotherset</span><br><span class="line">1) &quot;e&quot;</span><br><span class="line">2) &quot;a&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+<h2 id="Example-5"><a href="#Example-5" class="headerlink" title="Example 5"></a>Example 5</h2><p>An error is returned if source or destination does not hold a set value.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SET dest johnson</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; TYPE dest</span><br><span class="line">string</span><br><span class="line">127.0.0.1:6379&gt; SMOVE myset dest e</span><br><span class="line">(error) WRONGTYPE Operation against a key holding the wrong kind of value</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SMISMEMBER Command</title>
+    <url>/2024/10/11/redis-set-smismember-command/</url>
+    <content><![CDATA[<p>The Redis <code>SMISMEMBER</code> command returns whether each member is a member of the set stored at key. For every member, </p>
+<ul>
+<li>1 is returned if the value is a member of the set, </li>
+<li>or 0 if the element is not a member of the set or if key does not exist.</li>
+</ul>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SMISMEMBER</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SMISMEMBER key member [member ...]</span><br></pre></td></tr></table></figure>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version <strong>&gt;= 6.2.0</strong></p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(N) where N is the number of elements being checked for membership</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@read</code>, <code>@set</code>, <code>@fast</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns a list representing the membership of the given elements, in the same order as they are requested.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD key1 a b c d</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SMISMEMBER key1 a e</span><br><span class="line">1) (integer) 1</span><br><span class="line">2) (integer) 0</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SISMEMBER Command</title>
+    <url>/2024/10/09/redis-set-sismember-command/</url>
+    <content><![CDATA[<p>The Redis <code>SISMEMBER</code> command checks if a given element is a member of the set.</p>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SISMEMBER</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SISMEMBER key member</span><br></pre></td></tr></table></figure>
+<p>It returns if <code>member</code> is a member of the set stored at <code>key</code>.</p>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 1.0.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(1)</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@read</code>, <code>@set</code>, <code>@fast</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><ul>
+<li><code>0</code> if the element is not a member of the set, or when the key does not exist.</li>
+<li><code>1</code> if the element is a member of the set.</li>
+</ul>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD key1 a b c d</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SISMEMBER key1 a</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SISMEMBER key1 e</span><br><span class="line">(integer) 0</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SUNION Command</title>
+    <url>/2024/10/17/redis-set-sunion-command/</url>
+    <content><![CDATA[<p>The Redis <code>SUNION</code> command returns the union of the specified sets. Keys that do not exist are considered to be empty sets.</p>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SUNION</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SUNION key [key ...]</span><br></pre></td></tr></table></figure>
+<p>For example:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">key1 = &#123;a,b,c,d&#125;</span><br><span class="line">key2 = &#123;c&#125;</span><br><span class="line">key3 = &#123;a,c,e&#125;</span><br><span class="line">SUNION key1 key2 key3 = &#123;a,b,c,d,e&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 1.0.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(N) where N is the total number of elements in all given sets.</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@read</code>, <code>@set</code>, <code>@slow</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns the members of the set resulting from the union of all the given sets.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD key1 a b c d</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SADD key2 c</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SADD key3 a c e</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; SUNION key1 key2 key3</span><br><span class="line">1) &quot;b&quot;</span><br><span class="line">2) &quot;d&quot;</span><br><span class="line">3) &quot;e&quot;</span><br><span class="line">4) &quot;c&quot;</span><br><span class="line">5) &quot;a&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SREM Command</title>
+    <url>/2024/10/15/redis-set-srem-command/</url>
+    <content><![CDATA[<p>The Redis <code>SREM</code> command removes one or more members from a set. Non-existent members are ignored.</p>
+<p>An error is returned if the key is not of set type.</p>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SREM</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SREM key member [member ...]</span><br></pre></td></tr></table></figure>
+<p>In Redis version 2.4 and earlier, <code>SREM</code> only accepted a single member value.</p>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 1.0.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(N) where N is the number of members to be removed.</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@write</code>, <code>@set</code>, <code>@fast</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns the number of members that were removed from the set, not including non existing members.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD myset a b c d e</span><br><span class="line">(integer) 5</span><br><span class="line">127.0.0.1:6379&gt; SREM myset b</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SREM myset f</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS myset</span><br><span class="line">1) &quot;d&quot;</span><br><span class="line">2) &quot;c&quot;</span><br><span class="line">3) &quot;e&quot;</span><br><span class="line">4) &quot;a&quot;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SSCAN Command</title>
+    <url>/2024/10/16/redis-set-sscan-command/</url>
+    <content><![CDATA[<p>The Redis <code>SSCAN</code> command is used to iterate over the elements of a set. It is based on the <code>SCAN</code> command.</p>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SSCAN</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SSCAN key cursor [MATCH pattern] [COUNT count]</span><br></pre></td></tr></table></figure>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 2.8.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(1) for every call. </p>
+<p>O(N) for a complete iteration, including enough command calls for the cursor to return back to 0. N is the number of elements inside the collection.</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@read</code>, <code>@set</code>, <code>@slow</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns an array. specifically, an array with two elements:</p>
+<ul>
+<li>The first element is a Bulk string reply that represents an unsigned 64-bit number, the cursor.</li>
+<li>The second element is an Array reply with the names of scanned members.</li>
+</ul>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD myset Johnson Jack Tim Paul</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SSCAN myset 0 MATCH J*</span><br><span class="line">1) &quot;0&quot;</span><br><span class="line">2) 1) &quot;Johnson&quot;</span><br><span class="line">   2) &quot;Jack&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SPOP Command</title>
+    <url>/2024/10/13/redis-set-sadd-command/</url>
+    <content><![CDATA[<p>Removes and returns one or more random members from the set value store at key.</p>
+<p>This operation is similar to <code>SRANDMEMBER</code>, that returns one or more random elements from a set but does not remove it.</p>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SPOP</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SPOP key [count]</span><br></pre></td></tr></table></figure>
+<p>By default, the command pops a single member from the set. When provided with the optional count argument, the reply will consist of up to count members, depending on the set’s cardinality.</p>
+<p><em><strong>Note</strong></em>: the <code>count</code> argument is available in version 3.2.0 and later.</p>
+<blockquote>
+<p>Distribution of returned elements</p>
+<p>Note that this command is not suitable when you need a guaranteed uniform distribution of the returned elements. For more information about the algorithms used for SPOP, look up both the Knuth sampling and Floyd sampling algorithms.</p>
+</blockquote>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 1.0.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>Without the count argument O(1), otherwise O(N) where N is the value of the passed count.</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@write</code>, <code>@set</code>, <code>@fast</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns the removed member(s). Returns <code>nil</code> if the set does not exist or is empty.</p>
+<h2 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1"></a>Example 1</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD myset a b c d e f g</span><br><span class="line">(integer) 7</span><br><span class="line">127.0.0.1:6379&gt; SPOP myset</span><br><span class="line">&quot;a&quot;</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS myset</span><br><span class="line">1) &quot;g&quot;</span><br><span class="line">2) &quot;b&quot;</span><br><span class="line">3) &quot;d&quot;</span><br><span class="line">4) &quot;f&quot;</span><br><span class="line">5) &quot;c&quot;</span><br><span class="line">6) &quot;e&quot;</span><br><span class="line">127.0.0.1:6379&gt; SPOP myset 3</span><br><span class="line">1) &quot;g&quot;</span><br><span class="line">2) &quot;f&quot;</span><br><span class="line">3) &quot;b&quot;</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS myset</span><br><span class="line">1) &quot;d&quot;</span><br><span class="line">2) &quot;c&quot;</span><br><span class="line">3) &quot;e&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Example-2"><a href="#Example-2" class="headerlink" title="Example 2"></a>Example 2</h2><p>Returns <code>nil</code> if the set does not exist:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SPOP ss</span><br><span class="line">(nil)</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+<p>Returns <code>nil</code> if the set is empty:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SMEMBERS myset</span><br><span class="line">(empty array)</span><br><span class="line">127.0.0.1:6379&gt; SPOP myset</span><br><span class="line">(nil)</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Bitmaps</title>
+    <url>/2024/10/19/redis-bitmaps/</url>
+    <content><![CDATA[<p>In Redis, a bitmap is a data structure that represents a sequence of bits (0s and 1s). Each bit in the bitmap can be either on (1) or off (0), allowing it to represent binary data in a compact form. This is particularly useful when you need to handle large sets of boolean data, as bitmaps allow you to store information in a very space-efficient way.</p>
+<p>For example, if you have a system tracking whether users have completed a daily task, a bitmap can efficiently store whether each user has completed the task for each day. Bitmaps are ideal for such cases because they reduce memory usage compared to other data structures like strings or hashes.</p>
+<h2 id="Basic-Commands"><a href="#Basic-Commands" class="headerlink" title="Basic Commands"></a>Basic Commands</h2><font style="color:rgb(38, 38, 38);">Here's a list of basic commands:</font>
+
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><font style="color:rgb(38, 38, 38);">Command</font></th>
+<th><font style="color:rgb(38, 38, 38);"> Description</font></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SETBIT</td>
+<td>Set a specific bit in the bitmap.</td>
+</tr>
+<tr>
+<td>GETBIT</td>
+<td>Retrieve the value of a specific bit.</td>
+</tr>
+<tr>
+<td>BITCOUNT</td>
+<td>Count the number of bits set to 1 in a range.</td>
+</tr>
+<tr>
+<td>BITOP</td>
+<td>Perform bitwise operations (AND, OR, XOR, NOT) on bitmaps.</td>
+</tr>
+<tr>
+<td>BITPOS</td>
+<td>Find the position of the first bit set to a given value (0 or 1).</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<font style="color:rgb(38, 38, 38);">See the </font>[complete list of bitmap commands](https://redis.io/docs/latest/commands/?group=bitmap)<font style="color:rgb(38, 38, 38);">.  
+</font>
+
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a><font style="color:rgb(38, 38, 38);">Example</font></h2><h3 id="User-Activity-Tracking"><a href="#User-Activity-Tracking" class="headerlink" title="User Activity Tracking"></a>User Activity Tracking</h3><p>Redis bitmaps are often used to track daily activity, like logging in or completing a task. Each user is assigned a unique offset, and the bit is set to 1 if the user was active on a given day. By using bitmaps, it’s possible to represent the activity of millions of users efficiently.</p>
+<h3 id="Feature-Flags"><a href="#Feature-Flags" class="headerlink" title="Feature Flags"></a>Feature Flags</h3><p>You can also use bitmaps to enable or disable feature flags for users. By setting or clearing specific bits, you can control which users have access to certain features, making this an efficient alternative to storing the data in a database.</p>
+<h3 id="A-B-Testing-and-Experimentation"><a href="#A-B-Testing-and-Experimentation" class="headerlink" title="A/B Testing and Experimentation"></a>A/B Testing and Experimentation</h3><p>In A/B testing, bitmaps can be used to represent users assigned to different experimental groups. Each group is a separate bitmap, and Redis commands make it easy to check or update which users are in each group.  </p>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Set SUNIONSTORE Command</title>
+    <url>/2024/10/18/redis-set-sunionstore-command/</url>
+    <content><![CDATA[<p>The Redis <code>SUNIONSTORE</code> command stores the union of the given sets in the specified destination set. If the destination set already exists, it will be overwritten.</p>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>SUNIONSTORE</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SUNIONSTORE destination key [key ...]</span><br></pre></td></tr></table></figure>
+<p>This command is equal to <code>SUNION</code>, but instead of returning the resulting set, it is stored in destination.</p>
+<p>If destination already exists, it is overwritten.</p>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 1.0.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(N) where N is the total number of elements in all given sets.</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@write</code>, <code>@set</code>, <code>@slow</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns the number of elements in the resulting set.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD key1 a b c d</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6379&gt; SADD key2 c</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; SADD key3 a c e</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; SUNIONSTORE key key1 key2 key3</span><br><span class="line">(integer) 5</span><br><span class="line">127.0.0.1:6379&gt; SMEMBERS key</span><br><span class="line">1) &quot;b&quot;</span><br><span class="line">2) &quot;d&quot;</span><br><span class="line">3) &quot;e&quot;</span><br><span class="line">4) &quot;c&quot;</span><br><span class="line">5) &quot;a&quot;</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis Bitmap BITCOUNT Command</title>
+    <url>/2024/10/20/redis-bitmap-bitcount-command/</url>
+    <content><![CDATA[<p>The Redis <code>BITCOUNT</code> command count the number of set bits (population counting) in a string.</p>
+<h2 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h2><p>The basic syntax of the <code>BITCOUNT</code> command is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BITCOUNT key [start end [BYTE | BIT]]</span><br></pre></td></tr></table></figure>
+<p>By default all the bytes contained in the string are examined. It is possible to specify the counting operation only in an interval passing the additional arguments start and end.</p>
+<p>Like for the <code>GETRANGE</code> command start and end can contain negative values in order to index bytes starting from the end of the string, where -1 is the last byte, -2 is the penultimate, and so forth.</p>
+<p>Non-existent keys are treated as empty strings, so the command will return zero.</p>
+<p>By default, the additional arguments start and end specify a byte index. We can use an additional argument BIT to specify a bit index. So 0 is the first bit, 1 is the second bit, and so forth. For negative values, -1 is the last bit, -2 is the penultimate, and so forth.</p>
+<blockquote>
+<p><em><strong>Note</strong></em>: Starting with Redis version 7.0.0: Added the BYTE|BIT option.</p>
+</blockquote>
+<h2 id="Available-Since"><a href="#Available-Since" class="headerlink" title="Available Since"></a>Available Since</h2><p>Redis version &gt;= 2.6.0</p>
+<h2 id="Time-Complexity"><a href="#Time-Complexity" class="headerlink" title="Time Complexity"></a>Time Complexity</h2><p>O(N)</p>
+<h2 id="ACL-Categories"><a href="#ACL-Categories" class="headerlink" title="ACL Categories"></a>ACL Categories</h2><p><code>@read</code>, <code>@bitmap</code>, <code>@slow</code></p>
+<h2 id="Return-Value"><a href="#Return-Value" class="headerlink" title="Return Value"></a>Return Value</h2><p>Returns the number of bits set to 1.</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SET mykey JOHNSONLIN</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; BITCOUNT mykey</span><br><span class="line">(integer) 37</span><br><span class="line">127.0.0.1:6379&gt; BITCOUNT mykey 0 0</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; BITCOUNT mykey 1 1</span><br><span class="line">(integer) 5</span><br><span class="line">127.0.0.1:6379&gt; BITCOUNT mykey 1 1 BYTE</span><br><span class="line">(integer) 5</span><br><span class="line">127.0.0.1:6379&gt; BITCOUNT mykey 1 1 BIT</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; BITCOUNT mykey 5 40 BIT</span><br><span class="line">(integer) 16</span><br><span class="line">127.0.0.1:6379&gt; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Redis Tutorial</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
 </search>
