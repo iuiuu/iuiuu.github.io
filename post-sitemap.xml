@@ -9,6 +9,22 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2024/06/24/html-multimedia/</loc>
+        <lastmod>2024-11-26T17:21:36.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/06/18/html-text/</loc>
+        <lastmod>2024-11-26T17:18:40.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2024/06/29/html-instant-tutorial/</loc>
         <lastmod>2024-11-26T17:14:08.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -409,14 +425,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2024/06/24/html-multimedia/</loc>
-        <lastmod>2024-09-05T15:00:04.594Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2024/06/22/html-link-tag/</loc>
         <lastmod>2024-09-05T14:59:43.231Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -451,14 +459,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/09/04/how-to-fix-docker-gpg-key-installation-errors-on-ubuntu/</loc>
         <lastmod>2024-09-05T14:57:40.148Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/06/18/html-text/</loc>
-        <lastmod>2024-09-02T23:42:46.369Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
