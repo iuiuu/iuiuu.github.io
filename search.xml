@@ -15197,9 +15197,9 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Programming Digest</category>
       </categories>
       <tags>
-        <tag>Docker</tag>
-        <tag>Ubuntu</tag>
-        <tag>DevOps</tag>
+        <tag>ubuntu</tag>
+        <tag>docker</tag>
+        <tag>devops</tag>
       </tags>
   </entry>
   <entry>
@@ -15278,9 +15278,9 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Programming Digest</category>
       </categories>
       <tags>
-        <tag>HowTo</tag>
-        <tag>Docker</tag>
-        <tag>Ubuntu</tag>
+        <tag>ubuntu</tag>
+        <tag>howto</tag>
+        <tag>docker</tag>
       </tags>
   </entry>
   <entry>

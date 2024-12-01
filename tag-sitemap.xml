@@ -3,22 +3,36 @@
 
 
     <url>
-        <loc>http://linjiangxiong.com/tags/wiki/</loc>
-        <lastmod>2024-12-01T15:48:43.000Z</lastmod>
+        <loc>http://linjiangxiong.com/tags/devops/</loc>
+        <lastmod>2024-12-01T15:57:46.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/tags/howto/</loc>
-        <lastmod>2024-12-01T15:48:22.000Z</lastmod>
+        <loc>http://linjiangxiong.com/tags/docker/</loc>
+        <lastmod>2024-12-01T15:57:46.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://linjiangxiong.com/tags/ubuntu/</loc>
-        <lastmod>2024-12-01T15:48:22.000Z</lastmod>
+        <lastmod>2024-12-01T15:57:46.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/howto/</loc>
+        <lastmod>2024-12-01T15:57:32.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/wiki/</loc>
+        <lastmod>2024-12-01T15:48:43.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -108,20 +122,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/tags/Ubuntu/</loc>
-        <lastmod>2024-09-05T14:57:40.148Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/Docker/</loc>
-        <lastmod>2024-09-05T14:57:40.148Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/tags/Data-Structures-and-Algorithms/</loc>
         <lastmod>2024-09-01T14:28:05.744Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -194,13 +194,6 @@
     <url>
         <loc>http://linjiangxiong.com/tags/VMware/</loc>
         <lastmod>2024-08-25T17:06:41.800Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/DevOps/</loc>
-        <lastmod>2024-08-22T16:36:07.202Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
