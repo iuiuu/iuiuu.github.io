@@ -24348,7 +24348,7 @@ Enter your administrator password when prompted, and the installation will proce
       </tags>
   </entry>
   <entry>
-    <title>“Standard ASCII Table:A Complete Reference of 7-bit ASCII”</title>
+    <title>Standard ASCII Table:A Complete Reference of 7-bit ASCII</title>
     <url>/2024/11/29//wiki/a-complete-reference-of-7-bit-ascii/</url>
     <content><![CDATA[<p>Note: Refer to the ASCII table for character encoding, ASCII codes, and comparisons. Use <code>Ctrl+F</code> to quickly find the decimal value or escape character for any character you’re looking for.</p>
 <div class="table-container">
@@ -25724,7 +25724,7 @@ Enter your administrator password when prompted, and the installation will proce
       </tags>
   </entry>
   <entry>
-    <title>“How to Install `.deb` Packages on Ubuntu”</title>
+    <title>How to Install `.deb` Packages on Ubuntu</title>
     <url>/2024/11/27/how-to-install-deb-packages-on-ubuntu/</url>
     <content><![CDATA[<p>If you’re using Ubuntu and need to install a <code>.deb</code> package (the standard package format for Debian-based distributions), you have several methods to do so. This guide will walk you through the process using different approaches to suit your preferences.</p>
 <h2 id="What-is-a-deb-Package"><a href="#What-is-a-deb-Package" class="headerlink" title="What is a .deb Package?"></a>What is a <code>.deb</code> Package?</h2><p>A <code>.deb</code> file is a Debian software package that contains all the necessary files and metadata required to install software on a Debian-based distribution like Ubuntu. You may download <code>.deb</code> packages manually or use a repository to install them, but sometimes you may need to install one manually if it’s not available via Ubuntu’s package manager.</p>
@@ -25821,7 +25821,7 @@ Enter your administrator password when prompted, and the installation will proce
       </tags>
   </entry>
   <entry>
-    <title>“Understanding the &#92;&quot;Classic Confinement&#92;&quot; Warning in Snap Packages”</title>
+    <title>Understanding the &quot;Classic Confinement&quot; Warning in Snap Packages</title>
     <url>/2024/11/29/understanding-the-classic-confinement-warning-in-snap-packages/</url>
     <content><![CDATA[<p>If you’ve ever installed a Snap package on your Linux system, you may have encountered an error message like this one:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error: This revision of snap &quot;node&quot; was published using classic confinement and thus may perform</span><br><span class="line">       arbitrary system changes outside of the security sandbox that snaps are usually confined to,</span><br><span class="line">       which may put your system at risk.</span><br><span class="line"></span><br><span class="line">       If you understand and want to proceed repeat the command including --classic.</span><br></pre></td></tr></table></figure>
@@ -25875,7 +25875,7 @@ Enter your administrator password when prompted, and the installation will proce
       </tags>
   </entry>
   <entry>
-    <title>“Standard ASCII Table:A Complete Reference of 7-bit ASCII&quot;</title>
+    <title>Standard ASCII Table:A Complete Reference of 7-bit ASCII</title>
     <url>/2024/11/29//wiki/standard-ascii-table/</url>
     <content><![CDATA[<p><strong>ASCII</strong> (/ˈæskiː/ ASS-kee),  an acronym for <em>American Standard Code for Information Interchange</em>. It’s a character encoding standard used in electronic communication to represent text in computers, telecommunications equipment, and other devices. ASCII uses a 7-bit character encoding system to represent 128 unique characters, which include both control characters and printable characters. </p>
 <p>The first 32 code points (numbers 0–31 decimal) and the last one (number 127 decimal) are reserved for control characters, originally from Teletype models. While most of these control characters are outdated, some, like carriage return, line feed, and tab, are still in common use today.</p>
