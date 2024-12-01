@@ -14656,7 +14656,7 @@ fafas</script><p>$\dot{a}$</p>
       </categories>
       <tags>
         <tag>Superset</tag>
-        <tag>HowTo</tag>
+        <tag>howto</tag>
       </tags>
   </entry>
   <entry>
@@ -14721,8 +14721,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>Programming Digest</category>
       </categories>
       <tags>
-        <tag>HowTo</tag>
         <tag>Apache Flink</tag>
+        <tag>howto</tag>
       </tags>
   </entry>
   <entry>
@@ -14810,8 +14810,8 @@ fafas</script><p>$\dot{a}$</p>
       </categories>
       <tags>
         <tag>ubuntu</tag>
+        <tag>howto</tag>
         <tag>nodejs</tag>
-        <tag>how-to</tag>
       </tags>
   </entry>
   <entry>
@@ -14979,7 +14979,7 @@ fafas</script><p>$\dot{a}$</p>
       </categories>
       <tags>
         <tag>Python</tag>
-        <tag>HowTo</tag>
+        <tag>howto</tag>
       </tags>
   </entry>
   <entry>
@@ -15319,7 +15319,7 @@ Enter your administrator password when prompted, and the installation will proce
       </categories>
       <tags>
         <tag>Elasticsearch</tag>
-        <tag>HowTo</tag>
+        <tag>howto</tag>
       </tags>
   </entry>
   <entry>
