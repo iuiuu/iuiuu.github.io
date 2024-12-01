@@ -9,6 +9,22 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2024/11/29//wiki/a-complete-reference-of-7-bit-ascii/</loc>
+        <lastmod>2024-12-01T15:44:51.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/29//wiki/standard-ascii-table/</loc>
+        <lastmod>2024-12-01T15:44:46.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2024/11/27/how-to-install-deb-packages-on-ubuntu/</loc>
         <lastmod>2024-12-01T15:41:09.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -27,22 +43,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/11/29/understanding-the-classic-confinement-warning-in-snap-packages/</loc>
         <lastmod>2024-12-01T15:40:47.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/1970/01/01/cm45rpfrc00008wvp4tmng1lb/</loc>
-        <lastmod>2024-12-01T07:33:16.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/1970/01/01/cm45rpfrz00048wvp6wfge3vc/</loc>
-        <lastmod>2024-12-01T07:32:58.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

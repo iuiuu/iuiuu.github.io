@@ -24348,11 +24348,9 @@ Enter your administrator password when prompted, and the installation will proce
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/1970/01/01/cm45rpfrc00008wvp4tmng1lb/</url>
-    <content><![CDATA[<h1 id="241129-A-Complete-Reference-of-7-bit-ASCII"><a href="#241129-A-Complete-Reference-of-7-bit-ASCII" class="headerlink" title="241129-A Complete Reference of 7-bit ASCII"></a>241129-A Complete Reference of 7-bit ASCII</h1><hr>
-<p>title: “Standard ASCII Table: A Complete Reference of 7-bit ASCII”<br>id: /wiki/a-complete-reference-of-7-bit-ascii<br>date: 2024-11-29 02:20:32<br>top_img:<br>cover:<br>tags: [wiki]</p>
-<h2 id="categories-Wiki"><a href="#categories-Wiki" class="headerlink" title="categories: [Wiki]"></a>categories: [Wiki]</h2><p>Note: Refer to the ASCII table for character encoding, ASCII codes, and comparisons. Use <code>Ctrl+F</code> to quickly find the decimal value or escape character for any character you’re looking for.</p>
+    <title>“Standard ASCII Table:A Complete Reference of 7-bit ASCII”</title>
+    <url>/2024/11/29//wiki/a-complete-reference-of-7-bit-ascii/</url>
+    <content><![CDATA[<p>Note: Refer to the ASCII table for character encoding, ASCII codes, and comparisons. Use <code>Ctrl+F</code> to quickly find the decimal value or escape character for any character you’re looking for.</p>
 <div class="table-container">
 <table>
 <thead>
@@ -25653,6 +25651,12 @@ Enter your administrator password when prompted, and the installation will proce
 </table>
 </div>
 ]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+      </tags>
   </entry>
   <entry>
     <title>How to Install Redis on Ubuntu with Snap</title>
@@ -25871,11 +25875,9 @@ Enter your administrator password when prompted, and the installation will proce
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/1970/01/01/cm45rpfrz00048wvp6wfge3vc/</url>
-    <content><![CDATA[<h1 id="241129-Standard-ASCII-Table"><a href="#241129-Standard-ASCII-Table" class="headerlink" title="241129-Standard ASCII Table"></a>241129-Standard ASCII Table</h1><hr>
-<p>title: “Standard ASCII Table: A Complete Reference of 7-bit ASCII”<br>id: /wiki/standard-ascii-table<br>date: 2024-11-29 02:16:06<br>top_img:<br>cover:<br>tags: [wiki]</p>
-<h2 id="categories-Wiki"><a href="#categories-Wiki" class="headerlink" title="categories: [Wiki]"></a>categories: [Wiki]</h2><p><strong>ASCII</strong> (/ˈæskiː/ ASS-kee),  an acronym for <em>American Standard Code for Information Interchange</em>. It’s a character encoding standard used in electronic communication to represent text in computers, telecommunications equipment, and other devices. ASCII uses a 7-bit character encoding system to represent 128 unique characters, which include both control characters and printable characters. </p>
+    <title>“Standard ASCII Table:A Complete Reference of 7-bit ASCII&quot;</title>
+    <url>/2024/11/29//wiki/standard-ascii-table/</url>
+    <content><![CDATA[<p><strong>ASCII</strong> (/ˈæskiː/ ASS-kee),  an acronym for <em>American Standard Code for Information Interchange</em>. It’s a character encoding standard used in electronic communication to represent text in computers, telecommunications equipment, and other devices. ASCII uses a 7-bit character encoding system to represent 128 unique characters, which include both control characters and printable characters. </p>
 <p>The first 32 code points (numbers 0–31 decimal) and the last one (number 127 decimal) are reserved for control characters, originally from Teletype models. While most of these control characters are outdated, some, like carriage return, line feed, and tab, are still in common use today.</p>
 <p>Of the 128 characters, 95 are printable, including the digits 0–9, lowercase letters (a–z), uppercase letters (A–Z), and various punctuation symbols.</p>
 <h2 id="ASCII-Control-Characters-character-code-0-31-127"><a href="#ASCII-Control-Characters-character-code-0-31-127" class="headerlink" title="ASCII Control Characters (character code 0-31, 127)"></a>ASCII Control Characters (character code 0-31, 127)</h2><p>The first 32 characters in the ASCII-table are unprintable control codes and are used to control peripherals such as printers.</p>
@@ -28500,5 +28502,11 @@ Enter your administrator password when prompted, and the installation will proce
 <li><a href="https://en.wikipedia.org/wiki/ASCII">https://en.wikipedia.org/wiki/ASCII</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+      </tags>
   </entry>
 </search>
