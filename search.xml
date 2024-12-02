@@ -25875,7 +25875,7 @@ Enter your administrator password when prompted, and the installation will proce
       </tags>
   </entry>
   <entry>
-    <title>Standard ASCII Table: A Complete Reference of 7-bit ASCII</title>
+    <title>ASCII Table (7-bit)</title>
     <url>/2024/11/29//wiki/standard-ascii-table/</url>
     <content><![CDATA[<p><strong>ASCII</strong> (/‘æski:/ ASS-kee), an acronym for <em>American Standard Code for Information Interchange</em>. It’s a character encoding standard used in electronic communication to represent text in computers, telecommunications equipment, and other devices. ASCII uses a 7-bit character encoding system to represent 128 unique characters, which include both control characters and printable characters. </p>
 <p>The first 32 code points (numbers 0-31 decimal) and the last one (number 127 decimal) are reserved for control characters, originally from Teletype models. While most of these control characters are outdated, some, like carriage return, line feed, and tab, are still in common use today.</p>
