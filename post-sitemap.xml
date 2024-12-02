@@ -9,6 +9,534 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2022/11/20/java-convert-date-to-localdate-or-localdatetime-and-back/</loc>
+        <lastmod>2024-12-02T22:05:37.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/09/05/tutorial-gson/</loc>
+        <lastmod>2024-12-02T22:05:32.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/07/24/java-json-pretty-print-with-gson/</loc>
+        <lastmod>2024-12-02T22:05:25.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/03/24/java-convert-iterator-to-list/</loc>
+        <lastmod>2024-12-02T22:05:14.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/09/05/gson-bases/</loc>
+        <lastmod>2024-12-02T22:05:09.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/07/25/java-gson-camel-cased-underscore/</loc>
+        <lastmod>2024-12-02T22:05:05.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/08/27/gson-serializing-and-deserializing-array-set-map/</loc>
+        <lastmod>2024-12-02T22:05:02.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/08/28/gson-serializing-and-deserializing-nested-classes/</loc>
+        <lastmod>2024-12-02T22:04:56.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/08/30/gson-serializing-and-deserializing-generic-types/</loc>
+        <lastmod>2024-12-02T22:04:51.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/08/26/gson-serializing-and-deserializing-objects/</loc>
+        <lastmod>2024-12-02T22:04:48.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/09/03/gson-overview/</loc>
+        <lastmod>2024-12-02T22:04:44.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/12/30/java-gson-validate-json-string/</loc>
+        <lastmod>2024-12-02T22:04:41.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/08/22/how-to-return-many-value-in-java-method/</loc>
+        <lastmod>2024-12-02T22:04:36.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/03/27/java17-new-features-sealed-class/</loc>
+        <lastmod>2024-12-02T22:04:31.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/08/16/how-to-serialize-a-null-field-using-gson-library-in-java/</loc>
+        <lastmod>2024-12-02T22:04:26.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/08/03/gson-string-to-jsonobject/</loc>
+        <lastmod>2024-12-02T22:04:21.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/08/29/why-do-people-still-use-java-if-java-is-behind-technologically/</loc>
+        <lastmod>2024-12-02T22:04:18.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2021/07/22/hashmap-core-code-analysis-1/</loc>
+        <lastmod>2024-12-02T22:04:13.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2021/07/27/hashmap-core-code-analysis-2/</loc>
+        <lastmod>2024-12-02T22:04:09.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/04/10/git-tag-checkout/</loc>
+        <lastmod>2024-12-02T22:03:41.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/05/23/how-to-delete-a-local-and-remote-git-branch/</loc>
+        <lastmod>2024-12-02T22:03:34.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/05/24/how-to-clean-up-git-branches/</loc>
+        <lastmod>2024-12-02T22:03:29.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</loc>
+        <lastmod>2024-12-02T22:03:25.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-setrange/</loc>
+        <lastmod>2024-12-02T22:03:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-setnx/</loc>
+        <lastmod>2024-12-02T22:02:55.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-setex/</loc>
+        <lastmod>2024-12-02T22:02:51.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-set/</loc>
+        <lastmod>2024-12-02T22:02:47.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-psetex/</loc>
+        <lastmod>2024-12-02T22:02:42.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-msetnx/</loc>
+        <lastmod>2024-12-02T22:02:38.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-mset/</loc>
+        <lastmod>2024-12-02T22:02:32.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-mget/</loc>
+        <lastmod>2024-12-02T22:02:27.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-lcs/</loc>
+        <lastmod>2024-12-02T22:02:24.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/08/redis-cmd-hyperloglog-pfcount/</loc>
+        <lastmod>2024-12-02T22:02:18.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-strlen/</loc>
+        <lastmod>2024-12-02T22:02:13.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/06/redis-cmd-bitmap-bitcount/</loc>
+        <lastmod>2024-12-02T22:02:07.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/08/redis-cmd-hyperloglog-pfadd/</loc>
+        <lastmod>2024-12-02T22:02:04.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/09/redis-cmd-hyperloglog-pfdebug/</loc>
+        <lastmod>2024-12-02T22:01:57.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/09/redis-cmd-hyperloglog-pfmerge/</loc>
+        <lastmod>2024-12-02T22:01:53.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/09/10/analyzing-redis-source-code-sds/</loc>
+        <lastmod>2024-12-02T22:01:48.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/09/redis-cmd-hyperloglog-pfselftest/</loc>
+        <lastmod>2024-12-02T22:01:44.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/09/11/analyzing-redis-source-code-hash/</loc>
+        <lastmod>2024-12-02T22:01:39.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-substr/</loc>
+        <lastmod>2024-12-02T22:01:17.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-incrbyfloat/</loc>
+        <lastmod>2024-12-02T22:01:10.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-incrby/</loc>
+        <lastmod>2024-12-02T22:01:05.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-incr/</loc>
+        <lastmod>2024-12-02T22:01:01.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-getset/</loc>
+        <lastmod>2024-12-02T22:00:58.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-getrange/</loc>
+        <lastmod>2024-12-02T22:00:54.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/02/redis-cmd-strings-getex/</loc>
+        <lastmod>2024-12-02T22:00:49.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/01/redis-cmd-strings-getdel/</loc>
+        <lastmod>2024-12-02T22:00:45.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/05/31/redis-cmd-strings-get/</loc>
+        <lastmod>2024-12-02T22:00:39.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/02/redis-cmd-strings-decrby/</loc>
+        <lastmod>2024-12-02T22:00:34.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/01/redis-cmd-strings-decr/</loc>
+        <lastmod>2024-12-02T22:00:30.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/05/31/redis-cmd-strings-append/</loc>
+        <lastmod>2024-12-02T22:00:25.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/02/install-redis-from-source/</loc>
+        <lastmod>2024-12-02T22:00:21.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/06/02/how-to-check-the-redis-version/</loc>
+        <lastmod>2024-12-02T22:00:11.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/09/18/bulk-deleting-keys-in-redis-using-wildcards/</loc>
+        <lastmod>2024-12-02T22:00:06.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/09/06/why-does-redis-use-the-sds-structure-for-strings-instead-of-char/</loc>
+        <lastmod>2024-12-02T22:00:01.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/07/30/effective-ways-to-delete-fuzzy-matching-keys-in-redis/</loc>
+        <lastmod>2024-12-02T21:59:56.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/</loc>
+        <lastmod>2024-12-02T21:59:52.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/07/25/how-to-learn-redis-effectively/</loc>
+        <lastmod>2024-12-02T21:59:46.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/</loc>
+        <lastmod>2024-12-02T21:59:41.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/06/02/using-the-pfadd-command-in-redis/</loc>
+        <lastmod>2024-12-02T21:59:36.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/08/25/flush-all-cache-data-in-redis/</loc>
+        <lastmod>2024-12-02T21:59:06.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/30//wiki/html-char/</loc>
+        <lastmod>2024-12-02T21:58:21.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/29//wiki/a-complete-reference-of-7-bit-ascii/</loc>
+        <lastmod>2024-12-02T21:57:09.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/29//wiki/standard-ascii-table/</loc>
+        <lastmod>2024-12-02T21:54:11.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2024/11/10/how-to-install-node-js-latest-long-term-support-version-on-ubuntu-22-04/</loc>
         <lastmod>2024-12-01T16:05:50.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -43,22 +571,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/08/28/how-to-fix-shadows-name-from-outer-scope-warning-in-pycharm/</loc>
         <lastmod>2024-12-01T16:04:23.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/29//wiki/a-complete-reference-of-7-bit-ascii/</loc>
-        <lastmod>2024-12-01T16:01:31.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/29//wiki/standard-ascii-table/</loc>
-        <lastmod>2024-12-01T16:01:20.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -457,22 +969,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2024/09/18/bulk-deleting-keys-in-redis-using-wildcards/</loc>
-        <lastmod>2024-11-01T19:20:32.831Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/09/11/analyzing-redis-source-code-hash/</loc>
-        <lastmod>2024-10-27T22:30:09.103Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2024/05/21/c-language-cli/</loc>
         <lastmod>2024-09-18T16:20:01.307Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -579,22 +1075,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/05/01/introduction-to-the-c-language/</loc>
         <lastmod>2024-09-13T14:41:25.163Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/09/10/analyzing-redis-source-code-sds/</loc>
-        <lastmod>2024-09-10T14:48:41.707Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/09/06/why-does-redis-use-the-sds-structure-for-strings-instead-of-char/</loc>
-        <lastmod>2024-09-07T08:15:42.929Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -801,14 +1281,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2024/06/02/using-the-pfadd-command-in-redis/</loc>
-        <lastmod>2024-08-27T15:37:08.739Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2024/06/04/checking-filebeat-version/</loc>
         <lastmod>2024-08-27T15:36:48.201Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -827,38 +1299,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/07/23/how-to-count-lines-of-code-in-intellij-idea/</loc>
         <lastmod>2024-08-27T15:36:08.682Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/07/25/how-to-learn-redis-effectively/</loc>
-        <lastmod>2024-08-27T15:35:49.039Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/</loc>
-        <lastmod>2024-08-27T15:35:28.592Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/</loc>
-        <lastmod>2024-08-27T15:35:04.981Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/07/30/effective-ways-to-delete-fuzzy-matching-keys-in-redis/</loc>
-        <lastmod>2024-08-27T15:34:38.318Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -1225,64 +1665,8 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2023/09/05/tutorial-gson/</loc>
-        <lastmod>2023-09-05T15:50:29.771Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/09/05/gson-bases/</loc>
-        <lastmod>2023-09-05T15:43:00.202Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2023/09/05/data-analysis-knowledge-map/</loc>
         <lastmod>2023-09-05T15:38:20.187Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/08/30/gson-serializing-and-deserializing-generic-types/</loc>
-        <lastmod>2023-09-05T15:36:04.113Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/08/28/gson-serializing-and-deserializing-nested-classes/</loc>
-        <lastmod>2023-09-05T15:21:51.444Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/08/27/gson-serializing-and-deserializing-array-set-map/</loc>
-        <lastmod>2023-09-05T15:21:36.523Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/08/26/gson-serializing-and-deserializing-objects/</loc>
-        <lastmod>2023-09-05T15:20:43.385Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/09/03/gson-overview/</loc>
-        <lastmod>2023-09-04T15:39:15.462Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -1401,38 +1785,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2022/11/20/java-convert-date-to-localdate-or-localdatetime-and-back/</loc>
-        <lastmod>2023-08-28T15:01:16.300Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/07/24/java-json-pretty-print-with-gson/</loc>
-        <lastmod>2023-08-28T15:01:10.945Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/03/27/java17-new-features-sealed-class/</loc>
-        <lastmod>2023-08-28T15:00:35.951Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/12/30/java-gson-validate-json-string/</loc>
-        <lastmod>2023-08-28T15:00:28.347Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2022/10/30/hive-rename-table/</loc>
         <lastmod>2023-08-28T14:58:34.083Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -1457,14 +1809,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2023/07/25/java-gson-camel-cased-underscore/</loc>
-        <lastmod>2023-07-25T15:48:44.799Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2023/07/21/hive-sql-built-in-functions-concat_ws/</loc>
         <lastmod>2023-07-25T15:45:38.652Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -1475,22 +1819,6 @@
     <url>
         <loc>http://linjiangxiong.com/2023/07/05/mysql-add-column-error-duplicate-entry-xxx-for-key-idx-unique/</loc>
         <lastmod>2023-07-19T14:09:41.847Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/06/redis-cmd-bitmap-bitcount/</loc>
-        <lastmod>2023-06-12T15:19:03.778Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/08/redis-cmd-hyperloglog-pfcount/</loc>
-        <lastmod>2023-06-12T15:14:05.551Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -1515,222 +1843,6 @@
     <url>
         <loc>http://linjiangxiong.com/2023/06/09/python-how-to-convert-between-binary-strings-and-strings/</loc>
         <lastmod>2023-06-12T15:09:32.756Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/09/redis-cmd-hyperloglog-pfselftest/</loc>
-        <lastmod>2023-06-12T15:07:59.897Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/09/redis-cmd-hyperloglog-pfmerge/</loc>
-        <lastmod>2023-06-12T15:07:35.506Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/09/redis-cmd-hyperloglog-pfdebug/</loc>
-        <lastmod>2023-06-12T15:07:16.773Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/08/redis-cmd-hyperloglog-pfadd/</loc>
-        <lastmod>2023-06-12T15:06:40.614Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-substr/</loc>
-        <lastmod>2023-06-06T14:30:59.320Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-strlen/</loc>
-        <lastmod>2023-06-06T14:30:38.905Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-setrange/</loc>
-        <lastmod>2023-06-06T14:30:21.069Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-setnx/</loc>
-        <lastmod>2023-06-06T14:30:03.190Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-setex/</loc>
-        <lastmod>2023-06-06T14:29:46.938Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-set/</loc>
-        <lastmod>2023-06-06T14:29:29.851Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-psetex/</loc>
-        <lastmod>2023-06-06T14:28:52.787Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-lcs/</loc>
-        <lastmod>2023-06-05T15:22:06.628Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-getset/</loc>
-        <lastmod>2023-06-05T15:16:27.631Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-incr/</loc>
-        <lastmod>2023-06-05T15:07:09.866Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-incrby/</loc>
-        <lastmod>2023-06-05T15:07:03.564Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-incrbyfloat/</loc>
-        <lastmod>2023-06-05T15:06:57.022Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-mget/</loc>
-        <lastmod>2023-06-05T15:06:44.255Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-mset/</loc>
-        <lastmod>2023-06-05T15:06:32.120Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/04/redis-cmd-strings-msetnx/</loc>
-        <lastmod>2023-06-05T15:06:20.233Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/03/redis-cmd-strings-getrange/</loc>
-        <lastmod>2023-06-05T15:00:31.178Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/02/how-to-check-the-redis-version/</loc>
-        <lastmod>2023-06-04T15:48:26.270Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/02/install-redis-from-source/</loc>
-        <lastmod>2023-06-04T15:48:03.440Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/02/redis-cmd-strings-getex/</loc>
-        <lastmod>2023-06-04T15:47:23.174Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/02/redis-cmd-strings-decrby/</loc>
-        <lastmod>2023-06-04T15:46:58.673Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/01/redis-cmd-strings-getdel/</loc>
-        <lastmod>2023-06-04T15:46:25.909Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/06/01/redis-cmd-strings-decr/</loc>
-        <lastmod>2023-06-01T12:57:59.177Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/05/31/redis-cmd-strings-get/</loc>
-        <lastmod>2023-06-01T12:48:19.156Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -1763,14 +1875,6 @@
     <url>
         <loc>http://linjiangxiong.com/2023/05/24/presto-trigonometric-functions/</loc>
         <lastmod>2023-05-31T15:56:16.083Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/05/31/redis-cmd-strings-append/</loc>
-        <lastmod>2023-05-31T15:14:58.501Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -1889,14 +1993,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2022/05/24/how-to-clean-up-git-branches/</loc>
-        <lastmod>2023-05-10T15:18:55.367Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2023/04/17/python-encode-unicode-or-non-ascii-characters-into-json-string/</loc>
         <lastmod>2023-05-05T16:05:44.065Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -1969,14 +2065,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2023/04/10/git-tag-checkout/</loc>
-        <lastmod>2023-04-21T14:22:52.165Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2023/04/18/filebeat-http-endpoint/</loc>
         <lastmod>2023-04-21T14:21:12.903Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -2043,14 +2131,6 @@
     <url>
         <loc>http://linjiangxiong.com/2023/03/28/how-to-parse-json-from-the-second-level-to-the-root-level-in-logstash/</loc>
         <lastmod>2023-03-28T15:32:01.778Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/03/24/java-convert-iterator-to-list/</loc>
-        <lastmod>2023-03-24T14:12:18.273Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -2217,24 +2297,8 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2022/08/29/why-do-people-still-use-java-if-java-is-behind-technologically/</loc>
-        <lastmod>2022-08-30T14:27:49.324Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2022/08/30/edit-hosts-in-windows/</loc>
         <lastmod>2022-08-30T14:26:46.560Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/08/25/flush-all-cache-data-in-redis/</loc>
-        <lastmod>2022-08-25T15:47:28.505Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -2275,30 +2339,6 @@
     <url>
         <loc>http://linjiangxiong.com/2022/08/23/how-to-create-user-and-group-in-linux/</loc>
         <lastmod>2022-08-25T15:39:47.219Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/08/22/how-to-return-many-value-in-java-method/</loc>
-        <lastmod>2022-08-22T14:33:46.036Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/08/03/gson-string-to-jsonobject/</loc>
-        <lastmod>2022-08-22T14:33:21.388Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/08/16/how-to-serialize-a-null-field-using-gson-library-in-java/</loc>
-        <lastmod>2022-08-22T14:33:03.201Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -2355,14 +2395,6 @@
     <url>
         <loc>http://linjiangxiong.com/2022/06/27/how-to-find-hostname-in-linux/</loc>
         <lastmod>2022-07-04T14:59:08.797Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/05/23/how-to-delete-a-local-and-remote-git-branch/</loc>
-        <lastmod>2022-05-24T15:03:04.506Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -2515,30 +2547,6 @@
     <url>
         <loc>http://linjiangxiong.com/2021/08/02/bitwise-operation-xor-trick/</loc>
         <lastmod>2021-08-05T15:27:58.465Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2021/07/22/hashmap-core-code-analysis-1/</loc>
-        <lastmod>2021-07-28T14:00:13.659Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2021/07/27/hashmap-core-code-analysis-2/</loc>
-        <lastmod>2021-07-28T13:42:40.314Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2019/10/07/git-how-to-change-the-url-for-a-remote-git-repository/</loc>
-        <lastmod>2021-07-20T14:35:26.425Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
