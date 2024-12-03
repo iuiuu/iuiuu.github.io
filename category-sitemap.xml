@@ -9,8 +9,15 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/categories/Bash-Tutorial/</loc>
+        <lastmod>2024-12-03T21:24:39.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/categories/Wiki/</loc>
-        <lastmod>2024-12-02T22:26:16.000Z</lastmod>
+        <lastmod>2024-12-03T21:21:28.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -102,13 +109,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/Math/</loc>
         <lastmod>2024-08-27T15:37:42.587Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/Bash-Tutorial/</loc>
-        <lastmod>2024-08-27T15:20:26.214Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

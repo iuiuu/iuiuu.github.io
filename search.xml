@@ -22453,49 +22453,49 @@ Enter your administrator password when prompted, and the installation will proce
 <p>b) ./script.sh</p>
 <ul>
 <li>Requires the script to have execute permissions (<code>chmod +x script.sh</code>).</li>
-<li><p>You’ll get a “Permission denied” error if the script isn’t executable.</p>
+<li>You’ll get a “Permission denied” error if the script isn’t executable.</li>
+</ul>
 <h2 id="Path-Considerations"><a href="#Path-Considerations" class="headerlink" title="Path Considerations"></a>Path Considerations</h2><p>a) bash script.sh</p>
-</li>
-<li><p>Works as long as ‘bash’ is in your PATH.</p>
-</li>
+<ul>
+<li>Works as long as ‘bash’ is in your PATH.</li>
 <li>Can execute scripts from any directory without ‘./‘ if the script’s directory is in your PATH.</li>
 </ul>
 <p>b) ./script.sh</p>
 <ul>
 <li>The ‘./‘ specifies the current directory.</li>
-<li><p>Necessary for security reasons, as the current directory is not typically in the PATH.</p>
+<li>Necessary for security reasons, as the current directory is not typically in the PATH.</li>
+</ul>
 <h2 id="Subshell-Behavior"><a href="#Subshell-Behavior" class="headerlink" title="Subshell Behavior"></a>Subshell Behavior</h2><p>a) bash script.sh</p>
-</li>
-<li><p>Always runs the script in a new subshell.</p>
-</li>
+<ul>
+<li>Always runs the script in a new subshell.</li>
 <li>Changes to environment variables in the script don’t affect the parent shell.</li>
 </ul>
 <p>b) ./script.sh</p>
 <ul>
-<li><p>Typically runs in a subshell, but can be sourced to run in the current shell using ‘. ./script.sh’.</p>
+<li>Typically runs in a subshell, but can be sourced to run in the current shell using ‘. ./script.sh’.</li>
+</ul>
 <h2 id="Debugging"><a href="#Debugging" class="headerlink" title="Debugging"></a>Debugging</h2><p>a) bash -x script.sh</p>
-</li>
-<li><p>Enables debug mode, printing each command before execution.</p>
-</li>
+<ul>
+<li>Enables debug mode, printing each command before execution.</li>
 <li>Useful for troubleshooting scripts.</li>
 </ul>
 <p>b) ./script.sh</p>
 <ul>
-<li><p>To debug, you need to modify the shebang line or the script itself.</p>
+<li>To debug, you need to modify the shebang line or the script itself.</li>
+</ul>
 <h2 id="Portability"><a href="#Portability" class="headerlink" title="Portability"></a>Portability</h2><p>a) bash script.sh</p>
-</li>
-<li><p>More portable across different Unix-like systems.</p>
-</li>
+<ul>
+<li>More portable across different Unix-like systems.</li>
 <li>Ensures Bash is used, which may be important for Bash-specific features.</li>
 </ul>
 <p>b) ./script.sh</p>
 <ul>
 <li>Relies on the correct interpreter being available as specified in the shebang.</li>
-<li><p>More flexible if you want to use different interpreters for different scripts.</p>
+<li>More flexible if you want to use different interpreters for different scripts.</li>
+</ul>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Both <code>bash script.sh</code> and <code>./script.sh</code> have their places in Bash scripting. Use <code>bash script.sh</code> when you want to explicitly use Bash or when executing scripts without making them executable. Use <code>./script.sh</code> for scripts with proper shebangs and execute permissions, especially in production environments.<br>Remember:</p>
-</li>
-<li><p>Always use shebangs in your scripts for clarity.</p>
-</li>
+<ul>
+<li>Always use shebangs in your scripts for clarity.</li>
 <li>Set appropriate permissions for your scripts.</li>
 <li>Consider portability and environment when choosing an execution method.</li>
 </ul>
@@ -29293,6 +29293,2189 @@ Enter your administrator password when prompted, and the installation will proce
       </categories>
       <tags>
         <tag>wiki</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 13</title>
+    <url>/2024/12/03//wiki/ascii-code-13/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 13 is represented by the control character ␍ also known as the carriage return.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␍</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␍</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>13</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>D</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 1101</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Carriage Return</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Printing and display control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+000D</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 10</title>
+    <url>/2024/12/03//wiki/ascii-code-10/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 10 is represented by the control character ␊ also known as the line feed.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␊</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␊</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>A</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 1010</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Line Feed</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Printing and display control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+000A</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 11</title>
+    <url>/2024/12/03//wiki/ascii-code-11/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 11 is represented by the control character ␋ also known as the vertical tabulation.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␋</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␋</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>13</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>B</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 1011</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Vertical Tabulation</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Printing and display control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+000B</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 1</title>
+    <url>/2024/12/03//wiki/ascii-code-1/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 1 is represented by the control character ␁ also known as the start of heading.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␁</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␁</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 0001</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Start of Heading</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission Control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0001</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 15</title>
+    <url>/2024/12/03//wiki/ascii-code-15/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 15 is represented by the control character ␏ also known as the shift in.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␏</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␏</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>17</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>F</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 1111</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Shift In</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Printing and display control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+000F</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 12</title>
+    <url>/2024/12/03//wiki/ascii-code-12/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 12 is represented by the control character ␌ also known as the form feed.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␌</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␌</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>14</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>C</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 1100</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Form Feed</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Printing and display control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+000C</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 14</title>
+    <url>/2024/12/03//wiki/ascii-code-14/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 14 is represented by the control character ␎ also known as the shift out.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␎</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␎</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>14</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>E</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 1110</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Shift Out</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Printing and display control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+000E</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 17</title>
+    <url>/2024/12/03//wiki/ascii-code-17/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 17 is represented by the control character ␑ also known as the device control one (xon).</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␑</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␑</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>17</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 0001</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Device Control One (XON)</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0011</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 18</title>
+    <url>/2024/12/03//wiki/ascii-code-18/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 18 is represented by the control character ␒ also known as the device control two.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␒</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␒</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>18</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>22</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 0010</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Device Control Two</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0012</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 19</title>
+    <url>/2024/12/03//wiki/ascii-code-19/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 19 is represented by the control character ␓ also known as the device control three (xoff).</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␓</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␓</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>23</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>13</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 0011</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Device Control Three (XOFF)</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0013</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 16</title>
+    <url>/2024/12/03//wiki/ascii-code-16/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 16 is represented by the control character ␐ also known as the data link escape.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␐</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␐</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 0000</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Data Link Escape</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0010</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 21</title>
+    <url>/2024/12/03//wiki/ascii-code-21/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 21 is represented by the control character ␕ also known as the negative acknowledge.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␕</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␕</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>25</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 0101</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Negative Acknowledge</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0015</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 20</title>
+    <url>/2024/12/03//wiki/ascii-code-20/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 20 is represented by the control character ␔ also known as the device control four.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␔</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␔</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>24</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>14</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 0100</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Device Control Four</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0014</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 22</title>
+    <url>/2024/12/03//wiki/ascii-code-22/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 22 is represented by the control character ␖ also known as the synchronous idle.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␖</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␖</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>22</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 0110</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Synchronous Idle</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Miscellaneous codes</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0016</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 2</title>
+    <url>/2024/12/03//wiki/ascii-code-2/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 2 is represented by the control character ␂ also known as the start of text.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␂</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␂</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 0010</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Start of Text</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission Control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0002</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 25</title>
+    <url>/2024/12/03//wiki/ascii-code-25/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 25 is represented by the control character ␙ also known as the end of medium.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␙</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␙</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>25</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>31</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 1001</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>End of medium</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Data structuring</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0019</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 24</title>
+    <url>/2024/12/03//wiki/ascii-code-24/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 24 is represented by the control character ␘ also known as the cancel.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␘</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␘</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>24</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>30</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>18</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 1000</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Cancel</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0018</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 26</title>
+    <url>/2024/12/03//wiki/ascii-code-26/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 26 is represented by the control character ␚ also known as the substitute.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␚</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␚</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>32</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>1A</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 1010</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Substitute</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+001A</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 23</title>
+    <url>/2024/12/03//wiki/ascii-code-23/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 23 is represented by the control character ␗ also known as the end of transmission block.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␗</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␗</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>23</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>17</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 0111</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>End of Transmission Block</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0017</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 28</title>
+    <url>/2024/12/03//wiki/ascii-code-28/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 28 is represented by the control character ␜ also known as the file separator.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␜</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␜</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>34</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>1C</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 1100</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>File Separator</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Data structuring</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+001C</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 29</title>
+    <url>/2024/12/03//wiki/ascii-code-29/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 29 is represented by the control character ␝ also known as the group separator.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␝</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␝</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>29</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>35</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>1D</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 1101</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Group Separator</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Data structuring</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+001D</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 3</title>
+    <url>/2024/12/03//wiki/ascii-code-3/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 3 is represented by the control character ␃ also known as the end of text.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␃</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␃</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 0011</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>End of Text</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission Control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0003</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 27</title>
+    <url>/2024/12/03//wiki/ascii-code-27/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 27 is represented by the control character ␛ also known as the escape.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␛</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␛</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>33</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>1B</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 1011</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Escape</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+001B</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 5</title>
+    <url>/2024/12/03//wiki/ascii-code-5/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 5 is represented by the control character ␅ also known as the enquiry.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␅</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␅</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>5</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>5</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>5</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 0101</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Enquiry</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission Control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0005</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 31</title>
+    <url>/2024/12/03//wiki/ascii-code-31/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 31 is represented by the control character ␟ also known as the unit separator.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␟</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␟</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>31</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>37</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>1F</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 1111</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Unit Separator</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Data structuring</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+001F</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 30</title>
+    <url>/2024/12/03//wiki/ascii-code-30/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 30 is represented by the control character ␞ also known as the record separator.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␞</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␞</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>30</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>36</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>1E</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0001 1110</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Record Separator</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Data structuring</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+001E</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 32</title>
+    <url>/2024/12/03//wiki/ascii-code-32/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 32 is represented by non-printing character also known as the space.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Character Representation</strong></th>
+<th><strong>Value/Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASCII Character</td>
+<td><code>&#32;</code></td>
+</tr>
+<tr>
+<td>Decimal</td>
+<td>32</td>
+</tr>
+<tr>
+<td>Octal</td>
+<td>40</td>
+</tr>
+<tr>
+<td>Hexadecimal</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Binary</td>
+<td>0010 0000</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Space</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Printable Characters</td>
+</tr>
+<tr>
+<td>Subcategory</td>
+<td>Punctuation and Symbols</td>
+</tr>
+<tr>
+<td>Unicode</td>
+<td>U+0020</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Encoding"><a href="#Encoding" class="headerlink" title="Encoding"></a>Encoding</h2><p>Encoding non-standard letters and characters into values that can be displayed e.g. in browsers</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Encoding Method</th>
+<th>Encoded Value</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URL Escape Code</td>
+<td>%20</td>
+<td></td>
+</tr>
+<tr>
+<td>Quoted-printable</td>
+<td>=20</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 33</title>
+    <url>/2024/12/03//wiki/ascii-code-33/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 33 is represented by the character ! also known as the exclamation mark.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Character Representation</strong></th>
+<th><strong>Value/Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASCII Character</td>
+<td><code>!</code></td>
+</tr>
+<tr>
+<td>Decimal</td>
+<td>33</td>
+</tr>
+<tr>
+<td>Octal</td>
+<td>41</td>
+</tr>
+<tr>
+<td>Hexadecimal</td>
+<td>21</td>
+</tr>
+<tr>
+<td>Binary</td>
+<td>0010 0001</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Exclamation mark</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Printable Characters</td>
+</tr>
+<tr>
+<td>Subcategory</td>
+<td>Punctuation and Symbols</td>
+</tr>
+<tr>
+<td>Unicode</td>
+<td>U+0021</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Encoding"><a href="#Encoding" class="headerlink" title="Encoding"></a>Encoding</h2><p>Encoding non-standard letters and characters into values that can be displayed e.g. in browsers</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Encoding Method</th>
+<th>Encoded Value</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URL Escape Code</td>
+<td>%21</td>
+<td></td>
+</tr>
+<tr>
+<td>Quoted-printable</td>
+<td>=21</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 7</title>
+    <url>/2024/12/03//wiki/ascii-code-7/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 7 is represented by the control character ␇ also known as the bell, alert.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␇</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␇</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>7</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>7</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>7</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 0111</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Bell, Alert</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Miscellaneous codes</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0007</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 4</title>
+    <url>/2024/12/03//wiki/ascii-code-4/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 4 is represented by the control character ␄ also known as the end of transmission.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␄</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␄</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 0100</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>End of Transmission</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission Control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0004</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 6</title>
+    <url>/2024/12/03//wiki/ascii-code-6/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 6 is represented by the control character ␆ also known as the acknowledge.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␆</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␆</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>6</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>6</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>6</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 0110</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Acknowledge</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Transmission Control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0006</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 9</title>
+    <url>/2024/12/03//wiki/ascii-code-9/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 9 is represented by the control character ␉ also known as the horizontal tab.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␉</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␉</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>9</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>9</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 1001</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Horizontal Tab</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Printing and display control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0009</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ASCII Code 8</title>
+    <url>/2024/12/03//wiki/ascii-code-8/</url>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 8 is represented by the control character ␈ also known as the backspace.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Symbol</strong></td>
+<td>␈</td>
+</tr>
+<tr>
+<td><strong>Unicode Symbol</strong></td>
+<td>␈</td>
+</tr>
+<tr>
+<td><strong>Decimal</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td><strong>Octal</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Hexadecimal</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td><strong>Binary</strong></td>
+<td>0000 1000</td>
+</tr>
+<tr>
+<td><strong>Description</strong></td>
+<td>Backspace</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Control Characters</td>
+</tr>
+<tr>
+<td><strong>Subcategory</strong></td>
+<td>Printing and display control</td>
+</tr>
+<tr>
+<td><strong>Unicode</strong></td>
+<td>U+0008</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Wiki</category>
+      </categories>
+      <tags>
+        <tag>wiki</tag>
+        <tag>ascii-code</tag>
       </tags>
   </entry>
 </search>
