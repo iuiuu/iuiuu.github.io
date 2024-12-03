@@ -219,7 +219,7 @@
       </categories>
       <tags>
         <tag>CentOS7</tag>
-        <tag>java</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -239,7 +239,7 @@
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -300,8 +300,8 @@
         <category>编程文摘</category>
       </categories>
       <tags>
+        <tag>Redis</tag>
         <tag>Spring Boot</tag>
-        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -3891,7 +3891,7 @@
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>java</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -4454,7 +4454,7 @@ n = 2 ^ m，m = 1, 2, 3, ⋯</script><p>当 m = 1 时，n = 2，n - 1 = 1，其�
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>java</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -4585,7 +4585,7 @@ n = 2 ^ m，m = 1, 2, 3, ⋯</script><p>当 m = 1 时，n = 2，n - 1 = 1，其�
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>java</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -4622,7 +4622,7 @@ n = 2 ^ m，m = 1, 2, 3, ⋯</script><p>当 m = 1 时，n = 2，n - 1 = 1，其�
         <category>Programming Digest</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -7339,7 +7339,7 @@ n = 2 ^ m，m = 1, 2, 3, ⋯</script><p>当 m = 1 时，n = 2，n - 1 = 1，其�
         <category>Programming Digest</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -7421,7 +7421,7 @@ n = 2 ^ m，m = 1, 2, 3, ⋯</script><p>当 m = 1 时，n = 2，n - 1 = 1，其�
         <category>Programming Digest</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -7449,7 +7449,7 @@ n = 2 ^ m，m = 1, 2, 3, ⋯</script><p>当 m = 1 时，n = 2，n - 1 = 1，其�
         <category>Programming Digest</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -7485,7 +7485,7 @@ n = 2 ^ m，m = 1, 2, 3, ⋯</script><p>当 m = 1 时，n = 2，n - 1 = 1，其�
         <category>Programming Digest</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -8184,8 +8184,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>JSON</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>Gson</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -8245,7 +8245,7 @@ fafas</script><p>$\dot{a}$</p>
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>java</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -8283,7 +8283,7 @@ fafas</script><p>$\dot{a}$</p>
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>java</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -9096,7 +9096,7 @@ fafas</script><p>$\dot{a}$</p>
         <category>编程 Q&amp;A</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -9198,8 +9198,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>JSON</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>Gson</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -9349,8 +9349,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>JSON</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>Gson</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -9396,8 +9396,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>编程文摘</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>翻译</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -10628,8 +10628,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>JSON</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>Gson</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -10885,7 +10885,7 @@ fafas</script><p>$\dot{a}$</p>
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>java</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -10910,8 +10910,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>编程文摘</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>Gson</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -10935,7 +10935,7 @@ fafas</script><p>$\dot{a}$</p>
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>java</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -13312,8 +13312,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>JSON</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>Gson</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -13826,8 +13826,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>编程文摘</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>Gson</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -13892,8 +13892,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>JSON</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>Gson</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -14453,8 +14453,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>JSON</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>Gson</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -14484,8 +14484,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>JSON</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>Gson</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -14543,8 +14543,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>JSON</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>Gson</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -15340,7 +15340,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Programming Digest</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -15460,7 +15460,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Programming Digest</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -18584,8 +18584,8 @@ Enter your administrator password when prompted, and the installation will proce
         <category>极简教程</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>Gson</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -20829,7 +20829,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Source Code Analysis</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -20864,7 +20864,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -20988,7 +20988,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Source Code Analysis</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21037,7 +21037,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21069,7 +21069,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21100,7 +21100,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21153,7 +21153,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21195,7 +21195,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21226,7 +21226,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21267,7 +21267,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21347,7 +21347,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21403,7 +21403,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21442,7 +21442,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21467,7 +21467,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21499,7 +21499,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21528,7 +21528,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21552,7 +21552,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21579,7 +21579,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21638,7 +21638,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21668,7 +21668,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21699,7 +21699,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21730,7 +21730,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21753,7 +21753,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21784,7 +21784,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21841,7 +21841,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -21942,7 +21942,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -22549,7 +22549,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -22577,7 +22577,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -22625,7 +22625,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -22660,7 +22660,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -22699,9 +22699,9 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
+        <tag>Redis</tag>
         <tag>ubuntu</tag>
         <tag>howto</tag>
-        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -22728,7 +22728,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -22745,7 +22745,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -22764,7 +22764,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -22886,7 +22886,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -23634,7 +23634,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -23654,7 +23654,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -23682,7 +23682,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -23702,7 +23702,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -23729,7 +23729,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis教程</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -23773,7 +23773,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Programming Digest</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -23809,8 +23809,8 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Programming Digest</category>
       </categories>
       <tags>
+        <tag>Java</tag>
         <tag>howto</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -23830,7 +23830,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -23865,7 +23865,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -23955,7 +23955,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -23977,7 +23977,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -23998,7 +23998,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -24019,7 +24019,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -24039,7 +24039,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -24060,7 +24060,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -24096,7 +24096,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -24119,7 +24119,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -24142,7 +24142,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -24163,7 +24163,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -24184,7 +24184,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -24208,7 +24208,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -24238,7 +24238,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -24294,7 +24294,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -24315,7 +24315,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -24341,7 +24341,7 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Redis Tutorial</category>
       </categories>
       <tags>
-        <tag>redis</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
