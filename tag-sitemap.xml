@@ -3,6 +3,20 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/tags/Ubuntu/</loc>
+        <lastmod>2024-12-03T22:03:37.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/HowTo/</loc>
+        <lastmod>2024-12-03T22:03:37.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/tags/docker/</loc>
         <lastmod>2024-12-03T21:58:44.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -25,13 +39,6 @@
 
     <url>
         <loc>http://linjiangxiong.com/tags/Apache-Flink/</loc>
-        <lastmod>2024-12-03T21:58:44.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/HowTo/</loc>
         <lastmod>2024-12-03T21:58:44.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -117,13 +124,6 @@
     <url>
         <loc>http://linjiangxiong.com/tags/devops/</loc>
         <lastmod>2024-12-01T15:57:46.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/howto/</loc>
-        <lastmod>2024-12-01T15:48:22.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
