@@ -14653,7 +14653,7 @@ fafas</script><p>$\dot{a}$</p>
       </categories>
       <tags>
         <tag>Superset</tag>
-        <tag>howto</tag>
+        <tag>HowTo</tag>
       </tags>
   </entry>
   <entry>
@@ -14718,8 +14718,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>Programming Digest</category>
       </categories>
       <tags>
+        <tag>HowTo</tag>
         <tag>Apache Flink</tag>
-        <tag>howto</tag>
       </tags>
   </entry>
   <entry>
@@ -14755,8 +14755,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>Programming Digest</category>
       </categories>
       <tags>
+        <tag>HowTo</tag>
         <tag>ubuntu</tag>
-        <tag>howto</tag>
       </tags>
   </entry>
   <entry>
@@ -14806,8 +14806,8 @@ fafas</script><p>$\dot{a}$</p>
         <category>Programming Digest</category>
       </categories>
       <tags>
+        <tag>HowTo</tag>
         <tag>ubuntu</tag>
-        <tag>howto</tag>
         <tag>nodejs</tag>
       </tags>
   </entry>
@@ -14976,7 +14976,7 @@ fafas</script><p>$\dot{a}$</p>
       </categories>
       <tags>
         <tag>Python</tag>
-        <tag>howto</tag>
+        <tag>HowTo</tag>
       </tags>
   </entry>
   <entry>
@@ -15275,8 +15275,8 @@ Enter your administrator password when prompted, and the installation will proce
         <category>Programming Digest</category>
       </categories>
       <tags>
+        <tag>HowTo</tag>
         <tag>ubuntu</tag>
-        <tag>howto</tag>
         <tag>docker</tag>
       </tags>
   </entry>
@@ -15316,7 +15316,7 @@ Enter your administrator password when prompted, and the installation will proce
       </categories>
       <tags>
         <tag>Elasticsearch</tag>
-        <tag>howto</tag>
+        <tag>HowTo</tag>
       </tags>
   </entry>
   <entry>
@@ -22700,8 +22700,8 @@ Enter your administrator password when prompted, and the installation will proce
       </categories>
       <tags>
         <tag>Redis</tag>
+        <tag>HowTo</tag>
         <tag>ubuntu</tag>
-        <tag>howto</tag>
       </tags>
   </entry>
   <entry>
@@ -23810,7 +23810,7 @@ Enter your administrator password when prompted, and the installation will proce
       </categories>
       <tags>
         <tag>Java</tag>
-        <tag>howto</tag>
+        <tag>HowTo</tag>
       </tags>
   </entry>
   <entry>

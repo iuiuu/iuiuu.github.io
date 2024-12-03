@@ -9,6 +9,78 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2024/11/01/resolving-the-ttransportexception-error-in-superset-hive-database-connection/</loc>
+        <lastmod>2024-12-03T21:58:44.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/05/how-to-fix-java-lang-nosuchmethoderror-commandline-hasoption-in-flink/</loc>
+        <lastmod>2024-12-03T21:58:44.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/02/ubuntu-could-not-get-lock-var-lib-apt-lists-lock/</loc>
+        <lastmod>2024-12-03T21:58:44.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/10/how-to-install-node-js-latest-long-term-support-version-on-ubuntu-22-04/</loc>
+        <lastmod>2024-12-03T21:58:44.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/08/28/how-to-fix-shadows-name-from-outer-scope-warning-in-pycharm/</loc>
+        <lastmod>2024-12-03T21:58:44.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/09/04/how-to-fix-docker-gpg-key-installation-errors-on-ubuntu/</loc>
+        <lastmod>2024-12-03T21:58:44.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/09/05/how-to-delete-data-in-elasticsearch-single-multiple-clear-and-all/</loc>
+        <lastmod>2024-12-03T21:58:44.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/07/how-to-install-redis-on-ubuntu-using-the-apt-command/</loc>
+        <lastmod>2024-12-03T21:58:44.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/19/java-convert-localdatetime-to-long-timestamp/</loc>
+        <lastmod>2024-12-03T21:58:44.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2024/06/02/using-the-pfadd-command-in-redis/</loc>
         <lastmod>2024-12-03T21:57:30.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -130,14 +202,6 @@
 
     <url>
         <loc>http://linjiangxiong.com/2024/11/04/redis-hyperloglog-pfadd-command/</loc>
-        <lastmod>2024-12-03T21:57:30.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/07/how-to-install-redis-on-ubuntu-using-the-apt-command/</loc>
         <lastmod>2024-12-03T21:57:30.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -697,14 +761,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2024/11/19/java-convert-localdatetime-to-long-timestamp/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2023/03/25/apache-flink-release-1_17/</loc>
         <lastmod>2024-12-03T21:40:08.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -1041,56 +1097,8 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2024/11/10/how-to-install-node-js-latest-long-term-support-version-on-ubuntu-22-04/</loc>
-        <lastmod>2024-12-01T16:05:50.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/09/05/how-to-delete-data-in-elasticsearch-single-multiple-clear-and-all/</loc>
-        <lastmod>2024-12-01T16:04:46.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/05/how-to-fix-java-lang-nosuchmethoderror-commandline-hasoption-in-flink/</loc>
-        <lastmod>2024-12-01T16:04:38.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/01/resolving-the-ttransportexception-error-in-superset-hive-database-connection/</loc>
-        <lastmod>2024-12-01T16:04:30.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/08/28/how-to-fix-shadows-name-from-outer-scope-warning-in-pycharm/</loc>
-        <lastmod>2024-12-01T16:04:23.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2024/08/09/how-to-install-docker-on-ubuntu/</loc>
         <lastmod>2024-12-01T15:57:46.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/09/04/how-to-fix-docker-gpg-key-installation-errors-on-ubuntu/</loc>
-        <lastmod>2024-12-01T15:57:32.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -1147,14 +1155,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/06/23/html-script-and-noscript/</loc>
         <lastmod>2024-11-26T15:37:27.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/02/ubuntu-could-not-get-lock-var-lib-apt-lists-lock/</loc>
-        <lastmod>2024-11-08T18:01:15.742Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
