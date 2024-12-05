@@ -9,6 +9,13 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/categories/Wiki/</loc>
+        <lastmod>2024-12-05T15:52:08.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/categories/Programming-Digest/</loc>
         <lastmod>2024-12-03T22:03:37.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -67,13 +74,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/Bash-Tutorial/</loc>
         <lastmod>2024-12-03T21:24:39.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/Wiki/</loc>
-        <lastmod>2024-12-03T21:21:28.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
