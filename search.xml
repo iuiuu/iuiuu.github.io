@@ -28843,7 +28843,7 @@ Enter your administrator password when prompted, and the installation will proce
   <entry>
     <title>ASCII Code 0</title>
     <url>/2024/12/03//wiki/ascii-code-0/</url>
-    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 1 is represented by the control character ␁ also known as the start of heading.</p>
+    <content><![CDATA[<p>In the 7-bit ASCII character set, ASCII code 0 is represented by the control character ␀ also known as the null character.</p>
 <div class="table-container">
 <table>
 <thead>
@@ -28855,31 +28855,31 @@ Enter your administrator password when prompted, and the installation will proce
 <tbody>
 <tr>
 <td><strong>Symbol</strong></td>
-<td>␁</td>
+<td>␀</td>
 </tr>
 <tr>
 <td><strong>Unicode Symbol</strong></td>
-<td>␁</td>
+<td>␀</td>
 </tr>
 <tr>
 <td><strong>Decimal</strong></td>
-<td>1</td>
+<td>0</td>
 </tr>
 <tr>
 <td><strong>Octal</strong></td>
-<td>1</td>
+<td>0</td>
 </tr>
 <tr>
 <td><strong>Hexadecimal</strong></td>
-<td>1</td>
+<td>0</td>
 </tr>
 <tr>
 <td><strong>Binary</strong></td>
-<td>0000 0001</td>
+<td>0000 0000</td>
 </tr>
 <tr>
 <td><strong>Description</strong></td>
-<td>Start of Heading</td>
+<td>Null character</td>
 </tr>
 <tr>
 <td><strong>Category</strong></td>
@@ -28887,11 +28887,11 @@ Enter your administrator password when prompted, and the installation will proce
 </tr>
 <tr>
 <td><strong>Subcategory</strong></td>
-<td>Transmission Control</td>
+<td>Miscellaneous codes</td>
 </tr>
 <tr>
 <td><strong>Unicode</strong></td>
-<td>U+0001</td>
+<td>U+0000</td>
 </tr>
 </tbody>
 </table>
