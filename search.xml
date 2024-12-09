@@ -38188,7 +38188,6 @@ Enter your administrator password when prompted, and the installation will proce
 <li>Restart your computer for the changes to take effect.</li>
 </ol>
 <p>Once Windows reboots, it will no longer use pagefile.sys, and the file will be removed from your local drive.</p>
-<hr>
 <h2 id="How-to-Adjust-the-Size-of-pagefile-sys"><a href="#How-to-Adjust-the-Size-of-pagefile-sys" class="headerlink" title="How to Adjust the Size of pagefile.sys"></a>How to Adjust the Size of pagefile.sys</h2><p>If deleting pagefile.sys isn’t an option for you, you can adjust its size instead. Here’s how to do it:</p>
 <ol>
 <li>Press <strong>Win + S</strong> to open Windows Search.</li>
