@@ -38211,4 +38211,31 @@ Enter your administrator password when prompted, and the installation will proce
         <tag>Windows</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Install OpenJDK 21 LTS on Ubuntu 24.04|22.04|20.04|18.04</title>
+    <url>/2025/01/01/install-java-jdk-21-openjdk-21-on-ubuntu/</url>
+    <content><![CDATA[<blockquote>
+<p>JDK 21 is a long-term support (LTS) release from most vendors.</p>
+</blockquote>
+<p>OpenJDK (Open Java Development Kit) is an open-source implementation of the Java Platform, Standard Edition (Java SE) licensed under the GNU General Public License, which provides a complete runtime environment for executing Java applications and a development environment for building Java applications. OpenJDK is governed by the OpenJDK Community, and its development is led by Oracle, with contributions from various companies and individuals. </p>
+<p>OpenJDK 21, released in September 2023,  is a production-ready open-source builds of the <a href="https://openjdk.org/projects/jdk/21/">Java Development Kit, version 21</a>, an implementation of the <a href="http://openjdk.org/projects/jdk/21/spec/">Java SE 21 Platform</a>. It introduces several new features and improvements to the Java platform. Key enhancements in OpenJDK 21 include updates to the language, the JDK internals, performance optimizations, and the introduction of new features such as pattern matching for switch statements and virtual threads, which improve both the usability and performance of Java applications, especially in the context of modern multicore processors. </p>
+<p>To install OpenJDK 21, visit <a href="https://jdk.java.net/archive/">OpenJDK GA Release Page</a> and get the latest version of OpenJDK 21 for your CPU architecture. The latest available version of OpenJDK 21 is 21.0.2.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://download.java.net/java/GA/jdk21.0.2/f2283984656d49d69e91c558476027ac/13/GPL/openjdk-21.0.2_linux-x64_bin.tar.gz</span><br></pre></td></tr></table></figure>
+<p>Extract downloaded archive.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar xvf openjdk-21.0.2_linux-x64_bin.tar.gz</span><br></pre></td></tr></table></figure>
+<p>Set environment variables inside <em>/etc/profile.d/</em> directory. For example: </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/profile.d/dev-conf.sh</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/local/java/jdk-21.0.2</span><br><span class="line"><span class="built_in">export</span> PATH=.:<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$&#123;PATH&#125;</span></span><br></pre></td></tr></table></figure>
+<p>Source the files to make variables available in your current shell session.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile.d/dev-conf.sh</span><br></pre></td></tr></table></figure>
+<p>Confirm Java version using the <code>java -version</code> command.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ java -version</span><br><span class="line">openjdk version <span class="string">&quot;21.0.2&quot;</span> 2024-01-16</span><br><span class="line">OpenJDK Runtime Environment (build 21.0.2+13-58)</span><br><span class="line">OpenJDK 64-Bit Server VM (build 21.0.2+13-58, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Programming Digest</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>HowTo</tag>
+      </tags>
+  </entry>
 </search>
