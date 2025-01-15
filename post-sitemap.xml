@@ -9,6 +9,22 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2025/01/03/install-openjdk-17-on-ubuntu/</loc>
+        <lastmod>2025-01-15T17:45:03.936Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/01/04/how-to-install-openjdk-17-on-ubuntu-24-0-4/</loc>
+        <lastmod>2025-01-15T17:44:55.148Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2025/01/01/install-java-jdk-21-openjdk-21-on-ubuntu/</loc>
         <lastmod>2025-01-02T17:41:49.374Z</lastmod>
         <changefreq>weekly</changefreq>
