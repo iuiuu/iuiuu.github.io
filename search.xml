@@ -38291,13 +38291,10 @@ Enter your administrator password when prompted, and the installation will proce
 <p>This should display the path to your OpenJDK 17 installation.</p>
 <h2 id="Step-6-Optional-Install-OpenJDK-17-from-a-PPA-if-not-available-in-repositories"><a href="#Step-6-Optional-Install-OpenJDK-17-from-a-PPA-if-not-available-in-repositories" class="headerlink" title="Step 6: Optional - Install OpenJDK 17 from a PPA (if not available in repositories)"></a>Step 6: Optional - Install OpenJDK 17 from a PPA (if not available in repositories)</h2><p>If, for any reason, OpenJDK 17 is not available in your Ubuntu 24.0.4 repositories, you can use the <code>openjdk</code> PPA (Personal Package Archive). Here’s how:</p>
 <ol>
-<li>Add the PPA repository:</li>
+<li>Add the PPA repository:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> add-apt-repository ppa:openjdk-r/ppa</span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br></pre></td></tr></table></figure></li>
+<li>Then install OpenJDK 17:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install openjdk-17-jdk</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> add-apt-repository ppa:openjdk-r/ppa</span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Then install OpenJDK 17:</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install openjdk-17-jdk</span><br></pre></td></tr></table></figure>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>You’ve successfully installed OpenJDK 17 on Ubuntu 24.0.4. Whether you’re a developer setting up a Java environment or a server administrator configuring a Java-based application, these steps should have you up and running in no time. </p>
 <p>If you need further help or have any issues, don’t hesitate to check the official OpenJDK documentation or ask for support in relevant online forums.</p>
 ]]></content>
