@@ -38267,28 +38267,15 @@ Enter your administrator password when prompted, and the installation will proce
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> update-alternatives --config javac</span><br></pre></td></tr></table></figure>
 <h2 id="Step-5-Set-JAVA-HOME-Optional"><a href="#Step-5-Set-JAVA-HOME-Optional" class="headerlink" title="Step 5: Set JAVA_HOME (Optional)"></a>Step 5: Set JAVA_HOME (Optional)</h2><p>Many Java applications require the <code>JAVA_HOME</code> environment variable to be set. To set it for OpenJDK 17, follow these steps:</p>
 <ol>
-<li>Find the installation path of OpenJDK 17 with the following command:</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> update-alternatives --config java</span><br></pre></td></tr></table></figure>
-<p>This will show the path to the Java executable. It will look something like <code>/usr/lib/jvm/java-17-openjdk-amd64/bin/java</code>.</p>
-<ol>
-<li>Create or edit the <code>/etc/environment</code> file:</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/environment</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Add the following line at the end of the file, adjusting the path based on your system’s installation path:</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=<span class="string">&quot;/usr/lib/jvm/java-17-openjdk-amd64&quot;</span></span><br></pre></td></tr></table></figure>
-<ol>
+<li>Find the installation path of OpenJDK 17 with the following command:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> update-alternatives --config java</span><br></pre></td></tr></table></figure>
+This will show the path to the Java executable. It will look something like <code>/usr/lib/jvm/java-17-openjdk-amd64/bin/java</code>.</li>
+<li>Create or edit the <code>/etc/environment</code> file:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/environment</span><br></pre></td></tr></table></figure></li>
+<li>Add the following line at the end of the file, adjusting the path based on your system’s installation path:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=<span class="string">&quot;/usr/lib/jvm/java-17-openjdk-amd64&quot;</span></span><br></pre></td></tr></table></figure></li>
 <li>Save the file and close the editor.</li>
-<li>Finally, apply the changes by running:</li>
+<li>Finally, apply the changes by running:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/environment</span><br></pre></td></tr></table></figure></li>
+<li>Verify that the <code>JAVA_HOME</code> variable is set correctly:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$JAVA_HOME</span></span><br></pre></td></tr></table></figure>
+This should display the path to your OpenJDK 17 installation.</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/environment</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Verify that the <code>JAVA_HOME</code> variable is set correctly:</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$JAVA_HOME</span></span><br></pre></td></tr></table></figure>
-<p>This should display the path to your OpenJDK 17 installation.</p>
 <h2 id="Step-6-Optional-Install-OpenJDK-17-from-a-PPA-if-not-available-in-repositories"><a href="#Step-6-Optional-Install-OpenJDK-17-from-a-PPA-if-not-available-in-repositories" class="headerlink" title="Step 6: Optional - Install OpenJDK 17 from a PPA (if not available in repositories)"></a>Step 6: Optional - Install OpenJDK 17 from a PPA (if not available in repositories)</h2><p>If, for any reason, OpenJDK 17 is not available in your Ubuntu 24.0.4 repositories, you can use the <code>openjdk</code> PPA (Personal Package Archive). Here’s how:</p>
 <ol>
 <li>Add the PPA repository:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> add-apt-repository ppa:openjdk-r/ppa</span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br></pre></td></tr></table></figure></li>
@@ -38310,29 +38297,14 @@ Enter your administrator password when prompted, and the installation will proce
     <title>Install OpenJDK 17 LTS on Ubuntu 24.04|22.04|20.04|18.04</title>
     <url>/2025/01/03/install-openjdk-17-on-ubuntu/</url>
     <content><![CDATA[<ol>
-<li>Download OpenJDK 17. To install OpenJDK 17, visit OpenJDK 17 release page and get the latest version available for your CPU architecture,</li>
+<li>Download OpenJDK 17. To install OpenJDK 17, visit OpenJDK 17 release page and get the latest version available for your CPU architecture,<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz</span><br></pre></td></tr></table></figure></li>
+<li>Extract downloaded archive.<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar xvf openjdk-17.0.2_linux-x64_bin.tar.gz</span><br></pre></td></tr></table></figure></li>
+<li>Move the folder created after extraction.<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">mv</span> jdk-17.0.2/ /usr/local/</span><br></pre></td></tr></table></figure></li>
+<li>Set environment variables inside <code>/etc/profile.d/</code> directory.<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">sudo</span> vi /etc/profile.d/jdk17.sh</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/local/jdk-17.0.2</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br></pre></td></tr></table></figure></li>
+<li>Source the files to make variables available in your current shell session.<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile.d/jdk17.sh</span><br></pre></td></tr></table></figure></li>
+<li>Confirm Java version using the following command.<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ java --version</span><br><span class="line">openjdk 17.0.2 2022-01-18</span><br><span class="line">OpenJDK Runtime Environment (build 17.0.2+8-86)</span><br><span class="line">OpenJDK 64-Bit Server VM (build 17.0.2+8-86, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Extract downloaded archive.</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar xvf openjdk-17.0.2_linux-x64_bin.tar.gz</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Move the folder created after extraction.</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">mv</span> jdk-17.0.2/ /usr/local/</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Set environment variables inside <code>/etc/profile.d/</code> directory.</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">sudo</span> vi /etc/profile.d/jdk17.sh</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/local/jdk-17.0.2</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Source the files to make variables available in your current shell session.</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile.d/jdk17.sh</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Confirm Java version using the following command.</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ java --version</span><br><span class="line">openjdk 17.0.2 2022-01-18</span><br><span class="line">OpenJDK Runtime Environment (build 17.0.2+8-86)</span><br><span class="line">OpenJDK 64-Bit Server VM (build 17.0.2+8-86, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Programming Digest</category>
