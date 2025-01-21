@@ -38331,10 +38331,7 @@ This should display the path to your OpenJDK 17 installation.</li>
 <li>A-Z (26 characters)</li>
 <li>a-z (26 characters)</li>
 <li>0-9 (10 characters)</li>
-<li><ul>
-<li>and / (2 characters)</li>
-</ul>
-</li>
+<li><code>+</code> and / (2 characters)</li>
 <li>= (used for padding)</li>
 </ul>
 <p><strong>This is the Base64 alphabet defined in RFC 4648: </strong></p>
