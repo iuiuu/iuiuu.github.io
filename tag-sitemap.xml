@@ -3,6 +3,13 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/tags/wiki/</loc>
+        <lastmod>2025-01-21T17:12:03.371Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/tags/HowTo/</loc>
         <lastmod>2025-01-15T17:49:51.208Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -25,13 +32,6 @@
 
     <url>
         <loc>http://linjiangxiong.com/tags/ascii-code/</loc>
-        <lastmod>2024-12-07T10:51:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/wiki/</loc>
         <lastmod>2024-12-07T10:51:20.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
