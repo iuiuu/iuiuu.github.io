@@ -3,6 +3,13 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/tags/VMware/</loc>
+        <lastmod>2025-01-23T17:18:39.276Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/tags/wiki/</loc>
         <lastmod>2025-01-21T17:21:45.975Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -208,13 +215,6 @@
     <url>
         <loc>http://linjiangxiong.com/tags/YAML/</loc>
         <lastmod>2024-08-27T15:08:50.368Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/VMware/</loc>
-        <lastmod>2024-08-25T17:06:41.800Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

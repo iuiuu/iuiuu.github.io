@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JSON Formater | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="JSON是一种取代XML的数据结构，与xml相比，它更小巧，但描述能力却不差。JSON就是一串字符串，只不过元素会使用特定的符号标注">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSON Formater">
+<meta property="og:url" content="http://linjiangxiong.com/tools/json-formatter/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="JSON是一种取代XML的数据结构，与xml相比，它更小巧，但描述能力却不差。JSON就是一串字符串，只不过元素会使用特定的符号标注">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://linjiangxiong.com/image/IMG_3665.JPG">
+<meta property="article:published_time" content="2025-01-23T09:32:26.051Z">
+<meta property="article:modified_time" content="2025-01-23T17:21:33.922Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="Java,JVM,Spring,Spring Boot,Flink,Hadoop,Yarn,MySQL,Elasticsearch,Python,Kafka,Maven,Hbase,Kibana,Logstash">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/IMG_3665.JPG"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/tools/json-formatter/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap"><link rel="stylesheet" href="/css/ud_v5.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JSON Formater',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="https://static.json.cn/r/css/global.css"><link rel="stylesheet" href="https://static.json.cn/r/vendor/css/rtl/core.css"><link rel="stylesheet" href="https://static.json.cn/r/vendor/css/rtl/theme-default.css"><link rel="stylesheet" href="https://static.json.cn/r/css/demo.css"><link rel="stylesheet" href="https://static.json.cn/r/css/index.css?202501200944"><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/2.2.4/jquery.min.js"></script><script src="https://static.json.cn/r/vendor/js/header.js?202501200944"></script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">478</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">60</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">24</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Tools</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/dev-tools/json-format.html"><i class="fa-fw fas fa-link"></i><span> JSON Format</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Johnson Lin</span></a><a class="nav-page-title" href="/"><span class="site-name">JSON Formater</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Tools</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/dev-tools/json-format.html"><i class="fa-fw fas fa-link"></i><span> JSON Format</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main><div class="card card-feature">
+    <div class="card-body">
+        <div class="row" id="dragParent" style="margin-left: auto; margin-right: auto;">
+            <div class="col-md-5 input-area">
+                <div class="input-gap" id="jsonTxtAreaGap">
+                    <div id="line-numbers" class="textarea__lines text-muted"></div>
+                </div>
+                <div class="input-area-container" id="jsonTxtAreaContainer">
+                    <textarea class="form-control no-scrollbar" placeholder="请输入json数据..."
+                        id="json-src"></textarea>
+                </div>
+            </div>
+            <div class="area-drag" id="dragEle">
+                <span class="ti ti-layout-distribute-vertical"></span>
+            </div>
+            <div class="col-md-7 format-area">
+                <div class="top-btn-area">
+                    <button type="button" class="btn btn-icon zip" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="压缩">
+                        <span class="ti ti-stack-push"></span>
+                    </button>
+                    <button type="button" class="btn btn-icon xml" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="转XML">
+                        <span class="ti ti-file-x"></span>
+                    </button>
+                    <button type="button" class="btn btn-icon shown" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="显示行号">
+                        <span class="ti ti-list-numbers"></span>
+                    </button>
+                    <button type="button" class="btn btn-icon clear" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="清空">
+                        <span class="ti ti-trash"></span>
+                    </button>
+                    <button type="button" class="btn btn-icon save" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="保存">
+                        <span class="ti ti-file-download"></span>
+                    </button>
+                    <button type="button" class="btn btn-icon clipboard-btn" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="复制" data-clipboard-target="#json-target">
+                        <span class="ti ti-copy"></span>
+                    </button>
+                    <button type="button" class="btn btn-icon compress" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="折叠">
+                        <span class="ti ti-fold"></span>
+                    </button>
+                    <button type="button" class="btn btn-icon example" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="示例">
+                        <span class="ti ti-bulb"></span>
+                    </button>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" checked name="cancelZY"
+                            id="cancelZY" />
+                        <label class="form-check-label" for="cancelZY">
+                            保留转义
+                        </label>
+                    </div>
+                    <div class="flex-grow-1">
+                        <button type="button" class="btn btn-icon float-end d-none d-lg-block"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="全屏"
+                            id="formatFullScreen">
+                            <span class="ti ti-arrows-maximize"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="bottom-format-area" id="jsonFormatArea">
+                    <div class="line-num-container" id="lineNumContainer">
+                        <div id="line-num" class="line-num text-muted">
+                            <div>0</div>
+                        </div>
+                    </div>
+                    <div id="jsonFormatContainer" class="json-format-area">
+                        <div class="text-muted editable-tip">可点击键值进行编辑</div>
+                        <div id="hidden-message-box" class="alert alert-danger alert-dismissible"
+                            role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close">
+                            </button>
+                            <div class="d-flex">
+                                <span class="alert-icon text-danger me-2">
+                                    <i class="ti ti-bell ti-xs"></i>
+                                </span>
+                                <p>提示：<span id="hidden-message">默认警告</span></p>
+                            </div>
+                        </div>
+                        <div class="ro" id="json-target">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mt-3">
+    <div class="card-header">
+        <h5 class="card-title">工具介绍</h5>
+    </div>
+    <div class="card-body">
+        <p>
+            JSON是一种取代XML的数据结构，与xml相比，它更小巧，但描述能力却不差。JSON就是一串字符串，只不过元素会使用特定的符号标注：
+        <ul>
+            <li><code><strong>&#123;&#125;</strong></code> 双括号表示对象；</li>
+            <li><code><strong>[]</strong></code> 中括号表示数组；</li>
+            <li><code><strong>""</strong></code> 双引号内是属性或值；</li>
+            <li><code><strong>:</strong></code> 冒号表示后者是前者的值(这个值可以是字符串、数字、也可以是另一个数组或对象)</li>
+        </ul>
+        </p>
+        <p>所以 <code><strong>&#123;"name": "Tom"&#125;</strong></code> 可以理解为是一个包含name为Tom的对象，而
+            <code><strong>[&#123;"name": "Tom"&#125;, &#123;"name": "Jerry"&#125;]</strong></code> 就表示包含两个对象的数组。<br>
+            <br>
+            问：为什么 <code><strong>&#123;name:'json'&#125;</strong></code> 在检验时通过不了？<br>
+            答：JSON官网规范规定，如果是字符串，那不管是键或值最好都用双引号引起来，所以上面的代码就是
+            <code><strong>&#123;"name":"json"&#125;</strong></code>。<br>
+            <br>
+        </p>
+        <p><strong>JSON拓展</strong>
+        <ul>
+            <li><a href="/wiki.html" target="_blank">什么是JSON</a></li>
+            <li><a href="/code.html" target="_blank">JSON解析代码</a></li>
+            <li><a href="/component.html" target="_blank">JSON组件</a></li>
+            <li><a href="/jiaocheng/json_t/" target="_blank">JSON 教程</a></li>
+        </ul>
+        </p>
+        <p><strong>工具的进阶玩法</strong><br>
+            使用url参数传入json数据，搭配一些软件可以快速查看要解析的内容：<br>
+            <code><strong>fullscreen</strong></code> 参数，访问时带上这个链接会自动进入<a href="/?<strong>fullscreen"
+                target="_blank">专注模式</a>，畅享清爽简洁的在线解析视图。链接：<a href="/?fullscreen"
+                target="_blank">json.cn/?<strong>fullscreen</strong></a>。<br>
+            <code><strong>data</strong></code> 参数，通过这个参数，直接将json数据，传递给工具，示例：<a
+                href="/#data=%7B%22name%22%3A%22Tom%22%2C%22age%22%3A30%7D"
+                target="_blank">json.cn/#<strong>data={"name":"John","age":30}</strong></a><br>
+            <code><strong>url</strong></code> 参数，工具会基于您的当前网络，尝试获取指定url的json数据，示例：<a
+                href="/#url=https://static.json.cn/r/json/demo.json"
+                target="_blank">json.cn/#<strong>url=https://static.json.cn/r/json/demo.json</strong></a><br>
+            注意：<br>
+            &nbsp;&nbsp;data和url是在#号后面，不是?号，这两个参数内容，会在读取后自动清空。<br>
+            &nbsp;&nbsp;这样你的解析数据，仍然只会停留在本地，不会发往我们的服务器，也尽可能地避免了被搜索引擎以及统计代码所抓取。<br>
+            &nbsp;&nbsp;不足的地方就是，当你刷新页面时，刚才的参数内容会丢失，如果你想查看刚才的完整url，可以在浏览器的历史记录里面找到。
+        </p>
+        <p><br>
+            如果您经常使用本工具，邀您体验&nbsp;<a href="/?fullscreen" target="_blank">专注模式</a>，记得添加到收藏夹哦(*≧∪≦)。<br>
+            有任何建议和问题反馈，请通过 <a href="/feedback.html" target="_blank">问题反馈</a> 告诉我们。访问 <a
+                href="/changelog.html" target="_blank">更新日志</a> 查看更新详情。<code><strong>；-）</strong></code>
+        </p>
+    </div>
+</div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Johnson Lin</div></div></footer></div><script src="https://static.json.cn/r/vendor/js/global.js"></script><script src="https://static.json.cn/r/vendor/libs/json-format/json-format.js?202501200944"></script><script src="https://static.json.cn/r/js/main.js"></script><script src="https://static.json.cn/r/vendor/libs/format/json-format.js?202501200944"></script><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
