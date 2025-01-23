@@ -38755,7 +38755,7 @@ This should display the path to your OpenJDK 17 installation.</li>
       </tags>
   </entry>
   <entry>
-    <title>JSON Formater</title>
+    <title>JSON Formatter</title>
     <url>//tools/json-formatter/</url>
     <content><![CDATA[<div class="card card-feature">
     <div class="card-body">
