@@ -39070,7 +39070,7 @@ This should display the path to your OpenJDK 17 installation.</li>
 </ul>
 <hr>
 <p><strong>Official Download Link</strong>: <a href="https://ollama.com/download">https://ollama.com/download</a></p>
-<p><img src="/image/02-1.png" alt=""></p>
+<p><img src="/image/ollama/02-1.png" alt=""></p>
 <p>We can download the corresponding package based on the different systems.</p>
 <h2 id="Installing-on-Windows"><a href="#Installing-on-Windows" class="headerlink" title="Installing on Windows"></a><strong>Installing on Windows</strong></h2><ol>
 <li>Open your browser and visit the official Ollama website: <a href="https://ollama.com/download">https://ollama.com/download</a>. Download the Windows installer.  <ul>
@@ -39079,7 +39079,7 @@ This should display the path to your OpenJDK 17 installation.</li>
 </li>
 <li>Once downloaded, double-click the installer and follow the on-screen instructions to complete the installation.</li>
 </ol>
-<p><img src="/image/02-2.png" alt=""></p>
+<p><img src="/image/ollama/02-2.png" alt=""></p>
 <p><strong>Verifying Installation</strong></p>
 <p>Open Command Prompt or PowerShell and run the following command to verify the installation:  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama --version</span><br></pre></td></tr></table></figure>
@@ -39131,7 +39131,7 @@ This should display the path to your OpenJDK 17 installation.</li>
   <entry>
     <title>Ollama Tutorial</title>
     <url>/2025/01/29/ollama-tutorial/</url>
-    <content><![CDATA[<p><img src="/image/ollama.png" alt=""></p>
+    <content><![CDATA[<p><img src="/image/ollama/ollama.png" alt=""></p>
 <p>Ollama is an open-source framework designed to make it easy to deploy and run large language models (LLMs) directly on your local machine. It supports multiple operating systems, including macOS, Windows, Linux, and even Docker containers. One of its standout features is model quantization, which significantly reduces GPU memory requirements, making it possible to run large models on everyday home computers.</p>
 <h2 id="Who-Is-This-Tutorial-For"><a href="#Who-Is-This-Tutorial-For" class="headerlink" title="Who Is This Tutorial For?"></a>Who Is This Tutorial For?</h2><p>Ollama is ideal for developers, researchers, and users with high data privacy requirements. It enables quick deployment and operation of large language models (LLMs) in a local environment, offering flexible customization options. With Ollama, you can run models like Llama 3.3, DeepSeek-R1, Phi-4, Mistral, Gemma 2, and others directly on your local machine.</p>
 <h2 id="What-You-Need-to-Know-Before-Starting-This-Tutorial"><a href="#What-You-Need-to-Know-Before-Starting-This-Tutorial" class="headerlink" title="What You Need to Know Before Starting This Tutorial?"></a>What You Need to Know Before Starting This Tutorial?</h2><p>This tutorial is designed for developers with a basic understanding of Python.  </p>
@@ -39160,7 +39160,7 @@ This should display the path to your OpenJDK 17 installation.</li>
 <p>For example, to run the <strong>DeepSeek-R1:8b</strong> model and interact with it, use the following command: </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama run deepseek-r1:8b</span><br></pre></td></tr></table></figure>
 <p>If the model isn’t already installed, Ollama will automatically download it. </p>
-<p><img src="/image/03-1.png" alt=""></p>
+<p><img src="/image/ollama/03-1.png" alt=""></p>
 <p>Once the download is complete, you can interact with the model directly in the terminal:  </p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Users\Administrator&gt;ollama run deepseek-r1:8b</span><br><span class="line">pulling manifest</span><br><span class="line">pulling 6340dc3229b0... 100%  4.9 GB</span><br><span class="line">pulling 369ca498f347... 100%  387 B</span><br><span class="line">pulling 6e4c38e1172f... 100%  1.1 KB</span><br><span class="line">pulling f4d24e9138dd... 100%  148 B</span><br><span class="line">pulling 0cb05c6e4e02... 100%  487 B</span><br><span class="line">verifying sha256 digest</span><br><span class="line">writing manifest</span><br><span class="line">success</span><br><span class="line">&gt;&gt;&gt; hello</span><br><span class="line">&lt;think&gt;</span><br><span class="line"></span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">Hello! How can I assist you today? 😊</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; why is everyone&#x27;s fingerprint unique?</span><br><span class="line">&lt;think&gt;</span><br><span class="line">Okay, so the user asked &quot;why is everyone&#x27;s fingerprint unique?&quot; Hmm, that&#x27;s an interesting question. I remember</span><br><span class="line">learning about fingerprints in school, but I&#x27;m not exactly sure why they&#x27;re unique. Maybe it has something to</span><br><span class="line">do with genetics or something else.</span><br><span class="line"></span><br><span class="line">Wait, I think it&#x27;s because each person&#x27;s DNA is different. So, if two people had the same fingerprint, their</span><br><span class="line">DNA would also be the same, right? But no, that doesn&#x27;t make sense because identical twins can have the same</span><br><span class="line">fingerprints and DNA, but they&#x27;re still different people. Oh, but maybe the environment affects it too. Like,</span><br><span class="line">how we use our hands differently could change our fingerprints over time.</span><br><span class="line"></span><br><span class="line">I also remember hearing about something called &quot;friction ridges&quot; in fingerprints. Maybe those are what make</span><br><span class="line">each fingerprint unique because of how the skin cells are arranged. But I&#x27;m not entirely sure if that&#x27;s the</span><br><span class="line">full story. Maybe there&#x27;s more to it than just friction ridges.</span><br><span class="line"></span><br><span class="line">Oh, and then there&#x27;s the fact that some people might have identical fingerprints but still be different</span><br><span class="line">individuals. So, uniqueness isn&#x27;t the only thing determining individuality. There must be other factors like</span><br><span class="line">facial features or voiceprints that also contribute to identifying someone uniquely.</span><br><span class="line"></span><br><span class="line">I should probably look up more about how exactly friction ridges work and why they don&#x27;t make identical</span><br><span class="line">fingerprints common. Also, I wonder if there are any exceptions where two people could have similar</span><br><span class="line">fingerprints but still not be the same person. It&#x27;s a bit confusing, but I think it has something to do with</span><br><span class="line">other unique traits beyond just the fingerprint itself.</span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">The uniqueness of fingerprints is primarily due to the intricate structure of friction ridges found on the</span><br><span class="line">skin, which form when the hands are repeatedly used in different ways. These ridges create patterns that are as</span><br><span class="line">individual as a person&#x27;s DNA, making it highly unlikely for two people to have identical fingerprints. However,</span><br><span class="line">this isn&#x27;t the sole factor in determining individuality; other traits like facial features and voiceprints also</span><br><span class="line">play a role. Thus, while fingerprints contribute significantly to our identity, they aren&#x27;t alone in ensuring</span><br><span class="line">each person is unique.</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; Send a message (/? for help)</span><br></pre></td></tr></table></figure>
 <p>To end the conversation, you can type <code>/bye</code>, press <code>Ctrl+D</code> or hit <code>Ctrl+Z</code>.</p>
@@ -39344,7 +39344,7 @@ This should display the path to your OpenJDK 17 installation.</li>
 </table>
 </div>
 <p>For a full list of supported models, visit: <a href="https://ollama.com/library">https://ollama.com/library</a>. </p>
-<p><img src="/image/03-2.png" alt=""></p>
+<p><img src="/image/ollama/03-2.png" alt=""></p>
 <h2 id="Using-Models-with-the-Python-SDK"><a href="#Using-Models-with-the-Python-SDK" class="headerlink" title="Using Models with the Python SDK"></a><strong>Using Models with the Python SDK</strong></h2><p>If you want to integrate Ollama into your Python projects, you can use the Ollama Python SDK to load and run models.  </p>
 <h3 id="1-Install-the-Python-SDK"><a href="#1-Install-the-Python-SDK" class="headerlink" title="1. Install the Python SDK"></a><strong>1. Install the Python SDK</strong></h3><p>First, install the Ollama Python SDK by running the following command in your terminal:  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install ollama</span><br></pre></td></tr></table></figure>
@@ -39353,15 +39353,15 @@ This should display the path to your OpenJDK 17 installation.</li>
 <h3 id="3-Run-the-Python-Script"><a href="#3-Run-the-Python-Script" class="headerlink" title="3. Run the Python Script"></a><strong>3. Run the Python Script</strong></h3><p>Execute the script in your terminal:  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python ollama-example.py</span><br></pre></td></tr></table></figure>
 <p>You’ll see the model’s response based on your input. The output will look something like this: </p>
-<p><img src="/image/03-3.png" alt=""></p>
+<p><img src="/image/ollama/03-3.png" alt=""></p>
 <h3 id="4-Chat-Mode"><a href="#4-Chat-Mode" class="headerlink" title="4. Chat Mode"></a><strong>4. Chat Mode</strong></h3><p>Here’s an example of a conversational interaction with the model:  </p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> ollama <span class="keyword">import</span> chat</span><br><span class="line"></span><br><span class="line">response = chat(</span><br><span class="line">    model=<span class="string">&quot;deepseek-r1:8b&quot;</span>,</span><br><span class="line">    messages=[</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;why is everyone&#x27;s fingerprint unique?&quot;</span>&#125;</span><br><span class="line">    ]</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(response.message.content)</span><br></pre></td></tr></table></figure>
 <p>This code will engage the model in a conversation and print its response. </p>
-<p><img src="/image/03-4.png" alt=""></p>
+<p><img src="/image/ollama/03-4.png" alt=""></p>
 <h3 id="5-Streaming-Responses"><a href="#5-Streaming-Responses" class="headerlink" title="5. Streaming Responses"></a><strong>5. Streaming Responses</strong></h3><p>For handling large data, you can stream responses from the model:  </p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> ollama <span class="keyword">import</span> chat</span><br><span class="line"></span><br><span class="line">stream = chat(</span><br><span class="line">    model=<span class="string">&quot;deepseek-r1:8b&quot;</span>,</span><br><span class="line">    messages=[&#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;why is everyone&#x27;s fingerprint unique?&quot;</span>&#125;],</span><br><span class="line">    stream=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> stream:</span><br><span class="line">    <span class="built_in">print</span>(chunk[<span class="string">&quot;message&quot;</span>][<span class="string">&quot;content&quot;</span>], end=<span class="string">&quot;&quot;</span>, flush=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
 <p>This code streams the model’s response in real-time.</p>
-<p><img src="/image/03-5.png" alt=""></p>
+<p><img src="/image/ollama/03-5.png" alt=""></p>
 ]]></content>
       <categories>
         <category>Ollama Tutorial</category>
@@ -39391,9 +39391,9 @@ This should display the path to your OpenJDK 17 installation.</li>
 <p>Models are typically neural networks with millions (or billions) of parameters, trained on vast amounts of text data to learn language patterns and perform efficient reasoning.</p>
 <p><strong>Supported Models:</strong></p>
 <p>Ollama’s library of supported models can be accessed here: <a href="https://ollama.com/library">Ollama Model Library</a>. </p>
-<p><img src="/image/05-1.png" alt=""></p>
+<p><img src="/image/ollama/05-1.png" alt=""></p>
 <p>Click on the model to view the download command:</p>
-<p><img src="/image/05-2.png" alt=""></p>
+<p><img src="/image/ollama/05-2.png" alt=""></p>
 <p>Below are some examples of models and their download commands:</p>
 <div class="table-container">
 <table>
