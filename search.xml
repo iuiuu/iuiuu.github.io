@@ -38903,4 +38903,776 @@ This should display the path to your OpenJDK 17 installation.</li>
     </div>
 </div>]]></content>
   </entry>
+  <entry>
+    <title>Ollama Commands Overview</title>
+    <url>/2025/01/29/ollama-commands/</url>
+    <content><![CDATA[<h2 id="Ollama-Commands"><a href="#Ollama-Commands" class="headerlink" title="Ollama Commands"></a>Ollama Commands</h2><p>Ollama offers a variety of command-line tools (CLI) for interacting with locally running models.</p>
+<p>To see a list of available commands, you can use:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+<p>This will display the following:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Large language model runner</span><br><span class="line"></span><br><span class="line">Usage:</span><br><span class="line">  ollama [flags]</span><br><span class="line">  ollama [command]</span><br><span class="line"></span><br><span class="line">Available Commands:</span><br><span class="line">  serve       Start ollama</span><br><span class="line">  create      Create a model from a Modelfile</span><br><span class="line">  show        Show information for a model</span><br><span class="line">  run         Run a model</span><br><span class="line">  stop        Stop a running model</span><br><span class="line">  pull        Pull a model from a registry</span><br><span class="line">  push        Push a model to a registry</span><br><span class="line">  list        List models</span><br><span class="line">  ps          List running models</span><br><span class="line">  cp          Copy a model</span><br><span class="line">  rm          Remove a model</span><br><span class="line">  help        Help about any command</span><br><span class="line"></span><br><span class="line">Flags:</span><br><span class="line">  -h, --help      help for ollama</span><br><span class="line">  -v, --version   Show version information</span><br><span class="line"></span><br><span class="line">Use &quot;ollama [command] --help&quot; for more information about a command.</span><br></pre></td></tr></table></figure>
+<h3 id="Basic-Usage"><a href="#Basic-Usage" class="headerlink" title="Basic Usage"></a>Basic Usage</h3><ul>
+<li><strong>Run Ollama with flags</strong>:  </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama [flags]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>Run a specific command</strong>:  </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama [<span class="built_in">command</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="Available-Commands"><a href="#Available-Commands" class="headerlink" title="Available Commands"></a>Available Commands</h3><ul>
+<li><code>serve</code>: Start the Ollama service.  </li>
+<li><code>create</code>: Create a model using a Modelfile.  </li>
+<li><code>show</code>: Display detailed information about a model.  </li>
+<li><code>run</code>: Run a model.  </li>
+<li><code>stop</code>: Stop a running model.  </li>
+<li><code>pull</code>: Download a model from a registry.  </li>
+<li><code>push</code>: Upload a model to a registry.  </li>
+<li><code>list</code>: List all available models.  </li>
+<li><code>ps</code>: List currently running models.  </li>
+<li><code>cp</code>: Copy a model.  </li>
+<li><code>rm</code>: Delete a model.  </li>
+<li><code>help</code>: Get help for any command.</li>
+</ul>
+<h3 id="Flags"><a href="#Flags" class="headerlink" title="Flags"></a>Flags</h3><ul>
+<li><code>-h, --help</code>: Show help information for Ollama.  </li>
+<li><code>-v, --version</code>: Display the version of Ollama.</li>
+</ul>
+<h2 id="Model-Management"><a href="#Model-Management" class="headerlink" title="Model Management"></a>Model Management</h2><h3 id="Download-a-Model"><a href="#Download-a-Model" class="headerlink" title="Download a Model"></a>Download a Model</h3><p>To download a model from the registry:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama pull &lt;model-name&gt;</span><br></pre></td></tr></table></figure>
+<p>Example:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama pull deepseek-r1:8b</span><br></pre></td></tr></table></figure>
+<h3 id="Run-a-Model"><a href="#Run-a-Model" class="headerlink" title="Run a Model"></a>Run a Model</h3><p>To run a downloaded model:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama run &lt;model-name&gt;</span><br></pre></td></tr></table></figure>
+<p>Example:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama run deepseek-r1:8b</span><br></pre></td></tr></table></figure>
+<h3 id="Stop-a-Running-Model"><a href="#Stop-a-Running-Model" class="headerlink" title="Stop a Running Model"></a>Stop a Running Model</h3><p>To stop the running Ollama service:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama stop &lt;model-name&gt;</span><br></pre></td></tr></table></figure>
+<p>Example:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ollama stop deepseek-r1:8b</span><br></pre></td></tr></table></figure>
+<h3 id="List-Local-Models"><a href="#List-Local-Models" class="headerlink" title="List Local Models"></a>List Local Models</h3><p>To view all downloaded models:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama list</span><br></pre></td></tr></table></figure>
+<h3 id="Delete-a-Model"><a href="#Delete-a-Model" class="headerlink" title="Delete a Model"></a>Delete a Model</h3><p>To remove a local model:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama <span class="built_in">rm</span> &lt;model-name&gt;</span><br></pre></td></tr></table></figure>
+<p>Example:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama <span class="built_in">rm</span> deepseek-r1:8b</span><br></pre></td></tr></table></figure>
+<h2 id="Custom-Models"><a href="#Custom-Models" class="headerlink" title="Custom Models"></a>Custom Models</h2><h3 id="Create-a-Custom-Model"><a href="#Create-a-Custom-Model" class="headerlink" title="Create a Custom Model"></a>Create a Custom Model</h3><p>To create a custom model from an existing one:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama create &lt;custom-model-name&gt; -f &lt;Modelfile&gt;</span><br></pre></td></tr></table></figure>
+<p>Example:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama create my-model-name -f ./Modelfile</span><br></pre></td></tr></table></figure>
+<h3 id="Push-a-Custom-Model"><a href="#Push-a-Custom-Model" class="headerlink" title="Push a Custom Model"></a>Push a Custom Model</h3><p>To upload a custom model to the registry:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama push &lt;model-name&gt;</span><br></pre></td></tr></table></figure>
+<p>Example:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama push my-llama2</span><br></pre></td></tr></table></figure>
+<h3 id="Copy-a-Model"><a href="#Copy-a-Model" class="headerlink" title="Copy a Model"></a>Copy a Model</h3><p>To duplicate an existing model:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama <span class="built_in">cp</span> &lt;source-model-name&gt; &lt;new-model-name&gt;</span><br></pre></td></tr></table></figure>
+<p>Example:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama <span class="built_in">cp</span> llama2 my-llama2-copy</span><br></pre></td></tr></table></figure>
+<h2 id="Service-Management"><a href="#Service-Management" class="headerlink" title="Service Management"></a>Service Management</h2><h3 id="Start-Ollama-Service"><a href="#Start-Ollama-Service" class="headerlink" title="Start Ollama Service"></a>Start Ollama Service</h3><p>To start the Ollama service in the background:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama serve</span><br></pre></td></tr></table></figure>
+<h2 id="Other-Common-Commands"><a href="#Other-Common-Commands" class="headerlink" title="Other Common Commands"></a>Other Common Commands</h2><h3 id="View-Help"><a href="#View-Help" class="headerlink" title="View Help"></a>View Help</h3><p>To see all available commands:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+<p>Or</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ollama -h</span><br></pre></td></tr></table></figure>
+<h3 id="Check-Version"><a href="#Check-Version" class="headerlink" title="Check Version"></a>Check Version</h3><p>To check the installed version of Ollama:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama --version</span><br></pre></td></tr></table></figure>
+<p>Or</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama -v</span><br></pre></td></tr></table></figure>
+<p>The output looks something like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ollama version is 0.5.7</span><br></pre></td></tr></table></figure>
+<h2 id="Model-Information"><a href="#Model-Information" class="headerlink" title="Model Information"></a>Model Information</h2><h3 id="View-Model-Details"><a href="#View-Model-Details" class="headerlink" title="View Model Details"></a>View Model Details</h3><p>To see detailed information about a model:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama show &lt;model-name&gt;</span><br></pre></td></tr></table></figure>
+<p>Example:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama show deepseek-r1:8b</span><br></pre></td></tr></table></figure>
+<p>The output is as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Model</span><br><span class="line">  architecture        llama</span><br><span class="line">  parameters          8.0B</span><br><span class="line">  context length      131072</span><br><span class="line">  embedding length    4096</span><br><span class="line">  quantization        Q4_K_M</span><br><span class="line"></span><br><span class="line">Parameters</span><br><span class="line">  stop    &quot;&lt;｜begin▁of▁sentence｜&gt;&quot;</span><br><span class="line">  stop    &quot;&lt;｜end▁of▁sentence｜&gt;&quot;</span><br><span class="line">  stop    &quot;&lt;｜User｜&gt;&quot;</span><br><span class="line">  stop    &quot;&lt;｜Assistant｜&gt;&quot;</span><br><span class="line"></span><br><span class="line">License</span><br><span class="line">  MIT License</span><br><span class="line">  Copyright (c) 2023 DeepSeek</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Ollama Tutorial</category>
+      </categories>
+      <tags>
+        <tag>Ollama</tag>
+        <tag>LLM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Introduction to Ollama</title>
+    <url>/2025/01/29/ollama-intro/</url>
+    <content><![CDATA[<p>Ollama is an open-source platform for large language models (LLMs), designed to make it easy for users to run, manage, and interact with LLMs directly on their local machines.  </p>
+<p>It provides a straightforward way to load and use various pre-trained language models, supporting a wide range of natural language processing tasks such as text generation, translation, code writing, and question answering.  </p>
+<p>What sets Ollama apart is its combination of ready-to-use models and tools with user-friendly interfaces and APIs. This enables quick implementation of tasks like text generation, dialogue systems, and semantic analysis.  </p>
+<p>Unlike other NLP frameworks, Ollama simplifies workflows, making machine learning accessible to users without deep technical expertise.  </p>
+<p>Additionally, Ollama supports multiple hardware acceleration options, including CPU-only inference and various underlying architectures (such as Apple Silicon), ensuring efficient utilization of diverse hardware resources.</p>
+<h2 id="Core-Features-and-Highlights"><a href="#Core-Features-and-Highlights" class="headerlink" title="Core Features and Highlights"></a>Core Features and Highlights</h2><ul>
+<li><strong>Support for Multiple Pre-trained Language Models</strong><br>Ollama offers a variety of ready-to-use pre-trained models, including popular large language models like GPT and BERT. Users can easily load and utilize these models for tasks such as text generation, sentiment analysis, and question answering.  </li>
+<li><strong>Easy Integration and Usability</strong><br>Ollama provides a command-line interface (CLI) and Python SDK, simplifying integration with other projects and services. Developers can seamlessly incorporate Ollama into their existing applications without dealing with complex dependencies or configurations.  </li>
+<li><strong>Local Deployment and Offline Usage</strong><br>Unlike cloud-based NLP services, Ollama allows developers to run models in local computing environments. This eliminates reliance on external servers, ensures data privacy, and delivers lower latency and greater control for high-concurrency requests.  </li>
+<li><strong>Model Fine-tuning and Customization</strong><br>In addition to using pre-trained models, users can fine-tune models to suit specific needs. Developers can retrain models using their own datasets to enhance performance and accuracy.  </li>
+<li><strong>Performance Optimization</strong><br>Ollama prioritizes efficiency with optimized inference mechanisms and support for batch processing. It effectively manages memory and computational resources, ensuring high performance even with large-scale data.  </li>
+<li><strong>Cross-platform Support</strong><br>Ollama is compatible with multiple operating systems, including Windows, macOS, and Linux. This ensures a consistent experience whether developers are debugging locally or deploying in production environments.  </li>
+<li><strong>Open Source and Community Support</strong><br>As an open-source project, Ollama allows developers to access, modify, and improve its codebase. It also boasts an active community where users can seek help, share insights, and collaborate on the project.</li>
+</ul>
+<hr>
+<h2 id="Use-Cases"><a href="#Use-Cases" class="headerlink" title="Use Cases"></a>Use Cases</h2><ul>
+<li><strong>Content Creation</strong><br>Assists writers, journalists, and marketers in quickly generating high-quality content, such as blog posts, ad copy, and more.  </li>
+<li><strong>Programming Assistance</strong><br>Helps developers generate code, debug programs, or optimize code structures.  </li>
+<li><strong>Education and Research</strong><br>Supports students and researchers in learning, writing, and conducting studies, such as generating paper summaries or answering questions.  </li>
+<li><strong>Cross-language Communication</strong><br>Provides high-quality translation capabilities, breaking down language barriers for users.  </li>
+<li><strong>Personal Assistant</strong><br>Acts as a smart assistant, helping users with daily tasks like drafting emails or creating to-do lists.</li>
+</ul>
+<h2 id="How-Ollama-Differs-from-Other-LLMs"><a href="#How-Ollama-Differs-from-Other-LLMs" class="headerlink" title="How Ollama Differs from Other LLMs"></a>How Ollama Differs from Other LLMs</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Aspect</strong></th>
+<th><strong>Ollama’s Features</strong></th>
+<th><strong>Explanation</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Localization</strong></td>
+<td>Focuses on local execution</td>
+<td>Unlike cloud-dependent LLMs like ChatGPT, Ollama is ideal for users with high data privacy concerns.</td>
+</tr>
+<tr>
+<td><strong>Flexibility</strong></td>
+<td>Supports loading different models</td>
+<td>Users can load various models based on their needs, without being limited to a single model.</td>
+</tr>
+<tr>
+<td><strong>Open Source</strong></td>
+<td>Fully open-source</td>
+<td>Users can freely modify and extend its functionality to suit their specific requirements.</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>Ollama Tutorial</category>
+      </categories>
+      <tags>
+        <tag>Ollama</tag>
+        <tag>LLM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Installing Ollama</title>
+    <url>/2025/01/29/ollama-install/</url>
+    <content><![CDATA[<p>Ollama supports multiple operating systems, including macOS, Windows, Linux, and Docker containers.  </p>
+<p>It has modest hardware requirements, making it easy for users to run, manage, and interact with large language models locally.  </p>
+<h2 id="Hardware-and-Software-Requirements"><a href="#Hardware-and-Software-Requirements" class="headerlink" title="Hardware and Software Requirements"></a><strong>Hardware and Software Requirements</strong></h2><ul>
+<li><strong>CPU</strong>: A multi-core processor (4 cores or more recommended).  </li>
+<li><strong>GPU</strong>: If you plan to run large models or perform fine-tuning, a GPU with high computational power (e.g., NVIDIA with CUDA support) is recommended.  </li>
+<li><strong>RAM</strong>: At least 8GB of memory, with 16GB or more recommended for larger models.  </li>
+<li><strong>Storage</strong>: Sufficient disk space to store pre-trained models, typically ranging from 10GB to hundreds of GB, depending on the model size.  </li>
+<li><strong>Software</strong>: Ensure the latest version of Python is installed if you plan to use the Python SDK.</li>
+</ul>
+<hr>
+<p><strong>Official Download Link</strong>: <a href="https://ollama.com/download">https://ollama.com/download</a></p>
+<p><img src="/image/02-1.png" alt=""></p>
+<p>We can download the corresponding package based on the different systems.</p>
+<h2 id="Installing-on-Windows"><a href="#Installing-on-Windows" class="headerlink" title="Installing on Windows"></a><strong>Installing on Windows</strong></h2><ol>
+<li>Open your browser and visit the official Ollama website: <a href="https://ollama.com/download">https://ollama.com/download</a>. Download the Windows installer.  <ul>
+<li>Direct download link: <a href="https://ollama.com/download/OllamaSetup.exe">https://ollama.com/download/OllamaSetup.exe</a>.</li>
+</ul>
+</li>
+<li>Once downloaded, double-click the installer and follow the on-screen instructions to complete the installation.</li>
+</ol>
+<p><img src="/image/02-2.png" alt=""></p>
+<p><strong>Verifying Installation</strong></p>
+<p>Open Command Prompt or PowerShell and run the following command to verify the installation:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama --version</span><br></pre></td></tr></table></figure>
+<p>If the version number is displayed, the installation was successful.  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Users\Administrator&gt;ollama --version</span><br><span class="line">ollama version is 0.5.7</span><br></pre></td></tr></table></figure>
+<p><strong>Changing Installation Path (Optional)</strong></p>
+<p>To install Ollama in a custom directory, use the following command during installation:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">OllamaSetup.exe /DIR=<span class="string">&quot;e:\location\deepseek&quot;</span></span><br></pre></td></tr></table></figure>
+<p>This will install Ollama to the specified directory.  </p>
+<h2 id="Installing-on-macOS"><a href="#Installing-on-macOS" class="headerlink" title="Installing on macOS"></a><strong>Installing on macOS</strong></h2><ol>
+<li>Open your browser and visit the official Ollama website: <a href="https://ollama.com/download">https://ollama.com/download</a>. Download the macOS installer.  <ul>
+<li>Direct download link: <a href="https://ollama.com/download/Ollama-darwin.zip">https://ollama.com/download/Ollama-darwin.zip</a>.</li>
+</ul>
+</li>
+<li>Once downloaded, double-click the installer and follow the on-screen instructions to complete the installation.</li>
+</ol>
+<hr>
+<p><strong>Verifying Installation</strong></p>
+<p>After installation, run the following command to verify:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama --version</span><br></pre></td></tr></table></figure>
+<p>If the version number is displayed, the installation was successful.  </p>
+<h2 id="Installing-on-Linux"><a href="#Installing-on-Linux" class="headerlink" title="Installing on Linux"></a><strong>Installing on Linux</strong></h2><p>For Linux, you can use the one-click installation script. Open your terminal and run the following command:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://ollama.com/install.sh | sh</span><br></pre></td></tr></table></figure>
+<p><strong>Verifying Installation</strong></p>
+<p>After installation, run the following command to verify:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama --version</span><br></pre></td></tr></table></figure>
+<p>If the version number is displayed, the installation was successful.  </p>
+<h2 id="Installing-via-Docker"><a href="#Installing-via-Docker" class="headerlink" title="Installing via Docker"></a><strong>Installing via Docker</strong></h2><p>If you’re familiar with Docker, you can also install Ollama using the official Docker image available on Docker Hub: <a href="https://hub.docker.com/r/ollama/ollama">https://hub.docker.com/r/ollama/ollama</a>.  </p>
+<ol>
+<li>Pull the Docker image:  </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull ollama/ollama</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Run the container:  </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -p 11434:11434 ollama/ollama</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Access Ollama by visiting: <a href="http://localhost:11434">http://localhost:11434</a>.</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Ollama Tutorial</category>
+      </categories>
+      <tags>
+        <tag>Ollama</tag>
+        <tag>LLM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ollama Tutorial</title>
+    <url>/2025/01/29/ollama-tutorial/</url>
+    <content><![CDATA[<p><img src="/image/ollama.png" alt=""></p>
+<p>Ollama is an open-source framework designed to make it easy to deploy and run large language models (LLMs) directly on your local machine. It supports multiple operating systems, including macOS, Windows, Linux, and even Docker containers. One of its standout features is model quantization, which significantly reduces GPU memory requirements, making it possible to run large models on everyday home computers.</p>
+<h2 id="Who-Is-This-Tutorial-For"><a href="#Who-Is-This-Tutorial-For" class="headerlink" title="Who Is This Tutorial For?"></a>Who Is This Tutorial For?</h2><p>Ollama is ideal for developers, researchers, and users with high data privacy requirements. It enables quick deployment and operation of large language models (LLMs) in a local environment, offering flexible customization options. With Ollama, you can run models like Llama 3.3, DeepSeek-R1, Phi-4, Mistral, Gemma 2, and others directly on your local machine.</p>
+<h2 id="What-You-Need-to-Know-Before-Starting-This-Tutorial"><a href="#What-You-Need-to-Know-Before-Starting-This-Tutorial" class="headerlink" title="What You Need to Know Before Starting This Tutorial?"></a>What You Need to Know Before Starting This Tutorial?</h2><p>This tutorial is designed for developers with a basic understanding of Python.  </p>
+<p>You should also be familiar with the difference between Docker images and containers, and know how to pull images from Docker Hub and run containers.  </p>
+<p>Additionally, a working knowledge of command-line tools (like Terminal or Command Prompt) is required. This includes basic operations such as creating, deleting, and moving files and directories, as well as running scripts and programs.</p>
+<h2 id="Creating-a-New-Model"><a href="#Creating-a-New-Model" class="headerlink" title="Creating a New Model"></a>Creating a New Model</h2><p>You can use the <code>ollama create</code> command to build a model from a Modelfile.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ollama create model -of ./Modelfile</span><br></pre></td></tr></table></figure>
+<h2 id="Useful-Links"><a href="#Useful-Links" class="headerlink" title="Useful Links"></a>Useful Links</h2><ul>
+<li>Official Ollama Website: <a href="https://ollama.com/">https://ollama.com/</a>  </li>
+<li>GitHub Repository: <a href="https://github.com/ollama/ollama">https://github.com/ollama/ollama</a>  </li>
+<li>Official Documentation: <a href="https://github.com/ollama/ollama/tree/main/docs">https://github.com/ollama/ollama/tree/main/docs</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Ollama Tutorial</category>
+      </categories>
+      <tags>
+        <tag>Ollama</tag>
+        <tag>LLM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Running Models with Ollama</title>
+    <url>/2025/01/29/ollama-run-model/</url>
+    <content><![CDATA[<p>To run a model in Ollama, use the <code>ollama run</code> command.  </p>
+<p>For example, to run the <strong>DeepSeek-R1:8b</strong> model and interact with it, use the following command: </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama run deepseek-r1:8b</span><br></pre></td></tr></table></figure>
+<p>If the model isn’t already installed, Ollama will automatically download it. </p>
+<p><img src="/image/03-1.png" alt=""></p>
+<p>Once the download is complete, you can interact with the model directly in the terminal:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Users\Administrator&gt;ollama run deepseek-r1:8b</span><br><span class="line">pulling manifest</span><br><span class="line">pulling 6340dc3229b0... 100%  4.9 GB</span><br><span class="line">pulling 369ca498f347... 100%  387 B</span><br><span class="line">pulling 6e4c38e1172f... 100%  1.1 KB</span><br><span class="line">pulling f4d24e9138dd... 100%  148 B</span><br><span class="line">pulling 0cb05c6e4e02... 100%  487 B</span><br><span class="line">verifying sha256 digest</span><br><span class="line">writing manifest</span><br><span class="line">success</span><br><span class="line">&gt;&gt;&gt; hello</span><br><span class="line">&lt;think&gt;</span><br><span class="line"></span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">Hello! How can I assist you today? 😊</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; why is everyone&#x27;s fingerprint unique?</span><br><span class="line">&lt;think&gt;</span><br><span class="line">Okay, so the user asked &quot;why is everyone&#x27;s fingerprint unique?&quot; Hmm, that&#x27;s an interesting question. I remember</span><br><span class="line">learning about fingerprints in school, but I&#x27;m not exactly sure why they&#x27;re unique. Maybe it has something to</span><br><span class="line">do with genetics or something else.</span><br><span class="line"></span><br><span class="line">Wait, I think it&#x27;s because each person&#x27;s DNA is different. So, if two people had the same fingerprint, their</span><br><span class="line">DNA would also be the same, right? But no, that doesn&#x27;t make sense because identical twins can have the same</span><br><span class="line">fingerprints and DNA, but they&#x27;re still different people. Oh, but maybe the environment affects it too. Like,</span><br><span class="line">how we use our hands differently could change our fingerprints over time.</span><br><span class="line"></span><br><span class="line">I also remember hearing about something called &quot;friction ridges&quot; in fingerprints. Maybe those are what make</span><br><span class="line">each fingerprint unique because of how the skin cells are arranged. But I&#x27;m not entirely sure if that&#x27;s the</span><br><span class="line">full story. Maybe there&#x27;s more to it than just friction ridges.</span><br><span class="line"></span><br><span class="line">Oh, and then there&#x27;s the fact that some people might have identical fingerprints but still be different</span><br><span class="line">individuals. So, uniqueness isn&#x27;t the only thing determining individuality. There must be other factors like</span><br><span class="line">facial features or voiceprints that also contribute to identifying someone uniquely.</span><br><span class="line"></span><br><span class="line">I should probably look up more about how exactly friction ridges work and why they don&#x27;t make identical</span><br><span class="line">fingerprints common. Also, I wonder if there are any exceptions where two people could have similar</span><br><span class="line">fingerprints but still not be the same person. It&#x27;s a bit confusing, but I think it has something to do with</span><br><span class="line">other unique traits beyond just the fingerprint itself.</span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">The uniqueness of fingerprints is primarily due to the intricate structure of friction ridges found on the</span><br><span class="line">skin, which form when the hands are repeatedly used in different ways. These ridges create patterns that are as</span><br><span class="line">individual as a person&#x27;s DNA, making it highly unlikely for two people to have identical fingerprints. However,</span><br><span class="line">this isn&#x27;t the sole factor in determining individuality; other traits like facial features and voiceprints also</span><br><span class="line">play a role. Thus, while fingerprints contribute significantly to our identity, they aren&#x27;t alone in ensuring</span><br><span class="line">each person is unique.</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; Send a message (/? for help)</span><br></pre></td></tr></table></figure>
+<p>To end the conversation, you can type <code>/bye</code>, press <code>Ctrl+D</code> or hit <code>Ctrl+Z</code>.</p>
+<p>You can use the <code>ollama list</code> command to view installed models:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Users\Administrator&gt;ollama list</span><br><span class="line">NAME                ID              SIZE      MODIFIED</span><br><span class="line">deepseek-r1:8b      28f8fd6cdc67    4.9 GB    2 hours ago</span><br><span class="line">deepseek-r1:1.5b    a42b25d8c10a    1.1 GB    2 days ago</span><br><span class="line">deepseek-r1:7b      0a8c26691023    4.7 GB    2 days ago</span><br><span class="line">C:\Users\Administrator&gt;</span><br></pre></td></tr></table></figure>
+<p>Below is a table of some models and their download commands:  </p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Model</strong></th>
+<th><strong>Parameters</strong></th>
+<th><strong>Size</strong></th>
+<th><strong>Download Command</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeepSeek-R1</td>
+<td>671B</td>
+<td>404GB</td>
+<td><code>ollama run deepseek-r1:671b</code></td>
+</tr>
+<tr>
+<td>DeepSeek-R1</td>
+<td>70B</td>
+<td>43GB</td>
+<td><code>ollama run deepseek-r1:70b</code></td>
+</tr>
+<tr>
+<td>DeepSeek-R1</td>
+<td>32B</td>
+<td>20GB</td>
+<td><code>ollama run deepseek-r1:32b</code></td>
+</tr>
+<tr>
+<td>DeepSeek-R1</td>
+<td>14B</td>
+<td>9.0GB</td>
+<td><code>ollama run deepseek-r1:14b</code></td>
+</tr>
+<tr>
+<td>DeepSeek-R1</td>
+<td>8B</td>
+<td>4.9GB</td>
+<td><code>ollama run deepseek-r1:8b</code></td>
+</tr>
+<tr>
+<td>DeepSeek-R1</td>
+<td>7B</td>
+<td>4.7GB</td>
+<td><code>ollama run deepseek-r1:7b</code></td>
+</tr>
+<tr>
+<td>DeepSeek-R1</td>
+<td>1.5B</td>
+<td>1.1GB</td>
+<td><code>ollama run deepseek-r1:1.5b</code></td>
+</tr>
+<tr>
+<td>Llama 3.3</td>
+<td>70B</td>
+<td>43GB</td>
+<td><code>ollama run llama3.3</code></td>
+</tr>
+<tr>
+<td>Llama 3.2</td>
+<td>3B</td>
+<td>2.0GB</td>
+<td><code>ollama run llama3.2</code></td>
+</tr>
+<tr>
+<td>Llama 3.2</td>
+<td>1B</td>
+<td>1.3GB</td>
+<td><code>ollama run llama3.2:1b</code></td>
+</tr>
+<tr>
+<td>Llama 3.2 Vision</td>
+<td>11B</td>
+<td>7.9GB</td>
+<td><code>ollama run llama3.2-vision</code></td>
+</tr>
+<tr>
+<td>Llama 3.2 Vision</td>
+<td>90B</td>
+<td>55GB</td>
+<td><code>ollama run llama3.2-vision:90b</code></td>
+</tr>
+<tr>
+<td>Llama 3.1</td>
+<td>8B</td>
+<td>4.7GB</td>
+<td><code>ollama run llama3.1</code></td>
+</tr>
+<tr>
+<td>Llama 3.1</td>
+<td>405B</td>
+<td>231GB</td>
+<td><code>ollama run llama3.1:405b</code></td>
+</tr>
+<tr>
+<td>Phi 4</td>
+<td>14B</td>
+<td>9.1GB</td>
+<td><code>ollama run phi4</code></td>
+</tr>
+<tr>
+<td>Phi 3 Mini</td>
+<td>3.8B</td>
+<td>2.3GB</td>
+<td><code>ollama run phi3</code></td>
+</tr>
+<tr>
+<td>Gemma 2</td>
+<td>2B</td>
+<td>1.6GB</td>
+<td><code>ollama run gemma2:2b</code></td>
+</tr>
+<tr>
+<td>Gemma 2</td>
+<td>9B</td>
+<td>5.5GB</td>
+<td><code>ollama run gemma2</code></td>
+</tr>
+<tr>
+<td>Gemma 2</td>
+<td>27B</td>
+<td>16GB</td>
+<td><code>ollama run gemma2:27b</code></td>
+</tr>
+<tr>
+<td>Mistral</td>
+<td>7B</td>
+<td>4.1GB</td>
+<td><code>ollama run mistral</code></td>
+</tr>
+<tr>
+<td>Moondream 2</td>
+<td>1.4B</td>
+<td>829MB</td>
+<td><code>ollama run moondream</code></td>
+</tr>
+<tr>
+<td>Neural Chat</td>
+<td>7B</td>
+<td>4.1GB</td>
+<td><code>ollama run neural-chat</code></td>
+</tr>
+<tr>
+<td>Starling</td>
+<td>7B</td>
+<td>4.1GB</td>
+<td><code>ollama run starling-lm</code></td>
+</tr>
+<tr>
+<td>Code Llama</td>
+<td>7B</td>
+<td>3.8GB</td>
+<td><code>ollama run codellama</code></td>
+</tr>
+<tr>
+<td>Llama 2 Uncensored</td>
+<td>7B</td>
+<td>3.8GB</td>
+<td><code>ollama run llama2-uncensored</code></td>
+</tr>
+<tr>
+<td>LLaVA</td>
+<td>7B</td>
+<td>4.5GB</td>
+<td><code>ollama run llava</code></td>
+</tr>
+<tr>
+<td>Solar</td>
+<td>10.7B</td>
+<td>6.1GB</td>
+<td><code>ollama run solar</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For a full list of supported models, visit: <a href="https://ollama.com/library">https://ollama.com/library</a>. </p>
+<p><img src="/image/03-2.png" alt=""></p>
+<h2 id="Using-Models-with-the-Python-SDK"><a href="#Using-Models-with-the-Python-SDK" class="headerlink" title="Using Models with the Python SDK"></a><strong>Using Models with the Python SDK</strong></h2><p>If you want to integrate Ollama into your Python projects, you can use the Ollama Python SDK to load and run models.  </p>
+<h3 id="1-Install-the-Python-SDK"><a href="#1-Install-the-Python-SDK" class="headerlink" title="1. Install the Python SDK"></a><strong>1. Install the Python SDK</strong></h3><p>First, install the Ollama Python SDK by running the following command in your terminal:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install ollama</span><br></pre></td></tr></table></figure>
+<h3 id="2-Write-a-Python-Script"><a href="#2-Write-a-Python-Script" class="headerlink" title="2. Write a Python Script"></a><strong>2. Write a Python Script</strong></h3><p>Here’s an example of a Python script that uses the <strong>DeepSeek-r1:8b</strong> model to generate text:  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ollama</span><br><span class="line"></span><br><span class="line">response = ollama.generate(</span><br><span class="line">    model=<span class="string">&quot;deepseek-r1:8b&quot;</span>,  <span class="comment"># Model name</span></span><br><span class="line">    prompt=<span class="string">&quot;why is everyone&#x27;s fingerprint unique?&quot;</span>  <span class="comment"># Prompt text</span></span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(response)</span><br></pre></td></tr></table></figure>
+<h3 id="3-Run-the-Python-Script"><a href="#3-Run-the-Python-Script" class="headerlink" title="3. Run the Python Script"></a><strong>3. Run the Python Script</strong></h3><p>Execute the script in your terminal:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python ollama-example.py</span><br></pre></td></tr></table></figure>
+<p>You’ll see the model’s response based on your input. The output will look something like this: </p>
+<p><img src="/image/03-3.png" alt=""></p>
+<h3 id="4-Chat-Mode"><a href="#4-Chat-Mode" class="headerlink" title="4. Chat Mode"></a><strong>4. Chat Mode</strong></h3><p>Here’s an example of a conversational interaction with the model:  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> ollama <span class="keyword">import</span> chat</span><br><span class="line"></span><br><span class="line">response = chat(</span><br><span class="line">    model=<span class="string">&quot;deepseek-r1:8b&quot;</span>,</span><br><span class="line">    messages=[</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;why is everyone&#x27;s fingerprint unique?&quot;</span>&#125;</span><br><span class="line">    ]</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(response.message.content)</span><br></pre></td></tr></table></figure>
+<p>This code will engage the model in a conversation and print its response. </p>
+<p><img src="/image/03-4.png" alt=""></p>
+<h3 id="5-Streaming-Responses"><a href="#5-Streaming-Responses" class="headerlink" title="5. Streaming Responses"></a><strong>5. Streaming Responses</strong></h3><p>For handling large data, you can stream responses from the model:  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> ollama <span class="keyword">import</span> chat</span><br><span class="line"></span><br><span class="line">stream = chat(</span><br><span class="line">    model=<span class="string">&quot;deepseek-r1:8b&quot;</span>,</span><br><span class="line">    messages=[&#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;why is everyone&#x27;s fingerprint unique?&quot;</span>&#125;],</span><br><span class="line">    stream=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> stream:</span><br><span class="line">    <span class="built_in">print</span>(chunk[<span class="string">&quot;message&quot;</span>][<span class="string">&quot;content&quot;</span>], end=<span class="string">&quot;&quot;</span>, flush=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>This code streams the model’s response in real-time.</p>
+<p><img src="/image/03-5.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>Ollama Tutorial</category>
+      </categories>
+      <tags>
+        <tag>Ollama</tag>
+        <tag>LLM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ollama Core Concepts</title>
+    <url>/2025/01/29/ollama-core-concepts/</url>
+    <content><![CDATA[<p>Ollama is a localized machine learning framework designed for various natural language processing (NLP) tasks. It focuses on model loading, inference, and generation, making it easy for users to interact with large pre-trained models deployed locally.</p>
+<h2 id="Models"><a href="#Models" class="headerlink" title="Models"></a><strong>Models</strong></h2><p>Models are the heart of Ollama. These are pre-trained machine learning models capable of performing tasks like text generation, summarization, sentiment analysis, and dialogue generation. Ollama supports a wide range of popular pre-trained models, including:</p>
+<ul>
+<li><strong>Deepseek-v3</strong>: A large language model by DeepSeek, specialized in text generation.</li>
+<li><strong>LLama2</strong>: A large language model by Meta, designed for text generation.</li>
+<li><strong>GPT</strong>: OpenAI’s GPT series, suitable for dialogue generation, text reasoning, and more.</li>
+<li><strong>BERT</strong>: A model for sentence understanding and question-answering systems.</li>
+<li><strong>Custom Models</strong>: Users can upload and use their own custom models for inference.</li>
+</ul>
+<p><strong>Key Features of Models:</strong></p>
+<ul>
+<li><strong>Inference</strong>: Generating output based on user input.</li>
+<li><strong>Fine-tuning</strong>: Adapting pre-trained models to specific tasks or domains using custom datasets.</li>
+</ul>
+<p>Models are typically neural networks with millions (or billions) of parameters, trained on vast amounts of text data to learn language patterns and perform efficient reasoning.</p>
+<p><strong>Supported Models:</strong></p>
+<p>Ollama’s library of supported models can be accessed here: <a href="https://ollama.com/library">Ollama Model Library</a>. </p>
+<p><img src="/image/05-1.png" alt=""></p>
+<p>Click on the model to view the download command:</p>
+<p><img src="/image/05-2.png" alt=""></p>
+<p>Below are some examples of models and their download commands:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Model</strong></th>
+<th><strong>Parameters</strong></th>
+<th><strong>Size</strong></th>
+<th><strong>Download Command</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeepSeek-R1</td>
+<td>671B</td>
+<td>404GB</td>
+<td><code>ollama run deepseek-r1:671b</code></td>
+</tr>
+<tr>
+<td>DeepSeek-R1</td>
+<td>70B</td>
+<td>43GB</td>
+<td><code>ollama run deepseek-r1:70b</code></td>
+</tr>
+<tr>
+<td>DeepSeek-R1</td>
+<td>32B</td>
+<td>20GB</td>
+<td><code>ollama run deepseek-r1:32b</code></td>
+</tr>
+<tr>
+<td>DeepSeek-R1</td>
+<td>14B</td>
+<td>9.0GB</td>
+<td><code>ollama run deepseek-r1:14b</code></td>
+</tr>
+<tr>
+<td>DeepSeek-R1</td>
+<td>8B</td>
+<td>4.9GB</td>
+<td><code>ollama run deepseek-r1:8b</code></td>
+</tr>
+<tr>
+<td>DeepSeek-R1</td>
+<td>7B</td>
+<td>4.7GB</td>
+<td><code>ollama run deepseek-r1:7b</code></td>
+</tr>
+<tr>
+<td>DeepSeek-R1</td>
+<td>1.5B</td>
+<td>1.1GB</td>
+<td><code>ollama run deepseek-r1:1.5b</code></td>
+</tr>
+<tr>
+<td>Llama 3.3</td>
+<td>70B</td>
+<td>43GB</td>
+<td><code>ollama run llama3.3</code></td>
+</tr>
+<tr>
+<td>Phi 4</td>
+<td>14B</td>
+<td>9.1GB</td>
+<td><code>ollama run phi4</code></td>
+</tr>
+<tr>
+<td>Llama 3.2</td>
+<td>3B</td>
+<td>2.0GB</td>
+<td><code>ollama run llama3.2</code></td>
+</tr>
+<tr>
+<td>Llama 3.2</td>
+<td>1B</td>
+<td>1.3GB</td>
+<td><code>ollama run llama3.2:1b</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Tasks"><a href="#Tasks" class="headerlink" title="Tasks"></a><strong>Tasks</strong></h2><p>Ollama supports a variety of NLP tasks, each corresponding to different use cases for the models. Key tasks include:</p>
+<ul>
+<li><strong>Chat Generation</strong>: Generating natural dialogue responses in conversations.</li>
+<li><strong>Text Generation</strong>: Creating natural language text based on prompts (e.g., articles, stories).</li>
+<li><strong>Sentiment Analysis</strong>: Determining the emotional tone of a text (positive, negative, neutral).</li>
+<li><strong>Text Summarization</strong>: Condensing long texts into concise summaries.</li>
+<li><strong>Translation</strong>: Translating text between languages.</li>
+</ul>
+<p>Using Ollama’s command-line tools, users can specify tasks and load appropriate models to achieve their goals.</p>
+<h2 id="Inference"><a href="#Inference" class="headerlink" title="Inference"></a><strong>Inference</strong></h2><p>Inference is the process of feeding input into a trained model to generate output. Ollama provides user-friendly command-line tools and APIs, allowing users to quickly input text and receive results.</p>
+<p><strong>How Inference Works:</strong></p>
+<ol>
+<li><strong>Input</strong>: The user provides text input, such as a question, prompt, or dialogue.</li>
+<li><strong>Model Processing</strong>: The model processes the input using its neural network to generate relevant output.</li>
+<li><strong>Output</strong>: The model returns the generated text, which could be a response, article, translation, etc.</li>
+</ol>
+<p>Ollama’s API and CLI make it simple to interact with local models and perform inference tasks efficiently.</p>
+<h2 id="Fine-tuning"><a href="#Fine-tuning" class="headerlink" title="Fine-tuning"></a><strong>Fine-tuning</strong></h2><p>Fine-tuning involves further training a pre-trained model on domain-specific data to improve its performance on specific tasks or domains. Ollama supports fine-tuning, enabling users to customize models using their own datasets.</p>
+<p><strong>Fine-tuning Process:</strong></p>
+<ol>
+<li><strong>Prepare Dataset</strong>: Gather and format domain-specific data (e.g., text files or JSON).</li>
+<li><strong>Load Pre-trained Model</strong>: Select a suitable pre-trained model (e.g., LLama2 or GPT).</li>
+<li><strong>Train</strong>: Fine-tune the model using the custom dataset to adapt it to the target task.</li>
+<li><strong>Save and Deploy</strong>: Save the fine-tuned model for future use and deploy it as needed.</li>
+</ol>
+<p>Fine-tuning helps models achieve higher accuracy and efficiency in specialized tasks.</p>
+]]></content>
+      <categories>
+        <category>Ollama Tutorial</category>
+      </categories>
+      <tags>
+        <tag>Ollama</tag>
+        <tag>LLM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Using Ollama with Python</title>
+    <url>/2025/01/29/ollama-python-sdk/</url>
+    <content><![CDATA[<p>Ollama provides a Python SDK that allows you to interact with locally running models directly from your Python environment. This SDK makes it easy to integrate natural language processing tasks into your Python projects, enabling operations like text generation, conversational AI, and model management—all without the need for manual command-line interactions.</p>
+<h2 id="Installing-the-Python-SDK"><a href="#Installing-the-Python-SDK" class="headerlink" title="Installing the Python SDK"></a>Installing the Python SDK</h2><p>To get started, you’ll need to install the Ollama Python SDK. You can do this using <code>pip</code>:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install ollama</span><br></pre></td></tr></table></figure>
+<p>Make sure you have Python 3.x installed and that your environment can access the Ollama local service.</p>
+<h2 id="Starting-the-Local-Service"><a href="#Starting-the-Local-Service" class="headerlink" title="Starting the Local Service"></a>Starting the Local Service</h2><p>Before using the Python SDK, ensure that the Ollama local service is up and running. You can start it using the command line:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama serve</span><br></pre></td></tr></table></figure>
+<p>Once the local service is running, the Python SDK will communicate with it to perform tasks like model inference.</p>
+<h2 id="Using-the-Ollama-Python-SDK-for-Inference"><a href="#Using-the-Ollama-Python-SDK-for-Inference" class="headerlink" title="Using the Ollama Python SDK for Inference"></a>Using the Ollama Python SDK for Inference</h2><p>After installing the SDK and starting the local service, you can interact with Ollama using Python code. Here’s how:</p>
+<ol>
+<li>Import the necessary modules:</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> ollama <span class="keyword">import</span> chat, ChatResponse</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Send requests to a specified model to generate text or dialogue:</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">response: ChatResponse = chat(model=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, messages=[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;role&#x27;</span>: <span class="string">&#x27;user&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;content&#x27;</span>: <span class="string">&#x27;Who are you?&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print the response content</span></span><br><span class="line"><span class="built_in">print</span>(response[<span class="string">&#x27;message&#x27;</span>][<span class="string">&#x27;content&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Alternatively, access the response object directly</span></span><br><span class="line"><span class="comment"># print(response.message.content)</span></span><br></pre></td></tr></table></figure>
+<p>When you run this code, the output might look like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Greetings! I&#x27;m DeepSeek-R1, an artificial intelligence assistant created by DeepSeek. I&#x27;m at your service and would be delighted to assist you with any inquiries or tasks you may have.</span><br></pre></td></tr></table></figure>
+<p><strong>Streaming Responses</strong></p>
+<p>The Ollama SDK also supports streaming responses. You can enable this by setting <code>stream=True</code> when sending a request:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">stream = chat(</span><br><span class="line">    model=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>,</span><br><span class="line">    messages=[&#123;<span class="string">&#x27;role&#x27;</span>: <span class="string">&#x27;user&#x27;</span>, <span class="string">&#x27;content&#x27;</span>: <span class="string">&#x27;Who are you?&#x27;</span>&#125;],</span><br><span class="line">    stream=<span class="literal">True</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print the response in chunks</span></span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> stream:</span><br><span class="line">    <span class="built_in">print</span>(chunk[<span class="string">&#x27;message&#x27;</span>][<span class="string">&#x27;content&#x27;</span>], end=<span class="string">&#x27;&#x27;</span>, flush=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Custom-Clients"><a href="#Custom-Clients" class="headerlink" title="Custom Clients"></a>Custom Clients</h2><p>For more control over request configurations, such as custom headers or specifying the local service URL, you can create a custom client:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> ollama <span class="keyword">import</span> Client</span><br><span class="line"></span><br><span class="line">client = Client(</span><br><span class="line">    host=<span class="string">&#x27;http://localhost:11434&#x27;</span>,</span><br><span class="line">    headers=&#123;<span class="string">&#x27;x-some-header&#x27;</span>: <span class="string">&#x27;some-value&#x27;</span>&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">response = client.chat(model=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, messages=[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;role&#x27;</span>: <span class="string">&#x27;user&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;content&#x27;</span>: <span class="string">&#x27;Who are you?&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">])</span><br><span class="line"><span class="built_in">print</span>(response[<span class="string">&#x27;message&#x27;</span>][<span class="string">&#x27;content&#x27;</span>])</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>Asynchronous Clients</strong></p>
+<p>If you need to handle requests asynchronously, you can use the <code>AsyncClient</code> class, which is ideal for high-concurrency scenarios:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">from</span> ollama <span class="keyword">import</span> AsyncClient</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">chat</span>():</span><br><span class="line">    message = &#123;<span class="string">&#x27;role&#x27;</span>: <span class="string">&#x27;user&#x27;</span>, <span class="string">&#x27;content&#x27;</span>: <span class="string">&#x27;Who are you?&#x27;</span>&#125;</span><br><span class="line">    response = <span class="keyword">await</span> AsyncClient().chat(model=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, messages=[message])</span><br><span class="line">    <span class="built_in">print</span>(response[<span class="string">&#x27;message&#x27;</span>][<span class="string">&#x27;content&#x27;</span>])</span><br><span class="line"></span><br><span class="line">asyncio.run(chat())</span><br></pre></td></tr></table></figure>
+<p><strong>Asynchronous Streaming</strong></p>
+<p>For asynchronous streaming responses, you can use an asynchronous generator:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">from</span> ollama <span class="keyword">import</span> AsyncClient</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">chat</span>():</span><br><span class="line">    message = &#123;<span class="string">&#x27;role&#x27;</span>: <span class="string">&#x27;user&#x27;</span>, <span class="string">&#x27;content&#x27;</span>: <span class="string">&#x27;Who are you?&#x27;</span>&#125;</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">for</span> part <span class="keyword">in</span> <span class="keyword">await</span> AsyncClient().chat(model=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, messages=[message], stream=<span class="literal">True</span>):</span><br><span class="line">        <span class="built_in">print</span>(part[<span class="string">&#x27;message&#x27;</span>][<span class="string">&#x27;content&#x27;</span>], end=<span class="string">&#x27;&#x27;</span>, flush=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">asyncio.run(chat())</span><br></pre></td></tr></table></figure>
+<p>Here, the response is returned in parts asynchronously, allowing you to process each part immediately.</p>
+<h2 id="Common-API-Methods"><a href="#Common-API-Methods" class="headerlink" title="Common API Methods"></a>Common API Methods</h2><p>The Ollama Python SDK provides several useful API methods for managing and interacting with models:</p>
+<ol>
+<li><strong>Chat</strong>: Generate conversational responses.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.chat(model=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, messages=[&#123;<span class="string">&#x27;role&#x27;</span>: <span class="string">&#x27;user&#x27;</span>, <span class="string">&#x27;content&#x27;</span>: <span class="string">&#x27;Why is the sky blue?&#x27;</span>&#125;])</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>Generate</strong>: Generate text based on a prompt.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.generate(model=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, prompt=<span class="string">&#x27;Why is the sky blue?&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>List</strong>: List all available models.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.<span class="built_in">list</span>()</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>Show</strong>: Display details about a specific model.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.show(<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>Create</strong>: Create a new model from an existing one.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.create(model=<span class="string">&#x27;example&#x27;</span>, from_=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, system=<span class="string">&quot;You are Mario from Super Mario Bros.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>Copy</strong>: Copy a model to another location.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.copy(<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, <span class="string">&#x27;user/deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>Delete</strong>: Delete a model.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.delete(<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>Pull</strong>: Download a model from a remote repository.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.pull(<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>Push</strong>: Upload a model to a remote repository.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.push(<span class="string">&#x27;user/deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>Embed</strong>: Generate text embeddings.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.embed(model=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, <span class="built_in">input</span>=<span class="string">&#x27;The sky is blue because of Rayleigh scattering&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li><strong>Ps</strong>: List running models.</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.ps()</span><br></pre></td></tr></table></figure>
+<h2 id="Error-Handling"><a href="#Error-Handling" class="headerlink" title="Error Handling"></a>Error Handling</h2><p>The Ollama SDK raises errors when requests fail or streaming issues occur. You can handle these errors using <code>try-except</code> blocks:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ollama</span><br><span class="line"></span><br><span class="line">model = <span class="string">&#x27;does-not-yet-exist&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = ollama.chat(model)</span><br><span class="line"><span class="keyword">except</span> ollama.ResponseError <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Error:&#x27;</span>, e.error)</span><br><span class="line">    <span class="keyword">if</span> e.status_code == <span class="number">404</span>:</span><br><span class="line">        ollama.pull(model)</span><br></pre></td></tr></table></figure>
+<p>In this example, if the model doesn’t exist, a <code>ResponseError</code> is raised, and you can choose to pull the model or handle the error accordingly.</p>
+]]></content>
+      <categories>
+        <category>Ollama Tutorial</category>
+      </categories>
+      <tags>
+        <tag>Ollama</tag>
+        <tag>LLM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Interacting with Ollama Models</title>
+    <url>/2025/01/29/ollama-cli/</url>
+    <content><![CDATA[<p>Ollama offers multiple ways to interact with its models, with the most common being through command-line inference operations.</p>
+<h2 id="Command-Line-Interaction"><a href="#Command-Line-Interaction" class="headerlink" title="Command-Line Interaction"></a>Command-Line Interaction</h2><p>The simplest way to interact with the model is directly through the command line.</p>
+<p><strong>Running the Model</strong></p>
+<p>Use the <code>ollama run</code> command to start the model and enter interactive mode:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama run &lt;model-name&gt;</span><br></pre></td></tr></table></figure>
+<p>For example, to download and run the <code>deepseek-r1:1.5b</code> model:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama run deepseek-r1:1.5b</span><br></pre></td></tr></table></figure>
+<p>Once the model is running, you can directly input questions or instructions, and the model will generate responses in real-time.</p>
+<p><strong>Example Interaction:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; Hi, can you help me write some code?</span><br><span class="line">&lt;think&gt;</span><br><span class="line"></span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">Of course! I&#x27;d be happy to help. What do you need assistance with? For example:</span><br><span class="line"></span><br><span class="line">- Do you want to learn a new programming language?</span><br><span class="line">- Need help with setting up a particular software or tool?</span><br><span class="line">- Or simply need some code snippets for a specific task?</span><br><span class="line"></span><br><span class="line">Let me know, and I can provide detailed guidance!</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; Write a Python &quot;Hello, World!&quot; program.</span><br><span class="line">&lt;think&gt;</span><br><span class="line">Alright, the user asked for a Python &quot;Hello, World!&quot; program. Okay, so they want me to write that in Python.</span><br><span class="line">Let&#x27;s break this down.</span><br><span class="line"></span><br><span class="line">First, I need to recall what the &quot;Hello, World!&quot; program does. It prints the string &quot;Hello, World!&quot; to the</span><br><span class="line">console. That’s pretty straightforward.</span><br><span class="line"></span><br><span class="line">I should think about how to implement this in Python. Well, one common way is using the print function. So,</span><br><span class="line">something like `print(&quot;Hello, World!&quot;)`.</span><br><span class="line"></span><br><span class="line">But wait, maybe they want me to write a program that demonstrates more concepts. Let&#x27;s see—maybe I can include</span><br><span class="line">variables or loops? But for now, just printing &quot;Hello, World!&quot; should be simple enough.</span><br><span class="line"></span><br><span class="line">I should also consider best practices. Do I need to handle any edge cases? Well, if it&#x27;s always the same</span><br><span class="line">string, no, but in a real program, maybe the message changes. But for this case, staying simple is probably</span><br><span class="line">best.</span><br><span class="line"></span><br><span class="line">Let me outline the steps:</span><br><span class="line"></span><br><span class="line">1. Print the word &quot;Hello&quot;.</span><br><span class="line">2. Print a comma.</span><br><span class="line">3. Print space.</span><br><span class="line">4. Continue to print &quot;, World!&quot;.</span><br><span class="line"></span><br><span class="line">That covers the entire string. I can write it concisely using the print function multiple times.</span><br><span class="line"></span><br><span class="line">Is there another way to do this? Maybe using f-strings or triple quotes for better readability? Let me think...</span><br><span class="line">Both are similar in Python and not too hard.</span><br><span class="line"></span><br><span class="line">But perhaps sticking with the basic print function is simplest for now. It’s easy to read and maintain.</span><br><span class="line"></span><br><span class="line">I should also mention that the string can be any text, so &quot;Hello, World!&quot; works well but could change if</span><br><span class="line">needed. But for this case, it&#x27;s just a placeholder.</span><br><span class="line"></span><br><span class="line">In terms of code length, I want it concise yet clear. Using multiple print statements is straightforward and</span><br><span class="line">efficient.</span><br><span class="line"></span><br><span class="line">Alright, let me put it all together in Python syntax.</span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">Certainly! Here’s how to write the &quot;Hello, World!&quot; program in Python:</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">print(&quot;Hello, World!&quot;)</span><br></pre></td></tr></table></figure>
+<p>This will output:<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello, World!</span><br></pre></td></tr></table></figure></p>
+<p>Let me know if you’d like more examples or have a specific task!</p>
+<blockquote>
+<blockquote>
+<p>&gt;<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**Exiting Interactive Mode**</span><br><span class="line"></span><br><span class="line">To exit the interactive mode, type `/bye` or press `Ctrl+D`.</span><br><span class="line"></span><br><span class="line">## Single Command Interaction</span><br><span class="line">If you only need the model to generate a single response, you can pass the input directly through the command line.</span><br><span class="line"></span><br><span class="line">### Using Pipe Input</span><br><span class="line">You can pipe input to the model:</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">echo &quot;Who are you?&quot; | ollama run deepseek-r1:1.5b</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+<p>Output:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Users\Administrator&gt;echo &quot;Who are you?&quot; | ollama run deepseek-r1:1.5b</span><br><span class="line">&lt;think&gt;</span><br><span class="line"></span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">Greetings! I&#x27;m DeepSeek-R1, an artificial intelligence assistant created by DeepSeek. I&#x27;m at your service and would be delighted to assist you with any inquiries or tasks you may have.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">C:\Users\Administrator&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="Using-Command-Line-Arguments"><a href="#Using-Command-Line-Arguments" class="headerlink" title="Using Command-Line Arguments"></a>Using Command-Line Arguments</h3><p>You can also pass input directly as a command-line argument:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama run deepseek-r1:1.5b <span class="string">&quot;Python hello world code?&quot;</span></span><br></pre></td></tr></table></figure>
+<p>Output:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Users\Administrator&gt;ollama run deepseek-r1:1.5b &quot;Python hello world code?&quot;</span><br><span class="line">&lt;think&gt;</span><br><span class="line"></span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">Of course! Here&#x27;s a simple &quot;Hello World&quot; program in Python:</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">print(&quot;Hello, World!&quot;)</span><br></pre></td></tr></table></figure>
+<p>When you run this code, it will output:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello, World!</span><br></pre></td></tr></table></figure>
+<p>Let me know if you’d like to see a more complex example or different functionality!</p>
+<p>C:\Users\Administrator&gt;<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## Multi-Turn Conversations</span><br><span class="line">Ollama supports multi-turn conversations, allowing the model to remember context.</span><br><span class="line"></span><br><span class="line">**Example:**</span><br><span class="line"></span><br><span class="line">```plain</span><br><span class="line">&gt;&gt;&gt; Hi, can you help me write some Python code?</span><br><span class="line">&lt;think&gt;</span><br><span class="line">Okay, the user asked if I can help them write some Python code. I need to respond by offering assistance with any specific tasks they have in mind.</span><br><span class="line"></span><br><span class="line">I should let them know I&#x27;m here to assist with programming, problem-solving, or just general support. Maybe I&#x27;ll suggest a few things to get them started.</span><br><span class="line"></span><br><span class="line">I want to make sure my response is welcoming and encourages them to provide more details about what they need help with.</span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">Of course! I&#x27;d be happy to help you write Python code. What specific tasks do you need assistance with? Whether it&#x27;s solving a problem, implementing a feature, or just getting some advice, let me know so</span><br><span class="line">I can assist effectively!</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; I want to write a function to calculate the Fibonacci sequence.</span><br><span class="line">&lt;think&gt;</span><br><span class="line">Alright, the user wants a function to calculate the Fibonacci sequence. I should create a clear and functional Python function for them.</span><br><span class="line"></span><br><span class="line">First, I&#x27;ll outline the steps: the Fibonacci sequence starts with 0 and 1, each subsequent number is the sum of the previous two. The function will take an integer n and return the nth term in the</span><br><span class="line">sequence.</span><br><span class="line"></span><br><span class="line">I need to handle cases where n is larger than a certain value, like when it&#x27;s over 47 because beyond that, the numbers get too big for Python&#x27;s integers to manage efficiently. I&#x27;ll also consider using</span><br><span class="line">memoization to optimize performance by storing previously calculated values.</span><br><span class="line"></span><br><span class="line">I should write a helper function inside fib to make the code cleaner and more readable. This helper will compute the nth Fibonacci number using an iterative approach with caching.</span><br><span class="line"></span><br><span class="line">Finally, I&#x27;ll test the function with known inputs like n=0, 1, 2, etc., to ensure it works correctly.</span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">Sure! Let&#x27;s create a Python function called `fibonacci` that calculates the nth term in the Fibonacci sequence. The Fibonacci sequence is defined by starting with 0 and 1, where each subsequent number is</span><br><span class="line">the sum of the previous two numbers.</span><br><span class="line"></span><br><span class="line">Here&#x27;s how we can implement this:</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">def fibonacci(n):</span><br><span class="line">    # Check if n is a positive integer</span><br><span class="line">    if not isinstance(n, int) or n &lt; 0:</span><br><span class="line">        raise ValueError(&quot;n must be a non-negative integer&quot;)</span><br><span class="line"></span><br><span class="line">    # Base cases: F(0) = 0 and F(1) = 1</span><br><span class="line">    if n == 0:</span><br><span class="line">        return 0</span><br><span class="line">    elif n == 1:</span><br><span class="line">        return 1</span><br><span class="line"></span><br><span class="line">    # Create a memoization table to store previously computed values</span><br><span class="line">    fib_sequence = [0, 1]  # Initialize with F(0), F(1)</span><br><span class="line"></span><br><span class="line">    # Iterate from 2 to n-1 to compute the sequence up to F(n)</span><br><span class="line">    for i in range(2, n):</span><br><span class="line">        next_val = fib_sequence[i-2] + fib_sequence[i-1]</span><br><span class="line">        fib_sequence.append(next_val)</span><br><span class="line"></span><br><span class="line">    return fib_sequence[n - 1]</span><br><span class="line"></span><br><span class="line"># Test the function</span><br><span class="line">print(fibonacci(0))   # Output: 0</span><br><span class="line">print(fibonacci(1))   # Output: 1</span><br><span class="line">print(fibonacci(5))   # Output: 5 (F(5) = F(4) + F(3) = 3 + 2)</span><br></pre></td></tr></table></figure></p>
+<h3 id="Explanation"><a href="#Explanation" class="headerlink" title="Explanation:"></a>Explanation:</h3><ol>
+<li><strong>Base Cases</strong>: The function starts with the base cases where <code>n=0</code> returns 0 and <code>n=1</code> returns 1.</li>
+<li><strong>Memoization</strong>: We use a list called <code>fib_sequence</code> to store each computed Fibonacci number, which allows us to reuse previously calculated values and improve efficiency.</li>
+<li><strong>Iterative Calculation</strong>: For numbers larger than the base cases, we iterate from 2 up to <code>n-1</code>, computing each value as the sum of the previous two in the sequence and appending it to the list.</li>
+<li><strong>Return Result</strong>: Finally, we return the nth Fibonacci number by accessing the (n-1)th index of the <code>fib_sequence</code> list.</li>
+</ol>
+<p>This implementation is efficient for calculating Fibonacci numbers up to n=47 or beyond due to its use of memoization.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Send a message (/? for help)<br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## File Input</span><br><span class="line">You can also pass the contents of a file as input to the model.</span><br><span class="line"></span><br><span class="line">For example, if the content of the `input.txt` file is:</span><br><span class="line"></span><br><span class="line">```plain</span><br><span class="line">Write a Python function to calculate the Fibonacci sequence.</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>You can pass the file content as input:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama run deepseek-r1:1.5b &lt; input.txt</span><br></pre></td></tr></table></figure>
+<h2 id="Custom-Prompts"><a href="#Custom-Prompts" class="headerlink" title="Custom Prompts"></a>Custom Prompts</h2><p>You can define custom prompts or system instructions using a <code>Modelfile</code>, allowing the model to follow specific rules during interactions.</p>
+<p><strong>Creating a Custom Model</strong></p>
+<p>Write a <code>Modelfile</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM deepseek-r1:1.5b</span><br><span class="line">SYSTEM &quot;You are a programming assistant specialized in helping users write code.&quot;</span><br></pre></td></tr></table></figure>
+<p>Then create a custom model:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama create coder-assistant -f Modelfile</span><br></pre></td></tr></table></figure>
+<p>The output looks something like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gathering model components</span><br><span class="line">using existing layer sha256:aabd4debf0c8f08881923f2c25fc0fdeed24435271c2b3e92c4af36704040dbc</span><br><span class="line">using existing layer sha256:369ca498f347f710d068cbb38bf0b8692dd3fa30f30ca2ff755e211c94768150</span><br><span class="line">using existing layer sha256:6e4c38e1172f42fdbff13edf9a7a017679fb82b0fde415a3e8b3c31c6ed4a4e4</span><br><span class="line">creating new layer sha256:1036dcfe8bb2a3490d61eb73e932ffa8ae134954295de3e1e575191fbb26ea66</span><br><span class="line">using existing layer sha256:f4d24e9138dd4603380add165d2b0d970bef471fac194b436ebd50e6147c6588</span><br><span class="line">writing manifest</span><br><span class="line">success</span><br></pre></td></tr></table></figure>
+<p>Run the custom model:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama run coder-assistant</span><br></pre></td></tr></table></figure>
+<p>For example:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Users\Administrator\Downloads&gt;ollama run coder-assistant</span><br><span class="line">&gt;&gt;&gt; write a Python function that calculates the number of divisors of a given number</span><br><span class="line">&lt;think&gt;</span><br><span class="line">Okay, I need to write a Python function called count_divisors that takes a number as input and returns the total number of its divisors. Let me think about how to approach this.</span><br><span class="line"></span><br><span class="line">First, what is a divisor? It&#x27;s any integer that can divide the number without leaving a remainder. So for example, the divisors of 6 are 1, 2, 3, and 6.</span><br><span class="line"></span><br><span class="line">I remember from math class that one way to find all divisors of a number efficiently is by checking divisibility up to the square root of the number. This works because if there&#x27;s a divisor larger than</span><br><span class="line">the square root, it must pair with a smaller divisor. So I can iterate from 1 up to sqrt(n) and check for divisors.</span><br><span class="line"></span><br><span class="line">Wait, but what about numbers that are perfect squares? They have an odd square root, so in those cases, I need to make sure not to double count by handling the square root separately.</span><br><span class="line"></span><br><span class="line">Let me outline the steps:</span><br><span class="line"></span><br><span class="line">1. Initialize a counter to keep track of how many divisors there are.</span><br><span class="line">2. Iterate from 1 up to the integer part of sqrt(n).</span><br><span class="line">3. For each number i in this range, check if n is divisible by i (i.e., n % i == 0).</span><br><span class="line">4. If it is divisible, add both i and n/i to the count, but only once if they are different.</span><br><span class="line">5. Handle the case where i is exactly sqrt(n) separately to avoid adding the same divisor twice.</span><br><span class="line"></span><br><span class="line">Wait, another point: when I find a pair (i, j) such that i * j = n, I should make sure not to count both unless necessary. So for each i from 1 to sqrt(n), if it divides n, then if i is different from</span><br><span class="line">n/i, we count both. If i and n/i are the same (like when n is a perfect square), we only count once.</span><br><span class="line"></span><br><span class="line">Alternatively, another approach is to check each number starting from 1 up to sqrt(n). For each divisor i found, increment the count by 2 unless i is exactly sqrt(n) in which case we only add 1. But I</span><br><span class="line">think handling it as adding both when possible might be clearer for someone learning.</span><br><span class="line"></span><br><span class="line">Let me test this logic with an example. Take n = 6:</span><br><span class="line"></span><br><span class="line">- Start with i=1: 6 % 1 ==0, so check if 1 and 6/1 are different (which they are). Count +=2 → count is now 2.</span><br><span class="line">- Next i=2: 6%2==0, 2 !=3. So again, add 2 → count becomes 4.</span><br><span class="line">- i=3: sqrt(6) ≈2.45, so we stop before i=3? Wait, no, wait. The loop should run from 1 up to int(sqrt(n)) inclusive.</span><br><span class="line"></span><br><span class="line">Wait, in the example for n=6, sqrt(6) is about 2.449, so the integer part is 2. So i will go up to 2, and we don&#x27;t get to i=3 because that&#x27;s beyond the square root. But wait, if I do int(math.sqrt(n)),</span><br><span class="line">which in Python is done by import math.</span><br><span class="line"></span><br><span class="line">Wait, no, actually, for n=6, sqrt(n) is approximately 2.45, so int(sqrt(6)) would be 2. So i will run from 1 to 2 inclusive. Then after that, if there&#x27;s a pair beyond the square root, we need to account</span><br><span class="line">for it.</span><br><span class="line"></span><br><span class="line">Wait no, in this case, when n=6 and i is 2, 6%2 ==0. But then j would be 3, which is greater than sqrt(6), so our current approach of checking only up to sqrt(n) doesn&#x27;t account for the larger divisor.</span><br><span class="line">So perhaps we need to adjust.</span><br><span class="line"></span><br><span class="line">Wait, another way: when I find a divisor i in the loop (up to sqrt(n)), if i != n//i, then both are divisors and should be counted. If they are equal, count just once.</span><br><span class="line"></span><br><span class="line">So maybe I can restructure the code:</span><br><span class="line"></span><br><span class="line">Initialize count = 0</span><br><span class="line"></span><br><span class="line">for i from 1 to int(math.sqrt(n)) + 1:  # Wait, no, that would go beyond.</span><br><span class="line"></span><br><span class="line">Wait, better to run i up to and including sqrt(n). So for example, n=6, sqrt(6) is about 2.45, so the integer part is 2. So we loop from 1 to 2 inclusive.</span><br><span class="line"></span><br><span class="line">In each iteration:</span><br><span class="line"></span><br><span class="line">if i divides n (n % i ==0), then j = n // i</span><br><span class="line"></span><br><span class="line">if j !=i → count +=2</span><br><span class="line">else → count +=1</span><br><span class="line"></span><br><span class="line">Wait, but in this case, when I&#x27;m looping up to sqrt(n) and for each i that divides n, if it&#x27;s not equal to j, we add 2. If it is equal to j, which can only happen when the divisor is exactly at sqrt(n),</span><br><span class="line">then we add 1.</span><br><span class="line"></span><br><span class="line">But wait, let me test this logic with n=6:</span><br><span class="line"></span><br><span class="line">i starts at 1: 6%1==0 → j=6. 6 !=1 → count +=2 (count becomes 2)</span><br><span class="line">i=2: 6%2==0 → j=3. 3 !=2 → count +=2 (count is now 4)</span><br><span class="line"></span><br><span class="line">So the function would return 4, which is correct because divisors of 6 are 1,2,3,6.</span><br><span class="line"></span><br><span class="line">Another test case: n=4</span><br><span class="line"></span><br><span class="line">sqrt(4)=2, so i runs from 1 to 2.</span><br><span class="line"></span><br><span class="line">i=1 → j=4 → add 2 → count=2</span><br><span class="line">i=2 → j=2 → since equal, add 1 → count=3. Divisors are 1,2,4.</span><br><span class="line"></span><br><span class="line">So that works.</span><br><span class="line"></span><br><span class="line">Another test case: n=9</span><br><span class="line"></span><br><span class="line">sqrt(9)=3, i runs to 3.</span><br><span class="line"></span><br><span class="line">i=1→j=9→add 2</span><br><span class="line">i=3→j=3→add1</span><br><span class="line">Total count is 3 → divisors of 9 are 1,3,9. Correct.</span><br><span class="line"></span><br><span class="line">So the logic seems solid.</span><br><span class="line"></span><br><span class="line">Now, what about n=0? Well, in mathematics, 0 has infinitely many divisors because any number can divide zero. But since we&#x27;re dealing with integers and trying to compute this function, perhaps it&#x27;s</span><br><span class="line">better to handle edge cases where n is less than or equal to zero.</span><br><span class="line"></span><br><span class="line">Wait, let me think: if the input is a negative number, like -6, what should be done? Divisors of 6 include both positive and negative numbers. For example, divisors of -6 are ±1, ±2, ±3, ±6. So in</span><br><span class="line">that case, the total number would be 8.</span><br><span class="line"></span><br><span class="line">But wait, perhaps I&#x27;m supposed to count all integer divisors, including negatives. But for efficiency, we can note that if n is negative, it&#x27;s equivalent to its absolute value when considering divisors.</span><br><span class="line">Because any divisor of a positive number is also a divisor (with sign) of its negative counterpart.</span><br><span class="line"></span><br><span class="line">So the function should probably take the absolute value of the input n, but then in our code, since n can&#x27;t be zero (as per division by zero), perhaps it&#x27;s better to handle that case first.</span><br><span class="line"></span><br><span class="line">But according to the problem statement, I&#x27;m not sure whether n can be 0. But let me think: if someone passes 0 as a number, what is expected? Well, every non-zero integer divides zero, so there are</span><br><span class="line">infinitely many divisors. So in this function, perhaps we should return 0 or raise an error for n=0. Alternatively, perhaps it&#x27;s better to assume that the input will be a positive integer, and handle</span><br><span class="line">negatives by taking their absolute value.</span><br><span class="line"></span><br><span class="line">But since the problem statement does not specify this, I&#x27;ll proceed with assuming that the input is a non-zero integer, as per programming challenges often do. So in code:</span><br><span class="line"></span><br><span class="line">First, import math</span><br><span class="line"></span><br><span class="line">def count_divisors(n):</span><br><span class="line">    if n == 0:</span><br><span class="line">        return 0</span><br><span class="line">    # handle negative numbers by taking absolute value</span><br><span class="line">    n = abs(n)</span><br><span class="line">    count =0</span><br><span class="line">    sqrt_n = int(math.sqrt(n))</span><br><span class="line">    for i in range(1, sqrt_n +1):  # Loop up to and including sqrt_n</span><br><span class="line">        if n %i ==0:</span><br><span class="line">            j = n // i</span><br><span class="line">            if i !=j:</span><br><span class="line">                count +=2</span><br><span class="line">            else:</span><br><span class="line">                count +=1</span><br><span class="line">    return count</span><br><span class="line"></span><br><span class="line">Wait, but let me test this for n=6:</span><br><span class="line"></span><br><span class="line">sqrt(6)=2.45 → int is 2.</span><br><span class="line"></span><br><span class="line">Loop runs i from 1 to 2.</span><br><span class="line"></span><br><span class="line">i=1: j=6 → add 2 → count=2</span><br><span class="line">i=2: j=3 → add 2 → count=4</span><br><span class="line"></span><br><span class="line">Correct.</span><br><span class="line"></span><br><span class="line">Another test case, n=0: function returns 0. But since in code we return 0 for n==0 and let it be handled by the user if n is zero. Maybe that&#x27;s better than returning an error because the problem</span><br><span class="line">statement didn&#x27;t specify handling n=0.</span><br><span class="line"></span><br><span class="line">So this should work.</span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">To calculate the number of divisors of a given non-zero integer, follow these steps:</span><br><span class="line"></span><br><span class="line">1. **Handle Special Cases**: If the input number is 0, return 0 since every non-zero number divides 0 infinitely many times, but practically, we&#x27;ll handle it by returning 0 for this problem.</span><br><span class="line">2. **Take Absolute Value**: Convert the number to its absolute value to simplify divisor calculation since divisors of a negative number are the same as their positive counterparts.</span><br><span class="line">3. **Initialize Counters**: Set up a counter to keep track of the total number of divisors.</span><br><span class="line">4. **Calculate Divisors**: Loop from 1 to the square root of the number (inclusive). For each integer `i` in this range:</span><br><span class="line">   - If `i` is a divisor of the number, calculate the corresponding divisor `j = number / i`.</span><br><span class="line">   - If `i` and `j` are equal, add 1 to the count. Otherwise, add 2 to the count (since both `i` and `j`) are valid divisors.</span><br><span class="line">5. **Return Result**: After processing all potential divisors up to the square root, return the total count of divisors.</span><br><span class="line"></span><br><span class="line">Here&#x27;s a Python implementation that follows these steps:</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">import math</span><br><span class="line"></span><br><span class="line">def count_divisors(n):</span><br><span class="line">    if n == 0:</span><br><span class="line">        return 0  # Handle zero as per problem statement</span><br><span class="line"></span><br><span class="line">    n = abs(n)  # Convert to positive number for divisor calculation purposes</span><br><span class="line"></span><br><span class="line">    total_divisors = 0</span><br><span class="line">    sqrt_n = int(math.sqrt(n))</span><br><span class="line"></span><br><span class="line">    for i in range(1, sqrt_n + 1):</span><br><span class="line">        if n % i == 0:</span><br><span class="line">            j = n // i</span><br><span class="line">            if i != j:</span><br><span class="line">                total_divisors += 2</span><br><span class="line">            else:</span><br><span class="line">                total_divisors += 1</span><br><span class="line"></span><br><span class="line">    return total_divisors</span><br><span class="line"></span><br><span class="line"># Example usage:</span><br><span class="line">print(count_divisors(6))  # Output: 4 (divisors are 1, 2, 3, 6)</span><br></pre></td></tr></table></figure>
+<p>This function efficiently calculates the number of divisors by leveraging mathematical properties and reducing redundant checks.</p>
+<blockquote>
+<blockquote>
+<p>&gt;<br>```</p>
+</blockquote>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Ollama Tutorial</category>
+      </categories>
+      <tags>
+        <tag>Ollama</tag>
+        <tag>LLM</tag>
+      </tags>
+  </entry>
 </search>
