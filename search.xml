@@ -39521,13 +39521,10 @@ This should display the path to your OpenJDK 17 installation.</li>
 <p>Once the local service is running, the Python SDK will communicate with it to perform tasks like model inference.</p>
 <h2 id="Using-the-Ollama-Python-SDK-for-Inference"><a href="#Using-the-Ollama-Python-SDK-for-Inference" class="headerlink" title="Using the Ollama Python SDK for Inference"></a>Using the Ollama Python SDK for Inference</h2><p>After installing the SDK and starting the local service, you can interact with Ollama using Python code. Here’s how:</p>
 <ol>
-<li>Import the necessary modules:</li>
+<li>Import the necessary modules:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> ollama <span class="keyword">import</span> chat, ChatResponse</span><br></pre></td></tr></table></figure></li>
+<li>Send requests to a specified model to generate text or dialogue:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">response: ChatResponse = chat(model=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, messages=[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;role&#x27;</span>: <span class="string">&#x27;user&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;content&#x27;</span>: <span class="string">&#x27;Who are you?&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print the response content</span></span><br><span class="line"><span class="built_in">print</span>(response[<span class="string">&#x27;message&#x27;</span>][<span class="string">&#x27;content&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Alternatively, access the response object directly</span></span><br><span class="line"><span class="comment"># print(response.message.content)</span></span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> ollama <span class="keyword">import</span> chat, ChatResponse</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Send requests to a specified model to generate text or dialogue:</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">response: ChatResponse = chat(model=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, messages=[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;role&#x27;</span>: <span class="string">&#x27;user&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;content&#x27;</span>: <span class="string">&#x27;Who are you?&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print the response content</span></span><br><span class="line"><span class="built_in">print</span>(response[<span class="string">&#x27;message&#x27;</span>][<span class="string">&#x27;content&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Alternatively, access the response object directly</span></span><br><span class="line"><span class="comment"># print(response.message.content)</span></span><br></pre></td></tr></table></figure>
 <p>When you run this code, the output might look like this:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Greetings! I&#x27;m DeepSeek-R1, an artificial intelligence assistant created by DeepSeek. I&#x27;m at your service and would be delighted to assist you with any inquiries or tasks you may have.</span><br></pre></td></tr></table></figure>
 <p><strong>Streaming Responses</strong></p>
@@ -39549,26 +39546,11 @@ This should display the path to your OpenJDK 17 installation.</li>
 <li><strong>List</strong>: List all available models.<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.<span class="built_in">list</span>()</span><br></pre></td></tr></table></figure></li>
 <li><strong>Show</strong>: Display details about a specific model.<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.show(<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
 <li><strong>Create</strong>: Create a new model from an existing one.<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.create(model=<span class="string">&#x27;example&#x27;</span>, from_=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, system=<span class="string">&quot;You are Mario from Super Mario Bros.&quot;</span>)</span><br></pre></td></tr></table></figure></li>
-<li><strong>Copy</strong>: Copy a model to another location.</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.copy(<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, <span class="string">&#x27;user/deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<ol>
-<li><strong>Delete</strong>: Delete a model.</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.delete(<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<ol>
-<li><strong>Pull</strong>: Download a model from a remote repository.</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.pull(<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<ol>
-<li><strong>Push</strong>: Upload a model to a remote repository.</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.push(<span class="string">&#x27;user/deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<ol>
-<li><strong>Embed</strong>: Generate text embeddings.</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.embed(model=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, <span class="built_in">input</span>=<span class="string">&#x27;The sky is blue because of Rayleigh scattering&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<ol>
+<li><strong>Copy</strong>: Copy a model to another location.<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.copy(<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, <span class="string">&#x27;user/deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><strong>Delete</strong>: Delete a model.<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.delete(<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><strong>Pull</strong>: Download a model from a remote repository.<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.pull(<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><strong>Push</strong>: Upload a model to a remote repository.<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.push(<span class="string">&#x27;user/deepseek-r1:1.5b&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><strong>Embed</strong>: Generate text embeddings.<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.embed(model=<span class="string">&#x27;deepseek-r1:1.5b&#x27;</span>, <span class="built_in">input</span>=<span class="string">&#x27;The sky is blue because of Rayleigh scattering&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
 <li><strong>Ps</strong>: List running models.</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ollama.ps()</span><br></pre></td></tr></table></figure>
