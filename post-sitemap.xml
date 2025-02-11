@@ -9,6 +9,22 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2025/02/06/how-to-run-deepseek-locally-on-windows/</loc>
+        <lastmod>2025-02-11T15:23:01.965Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/01/29/ollama-install/</loc>
+        <lastmod>2025-02-11T15:14:14.301Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2025/01/29/ollama-cli/</loc>
         <lastmod>2025-02-11T15:11:31.283Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -35,14 +51,6 @@
     <url>
         <loc>http://linjiangxiong.com/2025/01/29/ollama-intro/</loc>
         <lastmod>2025-02-10T17:37:06.075Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2025/01/29/ollama-install/</loc>
-        <lastmod>2025-02-09T17:36:01.690Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

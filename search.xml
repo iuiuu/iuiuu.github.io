@@ -39067,7 +39067,6 @@ This should display the path to your OpenJDK 17 installation.</li>
 <li><strong>Storage</strong>: Sufficient disk space to store pre-trained models, typically ranging from 10GB to hundreds of GB, depending on the model size.  </li>
 <li><strong>Software</strong>: Ensure the latest version of Python is installed if you plan to use the Python SDK.</li>
 </ul>
-<hr>
 <p><strong>Official Download Link</strong>: <a href="https://ollama.com/download">https://ollama.com/download</a></p>
 <p><img src="/image/ollama/02-1.png" alt=""></p>
 <p>We can download the corresponding package based on the different systems.</p>
@@ -39095,7 +39094,6 @@ This should display the path to your OpenJDK 17 installation.</li>
 </li>
 <li>Once downloaded, double-click the installer and follow the on-screen instructions to complete the installation.</li>
 </ol>
-<hr>
 <p><strong>Verifying Installation</strong></p>
 <p>After installation, run the following command to verify:  </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ollama --version</span><br></pre></td></tr></table></figure>
@@ -39108,14 +39106,8 @@ This should display the path to your OpenJDK 17 installation.</li>
 <p>If the version number is displayed, the installation was successful.  </p>
 <h2 id="Installing-via-Docker"><a href="#Installing-via-Docker" class="headerlink" title="Installing via Docker"></a><strong>Installing via Docker</strong></h2><p>If you’re familiar with Docker, you can also install Ollama using the official Docker image available on Docker Hub: <a href="https://hub.docker.com/r/ollama/ollama">https://hub.docker.com/r/ollama/ollama</a>.  </p>
 <ol>
-<li>Pull the Docker image:  </li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull ollama/ollama</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Run the container:  </li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -p 11434:11434 ollama/ollama</span><br></pre></td></tr></table></figure>
-<ol>
+<li>Pull the Docker image:  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull ollama/ollama</span><br></pre></td></tr></table></figure></li>
+<li>Run the container:  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -p 11434:11434 ollama/ollama</span><br></pre></td></tr></table></figure></li>
 <li>Access Ollama by visiting: <a href="http://localhost:11434">http://localhost:11434</a>.</li>
 </ol>
 ]]></content>
@@ -39797,6 +39789,58 @@ This should display the path to your OpenJDK 17 installation.</li>
       <tags>
         <tag>Ollama</tag>
         <tag>LLM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How To Run DeepSeek Locally On Windows?</title>
+    <url>/2025/02/06/how-to-run-deepseek-locally-on-windows/</url>
+    <content><![CDATA[<p>Here is a step-by-step guide on how to run DeepSeek locally on Windows:</p>
+<h2 id="Install-Ollama"><a href="#Install-Ollama" class="headerlink" title="Install Ollama"></a>Install Ollama</h2><ol>
+<li><strong>Visit the Ollama Website</strong>: Open your web browser and go to <a href="https://ollama.com/">Ollama’s official website</a>.</li>
+<li><strong>Download the Windows Installer</strong>: On the <a href="https://ollama.com/download">Ollama download page</a>, click the “Download for Windows” button. Save the file to your computer, usually in the downloads folder.</li>
+<li><strong>Run the Installer</strong>: Locate the downloaded file (e.g., OllamaSetup.exe) and double-click to run it. Follow the on-screen instructions to complete the installation.</li>
+</ol>
+<p><img src="/image/2025/02/0601.png" alt=""></p>
+<p><img src="/image/2025/02/0602.png" alt=""></p>
+<ol>
+<li><strong>Verify Installation</strong>: Open the Command Prompt by pressing Win+R, typing “cmd”, and  hitting Enter. Type “<em>ollama —version</em>“. If installed correctly, it will display the current version of Ollama.</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Users\Administrator&gt;ollama --version</span><br><span class="line">ollama version is 0.5.7</span><br></pre></td></tr></table></figure>
+<p>You can also see this small icon in the Windows taskbar, indicating that Ollama is running successfully.</p>
+<p><img src="/image/2025/02/0603.png" alt=""></p>
+<h2 id="Install-the-DeepSeek-Model"><a href="#Install-the-DeepSeek-Model" class="headerlink" title="Install the DeepSeek Model"></a>Install the DeepSeek Model</h2><ol>
+<li><strong>Visit the Ollama Models Page</strong>: After installing Ollama, go to the <a href="https://ollama.com/library">Ollama models page</a>. Locate the DeepSeek model.</li>
+<li><strong>Copy the Installation Command</strong>: You will see commands like “<em>ollama run deepseek-r1:1.5b</em>“. Copy the command corresponding to the model version you want to install.</li>
+<li><strong>Modify and Execute the Command</strong>: Open the Command Prompt and instead of “run”, use “pull” to download the model without immediately running it. For example, “<em>ollama pull deepseek-r1:1.5b</em>“. Press Enter and wait for the download to complete.</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> D:\deepseek&gt; ollama pull deepseek<span class="literal">-r1</span>:<span class="number">1.5</span>b</span><br><span class="line">pulling manifest</span><br><span class="line">pulling aabd4debf0c8... <span class="number">100</span>% ▕████████████████████████████████████████████████████████▏ <span class="number">1.1</span> GB</span><br><span class="line">pulling <span class="number">369</span>ca498f347... <span class="number">100</span>% ▕████████████████████████████████████████████████████████▏  <span class="number">387</span> B</span><br><span class="line">pulling <span class="number">6</span>e4c38e1172f... <span class="number">100</span>% ▕████████████████████████████████████████████████████████▏ <span class="number">1.1</span> KB</span><br><span class="line">pulling f4d24e9138dd... <span class="number">100</span>% ▕████████████████████████████████████████████████████████▏  <span class="number">148</span> B</span><br><span class="line">pulling a85fe2a2e58e... <span class="number">100</span>% ▕████████████████████████████████████████████████████████▏  <span class="number">487</span> B</span><br><span class="line">verifying sha256 digest</span><br><span class="line">writing manifest</span><br><span class="line">success</span><br></pre></td></tr></table></figure>
+<h2 id="Run-DeepSeek"><a href="#Run-DeepSeek" class="headerlink" title="Run DeepSeek"></a>Run DeepSeek</h2><ol>
+<li><strong>Open Command Prompt</strong>: Press Win+R, type “cmd”, and hit Enter.</li>
+<li><strong>Start DeepSeek</strong>: Type the command you used for pulling but replace “pull” with “run”. For instance, “<code>ollama run deepseek-r1:1.5b</code>“. Press Enter and the model will start, and you can begin interacting with it.</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Users\Administrator&gt;ollama run deepseek-r1:1.5b</span><br><span class="line">&gt;&gt;&gt; Send a message (/? for help)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Interact-with-the-Model"><a href="#Interact-with-the-Model" class="headerlink" title="Interact with the Model"></a>Interact with the Model</h2><p>Now, we can chat with the DeepSeek-R1 model. My first question is: <em>How to Install Redis on Ubuntu with Snap?</em></p>
+<p><img src="/image/2025/02/0604.png" alt=""></p>
+<p>However, using the DeepSeek-R1 model in the Windows Command Prompt has one drawback: your chat history won’t be saved. To fix this, you’ll need to install its user interface.</p>
+<h2 id="Optional-Install-a-Graphical-Interface"><a href="#Optional-Install-a-Graphical-Interface" class="headerlink" title="(Optional) Install a Graphical Interface"></a>(Optional) Install a Graphical Interface</h2><ol>
+<li><strong>Install Docker</strong>: Download the Docker installer from <a href="https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&amp;utm_medium=webreferral&amp;utm_campaign=docs-driven-download-win-amd64&amp;gl=1rjke9fgcl_auMjAxNTA4ODQwMy4xNzI1ODYzMTMxgaMTc3ODM4NTkyMy4xNzI0MDM2OTcwga_XJWPQMJYHQ*MTczMDI2OTA1NC42LjEuMTczMDI2OTQwNC4zOC4wLjA">Docker’s official website</a>. Run the installer and follow the setup instructions.</li>
+<li><strong>Deploy Open WebUI</strong>: After installing Docker, open the command prompt and run the command “docker run -d -p 3000:8080 —add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data —name open-webui —restart always ghcr.io/open-webui/open-webui:main”. Wait for the installation to complete. Then, you can access the DeepSeek interface in your web browser at “localhost:3000”.</li>
+</ol>
+<p><img src="/image/2025/02/0605.png" alt=""></p>
+<p><img src="/image/2025/02/0606.png" alt=""></p>
+<p>To set up an account, just enter your name, email, and password. Make sure to remember these details, as you’ll need them every time you open DeepSeek-R1 on localhost.</p>
+<p><img src="/image/2025/02/0607.png" alt=""></p>
+<p>When you’re ready to exit, sign out of DeepSeek in your web browser by clicking your profile icon in the top-right or bottom-left corner, where you’ll find the sign-out option. Then, open the Docker app and click ‘Stop.’ Once that’s done, you can close Docker.</p>
+<p><img src="/image/2025/02/0608.png" alt=""></p>
+<p><img src="/image/2025/02/0609.png" alt=""></p>
+<p>Keep in mind that for DeepSeek-R1 to work in your web browser locally, both Ollama and Docker need to be running in the background. So, first, open Ollama, then launch Docker. Make sure the container is running in Docker; if it’s not, just start it. Once everything’s up and running, go to localhost:3000 in your browser and sign in with the same account to use DeepSeek-R1.</p>
+]]></content>
+      <categories>
+        <category>Large Language Model</category>
+      </categories>
+      <tags>
+        <tag>LLM</tag>
+        <tag>DeepSeek</tag>
       </tags>
   </entry>
 </search>
