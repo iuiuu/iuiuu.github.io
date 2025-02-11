@@ -39798,11 +39798,7 @@ This should display the path to your OpenJDK 17 installation.</li>
 <h2 id="Install-Ollama"><a href="#Install-Ollama" class="headerlink" title="Install Ollama"></a>Install Ollama</h2><ol>
 <li><strong>Visit the Ollama Website</strong>: Open your web browser and go to <a href="https://ollama.com/">Ollama’s official website</a>.</li>
 <li><strong>Download the Windows Installer</strong>: On the <a href="https://ollama.com/download">Ollama download page</a>, click the “Download for Windows” button. Save the file to your computer, usually in the downloads folder.</li>
-<li><strong>Run the Installer</strong>: Locate the downloaded file (e.g., OllamaSetup.exe) and double-click to run it. Follow the on-screen instructions to complete the installation.</li>
-</ol>
-<p><img src="/image/2025/02/0601.png" alt=""></p>
-<p><img src="/image/2025/02/0602.png" alt=""></p>
-<ol>
+<li><strong>Run the Installer</strong>: Locate the downloaded file (e.g., OllamaSetup.exe) and double-click to run it. Follow the on-screen instructions to complete the installation.<br><img src="/image/2025/02/0601.png" alt=""><br><img src="/image/2025/02/0602.png" alt=""></li>
 <li><strong>Verify Installation</strong>: Open the Command Prompt by pressing Win+R, typing “cmd”, and  hitting Enter. Type “<em>ollama —version</em>“. If installed correctly, it will display the current version of Ollama.</li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Users\Administrator&gt;ollama --version</span><br><span class="line">ollama version is 0.5.7</span><br></pre></td></tr></table></figure>
