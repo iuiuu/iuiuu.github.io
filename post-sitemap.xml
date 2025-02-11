@@ -9,6 +9,30 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2025/01/29/ollama-api/</loc>
+        <lastmod>2025-02-11T14:54:21.967Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/01/29/ollama-python-sdk/</loc>
+        <lastmod>2025-02-11T14:53:42.844Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/01/29/ollama-intro/</loc>
+        <lastmod>2025-02-10T17:37:06.075Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2025/01/29/ollama-install/</loc>
         <lastmod>2025-02-09T17:36:01.690Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -41,14 +65,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2025/01/29/ollama-python-sdk/</loc>
-        <lastmod>2025-02-09T17:23:14.655Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2025/01/29/ollama-cli/</loc>
         <lastmod>2025-02-09T17:23:07.539Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -59,14 +75,6 @@
     <url>
         <loc>http://linjiangxiong.com/2025/01/29/ollama-commands/</loc>
         <lastmod>2025-02-09T17:22:54.449Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2025/01/29/ollama-intro/</loc>
-        <lastmod>2025-02-09T17:22:33.213Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
