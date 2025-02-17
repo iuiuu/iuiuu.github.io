@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Introduction to JSON Web Tokens (JWT) | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="In today’s digital world, secure authentication and data exchange are critical for web applications. JSON Web Tokens (JWT) have emerged as a popular solution for securely transmitting information betw">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction to JSON Web Tokens (JWT)">
+<meta property="og:url" content="http://linjiangxiong.com/2025/02/14/ollama-tutorial/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="In today’s digital world, secure authentication and data exchange are critical for web applications. JSON Web Tokens (JWT) have emerged as a popular solution for securely transmitting information betw">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://linjiangxiong.com/image/IMG_3665.JPG">
+<meta property="article:published_time" content="2025-02-13T18:08:18.000Z">
+<meta property="article:modified_time" content="2025-02-17T22:39:21.413Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="JWT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/IMG_3665.JPG"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2025/02/14/ollama-tutorial/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap"><link rel="stylesheet" href="/css/ud_v5.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Introduction to JSON Web Tokens (JWT)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">492</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">65</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Tools</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tools/json-formatter/"><i class="fa-fw fas fa-link"></i><span> JSON Formatter</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Johnson Lin</span></a><a class="nav-page-title" href="/"><span class="site-name">Introduction to JSON Web Tokens (JWT)</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Tools</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tools/json-formatter/"><i class="fa-fw fas fa-link"></i><span> JSON Formatter</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Introduction to JSON Web Tokens (JWT)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-02-13T18:08:18.000Z" title="Created 2025-02-14 02:08:18">2025-02-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-02-17T22:39:21.413Z" title="Updated 2025-02-18 06:39:21">2025-02-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Programming-Digest/">Programming Digest</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="container post-content" id="article-container"><p>In today’s digital world, secure authentication and data exchange are critical for web applications. JSON Web Tokens (JWT) have emerged as a popular solution for securely transmitting information between parties as a compact, self-contained JSON object. Whether you’re a developer building APIs or working on user authentication, understanding JWTs is essential. This article will introduce you to JSON Web Tokens, explain how they work, and provide practical examples to help you get started.</p>
+<h2 id="What-is-a-JSON-Web-Token-JWT"><a href="#What-is-a-JSON-Web-Token-JWT" class="headerlink" title="What is a JSON Web Token (JWT)?"></a>What is a JSON Web Token (JWT)?</h2><p>A JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way to securely transmit information between parties as a JSON object. JWTs are commonly used for authentication and authorization in web applications. They are digitally signed, ensuring that the data they contain is trustworthy and hasn’t been tampered with.</p>
+<p>JWTs are often used in:</p>
+<ul>
+<li><strong>Authentication</strong>: Verifying user identity.</li>
+<li><strong>Authorization</strong>: Granting access to resources based on user roles.</li>
+<li><strong>Information Exchange</strong>: Securely transmitting data between systems.</li>
+</ul>
+<h2 id="Structure-of-a-JWT"><a href="#Structure-of-a-JWT" class="headerlink" title="Structure of a JWT"></a>Structure of a JWT</h2><p>A JWT consists of three parts separated by dots (<code>.</code>):</p>
+<ol>
+<li><strong>Header</strong></li>
+<li><strong>Payload</strong></li>
+<li><strong>Signature</strong></li>
+</ol>
+<p>The structure looks like this:</p>
+<p><code>xxxxx.yyyyy.zzzzz</code></p>
+<h3 id="1-Header"><a href="#1-Header" class="headerlink" title="1. Header"></a>1. Header</h3><p>The header typically consists of two parts:</p>
+<ul>
+<li>The type of token (JWT).</li>
+<li>The signing algorithm being used (e.g., HMAC SHA256 or RSA).</li>
+</ul>
+<p>Example:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;alg&quot;</span><span class="punctuation">:</span> <span class="string">&quot;HS256&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;typ&quot;</span><span class="punctuation">:</span> <span class="string">&quot;JWT&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-Payload"><a href="#2-Payload" class="headerlink" title="2. Payload"></a>2. Payload</h3><p>The payload contains the claims, which are statements about an entity (typically the user) and additional data. There are three types of claims:</p>
+<ul>
+<li><strong>Registered Claims</strong>: Predefined claims like <code>iss</code> (issuer), <code>exp</code> (expiration time), and <code>sub</code> (subject).</li>
+<li><strong>Public Claims</strong>: Custom claims defined by the users.</li>
+<li><strong>Private Claims</strong>: Custom claims agreed upon between parties.</li>
+</ul>
+<p>Example:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;sub&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1234567890&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;John Lin&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;admin&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-Signature"><a href="#3-Signature" class="headerlink" title="3. Signature"></a>3. Signature</h3><p>The signature is used to verify that the token hasn’t been altered. It is created by combining the encoded header, encoded payload, a secret key, and the algorithm specified in the header.</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + &quot;.&quot; +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  secret</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h2 id="How-JWTs-Work"><a href="#How-JWTs-Work" class="headerlink" title="How JWTs Work"></a>How JWTs Work</h2><ol>
+<li><strong>Authentication</strong>: When a user logs in, the server generates a JWT and sends it to the client.</li>
+<li><strong>Storage</strong>: The client stores the JWT (usually in local storage or cookies).</li>
+<li><strong>Authorization</strong>: For subsequent requests, the client sends the JWT in the <code>Authorization</code> header.</li>
+<li><strong>Verification</strong>: The server verifies the JWT’s signature and checks its claims to authorize the request.</li>
+</ol>
+<h2 id="Benefits-of-Using-JWTs"><a href="#Benefits-of-Using-JWTs" class="headerlink" title="Benefits of Using JWTs"></a>Benefits of Using JWTs</h2><ul>
+<li><strong>Stateless</strong>: JWTs are self-contained, reducing the need for server-side session storage.</li>
+<li><strong>Scalable</strong>: Ideal for distributed systems and microservices.</li>
+<li><strong>Secure</strong>: Digitally signed to prevent tampering.</li>
+<li><strong>Compact</strong>: Easy to transmit over networks.</li>
+</ul>
+<h2 id="Example-Creating-and-Verifying-a-JWT"><a href="#Example-Creating-and-Verifying-a-JWT" class="headerlink" title="Example: Creating and Verifying a JWT"></a>Example: Creating and Verifying a JWT</h2><h3 id="Step-1-Install-a-JWT-Library"><a href="#Step-1-Install-a-JWT-Library" class="headerlink" title="Step 1: Install a JWT Library"></a>Step 1: Install a JWT Library</h3><p>For Node.js, you can use the <code>jsonwebtoken</code> library:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install jsonwebtoken</span><br></pre></td></tr></table></figure>
+<h3 id="Step-2-Create-a-JWT"><a href="#Step-2-Create-a-JWT" class="headerlink" title="Step 2: Create a JWT"></a>Step 2: Create a JWT</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> jwt = <span class="built_in">require</span>(<span class="string">&#x27;jsonwebtoken&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> payload = &#123; <span class="attr">userId</span>: <span class="number">1234</span>, <span class="attr">role</span>: <span class="string">&#x27;admin&#x27;</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> secret = <span class="string">&#x27;your-secret-key&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> token = jwt.<span class="title function_">sign</span>(payload, secret, &#123; <span class="attr">expiresIn</span>: <span class="string">&#x27;1h&#x27;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Generated Token:&#x27;</span>, token);</span><br></pre></td></tr></table></figure>
+<h3 id="Step-3-Verify-a-JWT"><a href="#Step-3-Verify-a-JWT" class="headerlink" title="Step 3: Verify a JWT"></a>Step 3: Verify a JWT</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">jwt.<span class="title function_">verify</span>(token, secret, <span class="function">(<span class="params">err, decoded</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Token verification failed:&#x27;</span>, err);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Decoded Token:&#x27;</span>, decoded);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Best-Practices-for-Using-JWTs"><a href="#Best-Practices-for-Using-JWTs" class="headerlink" title="Best Practices for Using JWTs"></a>Best Practices for Using JWTs</h2><ol>
+<li><strong>Use HTTPS</strong>: Always transmit JWTs over secure connections.</li>
+<li><strong>Set Expiration</strong>: Use the <code>exp</code> claim to limit token validity.</li>
+<li><strong>Store Securely</strong>: Avoid storing JWTs in local storage; use HTTP-only cookies instead.</li>
+<li><strong>Validate Claims</strong>: Always verify the token’s claims before granting access.</li>
+</ol>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>JSON Web Tokens (JWTs) are a powerful tool for secure authentication and data exchange in modern web applications. By understanding their structure, how they work, and best practices for implementation, you can enhance the security and scalability of your systems. Whether you’re building APIs or managing user sessions, JWTs provide a reliable and efficient solution.</p>
+<p><strong>Keywords</strong>: JSON Web Tokens, JWT, JWT authentication, JWT structure, JWT example, JWT tutorial, JWT security, JWT best practices, JWT payload, JWT header, JWT signature, JWT implementation, JWT library, JWT claims, JWT vs session, JWT use cases.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2025/02/14/ollama-tutorial/">http://linjiangxiong.com/2025/02/14/ollama-tutorial/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JWT/">JWT</a></div><div class="post-share"><div class="social-share" data-image="/image/IMG_3665.JPG" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/02/10/integrating-deepseek-into-vscode/" title="Integrating DeepSeek into VSCode: A Game-Changer for Developers"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">Integrating DeepSeek into VSCode: A Game-Changer for Developers</div></div><div class="info-2"><div class="info-item-1">Visual Studio Code, affectionately known as VSCode, is a free, open-source code editor developed by Microsoft. Since its debut in 2015, it has skyrocketed in popularity within the developer community and is now a staple across Windows, macOS, and Linux operating systems. One of its most compelling features is the vast extension marketplace. Here, developers can enhance their coding experience with a plethora of extensions, whether it’s language support, code formatting tools, version control...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Johnson Lin</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">492</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">65</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-a-JSON-Web-Token-JWT"><span class="toc-number">1.</span> <span class="toc-text">What is a JSON Web Token (JWT)?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Structure-of-a-JWT"><span class="toc-number">2.</span> <span class="toc-text">Structure of a JWT</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Header"><span class="toc-number">2.1.</span> <span class="toc-text">1. Header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Payload"><span class="toc-number">2.2.</span> <span class="toc-text">2. Payload</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Signature"><span class="toc-number">2.3.</span> <span class="toc-text">3. Signature</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-JWTs-Work"><span class="toc-number">3.</span> <span class="toc-text">How JWTs Work</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Benefits-of-Using-JWTs"><span class="toc-number">4.</span> <span class="toc-text">Benefits of Using JWTs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Example-Creating-and-Verifying-a-JWT"><span class="toc-number">5.</span> <span class="toc-text">Example: Creating and Verifying a JWT</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-1-Install-a-JWT-Library"><span class="toc-number">5.1.</span> <span class="toc-text">Step 1: Install a JWT Library</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-2-Create-a-JWT"><span class="toc-number">5.2.</span> <span class="toc-text">Step 2: Create a JWT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-3-Verify-a-JWT"><span class="toc-number">5.3.</span> <span class="toc-text">Step 3: Verify a JWT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Best-Practices-for-Using-JWTs"><span class="toc-number">6.</span> <span class="toc-text">Best Practices for Using JWTs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">7.</span> <span class="toc-text">Conclusion</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/14/ollama-tutorial/" title="Introduction to JSON Web Tokens (JWT)">Introduction to JSON Web Tokens (JWT)</a><time datetime="2025-02-13T18:08:18.000Z" title="Created 2025-02-14 02:08:18">2025-02-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/10/integrating-deepseek-into-vscode/" title="Integrating DeepSeek into VSCode: A Game-Changer for Developers">Integrating DeepSeek into VSCode: A Game-Changer for Developers</a><time datetime="2025-02-09T22:41:00.000Z" title="Created 2025-02-10 06:41:00">2025-02-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/06/how-to-run-deepseek-locally-on-windows/" title="How To Run DeepSeek Locally On Windows?">How To Run DeepSeek Locally On Windows?</a><time datetime="2025-02-05T18:27:11.000Z" title="Created 2025-02-06 02:27:11">2025-02-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/29/ollama-page-assist/" title="Ollama Page Assist">Ollama Page Assist</a><time datetime="2025-01-29T12:15:55.000Z" title="Created 2025-01-29 20:15:55">2025-01-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/29/ollama-open-webui/" title="Ollama Open WebUI">Ollama Open WebUI</a><time datetime="2025-01-29T11:20:42.000Z" title="Created 2025-01-29 19:20:42">2025-01-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

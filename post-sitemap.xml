@@ -9,6 +9,46 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2025/01/29/ollama-tutorial/</loc>
+        <lastmod>2025-02-17T22:47:18.171Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/01/29/ollama-page-assist/</loc>
+        <lastmod>2025-02-17T22:45:31.916Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/01/29/ollama-open-webui/</loc>
+        <lastmod>2025-02-17T22:45:14.319Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/02/10/integrating-deepseek-into-vscode/</loc>
+        <lastmod>2025-02-17T22:44:38.329Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/02/14/ollama-tutorial/</loc>
+        <lastmod>2025-02-17T22:39:21.413Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2025/02/06/how-to-run-deepseek-locally-on-windows/</loc>
         <lastmod>2025-02-11T15:25:18.733Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -51,14 +91,6 @@
     <url>
         <loc>http://linjiangxiong.com/2025/01/29/ollama-intro/</loc>
         <lastmod>2025-02-10T17:37:06.075Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2025/01/29/ollama-tutorial/</loc>
-        <lastmod>2025-02-09T17:36:01.690Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Integrating DeepSeek into VSCode: A Game-Changer for Developers | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Visual Studio Code, affectionately known as VSCode, is a free, open-source code editor developed by Microsoft. Since its debut in 2015, it has skyrocketed in popularity within the developer community">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Integrating DeepSeek into VSCode: A Game-Changer for Developers">
+<meta property="og:url" content="http://linjiangxiong.com/2025/02/10/integrating-deepseek-into-vscode/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="Visual Studio Code, affectionately known as VSCode, is a free, open-source code editor developed by Microsoft. Since its debut in 2015, it has skyrocketed in popularity within the developer community">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://linjiangxiong.com/image/IMG_3665.JPG">
+<meta property="article:published_time" content="2025-02-09T22:41:00.000Z">
+<meta property="article:modified_time" content="2025-02-17T22:44:38.329Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="Ollama">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="VSCode">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/IMG_3665.JPG"><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2025/02/10/integrating-deepseek-into-vscode/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;family=Source+Sans+3:wght@400;600&amp;display=swap"><link rel="stylesheet" href="/css/ud_v5.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Integrating DeepSeek into VSCode: A Game-Changer for Developers',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/IMG_3665.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">492</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">65</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Tools</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tools/json-formatter/"><i class="fa-fw fas fa-link"></i><span> JSON Formatter</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Johnson Lin</span></a><a class="nav-page-title" href="/"><span class="site-name">Integrating DeepSeek into VSCode: A Game-Changer for Developers</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Tools</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tools/json-formatter/"><i class="fa-fw fas fa-link"></i><span> JSON Formatter</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Integrating DeepSeek into VSCode: A Game-Changer for Developers</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-02-09T22:41:00.000Z" title="Created 2025-02-10 06:41:00">2025-02-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-02-17T22:44:38.329Z" title="Updated 2025-02-18 06:44:38">2025-02-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Programming-Digest/">Programming Digest</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="container post-content" id="article-container"><p>Visual Studio Code, affectionately known as VSCode, is a free, open-source code editor developed by Microsoft. Since its debut in 2015, it has skyrocketed in popularity within the developer community and is now a staple across Windows, macOS, and Linux operating systems. One of its most compelling features is the vast extension marketplace. Here, developers can enhance their coding experience with a plethora of extensions, whether it’s language support, code formatting tools, version control integration, or aesthetic themes and icons.</p>
+<p>Integrating powerful tools like DeepSeek into VSCode can significantly enhance your productivity, streamline your workflow, and provide advanced features like AI-assisted coding, code analysis, and more. In this blog post, I’ll guide you through integrating the trendy DeepSeek into VSCode using the Roo Code extension. If you’re new to VSCode, I recommend checking out the VSCode tutorial for a comprehensive introduction.</p>
+<h2 id="What-is-DeepSeek"><a href="#What-is-DeepSeek" class="headerlink" title="What is DeepSeek?"></a>What is DeepSeek?</h2><p>DeepSeek is an AI-powered tool designed to assist developers in writing better code, debugging, and optimizing their workflows. It leverages machine learning to provide intelligent code suggestions, error detection, and even automated refactoring. By integrating DeepSeek into VSCode, you can supercharge your coding experience.</p>
+<h2 id="What-is-Roo-Code"><a href="#What-is-Roo-Code" class="headerlink" title="What is Roo Code?"></a>What is Roo Code?</h2><p>Roo Code, formerly Roo Cline, is a game-changing AI programming assistant plugin for VSCode. It integrates multiple AI models and a suite of powerful automation features, promising developers a more efficient and intelligent coding journey. What’s remarkable is its seamless compatibility with mainstream APIs like OpenAI, DeepSeek, Anthropic, and Google Gemini. It even supports using local models via Ollama, giving developers the freedom to choose based on their needs and budget. With preset modes such as Code, Architect, and Ask, and the option for custom configurations, it’s a flexible tool for various programming tasks. For instance, QA engineers can create a personalized role for writing test cases.</p>
+<h2 id="Step-by-Step-Guide-to-Integrate-DeepSeek-via-Roo-Code"><a href="#Step-by-Step-Guide-to-Integrate-DeepSeek-via-Roo-Code" class="headerlink" title="Step-by-Step Guide to Integrate DeepSeek via Roo Code"></a>Step-by-Step Guide to Integrate DeepSeek via Roo Code</h2><h3 id="Step-1-Install-Visual-Studio-Code"><a href="#Step-1-Install-Visual-Studio-Code" class="headerlink" title="Step 1: Install Visual Studio Code"></a>Step 1: Install Visual Studio Code</h3><p>If you haven’t already, download and install <strong>Visual Studio Code</strong> from the official website: <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>. It’s available for Windows, macOS, and Linux.</p>
+<h3 id="Step-2-Open-the-Extensions-Marketplace"><a href="#Step-2-Open-the-Extensions-Marketplace" class="headerlink" title="Step 2: Open the Extensions Marketplace"></a>Step 2: Open the Extensions Marketplace</h3><ol>
+<li>Launch VSCode.</li>
+<li>Click on the <strong>Extensions icon</strong> in the Activity Bar on the side of the window (or press <code>Ctrl+Shift+X</code>).</li>
+<li>In the search bar, type <strong>“Roo Code”</strong> and hit Enter.</li>
+</ol>
+<h3 id="Step-3-Install-the-Roo-Code-Extension"><a href="#Step-3-Install-the-Roo-Code-Extension" class="headerlink" title="Step 3: Install the Roo Code Extension"></a>Step 3: Install the Roo Code Extension</h3><ol>
+<li>Look for the extension in the search results.</li>
+<li>Click <strong>Install</strong> to add the extension to your VSCode.</li>
+<li>Once installed, you may need to reload VSCode to activate the extension.</li>
+</ol>
+<p><img src="/image/2025/02/1001.png" alt=""></p>
+<h3 id="Step-4-Obtain-and-Enter-API-Key"><a href="#Step-4-Obtain-and-Enter-API-Key" class="headerlink" title="Step 4: Obtain and Enter API Key"></a>Step 4: Obtain and Enter API Key</h3><ol>
+<li>Once installed, you’ll notice a small rocket icon on the left activity bar. Clicking it reveals a list of supported large language models, and among them is DeepSeek.</li>
+<li>Select DeepSeek as your API provider. You’ll need to enter an API key, which you can obtain by signing up on the DeepSeek official website’s API open platform at <a target="_blank" rel="noopener" href="https://www.deepseek.com/">deepseek.com</a>. Rest assured, this key is stored locally and solely used for API requests within the extension.</li>
+</ol>
+<p><img src="/image/2025/02/1002.png" alt=""></p>
+<p><img src="/image/2025/02/1003.png" alt=""></p>
+<h3 id="Step-5-Start-Using-DeepSeek-in-VSCode"><a href="#Step-5-Start-Using-DeepSeek-in-VSCode" class="headerlink" title="Step 5: Start Using DeepSeek in VSCode"></a>Step 5: Start Using DeepSeek in VSCode</h3><p>Once configured, DeepSeek will start providing real-time assistance as you code. Here’s what you can expect:</p>
+<ul>
+<li><strong>Intelligent Code Suggestions</strong>: DeepSeek will offer context-aware code completions.</li>
+<li><strong>Error Detection</strong>: It will highlight potential errors and suggest fixes.</li>
+<li><strong>Refactoring Assistance</strong>: DeepSeek can help you optimize and clean up your code.</li>
+</ul>
+<p><img src="/image/2025/02/1004.png" alt=""></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>In conclusion, integrating DeepSeek into VSCode via Roo Code unlocks a world of possibilities for developers. It combines the power of a leading code editor with a cutting-edge AI model, potentially revolutionizing your coding workflow. So, give it a try and see how it can enhance your programming experience!</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2025/02/10/integrating-deepseek-into-vscode/">http://linjiangxiong.com/2025/02/10/integrating-deepseek-into-vscode/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Ollama/">Ollama</a><a class="post-meta__tags" href="/tags/LLM/">LLM</a><a class="post-meta__tags" href="/tags/VSCode/">VSCode</a></div><div class="post-share"><div class="social-share" data-image="/image/IMG_3665.JPG" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/02/06/how-to-run-deepseek-locally-on-windows/" title="How To Run DeepSeek Locally On Windows?"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">How To Run DeepSeek Locally On Windows?</div></div><div class="info-2"><div class="info-item-1">Here is a step-by-step guide on how to run DeepSeek locally on Windows: Install Ollama Visit the Ollama Website: Open your web browser and go to Ollama’s official website. Download the Windows Installer: On the Ollama download page, click the “Download for Windows” button. Save the file to your computer, usually in the downloads folder. Run the Installer: Locate the downloaded file (e.g., OllamaSetup.exe) and double-click to run it. Follow the on-screen instructions to complete the...</div></div></div></a><a class="pagination-related" href="/2025/02/14/ollama-tutorial/" title="Introduction to JSON Web Tokens (JWT)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Introduction to JSON Web Tokens (JWT)</div></div><div class="info-2"><div class="info-item-1">In today’s digital world, secure authentication and data exchange are critical for web applications. JSON Web Tokens (JWT) have emerged as a popular solution for securely transmitting information between parties as a compact, self-contained JSON object. Whether you’re a developer building APIs or working on user authentication, understanding JWTs is essential. This article will introduce you to JSON Web Tokens, explain how they work, and provide practical examples to help you get...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/01/29/ollama-commands/" title="Ollama Commands Overview"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-29</div><div class="info-item-2">Ollama Commands Overview</div></div><div class="info-2"><div class="info-item-1">Ollama CommandsOllama offers a variety of command-line tools (CLI) for interacting with locally running models. To see a list of available commands, you can use: 1ollama --help This will display the following: 12345678910111213141516171819202122232425Large language model runnerUsage:  ollama [flags]  ollama [command]Available Commands:  serve       Start ollama  create      Create a model from a Modelfile  show        Show information for a model  run         Run a model  stop        Stop a...</div></div></div></a><a class="pagination-related" href="/2025/01/29/ollama-intro/" title="Introduction to Ollama"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-29</div><div class="info-item-2">Introduction to Ollama</div></div><div class="info-2"><div class="info-item-1">Ollama is an open-source platform for large language models (LLMs), designed to make it easy for users to run, manage, and interact with LLMs directly on their local machines.   It provides a straightforward way to load and use various pre-trained language models, supporting a wide range of natural language processing tasks such as text generation, translation, code writing, and question answering.   What sets Ollama apart is its combination of ready-to-use models and tools with...</div></div></div></a><a class="pagination-related" href="/2025/01/29/ollama-install/" title="Installing Ollama"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-29</div><div class="info-item-2">Installing Ollama</div></div><div class="info-2"><div class="info-item-1">Ollama supports multiple operating systems, including macOS, Windows, Linux, and Docker containers.   It has modest hardware requirements, making it easy for users to run, manage, and interact with large language models locally.   Hardware and Software Requirements CPU: A multi-core processor (4 cores or more recommended).   GPU: If you plan to run large models or perform fine-tuning, a GPU with high computational power (e.g., NVIDIA with CUDA support) is recommended.   RAM: At least 8GB of...</div></div></div></a><a class="pagination-related" href="/2025/01/29/ollama-tutorial/" title="Ollama Tutorial"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-29</div><div class="info-item-2">Ollama Tutorial</div></div><div class="info-2"><div class="info-item-1"> Ollama is an open-source framework designed to make it easy to deploy and run large language models (LLMs) directly on your local machine. It supports multiple operating systems, including macOS, Windows, Linux, and even Docker containers. One of its standout features is model quantization, which significantly reduces GPU memory requirements, making it possible to run large models on everyday home computers. Who Is This Tutorial For?Ollama is ideal for developers, researchers, and users...</div></div></div></a><a class="pagination-related" href="/2025/01/29/ollama-run-model/" title="Running Models with Ollama"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-29</div><div class="info-item-2">Running Models with Ollama</div></div><div class="info-2"><div class="info-item-1">To run a model in Ollama, use the ollama run command.   For example, to run the DeepSeek-R1:8b model and interact with it, use the following command:  1ollama run deepseek-r1:8b If the model isn’t already installed, Ollama will automatically download it.   Once the download is complete, you can interact with the model directly in the terminal:   1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950C:\Users\Administrator&gt;ollama run...</div></div></div></a><a class="pagination-related" href="/2025/01/29/ollama-core-concepts/" title="Ollama Core Concepts"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-29</div><div class="info-item-2">Ollama Core Concepts</div></div><div class="info-2"><div class="info-item-1">Ollama is a localized machine learning framework designed for various natural language processing (NLP) tasks. It focuses on model loading, inference, and generation, making it easy for users to interact with large pre-trained models deployed locally. ModelsModels are the heart of Ollama. These are pre-trained machine learning models capable of performing tasks like text generation, summarization, sentiment analysis, and dialogue generation. Ollama supports a wide range of popular...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Johnson Lin</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">492</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">65</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-DeepSeek"><span class="toc-number">1.</span> <span class="toc-text">What is DeepSeek?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-Roo-Code"><span class="toc-number">2.</span> <span class="toc-text">What is Roo Code?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-by-Step-Guide-to-Integrate-DeepSeek-via-Roo-Code"><span class="toc-number">3.</span> <span class="toc-text">Step-by-Step Guide to Integrate DeepSeek via Roo Code</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-1-Install-Visual-Studio-Code"><span class="toc-number">3.1.</span> <span class="toc-text">Step 1: Install Visual Studio Code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-2-Open-the-Extensions-Marketplace"><span class="toc-number">3.2.</span> <span class="toc-text">Step 2: Open the Extensions Marketplace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-3-Install-the-Roo-Code-Extension"><span class="toc-number">3.3.</span> <span class="toc-text">Step 3: Install the Roo Code Extension</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-4-Obtain-and-Enter-API-Key"><span class="toc-number">3.4.</span> <span class="toc-text">Step 4: Obtain and Enter API Key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-5-Start-Using-DeepSeek-in-VSCode"><span class="toc-number">3.5.</span> <span class="toc-text">Step 5: Start Using DeepSeek in VSCode</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">4.</span> <span class="toc-text">Conclusion</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/14/ollama-tutorial/" title="Introduction to JSON Web Tokens (JWT)">Introduction to JSON Web Tokens (JWT)</a><time datetime="2025-02-13T18:08:18.000Z" title="Created 2025-02-14 02:08:18">2025-02-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/10/integrating-deepseek-into-vscode/" title="Integrating DeepSeek into VSCode: A Game-Changer for Developers">Integrating DeepSeek into VSCode: A Game-Changer for Developers</a><time datetime="2025-02-09T22:41:00.000Z" title="Created 2025-02-10 06:41:00">2025-02-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/06/how-to-run-deepseek-locally-on-windows/" title="How To Run DeepSeek Locally On Windows?">How To Run DeepSeek Locally On Windows?</a><time datetime="2025-02-05T18:27:11.000Z" title="Created 2025-02-06 02:27:11">2025-02-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/29/ollama-page-assist/" title="Ollama Page Assist">Ollama Page Assist</a><time datetime="2025-01-29T12:15:55.000Z" title="Created 2025-01-29 20:15:55">2025-01-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/29/ollama-open-webui/" title="Ollama Open WebUI">Ollama Open WebUI</a><time datetime="2025-01-29T11:20:42.000Z" title="Created 2025-01-29 19:20:42">2025-01-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Johnson Lin</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
