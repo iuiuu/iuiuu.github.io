@@ -39144,6 +39144,8 @@ This should display the path to your OpenJDK 17 installation.</li>
 <p><a href="https://www.linjiangxiong.com/2025/01/29/ollama-cli/">&gt;&gt; Interacting with Ollama Models</a></p>
 <p><a href="https://www.linjiangxiong.com/2025/01/29/ollama-api/">&gt;&gt; Interacting with the Ollama API</a></p>
 <p><a href="https://www.linjiangxiong.com/2025/01/29/ollama-python-sdk/">&gt;&gt; Using Ollama with Python</a></p>
+<p><a href="https://www.linjiangxiong.com/2025/01/29/ollama-open-webui/">&gt;&gt; Ollama Open WebUI</a></p>
+<p><a href="https://www.linjiangxiong.com/2025/01/29/ollama-page-assist/">&gt;&gt; Ollama Page Assist</a></p>
 ]]></content>
       <categories>
         <category>Ollama Tutorial</category>
@@ -39866,13 +39868,13 @@ This should display the path to your OpenJDK 17 installation.</li>
 <li>Click <strong>Install</strong> to add the extension to your VSCode.</li>
 <li>Once installed, you may need to reload VSCode to activate the extension.</li>
 </ol>
-<p><img src="/image/2025/02/1001.png" alt=""></p>
+<p><img src="/image/2025/02/1001.webp" alt=""></p>
 <h3 id="Step-4-Obtain-and-Enter-API-Key"><a href="#Step-4-Obtain-and-Enter-API-Key" class="headerlink" title="Step 4: Obtain and Enter API Key"></a>Step 4: Obtain and Enter API Key</h3><ol>
 <li>Once installed, you’ll notice a small rocket icon on the left activity bar. Clicking it reveals a list of supported large language models, and among them is DeepSeek.</li>
 <li>Select DeepSeek as your API provider. You’ll need to enter an API key, which you can obtain by signing up on the DeepSeek official website’s API open platform at <a href="https://www.deepseek.com/">deepseek.com</a>. Rest assured, this key is stored locally and solely used for API requests within the extension.</li>
 </ol>
-<p><img src="/image/2025/02/1002.png" alt=""></p>
-<p><img src="/image/2025/02/1003.png" alt=""></p>
+<p><img src="/image/2025/02/1002.webp" alt=""></p>
+<p><img src="/image/2025/02/1003.webp" alt=""></p>
 <h3 id="Step-5-Start-Using-DeepSeek-in-VSCode"><a href="#Step-5-Start-Using-DeepSeek-in-VSCode" class="headerlink" title="Step 5: Start Using DeepSeek in VSCode"></a>Step 5: Start Using DeepSeek in VSCode</h3><p>Once configured, DeepSeek will start providing real-time assistance as you code. Here’s what you can expect:</p>
 <ul>
 <li><strong>Intelligent Code Suggestions</strong>: DeepSeek will offer context-aware code completions.</li>
