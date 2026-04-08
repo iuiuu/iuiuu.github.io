@@ -40242,7 +40242,6 @@ This should display the path to your OpenJDK 17 installation.</li>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">javac ReflectionDemo.java</span><br><span class="line">java ReflectionDemo</span><br></pre></td></tr></table></figure>
 <p><strong>预期输出</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Inner 的 NestHost: ReflectionOuter</span><br><span class="line">ReflectionOuter 的 NestHost: ReflectionOuter</span><br><span class="line">Inner 是 ReflectionOuter 的 nestmate 吗？ true</span><br><span class="line">----------------------------------</span><br><span class="line">Nest 成员列表：</span><br><span class="line">  - ReflectionOuter</span><br><span class="line">  - ReflectionOuter$Inner</span><br></pre></td></tr></table></figure>
-<hr>
 <h2 id="结语：透明的进步"><a href="#结语：透明的进步" class="headerlink" title="结语：透明的进步"></a>结语：透明的进步</h2><p>JEP 181 是一个典型的“基础设施改进”——它解决了一个你甚至不知道存在的问题，用一种更优雅的方式重新实现了你已经习以为常的特性。</p>
 <p>作为普通开发者，你可能永远不会直接调用 <code>getNestHost()</code>，也不会在意字节码里是否还有 <code>access$</code> 方法。但当你升级到 Java 11+，你的代码会变得稍微快一点、稍微小一点、调试信息稍微清晰一点、安全性更高一点——所有这些好处，都无需你付出任何额外努力。</p>
 <p><strong>这就是优秀语言演进的标志</strong>：让正确的事情变得简单，让改进在无声中发生。</p>
