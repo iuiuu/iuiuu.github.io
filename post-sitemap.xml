@@ -9,6 +9,38 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2023/09/26/shuhaishibei/</loc>
+        <lastmod>2026-04-08T16:40:59.651Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2021/08/10/technology-management-0/</loc>
+        <lastmod>2026-04-08T16:38:46.570Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2021/08/11/technology-management-3/</loc>
+        <lastmod>2026-04-08T16:38:42.437Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2021/08/10/technology-management-1/</loc>
+        <lastmod>2026-04-08T16:38:37.891Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2021/09/30/high-efficiency-study-note-1/</loc>
         <lastmod>2026-04-08T16:35:21.952Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -67,14 +99,6 @@
     <url>
         <loc>http://linjiangxiong.com/2023/09/26/zailushang/</loc>
         <lastmod>2026-04-08T16:30:50.118Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/09/26/shuhaishibei/</loc>
-        <lastmod>2026-04-08T16:30:27.515Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -3715,30 +3739,6 @@
     <url>
         <loc>http://linjiangxiong.com/2022/01/17/superset-hive-ttransport-exception/</loc>
         <lastmod>2022-01-17T14:53:01.533Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2021/08/10/technology-management-1/</loc>
-        <lastmod>2021-08-23T15:11:17.577Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2021/08/10/technology-management-0/</loc>
-        <lastmod>2021-08-23T15:06:35.010Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2021/08/11/technology-management-3/</loc>
-        <lastmod>2021-08-23T15:04:04.511Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
