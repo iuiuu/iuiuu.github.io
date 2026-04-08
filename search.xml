@@ -13249,7 +13249,7 @@ fafas</script><p>$\dot{a}$</p>
         <category>编程文摘</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -40051,6 +40051,42 @@ This should display the path to your OpenJDK 17 installation.</li>
       </categories>
       <tags>
         <tag>JWT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>书海拾贝</title>
+    <url>/2023/09/26/shuhaishibei/</url>
+    <content><![CDATA[<p>Iuo</p>
+]]></content>
+      <categories>
+        <category>书海拾贝</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在路上</title>
+    <url>/2023/09/26/zailushang/</url>
+    <content><![CDATA[<p>在路上</p>
+]]></content>
+      <categories>
+        <category>在路上</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>生活与成长</title>
+    <url>/2023/09/26/shenghuoyuchengzhang/</url>
+    <content><![CDATA[<p>生活与成长</p>
+]]></content>
+      <categories>
+        <category>生活与成长</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
       </tags>
   </entry>
 </search>
