@@ -9,6 +9,13 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/categories/%25E4%25B9%25A6%25E6%25B5%25B7%25E6%258B%25BE%25E8%25B4%259D/</loc>
+        <lastmod>2026-04-08T16:35:21.952Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/categories/%25E7%2594%259F%25E6%25B4%25BB%25E4%25B8%258E%25E6%2588%2590%25E9%2595%25BF/</loc>
         <lastmod>2026-04-08T16:31:13.605Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -18,13 +25,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/%25E5%259C%25A8%25E8%25B7%25AF%25E4%25B8%258A/</loc>
         <lastmod>2026-04-08T16:30:50.118Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/%25E4%25B9%25A6%25E6%25B5%25B7%25E6%258B%25BE%25E8%25B4%259D/</loc>
-        <lastmod>2026-04-08T16:30:27.515Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -192,7 +192,7 @@
 
     <url>
         <loc>http://linjiangxiong.com/categories/%25E8%25AF%25BB%25E4%25B9%25A6%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0/</loc>
-        <lastmod>2021-11-13T10:53:47.646Z</lastmod>
+        <lastmod>2021-08-23T15:11:17.577Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
