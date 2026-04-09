@@ -40091,7 +40091,7 @@ This should display the path to your OpenJDK 17 installation.</li>
   </entry>
   <entry>
     <title>理解 Java 11 的 Nest 访问控制（JEP 181）</title>
-    <url>/2026/04/09/jdk11-jep-181/</url>
+    <url>/2026/04/09/jdk11-jep-181-nest-based-access-control/</url>
     <content><![CDATA[<h2 id="引言：一个你可能从未注意过的“编译器秘密”"><a href="#引言：一个你可能从未注意过的“编译器秘密”" class="headerlink" title="引言：一个你可能从未注意过的“编译器秘密”"></a>引言：一个你可能从未注意过的“编译器秘密”</h2><p>如果你写过 Java 代码，一定对内部类访问外部类私有成员这样的写法不陌生：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Outer</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">secret</span> <span class="operator">=</span> <span class="number">42</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Inner</span> &#123;</span><br><span class="line">        <span class="keyword">void</span> <span class="title function_">access</span><span class="params">()</span> &#123;</span><br><span class="line">            System.out.println(secret);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这段代码自然得像是呼吸一样。但你可能不知道，在 Java 11 之前，编译器为了让你能这样写，在背后做了不少“见不得光”的勾当——它偷偷生成了一些隐藏方法，像特务一样帮你传递数据。而 JEP 181 的出现，终于让这件事变得光明正大。</p>
