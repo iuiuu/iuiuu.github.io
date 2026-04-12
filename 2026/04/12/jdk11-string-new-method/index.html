@@ -1,0 +1,319 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JDK 11 String 类新增方法详解与实用指南 | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="引言Java Development Kit 11 作为长期支持版本，在 java.lang.String 类中引入了一系列旨在提升开发效率与代码健壮性的新方法。这些新增 API 针对日常开发中的常见痛点提供了标准化、语义清晰的解决方案。本文将对这些新增方法进行系统性的梳理与解读，并通过典型示例展示其相较于传统写法的优势。 一、空白字符判定：isBlank()方法签名 1public boolea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDK 11 String 类新增方法详解与实用指南">
+<meta property="og:url" content="http://linjiangxiong.com/2026/04/12/jdk11-string-new-method/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="引言Java Development Kit 11 作为长期支持版本，在 java.lang.String 类中引入了一系列旨在提升开发效率与代码健壮性的新方法。这些新增 API 针对日常开发中的常见痛点提供了标准化、语义清晰的解决方案。本文将对这些新增方法进行系统性的梳理与解读，并通过典型示例展示其相较于传统写法的优势。 一、空白字符判定：isBlank()方法签名 1public boolea">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://linjiangxiong.com/image/brand/java.jpg">
+<meta property="article:published_time" content="2026-04-12T15:11:12.000Z">
+<meta property="article:modified_time" content="2026-04-12T15:12:22.067Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="Java,JVM,Spring,Spring Boot,Flink,Hadoop,Yarn,MySQL,Elasticsearch,Python,Kafka,Maven,Hbase,Kibana,Logstash">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/brand/java.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "JDK 11 String 类新增方法详解与实用指南",
+  "url": "http://linjiangxiong.com/2026/04/12/jdk11-string-new-method/",
+  "image": "http://linjiangxiong.com/image/brand/java.jpg",
+  "datePublished": "2026-04-12T15:11:12.000Z",
+  "dateModified": "2026-04-12T15:12:22.067Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Johnson Lin",
+      "url": "http://linjiangxiong.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2026/04/12/jdk11-string-new-method/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JDK 11 String 类新增方法详解与实用指南',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">497</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">66</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Johnson Lin</span></a><a class="nav-page-title" href="/"><span class="site-name">JDK 11 String 类新增方法详解与实用指南</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">JDK 11 String 类新增方法详解与实用指南</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-12T15:11:12.000Z" title="发表于 2026-04-12 23:11:12">2026-04-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-12T15:12:22.067Z" title="更新于 2026-04-12 23:12:22">2026-04-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%96%87%E6%91%98/">编程文摘</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="container post-content" id="article-container"><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>Java Development Kit 11 作为长期支持版本，在 <code>java.lang.String</code> 类中引入了一系列旨在提升开发效率与代码健壮性的新方法。这些新增 API 针对日常开发中的常见痛点提供了标准化、语义清晰的解决方案。本文将对这些新增方法进行系统性的梳理与解读，并通过典型示例展示其相较于传统写法的优势。</p>
+<h2 id="一、空白字符判定：isBlank"><a href="#一、空白字符判定：isBlank" class="headerlink" title="一、空白字符判定：isBlank()"></a>一、空白字符判定：<code>isBlank()</code></h2><p><strong>方法签名</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isBlank</span><span class="params">()</span></span><br></pre></td></tr></table></figure>
+<p><strong>功能描述</strong></p>
+<p><code>isBlank()</code> 方法用于判断当前字符串是否为空或仅包含空白字符。其判定的空白字符范围遵循 <code>Character.isWhitespace(int)</code> 的定义，涵盖空格、制表符、换行符、全角空格等各类 Unicode 空白字符。</p>
+<p><strong>传统写法对比</strong></p>
+<p>在 JDK 8 及更早版本中，要准确判断字符串是否仅由空白构成，通常需要结合 <code>trim()</code> 与 <code>isEmpty()</code>，且需预先进行空引用检查：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JDK 8 传统写法</span></span><br><span class="line"><span class="keyword">if</span> (str == <span class="literal">null</span> || str.trim().isEmpty()) &#123;</span><br><span class="line">    <span class="comment">// 处理空或空白逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此写法存在两点不足：</p>
+<ol>
+<li>易因疏忽遗漏 <code>trim()</code> 调用，导致仅包含空格的数据被当作有效输入。</li>
+<li><code>trim()</code> 仅能移除 ASCII 空格（码点 ≤ U+0020），对 Unicode 空白字符无效。</li>
+</ol>
+<p><strong>示例演示</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;</span>.isBlank();          <span class="comment">// 返回 true</span></span><br><span class="line"><span class="string">&quot;   &quot;</span>.isBlank();       <span class="comment">// 返回 true（包含 ASCII 空格）</span></span><br><span class="line"><span class="string">&quot;\n\t&quot;</span>.isBlank();      <span class="comment">// 返回 true（包含转义字符）</span></span><br><span class="line"><span class="string">&quot;\u2000&quot;</span>.isBlank();    <span class="comment">// 返回 true（Unicode 空白字符）</span></span><br><span class="line"><span class="string">&quot;Hello&quot;</span>.isBlank();     <span class="comment">// 返回 false</span></span><br></pre></td></tr></table></figure>
+<p><strong>适用场景</strong></p>
+<p>适用于表单输入校验、配置文件值解析、日志过滤等需排除无效空白内容的场景。该方法可显著减少样板代码并提升语义清晰度。</p>
+<h2 id="二、多行文本流式处理：lines"><a href="#二、多行文本流式处理：lines" class="headerlink" title="二、多行文本流式处理：lines()"></a>二、多行文本流式处理：<code>lines()</code></h2><p><strong>方法签名</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Stream&lt;String&gt; <span class="title function_">lines</span><span class="params">()</span></span><br></pre></td></tr></table></figure>
+<p><strong>功能描述</strong></p>
+<p><code>lines()</code> 方法以行终止符作为分隔依据，将当前字符串转换为一个 <code>Stream&lt;String&gt;</code>，流中的每个元素对应原字符串中的一行。该方法能够自动识别并处理多种行终止符，包括 <code>\n</code>（换行）、<code>\r</code>（回车）以及 <code>\r\n</code>（回车换行组合）。</p>
+<p><strong>传统写法对比</strong></p>
+<p>在旧版本中，处理多行文本通常依赖 <code>split(&quot;\n&quot;)</code> 或 <code>split(&quot;\\R&quot;)</code>，手动管理换行符差异较为繁琐，且过滤空白行需额外编写循环逻辑。</p>
+<p><strong>示例演示</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">multilineText</span> <span class="operator">=</span> <span class="string">&quot;First Line\nSecond Line\r\nThird Line\n\n  \nFourth Line&quot;</span>;</span><br><span class="line"></span><br><span class="line">multilineText.lines()</span><br><span class="line">             .filter(line -&gt; !line.isBlank()) <span class="comment">// 结合 isBlank() 过滤空行</span></span><br><span class="line">             .forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">First Line</span><br><span class="line">Second Line</span><br><span class="line">Third Line</span><br><span class="line">Fourth Line</span><br></pre></td></tr></table></figure>
+<p><strong>适用场景</strong></p>
+<ul>
+<li>日志文件解析与逐行分析。</li>
+<li>HTTP 请求体中多行文本数据的提取与处理。</li>
+<li>配合 Stream API 进行统计、转换或过滤操作。</li>
+</ul>
+<h2 id="三、Unicode-空白移除：strip-、stripLeading-、stripTrailing"><a href="#三、Unicode-空白移除：strip-、stripLeading-、stripTrailing" class="headerlink" title="三、Unicode 空白移除：strip()、stripLeading()、stripTrailing()"></a>三、Unicode 空白移除：<code>strip()</code>、<code>stripLeading()</code>、<code>stripTrailing()</code></h2><p><strong>方法签名</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> String <span class="title function_">strip</span><span class="params">()</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">stripLeading</span><span class="params">()</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">stripTrailing</span><span class="params">()</span></span><br></pre></td></tr></table></figure>
+<p><strong>功能描述</strong></p>
+<p>这三个方法用于移除字符串首部、尾部或两端的空白字符，其行为基于 <code>Character.isWhitespace(int)</code> 定义，支持完整的 Unicode 空白字符集。这与仅处理 ASCII 空白的 <code>trim()</code> 方法有本质区别。</p>
+<p><strong>与 </strong><code>**trim()**</code><strong> 的关键差异</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th><code>trim()</code></th>
+<th><code>strip()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>空白判定标准</td>
+<td>码点 ≤ U+0020 的字符</td>
+<td><code>Character.isWhitespace()</code> 定义的 Unicode 空白</td>
+</tr>
+<tr>
+<td>对全角空格 (U+3000)</td>
+<td>无法移除</td>
+<td>可正确移除</td>
+</tr>
+<tr>
+<td>返回结果</td>
+<td>移除前后 ASCII 空白后的新字符串</td>
+<td>移除前后 Unicode 空白后的新字符串</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>示例演示</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">unicodeSpace</span> <span class="operator">=</span> <span class="string">&quot;\u2000\u3000Hello\u2000\u3000&quot;</span>;</span><br><span class="line"></span><br><span class="line">System.out.println(unicodeSpace.trim());        <span class="comment">// 输出：　　Hello　　（全角空格未被移除）</span></span><br><span class="line">System.out.println(unicodeSpace.strip());       <span class="comment">// 输出：Hello</span></span><br><span class="line">System.out.println(unicodeSpace.stripLeading()); <span class="comment">// 输出：Hello\u2000\u3000</span></span><br><span class="line">System.out.println(unicodeSpace.stripTrailing());<span class="comment">// 输出：\u2000\u3000Hello</span></span><br></pre></td></tr></table></figure>
+<p><strong>适用场景</strong></p>
+<p>当数据来源涉及国际化字符集、富文本编辑器或外部系统导入时，推荐优先使用 <code>strip()</code> 系列方法以避免因 Unicode 空白字符导致的业务逻辑异常。</p>
+<h2 id="四、字符串重复拼接：repeat"><a href="#四、字符串重复拼接：repeat" class="headerlink" title="四、字符串重复拼接：repeat()"></a>四、字符串重复拼接：<code>repeat()</code></h2><p><strong>方法签名</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> String <span class="title function_">repeat</span><span class="params">(<span class="type">int</span> count)</span></span><br></pre></td></tr></table></figure>
+<p><strong>功能描述</strong></p>
+<p>返回一个由当前字符串重复 <code>count</code> 次拼接而成的新字符串。若 <code>count</code> 为零，则返回空字符串。若 <code>count</code> 为负数，则抛出 <code>IllegalArgumentException</code>。</p>
+<p><strong>传统写法对比</strong></p>
+<p>在早期版本中实现字符串重复拼接需借助循环或 <code>StringBuilder</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JDK 8 传统写法</span></span><br><span class="line"><span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    sb.append(<span class="string">&quot;-&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">String</span> <span class="variable">separator</span> <span class="operator">=</span> sb.toString();</span><br></pre></td></tr></table></figure>
+<p><strong>示例演示</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 生成分隔线</span></span><br><span class="line"><span class="type">String</span> <span class="variable">divider</span> <span class="operator">=</span> <span class="string">&quot;-&quot;</span>.repeat(<span class="number">40</span>);   <span class="comment">// 结果：&quot;----------------------------------------&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成缩进空格</span></span><br><span class="line"><span class="type">String</span> <span class="variable">indent</span> <span class="operator">=</span> <span class="string">&quot; &quot;</span>.repeat(<span class="number">4</span>);     <span class="comment">// 结果：&quot;    &quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成测试数据</span></span><br><span class="line"><span class="type">String</span> <span class="variable">pattern</span> <span class="operator">=</span> <span class="string">&quot;AB&quot;</span>.repeat(<span class="number">3</span>);   <span class="comment">// 结果：&quot;ABABAB&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意事项</strong></p>
+<ul>
+<li>传入负数将引发 <code>IllegalArgumentException</code>，调用前需确保 <code>count &gt;= 0</code>。</li>
+<li>重复超大次数（如接近 <code>Integer.MAX_VALUE</code>）可能导致内存溢出，应在业务允许范围内使用。</li>
+</ul>
+<h2 id="五、方法速查表"><a href="#五、方法速查表" class="headerlink" title="五、方法速查表"></a>五、方法速查表</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>功能描述</th>
+<th>示例调用</th>
+<th>返回结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isBlank()</code></td>
+<td>判断是否为空或仅含空白字符</td>
+<td><code>&quot;   &quot;.isBlank()</code></td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>lines()</code></td>
+<td>将多行文本按行分割为 Stream</td>
+<td><code>&quot;a\nb&quot;.lines()</code></td>
+<td><code>Stream.of(&quot;a&quot;, &quot;b&quot;)</code></td>
+</tr>
+<tr>
+<td><code>strip()</code></td>
+<td>移除首尾 Unicode 空白</td>
+<td><code>&quot;　hi　&quot;.strip()</code></td>
+<td><code>&quot;hi&quot;</code></td>
+</tr>
+<tr>
+<td><code>stripLeading()</code></td>
+<td>仅移除首部 Unicode 空白</td>
+<td><code>&quot;　hi&quot;.stripLeading()</code></td>
+<td><code>&quot;hi&quot;</code></td>
+</tr>
+<tr>
+<td><code>stripTrailing()</code></td>
+<td>仅移除尾部 Unicode 空白</td>
+<td><code>&quot;hi　&quot;.stripTrailing()</code></td>
+<td><code>&quot;hi&quot;</code></td>
+</tr>
+<tr>
+<td><code>repeat(int n)</code></td>
+<td>将当前字符串重复 n 次拼接</td>
+<td><code>&quot;Ha&quot;.repeat(2)</code></td>
+<td><code>&quot;HaHa&quot;</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="六、结语"><a href="#六、结语" class="headerlink" title="六、结语"></a>六、结语</h2><p>JDK 11 为 <code>String</code> 类引入的上述方法虽非颠覆性语言特性，却切实解决了长期困扰开发者的细微痛点。<code>isBlank()</code> 让空白检查回归直觉；<code>lines()</code> 与 Stream 的无缝集成简化了文本处理流程；<code>strip()</code> 系列弥补了 <code>trim()</code> 的 Unicode 盲区；<code>repeat()</code> 则使重复拼接操作更加优雅。</p>
+<p>对于仍运行于 JDK 8 的项目，若升级成本可控，建议考虑迁移至 JDK 11 或更高版本以享受这些提升生产力与代码质量的新特性。在日常开发与代码审查中，有意识地采用这些标准 API 替代传统写法，有助于构建更加健壮、可读性更强的 Java 应用程序。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2026/04/12/jdk11-string-new-method/">http://linjiangxiong.com/2026/04/12/jdk11-string-new-method/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://linjiangxiong.com" target="_blank">Johnson Lin</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/image/brand/java.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/04/09/jdk11-jep-181-nest-based-access-control/" title="理解 Java 11 的 Nest 访问控制（JEP 181）"><img class="cover" src="/image/brand/java.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">理解 Java 11 的 Nest 访问控制（JEP 181）</div></div><div class="info-2"><div class="info-item-1">引言：一个你可能从未注意过的“编译器秘密”如果你写过 Java 代码，一定对内部类访问外部类私有成员这样的写法不陌生： 123456789public class Outer &#123;    private int secret = 42;    class Inner &#123;        void access() &#123;            System.out.println(secret);        &#125;    &#125;&#125; 这段代码自然得像是呼吸一样。但你可能不知道，在 Java 11 之前，编译器为了让你能这样写，在背后做了不少“见不得光”的勾当——它偷偷生成了一些隐藏方法，像特务一样帮你传递数据。而 JEP 181 的出现，终于让这件事变得光明正大。 问题的起源——编译器的无奈之举Java 语言 vs JVM 规范故事的矛盾源于一个根本性的不一致：  Java 语言层面：认为内部类和外部类是“一家人”，内部类可以随便访问外部类的私有成员。 JVM 规范层面：访问控制是基于顶级类的。一个类要访问另一个类的 private ...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Johnson Lin</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">497</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">66</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A9%BA%E7%99%BD%E5%AD%97%E7%AC%A6%E5%88%A4%E5%AE%9A%EF%BC%9AisBlank"><span class="toc-number">2.</span> <span class="toc-text">一、空白字符判定：isBlank()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%A4%9A%E8%A1%8C%E6%96%87%E6%9C%AC%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86%EF%BC%9Alines"><span class="toc-number">3.</span> <span class="toc-text">二、多行文本流式处理：lines()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Unicode-%E7%A9%BA%E7%99%BD%E7%A7%BB%E9%99%A4%EF%BC%9Astrip-%E3%80%81stripLeading-%E3%80%81stripTrailing"><span class="toc-number">4.</span> <span class="toc-text">三、Unicode 空白移除：strip()、stripLeading()、stripTrailing()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8D%E5%A4%8D%E6%8B%BC%E6%8E%A5%EF%BC%9Arepeat"><span class="toc-number">5.</span> <span class="toc-text">四、字符串重复拼接：repeat()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%96%B9%E6%B3%95%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-number">6.</span> <span class="toc-text">五、方法速查表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E7%BB%93%E8%AF%AD"><span class="toc-number">7.</span> <span class="toc-text">六、结语</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/04/12/jdk11-string-new-method/" title="JDK 11 String 类新增方法详解与实用指南"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JDK 11 String 类新增方法详解与实用指南"/></a><div class="content"><a class="title" href="/2026/04/12/jdk11-string-new-method/" title="JDK 11 String 类新增方法详解与实用指南">JDK 11 String 类新增方法详解与实用指南</a><time datetime="2026-04-12T15:11:12.000Z" title="发表于 2026-04-12 23:11:12">2026-04-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/09/jdk11-jep-181-nest-based-access-control/" title="理解 Java 11 的 Nest 访问控制（JEP 181）"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="理解 Java 11 的 Nest 访问控制（JEP 181）"/></a><div class="content"><a class="title" href="/2026/04/09/jdk11-jep-181-nest-based-access-control/" title="理解 Java 11 的 Nest 访问控制（JEP 181）">理解 Java 11 的 Nest 访问控制（JEP 181）</a><time datetime="2026-04-08T16:52:53.000Z" title="发表于 2026-04-09 00:52:53">2026-04-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/14/ollama-tutorial/" title="Introduction to JSON Web Tokens (JWT)">Introduction to JSON Web Tokens (JWT)</a><time datetime="2025-02-13T18:08:18.000Z" title="发表于 2025-02-14 02:08:18">2025-02-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/10/integrating-deepseek-into-vscode/" title="Integrating DeepSeek into VSCode: A Game-Changer for Developers">Integrating DeepSeek into VSCode: A Game-Changer for Developers</a><time datetime="2025-02-09T22:41:00.000Z" title="发表于 2025-02-10 06:41:00">2025-02-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/06/how-to-run-deepseek-locally-on-windows/" title="How To Run DeepSeek Locally On Windows?">How To Run DeepSeek Locally On Windows?</a><time datetime="2025-02-05T18:27:11.000Z" title="发表于 2025-02-06 02:27:11">2025-02-06</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By Johnson Lin</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
