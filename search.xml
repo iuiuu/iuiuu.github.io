@@ -40260,7 +40260,7 @@ This should display the path to your OpenJDK 17 installation.</li>
   </entry>
   <entry>
     <title>JDK 11 String 类新增方法详解与实用指南</title>
-    <url>/2026/04/12/jdk11-string-new-method/</url>
+    <url>/2026/04/12/jdk11-new-string-method/</url>
     <content><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>Java Development Kit 11 作为长期支持版本，在 <code>java.lang.String</code> 类中引入了一系列旨在提升开发效率与代码健壮性的新方法。这些新增 API 针对日常开发中的常见痛点提供了标准化、语义清晰的解决方案。本文将对这些新增方法进行系统性的梳理与解读，并通过典型示例展示其相较于传统写法的优势。</p>
 <h2 id="一、空白字符判定：isBlank"><a href="#一、空白字符判定：isBlank" class="headerlink" title="一、空白字符判定：isBlank()"></a>一、空白字符判定：<code>isBlank()</code></h2><p><strong>方法签名</strong></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isBlank</span><span class="params">()</span></span><br></pre></td></tr></table></figure>
