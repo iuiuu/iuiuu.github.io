@@ -40402,4 +40402,230 @@ This should display the path to your OpenJDK 17 installation.</li>
         <category>编程文摘</category>
       </categories>
   </entry>
+  <entry>
+    <title>JDK 与 JRE 的关系：你真的分清了吗？</title>
+    <url>/2026/04/13/jdk-jre-relationship-explanation/</url>
+    <content><![CDATA[<p>在学习和使用 Java 的过程中，几乎每个人都会遇到两个名词：<strong>JDK</strong> 和 <strong>JRE</strong>。</p>
+<p>它们看起来很像，但作用完全不同。很多人一开始会混淆，甚至有些经验丰富的开发者也会模糊地说“反正装上 JDK 就能跑 Java 程序了”。</p>
+<p>那么，它们到底是什么关系？今天我们就来彻底讲清楚。</p>
+<h2 id="先给一个直观的结论"><a href="#先给一个直观的结论" class="headerlink" title="先给一个直观的结论"></a>先给一个直观的结论</h2><p><strong>JRE</strong> 是 <strong>Java 运行时环境</strong>，专门用来<strong>运行</strong> Java 程序。</p>
+<p><strong>JDK</strong> 是 <strong>Java 开发工具包</strong>，它不仅包含 JRE，还包含了编译、调试、打包等开发工具。</p>
+<p>换句话说：  </p>
+<ul>
+<li>如果你只想<strong>运行</strong>别人写好的 Java 程序，只需要装 <strong>JRE</strong>。  </li>
+<li>如果你想<strong>编写、编译、调试</strong> Java 程序，就需要装 <strong>JDK</strong>。</li>
+</ul>
+<p><strong>JDK 包含 JRE</strong>。这是最核心的关系。</p>
+<h2 id="拆开来看：JRE-里有什么？"><a href="#拆开来看：JRE-里有什么？" class="headerlink" title="拆开来看：JRE 里有什么？"></a>拆开来看：JRE 里有什么？</h2><p>JRE 的主要任务是<strong>让 Java 程序能跑起来</strong>。它包含：</p>
+<ul>
+<li><strong>Java 虚拟机（JVM）</strong>：真正执行 Java 字节码的地方，负责内存管理、垃圾回收、线程调度等。</li>
+<li><strong>核心类库</strong>：比如 <code>java.lang</code>、<code>java.util</code>、<code>java.io</code> 等，程序运行时必须依赖这些基础库。</li>
+<li><strong>支持文件</strong>：比如配置文件、资源文件、类加载器所需的库等。</li>
+</ul>
+<p>没有 JRE，你的计算机就无法运行任何 Java 程序。</p>
+<h2 id="再看-JDK：它多了什么？"><a href="#再看-JDK：它多了什么？" class="headerlink" title="再看 JDK：它多了什么？"></a>再看 JDK：它多了什么？</h2><p>JDK 除了包含一个完整的 JRE 之外，还额外提供了开发人员才需要的工具，例如：</p>
+<ul>
+<li><code>javac</code>：Java 编译器，把 <code>.java</code> 源文件编译成 <code>.class</code> 字节码。</li>
+<li><code>jar</code>：打包工具，把多个类文件打包成 JAR 包。</li>
+<li><code>javadoc</code>：从源代码中生成 API 文档。</li>
+<li><code>jdb</code>：Java 调试器，用于排查代码问题。</li>
+<li><code>jconsole</code>、<code>jvisualvm</code> 等监控和调优工具。</li>
+</ul>
+<p>如果你只装了 JRE，试图执行 <code>javac</code> 命令，系统会告诉你找不到这个命令。<br>而如果你装了 JDK，你会发现它的目录里有一个 <code>jre</code> 子文件夹，里面就是你用来运行程序的运行时环境。</p>
+<h2 id="一个类比帮你理解"><a href="#一个类比帮你理解" class="headerlink" title="一个类比帮你理解"></a>一个类比帮你理解</h2><p>可以把 Java 比作写文章：</p>
+<ul>
+<li><strong>JRE</strong> 相当于一个“阅读器”。它只能让你<strong>阅读</strong>已经写好的文章（运行程序）。  </li>
+<li><strong>JDK</strong> 相当于“写作工具 + 阅读器”。它既包含文字编辑器、语法检查工具、格式转换工具（编译、打包、调试），也自带阅读器，方便你写完文章后立刻看效果。</li>
+</ul>
+<p>所以，JDK 是给作者用的，JRE 是给读者用的。</p>
+<h2 id="常见误区与注意事项"><a href="#常见误区与注意事项" class="headerlink" title="常见误区与注意事项"></a>常见误区与注意事项</h2><ol>
+<li><strong>误区一：装了 JDK 就不用单独装 JRE</strong><br>对，因为 JDK 里已经带了 JRE。不过有些软件安装时会建议再装一个独立 JRE，那通常是用来运行某个特定应用的，避免和开发环境冲突。</li>
+<li><strong>误区二：JRE 也能编译 Java 程序</strong><br>不能。JRE 没有编译器，只有 JDK 才有 <code>javac</code>。</li>
+<li><strong>误区三：JRE 和 JDK 版本必须完全一致</strong><br>通常建议保持一致，高版本 JVM 通常可以运行低版本 javac 编译出的类文件，但高版本编译的类无法在低版本 JVM 上运行；同时 Java 大版本间可能存在不兼容变更，并非绝对兼容。</li>
+</ol>
+<h2 id="版本演进中的变化（Java-9-以后）"><a href="#版本演进中的变化（Java-9-以后）" class="headerlink" title="版本演进中的变化（Java 9 以后）"></a>版本演进中的变化（Java 9 以后）</h2><p>在 <strong>Java 8 及以前</strong>，JDK 目录下确实有一个独立的 <code>jre</code> 子目录。</p>
+<p>从 <strong>Java 9</strong> 开始引入了模块化系统（Project Jigsaw），JDK 不再默认生成一个独立的 JRE 文件夹。但<strong>逻辑上</strong>，JDK 依然包含运行程序所需的所有运行时组件。如果你需要一个单独用于运行的 JRE，可以用 <code>jlink</code> 工具按需裁剪生成一个轻量级运行时镜像。</p>
+<p>这一点对普通开发者影响不大，但有助于理解：两者依然是“包含”关系，只是物理组织形式发生了变化。</p>
+<h2 id="总结：一张表"><a href="#总结：一张表" class="headerlink" title="总结：一张表"></a>总结：一张表</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>JRE</th>
+<th>JDK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全称</td>
+<td>Java Runtime Environment</td>
+<td>Java Development Kit</td>
+</tr>
+<tr>
+<td>用途</td>
+<td>运行 Java 程序</td>
+<td>开发 + 运行 Java 程序</td>
+</tr>
+<tr>
+<td>面向人群</td>
+<td>普通用户、服务器部署</td>
+<td>开发者、学习者</td>
+</tr>
+<tr>
+<td>包含 JVM</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>包含核心类库</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>包含编译器 <code>javac</code></td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>包含调试、打包等工具</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>是否包含对方</td>
+<td>❌</td>
+<td>✅（包含 JRE）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="最后一句实用建议"><a href="#最后一句实用建议" class="headerlink" title="最后一句实用建议"></a>最后一句实用建议</h2><ul>
+<li>普通用户（比如只玩 Minecraft Java 版）：安装 <strong>JRE</strong> 就够了，不过现在很多 Java 版游戏已自带运行时，不再强制用户手动装 JRE。  </li>
+<li>学生、程序员、想写 Java 代码的人：直接装 <strong>JDK</strong>，一步到位。</li>
+</ul>
+<p>理解了 JDK 和 JRE 的关系，你也就理解了 Java 程序“一次编写，到处运行”的基础设施是如何组织的。<br>下次别人再问你，你可以自信地说：JDK 是 JRE 的超集，开发用 JDK，运行可只用 JRE。</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>解决 PowerShell 中 npm 命令报错“禁止运行脚本”的几种方法</title>
+    <url>/2026/04/04/powershell-running-scripts-is-disabled-on-this-system-fix/</url>
+    <content><![CDATA[<!-- 这是一张图片，ocr 内容为： -->
+<p><img src="/image/2026/04/0401.png" alt=""></p>
+<p>当你兴高采烈地在 Windows PowerShell 中敲下 <code>npm install</code>，却看到一行红色报错：</p>
+<p><code>npm : 无法加载文件 C:\Program Files\nodejs\npm.ps1，因为在此系统上禁止运行脚本。</code></p>
+<p>别慌，这不是 Node.js 装坏了，而是 Windows 在保护你。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Windows PowerShell</span><br><span class="line">版权所有 (C) Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">尝试新的跨平台 PowerShell https://aka.ms/pscore6</span><br><span class="line"></span><br><span class="line">PS C:\Users\Administrator&gt; npm</span><br><span class="line">npm : 无法加载文件 C:\Program Files\nodejs\npm.ps1，因为在此系统上禁止运行脚本。有关详细信息，请参阅 https:/go.microsof</span><br><span class="line">t.com/fwlink/?LinkID=135170 中的 about_Execution_Policies。</span><br><span class="line">所在位置 行:1 字符: 1</span><br><span class="line">+ npm</span><br><span class="line">+ ~~~</span><br><span class="line">    + CategoryInfo          : SecurityError: (:) []，PSSecurityException</span><br><span class="line">    + FullyQualifiedErrorId : UnauthorizedAccess</span><br></pre></td></tr></table></figure>
+<h2 id="为什么会发生这个错误？"><a href="#为什么会发生这个错误？" class="headerlink" title="为什么会发生这个错误？"></a>为什么会发生这个错误？</h2><p>Windows PowerShell 默认的执行策略（Execution Policy）是 <strong>Restricted</strong>，即禁止运行任何脚本文件。</p>
+<p>当你输入 <code>npm</code> 时，PowerShell 会优先查找并执行 <code>npm.ps1</code>（一个 PowerShell 脚本），而不是我们熟悉的 <code>npm.cmd</code> 可执行文件。由于策略限制，系统拒绝运行该脚本，于是抛出 <code>PSSecurityException</code>。</p>
+<p>这个机制主要是为了防止恶意脚本意外执行。好消息是——解决起来非常简单。</p>
+<h2 id="解决方案（任选一种即可）"><a href="#解决方案（任选一种即可）" class="headerlink" title="解决方案（任选一种即可）"></a>解决方案（任选一种即可）</h2><h3 id="方案一：改用命令提示符（CMD）——-最省事"><a href="#方案一：改用命令提示符（CMD）——-最省事" class="headerlink" title="方案一：改用命令提示符（CMD）—— 最省事"></a>方案一：改用命令提示符（CMD）—— 最省事</h3><p>既然只有 PowerShell 会管脚本策略，那直接换到 <strong>命令提示符</strong> 就好了。</p>
+<ul>
+<li>按 <code>Win + R</code>，输入 <code>cmd</code>，回车。</li>
+<li>在打开的 CMD 窗口中正常使用 <code>npm</code> 命令（例如 <code>npm install</code>）。</li>
+</ul>
+<p>CMD 不会执行 <code>.ps1</code> 脚本，所以永远不会触发这个错误。如果你不常用 PowerShell 的高级功能，这个方案零成本、零风险。</p>
+<!-- 这是一张图片，ocr 内容为： -->
+<p><img src="/image/2026/04/0402.png" alt=""></p>
+<h3 id="方案二：在-PowerShell-中强制使用-npm-cmd"><a href="#方案二：在-PowerShell-中强制使用-npm-cmd" class="headerlink" title="方案二：在 PowerShell 中强制使用 npm.cmd"></a>方案二：在 PowerShell 中强制使用 <code>npm.cmd</code></h3><p>PowerShell 其实也可以直接调用 <code>npm.cmd</code>，避免去查找 <code>npm.ps1</code>：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm.cmd install</span><br></pre></td></tr></table></figure>
+<p>如果你觉得每次都多打一个 <code>.cmd</code> 很麻烦，可以为它设置一个别名：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-Alias</span> <span class="literal">-Name</span> npm <span class="literal">-Value</span> npm.cmd</span><br></pre></td></tr></table></figure>
+<p>把这个命令写入 PowerShell 的配置文件（<code>$PROFILE</code>），以后每次打开 PowerShell 都会自动生效。</p>
+<h3 id="方案三：修改-PowerShell-执行策略（一劳永逸）"><a href="#方案三：修改-PowerShell-执行策略（一劳永逸）" class="headerlink" title="方案三：修改 PowerShell 执行策略（一劳永逸）"></a>方案三：修改 PowerShell 执行策略（一劳永逸）</h3><p>这是最根本的解决办法——调整执行策略，允许运行本地或已签名的脚本。</p>
+<p><strong>推荐做法（仅影响当前用户，无需管理员权限）：</strong></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-ExecutionPolicy</span> RemoteSigned <span class="literal">-Scope</span> CurrentUser</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>RemoteSigned</code>：本地编写的脚本可以直接运行，从网络下载的脚本必须经过数字签名。这是安全性与便利性的最佳平衡。</li>
+<li><code>-Scope CurrentUser</code>：只修改当前用户的策略，不会影响系统其他账户，也不需要以管理员身份运行 PowerShell。</li>
+</ul>
+<p>执行后系统会询问是否确认更改，输入 <code>Y</code> 并回车即可。<br>完成后<strong>关闭并重新打开 PowerShell</strong>，再试 <code>npm</code>，问题就消失了。</p>
+<p><strong>如果上述命令提示需要管理员权限</strong>（某些旧版本 Windows 或特定环境），请右键“Windows PowerShell”选择“以管理员身份运行”，然后执行：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-ExecutionPolicy</span> RemoteSigned</span><br></pre></td></tr></table></figure>
+<p>输入 <code>Y</code> 确认，重启 PowerShell 即可。</p>
+<!-- 这是一张图片，ocr 内容为： -->
+<p><img src="/image/2026/04/0403.png" alt=""></p>
+<h3 id="方案四：临时绕过（仅当前会话有效）"><a href="#方案四：临时绕过（仅当前会话有效）" class="headerlink" title="方案四：临时绕过（仅当前会话有效）"></a>方案四：临时绕过（仅当前会话有效）</h3><p>如果你不想永久修改策略，只想在当前这个 PowerShell 窗口里临时跑一下 <code>npm</code>：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-ExecutionPolicy</span> <span class="literal">-ExecutionPolicy</span> Bypass <span class="literal">-Scope</span> <span class="keyword">Process</span></span><br></pre></td></tr></table></figure>
+<p>这条命令只在当前进程（窗口）中生效，关闭窗口后策略自动恢复原状。适合一次性使用或测试环境。</p>
+<!-- 这是一张图片，ocr 内容为： -->
+<p><img src="/image/2026/04/0404.png" alt=""></p>
+<h2 id="补充知识：PowerShell-执行策略是什么？"><a href="#补充知识：PowerShell-执行策略是什么？" class="headerlink" title="补充知识：PowerShell 执行策略是什么？"></a>补充知识：PowerShell 执行策略是什么？</h2><p>执行策略不是安全边界，而是“防呆机制”。它主要防止用户无意中运行恶意脚本。常见级别：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Restricted</code></td>
+<td>默认值，禁止任何脚本运行</td>
+</tr>
+<tr>
+<td><code>RemoteSigned</code></td>
+<td>本地脚本可运行，远程脚本需签名</td>
+</tr>
+<tr>
+<td><code>AllSigned</code></td>
+<td>所有脚本（包括本地）都需签名</td>
+</tr>
+<tr>
+<td><code>Unrestricted</code></td>
+<td>所有脚本都可运行（不推荐）</td>
+</tr>
+<tr>
+<td><code>Bypass</code></td>
+<td>什么也不阻止，基本无限制</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>对于我们日常使用 Node.js、Python 等开发工具，<code>RemoteSigned</code> 是最合适的。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>改用 CMD</td>
+<td>无需任何配置，100% 有效</td>
+<td>习惯使用 CMD 的用户</td>
+</tr>
+<tr>
+<td>使用 <code>npm.cmd</code></td>
+<td>不修改系统策略</td>
+<td>偶尔使用 PowerShell 但不希望改动</td>
+</tr>
+<tr>
+<td>修改执行策略</td>
+<td>彻底解决，一劳永逸</td>
+<td>日常主力使用 PowerShell 的开发者</td>
+</tr>
+<tr>
+<td>临时绕过</td>
+<td>不改变任何设置</td>
+<td>临时救急，或测试环境</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>我个人最推荐 <strong>方案三（修改为 RemoteSigned + CurrentUser）</strong>，既安全又方便，一次配置永久受益。</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+      <tags>
+        <tag>nodejs</tag>
+      </tags>
+  </entry>
 </search>

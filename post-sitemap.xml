@@ -9,6 +9,22 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2026/04/04/powershell-running-scripts-is-disabled-on-this-system-fix/</loc>
+        <lastmod>2026-04-13T16:37:44.573Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2026/04/13/jdk-jre-relationship-explanation/</loc>
+        <lastmod>2026-04-13T16:33:41.257Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2026/04/12/jdk11-new-string-method/</loc>
         <lastmod>2026-04-12T15:13:15.052Z</lastmod>
         <changefreq>weekly</changefreq>
