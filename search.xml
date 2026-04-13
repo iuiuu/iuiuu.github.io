@@ -40628,4 +40628,135 @@ This should display the path to your OpenJDK 17 installation.</li>
         <tag>nodejs</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Windows 下的 i386 与 amd64 的架构区别</title>
+    <url>/2026/04/14/windows-i386-amd64-difference/</url>
+    <content><![CDATA[<p>在 Windows 系统中下载软件、驱动或开发工具时，你时常会看到两个技术标识：<strong>i386</strong> 和 <strong>amd64</strong>。它们不仅出现在操作系统安装镜像中，也常见于各类应用程序的发布页面。表面上，这似乎是两个抽象的代号，实则承载着 x86 架构数十年的演进历史，也定义了不同硬件平台与操作系统之间的协作方式。理解这两个术语的含义，不仅能帮你搞清楚 Windows 运行环境的底层逻辑，更能让你在下载软件时做出正确的选择。</p>
+<h2 id="i386：32-位时代的奠基者"><a href="#i386：32-位时代的奠基者" class="headerlink" title="i386：32 位时代的奠基者"></a>i386：32 位时代的奠基者</h2><p><strong>i386</strong> 原本特指英特尔公司于 1985 年推出的 <strong>80386</strong> 处理器。这是 x86 家族中第一款 32 位处理器，相比前代 80286 实现了质的飞跃：32 位地址总线使其能够直接访问 4 GB 内存空间，而 32 位寄存器与指令集则为软件性能释放提供了坚实基础。</p>
+<p>在 Windows 生态中，“i386”逐渐超越了具体芯片型号，演变为 <strong>32 位 x86 架构</strong> 的代名词。Windows XP、Windows 7 的 32 位版本，其安装光盘内的核心目录即命名为 <code>I386</code>。当人们说“Windows 的 i386 版本”时，实际指向的是：</p>
+<ul>
+<li><strong>处理器要求</strong>：兼容 32 位 x86 指令集的 CPU（几乎涵盖所有非移动端的英特尔、AMD 处理器直至约 2010 年前后）。</li>
+<li><strong>内存限制</strong>：系统最多支持 4 GB 物理内存，实际可用容量常在 3.2 GB 左右。</li>
+<li><strong>软件生态</strong>：应用程序基于 32 位地址编译，单个进程可用 2 GB（扩展后可达 3 GB）虚拟地址空间。</li>
+</ul>
+<p>i386 体系长期主导了桌面计算，但 4 GB 内存上限在数据量与日俱增的 2000 年代末开始捉襟见肘。更大的内存、更高的计算吞吐需求，催生了向 64 位计算的迁移。</p>
+<h2 id="amd64：64-位时代的现实标准"><a href="#amd64：64-位时代的现实标准" class="headerlink" title="amd64：64 位时代的现实标准"></a>amd64：64 位时代的现实标准</h2><p>64 位计算并非由 AMD 公司首创。英特尔早于 1990 年代与惠普联合开发了 <strong>IA-64</strong> 架构及安腾处理器，但它不兼容 x86 指令集，导致庞大 x86 软件遗产无法直接运行，最终未能普及于消费市场。</p>
+<p><strong>AMD</strong> 公司则采取了更为务实的路径：在 1999 年至 2003 年间陆续发布 <strong>AMD64</strong> 指令集架构，作为 x86 的 64 位扩展。它向下完全兼容 32 位 x86 代码，同时提供 64 位寻址和通用寄存器。首款实现该技术的产品是 2003 年的 <strong>Opteron</strong> 服务器处理器及 <strong>Athlon 64</strong> 桌面处理器。</p>
+<p>英特尔虽然起初反对，但为了市场生存，最终于 2004 年被迫授权并采纳 AMD64 规范，将其更名为 <strong>Intel 64</strong>（曾用名 EM64T、IA-32e）。由于 AMD 率先定义了这项技术标准，整个行业（包括微软、Linux 发行版、VMware 等）均使用 <strong>amd64</strong>（或 x86-64）作为这一架构的官方标识。</p>
+<p>因此在 Windows 语境下，<strong>amd64</strong> 代表 <strong>64 位 x86 架构</strong>，其关键特性包括：</p>
+<ul>
+<li><strong>64 位虚拟地址空间</strong>：理论支持 16 EB（艾字节，约 10¹⁸ 字节），实际 Windows 当前限制为 128 TB 或 256 TB（取决于版本）。</li>
+<li><strong>通用寄存器翻倍</strong>：增加 8 个通用寄存器（共 16 个），且均为 64 位宽，显著提升参数传递与本地变量处理效率。</li>
+<li><strong>指令集扩展</strong>：支持 SSE（流式 SIMD 扩展）系列指令作为基准，强化多媒体和科学计算能力。</li>
+<li><strong>向下兼容</strong>：可运行现有的 32 位应用程序（通过 WoW64 子系统，即 Windows 32-bit on Windows 64-bit）。</li>
+</ul>
+<h2 id="i386-与-amd64-的核心区别"><a href="#i386-与-amd64-的核心区别" class="headerlink" title="i386 与 amd64 的核心区别"></a>i386 与 amd64 的核心区别</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>i386（32 位）</th>
+<th>amd64（64 位）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>指令集架构</td>
+<td>32 位 x86</td>
+<td>64 位 x86</td>
+</tr>
+<tr>
+<td>内存上限</td>
+<td>4 GB</td>
+<td>128 TB+（Windows 限制）</td>
+</tr>
+<tr>
+<td>运行 32 位程序</td>
+<td>原生支持</td>
+<td>通过 WoW64 兼容层支持</td>
+</tr>
+<tr>
+<td>运行 64 位程序</td>
+<td><strong>不支持</strong></td>
+<td>原生支持</td>
+</tr>
+<tr>
+<td>常见标识</td>
+<td>x86, i386</td>
+<td>x64, amd64, x86-64</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>一个重要澄清</strong>：现代 x86 处理器（无论 Intel 还是 AMD）<strong>同时支持</strong> i386 和 amd64 两种运行模式。区别在于<strong>操作系统</strong>——你安装的 Windows 版本是 32 位还是 64 位，决定了系统以哪种模式运行。</p>
+</blockquote>
+<h2 id="Windows-发行版中的实际表现"><a href="#Windows-发行版中的实际表现" class="headerlink" title="Windows 发行版中的实际表现"></a>Windows 发行版中的实际表现</h2><p>当用户下载 Windows 安装镜像或驱动程序时，通常需要选择：</p>
+<ul>
+<li><strong>x86</strong>：即 i386 / 32 位版本。可安装在 32 位或 64 位 CPU 上，但无法使用 4 GB 以上内存，部分现代硬件可能不再提供 32 位驱动。</li>
+<li><strong>x64</strong> / <strong>amd64</strong>：64 位版本。仅能在 64 位 CPU 上安装，可充分利用大内存，并支持硬件 DEP（数据执行保护）、内核补丁保护等安全机制。</li>
+<li><strong>ARM64</strong>（如 Surface Pro X 等设备）：与 i386/amd64 无关的另一种架构，此处不展开。</li>
+</ul>
+<p>许多 Windows 系统目录也保留了这些痕迹：64 位系统中，32 位程序默认安装到 <code>C:\Program Files (x86)</code>，其系统目录 <code>C:\Windows\SysWOW64</code> 存放 32 位系统文件，而 <code>C:\Windows\System32</code> 反而存放 64 位文件——这种看似颠倒的命名正是为了兼容数十年的旧版软件路径约定。</p>
+<h2 id="为什么不是-“i686”-或-“x86-64”？"><a href="#为什么不是-“i686”-或-“x86-64”？" class="headerlink" title="为什么不是 “i686” 或 “x86-64”？"></a>为什么不是 “i686” 或 “x86-64”？</h2><ul>
+<li><strong>i686</strong> 本可指代奔腾 Pro（P6 微架构）及之后的 32 位处理器，但操作系统厂商统一沿用了 i386 作为最小通用指令集基线，以确保兼容性。</li>
+<li><strong>x86-64</strong> 是业界对 64 位 x86 的非专有称呼，但 Windows 及其驱动开发套件（WDK）选择 <strong>amd64</strong> 作为文件夹名、环境变量和构建目标名称，这是微软自 Windows XP 64-Bit Edition（针对 AMD64）以来一贯的技术命名。</li>
+</ul>
+<h2 id="如何查看你的-Windows-系统架构？"><a href="#如何查看你的-Windows-系统架构？" class="headerlink" title="如何查看你的 Windows 系统架构？"></a>如何查看你的 Windows 系统架构？</h2><p>在下载任何软件之前，建议先确认自己电脑的系统类型：</p>
+<ol>
+<li>右键点击 <strong>“此电脑”</strong>（或“我的电脑”）</li>
+<li>选择 <strong>“属性”</strong></li>
+<li>在 <strong>“系统类型”</strong> 一栏查看：<ul>
+<li><strong>64 位操作系统</strong> → 应选择 <code>amd64</code> / <code>x64</code> 版本</li>
+<li><strong>32 位操作系统</strong> → 应选择 <code>i386</code> / <code>x86</code> 版本</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>绝大多数现代 Windows 电脑均为 <strong>64 位系统</strong>，应选择 <code>amd64</code> 版本。</p>
+</blockquote>
+<!-- 这是一张图片，ocr 内容为：设置 关于 主页 相关设置 系统正在监控并保护你的电脑. 查找设置 BITLOCKER 设置 在WINDOWS安全中心中查看详细信息 系统 设备管理果 设备规格 远程东面 口际 系统保护 设备名称 JOHNSON INTEL(R) CORE(TM)I7-10510U CPU @ 1.80GHZ 2.30 处理器 高级系统设置 GHZ 通知和操作 机带RAM 16.0 GB(15.9 GB 可用) 重命名这台电脑 751A8469-FF9E-4BD6-B915-E1E44D79F4D5 设备ID 专注助手 00330-8000-00000-AA213 产品ID 系统类型 64位操作系统,基于X64的处理器 电源和睡眠 笔和触控 没有可用于此显示器的笔或净蛙输入 口 电池 复制 口存储 重命名这台电脑 风平板电脑 WINDOWS  规格 所多任务处理 版本 WINDOWS 10 专业版 投影到此电脑 版本号 21H1 安装日期 2022/5/10 剪贴板 操作系统内部版本 19043.1055 WINDOWS FEATURE EXPERIENCE PACK 120.2212.2020.0 体验 远程桌面 复制 关于 再改产品率领成升级 WINDOURS -->
+<p><img src="/image/2026/04/1402.png" alt=""></p>
+<h2 id="实例：如何正确下载-JVMS？"><a href="#实例：如何正确下载-JVMS？" class="headerlink" title="实例：如何正确下载 JVMS？"></a>实例：如何正确下载 JVMS？</h2><p><strong>JVMS</strong>（JDK Version Manager）是一款用于管理多个 JDK 版本的开源工具。在其 GitHub 发布页面中，你会看到针对不同架构提供了不同的 zip 包。</p>
+<h3 id="正确下载步骤"><a href="#正确下载步骤" class="headerlink" title="正确下载步骤"></a>正确下载步骤</h3><ol>
+<li><strong>访问 JVMS 的 GitHub Releases 页面</strong><br>直接打开：<a href="https://github.com/ystyle/jvms/releases">https://github.com/ystyle/jvms/releases</a></li>
+<li><strong>根据你的 Windows 系统架构选择对应文件</strong>  <ul>
+<li><strong>64 位 Windows</strong> → 下载文件名中包含 <code>amd64</code> 的 <code>jvms_xxxxx.zip</code></li>
+<li><strong>32 位 Windows</strong> → 下载文件名中包含 <code>i386</code> 的 <code>jvms_xxxxx.zip</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>假设最新版本为 <code>v2.1.14</code>，发布页面通常包含以下文件：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>适用系统</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>jvms_v2.1.14_amd64.zip</code></td>
+<td>64 位 Windows（绝大多数用户）</td>
+</tr>
+<tr>
+<td><code>jvms_v2.1.14_386.zip</code></td>
+<td>32 位 Windows（老旧或特殊系统）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>下载后解压即可通过命令行使用 <code>jvms</code> 命令管理 JDK 版本。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><strong>i386</strong> 和 <strong>amd64</strong> 是两种 x86 指令集架构的代称，分别对应 <strong>32 位</strong> 和 <strong>64 位</strong> 运行环境</li>
+<li>在 Windows 使用场景中，它们直接决定了你应该下载哪个版本的操作系统、驱动程序或应用工具</li>
+<li>以 JVMS 为例：64 位 Windows 用户选择 <code>amd64</code> 版本，32 位用户选择 <code>i386</code> 版本</li>
+</ul>
+<p>理解了这两个概念，你不仅能在下载 JVMS 时不出错，面对任何提供多架构版本的软件时，也能自信地做出正确选择。</p>
+]]></content>
+      <categories>
+        <category>编程文摘</category>
+      </categories>
+  </entry>
 </search>
