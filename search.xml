@@ -40716,7 +40716,7 @@ This should display the path to your OpenJDK 17 installation.</li>
 <p>绝大多数现代 Windows 电脑均为 <strong>64 位系统</strong>，应选择 <code>amd64</code> 版本。</p>
 </blockquote>
 <!-- 这是一张图片，ocr 内容为：设置 关于 主页 相关设置 系统正在监控并保护你的电脑. 查找设置 BITLOCKER 设置 在WINDOWS安全中心中查看详细信息 系统 设备管理果 设备规格 远程东面 口际 系统保护 设备名称 JOHNSON INTEL(R) CORE(TM)I7-10510U CPU @ 1.80GHZ 2.30 处理器 高级系统设置 GHZ 通知和操作 机带RAM 16.0 GB(15.9 GB 可用) 重命名这台电脑 751A8469-FF9E-4BD6-B915-E1E44D79F4D5 设备ID 专注助手 00330-8000-00000-AA213 产品ID 系统类型 64位操作系统,基于X64的处理器 电源和睡眠 笔和触控 没有可用于此显示器的笔或净蛙输入 口 电池 复制 口存储 重命名这台电脑 风平板电脑 WINDOWS  规格 所多任务处理 版本 WINDOWS 10 专业版 投影到此电脑 版本号 21H1 安装日期 2022/5/10 剪贴板 操作系统内部版本 19043.1055 WINDOWS FEATURE EXPERIENCE PACK 120.2212.2020.0 体验 远程桌面 复制 关于 再改产品率领成升级 WINDOURS -->
-<p><img src="/image/2026/04/1402.png" alt=""></p>
+<p><img src="/image/2026/04/1402.jpeg" alt=""></p>
 <h2 id="实例：如何正确下载-JVMS？"><a href="#实例：如何正确下载-JVMS？" class="headerlink" title="实例：如何正确下载 JVMS？"></a>实例：如何正确下载 JVMS？</h2><p><strong>JVMS</strong>（JDK Version Manager）是一款用于管理多个 JDK 版本的开源工具。在其 GitHub 发布页面中，你会看到针对不同架构提供了不同的 zip 包。</p>
 <h3 id="正确下载步骤"><a href="#正确下载步骤" class="headerlink" title="正确下载步骤"></a>正确下载步骤</h3><ol>
 <li><strong>访问 JVMS 的 GitHub Releases 页面</strong><br>直接打开：<a href="https://github.com/ystyle/jvms/releases">https://github.com/ystyle/jvms/releases</a></li>
