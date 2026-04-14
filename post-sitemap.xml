@@ -9,6 +9,70 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2026/04/13/jdk-jre-relationship-explanation/</loc>
+        <lastmod>2026-04-14T16:39:31.761Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2026/04/09/jdk11-jep-181-nest-based-access-control/</loc>
+        <lastmod>2026-04-14T16:38:52.658Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2026/04/12/jdk11-new-string-method/</loc>
+        <lastmod>2026-04-14T16:38:43.144Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2021/09/30/high-efficiency-study-note-1/</loc>
+        <lastmod>2026-04-14T16:38:05.042Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2021/10/30/high-efficiency-study-note-5/</loc>
+        <lastmod>2026-04-14T16:37:58.878Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2021/10/20/high-efficiency-study-note-4/</loc>
+        <lastmod>2026-04-14T16:37:53.423Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2021/10/05/high-efficiency-study-note-2/</loc>
+        <lastmod>2026-04-14T16:37:45.206Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2026/04/15/java11-jep-321-http-client-api/</loc>
+        <lastmod>2026-04-14T16:36:50.684Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2025/01/01/install-java-jdk-21-openjdk-21-on-ubuntu/</loc>
         <lastmod>2026-04-14T16:28:25.346Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -193,14 +257,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2026/04/15/java11-jep-321-http-client-api/</loc>
-        <lastmod>2026-04-14T16:20:30.699Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2026/04/14/windows-i386-amd64-difference/</loc>
         <lastmod>2026-04-13T16:56:48.539Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -211,30 +267,6 @@
     <url>
         <loc>http://linjiangxiong.com/2026/04/04/powershell-running-scripts-is-disabled-on-this-system-fix/</loc>
         <lastmod>2026-04-13T16:41:08.204Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2026/04/13/jdk-jre-relationship-explanation/</loc>
-        <lastmod>2026-04-13T16:33:41.257Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2026/04/12/jdk11-new-string-method/</loc>
-        <lastmod>2026-04-12T15:13:15.052Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2026/04/09/jdk11-jep-181-nest-based-access-control/</loc>
-        <lastmod>2026-04-12T15:12:29.273Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -273,40 +305,8 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2021/09/30/high-efficiency-study-note-1/</loc>
-        <lastmod>2026-04-08T16:35:21.952Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2021/10/30/high-efficiency-study-note-5/</loc>
-        <lastmod>2026-04-08T16:35:17.735Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2021/10/20/high-efficiency-study-note-4/</loc>
-        <lastmod>2026-04-08T16:35:13.670Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2021/10/07/high-efficiency-study-note-3/</loc>
         <lastmod>2026-04-08T16:35:08.989Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2021/10/05/high-efficiency-study-note-2/</loc>
-        <lastmod>2026-04-08T16:35:04.143Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

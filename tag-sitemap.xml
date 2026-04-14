@@ -4,7 +4,14 @@
 
     <url>
         <loc>http://linjiangxiong.com/tags/java/</loc>
-        <lastmod>2026-04-14T16:28:25.346Z</lastmod>
+        <lastmod>2026-04-14T16:39:31.761Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/</loc>
+        <lastmod>2026-04-14T16:38:05.042Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -47,13 +54,6 @@
     <url>
         <loc>http://linjiangxiong.com/tags/%E6%8A%80%E6%9C%AF%E7%AE%A1%E7%90%86/</loc>
         <lastmod>2026-04-08T16:38:46.570Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/</loc>
-        <lastmod>2026-04-08T16:35:21.952Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
