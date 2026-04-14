@@ -1,0 +1,234 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Introduction to the C Language | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="HistoryThe C programming language was originally invented as a tool for developing the Unix operating system. In 1969, Ken Thompson and Dennis Ritchie at Bell Labs in the United States developed the U">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction to the C Language">
+<meta property="og:url" content="http://linjiangxiong.com/2024/05/01/introduction-to-the-c-language/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="HistoryThe C programming language was originally invented as a tool for developing the Unix operating system. In 1969, Ken Thompson and Dennis Ritchie at Bell Labs in the United States developed the U">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://linjiangxiong.com/image/IMG_3665.JPG">
+<meta property="article:published_time" content="2024-05-01T02:55:56.000Z">
+<meta property="article:modified_time" content="2024-09-13T14:41:25.163Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="C Programming Language">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/IMG_3665.JPG"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Introduction to the C Language",
+  "url": "http://linjiangxiong.com/2024/05/01/introduction-to-the-c-language/",
+  "image": "http://linjiangxiong.com/image/IMG_3665.JPG",
+  "datePublished": "2024-05-01T02:55:56.000Z",
+  "dateModified": "2024-09-13T14:41:25.163Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Johnson Lin",
+      "url": "http://linjiangxiong.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2024/05/01/introduction-to-the-c-language/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Introduction to the C Language',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">501</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">66</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Johnson Lin</span></a><a class="nav-page-title" href="/"><span class="site-name">Introduction to the C Language</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Introduction to the C Language</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-01T02:55:56.000Z" title="发表于 2024-05-01 10:55:56">2024-05-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-13T14:41:25.163Z" title="更新于 2024-09-13 22:41:25">2024-09-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-Tutorial/">C Tutorial</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="container post-content" id="article-container"><h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><p>The C programming language was originally invented as a tool for developing the Unix operating system.</p>
+<p>In 1969, Ken Thompson and Dennis Ritchie at Bell Labs in the United States developed the Unix operating system. Unix was initially written in assembly language, making it difficult to port to other computers. To address this, they decided to rewrite it in a high-level language. However, existing high-level languages at the time did not meet their needs, so Thompson developed the B language based on BCPL.</p>
+<p>In 1972, Dennis Ritchie and Brian Kernighan redesigned the B language, creating a new language that replaced B, which they named C.</p>
+<p>By 1973, the entire Unix system was rewritten in C, and the language quickly gained popularity, becoming widely used for developing various operating systems and system software.</p>
+<p>In 1988, the American National Standards Institute (ANSI) officially standardized the C language, marking its stabilization and formalization.</p>
+<p>Decades later, C remains one of the most widely used and popular system programming languages, with Unix and Linux systems still developed in C.</p>
+<hr>
+<h2 id="Features-of-C-Language"><a href="#Features-of-C-Language" class="headerlink" title="Features of C Language"></a>Features of C Language</h2><p>The enduring popularity and widespread application of C can be attributed to several distinctive features:</p>
+<ol>
+<li><strong>Low-Level Language</strong><br>C allows direct hardware manipulation, memory management, and system-level operations, making it a language close to the machine level, or “low-level.” This makes it ideal for writing programs that interact closely with hardware or require high performance.</li>
+<li><strong>Portability</strong><br>C was originally designed to help port Unix to different computer architectures, emphasizing portability from the start. C programs can be relatively easily adapted to run on different hardware and operating systems.<br>Beyond traditional computing, C is also the preferred language for embedded systems, such as those in cars, cameras, and home appliances, largely due to its portability.</li>
+<li><strong>Simplicity</strong><br>C syntax is relatively straightforward, with a limited number of syntax rules and minimal syntactic sugar. Generally, C provides only one way to perform similar tasks, reducing language complexity.<br>Furthermore, C syntax is foundational, lacking advanced data structures like classes. Complex data structures must be manually constructed by the programmer.</li>
+<li><strong>Flexibility</strong><br>C imposes few constraints on programmers. It assumes that programmers know what they are doing, allowing them to perform risky operations without restriction. You have complete freedom, but you are also responsible for the consequences.<br>The philosophy of C is “trust the programmer, don’t interfere.” For example, C requires manual memory management and does not offer features like automatic memory cleanup, type checking, array bounds checking, or pointer safety measures.<br>While this approach can seem dangerous, it provides experienced programmers with great flexibility, though it can make debugging more challenging.</li>
+<li><strong>Summary</strong><br>These features allow C to write highly performant programs that fully utilize hardware potential, with a relatively simple compiler implementation. However, C code is prone to errors, and writing reliable programs can be challenging for most programmers.<br>Additionally, many modern languages, including C++, Java, C#, and JavaScript, are built on the foundations of C. Mastering C can deepen your understanding of these languages.</li>
+</ol>
+<hr>
+<h2 id="Versions-of-C-Language"><a href="#Versions-of-C-Language" class="headerlink" title="Versions of C Language"></a>Versions of C Language</h2><p>Throughout history, C has evolved through several versions:</p>
+<ol>
+<li><strong>K&amp;R C</strong><br>K&amp;R C refers to the original version of the C language. In 1978, C’s creators, Dennis Ritchie and Brian Kernighan, co-authored the seminal textbook <em>The C Programming Language</em>. Since there was no formal C syntax standard at the time, this book became the de facto standard, named after the initials of its authors: “K&amp;R C.”</li>
+<li><strong>ANSI C (also known as C89 or C90)</strong><br>The original C language was simple and vague in many aspects, and with C syntax still evolving, there were increasing calls for standardization.<br>In 1989, ANSI developed a formal C standard, which was later adopted by the International Organization for Standardization (ISO) in 1990. This version is known as “ANSI C” or, by its release years, “C89” or “C90.”</li>
+<li><strong>C95</strong><br>In 1995, ANSI updated the 1989 standard with support for multibyte and wide characters, resulting in the C95 version.</li>
+<li><strong>C99</strong><br>The first major revision of the C standard came in 1999, introducing many new features, such as the <code>//</code> comment syntax. C99 is currently one of the most widely used C versions.</li>
+<li><strong>C11</strong><br>In 2011, the standard was revised again, adding support for Unicode and multithreading. This version is called C11.</li>
+<li><strong>C17</strong><br>The C11 standard was patched in 2017, with the new version, released in 2018, fixing some of C11’s shortcomings without adding new features. This version is known as C17.</li>
+<li><strong>C2x</strong><br>A new version of C is currently under discussion and is expected to be finalized by 2023, at which point it will be called C23.</li>
+</ol>
+<hr>
+<h2 id="Compiling-C-Programs"><a href="#Compiling-C-Programs" class="headerlink" title="Compiling C Programs"></a>Compiling C Programs</h2><p>C is a compiled language, meaning its source code files, which typically end with the <code>.c</code> extension, are not directly executable. They must be translated into binary executable files through a compiler. This process, known as “compilation,” occurs during the compile time and differs from the runtime when the program is actually executed.</p>
+<p>The most commonly used C compiler today is the GCC compiler from the Free Software Foundation, which is available for free. This book also uses GCC. Linux and Mac systems can directly install GCC, while Windows users can use MinGW. Alternatively, online compilers like CodingGround and OnlineGDB offer web-based simulation of C code execution:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://tutorialspoint.com/compile_c_online.php">CodingGround</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://onlinegdb.com/online_c_compiler">OnlineGDB</a></li>
+</ul>
+<p>The examples in this book are compiled using GCC from the command line.</p>
+<hr>
+<h2 id="Hello-World-Example"><a href="#Hello-World-Example" class="headerlink" title="Hello World Example"></a>Hello World Example</h2><p>A simple C program, typically named <code>hello.c</code>, is just a plain text file that can be edited with any text editor. Here’s an example:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Hello World\n&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This program’s sole purpose is to display “Hello World” on the screen.</p>
+<p>To compile and run C code, ensure GCC is installed, then open the command line and run the following command:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gcc hello.c</span><br></pre></td></tr></table></figure>
+<p>This command compiles <code>hello.c</code> into a binary executable. Note that <code>$</code> is the command line prompt; you only need to type the part after it.</p>
+<p>By default, this command generates an output file named <code>a.out</code> (or <code>a.exe</code> on Windows). Run this file to see the output:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./a.out</span><br><span class="line">Hello World</span><br></pre></td></tr></table></figure>
+<p>The <code>-o</code> option (short for “output”) allows you to specify the output file name:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gcc -o hello hello.c</span><br></pre></td></tr></table></figure>
+<p>This command specifies that the output file should be named <code>hello</code>, instead of the default <code>a.out</code>. Running the file will produce the same result:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./hello</span><br><span class="line">Hello World</span><br></pre></td></tr></table></figure>
+<p>The <code>-std=</code> option allows you to specify the C standard version for compilation:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gcc -std=c99 hello.c</span><br></pre></td></tr></table></figure>
+<p>This command compiles the code according to the C99 standard.</p>
+<p>Note: The <code>-std</code> option uses <code>=</code> to connect the argument, unlike <code>-o</code>, which uses a space. Be sure there are no extra spaces around the <code>=</code> sign.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2024/05/01/introduction-to-the-c-language/">http://linjiangxiong.com/2024/05/01/introduction-to-the-c-language/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://linjiangxiong.com" target="_blank">Johnson Lin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C-Programming-Language/">C Programming Language</a></div><div class="post-share"><div class="social-share" data-image="/image/IMG_3665.JPG" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/01/03/analyzing-time-complexity-of-algorithms-using-big-o-notation/" title="Analyzing Time Complexity of Algorithms Using Big O Notation"><img class="cover" src="/image/2024/01/2024010301.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Analyzing Time Complexity of Algorithms Using Big O Notation</div></div><div class="info-2"><div class="info-item-1">In the previous article “Big O Notation for Time and Space Complexity,” we introduced the origin and notation of Big O time complexity. Now let’s explore how to analyze the time complexity of a piece of code. Understanding how to analyze the time complexity of a piece of code using Big O notation is a crucial skill for any software developer or computer scientist. Big O notation provides a way to describe the performance of an algorithm in terms of the amount of time it takes to execute or th...</div></div></div></a><a class="pagination-related" href="/2024/05/02/basic-c-language-syntax/" title="Basic C Language Syntax"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Basic C Language Syntax</div></div><div class="info-2"><div class="info-item-1">StatementsC code is composed of statements. A statement is a command that the program executes. In C, each statement must end with a semicolon, unless specified otherwise. 1int x = 1; The above is a variable declaration statement, where the integer variable x is declared and assigned a value of 1. Multiple statements can be written on a single line: 1int x; x = 1; Here, two statements are written on one line. Line breaks between statements aren’t required but are often used for readability. A...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/05/28/c-language-lib-iso646-h/" title="iso646.h in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-28</div><div class="info-item-2">iso646.h in C Language</div></div><div class="info-2"><div class="info-item-1">The iso646.h header file specifies alternative spellings for some common operators. For example, it uses the keyword and as a substitute for the logical operator &amp;&amp;.  Here’s how the following condition can be expressed using these alternatives: 123if (x &gt; 6 and x &lt; 12)// is equivalent toif (x &gt; 6 &amp;&amp; x &lt; 12) The defined alternative spellings are as follows:  and replaces &amp;&amp; and_eq replaces &amp;= bitand replaces &amp; bitor replaces | compl replaces ~ not re...</div></div></div></a><a class="pagination-related" href="/2024/05/21/c-language-cli/" title="CLI in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-21</div><div class="info-item-2">CLI in C Language</div></div><div class="info-2"><div class="info-item-1">Command Line ArgumentsC programs can receive parameters from the command line. For example, running: 1$ ./foo hello world The program foo receives two command line arguments: hello and world. How does the program access these command line arguments? C stores the command line input in an array, which can be accessed through the parameters of the main() function. 1234567#include &lt;stdio.h&gt;int main(int argc, char* argv[]) &#123;    for (int i = 0; i &lt; argc; i++) &#123;        printf(&quo...</div></div></div></a><a class="pagination-related" href="/2024/05/29/c-language-lib-limits-h/" title="limits.h in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-29</div><div class="info-item-2">limits.h in C Language</div></div><div class="info-2"><div class="info-item-1">The limits.h header provides macros that define the range of values for various integer types, including character types. Here are the key macros:  CHAR_BIT: Number of bits in a character. SCHAR_MIN: Minimum value of a signed char. SCHAR_MAX: Maximum value of a signed char. UCHAR_MAX: Maximum value of an unsigned char. CHAR_MIN: Minimum value of a char. CHAR_MAX: Maximum value of a char. MB_LEN_MAX: Maximum number of bytes in a multibyte character. SHRT_MIN: Minimum value of a short int. SHRT...</div></div></div></a><a class="pagination-related" href="/2024/05/09/c-language-array/" title="Array in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-09</div><div class="info-item-2">Array in C Language</div></div><div class="info-2"><div class="info-item-1">IntroductionAn array is a collection of values of the same type stored in a sequential manner. Arrays are represented by a variable name followed by square brackets, with the number inside the brackets indicating the number of elements in the array. 1int scores[100]; In this example, an array named scores is declared with 100 elements, each of which is of type int. Note: When declaring an array, you must specify its size. Array elements are indexed starting from 0. Thus, in an array scores[10...</div></div></div></a><a class="pagination-related" href="/2024/05/23/c-language-lib-assert-h/" title="assert.h in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-23</div><div class="info-item-2">assert.h in C Language</div></div><div class="info-2"><div class="info-item-1">assert()The assert.h header file defines the assert() macro, which is used to verify that a program meets certain conditions at runtime. If a condition is not met, the program will terminate with an error message. This macro is often referred to as an “assertion.” For example, consider the following code: 1assert(PI &gt; 3); When the program reaches this line, it checks whether the variable PI is greater than 3. If it is, the program continues to run; if not, the program will terminate and pr...</div></div></div></a><a class="pagination-related" href="/2024/05/10/c-language-string/" title="String in C Language"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-10</div><div class="info-item-2">String in C Language</div></div><div class="info-2"><div class="info-item-1">OverviewC doesn’t have a dedicated string type. Instead, strings are treated as arrays of characters (char arrays). For example, the string “Hello” is processed as the array {‘H’, ‘e’, ‘l’, ‘l’, ‘o’}. The compiler allocates a continuous block of memory for the array, with all characters stored in adjacent memory units. C automatically adds a null byte (‘\0’) at the end of the string to indicate its termination. This null character is different from the character ‘0’. The null character has an...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Johnson Lin</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">501</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">66</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#History"><span class="toc-number">1.</span> <span class="toc-text">History</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features-of-C-Language"><span class="toc-number">2.</span> <span class="toc-text">Features of C Language</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Versions-of-C-Language"><span class="toc-number">3.</span> <span class="toc-text">Versions of C Language</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Compiling-C-Programs"><span class="toc-number">4.</span> <span class="toc-text">Compiling C Programs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-World-Example"><span class="toc-number">5.</span> <span class="toc-text">Hello World Example</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/04/15/java11-jep-321-http-client-api/" title="Java 11 新增的 HTTP Client API（JEP 321）"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java 11 新增的 HTTP Client API（JEP 321）"/></a><div class="content"><a class="title" href="/2026/04/15/java11-jep-321-http-client-api/" title="Java 11 新增的 HTTP Client API（JEP 321）">Java 11 新增的 HTTP Client API（JEP 321）</a><time datetime="2026-04-14T16:10:29.000Z" title="发表于 2026-04-15 00:10:29">2026-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/14/windows-i386-amd64-difference/" title="Windows 下的 i386 与 amd64 的架构区别"><img src="/image/2026/04/1402.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows 下的 i386 与 amd64 的架构区别"/></a><div class="content"><a class="title" href="/2026/04/14/windows-i386-amd64-difference/" title="Windows 下的 i386 与 amd64 的架构区别">Windows 下的 i386 与 amd64 的架构区别</a><time datetime="2026-04-13T16:12:42.000Z" title="发表于 2026-04-14 00:12:42">2026-04-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/13/jdk-jre-relationship-explanation/" title="JDK 与 JRE 的关系：你真的分清了吗？"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JDK 与 JRE 的关系：你真的分清了吗？"/></a><div class="content"><a class="title" href="/2026/04/13/jdk-jre-relationship-explanation/" title="JDK 与 JRE 的关系：你真的分清了吗？">JDK 与 JRE 的关系：你真的分清了吗？</a><time datetime="2026-04-13T14:13:55.000Z" title="发表于 2026-04-13 22:13:55">2026-04-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/12/jdk11-new-string-method/" title="JDK 11 String 类新增方法详解与实用指南"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JDK 11 String 类新增方法详解与实用指南"/></a><div class="content"><a class="title" href="/2026/04/12/jdk11-new-string-method/" title="JDK 11 String 类新增方法详解与实用指南">JDK 11 String 类新增方法详解与实用指南</a><time datetime="2026-04-12T15:11:12.000Z" title="发表于 2026-04-12 23:11:12">2026-04-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/09/jdk11-jep-181-nest-based-access-control/" title="理解 Java 11 的 Nest 访问控制（JEP 181）"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="理解 Java 11 的 Nest 访问控制（JEP 181）"/></a><div class="content"><a class="title" href="/2026/04/09/jdk11-jep-181-nest-based-access-control/" title="理解 Java 11 的 Nest 访问控制（JEP 181）">理解 Java 11 的 Nest 访问控制（JEP 181）</a><time datetime="2026-04-08T16:52:53.000Z" title="发表于 2026-04-09 00:52:53">2026-04-09</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By Johnson Lin</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

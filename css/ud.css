@@ -1,0 +1,45 @@
+#footer {
+    background: linear-gradient(208deg, #4584ff 0, #4584ff 11%, #ff7676 100%) !important;
+}
+
+#aside-content #card-toc .toc-content ol {
+    font-size: 14px !important;
+}
+    
+.aside-list {
+    font-size: 14px !important;
+}
+
+
+    #article-container{
+        font-size: 18px !important;
+        /* text-align: justify; */
+       }
+    
+
+#article-container blockquote {
+    color: #777;
+margin: 0 0 20px 0;
+position: relative;
+/* font-style: italic; */
+padding-left: 50px;
+border-left: 0 !important;
+}
+
+#article-container blockquote:before {
+top: 0;
+left: 0;
+color: var(--hr-border);
+font-size: 32px;
+content: "\f10d";
+position: absolute;
+text-align: center;
+font-style: normal;
+font-family: 'FontAwesome';
+}
+
+   #article-container h2{
+    border-left: 0.3rem solid #49b1f5;
+    padding-left: 15px;
+    font-size: 22px;
+   }
