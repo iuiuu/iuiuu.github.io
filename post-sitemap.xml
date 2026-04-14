@@ -9,6 +9,190 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2025/01/01/install-java-jdk-21-openjdk-21-on-ubuntu/</loc>
+        <lastmod>2026-04-14T16:28:25.346Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/09/05/tutorial-gson/</loc>
+        <lastmod>2026-04-14T16:28:19.458Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/01/04/how-to-install-openjdk-17-on-ubuntu-24-0-4/</loc>
+        <lastmod>2026-04-14T16:28:13.007Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/01/03/install-openjdk-17-on-ubuntu/</loc>
+        <lastmod>2026-04-14T16:28:08.723Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/19/java-convert-localdatetime-to-long-timestamp/</loc>
+        <lastmod>2026-04-14T16:28:04.056Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/11/20/java-convert-date-to-localdate-or-localdatetime-and-back/</loc>
+        <lastmod>2026-04-14T16:27:42.275Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/07/24/java-json-pretty-print-with-gson/</loc>
+        <lastmod>2026-04-14T16:27:37.560Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/03/24/java-convert-iterator-to-list/</loc>
+        <lastmod>2026-04-14T16:27:29.648Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/09/05/gson-bases/</loc>
+        <lastmod>2026-04-14T16:27:24.128Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/07/25/java-gson-camel-cased-underscore/</loc>
+        <lastmod>2026-04-14T16:27:17.657Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/08/27/gson-serializing-and-deserializing-array-set-map/</loc>
+        <lastmod>2026-04-14T16:27:09.108Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/08/28/gson-serializing-and-deserializing-nested-classes/</loc>
+        <lastmod>2026-04-14T16:27:01.525Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/08/30/gson-serializing-and-deserializing-generic-types/</loc>
+        <lastmod>2026-04-14T16:26:54.935Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/08/26/gson-serializing-and-deserializing-objects/</loc>
+        <lastmod>2026-04-14T16:26:47.174Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/08/22/how-to-return-many-value-in-java-method/</loc>
+        <lastmod>2026-04-14T16:26:39.159Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/09/03/gson-overview/</loc>
+        <lastmod>2026-04-14T16:26:32.799Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/12/30/java-gson-validate-json-string/</loc>
+        <lastmod>2026-04-14T16:26:24.442Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/08/29/why-do-people-still-use-java-if-java-is-behind-technologically/</loc>
+        <lastmod>2026-04-14T16:26:11.477Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/08/03/gson-string-to-jsonobject/</loc>
+        <lastmod>2026-04-14T16:24:15.102Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/08/16/how-to-serialize-a-null-field-using-gson-library-in-java/</loc>
+        <lastmod>2026-04-14T16:23:43.350Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/03/27/java17-new-features-sealed-class/</loc>
+        <lastmod>2026-04-14T16:22:50.650Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2021/07/27/hashmap-core-code-analysis-2/</loc>
+        <lastmod>2026-04-14T16:22:32.302Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2021/07/22/hashmap-core-code-analysis-1/</loc>
+        <lastmod>2026-04-14T16:22:25.187Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2026/04/15/java11-jep-321-http-client-api/</loc>
         <lastmod>2026-04-14T16:20:30.699Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -291,30 +475,6 @@
     <url>
         <loc>http://linjiangxiong.com/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/</loc>
         <lastmod>2025-01-21T17:21:45.975Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2025/01/03/install-openjdk-17-on-ubuntu/</loc>
-        <lastmod>2025-01-15T17:49:51.208Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2025/01/04/how-to-install-openjdk-17-on-ubuntu-24-0-4/</loc>
-        <lastmod>2025-01-15T17:49:01.672Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2025/01/01/install-java-jdk-21-openjdk-21-on-ubuntu/</loc>
-        <lastmod>2025-01-02T17:41:49.374Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -1177,14 +1337,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2024/11/19/java-convert-localdatetime-to-long-timestamp/</loc>
-        <lastmod>2024-12-03T21:58:44.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2024/06/02/using-the-pfadd-command-in-redis/</loc>
         <lastmod>2024-12-03T21:57:30.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -1707,158 +1859,6 @@
     <url>
         <loc>http://linjiangxiong.com/2023/06/08/redis-cmd-hyperloglog-pfcount/</loc>
         <lastmod>2024-12-03T21:57:29.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2021/07/22/hashmap-core-code-analysis-1/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2021/07/27/hashmap-core-code-analysis-2/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/12/30/java-gson-validate-json-string/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/03/27/java17-new-features-sealed-class/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/08/22/how-to-return-many-value-in-java-method/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/08/03/gson-string-to-jsonobject/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/08/16/how-to-serialize-a-null-field-using-gson-library-in-java/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/08/29/why-do-people-still-use-java-if-java-is-behind-technologically/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/09/05/gson-bases/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/03/24/java-convert-iterator-to-list/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/07/24/java-json-pretty-print-with-gson/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/11/20/java-convert-date-to-localdate-or-localdatetime-and-back/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/08/28/gson-serializing-and-deserializing-nested-classes/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/07/25/java-gson-camel-cased-underscore/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/08/27/gson-serializing-and-deserializing-array-set-map/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/08/26/gson-serializing-and-deserializing-objects/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/08/30/gson-serializing-and-deserializing-generic-types/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/09/03/gson-overview/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/09/05/tutorial-gson/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

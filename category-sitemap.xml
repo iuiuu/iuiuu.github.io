@@ -9,14 +9,28 @@
 
 
     <url>
-        <loc>http://linjiangxiong.com/categories/%25E7%25BC%2596%25E7%25A8%258B%25E6%2596%2587%25E6%2591%2598/</loc>
-        <lastmod>2026-04-14T16:20:30.699Z</lastmod>
+        <loc>http://linjiangxiong.com/categories/Programming-Digest/</loc>
+        <lastmod>2026-04-14T16:28:25.346Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/categories/%25E6%2585%25A2%25E6%2585%25A2%25E5%258F%2598%25E5%25AF%258C/</loc>
+        <loc>http://linjiangxiong.com/categories/%25E6%259E%2581%25E7%25AE%2580%25E6%2595%2599%25E7%25A8%258B/</loc>
+        <lastmod>2026-04-14T16:28:19.458Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/categories/programming/</loc>
+        <lastmod>2026-04-14T16:27:42.275Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/categories/fortune/</loc>
         <lastmod>2026-04-08T16:40:59.651Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -30,14 +44,14 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/categories/%25E7%2594%259F%25E6%25B4%25BB%25E4%25B8%258E%25E6%2588%2590%25E9%2595%25BF/</loc>
+        <loc>http://linjiangxiong.com/categories/life/</loc>
         <lastmod>2026-04-08T16:31:13.605Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/categories/%25E5%259C%25A8%25E8%25B7%25AF%25E4%25B8%258A/</loc>
+        <loc>http://linjiangxiong.com/categories/road/</loc>
         <lastmod>2026-04-08T16:30:50.118Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -46,13 +60,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/Ollama-Tutorial/</loc>
         <lastmod>2025-02-17T22:57:20.836Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/Programming-Digest/</loc>
-        <lastmod>2025-02-17T22:55:13.442Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -95,20 +102,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/%25E7%25BC%2596%25E7%25A8%258B-Q-A/</loc>
         <lastmod>2024-12-03T21:57:29.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/%25E6%259E%2581%25E7%25AE%2580%25E6%2595%2599%25E7%25A8%258B/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/JSON/</loc>
-        <lastmod>2024-12-03T21:55:20.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
