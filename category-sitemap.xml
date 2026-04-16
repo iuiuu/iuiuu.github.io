@@ -10,7 +10,14 @@
 
     <url>
         <loc>http://linjiangxiong.com/categories/programming/</loc>
-        <lastmod>2026-04-16T17:05:57.278Z</lastmod>
+        <lastmod>2026-04-16T17:17:54.704Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/categories/life/</loc>
+        <lastmod>2026-04-16T17:13:39.078Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -39,13 +46,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/fortune/</loc>
         <lastmod>2026-04-08T16:40:59.651Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/life/</loc>
-        <lastmod>2026-04-08T16:31:13.605Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -95,13 +95,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/Redis-Source-Code-Analysis/</loc>
         <lastmod>2024-12-03T21:57:29.853Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/%25E7%25BC%2596%25E7%25A8%258B-Q-A/</loc>
-        <lastmod>2024-12-03T21:57:29.852Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -177,15 +170,15 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/categories/%25E5%2589%25AA%25E6%258A%25A5/</loc>
-        <lastmod>2021-08-10T14:27:31.785Z</lastmod>
+        <loc>http://linjiangxiong.com/categories/%25E7%25BC%2596%25E7%25A8%258B-Q-A/</loc>
+        <lastmod>2023-03-31T15:40:24.742Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/categories/%25E5%25B0%258F%25E8%25AE%25B0/</loc>
-        <lastmod>2021-08-05T16:20:00.485Z</lastmod>
+        <loc>http://linjiangxiong.com/categories/%25E5%2589%25AA%25E6%258A%25A5/</loc>
+        <lastmod>2021-08-10T14:27:31.785Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

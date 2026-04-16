@@ -9,6 +9,70 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2023/04/24/ubuntu-20-04-pip37-module-not-found-error-no-module-named-distutils-cmd/</loc>
+        <lastmod>2026-04-16T17:17:54.704Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/01/11/how-to-check-filebeat-version/</loc>
+        <lastmod>2026-04-16T17:17:29.291Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/02/16/flink-sql-table-api-configuration-dependency/</loc>
+        <lastmod>2026-04-16T17:17:01.693Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/10/14/query-dsl-null-field/</loc>
+        <lastmod>2026-04-16T17:16:33.309Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/10/13/how-to-solve-json-e-o-f-exception-on-bulk-index/</loc>
+        <lastmod>2026-04-16T17:16:17.899Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/08/25/flush-all-cache-data-in-redis/</loc>
+        <lastmod>2026-04-16T17:15:59.430Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/08/24/lateral-view-explode-in-presto/</loc>
+        <lastmod>2026-04-16T17:15:31.413Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2021/08/05/note-202108/</loc>
+        <lastmod>2026-04-16T17:13:39.078Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2023/09/13/quantile-definition-and-how-to-find-them-in-easy-steps/</loc>
         <lastmod>2026-04-16T17:05:57.278Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -1713,14 +1777,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2022/08/25/flush-all-cache-data-in-redis/</loc>
-        <lastmod>2024-12-03T21:57:29.852Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2023/05/31/redis-cmd-strings-append/</loc>
         <lastmod>2024-12-03T21:57:29.852Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -3393,14 +3449,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2023/04/24/ubuntu-20-04-pip37-module-not-found-error-no-module-named-distutils-cmd/</loc>
-        <lastmod>2023-04-26T13:53:11.673Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2023/04/25/ubuntu-sudo-add-apt-repository-command-not-found/</loc>
         <lastmod>2023-04-26T13:51:52.955Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -3529,14 +3577,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2023/02/16/flink-sql-table-api-configuration-dependency/</loc>
-        <lastmod>2023-03-22T15:51:18.655Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2023/03/10/lsm-tree-intro/</loc>
         <lastmod>2023-03-22T15:47:16.028Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -3555,14 +3595,6 @@
     <url>
         <loc>http://linjiangxiong.com/2023/01/13/superset-presto-error-prestoenginespec/</loc>
         <lastmod>2023-01-16T02:11:41.368Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/01/11/how-to-check-filebeat-version/</loc>
-        <lastmod>2023-01-16T02:06:00.618Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -3601,24 +3633,8 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2022/10/14/query-dsl-null-field/</loc>
-        <lastmod>2022-10-18T14:47:31.740Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2022/10/08/the-first-apache-flink-job/</loc>
         <lastmod>2022-10-13T14:49:37.076Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/10/13/how-to-solve-json-e-o-f-exception-on-bulk-index/</loc>
-        <lastmod>2022-10-13T14:44:57.661Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -3659,14 +3675,6 @@
     <url>
         <loc>http://linjiangxiong.com/2022/08/25/adding-new-fields-in-an-existing-index-elasticsearch/</loc>
         <lastmod>2022-08-25T15:46:21.364Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/08/24/lateral-view-explode-in-presto/</loc>
-        <lastmod>2022-08-25T15:43:25.337Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -3811,14 +3819,6 @@
     <url>
         <loc>http://linjiangxiong.com/2021/08/09/ml-1/</loc>
         <lastmod>2021-08-10T14:27:31.785Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2021/08/05/note-202108/</loc>
-        <lastmod>2021-08-05T16:20:00.485Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
