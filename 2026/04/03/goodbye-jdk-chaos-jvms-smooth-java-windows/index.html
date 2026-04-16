@@ -1,0 +1,278 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>告别JDK版本混乱：JVMS让Windows下的Java开发如丝般顺滑 | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="你是否也曾经历过这样的抓狂时刻：接手一个老项目，需要 JDK 8；自己正在开发的新项目，必须用 JDK 17；突然领导又扔过来一个祖传项目，非 JDK 11 不可。每次切换版本，你都得去修改 JAVA_HOME，折腾 Path 环境变量，重启终端，甚至还要祈祷不要报 Unsupported major.minor version 错误。 如果你是一名 Windows 开发者，这些烦恼将随着一个名为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="告别JDK版本混乱：JVMS让Windows下的Java开发如丝般顺滑">
+<meta property="og:url" content="http://linjiangxiong.com/2026/04/03/goodbye-jdk-chaos-jvms-smooth-java-windows/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="你是否也曾经历过这样的抓狂时刻：接手一个老项目，需要 JDK 8；自己正在开发的新项目，必须用 JDK 17；突然领导又扔过来一个祖传项目，非 JDK 11 不可。每次切换版本，你都得去修改 JAVA_HOME，折腾 Path 环境变量，重启终端，甚至还要祈祷不要报 Unsupported major.minor version 错误。 如果你是一名 Windows 开发者，这些烦恼将随着一个名为">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://linjiangxiong.com/image/2026/04/26040303.png">
+<meta property="article:published_time" content="2026-04-03T14:13:54.000Z">
+<meta property="article:modified_time" content="2026-04-16T16:52:35.709Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/2026/04/26040303.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "告别JDK版本混乱：JVMS让Windows下的Java开发如丝般顺滑",
+  "url": "http://linjiangxiong.com/2026/04/03/goodbye-jdk-chaos-jvms-smooth-java-windows/",
+  "image": "http://linjiangxiong.com/image/2026/04/26040303.png",
+  "datePublished": "2026-04-03T14:13:54.000Z",
+  "dateModified": "2026-04-16T16:52:35.709Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Johnson Lin",
+      "url": "http://linjiangxiong.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2026/04/03/goodbye-jdk-chaos-jvms-smooth-java-windows/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '告别JDK版本混乱：JVMS让Windows下的Java开发如丝般顺滑',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">503</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">66</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Johnson Lin</span></a><a class="nav-page-title" href="/"><span class="site-name">告别JDK版本混乱：JVMS让Windows下的Java开发如丝般顺滑</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">告别JDK版本混乱：JVMS让Windows下的Java开发如丝般顺滑</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-03T14:13:54.000Z" title="发表于 2026-04-03 22:13:54">2026-04-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-16T16:52:35.709Z" title="更新于 2026-04-17 00:52:35">2026-04-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/programming/">编程文摘</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="container post-content" id="article-container"><p>你是否也曾经历过这样的抓狂时刻：接手一个老项目，需要 JDK 8；自己正在开发的新项目，必须用 JDK 17；突然领导又扔过来一个祖传项目，非 JDK 11 不可。每次切换版本，你都得去修改 <code>JAVA_HOME</code>，折腾 Path 环境变量，重启终端，甚至还要祈祷不要报 <code>Unsupported major.minor version</code> 错误。</p>
+<p>如果你是一名 Windows 开发者，这些烦恼将随着一个名为 <strong>JVMS</strong> 的工具烟消云散。</p>
+<h2 id="JVMS：简化Windows平台上的JDK版本管理"><a href="#JVMS：简化Windows平台上的JDK版本管理" class="headerlink" title="JVMS：简化Windows平台上的JDK版本管理"></a>JVMS：简化Windows平台上的JDK版本管理</h2><p>JVMS（全称：JDK Version Manager）是一款专为 Windows 平台设计的开源 JDK 版本管理工具，旨在让开发者能够轻松地在多个 JDK 版本之间无缝切换。该工具由 Go 语言编写，无需依赖任何额外的运行环境，下载后即可直接使用。</p>
+<h3 id="传统方法的局限性"><a href="#传统方法的局限性" class="headerlink" title="传统方法的局限性"></a>传统方法的局限性</h3><p>过去，在 Windows 系统上切换不同的 JDK 版本通常需要手动修改系统的 <code>JAVA_HOME</code> 环境变量，并且还需要调整 PATH 配置以指向正确的 JDK 路径。这种方法不仅步骤繁琐，还容易因残留的 Path 设置导致冲突。此外，每次切换都需要重新打开命令行窗口才能生效，非常不便。</p>
+<h3 id="JVMS的工作原理"><a href="#JVMS的工作原理" class="headerlink" title="JVMS的工作原理"></a>JVMS的工作原理</h3><p>JVMS 通过引入符号链接技术提供了一种更为优雅和高效的解决方案。其核心机制是“一次配置，永久生效”。具体来说，在首次设置时，JVMS 会创建一个指向当前所选 JDK 的符号链接，并将这个链接添加到系统的 PATH 环境变量中。当用户希望切换到另一个 JDK 版本时，只需执行简单的切换命令，JVMS 便会更新这个符号链接的目标路径。这种方式带来了以下几大优势：</p>
+<ol>
+<li><strong>快速切换</strong>：无需手动修改环境变量，瞬间完成 JDK 版本的切换。</li>
+<li><strong>全局生效</strong>：所有已打开的命令行窗口几乎立即响应新的 JDK 设置（少数情况下可能需要刷新）。</li>
+<li><strong>持久化记忆</strong>：即使重启计算机，JVMS 也会记住您上次使用的 JDK 版本，从而避免了重复配置的麻烦。</li>
+</ol>
+<h3 id="为什么选择JVMS？"><a href="#为什么选择JVMS？" class="headerlink" title="为什么选择JVMS？"></a>为什么选择JVMS？</h3><p>尽管 macOS 和 Linux 平台上已有如 jenv 或 sdkman 等成熟的 JDK 版本管理工具，但在 Windows 生态系统内，这类工具相对较少。与其他基于批处理脚本的简易方案相比，JVMS 提供了更加全面和强大的功能支持：</p>
+<ul>
+<li><strong>零依赖性</strong>：安装与运行均不需预装 Python、Java 或其他开发环境。</li>
+<li><strong>双模式管理</strong>：既支持从互联网下载并安装新版本 JDK，也允许导入本地已有的 JDK 安装包。</li>
+<li><strong>企业级特性</strong>：内置对自定义 JDK 下载源的支持，特别适合那些网络受限或者需要统一软件环境的企业应用场景。</li>
+</ul>
+<p>对于任何需要频繁切换不同 JDK 版本进行开发工作的 Windows 用户而言，JVMS 无疑是一个强大而方便的选择。</p>
+<h2 id="最佳实践：手把手教你玩转JVMS"><a href="#最佳实践：手把手教你玩转JVMS" class="headerlink" title="最佳实践：手把手教你玩转JVMS"></a>最佳实践：手把手教你玩转JVMS</h2><p>理论说了那么多，不如直接上手。以下是我总结的 JVMS 最佳实践，按照这个流程操作，你几乎不会遇到任何坑。</p>
+<h3 id="第一步：下载与安装（极简主义）"><a href="#第一步：下载与安装（极简主义）" class="headerlink" title="第一步：下载与安装（极简主义）"></a>第一步：下载与安装（极简主义）</h3><ol>
+<li>访问 JVMS 的 GitHub Releases 页面：<a target="_blank" rel="noopener" href="https://github.com/ystyle/jvms/releases">https://github.com/ystyle/jvms/releases</a>。在页面中找到最新发布的版本，根据你的 Windows 系统类型下载对应的 <code>jvms_xxxxx.zip</code> 文件：</li>
+</ol>
+<ul>
+<li>大多数现代 Windows 系统为 64 位，请选择文件名中包含 <code>**amd64**</code> 的 zip 包；</li>
+<li>若为较旧的 32 位系统，则选择包含 <code>**i386**</code> 的 zip 包。</li>
+</ul>
+<p>（不确定系统类型？右键点击“此电脑” → 属性，在“系统类型”一栏查看）</p>
+<ol>
+<li>将压缩包解压到一个你<strong>不会轻易移动或删除</strong>的目录，例如 <code>D:\dev-env\jvms</code>。<strong>请记住这个路径，不要随意挪动，否则符号链接会失效。</strong></li>
+<li>（可选）为了方便调用，可以将<code>jvms.exe</code>所在的目录也添加到系统 Path 中，或者直接在该目录下操作。</li>
+</ol>
+<h3 id="第二步：初始化（关键一步）"><a href="#第二步：初始化（关键一步）" class="headerlink" title="第二步：初始化（关键一步）"></a>第二步：初始化（关键一步）</h3><p>这一步最容易出错，请务必遵守：</p>
+<ol>
+<li>按下 <code>Win</code> 键，搜索 <code>cmd</code> 或 <code>PowerShell</code>，右键选择 <strong>“以管理员身份运行”</strong>。</li>
+</ol>
+<blockquote>
+<p><em>这里必须使用管理员权限，因为 JVMS 需要创建符号链接，这是 Windows 的安全机制。</em></p>
+</blockquote>
+<ol>
+<li>使用 <code>cd</code> 命令进入你刚才解压的目录，执行初始化命令：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jvms.exe init</span><br></pre></td></tr></table></figure>
+<p>如果看到初始化成功的提示，说明符号链接已经创建好了。</p>
+<h3 id="第三步：导入现有JDK（高手都这么干）"><a href="#第三步：导入现有JDK（高手都这么干）" class="headerlink" title="第三步：导入现有JDK（高手都这么干）"></a>第三步：导入现有JDK（高手都这么干）</h3><p>很多教程会教你怎么用 <code>jvms install</code> 在线下载。但在实际工作中，直接从 Oracle 官网下载速度极慢。<strong>最佳实践是：利用你电脑里已经下载好的 JDK 包。</strong></p>
+<ol>
+<li>在 <code>jvms.exe</code> 所在的目录下，查看是否已经存在名为 <code>store</code> 的文件夹，不存在的话则<strong>手动创建一个名为 </strong><code>store</code><strong> 的文件夹</strong>。</li>
+<li>打开你平时安装 JDK 的目录（通常是 <code>C:\Program Files\Java</code>），你会发现里面躺着各种版本的 JDK 文件夹，比如 <code>jdk1.8.0_202</code>， <code>jdk-11.0.15</code>。</li>
+<li><strong>复制</strong>这些文件夹，粘贴到刚才创建的 <code>jvms/store</code> 目录下。</li>
+<li>（可选但推荐）重命名这些文件夹，去掉多余的后缀，让名字更简洁，例如直接命名为 <code>1.8</code>， <code>11</code>， <code>17</code>。</li>
+</ol>
+<!-- 这是一张图片，ocr 内容为： -->
+<p><img src="/image/2026/04/26040301.png" alt=""></p>
+<h3 id="第四步：日常高频命令"><a href="#第四步：日常高频命令" class="headerlink" title="第四步：日常高频命令"></a>第四步：日常高频命令</h3><p>现在，你的 JVMS 已经收录了所有 JDK 版本。接下来的操作就简单了：</p>
+<ul>
+<li><strong>查看所有已安装的版本</strong>：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jvms <span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+<p>当前激活的版本前会有一个 <code>*</code> 号。</p>
+<ul>
+<li><strong>切换版本</strong>：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jvms switch 1.8</span><br></pre></td></tr></table></figure>
+<p>执行后，JVMS 会瞬间更新符号链接。</p>
+<ul>
+<li><strong>验证是否生效</strong>：<br>打开一个<strong>新的</strong>命令行窗口（或者在当前窗口执行 <code>refreshenv</code> 如果装了 Chocolatey，否则建议新开窗口），输入：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+<p>你会看到版本已经变成了JDK 8。</p>
+<!-- 这是一张图片，ocr 内容为： -->
+<p><img src="/image/2026/04/26040302.png" alt=""></p>
+<h3 id="第五步：在线安装（可选）"><a href="#第五步：在线安装（可选）" class="headerlink" title="第五步：在线安装（可选）"></a>第五步：在线安装（可选）</h3><p>如果你需要尝试一个从未安装过的新版本，比如JDK 21，可以这样操作：</p>
+<ol>
+<li>查看支持列表：<code>jvms rls</code></li>
+<li>下载安装：<code>jvms install 21.0.1</code></li>
+</ol>
+<h2 id="避坑指南：常见问题与解决"><a href="#避坑指南：常见问题与解决" class="headerlink" title="避坑指南：常见问题与解决"></a>避坑指南：常见问题与解决</h2><ol>
+<li><strong>“切换失败，A required privilege is not held by the client”</strong><ul>
+<li><strong>原因</strong>：权限不足。</li>
+<li><strong>解决</strong>：确保你的命令行窗口是以<strong>管理员身份</strong>运行的。如果还是报错，可以尝试开启 Windows 的“开发者模式”（设置 -&gt; 更新和安全 -&gt; 开发者选项 -&gt; 开启开发人员模式）。</li>
+</ul>
+</li>
+<li><strong>切换后没反应</strong><ul>
+<li><strong>原因</strong>：环境变量缓存或 Path 路径优先级问题。</li>
+<li><strong>解决</strong>：检查系统环境变量 Path，确保 JVMS 创建的符号链接路径排在其他 JDK 路径的<strong>最前面</strong>。然后关闭所有命令行窗口，重新打开。</li>
+</ul>
+</li>
+<li><strong>无法下载或下载慢</strong><ul>
+<li><strong>原因</strong>：默认源在 GitHub，国内访问慢。</li>
+<li><strong>解决</strong>：建议直接用本地导入的方式。或者配置代理：<code>jvms proxy http://127.0.0.1:7890</code>。</li>
+</ul>
+</li>
+</ol>
+<!-- 这是一张图片，ocr 内容为： -->
+<p><img src="/image/2026/04/26040303.png" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>JVMS 解决了 Windows Java 开发者的一个核心痛点。它没有复杂的图形界面，也不需要繁琐的配置，通过简洁的命令行和符号链接技术，将版本管理的复杂度降到了最低。</p>
+<p>对于团队开发而言，统一使用 JVMS 并配合一个标准的 <code>store</code> 目录，可以彻底告别“我本地跑得好好的啊”这种因环境差异引发的甩锅大战。<strong>是时候跟手动修改 </strong><code>JAVA_HOME</code> <strong>的原始生活说再见了。</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2026/04/03/goodbye-jdk-chaos-jvms-smooth-java-windows/">http://linjiangxiong.com/2026/04/03/goodbye-jdk-chaos-jvms-smooth-java-windows/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://linjiangxiong.com" target="_blank">Johnson Lin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a></div><div class="post-share"><div class="social-share" data-image="/image/2026/04/26040303.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/02/14/ollama-tutorial/" title="Introduction to JSON Web Tokens (JWT)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Introduction to JSON Web Tokens (JWT)</div></div><div class="info-2"><div class="info-item-1">In today’s digital world, secure authentication and data exchange are critical for web applications. JSON Web Tokens (JWT) have emerged as a popular solution for securely transmitting information between parties as a compact, self-contained JSON object. Whether you’re a developer building APIs or working on user authentication, understanding JWTs is essential. This article will introduce you to JSON Web Tokens, explain how they work, and provide practical examples to help you get started. Wha...</div></div></div></a><a class="pagination-related" href="/2026/04/04/powershell-running-scripts-is-disabled-on-this-system-fix/" title="解决 PowerShell 中 npm 命令报错“禁止运行脚本”的几种方法"><img class="cover" src="/image/2026/04/0401.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">解决 PowerShell 中 npm 命令报错“禁止运行脚本”的几种方法</div></div><div class="info-2"><div class="info-item-1">  当你兴高采烈地在 Windows PowerShell 中敲下 npm install，却看到一行红色报错： npm : 无法加载文件 C:\Program Files\nodejs\npm.ps1，因为在此系统上禁止运行脚本。 别慌，这不是 Node.js 装坏了，而是 Windows 在保护你。 12345678910111213Windows PowerShell版权所有 (C) Microsoft Corporation。保留所有权利。尝试新的跨平台 PowerShell https://aka.ms/pscore6PS C:\Users\Administrator&gt; npmnpm : 无法加载文件 C:\Program Files\nodejs\npm.ps1，因为在此系统上禁止运行脚本。有关详细信息，请参阅 https:/go.microsoft.com/fwlink/?LinkID=135170 中的 about_Execution_Policies。所在位置 行:1 字符: 1+ npm+ ~~~    + CategoryInfo          :...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2023/09/03/gson-overview/" title="深入解析Gson：一个强大的Java JSON库"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-03</div><div class="info-item-2">深入解析Gson：一个强大的Java JSON库</div></div><div class="info-2"><div class="info-item-1">引言在现代的软件开发中，处理 JSON 数据是非常常见的任务。而为了简化 JSON 数据的解析和生成过程，我们可以借助一个强大而灵活的 Java 库——Gson。作为一个非常流行的开源 Java 库，它的主要用途是将 Java 对象序列化为 JSON 字符串，或者将 JSON 字符串反序列化为 Java 对象。它提供了简单易用的 API，使得处理 JSON 数据变得轻而易举。本篇博文将详细介绍 Gson 库的特性和使用方法，并通过示例代码展示其在实际场景中的应用。  Gson 经历了多个版本的迭代，目前已经成熟而稳定，处于维护模式。这意味着它会继续修复现有的错误，但可能不会添加大型的新功能。  Gson的特性 简单易用：Gson 提供了简洁的 API，使得将 Java 对象序列化为 JSON 或将 JSON 反序列化为 Java 对象变得非常简单。 高度灵活：Gson 支持自定义序列化和反序列化的规则，可以满足各种复杂的数据结构和业务需求（具有深度继承层次结构并广泛使用泛型类型）。 配置灵活：通过设置不同的配置选项，如日期格式、字段排除策略等，可以灵活地控制 Gson 的行为。 ...</div></div></div></a><a class="pagination-related" href="/2024/11/19/java-convert-localdatetime-to-long-timestamp/" title="How to Convert LocalDateTime to Long Timestamp in Java"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-19</div><div class="info-item-2">How to Convert LocalDateTime to Long Timestamp in Java</div></div><div class="info-2"><div class="info-item-1">When working with dates and times in Java, you may often need to convert a LocalDateTime object into a long timestamp, typically representing the number of milliseconds or seconds since the Unix epoch (January 1, 1970, 00:00:00 UTC). This can be useful for database operations, APIs, or any scenario requiring a numerical representation of date and time. Step-by-Step Conversion ProcessJava’s LocalDateTime is a part of the java.time package introduced in Java 8. Since LocalDateTime is time-zone ...</div></div></div></a><a class="pagination-related" href="/2023/09/05/tutorial-gson/" title="极简教程 - Gson"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-05</div><div class="info-item-2">极简教程 - Gson</div></div><div class="info-2"><div class="info-item-1">深入解析Gson：一个强大的Java JSON库 深入了解Gson：Java对象的序列化和反序列化 Gson基本使用：序列化与反序列化操作详解 使用Gson进行数组、集合和映射的序列化与反序列化 使用Gson对嵌套类进行序列化和反序列化 深入探索Gson的泛型序列化和反序列化能力 使用Gson库在Java中实现下划线与驼峰格式的转换 Java使用Gson判断字符串是否为JSON格式 在Java中如何使用Gson库序列化NULL字段 使用Gson将字符串转成JsonObject对象 Java使用Gson库格式化输出JSON字符串 </div></div></div></a><a class="pagination-related" href="/2019/08/30/how-to-install-jdk-1-8-on-centos-7/" title="CentOS7下安装JDK1.8"><img class="cover" src="https://i.loli.net/2021/07/19/fzMo5a14AYthxyv.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2019-08-30</div><div class="info-item-2">CentOS7下安装JDK1.8</div></div><div class="info-2"><div class="info-item-1">安装Java 幵发工具包（JDK）  从 Oracle 官网下载 1.8 版本的安装包 （网速慢的同学请移步国内镜像，提取码为 rjqx），本次安装的JDK版本为 jdk-8u221-linux-x64.tar.gz；  上传至服务器（系统为 CentOS7.3），存放目录为 /home； 1scp ~/Downloads/jdk-8u221-linux-x64.tar.gz root@192.168.3.67:/home  新建JDK安装目录 /usr/local/java， 1mkdir /usr/local/java  解压文件 jdk-8u221-linux-x64.tar.gz 至安装目录 /usr/local/java， 1tar -zxvf jdk-8u221-linux-x64.tar.gz -C /usr/local/java/  安装完成之后需要配置环境变量，将以下代码追加到文件 profile 末尾； 12345# JAVA_HOME为JDK安装目录export JAVA_HOME=/usr/local/java/jdk1.8.0_221export JRE...</div></div></div></a><a class="pagination-related" href="/2025/01/01/install-java-jdk-21-openjdk-21-on-ubuntu/" title="Install OpenJDK 21 LTS on Ubuntu 24.04|22.04|20.04|18.04"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-01</div><div class="info-item-2">Install OpenJDK 21 LTS on Ubuntu 24.04|22.04|20.04|18.04</div></div><div class="info-2"><div class="info-item-1"> JDK 21 is a long-term support (LTS) release from most vendors.  OpenJDK (Open Java Development Kit) is an open-source implementation of the Java Platform, Standard Edition (Java SE) licensed under the GNU General Public License, which provides a complete runtime environment for executing Java applications and a development environment for building Java applications. OpenJDK is governed by the OpenJDK Community, and its development is led by Oracle, with contributions from various companies a...</div></div></div></a><a class="pagination-related" href="/2023/08/26/gson-serializing-and-deserializing-objects/" title="深入了解Gson：Java对象的序列化和反序列化"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-26</div><div class="info-item-2">深入了解Gson：Java对象的序列化和反序列化</div></div><div class="info-2"><div class="info-item-1">本文将介绍一些使用 Gson 库进行对象序列化时需要注意的细节，帮助开发人员更好地理解和应用该库。 引入Gson库首先，需要确保项目中已经正确引入了 Gson 库。可以通过 Maven、Gradle 或手动下载 jar 包的方式导入 Gson 库。 例如，如果使用 Maven，在 pom.xml 文件中添加以下依赖项： 123456&lt;dependency&gt;    &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt;    &lt;artifactId&gt;gson&lt;/artifactId&gt;    &lt;version&gt;2.10.1&lt;/version&gt;    &lt;scope&gt;compile&lt;/scope&gt;&lt;/dependency&gt; 创建Gson对象在使用 Gson 库之前，需要创建一个 Gson 对象。可以直接使用默认的 Gson 构造函数创建一个 Gson 对象，也可以根据需要配置一些参数。 例如，如果希望将 JSON 字符串格式化输出，可以使用 Gs...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Johnson Lin</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">503</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">66</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JVMS%EF%BC%9A%E7%AE%80%E5%8C%96Windows%E5%B9%B3%E5%8F%B0%E4%B8%8A%E7%9A%84JDK%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">JVMS：简化Windows平台上的JDK版本管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E6%96%B9%E6%B3%95%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text">传统方法的局限性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JVMS%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">JVMS的工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9JVMS%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">为什么选择JVMS？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%9A%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%8E%A9%E8%BD%ACJVMS"><span class="toc-number">2.</span> <span class="toc-text">最佳实践：手把手教你玩转JVMS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85%EF%BC%88%E6%9E%81%E7%AE%80%E4%B8%BB%E4%B9%89%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">第一步：下载与安装（极简主义）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88%E5%85%B3%E9%94%AE%E4%B8%80%E6%AD%A5%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">第二步：初始化（关键一步）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%AF%BC%E5%85%A5%E7%8E%B0%E6%9C%89JDK%EF%BC%88%E9%AB%98%E6%89%8B%E9%83%BD%E8%BF%99%E4%B9%88%E5%B9%B2%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">第三步：导入现有JDK（高手都这么干）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E6%97%A5%E5%B8%B8%E9%AB%98%E9%A2%91%E5%91%BD%E4%BB%A4"><span class="toc-number">2.4.</span> <span class="toc-text">第四步：日常高频命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-number">2.5.</span> <span class="toc-text">第五步：在线安装（可选）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%EF%BC%9A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3"><span class="toc-number">3.</span> <span class="toc-text">避坑指南：常见问题与解决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/04/16/java-11-files-readstring-writestring-guide/" title="Java 11 Files 类新方法：readString与writeString 详解"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java 11 Files 类新方法：readString与writeString 详解"/></a><div class="content"><a class="title" href="/2026/04/16/java-11-files-readstring-writestring-guide/" title="Java 11 Files 类新方法：readString与writeString 详解">Java 11 Files 类新方法：readString与writeString 详解</a><time datetime="2026-04-15T16:14:59.000Z" title="发表于 2026-04-16 00:14:59">2026-04-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/15/java11-jep-321-http-client-api/" title="Java 11 新增的 HTTP Client API（JEP 321）"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java 11 新增的 HTTP Client API（JEP 321）"/></a><div class="content"><a class="title" href="/2026/04/15/java11-jep-321-http-client-api/" title="Java 11 新增的 HTTP Client API（JEP 321）">Java 11 新增的 HTTP Client API（JEP 321）</a><time datetime="2026-04-14T16:10:29.000Z" title="发表于 2026-04-15 00:10:29">2026-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/14/windows-i386-amd64-difference/" title="Windows 下的 i386 与 amd64 的架构区别"><img src="/image/2026/04/1402.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows 下的 i386 与 amd64 的架构区别"/></a><div class="content"><a class="title" href="/2026/04/14/windows-i386-amd64-difference/" title="Windows 下的 i386 与 amd64 的架构区别">Windows 下的 i386 与 amd64 的架构区别</a><time datetime="2026-04-13T16:12:42.000Z" title="发表于 2026-04-14 00:12:42">2026-04-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/13/jdk-jre-relationship-explanation/" title="JDK 与 JRE 的关系：你真的分清了吗？"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JDK 与 JRE 的关系：你真的分清了吗？"/></a><div class="content"><a class="title" href="/2026/04/13/jdk-jre-relationship-explanation/" title="JDK 与 JRE 的关系：你真的分清了吗？">JDK 与 JRE 的关系：你真的分清了吗？</a><time datetime="2026-04-13T14:13:55.000Z" title="发表于 2026-04-13 22:13:55">2026-04-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/12/jdk11-new-string-method/" title="JDK 11 String 类新增方法详解与实用指南"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JDK 11 String 类新增方法详解与实用指南"/></a><div class="content"><a class="title" href="/2026/04/12/jdk11-new-string-method/" title="JDK 11 String 类新增方法详解与实用指南">JDK 11 String 类新增方法详解与实用指南</a><time datetime="2026-04-12T15:11:12.000Z" title="发表于 2026-04-12 23:11:12">2026-04-12</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By Johnson Lin</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

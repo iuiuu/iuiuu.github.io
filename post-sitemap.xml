@@ -9,6 +9,22 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2026/04/16/java-11-files-readstring-writestring-guide/</loc>
+        <lastmod>2026-04-16T16:53:15.013Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2026/04/03/goodbye-jdk-chaos-jvms-smooth-java-windows/</loc>
+        <lastmod>2026-04-16T16:52:35.709Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2026/04/13/jdk-jre-relationship-explanation/</loc>
         <lastmod>2026-04-14T16:39:31.761Z</lastmod>
         <changefreq>weekly</changefreq>
