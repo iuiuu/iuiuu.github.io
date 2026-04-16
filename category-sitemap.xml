@@ -10,7 +10,7 @@
 
     <url>
         <loc>http://linjiangxiong.com/categories/programming/</loc>
-        <lastmod>2026-04-16T17:20:26.425Z</lastmod>
+        <lastmod>2026-04-16T17:33:33.195Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -32,13 +32,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/Programming-Digest/</loc>
         <lastmod>2026-04-14T16:28:25.346Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/%25E6%259E%2581%25E7%25AE%2580%25E6%2595%2599%25E7%25A8%258B/</loc>
-        <lastmod>2026-04-14T16:28:19.458Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -151,20 +144,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/Apache-Paimon/</loc>
         <lastmod>2023-09-12T00:48:22.729Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/LeetCode%25E9%25A2%2598%25E8%25A7%25A3/</loc>
-        <lastmod>2023-08-04T16:02:41.952Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/Linux%25E5%25B8%25B8%25E7%2594%25A8%25E5%2591%25BD%25E4%25BB%25A4/</loc>
-        <lastmod>2023-04-04T00:10:58.301Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
