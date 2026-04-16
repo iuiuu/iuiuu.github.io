@@ -9,16 +9,24 @@
 
 
     <url>
-        <loc>http://linjiangxiong.com/2026/04/16/java-11-files-readstring-writestring-guide/</loc>
-        <lastmod>2026-04-16T16:53:15.013Z</lastmod>
+        <loc>http://linjiangxiong.com/2026/04/03/goodbye-jdk-chaos-jvms-smooth-java-windows/</loc>
+        <lastmod>2026-04-16T17:01:47.315Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2026/04/03/goodbye-jdk-chaos-jvms-smooth-java-windows/</loc>
-        <lastmod>2026-04-16T16:52:35.709Z</lastmod>
+        <loc>http://linjiangxiong.com/2026/04/16/java-11-files-readstring-writestring-guide/</loc>
+        <lastmod>2026-04-16T17:01:36.314Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/09/08/user-portrait-intro/</loc>
+        <lastmod>2026-04-16T17:00:18.433Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -3635,14 +3643,6 @@
     <url>
         <loc>http://linjiangxiong.com/2022/06/10/how-to-install-mysql57-on-ubuntu_20_04/</loc>
         <lastmod>2022-09-08T14:42:21.577Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/09/08/user-portrait-intro/</loc>
-        <lastmod>2022-09-08T14:38:55.039Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
