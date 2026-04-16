@@ -10,7 +10,7 @@
 
     <url>
         <loc>http://linjiangxiong.com/categories/programming/</loc>
-        <lastmod>2026-04-16T17:17:54.704Z</lastmod>
+        <lastmod>2026-04-16T17:20:26.425Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -165,13 +165,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/Linux%25E5%25B8%25B8%25E7%2594%25A8%25E5%2591%25BD%25E4%25BB%25A4/</loc>
         <lastmod>2023-04-04T00:10:58.301Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/%25E7%25BC%2596%25E7%25A8%258B-Q-A/</loc>
-        <lastmod>2023-03-31T15:40:24.742Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
