@@ -10,7 +10,7 @@
 
     <url>
         <loc>http://linjiangxiong.com/categories/programming/</loc>
-        <lastmod>2026-04-20T14:55:01.669Z</lastmod>
+        <lastmod>2026-04-20T15:01:10.715Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -102,13 +102,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/JSON-Tutorial/</loc>
         <lastmod>2024-08-28T16:12:05.011Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/Apache-Paimon/</loc>
-        <lastmod>2023-08-31T14:39:41.862Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
