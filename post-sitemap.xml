@@ -9,8 +9,184 @@
 
 
     <url>
-        <loc>http://linjiangxiong.com/2026/04/03/goodbye-jdk-chaos-jvms-smooth-java-windows/</loc>
-        <lastmod>2026-04-20T14:38:48.720Z</lastmod>
+        <loc>http://linjiangxiong.com/2022/08/24/physical-memory-exceeded-causing-being-killed-by-yarn/</loc>
+        <lastmod>2026-04-20T14:55:01.669Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/10/08/the-first-apache-flink-job/</loc>
+        <lastmod>2026-04-20T14:54:36.925Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/02/20/apache-flink-release-1_13_6/</loc>
+        <lastmod>2026-04-20T14:54:26.507Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/06/23/apache-flink-release-1_14_5/</loc>
+        <lastmod>2026-04-20T14:54:18.705Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/09/15/apache-flink-table-store-intro/</loc>
+        <lastmod>2026-04-20T14:54:12.250Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2022/09/16/apache-flink-table-store-quick-start/</loc>
+        <lastmod>2026-04-20T14:53:57.812Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/09/02/apache-flink-performance-high-throughput-low-latency/</loc>
+        <lastmod>2026-04-20T14:53:15.663Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/09/06/apache-paimon-release-0_5/</loc>
+        <lastmod>2026-04-20T14:52:56.714Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/09/11/apache-paimon-0_5_0-incubating-release/</loc>
+        <lastmod>2026-04-20T14:52:41.586Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/02/16/flink-sql-table-api-configuration-dependency/</loc>
+        <lastmod>2026-04-20T14:52:06.950Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/03/10/lsm-tree-intro/</loc>
+        <lastmod>2026-04-20T14:51:57.992Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/09/10/apache-flink-history-server/</loc>
+        <lastmod>2026-04-20T14:51:16.614Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/09/01/apache-flink-use-cases/</loc>
+        <lastmod>2026-04-20T14:51:05.765Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/01/01/flink-webui-jar-dir/</loc>
+        <lastmod>2026-04-20T14:50:53.211Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/09/09/apache-flink-features/</loc>
+        <lastmod>2026-04-20T14:50:39.260Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2023/03/25/apache-flink-release-1_17/</loc>
+        <lastmod>2026-04-20T14:50:22.880Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/01/01/why-you-should-learn-data-structures-and-algorithms/</loc>
+        <lastmod>2026-04-20T14:49:19.463Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/01/02/big-o-notation-for-time-and-space-complexity/</loc>
+        <lastmod>2026-04-20T14:49:14.513Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/01/03/analyzing-time-complexity-of-algorithms-using-big-o-notation/</loc>
+        <lastmod>2026-04-20T14:49:09.577Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/09/11/analyzing-redis-source-code-hash/</loc>
+        <lastmod>2026-04-20T14:47:57.779Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/09/10/analyzing-redis-source-code-sds/</loc>
+        <lastmod>2026-04-20T14:47:46.402Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/02/06/how-to-run-deepseek-locally-on-windows/</loc>
+        <lastmod>2026-04-20T14:46:59.458Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/06/03/list-of-roman-numerals-1-to-1000/</loc>
+        <lastmod>2026-04-20T14:45:58.431Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -18,7 +194,15 @@
 
     <url>
         <loc>http://linjiangxiong.com/2026/04/17/java-11-jep-330-launch-single-file-source-code-programs/</loc>
-        <lastmod>2026-04-20T14:35:55.389Z</lastmod>
+        <lastmod>2026-04-20T14:43:49.573Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2026/04/03/goodbye-jdk-chaos-jvms-smooth-java-windows/</loc>
+        <lastmod>2026-04-20T14:38:48.720Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -83,14 +267,6 @@
     <url>
         <loc>http://linjiangxiong.com/2023/01/11/how-to-check-filebeat-version/</loc>
         <lastmod>2026-04-16T17:17:29.291Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/02/16/flink-sql-table-api-configuration-dependency/</loc>
-        <lastmod>2026-04-16T17:17:01.693Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -547,14 +723,6 @@
     <url>
         <loc>http://linjiangxiong.com/2025/02/14/ollama-tutorial/</loc>
         <lastmod>2025-02-17T22:39:21.413Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2025/02/06/how-to-run-deepseek-locally-on-windows/</loc>
-        <lastmod>2025-02-11T15:25:18.733Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -1809,22 +1977,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2024/09/10/analyzing-redis-source-code-sds/</loc>
-        <lastmod>2024-12-03T21:57:29.853Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/09/11/analyzing-redis-source-code-hash/</loc>
-        <lastmod>2024-12-03T21:57:29.853Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2023/05/31/redis-cmd-strings-append/</loc>
         <lastmod>2024-12-03T21:57:29.852Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -2019,14 +2171,6 @@
     <url>
         <loc>http://linjiangxiong.com/2023/06/09/redis-cmd-hyperloglog-pfselftest/</loc>
         <lastmod>2024-12-03T21:57:29.852Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/03/25/apache-flink-release-1_17/</loc>
-        <lastmod>2024-12-03T21:40:08.596Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -2665,22 +2809,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2024/01/03/analyzing-time-complexity-of-algorithms-using-big-o-notation/</loc>
-        <lastmod>2024-09-01T14:28:05.744Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/01/02/big-o-notation-for-time-and-space-complexity/</loc>
-        <lastmod>2024-09-01T14:26:36.059Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2024/08/30/differences-between-the-return-and-exit-commands-in-bash/</loc>
         <lastmod>2024-08-30T16:52:36.554Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -2779,14 +2907,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/06/07/json-syntax/</loc>
         <lastmod>2024-08-28T16:10:19.657Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/06/03/list-of-roman-numerals-1-to-1000/</loc>
-        <lastmod>2024-08-27T15:37:42.587Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -2969,22 +3089,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2022/06/23/apache-flink-release-1_14_5/</loc>
-        <lastmod>2024-08-22T16:33:05.218Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/02/20/apache-flink-release-1_13_6/</loc>
-        <lastmod>2024-08-22T16:32:04.581Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2024/07/14/quotes-and-basic-escape-characters-in-bash/</loc>
         <lastmod>2024-08-22T16:26:46.268Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -3019,14 +3123,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/07/11/your-first-bash-script/</loc>
         <lastmod>2024-08-22T16:11:32.887Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/01/01/why-you-should-learn-data-structures-and-algorithms/</loc>
-        <lastmod>2024-08-05T15:43:09.162Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -3113,38 +3209,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2023/09/10/apache-flink-history-server/</loc>
-        <lastmod>2023-09-12T00:51:40.398Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/09/11/apache-paimon-0_5_0-incubating-release/</loc>
-        <lastmod>2023-09-12T00:48:22.729Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/09/09/apache-flink-features/</loc>
-        <lastmod>2023-09-12T00:44:31.901Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/09/06/apache-paimon-release-0_5/</loc>
-        <lastmod>2023-09-07T15:38:34.711Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2023/09/05/data-analysis-knowledge-map/</loc>
         <lastmod>2023-09-05T15:38:20.187Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -3153,24 +3217,8 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2023/09/02/apache-flink-performance-high-throughput-low-latency/</loc>
-        <lastmod>2023-09-04T15:39:09.856Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2023/09/04/the-best-career-advice-ive-received/</loc>
         <lastmod>2023-09-04T15:39:04.543Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/09/01/apache-flink-use-cases/</loc>
-        <lastmod>2023-09-04T15:24:54.493Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -3601,24 +3649,8 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2023/03/10/lsm-tree-intro/</loc>
-        <lastmod>2023-03-22T15:47:16.028Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2023/01/13/superset-presto-error-prestoenginespec/</loc>
         <lastmod>2023-01-16T02:11:41.368Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2023/01/01/flink-webui-jar-dir/</loc>
-        <lastmod>2023-01-09T16:53:01.906Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -3649,30 +3681,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2022/10/08/the-first-apache-flink-job/</loc>
-        <lastmod>2022-10-13T14:49:37.076Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/09/16/apache-flink-table-store-quick-start/</loc>
-        <lastmod>2022-10-13T14:29:44.016Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/09/15/apache-flink-table-store-intro/</loc>
-        <lastmod>2022-09-15T15:52:37.343Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2022/06/10/how-to-install-mysql57-on-ubuntu_20_04/</loc>
         <lastmod>2022-09-08T14:42:21.577Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -3691,14 +3699,6 @@
     <url>
         <loc>http://linjiangxiong.com/2022/08/25/adding-new-fields-in-an-existing-index-elasticsearch/</loc>
         <lastmod>2022-08-25T15:46:21.364Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2022/08/24/physical-memory-exceeded-causing-being-killed-by-yarn/</loc>
-        <lastmod>2022-08-25T15:43:14.162Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

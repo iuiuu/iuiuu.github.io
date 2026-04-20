@@ -10,7 +10,7 @@
 
     <url>
         <loc>http://linjiangxiong.com/categories/programming/</loc>
-        <lastmod>2026-04-20T14:38:48.720Z</lastmod>
+        <lastmod>2026-04-20T14:55:01.669Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -58,13 +58,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/categories/Large-Language-Model/</loc>
-        <lastmod>2025-02-11T15:25:18.733Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/categories/Wiki/</loc>
         <lastmod>2025-01-21T17:21:45.975Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -81,13 +74,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/Redis%25E6%2595%2599%25E7%25A8%258B/</loc>
         <lastmod>2024-12-03T21:57:30.377Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/Redis-Source-Code-Analysis/</loc>
-        <lastmod>2024-12-03T21:57:29.853Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -114,13 +100,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/categories/Data-Structures-and-Algorithms/</loc>
-        <lastmod>2024-09-01T14:28:05.744Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/categories/JSON-Tutorial/</loc>
         <lastmod>2024-08-28T16:12:05.011Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -128,22 +107,8 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/categories/Math/</loc>
-        <lastmod>2024-08-27T15:37:42.587Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/Flink/</loc>
-        <lastmod>2024-08-22T16:33:05.218Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/categories/Apache-Paimon/</loc>
-        <lastmod>2023-09-12T00:48:22.729Z</lastmod>
+        <lastmod>2023-08-31T14:39:41.862Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
