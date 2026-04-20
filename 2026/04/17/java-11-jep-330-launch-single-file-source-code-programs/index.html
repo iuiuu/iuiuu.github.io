@@ -1,0 +1,232 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Java 11 新特性详解：像运行 Python 一样运行 Java（JEP 330） | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="说明： 本文基于 OpenJDK 11+ 编写。请注意，Oracle 官方已停止对 Java 11 的免费公开更新，生产环境建议使用更新的 LTS 版本（如 Java 17&#x2F;21）。   引言：从两步到一步在 Java 11 之前，运行任何一个 Java 程序——哪怕是最简单的 “Hello World”——都必须经历一个固定的两步流程： 12$ javac HelloWorld.java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 11 新特性详解：像运行 Python 一样运行 Java（JEP 330）">
+<meta property="og:url" content="http://linjiangxiong.com/2026/04/17/java-11-jep-330-launch-single-file-source-code-programs/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="说明： 本文基于 OpenJDK 11+ 编写。请注意，Oracle 官方已停止对 Java 11 的免费公开更新，生产环境建议使用更新的 LTS 版本（如 Java 17&#x2F;21）。   引言：从两步到一步在 Java 11 之前，运行任何一个 Java 程序——哪怕是最简单的 “Hello World”——都必须经历一个固定的两步流程： 12$ javac HelloWorld.java">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://linjiangxiong.com/image/2026/04/1701.png">
+<meta property="article:published_time" content="2026-04-16T17:14:33.000Z">
+<meta property="article:modified_time" content="2026-04-20T14:35:55.389Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/2026/04/1701.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Java 11 新特性详解：像运行 Python 一样运行 Java（JEP 330）",
+  "url": "http://linjiangxiong.com/2026/04/17/java-11-jep-330-launch-single-file-source-code-programs/",
+  "image": "http://linjiangxiong.com/image/2026/04/1701.png",
+  "datePublished": "2026-04-16T17:14:33.000Z",
+  "dateModified": "2026-04-20T14:35:55.389Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Johnson Lin",
+      "url": "http://linjiangxiong.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2026/04/17/java-11-jep-330-launch-single-file-source-code-programs/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Java 11 新特性详解：像运行 Python 一样运行 Java（JEP 330）',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">504</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">68</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Johnson Lin</span></a><a class="nav-page-title" href="/"><span class="site-name">Java 11 新特性详解：像运行 Python 一样运行 Java（JEP 330）</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Java 11 新特性详解：像运行 Python 一样运行 Java（JEP 330）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-16T17:14:33.000Z" title="发表于 2026-04-17 01:14:33">2026-04-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-20T14:35:55.389Z" title="更新于 2026-04-20 22:35:55">2026-04-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/programming/">编程文摘</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="container post-content" id="article-container"><blockquote>
+<p><strong>说明：</strong> 本文基于 OpenJDK 11+ 编写。请注意，Oracle 官方已停止对 Java 11 的免费公开更新，生产环境建议使用更新的 LTS 版本（如 Java 17/21）。</p>
+</blockquote>
+<hr>
+<h2 id="引言：从两步到一步"><a href="#引言：从两步到一步" class="headerlink" title="引言：从两步到一步"></a>引言：从两步到一步</h2><p>在 Java 11 之前，运行任何一个 Java 程序——哪怕是最简单的 “Hello World”——都必须经历一个固定的两步流程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ javac HelloWorld.java   <span class="comment"># 第一步：编译生成 HelloWorld.class</span></span><br><span class="line">$ java HelloWorld         <span class="comment"># 第二步：运行编译后的字节码</span></span><br></pre></td></tr></table></figure>
+<p>这种流程对于大型项目而言是严谨且必要的，但对于初学者练手、快速验证代码片段或编写小型工具脚本来说，却显得有些繁琐，且每次修改后都必须重新编译，否则运行的仍是旧版本的字节码。</p>
+<p>从 Java 11 开始，这一流程得到了极大的简化。现在，你可以跳过显式的 <code>javac</code> 编译步骤，<strong>直接使用 </strong><code>java</code><strong> 命令运行源代码文件</strong>。</p>
+<h2 id="功能初探：一行命令搞定一切"><a href="#功能初探：一行命令搞定一切" class="headerlink" title="功能初探：一行命令搞定一切"></a>功能初探：一行命令搞定一切</h2><h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>新用法非常简单。假设你有一个 <code>HelloWorld.java</code> 文件，内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloWorld</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello Java 11!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在命令行中，直接输入以下命令即可运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ java HelloWorld.java</span><br></pre></td></tr></table></figure>
+<p>终端将直接输出 <code>Hello Java 11!</code>。</p>
+<h3 id="工作原理：内存中的“隐形”编译"><a href="#工作原理：内存中的“隐形”编译" class="headerlink" title="工作原理：内存中的“隐形”编译"></a>工作原理：内存中的“隐形”编译</h3><p>这一功能是 Java 11 引入的 <strong>JEP 330: Launch Single-File Source-Code Programs</strong> 的核心内容。其原理是：当 <code>java</code> 启动器检测到目标是 <code>.java</code> 源文件时，它会<strong>在后台自动调用编译器（</strong><code>javac</code><strong>）</strong>，将源代码编译为字节码。与传统编译不同的是，这些字节码文件（<code>.class</code>）并不会被写入磁盘，而是<strong>全部存储在内存中</strong>。编译完成后，JVM 会立即从内存中加载并执行这个类。</p>
+<p>也就是说，<code>java HelloWorld.java</code> 在效果上<strong>近似于</strong> <code>javac -d &lt;memory&gt; HelloWorld.java &amp;&amp; java -cp &lt;memory&gt; HelloWorld</code>，整个过程对用户完全透明。</p>
+<h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><p>向程序传递命令行参数的方式与传统方式完全一致。参数直接写在源文件名之后即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ java HelloWorld.java Java 11</span><br></pre></td></tr></table></figure>
+<p>上面的代码中，<code>args[0]</code> 的值为 <code>Java</code>，<code>args[1]</code> 的值为 <code>11</code>。</p>
+<h3 id="宽松的文件名规则"><a href="#宽松的文件名规则" class="headerlink" title="宽松的文件名规则"></a>宽松的文件名规则</h3><p>一个有趣的点是，该功能对文件名与公共类名的匹配要求较为宽松。例如，将文件重命名为 <code>WrongName.java</code>（内容不变），依然可以直接运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ java WrongName.java</span><br></pre></td></tr></table></figure>
+<p>程序会正常执行。但这仅限 <code>java</code> 命令；若改用 <code>javac</code> 编译该文件，则会因类名与文件名不符而报错。当然，尽管可以运行，<strong>始终建议遵循标准的命名规范</strong>（文件名与 <code>public class</code> 名一致），以保持代码的可维护性。</p>
+<!-- 这是一张图片，ocr 内容为： -->
+<p><img src="/image/2026/04/1701.png" alt=""></p>
+<h2 id="进阶选项：命令行与-Shebang-脚本"><a href="#进阶选项：命令行与-Shebang-脚本" class="headerlink" title="进阶选项：命令行与 Shebang 脚本"></a>进阶选项：命令行与 Shebang 脚本</h2><h3 id="源文件模式的触发条件"><a href="#源文件模式的触发条件" class="headerlink" title="源文件模式的触发条件"></a>源文件模式的触发条件</h3><p><code>java</code> 命令进入“源文件模式”有两个触发条件，满足其一即可：</p>
+<ol>
+<li><strong>文件名后缀</strong>：命令行第一个参数（JVM 选项之后）是一个以 <code>.java</code> 结尾的文件名。</li>
+<li><code>--source</code><strong> 参数</strong>：命令行中显式指定了 <code>--source</code> 版本号。</li>
+</ol>
+<h3 id="使用-class-path-选项"><a href="#使用-class-path-选项" class="headerlink" title="使用 --class-path 选项"></a>使用 <code>--class-path</code> 选项</h3><p>你仍然可以在运行源文件时指定类路径（<code>--class-path</code> 或 <code>-cp</code>），选项需要放在源文件名之前：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ java --class-path=/some/path HelloWorld.java</span><br></pre></td></tr></table></figure>
+<h3 id="Shebang-支持：像脚本一样运行-Java"><a href="#Shebang-支持：像脚本一样运行-Java" class="headerlink" title="Shebang 支持：像脚本一样运行 Java"></a>Shebang 支持：像脚本一样运行 Java</h3><p>Java 11 还支持将 Java 程序作为 Shebang 脚本运行，进一步模糊了编译型语言与脚本语言之间的界限。在 Unix/Linux/macOS 系统上，你可以创建一个没有 <code>.java</code> 扩展名的文件，并在第一行添加 Shebang（<code>#!</code>）指令，指向 Java 启动器的路径并指定 <code>--source</code> 版本。</p>
+<p><strong>示例：</strong> 创建一个名为 <code>add</code> 的文件，内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env -S java --source 11</span></span><br><span class="line"></span><br><span class="line">import java.util.Arrays;</span><br><span class="line"></span><br><span class="line">public class Addition &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Integer <span class="built_in">sum</span> = Arrays.stream(args)</span><br><span class="line">                .mapToInt(Integer::parseInt)</span><br><span class="line">                .<span class="built_in">sum</span>();</span><br><span class="line">        System.out.println(<span class="built_in">sum</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>赋予可执行权限后，即可像普通脚本一样调用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">chmod</span> +x add</span><br><span class="line">$ ./add 1 2 3</span><br><span class="line">6</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>注意</strong>：Shebang 功能需要 <code>--source</code> 参数支持，且文件<strong>不能</strong>使用 <code>.java</code> 扩展名，否则 Shebang 行会被视为非法字符而导致错误。该功能在 Windows 上不直接支持。</p>
+</blockquote>
+<h2 id="限制与适用场景"><a href="#限制与适用场景" class="headerlink" title="限制与适用场景"></a>限制与适用场景</h2><p>这项功能虽便捷，但存在明确的限制，了解这些限制有助于避免踩坑。</p>
+<h3 id="核心限制：单文件"><a href="#核心限制：单文件" class="headerlink" title="核心限制：单文件"></a>核心限制：单文件</h3><p>在 Java 11 中，此功能<strong>仅适用于单个源文件</strong>。程序所依赖的其他类必须定义在同一个 <code>.java</code> 文件中，不能引用其他源文件或第三方 JAR 包。例如，如果 <code>Student.java</code> 引用了 <code>Teacher.java</code> 中的 <code>Teacher</code> 类，运行时将报错“找不到符号”。</p>
+<h3 id="类路径冲突"><a href="#类路径冲突" class="headerlink" title="类路径冲突"></a>类路径冲突</h3><p>如果当前目录下同时存在同名的源文件（如 <code>HelloWorld.java</code>）和编译后的字节码文件（如 <code>HelloWorld.class</code>），再使用 <code>java HelloWorld.java</code> 运行时会报错：<code>error: class found on application class path</code>。这是为了防止类路径冲突导致的行为不一致。</p>
+<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><ul>
+<li><strong>Java 初学者练手</strong>：省去了编译步骤，降低入门门槛。</li>
+<li><strong>快速原型验证与探索性编程</strong>：快速测试某个 API 或代码片段，无需建立完整项目。</li>
+<li><strong>编写小型实用工具或脚本</strong>：在熟悉 Java 生态的情况下，替代部分 Shell/Python 脚本。</li>
+<li><strong>不适合</strong>：大型项目、需要外部依赖（JAR 包）、涉及多模块的项目开发。</li>
+</ul>
+<h2 id="未来演进：多文件支持"><a href="#未来演进：多文件支持" class="headerlink" title="未来演进：多文件支持"></a>未来演进：多文件支持</h2><p>Java 22 进一步增强了此功能。通过 <strong>JEP 458: Launch Multi-File Source-Code Programs</strong>，<code>java</code> 启动器现在可以自动定位、编译并加载多个源文件，前提是源文件的目录结构与其包结构相匹配。这意味着你可以在不借助构建工具的情况下，直接运行由多个源文件组成的简单程序，进一步拓宽了“免编译运行”的使用场景。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Java 11 引入的“直接运行源文件”功能，是一项旨在提升开发体验的务实改进。它通过将编译步骤隐藏在内存中，将开发者从繁琐的两步操作中解放出来，尤其适合快速迭代和轻量级编程场景。不过，它并非要取代传统的 <code>javac</code> + <code>java</code> 流程，而是在特定场景下提供一个更轻便、更高效的替代方案。掌握这一特性，能让你的 Java 日常开发与学习更加游刃有余。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2026/04/17/java-11-jep-330-launch-single-file-source-code-programs/">http://linjiangxiong.com/2026/04/17/java-11-jep-330-launch-single-file-source-code-programs/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://linjiangxiong.com" target="_blank">Johnson Lin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a></div><div class="post-share"><div class="social-share" data-image="/image/2026/04/1701.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/04/16/java-11-files-readstring-writestring-guide/" title="Java 11 Files 类新方法：readString 与 writeString 详解"><img class="cover" src="/image/brand/java.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Java 11 Files 类新方法：readString 与 writeString 详解</div></div><div class="info-2"><div class="info-item-1">自 Java 7 引入 java.nio.file.Files 以来，文件读写操作已大幅简化。但直到 Java 10，将整个文件内容读取为单个 String 或直接将 String 写入文件仍然需要多步转换或借助辅助工具（例如 new String(Files.readAllBytes(path), charset)）。Java 11 在 Files 类中直接增加了 readString 和 writeString 方法，使这类最常用的文本文件操作变得优雅且直观。本文将详细讲解这两个方法的用法、最佳实践及注意事项。 1. 方法签名与基本概念1.1 readString12public static String readString(Path path) throws IOExceptionpublic static String readString(Path path, Charset cs) throws IOException  作用：读取指定路径文件中的所有字符，并将其返回为一个 String。 参数： path – 文件路径。 cs – 可选，字符集。若不提供，默认使...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2023/08/26/gson-serializing-and-deserializing-objects/" title="深入了解Gson：Java对象的序列化和反序列化"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-26</div><div class="info-item-2">深入了解Gson：Java对象的序列化和反序列化</div></div><div class="info-2"><div class="info-item-1">本文将介绍一些使用 Gson 库进行对象序列化时需要注意的细节，帮助开发人员更好地理解和应用该库。 引入Gson库首先，需要确保项目中已经正确引入了 Gson 库。可以通过 Maven、Gradle 或手动下载 jar 包的方式导入 Gson 库。 例如，如果使用 Maven，在 pom.xml 文件中添加以下依赖项： 123456&lt;dependency&gt;    &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt;    &lt;artifactId&gt;gson&lt;/artifactId&gt;    &lt;version&gt;2.10.1&lt;/version&gt;    &lt;scope&gt;compile&lt;/scope&gt;&lt;/dependency&gt; 创建Gson对象在使用 Gson 库之前，需要创建一个 Gson 对象。可以直接使用默认的 Gson 构造函数创建一个 Gson 对象，也可以根据需要配置一些参数。 例如，如果希望将 JSON 字符串格式化输出，可以使用 Gs...</div></div></div></a><a class="pagination-related" href="/2025/01/04/how-to-install-openjdk-17-on-ubuntu-24-0-4/" title="How to Install OpenJDK 17 on Ubuntu 24.0.4"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-04</div><div class="info-item-2">How to Install OpenJDK 17 on Ubuntu 24.0.4</div></div><div class="info-2"><div class="info-item-1">This guide walks you through the step-by-step process, ensuring you get OpenJDK 17 up and running on your system in no time. Step 1: Update Package ListsBefore starting the installation process, it’s always a good practice to update your system’s package list. This ensures that you’re installing the latest version available in the repositories. Open your terminal and run the following command: 1sudo apt update This command will refresh the list of available packages and their versions, making...</div></div></div></a><a class="pagination-related" href="/2025/01/01/install-java-jdk-21-openjdk-21-on-ubuntu/" title="Install OpenJDK 21 LTS on Ubuntu 24.04|22.04|20.04|18.04"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-01-01</div><div class="info-item-2">Install OpenJDK 21 LTS on Ubuntu 24.04|22.04|20.04|18.04</div></div><div class="info-2"><div class="info-item-1"> JDK 21 is a long-term support (LTS) release from most vendors.  OpenJDK (Open Java Development Kit) is an open-source implementation of the Java Platform, Standard Edition (Java SE) licensed under the GNU General Public License, which provides a complete runtime environment for executing Java applications and a development environment for building Java applications. OpenJDK is governed by the OpenJDK Community, and its development is led by Oracle, with contributions from various companies a...</div></div></div></a><a class="pagination-related" href="/2022/08/16/how-to-serialize-a-null-field-using-gson-library-in-java/" title="在 Java 中如何使用 Gson 库序列化 NULL 字段"><img class="cover" src="/image/brand/java.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-16</div><div class="info-item-2">在 Java 中如何使用 Gson 库序列化 NULL 字段</div></div><div class="info-2"><div class="info-item-1">默认情况下，Gson 对象不会将值为 NULL 的字段序列化到 JSON 对象中。如果要序列化值为 NULL 的字段，可以在创建 Gson 对象之前，先调用 GsonBuilder 实例的 serializeNulls() 方法，再由 GsonBuilder 创建 Gson 实例，即可在序列化后的 JSON 中包含 NULL 值的字段。 具体示例代码如下： 12345678910111213141516171819202122232425import com.google.gson.Gson;import com.google.gson.GsonBuilder;import com.johnson.gson.model.User;public class NullFieldSerializeDemo &#123;    public static void main(String[] args) &#123;        GsonBuilder builder = new GsonBuilder();        builder.serializeNulls();      ...</div></div></div></a><a class="pagination-related" href="/2024/11/19/java-convert-localdatetime-to-long-timestamp/" title="How to Convert LocalDateTime to Long Timestamp in Java"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-19</div><div class="info-item-2">How to Convert LocalDateTime to Long Timestamp in Java</div></div><div class="info-2"><div class="info-item-1">When working with dates and times in Java, you may often need to convert a LocalDateTime object into a long timestamp, typically representing the number of milliseconds or seconds since the Unix epoch (January 1, 1970, 00:00:00 UTC). This can be useful for database operations, APIs, or any scenario requiring a numerical representation of date and time. Step-by-Step Conversion ProcessJava’s LocalDateTime is a part of the java.time package introduced in Java 8. Since LocalDateTime is time-zone ...</div></div></div></a><a class="pagination-related" href="/2026/04/15/java11-jep-321-http-client-api/" title="Java 11 新增的 HTTP Client API（JEP 321）"><img class="cover" src="/image/brand/java.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-15</div><div class="info-item-2">Java 11 新增的 HTTP Client API（JEP 321）</div></div><div class="info-2"><div class="info-item-1">一、概述Java 11引入了一个全新的标准HTTP客户端API，位于java.net.http包中，旨在取代自Java早期就存在的HttpURLConnection类。该API此前在Java 9中以孵化器模块形式出现，经过Java 10的迭代更新，最终在Java 11中正式标准化。新的HTTP客户端提供了一种更现代化、更易用的方式来处理HTTP通信，支持HTTP/2和WebSocket，并同时提供同步与异步两种编程模型。 与传统的HttpURLConnection相比，java.net.http.HttpClient具备以下显著优势：     特性 说明     无需第三方依赖 属于Java标准库的一部分，开箱即用   HTTP/2原生支持 支持多路复用、头部压缩等性能优化特性   异步非阻塞 基于CompletableFuture，可高效处理高并发场景   构建器模式 采用流式API，配置和构建过程简洁直观   内置WebSocket客户端 无需额外依赖即可实现WebSocket通信     在Java 11之前，开发者通常使用HttpURLConnection（功能过于底层）...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Johnson Lin</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">504</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">68</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80%EF%BC%9A%E4%BB%8E%E4%B8%A4%E6%AD%A5%E5%88%B0%E4%B8%80%E6%AD%A5"><span class="toc-number">1.</span> <span class="toc-text">引言：从两步到一步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E5%88%9D%E6%8E%A2%EF%BC%9A%E4%B8%80%E8%A1%8C%E5%91%BD%E4%BB%A4%E6%90%9E%E5%AE%9A%E4%B8%80%E5%88%87"><span class="toc-number">2.</span> <span class="toc-text">功能初探：一行命令搞定一切</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.</span> <span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E2%80%9C%E9%9A%90%E5%BD%A2%E2%80%9D%E7%BC%96%E8%AF%91"><span class="toc-number">2.2.</span> <span class="toc-text">工作原理：内存中的“隐形”编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="toc-number">2.3.</span> <span class="toc-text">参数传递</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%BD%E6%9D%BE%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%E8%A7%84%E5%88%99"><span class="toc-number">2.4.</span> <span class="toc-text">宽松的文件名规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%E9%80%89%E9%A1%B9%EF%BC%9A%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%8E-Shebang-%E8%84%9A%E6%9C%AC"><span class="toc-number">3.</span> <span class="toc-text">进阶选项：命令行与 Shebang 脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BA%90%E6%96%87%E4%BB%B6%E6%A8%A1%E5%BC%8F%E7%9A%84%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">源文件模式的触发条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-class-path-%E9%80%89%E9%A1%B9"><span class="toc-number">3.2.</span> <span class="toc-text">使用 --class-path 选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shebang-%E6%94%AF%E6%8C%81%EF%BC%9A%E5%83%8F%E8%84%9A%E6%9C%AC%E4%B8%80%E6%A0%B7%E8%BF%90%E8%A1%8C-Java"><span class="toc-number">3.3.</span> <span class="toc-text">Shebang 支持：像脚本一样运行 Java</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">4.</span> <span class="toc-text">限制与适用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E9%99%90%E5%88%B6%EF%BC%9A%E5%8D%95%E6%96%87%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">核心限制：单文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E8%B7%AF%E5%BE%84%E5%86%B2%E7%AA%81"><span class="toc-number">4.2.</span> <span class="toc-text">类路径冲突</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">4.3.</span> <span class="toc-text">适用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AA%E6%9D%A5%E6%BC%94%E8%BF%9B%EF%BC%9A%E5%A4%9A%E6%96%87%E4%BB%B6%E6%94%AF%E6%8C%81"><span class="toc-number">5.</span> <span class="toc-text">未来演进：多文件支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/04/17/java-11-jep-330-launch-single-file-source-code-programs/" title="Java 11 新特性详解：像运行 Python 一样运行 Java（JEP 330）"><img src="/image/2026/04/1701.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java 11 新特性详解：像运行 Python 一样运行 Java（JEP 330）"/></a><div class="content"><a class="title" href="/2026/04/17/java-11-jep-330-launch-single-file-source-code-programs/" title="Java 11 新特性详解：像运行 Python 一样运行 Java（JEP 330）">Java 11 新特性详解：像运行 Python 一样运行 Java（JEP 330）</a><time datetime="2026-04-16T17:14:33.000Z" title="发表于 2026-04-17 01:14:33">2026-04-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/16/java-11-files-readstring-writestring-guide/" title="Java 11 Files 类新方法：readString 与 writeString 详解"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java 11 Files 类新方法：readString 与 writeString 详解"/></a><div class="content"><a class="title" href="/2026/04/16/java-11-files-readstring-writestring-guide/" title="Java 11 Files 类新方法：readString 与 writeString 详解">Java 11 Files 类新方法：readString 与 writeString 详解</a><time datetime="2026-04-15T16:14:59.000Z" title="发表于 2026-04-16 00:14:59">2026-04-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/15/java11-jep-321-http-client-api/" title="Java 11 新增的 HTTP Client API（JEP 321）"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java 11 新增的 HTTP Client API（JEP 321）"/></a><div class="content"><a class="title" href="/2026/04/15/java11-jep-321-http-client-api/" title="Java 11 新增的 HTTP Client API（JEP 321）">Java 11 新增的 HTTP Client API（JEP 321）</a><time datetime="2026-04-14T16:10:29.000Z" title="发表于 2026-04-15 00:10:29">2026-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/14/windows-i386-amd64-difference/" title="Windows 下的 i386 与 amd64 的架构区别"><img src="/image/2026/04/1402.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Windows 下的 i386 与 amd64 的架构区别"/></a><div class="content"><a class="title" href="/2026/04/14/windows-i386-amd64-difference/" title="Windows 下的 i386 与 amd64 的架构区别">Windows 下的 i386 与 amd64 的架构区别</a><time datetime="2026-04-13T16:12:42.000Z" title="发表于 2026-04-14 00:12:42">2026-04-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/13/jdk-jre-relationship-explanation/" title="JDK 与 JRE 的关系：你真的分清了吗？"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JDK 与 JRE 的关系：你真的分清了吗？"/></a><div class="content"><a class="title" href="/2026/04/13/jdk-jre-relationship-explanation/" title="JDK 与 JRE 的关系：你真的分清了吗？">JDK 与 JRE 的关系：你真的分清了吗？</a><time datetime="2026-04-13T14:13:55.000Z" title="发表于 2026-04-13 22:13:55">2026-04-13</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By Johnson Lin</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

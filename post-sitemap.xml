@@ -9,6 +9,22 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2026/04/03/goodbye-jdk-chaos-jvms-smooth-java-windows/</loc>
+        <lastmod>2026-04-20T14:37:09.172Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2026/04/17/java-11-jep-330-launch-single-file-source-code-programs/</loc>
+        <lastmod>2026-04-20T14:35:55.389Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2023/04/03/linux-commands-pwgen/</loc>
         <lastmod>2026-04-16T17:33:33.195Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -147,14 +163,6 @@
     <url>
         <loc>http://linjiangxiong.com/2023/09/24/what-is-a-quantile/</loc>
         <lastmod>2026-04-16T17:04:21.346Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2026/04/03/goodbye-jdk-chaos-jvms-smooth-java-windows/</loc>
-        <lastmod>2026-04-16T17:01:47.315Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
