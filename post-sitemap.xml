@@ -9,6 +9,326 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2024/09/06/why-does-redis-use-the-sds-structure-for-strings-instead-of-char/</loc>
+        <lastmod>2026-05-09T16:00:27.676Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/09/18/bulk-deleting-keys-in-redis-using-wildcards/</loc>
+        <lastmod>2026-05-09T16:00:27.636Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/10/how-to-install-node-js-latest-long-term-support-version-on-ubuntu-22-04/</loc>
+        <lastmod>2026-05-09T16:00:27.635Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/29/understanding-the-classic-confinement-warning-in-snap-packages/</loc>
+        <lastmod>2026-05-09T16:00:27.635Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/09/04/how-to-fix-docker-gpg-key-installation-errors-on-ubuntu/</loc>
+        <lastmod>2026-05-09T16:00:27.634Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/09/05/how-to-delete-data-in-elasticsearch-single-multiple-clear-and-all/</loc>
+        <lastmod>2026-05-09T16:00:27.633Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/</loc>
+        <lastmod>2026-05-09T16:00:27.615Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/01/resolving-the-ttransportexception-error-in-superset-hive-database-connection/</loc>
+        <lastmod>2026-05-09T16:00:27.615Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/02/ubuntu-could-not-get-lock-var-lib-apt-lists-lock/</loc>
+        <lastmod>2026-05-09T16:00:27.615Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/05/how-to-fix-java-lang-nosuchmethoderror-commandline-hasoption-in-flink/</loc>
+        <lastmod>2026-05-09T16:00:27.615Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/19/java-convert-localdatetime-to-long-timestamp/</loc>
+        <lastmod>2026-05-09T16:00:27.615Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/27/how-to-install-deb-packages-on-ubuntu/</loc>
+        <lastmod>2026-05-09T16:00:27.615Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/</loc>
+        <lastmod>2026-05-09T16:00:27.477Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/07/23/how-to-count-lines-of-code-in-intellij-idea/</loc>
+        <lastmod>2026-05-09T16:00:27.457Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/06/01/why-learning-data-structures-and-algorithms-is-crucial-for-success-in-tech/</loc>
+        <lastmod>2026-05-09T16:00:27.366Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/06/04/checking-filebeat-version/</loc>
+        <lastmod>2026-05-09T16:00:27.366Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/07/30/effective-ways-to-delete-fuzzy-matching-keys-in-redis/</loc>
+        <lastmod>2026-05-09T16:00:27.366Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/08/29/5-ways-to-concatenate-strings-in-python3/</loc>
+        <lastmod>2026-05-09T16:00:27.366Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/10/29/multiple-jobs-or-multiple-pipelines-in-one-job-in-flink/</loc>
+        <lastmod>2026-05-09T16:00:27.366Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/06/02/using-the-pfadd-command-in-redis/</loc>
+        <lastmod>2026-05-09T16:00:27.365Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/01/04/how-to-install-openjdk-17-on-ubuntu-24-0-4/</loc>
+        <lastmod>2026-05-09T16:00:27.365Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/08/27/yaml-tutorial/</loc>
+        <lastmod>2026-05-09T16:00:27.365Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/08/20/copying-andpasting-content-and-dragging-files-between-vmware-virtual-machines-and-the-host-system/</loc>
+        <lastmod>2026-05-09T16:00:27.365Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/08/14/troubleshooting-chattr-operation-not-permitted-while-setting-flags/</loc>
+        <lastmod>2026-05-09T16:00:27.365Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/06/05/finding-the-hostname-in-linux-a-guide-to-common-methods/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/07/25/how-to-learn-redis-effectively/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/07/31/how-to-view-mysql-version-a-quick-guide/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/01/01/install-java-jdk-21-openjdk-21-on-ubuntu/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/01/03/install-openjdk-17-on-ubuntu/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/01/23/solution-for-vmware-virtual-machine-folder-sharing-not-working/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/02/10/integrating-deepseek-into-vscode/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2025/02/14/ollama-tutorial/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/08/05/solving-macos-port-occupation-issues/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/08/28/how-to-fix-shadows-name-from-outer-scope-warning-in-pycharm/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/08/30/differences-between-the-return-and-exit-commands-in-bash/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/08/09/how-to-install-docker-on-ubuntu/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/08/15/understanding-the-chattr-inappropriate-ioctl-for-device-while-reading-flags-error/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/08/16/a-deep-dive-into-the-apt-command-linux-package-management-simplified/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/12/09/what-is-pagefile-sys-in-windows/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2024/11/15/redis-bitmaps-intro/</loc>
+        <lastmod>2026-05-09T16:00:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2026/04/28/dataworks-bind-flink-resources-tutorial/</loc>
         <lastmod>2026-05-09T15:53:28.254Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -569,38 +889,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2025/01/01/install-java-jdk-21-openjdk-21-on-ubuntu/</loc>
-        <lastmod>2026-04-14T16:28:25.346Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2025/01/04/how-to-install-openjdk-17-on-ubuntu-24-0-4/</loc>
-        <lastmod>2026-04-14T16:28:13.007Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2025/01/03/install-openjdk-17-on-ubuntu/</loc>
-        <lastmod>2026-04-14T16:28:08.723Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/19/java-convert-localdatetime-to-long-timestamp/</loc>
-        <lastmod>2026-04-14T16:28:04.056Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2022/11/20/java-convert-date-to-localdate-or-localdatetime-and-back/</loc>
         <lastmod>2026-04-14T16:27:42.275Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -833,14 +1121,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2025/02/10/integrating-deepseek-into-vscode/</loc>
-        <lastmod>2025-02-17T22:55:13.442Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2025/01/29/ollama-page-assist/</loc>
         <lastmod>2025-02-17T22:45:31.916Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -851,14 +1131,6 @@
     <url>
         <loc>http://linjiangxiong.com/2025/01/29/ollama-open-webui/</loc>
         <lastmod>2025-02-17T22:45:14.319Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2025/02/14/ollama-tutorial/</loc>
-        <lastmod>2025-02-17T22:39:21.413Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -937,24 +1209,8 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2025/01/23/solution-for-vmware-virtual-machine-folder-sharing-not-working/</loc>
-        <lastmod>2025-01-23T17:18:39.276Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/</loc>
         <lastmod>2025-01-21T17:21:45.975Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/12/09/what-is-pagefile-sys-in-windows/</loc>
-        <lastmod>2024-12-09T18:32:22.578Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -1729,14 +1985,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2024/11/27/how-to-install-deb-packages-on-ubuntu/</loc>
-        <lastmod>2024-12-03T22:03:37.804Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2024/11/28/how-to-install-redis-on-ubuntu-with-snap/</loc>
         <lastmod>2024-12-03T22:03:09.850Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -1745,120 +1993,8 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2024/08/28/how-to-fix-shadows-name-from-outer-scope-warning-in-pycharm/</loc>
-        <lastmod>2024-12-03T21:58:44.736Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/09/05/how-to-delete-data-in-elasticsearch-single-multiple-clear-and-all/</loc>
-        <lastmod>2024-12-03T21:58:44.736Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/09/04/how-to-fix-docker-gpg-key-installation-errors-on-ubuntu/</loc>
-        <lastmod>2024-12-03T21:58:44.736Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/01/resolving-the-ttransportexception-error-in-superset-hive-database-connection/</loc>
-        <lastmod>2024-12-03T21:58:44.736Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/02/ubuntu-could-not-get-lock-var-lib-apt-lists-lock/</loc>
-        <lastmod>2024-12-03T21:58:44.736Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/05/how-to-fix-java-lang-nosuchmethoderror-commandline-hasoption-in-flink/</loc>
-        <lastmod>2024-12-03T21:58:44.736Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/10/how-to-install-node-js-latest-long-term-support-version-on-ubuntu-22-04/</loc>
-        <lastmod>2024-12-03T21:58:44.736Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2024/11/07/how-to-install-redis-on-ubuntu-using-the-apt-command/</loc>
         <lastmod>2024-12-03T21:58:44.736Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/06/02/using-the-pfadd-command-in-redis/</loc>
-        <lastmod>2024-12-03T21:57:30.396Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/07/29/a-set-of-best-practices-and-guidelines-for-using-redis-effectively/</loc>
-        <lastmod>2024-12-03T21:57:30.396Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/07/30/effective-ways-to-delete-fuzzy-matching-keys-in-redis/</loc>
-        <lastmod>2024-12-03T21:57:30.396Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/09/06/why-does-redis-use-the-sds-structure-for-strings-instead-of-char/</loc>
-        <lastmod>2024-12-03T21:57:30.396Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/09/18/bulk-deleting-keys-in-redis-using-wildcards/</loc>
-        <lastmod>2024-12-03T21:57:30.396Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/07/27/flushing-cache-data-in-redis-a-step-by-step-guide/</loc>
-        <lastmod>2024-12-03T21:57:30.395Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/07/25/how-to-learn-redis-effectively/</loc>
-        <lastmod>2024-12-03T21:57:30.377Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -1970,14 +2106,6 @@
 
     <url>
         <loc>http://linjiangxiong.com/2024/11/09/redis-hyperloglog-pfselftest-command/</loc>
-        <lastmod>2024-12-03T21:57:30.377Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/15/redis-bitmaps-intro/</loc>
         <lastmod>2024-12-03T21:57:30.377Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -2633,22 +2761,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2024/08/09/how-to-install-docker-on-ubuntu/</loc>
-        <lastmod>2024-12-01T15:57:46.922Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/11/29/understanding-the-classic-confinement-warning-in-snap-packages/</loc>
-        <lastmod>2024-12-01T15:47:55.238Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2024/06/24/html-multimedia/</loc>
         <lastmod>2024-11-26T17:21:36.173Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -2683,14 +2795,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/05/31/c-language-lib-math-h/</loc>
         <lastmod>2024-11-03T15:25:02.068Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/10/29/multiple-jobs-or-multiple-pipelines-in-one-job-in-flink/</loc>
-        <lastmod>2024-11-03T14:16:41.201Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -2945,14 +3049,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2024/08/30/differences-between-the-return-and-exit-commands-in-bash/</loc>
-        <lastmod>2024-08-30T16:52:36.554Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2024/06/19/html-lists/</loc>
         <lastmod>2024-08-30T16:37:30.394Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -2987,14 +3083,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/06/14/html-url-introduction/</loc>
         <lastmod>2024-08-30T16:36:39.321Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/08/29/5-ways-to-concatenate-strings-in-python3/</loc>
-        <lastmod>2024-08-30T16:34:36.253Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -3049,54 +3137,6 @@
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/2024/06/01/why-learning-data-structures-and-algorithms-is-crucial-for-success-in-tech/</loc>
-        <lastmod>2024-08-27T15:37:26.979Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/06/04/checking-filebeat-version/</loc>
-        <lastmod>2024-08-27T15:36:48.201Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/06/05/finding-the-hostname-in-linux-a-guide-to-common-methods/</loc>
-        <lastmod>2024-08-27T15:36:30.518Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/07/23/how-to-count-lines-of-code-in-intellij-idea/</loc>
-        <lastmod>2024-08-27T15:36:08.682Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/07/31/how-to-view-mysql-version-a-quick-guide/</loc>
-        <lastmod>2024-08-27T15:34:08.008Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/08/05/solving-macos-port-occupation-issues/</loc>
-        <lastmod>2024-08-27T15:33:10.985Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://linjiangxiong.com/2024/06/06/json-intro/</loc>
         <lastmod>2024-08-27T15:18:38.921Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -3107,14 +3147,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/06/08/json-vs-xml/</loc>
         <lastmod>2024-08-27T15:18:21.145Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/08/27/yaml-tutorial/</loc>
-        <lastmod>2024-08-27T15:08:50.368Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -3187,38 +3219,6 @@
     <url>
         <loc>http://linjiangxiong.com/2024/07/28/string-comparisons-in-bash/</loc>
         <lastmod>2024-08-25T23:46:41.325Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/08/20/copying-andpasting-content-and-dragging-files-between-vmware-virtual-machines-and-the-host-system/</loc>
-        <lastmod>2024-08-25T17:06:41.800Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/08/14/troubleshooting-chattr-operation-not-permitted-while-setting-flags/</loc>
-        <lastmod>2024-08-22T16:38:34.595Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/08/15/understanding-the-chattr-inappropriate-ioctl-for-device-while-reading-flags-error/</loc>
-        <lastmod>2024-08-22T16:38:27.049Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/2024/08/16/a-deep-dive-into-the-apt-command-linux-package-management-simplified/</loc>
-        <lastmod>2024-08-22T16:36:43.661Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
