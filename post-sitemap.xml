@@ -9,6 +9,38 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/2026/05/09/euclid-infinite-primes-proof/</loc>
+        <lastmod>2026-05-09T15:29:13.242Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2026/04/26/java-26-jep-504-remove-the-applet-api/</loc>
+        <lastmod>2026-05-09T15:27:06.227Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2026/04/28/dataworks-bind-flink-resources-tutorial/</loc>
+        <lastmod>2026-05-09T15:26:58.562Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/2026/04/29/java-26-jep-522-g1-gc-improve-throughput-by-reducing-synchronization/</loc>
+        <lastmod>2026-05-09T15:26:49.230Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/2023/06/10/paimon-concepts-basic-concepts/</loc>
         <lastmod>2026-04-20T15:01:10.715Z</lastmod>
         <changefreq>weekly</changefreq>

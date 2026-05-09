@@ -3,6 +3,27 @@
 
 
     <url>
+        <loc>http://linjiangxiong.com/tags/math/</loc>
+        <lastmod>2026-05-09T15:29:13.242Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/java/</loc>
+        <lastmod>2026-05-09T15:27:06.227Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/aliyun-bigdata/</loc>
+        <lastmod>2026-05-09T15:26:58.562Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://linjiangxiong.com/tags/apache-paimon/</loc>
         <lastmod>2026-04-20T15:01:10.715Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -68,13 +89,6 @@
     <url>
         <loc>http://linjiangxiong.com/tags/roman-numerals/</loc>
         <lastmod>2026-04-20T14:45:58.431Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/java/</loc>
-        <lastmod>2026-04-20T14:43:49.573Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -158,13 +172,6 @@
 
     <url>
         <loc>http://linjiangxiong.com/tags/translation/</loc>
-        <lastmod>2026-04-16T17:05:57.278Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/math/</loc>
         <lastmod>2026-04-16T17:05:57.278Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
