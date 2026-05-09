@@ -3,22 +3,29 @@
 
 
     <url>
-        <loc>http://linjiangxiong.com/tags/math/</loc>
-        <lastmod>2026-05-09T15:29:13.242Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/tags/java/</loc>
-        <lastmod>2026-05-09T15:27:06.227Z</lastmod>
+        <loc>http://linjiangxiong.com/tags/%E5%89%AA%E6%8A%A5/</loc>
+        <lastmod>2026-05-09T15:40:08.933Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://linjiangxiong.com/tags/aliyun-bigdata/</loc>
-        <lastmod>2026-05-09T15:26:58.562Z</lastmod>
+        <lastmod>2026-05-09T15:37:04.022Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/java/</loc>
+        <lastmod>2026-05-09T15:36:36.131Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://linjiangxiong.com/tags/math/</loc>
+        <lastmod>2026-05-09T15:35:13.122Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

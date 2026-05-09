@@ -9,22 +9,22 @@
 
 
     <url>
-        <loc>http://linjiangxiong.com/categories/%25E6%2595%25B0%25E5%25AD%25A6%25E5%259B%25AD%25E5%259C%25B0/</loc>
-        <lastmod>2026-05-09T15:29:13.242Z</lastmod>
+        <loc>http://linjiangxiong.com/categories/life/</loc>
+        <lastmod>2026-05-09T15:40:08.933Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://linjiangxiong.com/categories/programming/</loc>
-        <lastmod>2026-05-09T15:27:06.227Z</lastmod>
+        <lastmod>2026-05-09T15:37:04.022Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://linjiangxiong.com/categories/life/</loc>
-        <lastmod>2026-04-16T17:13:39.078Z</lastmod>
+        <loc>http://linjiangxiong.com/categories/learning/</loc>
+        <lastmod>2026-05-09T15:35:13.122Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -109,13 +109,6 @@
     <url>
         <loc>http://linjiangxiong.com/categories/JSON-Tutorial/</loc>
         <lastmod>2024-08-28T16:12:05.011Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://linjiangxiong.com/categories/%25E5%2589%25AA%25E6%258A%25A5/</loc>
-        <lastmod>2021-08-10T14:27:31.785Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
