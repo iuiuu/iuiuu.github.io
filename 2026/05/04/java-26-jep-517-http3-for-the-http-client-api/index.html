@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Java 26前瞻：JEP 517终落地，原生HTTP Client API完美支持HTTP/3 | Johnson Lin</title><meta name="author" content="Johnson Lin"><meta name="copyright" content="Johnson Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="JEP 517 为 Java 标准库中的 HTTP Client API（自 JDK 11 引入）增加了对 HTTP&#x2F;3 协议的支持，使 Java 应用能够以最小的代码改动与 HTTP&#x2F;3 服务器交互，从而获得更快握手、避免队头阻塞、更可靠传输等一系列协议层面的性能收益。该特性已于 JDK 26 正式交付。 基本信息卡片    项目 内容     JEP 编号 517   标题 HTTP&#x2F;3 fo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 26前瞻：JEP 517终落地，原生HTTP Client API完美支持HTTP&#x2F;3">
+<meta property="og:url" content="http://linjiangxiong.com/2026/05/04/java-26-jep-517-http3-for-the-http-client-api/index.html">
+<meta property="og:site_name" content="Johnson Lin">
+<meta property="og:description" content="JEP 517 为 Java 标准库中的 HTTP Client API（自 JDK 11 引入）增加了对 HTTP&#x2F;3 协议的支持，使 Java 应用能够以最小的代码改动与 HTTP&#x2F;3 服务器交互，从而获得更快握手、避免队头阻塞、更可靠传输等一系列协议层面的性能收益。该特性已于 JDK 26 正式交付。 基本信息卡片    项目 内容     JEP 编号 517   标题 HTTP&#x2F;3 fo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://linjiangxiong.com/image/brand/java.jpg">
+<meta property="article:published_time" content="2026-05-04T00:42:57.000Z">
+<meta property="article:modified_time" content="2026-05-10T00:47:45.650Z">
+<meta property="article:author" content="Johnson Lin">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://linjiangxiong.com/image/brand/java.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Java 26前瞻：JEP 517终落地，原生HTTP Client API完美支持HTTP/3",
+  "url": "http://linjiangxiong.com/2026/05/04/java-26-jep-517-http3-for-the-http-client-api/",
+  "image": "http://linjiangxiong.com/image/brand/java.jpg",
+  "datePublished": "2026-05-04T00:42:57.000Z",
+  "dateModified": "2026-05-10T00:47:45.650Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Johnson Lin",
+      "url": "http://linjiangxiong.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/image/IMG_3665.JPG"><link rel="canonical" href="http://linjiangxiong.com/2026/05/04/java-26-jep-517-http3-for-the-http-client-api/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ca45da0012a3ce293c6ca4f7e5ebc3a8";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'WLKqFH01ST8bHfxLtjsterJZnoEpVlF26sn-Nzzoqfc', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Java 26前瞻：JEP 517终落地，原生HTTP Client API完美支持HTTP/3',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">509</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">73</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Johnson Lin</span></a><a class="nav-page-title" href="/"><span class="site-name">Java 26前瞻：JEP 517终落地，原生HTTP Client API完美支持HTTP/3</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> Instant Tutorials</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2025/01/29/ollama-tutorial/"><i class="fa-fw fas fa-book"></i><span> Ollama Tutorial</span></a></li><li><a class="site-page child" href="/2024/06/29/html-instant-tutorial/"><i class="fa-fw fas fa-book"></i><span> HTML Tutorial</span></a></li><li><a class="site-page child" href="/2024/08/27/yaml-tutorial/"><i class="fa-fw fas fa-book"></i><span> YAML Tutorial</span></a></li><li><a class="site-page child" href="/categories/Bash-Tutorial/"><i class="fa-fw fas fa-book"></i><span> Bash Tutorial</span></a></li><li><a class="site-page child" href="/2023/09/05/tutorial-gson/"><i class="fa-fw fas fa-music"></i><span> 极简教程 - Gson</span></a></li><li><a class="site-page child" href="/categories/Redis%E6%95%99%E7%A8%8B/"><i class="fa-fw fas fa-book"></i><span> Redis教程</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><span> Dev Wiki</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/2024/11/29/wiki/standard-ascii-table/"><i class="fa-fw fas fa-book"></i><span> Standard ASCII Table (7-bit)</span></a></li><li><a class="site-page child" href="/2025/01/17/a-complete-guide-to-base64-encoding-and-decoding/"><i class="fa-fw fas fa-book"></i><span> Base64 Introduction</span></a></li><li><a class="site-page child" href="/2024/11/30/wiki/html-char/"><i class="fa-fw fas fa-book"></i><span> HTML Special Char</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Java 26前瞻：JEP 517终落地，原生HTTP Client API完美支持HTTP/3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-05-04T00:42:57.000Z" title="发表于 2026-05-04 08:42:57">2026-05-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-05-10T00:47:45.650Z" title="更新于 2026-05-10 08:47:45">2026-05-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/programming/">编程文摘</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="container post-content" id="article-container"><p>JEP 517 为 Java 标准库中的 HTTP Client API（自 JDK 11 引入）增加了对 HTTP/3 协议的支持，使 Java 应用能够以最小的代码改动与 HTTP/3 服务器交互，从而获得更快握手、避免队头阻塞、更可靠传输等一系列协议层面的性能收益。该特性已于 JDK 26 正式交付。</p>
+<h2 id="基本信息卡片"><a href="#基本信息卡片" class="headerlink" title="基本信息卡片"></a>基本信息卡片</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>JEP 编号</strong></td>
+<td>517</td>
+</tr>
+<tr>
+<td><strong>标题</strong></td>
+<td>HTTP/3 for the HTTP Client API</td>
+</tr>
+<tr>
+<td><strong>负责人</strong></td>
+<td>Daniel Fuchs</td>
+</tr>
+<tr>
+<td><strong>所属版本</strong></td>
+<td>JDK 26</td>
+</tr>
+<tr>
+<td><strong>状态</strong></td>
+<td>Closed / Delivered</td>
+</tr>
+<tr>
+<td><strong>组件</strong></td>
+<td>core-libs / java.net</td>
+</tr>
+<tr>
+<td><strong>关联 JEP</strong></td>
+<td>JEP 321（HTTP Client API）</td>
+</tr>
+<tr>
+<td><strong>Issue</strong></td>
+<td>JDK-8291976</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="背景与动机"><a href="#背景与动机" class="headerlink" title="背景与动机"></a>背景与动机</h2><h3 id="HTTP-Client-API-的前世今生"><a href="#HTTP-Client-API-的前世今生" class="headerlink" title="HTTP Client API 的前世今生"></a>HTTP Client API 的前世今生</h3><p>JDK 11 通过 JEP 321 引入了一套现代化的 HTTP Client API，用于取代老旧的 <code>java.net.HttpURLConnection</code>。这套 API 设计之初就支持 HTTP/1.1 和 HTTP/2，并预留了未来扩展更多协议版本的能力。默认情况下，HTTP Client 会优先使用 HTTP/2，如果目标服务器不支持，则透明降级到 HTTP/1.1。</p>
+<p>使用 HTTP Client API 的代码非常简洁，并且<strong>完全与底层协议版本无关</strong>——开发者无需关心最终走的是 HTTP/1.1 还是 HTTP/2。例如，发送一个 GET 请求并获取响应内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.johnson.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.http.*;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * HttpClient Example</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> johnson lin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2026/4/27 01:08</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HttpClientExample</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">()</span> <span class="keyword">throws</span> IOException, InterruptedException &#123;</span><br><span class="line">        <span class="type">var</span> <span class="variable">client</span> <span class="operator">=</span> HttpClient.newHttpClient();</span><br><span class="line">        <span class="type">var</span> <span class="variable">request</span> <span class="operator">=</span> HttpRequest.newBuilder(URI.create(<span class="string">&quot;https://openjdk.org/&quot;</span>))</span><br><span class="line">                .GET()</span><br><span class="line">                .build();</span><br><span class="line">        <span class="type">var</span> <span class="variable">response</span> <span class="operator">=</span> client.send(request, HttpResponse.BodyHandlers.ofString());</span><br><span class="line">        <span class="keyword">assert</span> response.statusCode() == <span class="number">200</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">htmlText</span> <span class="operator">=</span> response.body();</span><br><span class="line"></span><br><span class="line">        System.out.printf(htmlText);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这段代码中没有任何地方显式依赖 HTTP 协议版本，应用代码天然具备协议无关性。</p>
+<h3 id="当前的短板：缺少-HTTP-3-支持"><a href="#当前的短板：缺少-HTTP-3-支持" class="headerlink" title="当前的短板：缺少 HTTP/3 支持"></a>当前的短板：缺少 HTTP/3 支持</h3><p>HTTP/3 是 HTTP/2 的下一代协议，由 IETF 于 2022 年正式标准化。与 HTTP/1.1 和 HTTP/2 基于 TCP 不同，HTTP/3 构建于 QUIC 协议之上。QUIC 是一种基于 UDP 数据报的可靠传输层协议，并使用 TLS 1.3 进行安全加密。</p>
+<p>HTTP/3 带来了多项显著改进：</p>
+<ul>
+<li><strong>更快的握手速度</strong>：QUIC 将传输握手与 TLS 加密握手合并，减少了建立连接所需的往返次数。</li>
+<li><strong>消除队头阻塞</strong>：HTTP/2 虽然支持多路复用，但底层 TCP 的可靠传输机制仍会导致队头阻塞（一个丢失的数据包会阻塞同一 TCP 连接上的所有请求）。QUIC 在传输层实现了独立的数据流，从根本上解决了这一问题。</li>
+<li><strong>更可靠的传输表现</strong>：在高丢包率网络环境下（如移动网络），QUIC 的表现明显优于 TCP。</li>
+</ul>
+<p>截至 JEP 517 提出之时，HTTP/3 已被主流浏览器广泛支持，约三分之一的网站已部署了该协议。Java 平台作为服务端和客户端开发的重要基础设施，应当跟上这一趋势。</p>
+<h2 id="核心变更详解"><a href="#核心变更详解" class="headerlink" title="核心变更详解"></a>核心变更详解</h2><h3 id="显式选择加入（Opt-in）"><a href="#显式选择加入（Opt-in）" class="headerlink" title="显式选择加入（Opt-in）"></a>显式选择加入（Opt-in）</h3><p>JEP 517 的一个重要设计原则是<strong>不改变默认行为</strong>。升级到 JDK 26 后，现有代码的 HTTP Client 仍会继续使用 HTTP/2 作为默认协议，不会自动切换到 HTTP/3。开发者需要显式声明使用 HTTP/3，这确保了向后兼容性，降低了升级风险。</p>
+<p>有两种方式可以启用 HTTP/3：</p>
+<p><strong>方式一：在 HttpClient 层面设置</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为 HttpClient 指定 HTTP/3 作为首选协议版本</span></span><br><span class="line"><span class="comment">// 此后通过该 client 发送的所有请求都将优先尝试 HTTP/3</span></span><br><span class="line"><span class="type">var</span> <span class="variable">client</span> <span class="operator">=</span> HttpClient.newBuilder()</span><br><span class="line">        .version(HttpClient.Version.HTTP_3)  <span class="comment">// 显式启用 HTTP/3</span></span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+<p><strong>方式二：在单个 HttpRequest 层面设置</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 仅为本次请求指定 HTTP/3 作为首选协议版本</span></span><br><span class="line"><span class="type">var</span> <span class="variable">request</span> <span class="operator">=</span> HttpRequest.newBuilder(URI.create(<span class="string">&quot;https://openjdk.org/&quot;</span>))</span><br><span class="line">        .version(HttpClient.Version.HTTP_3)  <span class="comment">// 仅此请求使用 HTTP/3</span></span><br><span class="line">        .GET()</span><br><span class="line">        .build();</span><br></pre></td></tr></table></figure>
+<p>无论采用哪种方式，设置完成后发送请求的代码保持不变，无需额外改动。</p>
+<h3 id="协议版本协商机制"><a href="#协议版本协商机制" class="headerlink" title="协议版本协商机制"></a>协议版本协商机制</h3><p>一个关键问题是：客户端无法提前知晓目标服务器是否支持 HTTP/3。此外，由于 HTTP/1.1 和 HTTP/2 基于 TCP 流，而 HTTP/3 基于 UDP 数据报，因此<strong>无法</strong>将已有的 HTTP/1.1 或 HTTP/2 连接直接升级为 HTTP/3 连接。</p>
+<p>JEP 517 设计了四种协议协商策略：</p>
+<ol>
+<li><strong>先用 HTTP/3 尝试</strong>：发送首个请求时优先尝试建立 HTTP/3 连接。若在合理时间内无法建立连接，则自动降级到 HTTP/2 或 HTTP/1.1。这是当 <code>HttpRequest</code> 单独指定 <code>HTTP_3</code> 时的行为。</li>
+<li><strong>并行竞速</strong>：同时尝试建立 HTTP/3 连接和 HTTP/2/HTTP/1.1 连接，谁先成功就用谁。这是当 <code>HttpClient</code> 全局指定 <code>HTTP_3</code> 而 <code>HttpRequest</code> 未单独指定时的行为。</li>
+<li><strong>Alt-Svc 服务端宣告</strong>：先用 HTTP/2 或 HTTP/1.1 发送首个请求，如果服务器在响应头中通过 <code>Alt-Svc</code> 字段告知支持 HTTP/3，则后续请求切换至 HTTP/3。通过设置 <code>HttpOption.H3_DISCOVERY</code> 为 <code>Http3DiscoveryMode.ALT_SVC</code> 即可启用此模式。</li>
+<li><strong>强制仅使用 HTTP/3</strong>：只发送 HTTP/3 请求。若服务器不支持 HTTP/3，请求直接失败。</li>
+</ol>
+<h2 id="非目标（Non-Goals）"><a href="#非目标（Non-Goals）" class="headerlink" title="非目标（Non-Goals）"></a>非目标（Non-Goals）</h2><p>JEP 517 明确排除了以下几项工作：</p>
+<ul>
+<li><strong>不提供 QUIC 协议的公开 API</strong>：QUIC 作为 HTTP/3 的底层传输协议，其实现是 JDK 内部的、不对外暴露的。开发者无法通过 HTTP Client API 直接操作 QUIC 连接。</li>
+<li><strong>不支持第三方安全套接字提供者</strong>：HTTP/3 的 TLS 实现依赖于 JDK 内置的 SunJSSE 提供者，暂不支持第三方 JSSE 实现。</li>
+<li><strong>不提供服务端 HTTP/3 实现</strong>：此 JEP 仅面向客户端场景，不涉及服务端对 HTTP/3 的支持。</li>
+<li><strong>不更新传统的 </strong><code>java.net.URL</code><strong> 协议处理器</strong>：遗留的 <code>URL</code> 类及其相关 API 仍然只支持 HTTP/1.1，不会获得 HTTP/3 能力。</li>
+</ul>
+<h2 id="与历史版本的关联"><a href="#与历史版本的关联" class="headerlink" title="与历史版本的关联"></a>与历史版本的关联</h2><p>JEP 517 直接构建于 <strong>JEP 321（HTTP Client API）</strong> 之上。JEP 321 在 JDK 11 中引入 HTTP Client API 时，其架构设计就已经为未来协议扩展留好了接口。JEP 517 正是这一设计前瞻性的体现——新增 HTTP/3 支持几乎不需要改动 API 表面，开发者只需添加一行 <code>.version(HTTP_3)</code> 即可享受新协议带来的性能红利。</p>
+<p>该特性已于 <strong>2026 年 3 月随 JDK 26 GA 版本正式交付</strong>。</p>
+<h2 id="兼容性与影响"><a href="#兼容性与影响" class="headerlink" title="兼容性与影响"></a>兼容性与影响</h2><p>JEP 517 对现有 Java 应用的兼容性影响极小：</p>
+<ul>
+<li><strong>默认行为不变</strong>：未显式设置 <code>HTTP_3</code> 的代码行为与升级前完全一致，继续使用 HTTP/2。</li>
+<li><strong>透明降级</strong>：即使设置了 <code>HTTP_3</code>，当服务器不支持 HTTP/3 时，客户端会自动回退到 HTTP/2 或 HTTP/1.1，不会导致请求失败。</li>
+<li><strong>API 纯增量扩展</strong>：仅新增了 <code>HttpClient.Version.HTTP_3</code> 枚举值和 <code>Http3DiscoveryMode</code> 等少量配置选项，不影响已有 API 的使用。</li>
+</ul>
+<p>对于希望利用 HTTP/3 优势的开发者来说，迁移成本极低——通常只需在 <code>HttpClient.newBuilder()</code> 后追加一行 <code>.version(HttpClient.Version.HTTP_3)</code>，其余代码无需任何改动。</p>
+<h2 id="小结与展望"><a href="#小结与展望" class="headerlink" title="小结与展望"></a>小结与展望</h2><p>JEP 517 以极小的 API 改动成本，为 Java HTTP Client 带来了对 HTTP/3 协议的支持。这是 Java 平台在现代化网络协议方面迈出的重要一步，使 Java 应用得以享受 QUIC 带来的低延迟、抗丢包等网络优化收益。</p>
+<p>值得一提的是，HTTP/3 的底层实现基于 <code>DatagramChannel</code> 和 SunJSSE，完全由 JDK 内部提供，无需引入第三方依赖。对于微服务架构、移动端后台、物联网等对网络延迟敏感的场景，这一特性具有直接的实用价值。</p>
+<p>随着 HTTP/3 在互联网上的部署率持续攀升，Java 应用现在已具备了“原生”适配的能力，开发者可以放心地在新项目中启用 HTTP/3，或在现有项目中按需升级，而无需担心兼容性风险。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com">Johnson Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://linjiangxiong.com/2026/05/04/java-26-jep-517-http3-for-the-http-client-api/">http://linjiangxiong.com/2026/05/04/java-26-jep-517-http3-for-the-http-client-api/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://linjiangxiong.com" target="_blank">Johnson Lin</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a></div><div class="post-share"><div class="social-share" data-image="/image/brand/java.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/04/29/java-26-jep-522-g1-gc-improve-throughput-by-reducing-synchronization/" title="Java 26 新特性：G1 GC 吞吐量优化（JEP 522）"><img class="cover" src="/image/brand/java.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Java 26 新特性：G1 GC 吞吐量优化（JEP 522）</div></div><div class="info-2"><div class="info-item-1">  JEP 522 的核心改进在于写屏障（Write Barrier） 的精简与卡表（Card Table） 机制的优化。如果你对 G1 的并发标记和记忆集（RSet）管理已经有一定了解，那么理解下面这些改动会更加顺畅：     维度 改进前 改进后     写屏障 复杂的同步逻辑，包含“优化卡表”相关指令 简化为类 Parallel GC 风格，仅标记卡表“脏”   同步方式 应用线程与 GC 优化线程持续协调 引入双卡表，双方各自操作，互不干扰   性能影响 同步开销降低吞吐量，增加延迟 吞吐量提升，GC 暂停时间更可控     接下来，我将从 JEP 的基本信息开始，带你逐步解析这次优化的背景、动机以及它如何从根本上改变 G1 的工作方式。 基本信息卡片    项目 内容     JEP 编号 522   标题 G1 GC：通过减少同步来提升吞吐量   所属版本 JDK 26   状态 Closed / Delivered   类型 Feature   组件 hotspot / gc   负责人 Ivan Walulya   创建时间 2024/09/24   关联 Iss...</div></div></div></a><a class="pagination-related" href="/2026/05/09/euclid-infinite-primes-proof/" title="两千年前的灵光：欧几里得如何证明素数有无穷多个"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">两千年前的灵光：欧几里得如何证明素数有无穷多个</div></div><div class="info-2"><div class="info-item-1">在我心中，数学的优雅，不在于它有多么高深莫测，而在于用最简洁明了的逻辑，去揭示一个深刻到令人惊叹的真理。今天，我们就来谈一个这样的例子。它来自2300多年前，一个叫欧几里得的人，在他那本不朽的《几何原本》中，为我们展示了一个堪称完美的证明——素数有无穷多个。 首先，我们要明白，欧几里得面对的不是一道算术题，而是一个关于“无穷”这个概念的哲学命题。怎么证明一种东西有无穷多个？你无法一个个去数，因为生命有限，宇宙也有限。但欧几里得的思考方式，是用有限去触碰无限，用逻辑去构建一个必然的结论。这种方法，正是科学精神的源头。 他的证明过程，简单到你可以用几句话讲给一个聪明的中学生听。但它背后的智慧，却足以让任何一个成年人沉思良久。 让我们开始这个思维之旅。 先假设，素数只有有限个，比如N个。我们把它们列出来：2，3，5，7，11……一直到最后一个，最大的素数，我们叫它P。 现在，欧几里得让我们做一件事：把这些所有已知的素数乘起来，然后再加上1，构造出一个新的数。我们把它记作Q，即： Q = (2 × 3 × 5 × 7 × 11 × … × P) + 1 好了，我们手上有了这个数Q。接下来...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2021/07/22/hashmap-core-code-analysis-1/" title="HashMap核心功能源码解读（一）：概述"><img class="cover" src="https://i.loli.net/2021/07/19/fzMo5a14AYthxyv.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-22</div><div class="info-item-2">HashMap核心功能源码解读（一）：概述</div></div><div class="info-2"><div class="info-item-1">在开始分析 HashMap 核心源码之前，本文先试着从使用的角度对其进行解读，包括 HashMap 特性、如何正确使用，以及影响 Map 性能的因素等。 HashMap特性HashMap 是 Map 接口的一个基于哈希表实现，主要用来存储键值对数据。作为一个使用频率较高的集合类，了解它的特性有助于我们在实践中正确使用它。 首先，HashMap 允许键为 null 和值为 null。 其次，HashMap 不保证 Map 的有序性，即不保证遍历 HashMap 输出元素的顺序与其插入的顺序相同（可能存在顺序相同情况）。另外，HashMap 也不保证其顺序在一段时间内保持不变。如果需要在项目中保证 Map 有序性的话，可以使用 LinkedHashMap 代替 HashMap。 再次，HashMap 是不同步的，即 HashMap 不是线程安全的。如果多个线程同时访问同一个 HashMap 实例，并且其中至少有一个线程从结构上修改了 HashMap 实例时，会导致数据不一致的情况发生。这里的“从结构上修改”是指对 HashMap 实例进行添加或删除元素的操作，仅修改已包含的键对应的值...</div></div></div></a><a class="pagination-related" href="/2023/08/28/gson-serializing-and-deserializing-nested-classes/" title="使用Gson对嵌套类进行序列化和反序列化"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-28</div><div class="info-item-2">使用Gson对嵌套类进行序列化和反序列化</div></div><div class="info-2"><div class="info-item-1">本文将重点介绍如何使用 Gson 序列化嵌套类，包括内部类。 什么是嵌套类？在 Java 中，嵌套类是指在一个类的内部定义的另一个类。嵌套类可以分为两种类型：静态嵌套类（也称为静态内部类）和非静态嵌套类（也称为成员内部类）。静态嵌套类与外部类之间没有直接的引用关系，而非静态嵌套类则与外部类实例相关联。 Gson序列化嵌套类的基本用法Gson 可以很容易地序列化和反序列化静态嵌套类。 要使用 Gson 序列化嵌套类，我们首先需要确保 Gson 库已添加到项目中。可以通过 Maven、Gradle 或手动下载 jar 包的方式导入 Gson 库。 例如，如果使用 Maven，在 pom.xml 文件中添加以下依赖项： 123456&lt;dependency&gt;    &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt;    &lt;artifactId&gt;gson&lt;/artifactId&gt;    &lt;version&gt;2.10.1&lt;/version&gt;    &lt;scope&gt;comp...</div></div></div></a><a class="pagination-related" href="/2019/08/30/how-to-install-jdk-1-8-on-centos-7/" title="CentOS7下安装JDK1.8"><img class="cover" src="https://i.loli.net/2021/07/19/fzMo5a14AYthxyv.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2019-08-30</div><div class="info-item-2">CentOS7下安装JDK1.8</div></div><div class="info-2"><div class="info-item-1">安装Java 幵发工具包（JDK）  从 Oracle 官网下载 1.8 版本的安装包 （网速慢的同学请移步国内镜像，提取码为 rjqx），本次安装的JDK版本为 jdk-8u221-linux-x64.tar.gz；  上传至服务器（系统为 CentOS7.3），存放目录为 /home； 1scp ~/Downloads/jdk-8u221-linux-x64.tar.gz root@192.168.3.67:/home  新建JDK安装目录 /usr/local/java， 1mkdir /usr/local/java  解压文件 jdk-8u221-linux-x64.tar.gz 至安装目录 /usr/local/java， 1tar -zxvf jdk-8u221-linux-x64.tar.gz -C /usr/local/java/  安装完成之后需要配置环境变量，将以下代码追加到文件 profile 末尾； 12345# JAVA_HOME为JDK安装目录export JAVA_HOME=/usr/local/java/jdk1.8.0_221export JRE...</div></div></div></a><a class="pagination-related" href="/2020/06/29/java-list-string-join/" title="使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串"><img class="cover" src="/image/java-logo.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-29</div><div class="info-item-2">使用Java将List&lt;String&gt;元素按指定分隔符连接成字符串</div></div><div class="info-2"><div class="info-item-1">在日常开发工作中，经常会遇到需要将 List&lt;String&gt; 转换为使用某个符号连接的字符串。如将 List&lt;String&gt; 转换为按英文逗号（,）分隔的字符串： 123456789101112List&lt;String&gt; weekList = Arrays.asList(                &quot;Monday&quot;,                &quot;Tuesday&quot;,                &quot;Wednesday&quot;,                &quot;Thursday&quot;,                &quot;Friday&quot;,                &quot;Saturday&quot;,                &quot;Sunday&quot;        );// 将 weekList 输出转换为按英文逗号（,）分隔的字符串：// Monday,Tuesday,Wednesday,Thursday,Friday,Satu...</div></div></div></a><a class="pagination-related" href="/2026/04/03/goodbye-jdk-chaos-jvms-smooth-java-windows/" title="告别JDK版本混乱：JVMS让Windows下的Java开发如丝般顺滑"><img class="cover" src="/image/2026/04/26040302.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-03</div><div class="info-item-2">告别JDK版本混乱：JVMS让Windows下的Java开发如丝般顺滑</div></div><div class="info-2"><div class="info-item-1">你是否也曾经历过这样的抓狂时刻：接手一个老项目，需要 JDK 8；自己正在开发的新项目，必须用 JDK 17；突然领导又扔过来一个祖传项目，非 JDK 11 不可。每次切换版本，你都得去修改 JAVA_HOME，折腾 Path 环境变量，重启终端，甚至还要祈祷不要报 Unsupported major.minor version 错误。 如果你是一名 Windows 开发者，这些烦恼将随着一个名为 JVMS 的工具烟消云散。 JVMS：简化Windows平台上的JDK版本管理JVMS（全称：JDK Version Manager）是一款专为 Windows 平台设计的开源 JDK 版本管理工具，旨在让开发者能够轻松地在多个 JDK 版本之间无缝切换。该工具由 Go 语言编写，无需依赖任何额外的运行环境，下载后即可直接使用。 传统方法的局限性过去，在 Windows 系统上切换不同的 JDK 版本通常需要手动修改系统的 JAVA_HOME 环境变量，并且还需要调整 PATH 配置以指向正确的 JDK 路径。这种方法不仅步骤繁琐，还容易因残留的 Path 设置导致冲突。此外，每次切换...</div></div></div></a><a class="pagination-related" href="/2023/03/24/java-convert-iterator-to-list/" title="Java 如何将 Iterator 转换为 List"><img class="cover" src="/image/brand/java.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-24</div><div class="info-item-2">Java 如何将 Iterator 转换为 List</div></div><div class="info-2"><div class="info-item-1">在本文中，我们将学习在 Java 中如何把一个 Iterator 转换成一个 List。 为便于代码测试，我们在所有的示例代码中使用一个元素为字符串类型的 Iterator ： 12Iterator&lt;String&gt; iterator = Arrays.asList(&quot;MONDAY&quot;, &quot;TUESDAY&quot;, &quot;WEDNESDAY&quot;,                &quot;THURSDAY&quot;, &quot;FRIDAY&quot;, &quot;SATURDAY&quot;, &quot;SUNDAY&quot;).iterator(); 方法一：使用 While 循环一个容易想到的方法是使用 while 循环将 Iterator 转换为 List。具体代码如下： 12345678910111213141516171819202122232425262728// 此代码示例演示 while 循环方法的使用package com.johnson.java.fundamentals.collection...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/image/IMG_3665.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Johnson Lin</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">509</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">73</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/iuiuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/iuiuu" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:me@linjiangxiong.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E5%8D%A1%E7%89%87"><span class="toc-number">1.</span> <span class="toc-text">基本信息卡片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%B8%8E%E5%8A%A8%E6%9C%BA"><span class="toc-number">2.</span> <span class="toc-text">背景与动机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-Client-API-%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F"><span class="toc-number">2.1.</span> <span class="toc-text">HTTP Client API 的前世今生</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E7%9A%84%E7%9F%AD%E6%9D%BF%EF%BC%9A%E7%BC%BA%E5%B0%91-HTTP-3-%E6%94%AF%E6%8C%81"><span class="toc-number">2.2.</span> <span class="toc-text">当前的短板：缺少 HTTP&#x2F;3 支持</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%8F%98%E6%9B%B4%E8%AF%A6%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">核心变更详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%BE%E5%BC%8F%E9%80%89%E6%8B%A9%E5%8A%A0%E5%85%A5%EF%BC%88Opt-in%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">显式选择加入（Opt-in）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E7%89%88%E6%9C%AC%E5%8D%8F%E5%95%86%E6%9C%BA%E5%88%B6"><span class="toc-number">3.2.</span> <span class="toc-text">协议版本协商机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E7%9B%AE%E6%A0%87%EF%BC%88Non-Goals%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">非目标（Non-Goals）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8E%E5%8E%86%E5%8F%B2%E7%89%88%E6%9C%AC%E7%9A%84%E5%85%B3%E8%81%94"><span class="toc-number">5.</span> <span class="toc-text">与历史版本的关联</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%BC%E5%AE%B9%E6%80%A7%E4%B8%8E%E5%BD%B1%E5%93%8D"><span class="toc-number">6.</span> <span class="toc-text">兼容性与影响</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93%E4%B8%8E%E5%B1%95%E6%9C%9B"><span class="toc-number">7.</span> <span class="toc-text">小结与展望</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/09/euclid-infinite-primes-proof/" title="两千年前的灵光：欧几里得如何证明素数有无穷多个">两千年前的灵光：欧几里得如何证明素数有无穷多个</a><time datetime="2026-05-08T16:14:39.000Z" title="发表于 2026-05-09 00:14:39">2026-05-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/04/java-26-jep-517-http3-for-the-http-client-api/" title="Java 26前瞻：JEP 517终落地，原生HTTP Client API完美支持HTTP/3"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java 26前瞻：JEP 517终落地，原生HTTP Client API完美支持HTTP/3"/></a><div class="content"><a class="title" href="/2026/05/04/java-26-jep-517-http3-for-the-http-client-api/" title="Java 26前瞻：JEP 517终落地，原生HTTP Client API完美支持HTTP/3">Java 26前瞻：JEP 517终落地，原生HTTP Client API完美支持HTTP/3</a><time datetime="2026-05-04T00:42:57.000Z" title="发表于 2026-05-04 08:42:57">2026-05-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/29/java-26-jep-522-g1-gc-improve-throughput-by-reducing-synchronization/" title="Java 26 新特性：G1 GC 吞吐量优化（JEP 522）"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java 26 新特性：G1 GC 吞吐量优化（JEP 522）"/></a><div class="content"><a class="title" href="/2026/04/29/java-26-jep-522-g1-gc-improve-throughput-by-reducing-synchronization/" title="Java 26 新特性：G1 GC 吞吐量优化（JEP 522）">Java 26 新特性：G1 GC 吞吐量优化（JEP 522）</a><time datetime="2026-04-28T16:16:34.000Z" title="发表于 2026-04-29 00:16:34">2026-04-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/28/dataworks-bind-flink-resources-tutorial/" title="DataWorks 绑定全托管 Flink 计算资源：新手图文教程"><img src="/image/2026/04/2401.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DataWorks 绑定全托管 Flink 计算资源：新手图文教程"/></a><div class="content"><a class="title" href="/2026/04/28/dataworks-bind-flink-resources-tutorial/" title="DataWorks 绑定全托管 Flink 计算资源：新手图文教程">DataWorks 绑定全托管 Flink 计算资源：新手图文教程</a><time datetime="2026-04-27T17:02:33.000Z" title="发表于 2026-04-28 01:02:33">2026-04-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/26/java-26-jep-504-remove-the-applet-api/" title="Java 26 / JEP 504：Applet API 正式退出 Java 历史舞台"><img src="/image/brand/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java 26 / JEP 504：Applet API 正式退出 Java 历史舞台"/></a><div class="content"><a class="title" href="/2026/04/26/java-26-jep-504-remove-the-applet-api/" title="Java 26 / JEP 504：Applet API 正式退出 Java 历史舞台">Java 26 / JEP 504：Applet API 正式退出 Java 历史舞台</a><time datetime="2026-04-26T03:45:56.000Z" title="发表于 2026-04-26 11:45:56">2026-04-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By Johnson Lin</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly/source/js/main.min.js"></script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
